@@ -23,7 +23,7 @@ def py_files(filename):
 
 
 @runnable
-def python_tests(*args):
+def python_tests(*_):
 
     group = int(time.time())  # unique per run
 
@@ -47,7 +47,7 @@ def python_tests(*args):
                 mark = "✅" * count
                 notify(mark + " [PASS] " + mark, title=title, group=group)
 
-    global show_coverage
+    global show_coverage  # pylint: disable=W0603
     if show_coverage:
         subprocess.call(['make', 'read-coverage'])
     show_coverage = False

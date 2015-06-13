@@ -11,9 +11,9 @@ ifndef TRAVIS
 endif
 
 # Test settings
-UNIT_TEST_COVERAGE := 94
-INTEGRATION_TEST_COVERAGE := 47
-COMBINED_TEST_COVERAGE := 100
+UNIT_TEST_COVERAGE := 0
+INTEGRATION_TEST_COVERAGE := 0
+COMBINED_TEST_COVERAGE := 0
 
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
@@ -75,6 +75,10 @@ INSTALLED_FLAG := $(ENV)/.installed
 
 # Main Targets #################################################################
 
+IP = $(shell ipconfig getifaddr en0)
+CONFIG ?= dev
+PORT := 5000
+
 .PHONY: all
 all: depends doc $(ALL_FLAG)
 $(ALL_FLAG): $(SOURCES)
@@ -83,6 +87,15 @@ $(ALL_FLAG): $(SOURCES)
 
 .PHONY: ci
 ci: check test tests
+
+.PHONY: run
+run: env
+	CONFIG=$(CONFIG) $(PYTHON) manage.py
+
+.PHONY: launch
+launch: env
+	eval "sleep 1; open http://$(IP):$(PORT)" &
+	$(MAKE) run
 
 # Development Installation #####################################################
 
