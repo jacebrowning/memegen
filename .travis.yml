@@ -1,0 +1,19 @@
+sudo: false
+language: python
+python:
+- 3.4
+cache: pip
+install:
+- pip install coveralls scrutinizer-ocular
+before_script:
+- make env
+- make depends-ci
+script:
+- make ci
+after_success:
+- coveralls
+- ocular
+notifications:
+  email:
+    on_success: never
+    on_failure: change
