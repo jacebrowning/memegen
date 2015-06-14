@@ -1,1 +1,1 @@
-from . import image
+from . import link, image

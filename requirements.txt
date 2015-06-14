@@ -1,0 +1,4 @@
+Flask ~= 0.10.1
+Flask-API ~= 0.6.3
+
+Pillow ~= 2.8.2

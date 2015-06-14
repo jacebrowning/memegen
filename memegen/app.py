@@ -39,4 +39,5 @@ def register_services(app):
 
 
 def register_blueprints(app):
+    app.register_blueprint(routes.link.blueprint)
     app.register_blueprint(routes.image.blueprint)
