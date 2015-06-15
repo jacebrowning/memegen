@@ -1,4 +1,9 @@
+import os
+
 from PIL import Image as ImageFile, ImageFont, ImageDraw
+
+
+FONT = os.path.normpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'fonts', 'Impact.ttf'))
 
 
 class Image:
@@ -12,18 +17,19 @@ class Image:
 
 # based on: https://github.com/danieldiekmeier/memegenerator
 def make_meme(topString, bottomString, filename):
+    print(FONT)
 
     img = ImageFile.open(filename)
     imageSize = img.size
 
     # find biggest font size that works
     fontSize = int(imageSize[1] / 5)
-    font = ImageFont.truetype("../../data/fonts/Impact.ttf", fontSize)
+    font = ImageFont.truetype(FONT, fontSize)
     topTextSize = font.getsize(topString)
     bottomTextSize = font.getsize(bottomString)
     while topTextSize[0] > imageSize[0] - 20 or bottomTextSize[0] > imageSize[0] - 20:
         fontSize = fontSize - 1
-        font = ImageFont.truetype("../../data/fonts/Impact.ttf", fontSize)
+        font = ImageFont.truetype(FONT, fontSize)
         topTextSize = font.getsize(topString)
         bottomTextSize = font.getsize(bottomString)
 
