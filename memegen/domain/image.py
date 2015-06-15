@@ -12,7 +12,7 @@ class Image:
     @classmethod
     def from_template(cls, template, text, kind):
         make_meme(text.top, text.bottom, template.path)
-        return "../temp.png"
+        return "../temp.jpg"
 
 
 # based on: https://github.com/danieldiekmeier/memegenerator
@@ -56,4 +56,4 @@ def make_meme(topString, bottomString, filename):
     draw.text(topTextPosition, topString, (255, 255, 255), font=font)
     draw.text(bottomTextPosition, bottomString, (255, 255, 255), font=font)
 
-    return img.save("temp.png")
+    return img.save("temp.jpg")

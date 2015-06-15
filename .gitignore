@@ -12,7 +12,7 @@ Icon*
 env
 
 # Temporary deploy files
-temp.png
+temp.*
 
 # Generated documentation
 docs/gen
