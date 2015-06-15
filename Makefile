@@ -86,7 +86,8 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: check test tests
+#ci: check test tests
+ci: test tests
 
 .PHONY: run
 run: env

@@ -9,6 +9,7 @@ class Image:
         make_meme(text.top, text.bottom, template.path)
         return "../temp.png"
 
+
 # based on: https://github.com/danieldiekmeier/memegenerator
 def make_meme(topString, bottomString, filename):
 
