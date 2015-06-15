@@ -1,1 +1,1 @@
-web: gunicorn --env CONFIG=prod manage:app --log-file -
+web: gunicorn --env CONFIG=dev manage:app --log-file -
