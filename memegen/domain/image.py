@@ -40,7 +40,7 @@ def make_meme(topString, bottomString, filename):
 
     # find bottom centered position for bottom text
     bottomTextPositionX = (imageSize[0] / 2) - (bottomTextSize[0] / 2)
-    bottomTextPositionY = imageSize[1] - bottomTextSize[1]
+    bottomTextPositionY = imageSize[1] - bottomTextSize[1] - bottomTextSize[1] / 4
     bottomTextPosition = (bottomTextPositionX, bottomTextPositionY)
 
     draw = ImageDraw.Draw(img)
