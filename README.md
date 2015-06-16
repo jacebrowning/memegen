@@ -1,5 +1,7 @@
 MemeGen
 ======
+
+[![Join the chat at https://gitter.im/jacebrowning/memegen](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jacebrowning/memegen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [TBD]
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/memegen/master.svg)](https://travis-ci.org/jacebrowning/memegen)
