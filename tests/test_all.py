@@ -26,7 +26,7 @@ class TestMeme:
     #     assert response.mimetype == 'image/gif'
 
     def test_get_hidden_jpg(self, client):
-        response = client.get("/aXcJaGVsbG8Jd29ybGQg.jpg")
+        response = client.get("/aXcJaGVsbG8Jd29ybGQJ.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'
 
@@ -36,11 +36,16 @@ class TestLink:
     def test_get_links(self, client):
         response = client.get("/iw/hello/world")
         assert response.status_code == 200
-        assert load(response) == dict(
+        assert dict(
             visible=dict(
                 jpg="http://localhost/iw/hello/world.jpg",
             ),
             hidden=dict(
-                jpg="http://localhost/aXcJaGVsbG8Jd29ybGQg.jpg",
+                jpg="http://localhost/aXcJaGVsbG8Jd29ybGQJ.jpg",
             ),
-        )
+        ) == load(response)
+
+    def test_get_links_redirect_hidden(self, client):
+        response = client.get("/aXcJaGVsbG8Jd29ybGQJ")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello/world">' in load(response, as_json=False)

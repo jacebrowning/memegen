@@ -7,9 +7,11 @@ from memegen.app import create_app
 from memegen.settings import get_config
 
 
-def load(response):
+def load(response, as_json=True):
     """Convert a response's binary data (JSON) to a dictionary."""
     text = response.data.decode('utf-8')
+    if not as_json:
+        return text
     if text:
         data = json.loads(text)
     else:

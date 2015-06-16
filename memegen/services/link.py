@@ -12,7 +12,7 @@ class LinkService(Service):
     def encode(self, key, top, bottom):
         slug = '\t'.join((key, top, bottom))
         while len(slug) % 3:
-            slug += ' '
+            slug += '\t'
         code = base64.urlsafe_b64encode(slug.encode('utf-8'))
         return code
 
@@ -22,5 +22,5 @@ class LinkService(Service):
         except ValueError:
             raise self.exceptions.bad_code
         else:
-            key, top, bottom = slug.strip().split('\t')
+            key, top, bottom = slug.strip('\t').split('\t')
             return key, top, bottom
