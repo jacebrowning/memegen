@@ -29,7 +29,6 @@ def python_tests(*_):
 
     for count, (command, title) in enumerate((
         (('make', 'test-unit'), "Unit Tests"),
-        (('make', 'test-int'), "Integration Tests"),
         (('make', 'test-all'), "Combined Tests"),
         (('make', 'check'), "Static Analysis"),
         (('make', 'doc'), None),

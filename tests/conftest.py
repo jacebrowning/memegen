@@ -18,7 +18,6 @@ def load(response):
     return data
 
 
-
 @pytest.fixture
 def app():
     return create_app(get_config('test'))

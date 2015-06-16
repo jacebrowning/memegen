@@ -13,7 +13,7 @@ class ImageService(Service):
     def find_template(self, template):
         template = self.template_store.read(template)
         if not template:
-            raise self.exceptions.missing
+            raise self.exceptions.not_found
         return template
 
     def create_image(self, template, text, kind):

@@ -3,27 +3,32 @@ from .conftest import load
 
 class TestMeme:
 
-    def test_get_jpg(self, client):
+    def test_get_visible_jpg(self, client):
         response = client.get("/iw/hello/world.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'
 
     # TODO: add more image types
 
-    # def test_get_jpeg(self, client):
+    # def test_get_visible_jpeg(self, client):
     #     response = client.get("/iw/hello/world.jpeg")
     #     assert response.status_code == 200
     #     assert response.mimetype == 'image/jpeg'
 
-    # def test_get_png(self, client):
+    # def test_get_visible_png(self, client):
     #     response = client.get("/iw/hello/world.png")
     #     assert response.status_code == 200
     #     assert response.mimetype == 'image/png'
 
-    # def test_get_gif(self, client):
+    # def test_get_visible_gif(self, client):
     #     response = client.get("/iw/hello/world.gif")
     #     assert response.status_code == 200
     #     assert response.mimetype == 'image/gif'
+
+    def test_get_hidden_jpg(self, client):
+        response = client.get("/aXcJaGVsbG8Jd29ybGQg.jpg")
+        assert response.status_code == 200
+        assert response.mimetype == 'image/jpeg'
 
 
 class TestLink:
