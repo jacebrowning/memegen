@@ -17,7 +17,8 @@ def create_app(config):
 
 def register_services(app):
     _exceptions = services.Exceptions(
-        missing=exceptions.NotFound,
+        not_found=exceptions.NotFound,
+        bad_code=exceptions.NotFound,
     )
 
     _template_store = stores.template.TemplateStore()
