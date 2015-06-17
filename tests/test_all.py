@@ -42,7 +42,7 @@ class TestLink:
             ),
         ) == load(response)
 
-    def test_get_links_1_line(self, client):
+    def test_get_links_with_1_line(self, client):
         response = client.get("/iw/hello")
         assert response.status_code == 200
         assert dict(
@@ -54,12 +54,18 @@ class TestLink:
             ),
         ) == load(response)
 
-    def test_get_links_redirect_hidden(self, client):
+    def test_get_links_redirects_to_dashes(self, client):
+        response = client.get("/iw/HelloThere_World/How-areYOU")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello-there-world/how-are-you">' in \
+            load(response, as_json=False)
+
+    def test_get_links_redirects_when_hidden(self, client):
         response = client.get("/aXcJaGVsbG8vd29ybGQJ")
         assert response.status_code == 302
         assert '<a href="/iw/hello/world">' in load(response, as_json=False)
 
-    def test_get_links_redirect_hidden_1_line(self, client):
+    def test_get_links_redirects_when_hidden_with_1_line(self, client):
         response = client.get("/aXcJaGVsbG8J")
         assert response.status_code == 302
         assert '<a href="/iw/hello">' in load(response, as_json=False)
@@ -98,3 +104,10 @@ class TestMeme:
         response = client.get("/aXcJaGVsbG8vd29ybGQJ.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'
+
+    def test_get_meme_redirects_to_dashes(self, client):
+        response = client.get("/iw/HelloThere_World/How-areYOU.jpg")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello-there-world/how-are-you.jpg">' in \
+            load(response, as_json=False)
+

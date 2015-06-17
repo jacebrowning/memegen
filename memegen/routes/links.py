@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from flask import Blueprint, current_app as app, url_for, redirect
 
-from ..domain import Image
+from ..domain import Image, Text
 
 
 blueprint = Blueprint('links', __name__, url_prefix="/")
@@ -14,6 +14,10 @@ def get(**kwargs):
     data = OrderedDict()
     data['visible'] = OrderedDict()
     data['hidden'] = OrderedDict()
+    text = Text(kwargs['path'])
+    if kwargs['path'] != text.path:
+        kwargs['path'] = text.path
+        return redirect(url_for(".get", **kwargs))
     for kind in Image.KINDS:
         url = url_for('image.get', kind=kind.lower(), _external=True, **kwargs)
         data['visible'][kind] = url

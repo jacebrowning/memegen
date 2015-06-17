@@ -8,7 +8,9 @@ blueprint = Blueprint('image', __name__, url_prefix="/")
 @blueprint.route("<key>/<path:path>.<kind>")
 def get(key, path, kind):
     template = domain.Template(key)
-    text = domain.Text(path.split('/'))
+    text = domain.Text(path)
+    if path != text.path:
+        return redirect(url_for(".get", key=key, path=text.path, kind=kind))
     _path = app.image_service.create_image(template, text, kind)
     return send_file(_path, mimetype='image/jpeg')
 
@@ -20,6 +22,6 @@ def get_encoded(code, kind):
     # url = url_for('.get_visible', key=key, top=top, bottom=bottom, kind=kind)
     # return redirect(url)
     template = domain.Template(key)
-    text = domain.Text(path.split('/'))
+    text = domain.Text(path)
     _path = app.image_service.create_image(template, text, kind)
     return send_file(_path, mimetype='image/jpeg')
