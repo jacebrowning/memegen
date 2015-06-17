@@ -8,7 +8,7 @@ from ..domain import Image
 blueprint = Blueprint('links', __name__, url_prefix="/")
 
 
-@blueprint.route("<key>/<top>/<bottom>")
+@blueprint.route("<key>/<path:path>")
 def get(**kwargs):
     """Get links for generated images."""
     data = OrderedDict()
@@ -18,13 +18,14 @@ def get(**kwargs):
         url = url_for('image.get', kind=kind.lower(), _external=True, **kwargs)
         data['visible'][kind] = url
         code = app.link_service.encode(**kwargs)
-        url = url_for('image.get_encoded', kind=kind.lower(), _external=True, code=code)
+        url = url_for('image.get_encoded', kind=kind.lower(), _external=True,
+                      code=code)
         data['hidden'][kind] = url
     return data
 
 
 @blueprint.route("<code>")
 def get_encoded(code):
-    key, top, bottom = app.link_service.decode(code)
-    url = url_for('.get', key=key, top=top, bottom=bottom)
+    key, path = app.link_service.decode(code)
+    url = url_for('.get', key=key, path=path)
     return redirect(url)

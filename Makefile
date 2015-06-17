@@ -86,8 +86,7 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-#ci: check test tests
-ci: test tests
+ci: check test tests
 
 .PHONY: run
 run: env
@@ -169,7 +168,7 @@ read: doc
 # Static Analysis ##############################################################
 
 .PHONY: check
-check: pep8 pep257 pylint
+check: pep8 # pep257 pylint
 
 .PHONY: pep8
 pep8: depends-ci

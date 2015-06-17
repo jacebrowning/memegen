@@ -38,20 +38,42 @@ class TestLink:
                 JPG="http://localhost/iw/hello/world.jpg",
             ),
             hidden=dict(
-                JPG="http://localhost/aXcJaGVsbG8Jd29ybGQJ.jpg",
+                JPG="http://localhost/aXcJaGVsbG8vd29ybGQJ.jpg",
+            ),
+        ) == load(response)
+
+    def test_get_links_1_line(self, client):
+        response = client.get("/iw/hello")
+        assert response.status_code == 200
+        assert dict(
+            visible=dict(
+                JPG="http://localhost/iw/hello.jpg",
+            ),
+            hidden=dict(
+                JPG="http://localhost/aXcJaGVsbG8J.jpg",
             ),
         ) == load(response)
 
     def test_get_links_redirect_hidden(self, client):
-        response = client.get("/aXcJaGVsbG8Jd29ybGQJ")
+        response = client.get("/aXcJaGVsbG8vd29ybGQJ")
         assert response.status_code == 302
         assert '<a href="/iw/hello/world">' in load(response, as_json=False)
+
+    def test_get_links_redirect_hidden_1_line(self, client):
+        response = client.get("/aXcJaGVsbG8J")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello">' in load(response, as_json=False)
 
 
 class TestMeme:
 
     def test_get_visible_jpg(self, client):
         response = client.get("/iw/hello/world.jpg")
+        assert response.status_code == 200
+        assert response.mimetype == 'image/jpeg'
+
+    def test_get_visible_jpg_1_line(self, client):
+        response = client.get("/iw/hello.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'
 
@@ -73,6 +95,6 @@ class TestMeme:
     #     assert response.mimetype == 'image/gif'
 
     def test_get_hidden_jpg(self, client):
-        response = client.get("/aXcJaGVsbG8Jd29ybGQJ.jpg")
+        response = client.get("/aXcJaGVsbG8vd29ybGQJ.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'

@@ -20,7 +20,7 @@ def create(key):
     """Generate a meme from a template."""
     if request.method == 'GET':
         return dict(example=url_for("links.get", key=key, _external=True,
-                                    top="hello", bottom="world"))
+                                    path="hello/world"))
     elif request.method == 'POST':
         # TODO: https://github.com/jacebrowning/memegen/issues/12
         raise exceptions.PermissionDenied("Feature not implemented.")
