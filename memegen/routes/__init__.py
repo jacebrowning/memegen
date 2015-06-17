@@ -1,1 +1,4 @@
-from . import link, image
+from . import root
+from . import templates
+from . import links
+from . import image

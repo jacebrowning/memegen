@@ -10,7 +10,7 @@ class Image:
     """Meme image generated from a template."""
 
     # TODO: support more image types
-    KINDS = ('jpg',)  # 'png', 'gif')
+    KINDS = ('JPG',)  # 'PNG', 'GIF')
 
     @classmethod
     def from_template(cls, template, text, kind):

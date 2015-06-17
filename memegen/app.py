@@ -40,5 +40,7 @@ def register_services(app):
 
 
 def register_blueprints(app):
-    app.register_blueprint(routes.link.blueprint)
+    app.register_blueprint(routes.root.blueprint)
+    app.register_blueprint(routes.templates.blueprint)
+    app.register_blueprint(routes.links.blueprint)
     app.register_blueprint(routes.image.blueprint)
