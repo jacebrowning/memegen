@@ -24,7 +24,7 @@ class TestTemplates:
         response = client.get("/templates/iw")
         assert response.status_code == 200
         assert dict(
-            sample="http://localhost/iw/hello/world",
+            example="http://localhost/iw/hello/world",
         ) == load(response)
 
 
