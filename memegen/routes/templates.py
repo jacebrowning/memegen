@@ -17,7 +17,7 @@ def get():
 
 @blueprint.route("<key>", methods=['GET', 'POST'])
 def create(key):
-    """Generate a meme from a templates."""
+    """Generate a meme from a template."""
     if request.method == 'GET':
         return dict(sample=url_for("links.get", key=key, _external=True,
                                    top="hello", bottom="world"))
