@@ -38,12 +38,20 @@ class TestLink:
             hidden="http://localhost/aXcJaGVsbG8vd29ybGQJ.jpg",
         ) == load(response)
 
-    def test_get_links_with_1_line(self, client):
+    def test_get_links_with_top_only(self, client):
         response = client.get("/iw/hello")
         assert response.status_code == 200
         assert dict(
             visible="http://localhost/iw/hello.jpg",
             hidden="http://localhost/aXcJaGVsbG8J.jpg",
+        ) == load(response)
+
+    def test_get_links_with_bottom_only(self, client):
+        response = client.get("/iw/_/hello")
+        assert response.status_code == 200
+        assert dict(
+            visible="http://localhost/iw/_/hello.jpg",
+            hidden="http://localhost/aXcJXy9oZWxsbwkJ.jpg",
         ) == load(response)
 
     def test_get_links_redirects_to_dashes(self, client):

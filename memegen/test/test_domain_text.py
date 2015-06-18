@@ -50,6 +50,10 @@ class TestText:
         text = Text("hello-World")
         assert ["HELLO WORLD"] == text.lines
 
+    def test_lines_strip_spaces(self):
+        text = Text("  hello  World /    ")
+        assert ["HELLO   WORLD"] == text.lines
+
     def test_path(self):
         text = Text("hello/World")
         assert "hello/world" == text.path
@@ -65,3 +69,7 @@ class TestText:
     def test_path_with_case_changes(self):
         text = Text("withCaseChanges/InIT")
         assert "with-case-changes/in-it" == text.path
+
+    def test_path_strips_spaces(self):
+        text = Text("  with  spaces/  in it   / ")
+        assert "with--spaces/in-it" == text.path

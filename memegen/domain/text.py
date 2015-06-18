@@ -9,7 +9,7 @@ class Text:
         except (IndexError, ValueError):
             return ""
         else:
-            return part
+            return part.strip()
 
     def get_line(self, index):
         return self._format_line(self[index])
@@ -65,4 +65,7 @@ class Text:
 
     @staticmethod
     def _format_path(line):
-        return line.replace(' ', '-').lower()
+        if line == ' ':
+            return '_'
+        else:
+            return line.replace(' ', '-').lower()
