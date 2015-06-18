@@ -1,4 +1,6 @@
-from flask_api import FlaskAPI, exceptions
+import os
+
+from flask_api import FlaskAPI, exceptions as api_exceptions
 
 from . import services
 from . import stores
@@ -16,26 +18,27 @@ def create_app(config):
 
 
 def register_services(app):
-    _exceptions = services.Exceptions(
-        not_found=exceptions.NotFound,
-        bad_code=exceptions.NotFound,
+    exceptions = services.Exceptions(
+        not_found=api_exceptions.NotFound,
+        bad_code=api_exceptions.NotFound,
     )
 
-    _template_store = stores.template.TemplateStore()
-    _image_store = stores.image.ImageStore()
+    templates_root = os.path.join(app.config['ROOT'], 'data', 'templates')
+    template_store = stores.template.TemplateStore(templates_root)
+    image_store = stores.image.ImageStore()
 
     app.link_service = services.link.LinkService(
-        exceptions=_exceptions,
-        template_store=_template_store,
+        exceptions=exceptions,
+        template_store=template_store,
     )
-    app.template_servcie = services.template.TemplateService(
-        exceptions=_exceptions,
-        template_store=_template_store,
+    app.template_service = services.template.TemplateService(
+        exceptions=exceptions,
+        template_store=template_store,
     )
     app.image_service = services.image.ImageService(
-        exceptions=_exceptions,
-        template_store=_template_store,
-        image_store=_image_store,
+        exceptions=exceptions,
+        template_store=template_store,
+        image_store=image_store,
     )
 
 

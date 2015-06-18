@@ -10,13 +10,12 @@ class ImageService(Service):
         self.template_store = template_store
         self.image_store = image_store
 
-    def find_template(self, template):
-        template = self.template_store.read(template)
+    def find_template(self, key):
+        template = self.template_store.read(key)
         if not template:
             raise self.exceptions.not_found
         return template
 
     def create_image(self, template, text):
-        template = self.find_template(template)
         image = domain.Image.from_template(template, text)
         return image

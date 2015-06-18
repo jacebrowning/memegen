@@ -6,6 +6,11 @@ from memegen import services
 
 
 @pytest.fixture
+def template_service():
+    return services.template.TemplateService(template_store=Mock())
+
+
+@pytest.fixture
 def link_service():
     return services.link.LinkService(template_store=Mock())
 

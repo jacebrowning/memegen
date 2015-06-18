@@ -11,7 +11,9 @@ blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
 def get():
     """Get a list of all meme templates."""
     data = OrderedDict()
-    data['Insanity Wolf'] = url_for(".create", key='iw', _external=True)
+    for template in sorted(app.template_service.all()):
+        url = url_for(".create", key=template.key, _external=True)
+        data[template.name] = url
     return data
 
 

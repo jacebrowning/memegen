@@ -17,7 +17,7 @@ class TestTemplates:
         response = client.get("/templates/")
         assert response.status_code == 200
         data = load(response)
-        assert len(data) > 0  # TODO: check for a minimum number of memes
+        assert len(data) >= 3
         assert "http://localhost/templates/iw" == data['Insanity Wolf']
 
     def test_get_template(self, client):
