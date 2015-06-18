@@ -16,7 +16,7 @@ class ImageService(Service):
             raise self.exceptions.not_found
         return template
 
-    def create_image(self, template, text, kind):
+    def create_image(self, template, text):
         template = self.find_template(template)
-        image = domain.Image.from_template(template, text, kind)
+        image = domain.Image.from_template(template, text)
         return image

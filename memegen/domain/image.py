@@ -7,13 +7,10 @@ FONT = os.path.normpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pa
 
 
 class Image:
-    """Meme image generated from a template."""
-
-    # TODO: support more image types
-    KINDS = ('JPG',)  # 'PNG', 'GIF')
+    """Meme JPEG generated from a template."""
 
     @classmethod
-    def from_template(cls, template, text, kind):
+    def from_template(cls, template, text):
         make_meme(text.top, text.bottom, template.path)
         return "../temp.jpg"
 

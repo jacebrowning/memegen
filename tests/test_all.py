@@ -34,24 +34,16 @@ class TestLink:
         response = client.get("/iw/hello/world")
         assert response.status_code == 200
         assert dict(
-            visible=dict(
-                JPG="http://localhost/iw/hello/world.jpg",
-            ),
-            hidden=dict(
-                JPG="http://localhost/aXcJaGVsbG8vd29ybGQJ.jpg",
-            ),
+            visible="http://localhost/iw/hello/world.jpg",
+            hidden="http://localhost/aXcJaGVsbG8vd29ybGQJ.jpg",
         ) == load(response)
 
     def test_get_links_with_1_line(self, client):
         response = client.get("/iw/hello")
         assert response.status_code == 200
         assert dict(
-            visible=dict(
-                JPG="http://localhost/iw/hello.jpg",
-            ),
-            hidden=dict(
-                JPG="http://localhost/aXcJaGVsbG8J.jpg",
-            ),
+            visible="http://localhost/iw/hello.jpg",
+            hidden="http://localhost/aXcJaGVsbG8J.jpg",
         ) == load(response)
 
     def test_get_links_redirects_to_dashes(self, client):
@@ -82,23 +74,6 @@ class TestMeme:
         response = client.get("/iw/hello.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'
-
-    # TODO: add more image types
-
-    # def test_get_visible_jpeg(self, client):
-    #     response = client.get("/iw/hello/world.jpeg")
-    #     assert response.status_code == 200
-    #     assert response.mimetype == 'image/jpeg'
-
-    # def test_get_visible_png(self, client):
-    #     response = client.get("/iw/hello/world.png")
-    #     assert response.status_code == 200
-    #     assert response.mimetype == 'image/png'
-
-    # def test_get_visible_gif(self, client):
-    #     response = client.get("/iw/hello/world.gif")
-    #     assert response.status_code == 200
-    #     assert response.mimetype == 'image/gif'
 
     def test_get_hidden_jpg(self, client):
         response = client.get("/aXcJaGVsbG8vd29ybGQJ.jpg")
