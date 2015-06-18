@@ -94,3 +94,7 @@ class TestMeme:
         assert '<a href="/iw/hello-there-world/how-are-you.jpg">' in \
             load(response, as_json=False)
 
+    def test_get_unknown_template(self, client):
+        response = client.get("/make/sudo/give.me.jpg")
+        assert response.status_code == 404
+

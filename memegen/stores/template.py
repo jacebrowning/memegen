@@ -32,7 +32,10 @@ class TemplateStore:
         if key is None:
             return self._items.values()
         else:
-            return self._items[key]
+            try:
+                return self._items[key]
+            except KeyError:
+                return None
 
     def _load(self):
         self._items = {}
