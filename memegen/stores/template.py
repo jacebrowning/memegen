@@ -15,7 +15,7 @@ class StringList(yorm.converters.List):
 @yorm.attr(default=StringList)
 @yorm.attr(link=yorm.converters.String)
 @yorm.attr(aliases=StringList)
-@yorm.sync("{self.root}/{self.key}/config.yml", auto=False)
+@yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""
 
@@ -62,7 +62,4 @@ class TemplateStore:
         for key in os.listdir(self.root):
             if key[0] not in ('.', '_'):
                 model = TemplateModel(key, self.root)
-                yorm.update_object(model)
-                model.key = key  # TODO: this line shouldn't be required
                 self._items[key] = model
-        print(self._items.values())

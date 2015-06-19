@@ -2,7 +2,6 @@ Flask ~= 0.10.1
 Flask-API ~= 0.6.3
 
 Pillow ~= 2.8.2
-
-YORM == 0.4.1rc6
+YORM == 0.4.1rc7
 
 gunicorn ~= 19.3.0
