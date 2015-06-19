@@ -60,7 +60,7 @@ class TemplateStore:
     def _load(self):
         self._items = {}
         for key in os.listdir(self.root):
-            if not key.startswith('.'):
+            if key[0] not in ('.', '_'):
                 model = TemplateModel(key, self.root)
                 yorm.update_object(model)
                 model.key = key  # TODO: this line shouldn't be required
