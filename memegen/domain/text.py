@@ -26,14 +26,18 @@ class Text:
     def lines(self):
         lines = []
 
+        previous_part = True
         for part in self:
             if part:
                 line = self._format_line(part)
                 lines.append(line)
-            else:
+            elif not previous_part:
                 break
+            else:
+                lines.append('_')
+            previous_part = part
 
-        return lines
+        return lines[:-1]
 
     @property
     def path(self):

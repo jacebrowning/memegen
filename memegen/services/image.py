@@ -1,4 +1,4 @@
-from .. import domain
+from ..domain import Image
 
 from . import Service
 
@@ -17,5 +17,7 @@ class ImageService(Service):
         return template
 
     def create_image(self, template, text):
-        image = domain.Image.from_template(template, text)
+        image = Image(template, text)
+        if not self.image_store.read(image.path):
+            self.image_store.create(image)
         return image

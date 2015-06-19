@@ -21,8 +21,10 @@ def get():
 def create(key):
     """Generate a meme from a template."""
     if request.method == 'GET':
-        return dict(example=url_for("links.get", key=key, _external=True,
-                                    path="hello/world"))
+        template = app.template_service.find(key)
+        path = template.default or "hello/world"
+        url = url_for("links.get", key=key, path=path, _external=True)
+        return dict(example=url)
     elif request.method == 'POST':
         # TODO: https://github.com/jacebrowning/memegen/issues/12
         raise exceptions.PermissionDenied("Feature not implemented.")

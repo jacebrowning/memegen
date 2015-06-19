@@ -20,3 +20,17 @@ class TestImageService:
 
         with pytest.raises(KeyError):
             image_service.find_template('unknown_key')
+
+    def test_create_image(self, image_service):
+        mock_template = Mock()
+        mock_text = Mock()
+        mock_image = Mock()
+        mock_image.template = mock_template
+        mock_image.text = mock_text
+
+        image = image_service.create_image(mock_template, mock_text)
+
+        assert image_service.image_store.create.called_once_with(mock_image)
+
+        assert image.template is mock_image.template
+        assert image.text is mock_image.text
