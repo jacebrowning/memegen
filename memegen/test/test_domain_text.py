@@ -30,6 +30,10 @@ class TestText:
         text = Text("hello_world")
         assert ["HELLO WORLD"] == text.lines
 
+    def test_lines_split_underscore_as_spaces_ignores_case(self):
+        text = Text("HELLO WORLD")
+        assert ["HELLO WORLD"] == text.lines
+
     def test_lines_split_dash_as_spaces(self):
         text = Text("hello-world")
         assert ["HELLO WORLD"] == text.lines
@@ -52,7 +56,7 @@ class TestText:
 
     def test_lines_strip_spaces(self):
         text = Text("  hello  World /    ")
-        assert ["HELLO   WORLD"] == text.lines
+        assert ["HELLO  WORLD"] == text.lines
 
     def test_path(self):
         text = Text("hello/World")

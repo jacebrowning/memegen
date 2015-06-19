@@ -53,17 +53,17 @@ class Text:
     def _format_line(part):
         chars = []
 
-        upper = True
+        previous_upper = True
         for char in part:
             if char in ('_', '-'):
                 chars.append(' ')
-                upper = True
+                previous_upper = True
             else:
                 if char.isupper():
-                    if not upper:
+                    if not previous_upper and chars[-1] != ' ':
                         chars.append(' ')
                 chars.append(char.upper())
-                upper = char.isupper()
+                previous_upper = char.isupper()
 
         return ''.join(chars)
 
