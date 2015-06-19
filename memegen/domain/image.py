@@ -3,11 +3,19 @@ import os
 from PIL import Image as ImageFile, ImageFont, ImageDraw
 
 
-FONT = os.path.normpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'fonts', 'Impact.ttf'))
+FONT = os.path.normpath(os.path.join(
+    os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'fonts', 'Impact.ttf')
+)
 
 
 class Image:
     """Meme JPEG generated from a template."""
+
+    path = None  # TODO: add a path property
+
+    def __init__(self, template, text):
+        self.template = template
+        self.text = text
 
     @classmethod
     def from_template(cls, template, text):
@@ -40,7 +48,8 @@ def make_meme(topString, bottomString, filename):
 
     # find bottom centered position for bottom text
     bottomTextPositionX = (imageSize[0] / 2) - (bottomTextSize[0] / 2)
-    bottomTextPositionY = imageSize[1] - bottomTextSize[1] - bottomTextSize[1] / 6
+    bottomTextPositionY = imageSize[1] - \
+        bottomTextSize[1] - bottomTextSize[1] / 6
     bottomTextPosition = (bottomTextPositionX, bottomTextPositionY)
 
     draw = ImageDraw.Draw(img)
@@ -50,8 +59,10 @@ def make_meme(topString, bottomString, filename):
     outlineRange = int(fontSize / 15)
     for x in range(-outlineRange, outlineRange + 1):
         for y in range(-outlineRange, outlineRange + 1):
-            draw.text((topTextPosition[0] + x, topTextPosition[1] + y), topString, (0, 0, 0), font=font)
-            draw.text((bottomTextPosition[0] + x, bottomTextPosition[1] + y), bottomString, (0, 0, 0), font=font)
+            draw.text(
+                (topTextPosition[0] + x, topTextPosition[1] + y), topString, (0, 0, 0), font=font)
+            draw.text((bottomTextPosition[
+                      0] + x, bottomTextPosition[1] + y), bottomString, (0, 0, 0), font=font)
 
     draw.text(topTextPosition, topString, (255, 255, 255), font=font)
     draw.text(bottomTextPosition, bottomString, (255, 255, 255), font=font)

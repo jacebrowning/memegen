@@ -73,3 +73,7 @@ class TestText:
     def test_path_strips_spaces(self):
         text = Text("  with  spaces/  in it   / ")
         assert "with--spaces/in-it" == text.path
+
+    def test_path_with_a_single_underscore(self):
+        text = Text(" _     ")
+        assert "_" == text.path

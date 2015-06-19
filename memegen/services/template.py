@@ -9,7 +9,7 @@ class TemplateService(Service):
 
     def all(self):
         """Get all templates."""
-        templates = self.template_store.read()
+        templates = self.template_store.filter()
         return templates
 
     def find(self, key):
