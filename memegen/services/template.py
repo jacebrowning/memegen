@@ -1,4 +1,9 @@
+import logging
+
 from . import Service
+
+
+log = logging.getLogger(__name__)
 
 
 class TemplateService(Service):
@@ -18,3 +23,23 @@ class TemplateService(Service):
         if not template:
             raise self.exceptions.not_found
         return template
+
+    def validate(self):
+        """Ensure all template are valid and conflict-free."""
+        templates = self.all()
+        keys = {template.key: template for template in templates}
+        for template in templates:
+            log.info("checking template '%s' ...", template)
+            if not template.validate():
+                return False
+            for alias in template.aliases:
+                log.info("checking alias '%s' -> '%s' ...", alias, template.key)
+                try:
+                    existing = keys[alias]
+                except KeyError:
+                    keys[alias] = template
+                else:
+                    msg = "alias '%s' already used in template: %s"
+                    log.error(msg, alias, existing)
+                    return False
+        return True

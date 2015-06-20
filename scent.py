@@ -11,14 +11,14 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ['memegen/', 'tests/']
+watch_paths = ['memegen/', 'tests/', 'data/']
 show_coverage = True
 
 
 @select_runnable('python_tests')
 @file_validator
 def py_files(filename):
-    return all((filename.endswith('.py'),
+    return all((filename.endswith('.py') or filename.endswith('.yml'),
                not os.path.basename(filename).startswith('.')))
 
 
@@ -30,6 +30,7 @@ def python_tests(*_):
     for count, (command, title) in enumerate((
         (('make', 'test-unit'), "Unit Tests"),
         (('make', 'test-all'), "Integration Tests"),
+        (('make', 'validate'), "Meme Validation"),
         (('make', 'check'), "Static Analysis"),
         (('make', 'doc'), None),
     ), start=1):

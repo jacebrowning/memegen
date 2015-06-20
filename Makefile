@@ -86,16 +86,20 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: check test tests
+ci: validate check test tests
 
 .PHONY: run
 run: env
-	CONFIG=$(CONFIG) $(PYTHON) manage.py
+	CONFIG=$(CONFIG) $(PYTHON) manage.py server
 
 .PHONY: launch
 launch: env
 	eval "sleep 1; open http://$(IP):$(PORT)" &
 	$(MAKE) run
+
+.PHONY: validate
+validate: env
+	CONFIG=$(CONFIG) $(PYTHON) manage.py validate
 
 # Development Installation #####################################################
 

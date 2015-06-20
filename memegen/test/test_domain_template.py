@@ -32,3 +32,11 @@ class TestTemplate:
     def test_default_with_no_lines(self):
         template = Template('abc', lines=[])
         assert "" == template.default
+
+    def test_validate_with_no_name(self):
+        template = Template('abc')
+        assert False is template.validate()
+
+    def test_validate_with_no_default_image(self):
+        template = Template('abc', name="ABC")
+        assert False is template.validate()
