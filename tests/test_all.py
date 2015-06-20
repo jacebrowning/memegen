@@ -34,6 +34,11 @@ class TestTemplates:
         assert len(data) >= 3
         assert "http://localhost/templates/iw" == data['Insanity Wolf']
 
+    def test_get_redirects_with_text_is_provided(self, client):
+        response = client.get("/templates/iw/top/bottom")
+        assert response.status_code == 302
+        assert '<a href="iw/top/bottom">' in load(response, as_json=False)
+
 
 class TestLinks:
 

@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, request, url_for
+from flask import Blueprint, current_app as app, request, url_for, redirect
 from flask_api import exceptions
 
 
@@ -30,3 +30,10 @@ def create(key):
         raise exceptions.PermissionDenied("Feature not implemented.")
     else:  # pragma: no cover
         assert None
+
+
+@blueprint.route("<key>/<path:path>")
+def get_with_path(key, path):
+    """Redirect if any additional path is provided."""
+    url = "{}/{}".format(key, path)
+    return redirect(url)
