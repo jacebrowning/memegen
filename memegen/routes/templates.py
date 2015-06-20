@@ -22,6 +22,9 @@ def create(key):
     """Generate a meme from a template."""
     if request.method == 'GET':
         template = app.template_service.find(key)
+        if template.key != key:
+            return redirect(url_for(".create", key=template.key))
+
         path = template.default or "hello/world"
         url = url_for("links.get", key=key, path=path, _external=True)
         return dict(example=url)
@@ -35,5 +38,5 @@ def create(key):
 @blueprint.route("<key>/<path:path>")
 def get_with_path(key, path):
     """Redirect if any additional path is provided."""
-    url = "{}/{}".format(key, path)
-    return redirect(url)
+    template = app.template_service.find(key)
+    return redirect("/{}/{}".format(template.key, path))

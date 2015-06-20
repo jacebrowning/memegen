@@ -19,10 +19,19 @@ class TemplateService(Service):
 
     def find(self, key):
         """Find a template with a matching key."""
+
+        # Find an exact match
         template = self.template_store.read(key)
-        if not template:
-            raise self.exceptions.not_found
-        return template
+        if template:
+            return template
+
+        # Else, find an alias match
+        for template in self.all():
+            if key in template.aliases:
+                return template
+
+        # Else, no match
+        raise self.exceptions.not_found
 
     def validate(self):
         """Ensure all template are valid and conflict-free."""

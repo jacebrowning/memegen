@@ -34,10 +34,15 @@ class TestTemplates:
         assert len(data) >= 3
         assert "http://localhost/templates/iw" == data['Insanity Wolf']
 
-    def test_get_redirects_with_text_is_provided(self, client):
+    def test_get_redirects_when_text_is_provided(self, client):
         response = client.get("/templates/iw/top/bottom")
         assert response.status_code == 302
-        assert '<a href="iw/top/bottom">' in load(response, as_json=False)
+        assert '<a href="/iw/top/bottom">' in load(response, as_json=False)
+
+    def test_get_redirects_when_key_is_an_alias(self, client):
+        response = client.get("/templates/insanity-wolf")
+        assert response.status_code == 302
+        assert '<a href="/templates/iw">' in load(response, as_json=False)
 
 
 class TestLinks:
@@ -88,6 +93,16 @@ class TestLinks:
         assert response.status_code == 302
         assert '<a href="/live/_/do-it-live">' in load(response, as_json=False)
 
+    def test_get_redirects_when_alias(self, client):
+        response = client.get("/insanity-wolf")
+        assert response.status_code == 302
+        assert '<a href="/iw">' in load(response, as_json=False)
+
+    def test_get_redirects_when_alias_with_text(self, client):
+        response = client.get("/insanity-wolf/hello/world")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello/world">' in load(response, as_json=False)
+
 
 class TestImage:
 
@@ -121,3 +136,7 @@ class TestImage:
         assert response.status_code == 302
         assert '<a href="/live/_/do-it-live.jpg">' in load(response, as_json=False)
 
+    def test_get_redirects_when_alias(self, client):
+        response = client.get("/insanity-wolf/hello/world.jpg")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello/world.jpg">' in load(response, as_json=False)
