@@ -20,13 +20,15 @@ def pytest_configure(config):
     terminal.TerminalReporter = QuietReporter
 
 
-def load(response, as_json=True):
+def load(response, as_json=True, key=None):
     """Convert a response's binary data (JSON) to a dictionary."""
     text = response.data.decode('utf-8')
     if not as_json:
         return text
     if text:
         data = json.loads(text)
+        if key:
+            data = data[key]
     else:
         data = None
     logging.debug("response: %r", data)

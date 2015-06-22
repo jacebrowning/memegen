@@ -7,8 +7,14 @@ class TestLinks:
         response = client.get("/iw/hello/world")
         assert response.status_code == 200
         assert dict(
-            visible="http://localhost/iw/hello/world.jpg",
-            hidden="http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg",
+            direct=dict(
+                visible="http://localhost/iw/hello/world.jpg",
+                hidden="http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg",
+            ),
+            markdown=dict(
+                visible="![iw](http://localhost/iw/hello/world.jpg)",
+                hidden="![iw](http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg)",
+            ),
         ) == load(response)
 
     def test_get_with_top_only(self, client):
@@ -17,7 +23,7 @@ class TestLinks:
         assert dict(
             visible="http://localhost/iw/hello.jpg",
             hidden="http://localhost/_aXcJaGVsbG8J.jpg",
-        ) == load(response)
+        ) == load(response, key='direct')
 
     def test_get_with_bottom_only(self, client):
         response = client.get("/iw/_/hello")
@@ -25,7 +31,7 @@ class TestLinks:
         assert dict(
             visible="http://localhost/iw/_/hello.jpg",
             hidden="http://localhost/_aXcJXy9oZWxsbwkJ.jpg",
-        ) == load(response)
+        ) == load(response, key='direct')
 
     def test_get_redirects_to_dashes(self, client):
         response = client.get("/iw/HelloThere_World/How-areYOU")

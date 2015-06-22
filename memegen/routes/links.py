@@ -30,9 +30,15 @@ def get_with_text(key, path):
         return redirect(url_for(".get", key=key, path=text.path))
 
     data = OrderedDict()
-    data['visible'] = url_for('image.get', key=key, path=path, _external=True)
+    data['direct'] = OrderedDict()
+    visible_url = url_for('image.get', key=key, path=path, _external=True)
+    data['direct']['visible'] = visible_url
     code = app.link_service.encode(key, path)
-    data['hidden'] = url_for('image.get_encoded', _external=True, code=code)
+    hidden_url = url_for('image.get_encoded', code=code, _external=True)
+    data['direct']['hidden'] = hidden_url
+    data['markdown'] = OrderedDict()
+    data['markdown']['visible'] = "![{k}]({u})".format(k=key, u=visible_url)
+    data['markdown']['hidden'] = "![{k}]({u})".format(k=key, u=hidden_url)
     return data
 
 
