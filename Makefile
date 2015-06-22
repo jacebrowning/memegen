@@ -194,7 +194,7 @@ fix: depends-dev
 
 # Testing ######################################################################
 
-PYTEST_OPTS := --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+PYTEST_OPTS := -v --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
 
 .PHONY: test test-unit
 test: test-unit

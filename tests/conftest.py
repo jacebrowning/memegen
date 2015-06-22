@@ -7,6 +7,19 @@ from memegen.app import create_app
 from memegen.settings import get_config
 
 
+def pytest_configure(config):
+    terminal = config.pluginmanager.getplugin('terminal')
+
+    class QuietReporter(terminal.TerminalReporter):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.verbosity = 0
+            self.showlongtestinfo = False
+            self.showfspath = False
+
+    terminal.TerminalReporter = QuietReporter
+
+
 def load(response, as_json=True):
     """Convert a response's binary data (JSON) to a dictionary."""
     text = response.data.decode('utf-8')

@@ -25,12 +25,18 @@ def create(key):
         if template.key != key:
             return redirect(url_for(".create", key=template.key))
 
+        data = OrderedDict()
+        data['description'] = template.link
+        data['aliases'] = template.aliases
         path = template.default or "hello/world"
         url = url_for("links.get", key=key, path=path, _external=True)
-        return dict(example=url)
+        data['example'] = url
+        return data
+
     elif request.method == 'POST':
         # TODO: https://github.com/jacebrowning/memegen/issues/12
         raise exceptions.PermissionDenied("Feature not implemented.")
+
     else:  # pragma: no cover
         assert None
 
