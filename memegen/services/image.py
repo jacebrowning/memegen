@@ -18,6 +18,6 @@ class ImageService(Service):
 
     def create_image(self, template, text):
         image = Image(template, text)
-        if not self.image_store.read(image.path):
+        if not self.image_store.exists(image):
             self.image_store.create(image)
         return image

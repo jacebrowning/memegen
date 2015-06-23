@@ -1,9 +1,15 @@
-from unittest.mock import Mock
+from unittest.mock import patch, Mock
 
 import pytest
 
 
 class TestImageService:
+
+    mock_template = Mock()
+    mock_text = Mock()
+    mock_image = Mock()
+    mock_image.template = mock_template
+    mock_image.text = mock_text
 
     def test_find_template(self, image_service):
         mock_template = Mock()
@@ -22,15 +28,23 @@ class TestImageService:
             image_service.find_template('unknown_key')
 
     def test_create_image(self, image_service):
-        mock_template = Mock()
-        mock_text = Mock()
-        mock_image = Mock()
-        mock_image.template = mock_template
-        mock_image.text = mock_text
+        image = image_service.create_image(self.mock_template, self.mock_text)
 
-        image = image_service.create_image(mock_template, mock_text)
+        assert image_service.image_store.create.called_once_with(
+            self.mock_image)
 
-        assert image_service.image_store.create.called_once_with(mock_image)
+        assert image.template is self.mock_image.template
+        assert image.text is self.mock_image.text
 
-        assert image.template is mock_image.template
-        assert image.text is mock_image.text
+    def test_create_image_that_already_exists(self, image_service):
+        with patch('os.path.isfile', Mock(return_value=True)):
+            image = image_service.create_image(
+                self.mock_template,
+                self.mock_text)
+
+        assert image_service.image_store.existing.called_once_with(
+            self.mock_image)
+        assert not image_service.image_store.create.called
+
+        assert image.template is self.mock_image.template
+        assert image.text is self.mock_image.text

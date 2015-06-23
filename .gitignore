@@ -11,9 +11,6 @@ Icon*
 .cache
 env
 
-# Temporary deploy files
-temp.*
-
 # Generated documentation
 docs/gen
 apidocs

@@ -1,10 +1,15 @@
+import os
+
+
 class ImageStore:
 
-    def read(self, path):
-        # TODO: read images from 'data'
-        print(path)
-        return None
+    def __init__(self, root):
+        self.root = root
+
+    def exists(self, image):
+        image.root = self.root
+        return os.path.isfile(image.path)
 
     def create(self, image):
-        image.from_template(image.template, image.text)
-        image.path = "../temp.jpg"
+        image.root = self.root
+        image.generate()

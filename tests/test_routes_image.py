@@ -1,12 +1,24 @@
+import os
+
 from .conftest import load
+
+TESTS = os.path.dirname(__file__)
+ROOT = os.path.dirname(TESTS)
 
 
 class TestImage:
 
+
     def test_get_visible_jpg(self, client):
+        path = os.path.join(ROOT, 'data', 'images', 'iw', 'hello', 'world.jpg')
+        if os.path.exists(path):
+            os.remove(path)
+
         response = client.get("/iw/hello/world.jpg")
         assert response.status_code == 200
         assert response.mimetype == 'image/jpeg'
+
+        assert os.path.isfile(path)
 
     def test_get_visible_jpg_1_line(self, client):
         response = client.get("/iw/hello.jpg")
