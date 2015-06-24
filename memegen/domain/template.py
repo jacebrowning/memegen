@@ -46,6 +46,17 @@ class Template:
         text = Text('/'.join(self.lines))
         return text.path
 
+    @property
+    def aliases_stripped(self):
+        return [self.strip(alias) for alias in self.aliases]
+
+    @staticmethod
+    def strip(text, keep_special=False):
+        text = text.lower().strip()
+        if not keep_special:
+            text = text.replace('-', '').replace('_', '')
+        return text
+
     def validate(self):
         if not self.name:
             log.error("template '%s' has no name", self)

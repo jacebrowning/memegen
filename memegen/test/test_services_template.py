@@ -16,6 +16,15 @@ class TestTemplateService:
         with pytest.raises(KeyError):
             template_service.find('unknown_key')
 
+    def test_find_template_by_alias(self, template_service):
+        template = Template('hello', aliases=['hello-world', 'helloworld'])
+        template_service.template_store.read.return_value = None
+        template_service.template_store.filter.return_value = [template]
+
+        template = template_service.find('HELLO_WORLD')
+
+        assert 'hello' == template.key
+
     def test_validate_with_good_templates(self, template_service):
         templates = [Template(key='abc',
                               name="The ABC Meme"),

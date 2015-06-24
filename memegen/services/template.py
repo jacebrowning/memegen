@@ -1,6 +1,7 @@
 import logging
 
 from . import Service
+from ..domain import Template
 
 
 log = logging.getLogger(__name__)
@@ -19,6 +20,7 @@ class TemplateService(Service):
 
     def find(self, key):
         """Find a template with a matching key."""
+        key = Template.strip(key)
 
         # Find an exact match
         template = self.template_store.read(key)
@@ -27,7 +29,7 @@ class TemplateService(Service):
 
         # Else, find an alias match
         for template in self.all():
-            if key in template.aliases:
+            if key in template.aliases_stripped:
                 return template
 
         # Else, no match

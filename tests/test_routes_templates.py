@@ -8,7 +8,7 @@ class TestTemplates:
         assert response.status_code == 200
         assert dict(
             description="http://knowyourmeme.com/memes/insanity-wolf",
-            aliases=['insanity-wolf', 'insanity'],
+            aliases=['insanity', 'insanity-wolf'],
             example="http://localhost/iw/hello/world",
         ) == load(response)
 
