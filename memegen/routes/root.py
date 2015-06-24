@@ -15,6 +15,7 @@ def get(**kwargs):
     """Generate memes from templates."""
     data = OrderedDict()
     data['templates'] = url_for("templates.get", _external=True)
+    data['about'] = GITHUB_BASE
     data['contributing'] = GITHUB_BASE + "CONTRIBUTING.md"
     return data
 
