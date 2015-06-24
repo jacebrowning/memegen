@@ -7,7 +7,7 @@ from ..domain import Image
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
 
-GITHUB_BASE = "https://github.com/jacebrowning/memegen/blob/master/"
+GITHUB_BASE = "http://github.com/jacebrowning/memegen/blob/master/"
 
 
 @blueprint.route("")

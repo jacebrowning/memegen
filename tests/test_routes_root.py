@@ -8,4 +8,6 @@ class TestRoot:
         assert response.status_code == 200
         assert dict(
             templates="http://localhost/templates/",
+            contributing=("http://github.com/jacebrowning/memegen/blob/master/"
+                          "CONTRIBUTING.md")
         ) == load(response)
