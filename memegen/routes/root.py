@@ -7,12 +7,15 @@ from ..domain import Image
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
 
+GITHUB_BASE = "https://github.com/jacebrowning/memegen/blob/master/"
+
 
 @blueprint.route("")
 def get(**kwargs):
     """Generate memes from templates."""
     data = OrderedDict()
     data['templates'] = url_for("templates.get", _external=True)
+    data['contributing'] = GITHUB_BASE + "CONTRIBUTING.md"
     return data
 
 
