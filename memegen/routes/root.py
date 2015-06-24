@@ -7,7 +7,7 @@ from ..domain import Image
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
 
-GITHUB_BASE = "http://github.com/jacebrowning/memegen/blob/master/"
+GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
 
 
 @blueprint.route("")
@@ -16,7 +16,7 @@ def get(**kwargs):
     data = OrderedDict()
     data['templates'] = url_for("templates.get", _external=True)
     data['source'] = GITHUB_BASE
-    data['contributing'] = GITHUB_BASE + "CONTRIBUTING.md"
+    data['contributing'] = GITHUB_BASE + "blob/master/CONTRIBUTING.md"
     return data
 
 
