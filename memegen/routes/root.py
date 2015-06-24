@@ -29,4 +29,3 @@ def get_javascript():
 def handle_checks():
     """ Return CHECK_OK for zero-downtime deployment - see https://labnotes.org/zero-downtime-deploy-with-dokku/ """
     return "CHECK_OK"
-
