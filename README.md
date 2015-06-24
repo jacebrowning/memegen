@@ -19,4 +19,8 @@ But, the site can also produce masked URLs to conceal the joke:
 
 http://memegen.link/_YnV6egltZW1lcy9tZW1lcy1ldmVyeXdoZXJl.jpg
 
+For any MemeGen image, lose the extension to see a list of all format options:
+
+http://memegen.link/buzz/memes/memes-everywhere
+
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
