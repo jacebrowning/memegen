@@ -34,11 +34,11 @@ def get_with_text(key, path):
     visible_url = url_for('image.get', key=key, path=path, _external=True)
     data['direct']['visible'] = visible_url
     code = app.link_service.encode(key, path)
-    hidden_url = url_for('image.get_encoded', code=code, _external=True)
-    data['direct']['hidden'] = hidden_url
+    masked_url = url_for('image.get_encoded', code=code, _external=True)
+    data['direct']['masked'] = masked_url
     data['markdown'] = OrderedDict()
     data['markdown']['visible'] = "![{k}]({u})".format(k=key, u=visible_url)
-    data['markdown']['hidden'] = "![{k}]({u})".format(k=key, u=hidden_url)
+    data['markdown']['masked'] = "![{k}]({u})".format(k=key, u=masked_url)
     return data
 
 

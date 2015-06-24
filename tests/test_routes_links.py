@@ -9,11 +9,11 @@ class TestLinks:
         assert dict(
             direct=dict(
                 visible="http://localhost/iw/hello/world.jpg",
-                hidden="http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg",
+                masked="http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg",
             ),
             markdown=dict(
                 visible="![iw](http://localhost/iw/hello/world.jpg)",
-                hidden="![iw](http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg)",
+                masked="![iw](http://localhost/_aXcJaGVsbG8vd29ybGQJ.jpg)",
             ),
         ) == load(response)
 
@@ -22,7 +22,7 @@ class TestLinks:
         assert response.status_code == 200
         assert dict(
             visible="http://localhost/iw/hello.jpg",
-            hidden="http://localhost/_aXcJaGVsbG8J.jpg",
+            masked="http://localhost/_aXcJaGVsbG8J.jpg",
         ) == load(response, key='direct')
 
     def test_get_with_bottom_only(self, client):
@@ -30,7 +30,7 @@ class TestLinks:
         assert response.status_code == 200
         assert dict(
             visible="http://localhost/iw/_/hello.jpg",
-            hidden="http://localhost/_aXcJXy9oZWxsbwkJ.jpg",
+            masked="http://localhost/_aXcJXy9oZWxsbwkJ.jpg",
         ) == load(response, key='direct')
 
     def test_get_redirects_to_dashes(self, client):
@@ -39,12 +39,12 @@ class TestLinks:
         assert '<a href="/iw/hello-there-world/how-are-you">' in \
             load(response, as_json=False)
 
-    def test_get_redirects_when_hidden(self, client):
+    def test_get_redirects_when_masked(self, client):
         response = client.get("/_aXcJaGVsbG8vd29ybGQJ")
         assert response.status_code == 302
         assert '<a href="/iw/hello/world">' in load(response, as_json=False)
 
-    def test_get_redirects_when_hidden_with_1_line(self, client):
+    def test_get_redirects_when_masked_with_1_line(self, client):
         response = client.get("/_aXcJaGVsbG8J")
         assert response.status_code == 302
         assert '<a href="/iw/hello">' in load(response, as_json=False)
