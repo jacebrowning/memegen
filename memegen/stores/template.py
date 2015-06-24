@@ -28,8 +28,7 @@ class TemplateModel:
         template = Template(model.key)
         template.name = model.name
         template.lines = model.default
-        template.aliases = sorted(Template.strip(alias, keep_special=True) for
-                                  alias in model.aliases)
+        template.aliases = model.aliases
         template.link = model.link
         template.root = model.root
         return template

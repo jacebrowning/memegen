@@ -47,12 +47,16 @@ class Template:
         return text.path
 
     @property
+    def aliases_lowercase(self):
+        return [self.strip(a, keep_special=True) for a in self.aliases]
+
+    @property
     def aliases_stripped(self):
-        return [self.strip(alias) for alias in self.aliases]
+        return [self.strip(a, keep_special=False) for a in self.aliases]
 
     @staticmethod
     def strip(text, keep_special=False):
-        text = text.lower().strip()
+        text = text.lower().strip().replace(' ', '-')
         if not keep_special:
             text = text.replace('-', '').replace('_', '')
         return text

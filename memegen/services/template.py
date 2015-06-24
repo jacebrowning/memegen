@@ -45,6 +45,10 @@ class TemplateService(Service):
                 return False
             for alias in template.aliases:
                 log.info("checking alias '%s' -> '%s' ...", alias, template.key)
+                if alias not in template.aliases_lowercase:
+                    msg = "alias '%s' should be lowercase characters or dashes"
+                    log.error(msg, alias)
+                    return False
                 try:
                     existing = keys[alias]
                 except KeyError:

@@ -46,10 +46,19 @@ class TestTemplateService:
     def test_validate_with_duplicate_aliases(self, template_service):
         templates = [Template(key='abc',
                               name="The ABC Meme",
-                              aliases=['123', '456']),
+                              aliases=['123', 'the-meme']),
                      Template(key='def',
                               name="The DEF Meme",
-                              aliases=['456'])]
+                              aliases=['the-meme'])]
+        template_service.template_store.filter.return_value = templates
+
+        with patch('os.path.isfile', Mock(return_value=True)):
+            assert False is template_service.validate()
+
+    def test_validate_with_misformatted_aliases(self, template_service):
+        templates = [Template(key='abc',
+                              name="The ABC Meme",
+                              aliases=['abc-meme', 'Bad Format'])]
         template_service.template_store.filter.return_value = templates
 
         with patch('os.path.isfile', Mock(return_value=True)):

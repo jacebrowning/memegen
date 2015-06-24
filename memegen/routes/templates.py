@@ -27,7 +27,7 @@ def create(key):
 
         data = OrderedDict()
         data['description'] = template.link
-        data['aliases'] = template.aliases
+        data['aliases'] = sorted(template.aliases)
         path = template.default or "hello/world"
         url = url_for("links.get", key=key, path=path, _external=True)
         data['example'] = url
