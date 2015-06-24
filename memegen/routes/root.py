@@ -23,3 +23,10 @@ def get(**kwargs):
 @blueprint.route("flask-api/static/js/default.js")
 def get_javascript():
     return send_file("routes/default.js", mimetype='application/javascript')
+
+
+@blueprint.route("CHECK")
+def handle_checks()
+    """ Return CHECK_OK for zero-downtime deployment - see https://labnotes.org/zero-downtime-deploy-with-dokku/ """
+    return "CHECK_OK"
+
