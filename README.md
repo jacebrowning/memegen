@@ -8,7 +8,7 @@ Generates meme images based solely on requested URLs.
 
 ## Generating Images
 
-Visit the live site at [http://memegen.link](http://memegen.link]) to browse the API and view examples.
+Visit the live site at [http://memegen.link](http://memegen.link) to browse the API and view examples.
 
 MemeGen URLs contain all the information necessary to generate the image. For example, http://memegen.link/buzz/memes/memes-everywhere.jpg produces:
 
