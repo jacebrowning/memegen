@@ -22,6 +22,20 @@ $ make env
 
 In the [`data/templates`](data/templates) directory, use the example to create your own template directory. The name of the directory will be the primary alias for that meme.
 
+### Serving
+
+Run the server locally:
+
+```
+$ make run
+```
+
+or also launch it in your browser:
+
+```
+$ make launch
+```
+
 ### Validation
 
 Run the checks to ensure your new template does not conflict with others:
