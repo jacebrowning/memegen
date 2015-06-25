@@ -7,6 +7,7 @@ class TestTemplates:
         response = client.get("/templates/iw")
         assert response.status_code == 200
         assert dict(
+            name="Insanity Wolf",
             description="http://knowyourmeme.com/memes/insanity-wolf",
             aliases=['insanity', 'insanity-wolf'],
             example="http://localhost/iw/hello/world",
@@ -16,9 +17,10 @@ class TestTemplates:
         response = client.get("/templates/live")
         assert response.status_code == 200
         assert dict(
+            name="Do It Live!",
             description="http://knowyourmeme.com/memes/bill-oreilly-rant",
             aliases=['do-it-live'],
-            example="http://localhost/live/_/do-it-live",
+            example="http://localhost/live/_/do-it-live%21",
         ) == load(response)
 
     def test_get_all(self, client):

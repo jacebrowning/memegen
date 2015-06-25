@@ -26,6 +26,7 @@ def create(key):
             return redirect(url_for(".create", key=template.key))
 
         data = OrderedDict()
+        data['name'] = template.name
         data['description'] = template.link
         data['aliases'] = sorted(template.aliases)
         path = template.default or "hello/world"
