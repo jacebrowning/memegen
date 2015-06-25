@@ -9,7 +9,7 @@ class TestTemplates:
         assert dict(
             name="Insanity Wolf",
             description="http://knowyourmeme.com/memes/insanity-wolf",
-            aliases=['insanity', 'insanity-wolf'],
+            aliases=['insanity', 'insanity-wolf', 'iw'],
             example="http://localhost/iw/hello/world",
         ) == load(response)
 
@@ -19,7 +19,7 @@ class TestTemplates:
         assert dict(
             name="Do It Live!",
             description="http://knowyourmeme.com/memes/bill-oreilly-rant",
-            aliases=["bill-o'reilly-rant", 'do-it-live', "o'reilly",
+            aliases=["bill-o'reilly-rant", 'do-it-live', 'live', "o'reilly",
                      "o'reilly-rant"],
             example="http://localhost/live/_/do-it-live%21",
         ) == load(response)
