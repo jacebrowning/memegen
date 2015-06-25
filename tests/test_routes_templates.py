@@ -19,7 +19,8 @@ class TestTemplates:
         assert dict(
             name="Do It Live!",
             description="http://knowyourmeme.com/memes/bill-oreilly-rant",
-            aliases=['do-it-live'],
+            aliases=["bill-o'reilly-rant", 'do-it-live', "o'reilly",
+                     "o'reilly-rant"],
             example="http://localhost/live/_/do-it-live%21",
         ) == load(response)
 
