@@ -27,3 +27,7 @@ http://memegen.link/buzz/memes/memes-everywhere
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
 
 Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/memegenerator) for the inspiration!
+
+## Slack Integration
+
+Check out [nicolewhite/slackbot-meme](https://github.com/nicolewhite/slackbot-meme)!
