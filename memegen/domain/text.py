@@ -51,16 +51,27 @@ class Text:
 
     @staticmethod
     def _format_line(part):
+        part = list(part)
         chars = []
 
         previous_upper = True
-        for char in part:
+        for i, char in enumerate(part):
             if char in ('_', '-'):
                 chars.append(' ')
             else:
                 if char.isupper():
                     if not previous_upper and chars[-1] != ' ':
                         chars.append(' ')
+                    else:
+                        letters_to_check = part[max(i - 1, 0):i + 2]
+
+                        if len(letters_to_check) == 3:
+                            if (
+                                letters_to_check[0].isupper() and
+                                letters_to_check[1].isupper() and
+                                letters_to_check[2].islower()
+                            ):
+                                chars.append(' ')
 
                 chars.append(char.upper())
                 previous_upper = char.isupper()
