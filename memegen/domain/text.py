@@ -57,11 +57,11 @@ class Text:
         for char in part:
             if char in ('_', '-'):
                 chars.append(' ')
-                previous_upper = True
             else:
                 if char.isupper():
                     if not previous_upper and chars[-1] != ' ':
                         chars.append(' ')
+
                 chars.append(char.upper())
                 previous_upper = char.isupper()
 
