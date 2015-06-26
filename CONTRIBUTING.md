@@ -4,6 +4,7 @@
 
 ### Requirements
 
+* Python 3.4+
 * Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
@@ -54,6 +55,7 @@ After checks pass, create a pull request to be merged after review.
 
 ### Requirements
 
+* Python 3.4+
 * Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
