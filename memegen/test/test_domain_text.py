@@ -42,7 +42,7 @@ class TestText:
         text = Text("helloWorld")
         assert ["HELLO WORLD"] == text.lines
 
-    def test_lines_kepp_spaces(self):
+    def test_lines_keep_spaces(self):
         text = Text("hello world")
         assert ["HELLO WORLD"] == text.lines
 
