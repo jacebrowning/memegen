@@ -42,7 +42,7 @@ class TestText:
         text = Text("helloWorld")
         assert ["HELLO WORLD"] == text.lines
 
-    def test_lines_kepp_spaces(self):
+    def test_lines_keep_spaces(self):
         text = Text("hello world")
         assert ["HELLO WORLD"] == text.lines
 
@@ -57,6 +57,10 @@ class TestText:
     def test_lines_strip_spaces(self):
         text = Text("  hello  World /    ")
         assert ["HELLO  WORLD"] == text.lines
+
+    def test_duplicate_capitals_treated_as_spaces(self):
+        text = Text("IWantTHISPattern_to-Work")
+        assert ["I WANT THIS PATTERN TO WORK"] == text.lines
 
     def test_path(self):
         text = Text("hello/World")
@@ -81,3 +85,7 @@ class TestText:
     def test_path_with_a_single_underscore(self):
         text = Text(" _     ")
         assert "_" == text.path
+
+    def test_path_with_duplicate_capitals(self):
+        text = Text("IWantTHISPattern_to-Work")
+        assert "i-want-this-pattern-to-work" == text.path
