@@ -30,4 +30,7 @@ Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/
 
 ## Slack Integration
 
-Check out [nicolewhite/slackbot-meme](https://github.com/nicolewhite/slackbot-meme)!
+Check out one of these options:
+
+* [nicolewhite/slackbot-meme](https://github.com/nicolewhite/slackbot-meme)
+* [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)
