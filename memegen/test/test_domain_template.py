@@ -40,3 +40,7 @@ class TestTemplate:
     def test_validate_with_no_default_image(self):
         template = Template('abc', name="ABC")
         assert False is template.validate()
+
+    def test_validate_with_nonalphanumberic_name(self):
+        template = Template('abc', name="'ABC' Meme")
+        assert False is template.validate()

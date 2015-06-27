@@ -66,6 +66,10 @@ class Template:
         if not self.name:
             log.error("template '%s' has no name", self)
             return False
+        if not self.name[0].isalnum():
+            msg = "template '%s' name %r should start with an alphanumeric"
+            log.error(msg, self, self.name)
+            return False
         if not self.path:
             log.error("template '%s' has no default image", self)
             return False
