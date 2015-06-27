@@ -1,6 +1,6 @@
 # MemeGen
 
-Generates meme images based solely on requested URLs.
+An API to generate meme images based solely on requested URLs.
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/memegen/master.svg)](https://travis-ci.org/jacebrowning/memegen)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/master.svg)](https://coveralls.io/r/jacebrowning/memegen)
