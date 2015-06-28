@@ -1,3 +1,5 @@
+# pylint: disable=R,C
+
 from memegen import app
 from memegen import settings
 

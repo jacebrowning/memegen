@@ -5,10 +5,8 @@ SOURCES := Makefile $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # Python settings
-ifndef TRAVIS
-	PYTHON_MAJOR := 3
-	PYTHON_MINOR := 4
-endif
+PYTHON_MAJOR ?= 3
+PYTHON_MINOR ?= 4
 
 # Test settings
 UNIT_TEST_COVERAGE := 65
@@ -172,7 +170,7 @@ read: doc
 # Static Analysis ##############################################################
 
 .PHONY: check
-check: pep8 # pep257 pylint
+check: pep8 pep257 pylint
 
 .PHONY: pep8
 pep8: depends-ci
@@ -182,11 +180,11 @@ pep8: depends-ci
 pep257: depends-ci
 # D102: docstring missing (checked by PyLint)
 # D202: No blank lines allowed *after* function docstring
-	$(PEP257) $(PACKAGE) --ignore=D102,D202
+	$(PEP257) $(PACKAGE) --ignore=D100,D101,D102,D103,D202,D203
 
 .PHONY: pylint
 pylint: depends-ci
-	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc
+	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc --disable=C0111,R0913,R0914
 
 .PHONY: fix
 fix: depends-dev

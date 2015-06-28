@@ -66,11 +66,9 @@ class Text:
                         letters_to_check = part[max(i - 1, 0):i + 2]
 
                         if len(letters_to_check) == 3:
-                            if (
-                                letters_to_check[0].isupper() and
-                                letters_to_check[1].isupper() and
-                                letters_to_check[2].islower()
-                            ):
+                            if all((letters_to_check[0].isupper(),
+                                    letters_to_check[1].isupper(),
+                                    letters_to_check[2].islower())):
                                 chars.append(' ')
 
                 chars.append(char.upper())

@@ -1,3 +1,5 @@
+# pylint: disable=R,C
+
 import pytest
 
 

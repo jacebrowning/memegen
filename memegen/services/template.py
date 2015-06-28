@@ -1,6 +1,6 @@
 import logging
 
-from . import Service
+from ._base import Service
 from ..domain import Template
 
 

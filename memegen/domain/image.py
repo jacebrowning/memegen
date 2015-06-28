@@ -8,8 +8,9 @@ log = logging.getLogger(__name__)
 
 # TODO: move to a fonts store
 FONT = os.path.normpath(os.path.join(
-    os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'fonts', 'Impact.ttf')
-)
+    os.path.dirname(__file__), os.pardir, os.pardir,
+    'data', 'fonts', 'Impact.ttf'
+))
 
 
 class Image:
@@ -18,7 +19,7 @@ class Image:
     def __init__(self, template, text, root=None):
         self.template = template
         self.text = text
-        self.root = None
+        self.root = root
 
     @property
     def path(self):
@@ -70,14 +71,14 @@ def make_meme(top, bottom, background, path):
     outline_range = int(font_size / 15)
     for x in range(-outline_range, outline_range + 1):
         for y in range(-outline_range, outline_range + 1):
-            draw.text(
-                (top_text_position[0] + x, top_text_position[1] + y), top, (0, 0, 0), font=font)
-            draw.text((bottom_text_position[
-                      0] + x, bottom_text_position[1] + y), bottom, (0, 0, 0), font=font)
+            pos = (top_text_position[0] + x, top_text_position[1] + y)
+            draw.text(pos, top, (0, 0, 0), font=font)
+            pos = (bottom_text_position[0] + x, bottom_text_position[1] + y)
+            draw.text(pos, bottom, (0, 0, 0), font=font)
 
     # Draw inner white text
     draw.text(top_text_position, top, (255, 255, 255), font=font)
     draw.text(bottom_text_position, bottom, (255, 255, 255), font=font)
 
-    log.info("generated: {}".format(path))
+    log.info("generated: %s", path)
     return img.save(path)

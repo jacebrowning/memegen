@@ -1,8 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, url_for, redirect, send_file
-
-from ..domain import Image
+from flask import Blueprint, url_for, send_file
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
@@ -11,7 +9,7 @@ GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
 
 
 @blueprint.route("")
-def get(**kwargs):
+def get():
     """Generate memes from templates."""
     data = OrderedDict()
     data['templates'] = url_for("templates.get", _external=True)
@@ -27,5 +25,8 @@ def get_javascript():
 
 @blueprint.route("CHECK")
 def handle_checks():
-    """ Return CHECK_OK for zero-downtime deployment - see https://labnotes.org/zero-downtime-deploy-with-dokku/ """
+    """Return CHECK_OK for zero-downtime deployment.
+
+    See: https://labnotes.org/zero-downtime-deploy-with-dokku
+    """
     return "CHECK_OK"

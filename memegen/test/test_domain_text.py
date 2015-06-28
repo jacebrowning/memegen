@@ -1,3 +1,5 @@
+# pylint: disable=R,C
+
 from memegen.domain import Text
 
 

@@ -5,7 +5,8 @@
 # W0511: TODO in comments
 # RO903: Too few public methods
 # R0904: Too many public methods
-disable=I0011,W0142,W0511,R0903,R0904
+# C0103: Invalid variable name
+disable=I0011,W0142,W0511,R0903,R0904,C0103
 
 [REPORTS]
 

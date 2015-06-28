@@ -1,3 +1,5 @@
+# pylint: disable=R,C
+
 from .conftest import load
 
 

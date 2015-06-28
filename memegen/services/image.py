@@ -1,6 +1,6 @@
 from ..domain import Image
 
-from . import Service
+from ._base import Service
 
 
 class ImageService(Service):

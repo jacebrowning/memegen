@@ -1,6 +1,6 @@
 import base64
 
-from . import Service
+from ._base import Service
 
 
 class LinkService(Service):
@@ -9,7 +9,8 @@ class LinkService(Service):
         super().__init__(**kwargs)
         self.template_store = template_store
 
-    def encode(self, key, path):
+    @staticmethod
+    def encode(key, path):
         slug = '\t'.join((key, path))
         while len(slug) % 3:
             slug += '\t'
