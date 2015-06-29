@@ -10,6 +10,7 @@ class TestRoot:
         assert response.status_code == 200
         assert dict(
             templates="http://localhost/templates/",
+            overview="http://localhost/overview",
             source=GITHUB_BASE,
             contributing=GITHUB_BASE + "blob/master/CONTRIBUTING.md",
         ) == load(response)
