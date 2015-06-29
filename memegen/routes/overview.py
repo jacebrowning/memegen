@@ -1,7 +1,6 @@
 from flask import Blueprint, current_app as app, url_for, render_template
-# http://stackoverflow.com/questions/16061514/pylint-pylint-unable-to-import-flask-ext-wtf
-from flask.ext.api.decorators import set_renderers  # pylint: disable=E0611,F0401
-from flask.ext.api.renderers import HTMLRenderer  # pylint: disable=E0611,F0401
+from flask_api.decorators import set_renderers
+from flask_api.renderers import HTMLRenderer
 
 
 blueprint = Blueprint('overview', __name__, url_prefix="/overview")
