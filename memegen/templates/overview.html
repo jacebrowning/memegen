@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">
+  div {
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    margin: 1em;
+  }
+  a {
+    display: block;
+  }
+  </style>
+</head>
+<body>
+  {% for url in urls %}
+  <div>
+    <img src="{{ url }}"/>
+    <a href="{{ url }}">{{ url }}</a>
+  </div>
+  {% endfor %}
+</body>
+</html>
