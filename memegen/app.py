@@ -48,3 +48,4 @@ def register_blueprints(app):
     app.register_blueprint(routes.templates.blueprint)
     app.register_blueprint(routes.links.blueprint)
     app.register_blueprint(routes.image.blueprint)
+    app.register_blueprint(routes.overview.blueprint)
