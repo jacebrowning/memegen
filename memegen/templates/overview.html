@@ -14,10 +14,10 @@
   </style>
 </head>
 <body>
-  {% for url in urls %}
+  {% for img in imgs %}
   <div>
-    <img src="{{ url }}"/>
-    <a href="{{ url }}">{{ url }}</a>
+    <a href="{{ img.url }}"><img src="{{ img.url }}"/></a>
+    <a href="{{ img.link }}">API</a>
   </div>
   {% endfor %}
 </body>
