@@ -12,7 +12,7 @@ def _gen():
         url = url_for("image.get", key=template.key, path=path,
                       _external=True)
         link = url_for("links.get", key=template.key, path=path,
-                      _external=True)
+                       _external=True)
         yield {
             'url': url,
             'link': link
