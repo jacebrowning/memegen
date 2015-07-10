@@ -1,6 +1,8 @@
 import os
 import logging
 
+import requests
+
 from .text import Text
 
 
@@ -73,4 +75,9 @@ class Template:
         if not self.path:
             log.error("template '%s' has no default image", self)
             return False
+        if self.link:
+            log.info("checking link %s ...", self.link)
+            response = requests.get(self.link)
+            if response.status_code >= 400:
+                return False
         return True

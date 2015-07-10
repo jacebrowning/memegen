@@ -26,7 +26,4 @@ manager.add_command('server', Server(host='0.0.0.0'))
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO,
-                        format="%(levelname)s: %(message)s")
-    logging.getLogger('yorm').setLevel(logging.WARNING)
     manager.run()

@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask_api import FlaskAPI, exceptions as api_exceptions
 
@@ -11,10 +12,19 @@ def create_app(config):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
 
+    configure_logging()
+
     register_services(app)
     register_blueprints(app)
 
     return app
+
+
+def configure_logging():
+    logging.basicConfig(level=logging.INFO,
+                        format="%(levelname)s: %(message)s")
+    logging.getLogger('yorm').setLevel(logging.WARNING)
+    logging.getLogger('requests').setLevel(logging.WARNING)
 
 
 def register_services(app):
