@@ -2,6 +2,7 @@ Flask==0.10.1
 Flask-API==0.6.3
 Pillow==2.8.2
 YORM==0.4.1
+requests==2.7.0
 
 Flask-Script==2.0.5
 gunicorn==19.3.0
