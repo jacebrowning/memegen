@@ -65,6 +65,8 @@ class Template:
         return text
 
     def validate(self):
+        if not self.lines:
+            log.warning("template '%s' has no default lines of text")
         if not self.name:
             log.error("template '%s' has no name", self)
             return False
@@ -79,6 +81,7 @@ class Template:
             log.info("checking link %s ...", self.link)
             response = requests.get(self.link, timeout=5)
             if response.status_code >= 400:
-                logging.error("status code = %s", response.status_code)
+                msg = "template '%s' link is invalid (%s)"
+                log.error(msg, self, response.status_code)
                 return False
         return True
