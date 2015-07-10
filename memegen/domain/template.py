@@ -80,7 +80,7 @@ class Template:
         if self.link:
             log.info("checking link %s ...", self.link)
             response = requests.get(self.link, timeout=5)
-            if response.status_code >= 400 and != 429:
+            if response.status_code >= 400 and response.status_code != 429:
                 msg = "template '%s' link is invalid (%s)"
                 log.error(msg, self, response.status_code)
                 return False
