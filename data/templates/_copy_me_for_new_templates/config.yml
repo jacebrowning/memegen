@@ -1,8 +1,8 @@
-name: <Name of Meme as a Title>
+name: # Name of Meme as a Title
 default:
-- <OPTIONAL DEFAULT>
-- <LINES OF TEXT>
-link: http://knowyourmeme.com/memes/<link-for-future-reference>
+- # OPTIONAL DEFAULT
+- # LINES OF TEXT
+link: # http://knowyourmeme.com/memes/<link-for-future-reference>
 aliases:
-- <other-short-name>
-- <another>
+- # other-short-name
+- # another

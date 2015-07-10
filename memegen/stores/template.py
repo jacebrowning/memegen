@@ -34,14 +34,23 @@ class TemplateModel:
         return template
 
 
+def load_before(func):
+    def wrapped(self, *args, **kwargs):
+        # pylint: disable=W0212
+        if self._items is None:
+            self._load()
+        return func(self, *args, **kwargs)
+    return wrapped
+
+
 class TemplateStore:
 
     def __init__(self, root):
         self.root = root
-        self._items = {}
+        self._items = None
 
+    @load_before
     def read(self, key):
-        self._load()  # TODO: only do this if needed
         try:
             model = self._items[key]
         except KeyError:
@@ -50,8 +59,8 @@ class TemplateStore:
             template = TemplateModel.pm_to_dm(model)
             return template
 
+    @load_before
     def filter(self, **_):
-        self._load()  # TODO: only do this if needed
         templates = []
         for model in self._items.values():
             template = TemplateModel.pm_to_dm(model)
