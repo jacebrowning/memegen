@@ -77,7 +77,7 @@ class Template:
             return False
         if self.link:
             log.info("checking link %s ...", self.link)
-            response = requests.get(self.link)
+            response = requests.get(self.link, timeout=5)
             if response.status_code >= 400:
                 return False
         return True

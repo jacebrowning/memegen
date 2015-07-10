@@ -1,8 +1,15 @@
-# pylint: disable=R,C
+# pylint: disable=R,C,W0621
 
 from unittest.mock import patch, Mock
 
+import pytest
+
 from memegen.domain import Template
+
+
+@pytest.fixture
+def template():
+    return Template('abc', lines=['foo', 'bar'])
 
 
 class TestTemplate:
@@ -27,8 +34,7 @@ class TestTemplate:
             path = template.path
         assert path is None
 
-    def test_default(self):
-        template = Template('abc', lines=['foo', 'bar'])
+    def test_default(self, template):
         assert "foo/bar" == template.default
 
     def test_default_with_no_lines(self):
@@ -46,3 +52,10 @@ class TestTemplate:
     def test_validate_with_nonalphanumberic_name(self):
         template = Template('abc', name="'ABC' Meme")
         assert False is template.validate()
+
+    def test_validate_with_bad_link(self, template):
+        mock_response = Mock()
+        mock_response.status_code = 404
+        with patch('requests.get', Mock(return_value=mock_response)):
+            template.link = "example.com/fake"
+            assert False is template.validate()

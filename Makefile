@@ -9,7 +9,7 @@ PYTHON_MAJOR ?= 3
 PYTHON_MINOR ?= 4
 
 # Test settings
-UNIT_TEST_COVERAGE := 65
+UNIT_TEST_COVERAGE := 67
 INTEGRATION_TEST_COVERAGE := 75
 COMBINED_TEST_COVERAGE := 95
 
@@ -84,7 +84,7 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: validate check test tests
+ci: check test tests validate
 
 .PHONY: run
 run: env
