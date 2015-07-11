@@ -5,6 +5,9 @@
 ### Requirements
 
 * Python 3.4+
+    * Windows: https://www.python.org/downloads
+    * Mac: `$ brew install python3`
+    * Linux: `python3.4` and `python3.4-dev` packages
 * Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
@@ -55,12 +58,8 @@ After checks pass, create a pull request to be merged after review.
 
 ### Requirements
 
-* Python 3.4+
-* Make:
-    * Windows: http://cygwin.com/install.html
-    * Mac: https://developer.apple.com/xcode
-    * Linux: http://www.gnu.org/software/make (likely already installed)
-* virtualenv: https://pypi.python.org/pypi/virtualenv#installation
+Everything from above with the addition of:
+
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
