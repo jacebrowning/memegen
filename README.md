@@ -22,6 +22,15 @@ For any MemeGen image, lose the extension to see a list of all format options:
 
 http://memegen.link/buzz/memes/memes-everywhere
 
+### Special Characters
+
+Spaces and other special characters can be escaped:
+
+* underscore `_` → ` ` space
+* dash `-` → ` ` space
+* underscores `__` → `_` underscore 
+* dashes `--` → `-` dash
+
 ## Adding Templates 
 
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
