@@ -34,7 +34,7 @@ class Text:
             elif not previous_part:
                 break
             else:
-                lines.append('_')
+                lines.append(' ')
             previous_part = part
 
         return lines[:-1]
@@ -55,9 +55,15 @@ class Text:
         chars = []
 
         previous_upper = True
+        previous_char = None
         for i, char in enumerate(part):
             if char in ('_', '-'):
-                chars.append(' ')
+                if char == previous_char:
+                    chars[-1] = char
+                    previous_char = None
+                    continue
+                else:
+                    chars.append(' ')
             else:
                 if char.isupper():
                     if not previous_upper and chars[-1] != ' ':
@@ -73,6 +79,7 @@ class Text:
 
                 chars.append(char.upper())
                 previous_upper = char.isupper()
+            previous_char = char
 
         return ''.join(chars)
 
@@ -81,4 +88,6 @@ class Text:
         if line == ' ':
             return '_'
         else:
-            return line.replace(' ', '-').lower()
+            line = line.replace('-', '--').replace('_', '__')
+            line = line.replace(' ', '-')
+            return line.lower()

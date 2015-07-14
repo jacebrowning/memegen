@@ -73,7 +73,7 @@ INSTALLED_FLAG := $(ENV)/.installed
 
 # Main Targets #################################################################
 
-IP = $(shell ipconfig getifaddr en0)
+IP = $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
 CONFIG ?= dev
 PORT := 5000
 
