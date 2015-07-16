@@ -17,7 +17,7 @@ def get_without_text(key):
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
 def get_with_text(key, path):
     text = domain.Text(path)
-    track_request(str(text))
+    track_request(text)
 
     template = app.template_service.find(key)
     if template.key != key:
@@ -28,7 +28,7 @@ def get_with_text(key, path):
 
     image = app.image_service.create_image(template, text)
 
-    track_request(str(text))
+    track_request(text)
     return send_file(image.path, mimetype='image/jpeg')
 
 
@@ -41,7 +41,7 @@ def get_encoded(code):
     text = domain.Text(path)
     image = app.image_service.create_image(template, text)
 
-    track_request(str(text))
+    track_request(text)
     return send_file(image.path, mimetype='image/jpeg')
 
 
@@ -54,7 +54,7 @@ def track_request(title):
         t='pageview',
         dh='memegen.link',
         dp=request.path,
-        dt=title,
+        dt=str(title),
     )
     if not app.config['TESTING']:  # pragma: no cover (manual)
         requests.post("http://www.google-analytics.com/collect", data=data)
