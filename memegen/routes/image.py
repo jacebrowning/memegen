@@ -55,6 +55,10 @@ def track_request(title):
         dh='memegen.link',
         dp=request.path,
         dt=str(title),
+
+        uip=request.remote_addr,
+        ua=request.user_agent.string,
+        dr=request.referrer,
     )
     if not app.config['TESTING']:  # pragma: no cover (manual)
         requests.post("http://www.google-analytics.com/collect", data=data)
