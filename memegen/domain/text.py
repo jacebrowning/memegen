@@ -3,6 +3,9 @@ class Text:
     def __init__(self, path=None):
         self._parts = [] if path is None else path.split('/')
 
+    def __str__(self):
+        return ' / '.join(self.lines)
+
     def __getitem__(self, key):
         try:
             part = self._parts[key]
