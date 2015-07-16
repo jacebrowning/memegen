@@ -16,19 +16,19 @@ def get_without_text(key):
 
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
 def get_with_text(key, path):
-    track_request(str(domain.Text(path)))
+    text = domain.Text(path)
+    track_request(str(text))
 
     template = app.template_service.find(key)
     if template.key != key:
         return redirect(url_for(".get", key=template.key, path=path))
 
-    text = domain.Text(path)
     if path != text.path:
         return redirect(url_for(".get", key=key, path=text.path))
 
     image = app.image_service.create_image(template, text)
 
-    track_request(text)
+    track_request(str(text))
     return send_file(image.path, mimetype='image/jpeg')
 
 
@@ -41,7 +41,7 @@ def get_encoded(code):
     text = domain.Text(path)
     image = app.image_service.create_image(template, text)
 
-    track_request(text)
+    track_request(str(text))
     return send_file(image.path, mimetype='image/jpeg')
 
 
