@@ -35,6 +35,8 @@ def python_tests(*_):
         (('make', 'doc'), None),
     ), start=1):
 
+        print("")
+        print("$ %s" % ' '.join(command))
         failure = subprocess.call(command)
 
         if failure:

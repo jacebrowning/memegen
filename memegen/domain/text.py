@@ -54,6 +54,11 @@ class Text:
 
     @staticmethod
     def _format_line(part):
+        part = part.replace('~q', '?')
+        part = part.replace('~Q', '?')
+        part = part.replace('~e', '!')
+        part = part.replace('~E', '!')
+
         part = list(part)
         chars = []
 
@@ -89,8 +94,12 @@ class Text:
     @staticmethod
     def _format_path(line):
         if line == ' ':
-            return '_'
+            path = '_'
         else:
-            line = line.replace('-', '--').replace('_', '__')
-            line = line.replace(' ', '-')
-            return line.lower()
+            path = line.replace('-', '--').replace('_', '__')
+            path = path.replace(' ', '-')
+            path = path.replace('?', '~q')
+            path = path.replace('!', '~e')
+            path = path.lower()
+
+        return path

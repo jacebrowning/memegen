@@ -43,7 +43,7 @@ class TestImage:
     def test_get_redirects_to_default(self, client):
         response = client.get("/live.jpg")
         assert response.status_code == 302
-        assert '<a href="/live/_/do-it-live%21.jpg">' in \
+        assert '<a href="/live/_/do-it-live%7Ee.jpg">' in \
             load(response, as_json=False)
 
     def test_get_redirects_when_alias(self, client):

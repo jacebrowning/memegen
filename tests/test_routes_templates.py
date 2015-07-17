@@ -21,7 +21,7 @@ class TestTemplates:
             description="http://knowyourmeme.com/memes/bill-oreilly-rant",
             aliases=["bill-o'reilly-rant", 'do-it-live', 'live', "o'reilly",
                      "o'reilly-rant"],
-            example="http://localhost/live/_/do-it-live%21",
+            example="http://localhost/live/_/do-it-live%7Ee",
         ) == load(response)
 
     def test_get_all(self, client):
