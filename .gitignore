@@ -25,6 +25,7 @@ docs/*.png
 *.gdraw
 
 # Testing and coverage results
+.pytest
 .coverage
 htmlcov
 pyunit.xml

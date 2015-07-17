@@ -68,6 +68,7 @@ SNIFFER := $(BIN)/sniffer
 # Flags for PHONY targets
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
+DOCS_FLAG := $(ENV)/.docs
 ALL_FLAG := $(ENV)/.all
 INSTALLED_FLAG := $(ENV)/.installed
 
@@ -119,7 +120,7 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint coverage pytest pytest-cov
+	$(PIP) install --upgrade pep8 pep257 pylint coverage pytest pytest-cov pytest-random pytest-runfailed
 	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
@@ -179,11 +180,16 @@ pep8: depends-ci
 .PHONY: pep257
 pep257: depends-ci
 # D102: docstring missing (checked by PyLint)
-# D202: No blank lines allowed *after* function docstring
+# D202: No blank lines allowed *after* function docstring (personal preference)
+# D203: 1 blank line required before class (deprecated warning)
 	$(PEP257) $(PACKAGE) --ignore=D100,D101,D102,D103,D202,D203
 
 .PHONY: pylint
 pylint: depends-ci
+# These warnings shouldn't fail builds, but warn in editors:
+# C0111: Line too long
+# R0913: Too many arguments
+# R0914: Too many local variables
 	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc --disable=C0111,R0913,R0914
 
 .PHONY: fix
@@ -192,28 +198,45 @@ fix: depends-dev
 
 # Testing ######################################################################
 
-PYTEST_OPTS := -v --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+TIMESTAMP := $(shell date +%s)
+
+PYTEST_CORE_OPTS := --doctest-modules --verbose -r X --maxfail=3
+PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+PYTEST_RANDOM_OPTS := --random --random-seed=$(TIMESTAMP)
+
+PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
+PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --failed --exitfirst
+
+FAILED_FLAG := .pytest/failed
 
 .PHONY: test test-unit
 test: test-unit
-test-unit: depends-ci .clean-test
+test-unit: depends-ci
+	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
+	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
 endif
 
 .PHONY: test-int
-test-int: depends-ci .clean-test
-	$(PYTEST) $(PYTEST_OPTS) tests
+test-int: depends-ci
+	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
+	@ $(COVERAGE) erase
+	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
+	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(INTEGRATION_TEST_COVERAGE)
 endif
 
 .PHONY: tests test-all
 tests: test-all
-test-all: depends-ci .clean-test
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
+test-all: depends-ci
+	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(PACKAGE) tests; fi
+	@ $(COVERAGE) erase
+	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
 ifndef TRAVIS
+	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 
@@ -222,7 +245,8 @@ read-coverage:
 	$(OPEN) htmlcov/index.html
 
 .PHONY: watch
-watch: depends-dev
+watch: depends-dev .clean-test
+	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
 # Cleanup ######################################################################
@@ -250,7 +274,7 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-test
 .clean-test:
-	rm -rf .coverage htmlcov
+	rm -rf .pytest .coverage htmlcov
 
 .PHONY: .clean-dist
 .clean-dist:
