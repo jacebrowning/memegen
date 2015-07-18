@@ -46,5 +46,5 @@ Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/
 
 Check out one of these options:
 
-* [nicolewhite/slackbot-meme](https://github.com/nicolewhite/slackbot-meme)
+* [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)
 * [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)
