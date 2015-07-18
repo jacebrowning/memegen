@@ -30,8 +30,8 @@ def python_tests(*_):
     for count, (command, title) in enumerate((
         (('make', 'test-unit'), "Unit Tests"),
         (('make', 'test-all'), "Integration Tests"),
-        (('make', 'validate'), "Meme Validation"),
         (('make', 'check'), "Static Analysis"),
+        (('make', 'validate'), "Meme Validation"),
         (('make', 'doc'), None),
     ), start=1):
 

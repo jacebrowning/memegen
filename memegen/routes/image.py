@@ -14,6 +14,11 @@ def get_without_text(key):
     return redirect(url_for(".get", key=key, path=text.path))
 
 
+@blueprint.route("<key>.jpeg")
+def get_without_text_jpeg(key):
+    return redirect(url_for(".get_without_text", key=key))
+
+
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
 def get_with_text(key, path):
     text = domain.Text(path)
@@ -30,6 +35,11 @@ def get_with_text(key, path):
 
     track_request(text)
     return send_file(image.path, mimetype='image/jpeg')
+
+
+@blueprint.route("<key>/<path:path>.jpeg")
+def get_with_text_jpeg(key, path):
+    return redirect(url_for(".get", key=key, path=path))
 
 
 @blueprint.route("_<code>.jpg")

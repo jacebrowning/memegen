@@ -51,3 +51,15 @@ class TestImage:
         assert response.status_code == 302
         assert '<a href="/iw/hello/world.jpg">' in \
             load(response, as_json=False)
+
+    def test_get_redirects_when_jpeg_without_text(self, client):
+        response = client.get("/iw.jpeg")
+        assert response.status_code == 302
+        assert '<a href="/iw.jpg">' in \
+            load(response, as_json=False)
+
+    def test_get_redirects_when_jpeg_with_text(self, client):
+        response = client.get("/iw/hello/world.jpeg")
+        assert response.status_code == 302
+        assert '<a href="/iw/hello/world.jpg">' in \
+            load(response, as_json=False)
