@@ -24,12 +24,12 @@ http://memegen.link/buzz/memes/memes-everywhere
 
 ### Special Characters
 
-Spaces can be inserted using underscores or dashes:
+Spaces can be inserted using dashes or underscores:
 
-* underscore `_` → ` ` space
 * dash `-` → ` ` space
-* underscores `__` → `_` underscore 
+* underscore `_` → ` ` space
 * dashes `--` → `-` dash
+* underscores `__` → `_` underscore 
 
 Reserved URL characters can be escaped:
 
