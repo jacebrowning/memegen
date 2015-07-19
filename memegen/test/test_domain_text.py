@@ -59,6 +59,10 @@ class TestTextLines:
         text = Text("hello-World")
         assert ["HELLO WORLD"] == text.lines
 
+    def test_ignore_capital_after_apostrophe(self):
+        text = Text("Y'ALL")
+        assert ["Y'ALL"] == text.lines
+
     def test_strip_spaces(self):
         text = Text("  hello  World /    ")
         assert ["HELLO  WORLD"] == text.lines

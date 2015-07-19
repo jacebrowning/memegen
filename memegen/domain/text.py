@@ -72,6 +72,8 @@ class Text:
                     continue
                 else:
                     chars.append(' ')
+            elif not char.isalpha():
+                chars.append(char)
             else:
                 if char.isupper():
                     if not previous_upper and chars[-1] != ' ':

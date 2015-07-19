@@ -50,6 +50,7 @@ def register_services(app):
         exceptions=exceptions,
         template_store=template_store,
         image_store=image_store,
+        debug=app.config['DEBUG']
     )
 
 
