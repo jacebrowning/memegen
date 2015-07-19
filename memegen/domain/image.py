@@ -40,6 +40,9 @@ class Image:
 # based on: https://github.com/danieldiekmeier/memegenerator
 def make_meme(top, bottom, background, path):
     img = ImageFile.open(background)
+
+    # Resize to a maximum height and width
+    img.thumbnail((500, 500))
     image_size = img.size
 
     # Find biggest font size that works
