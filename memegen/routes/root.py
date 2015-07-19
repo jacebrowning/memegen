@@ -2,10 +2,10 @@ from collections import OrderedDict
 
 from flask import Blueprint, url_for, send_file
 
+from ._common import GITHUB_BASE, CONTRIBUTING
+
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
-
-GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
 
 
 @blueprint.route("")
@@ -15,7 +15,7 @@ def get():
     data['templates'] = url_for("templates.get", _external=True)
     data['overview'] = url_for("overview.get", _external=True)
     data['source'] = GITHUB_BASE
-    data['contributing'] = GITHUB_BASE + "blob/master/CONTRIBUTING.md"
+    data['contributing'] = CONTRIBUTING
     return data
 
 

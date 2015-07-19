@@ -40,3 +40,10 @@ class TestTemplates:
         response = client.get("/templates/insanity-wolf")
         assert response.status_code == 302
         assert '<a href="/templates/iw">' in load(response, as_json=False)
+
+    def test_post_returns_an_error(self, client):
+        response = client.post("/templates/")
+        assert response.status_code == 403
+        assert dict(
+            message="http://github.com/jacebrowning/memegen/blob/master/CONTRIBUTING.md"
+        ) == load(response)

@@ -3,6 +3,8 @@ from collections import OrderedDict
 from flask import Blueprint, current_app as app, request, url_for, redirect
 from flask_api import exceptions
 
+from ._common import CONTRIBUTING
+
 
 blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
 
@@ -17,8 +19,13 @@ def get():
     return data
 
 
-@blueprint.route("<key>", methods=['GET', 'POST'])
-def create(key):
+@blueprint.route("", methods=['POST'])
+def create_template():
+    raise exceptions.PermissionDenied(CONTRIBUTING)
+
+
+@blueprint.route("<key>", methods=['GET', 'POST'], endpoint='create')
+def create_meme(key):
     """Generate a meme from a template."""
     if request.method == 'GET':
         template = app.template_service.find(key)
@@ -43,7 +50,7 @@ def create(key):
 
 
 @blueprint.route("<key>/<path:path>")
-def get_with_path(key, path):
+def get_meme_with_path(key, path):
     """Redirect if any additional path is provided."""
     template = app.template_service.find(key)
     return redirect("/{}/{}".format(template.key, path))
