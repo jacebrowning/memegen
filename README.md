@@ -36,6 +36,8 @@ Reserved URL characters can be escaped:
 * Tilde Q `~q` → `?` question mark
 * Tilde E `~e` → `!` exclamation point
 
+For example: http://memegen.link/doge/underscore__-dash--/question~q-bang~e.jpg
+
 ## Adding Templates 
 
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
