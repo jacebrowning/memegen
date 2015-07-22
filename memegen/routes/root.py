@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, url_for, send_file
+from flask import Blueprint, url_for
 
 from ._common import GITHUB_BASE, CONTRIBUTING
 
@@ -8,20 +8,16 @@ from ._common import GITHUB_BASE, CONTRIBUTING
 blueprint = Blueprint('root', __name__, url_prefix="/")
 
 
-@blueprint.route("")
+@blueprint.route("api")
 def get():
     """Generate memes from templates."""
     data = OrderedDict()
+    data['home'] = url_for("static.get", _external=True)
     data['templates'] = url_for("templates.get", _external=True)
     data['overview'] = url_for("overview.get", _external=True)
     data['source'] = GITHUB_BASE
     data['contributing'] = CONTRIBUTING
     return data
-
-
-@blueprint.route("flask-api/static/js/default.js")
-def get_javascript():
-    return send_file("routes/default.js", mimetype='application/javascript')
 
 
 @blueprint.route("CHECK")

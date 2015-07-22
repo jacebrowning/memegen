@@ -1,3 +1,4 @@
+from . import static
 from . import root
 from . import templates
 from . import links
