@@ -1,3 +1,5 @@
+# pylint: disable=no-self-use
+
 from .conftest import load
 
 

@@ -1,4 +1,4 @@
-# pylint: disable=R,C
+# pylint: disable=no-self-use
 
 from .conftest import load
 
@@ -54,7 +54,8 @@ class TestLinks:
     def test_get_redirects_to_default(self, client):
         response = client.get("/live")
         assert response.status_code == 302
-        assert '<a href="/live/_/do-it-live%7Ee">' in load(response, as_json=False)
+        assert '<a href="/live/_/do-it-live%7Ee">' in \
+            load(response, as_json=False)
 
     def test_get_redirects_when_alias(self, client):
         response = client.get("/insanity-wolf")

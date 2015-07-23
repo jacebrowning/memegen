@@ -1,9 +1,14 @@
 sudo: false
 
 language: python
-python: 3.4
+python:
+- 3.4
 
 cache: pip
+
+env:
+  global:
+  - RANDOM_SEED=12345
 
 install:
 - pip install coveralls scrutinizer-ocular

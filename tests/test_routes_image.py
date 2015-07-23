@@ -1,3 +1,5 @@
+# pylint: disable=no-self-use
+
 import os
 
 from .conftest import load
@@ -7,7 +9,6 @@ ROOT = os.path.dirname(TESTS)
 
 
 class TestImage:
-
 
     def test_get_visible_jpg(self, client):
         path = os.path.join(ROOT, 'data', 'images', 'iw', 'hello', 'world.jpg')

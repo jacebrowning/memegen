@@ -100,6 +100,11 @@ launch: env
 validate: env
 	CONFIG=$(CONFIG) $(PYTHON) manage.py validate
 
+.PHONY: watch
+watch: depends-dev .clean-test
+	@ rm -rf $(FAILED_FLAG)
+	$(SNIFFER)
+
 # Development Installation #####################################################
 
 .PHONY: env
@@ -175,14 +180,14 @@ check: pep8 pep257 pylint
 
 .PHONY: pep8
 pep8: depends-ci
-	$(PEP8) $(PACKAGE) --config=.pep8rc
+	$(PEP8) $(PACKAGE) tests --config=.pep8rc
 
 .PHONY: pep257
 pep257: depends-ci
 # D102: docstring missing (checked by PyLint)
 # D202: No blank lines allowed *after* function docstring (personal preference)
 # D203: 1 blank line required before class (deprecated warning)
-	$(PEP257) $(PACKAGE) --ignore=D100,D101,D102,D103,D202,D203
+	$(PEP257) $(PACKAGE) tests --ignore=D100,D101,D102,D103,D202,D203
 
 .PHONY: pylint
 pylint: depends-ci
@@ -190,7 +195,7 @@ pylint: depends-ci
 # C0111: Line too long
 # R0913: Too many arguments
 # R0914: Too many local variables
-	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc --disable=C0111,R0913,R0914
+	$(PYLINT) $(PACKAGE) tests --rcfile=.pylintrc --disable=C0111,R0913,R0914
 
 .PHONY: fix
 fix: depends-dev
@@ -198,11 +203,11 @@ fix: depends-dev
 
 # Testing ######################################################################
 
-TIMESTAMP := $(shell date +%s)
+RANDOM_SEED ?= $(shell date +%s)
 
 PYTEST_CORE_OPTS := --doctest-modules --verbose -r X --maxfail=3
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
-PYTEST_RANDOM_OPTS := --random --random-seed=$(TIMESTAMP)
+PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
 PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
 PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --failed --exitfirst
@@ -244,16 +249,11 @@ endif
 read-coverage:
 	$(OPEN) htmlcov/index.html
 
-.PHONY: watch
-watch: depends-dev .clean-test
-	@ rm -rf $(FAILED_FLAG)
-	$(SNIFFER)
-
 # Cleanup ######################################################################
 
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
-	rm -rf $(ALL)
+	rm -rf $(ALL_FLAG)
 
 .PHONY: clean-env
 clean-env: clean

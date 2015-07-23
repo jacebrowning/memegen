@@ -1,23 +1,15 @@
 [MESSAGES CONTROL]
 
-# I0011: Locally disabling warning
-# W0142: Used * or ** magic
-# W0511: TODO in comments
-# RO903: Too few public methods
-# R0904: Too many public methods
-# C0103: Invalid constant name
-# W0603: Using the global statement
-# R0901: Too many ancestors
-disable=I0011,W0142,W0511,R0903,R0904,C0103,W0603,R0901
-
-[REPORTS]
-
-reports=no
-
-msg-template={msg_id}:{line:3d},{column}:{msg}
+disable=locally-disabled,fixme,too-few-public-methods,too-many-public-methods,invalid-name,global-statement,too-many-ancestors
 
 [FORMAT]
 
 max-line-length=80
 
 ignore-long-lines=^.*((https?:)|(pragma:)|(TODO:)).*$
+
+[REPORTS]
+
+reports=no
+
+msg-template={msg_id} ({symbol}):{line:3d},{column}: {msg}
