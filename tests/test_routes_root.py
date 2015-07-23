@@ -11,7 +11,6 @@ class TestRoot:
         response = client.get("/api")
         assert response.status_code == 200
         assert dict(
-            home="http://localhost/",
             templates="http://localhost/templates/",
             overview="http://localhost/overview",
             source=GITHUB_BASE,

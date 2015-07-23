@@ -12,7 +12,6 @@ blueprint = Blueprint('root', __name__, url_prefix="/")
 def get():
     """Generate memes from templates."""
     data = OrderedDict()
-    data['home'] = url_for("static.get", _external=True)
     data['templates'] = url_for("templates.get", _external=True)
     data['overview'] = url_for("overview.get", _external=True)
     data['source'] = GITHUB_BASE
