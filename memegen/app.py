@@ -1,11 +1,15 @@
 import os
 import logging
+from urllib.parse import urlencode, unquote
 
+from flask import request, current_app
 from flask_api import FlaskAPI, exceptions as api_exceptions
 
 from . import services
 from . import stores
 from . import routes
+
+log = logging.getLogger('api')
 
 
 def create_app(config):
@@ -52,6 +56,16 @@ def register_services(app):
         image_store=image_store,
         debug=app.config['DEBUG']
     )
+
+    def log_request(response):
+        if current_app.debug:
+            path = request.path
+            if request.args:
+                path += '?%s' % unquote(urlencode(request.args))
+            log.info('%7s: %s - %i', request.method, path,
+                     response.status_code)
+        return response
+    app.after_request(log_request)
 
 
 def register_blueprints(app):

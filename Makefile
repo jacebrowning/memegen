@@ -64,6 +64,8 @@ NOSE := $(BIN)/nosetests
 PYTEST := $(BIN)/py.test
 COVERAGE := $(BIN)/coverage
 SNIFFER := $(BIN)/sniffer
+ACTIVATE := $(BIN)/activate
+HONCHO := . $(ACTIVATE); $(BIN)/honcho
 
 # Flags for PHONY targets
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
@@ -88,8 +90,8 @@ $(ALL_FLAG): $(SOURCES)
 ci: check test tests validate
 
 .PHONY: run
-run: env
-	CONFIG=$(CONFIG) $(PYTHON) manage.py server
+run: depends-dev
+	$(HONCHO) start
 
 .PHONY: launch
 launch: env
@@ -131,7 +133,7 @@ $(DEPENDS_CI_FLAG): Makefile
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
 $(DEPENDS_DEV_FLAG): Makefile
-	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer
+	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer honcho
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
