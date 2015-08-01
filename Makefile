@@ -274,6 +274,7 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-test
 .clean-test:
+	find data -name '*.tmp' -delete
 	rm -rf .pytest .coverage htmlcov
 
 .PHONY: .clean-dist

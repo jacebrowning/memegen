@@ -1,6 +1,7 @@
 import os
 import logging
 
+import time
 import requests
 
 from .text import Text
@@ -13,6 +14,7 @@ class Template:
     """Blank image to generate a meme."""
 
     DEFAULTS = ("default.png", "default.jpg")
+    VALID_LINK_FLAG = '.valid_link.tmp'
 
     def __init__(self, key,
                  name=None, lines=None, aliases=None, link=None, root=None):
@@ -66,7 +68,7 @@ class Template:
 
     def validate(self):
         if not self.lines:
-            log.warning("template '%s' has no default lines of text")
+            log.warning("template '%s' has no default lines of text", self)
         if not self.name:
             log.error("template '%s' has no name", self)
             return False
@@ -77,11 +79,23 @@ class Template:
         if not self.path:
             log.error("template '%s' has no default image", self)
             return False
+        if not self._validate_link():
+            return False
+        return True
+
+    def _validate_link(self):
         if self.link:
-            log.info("checking link %s ...", self.link)
-            response = requests.get(self.link, timeout=5)
-            if response.status_code >= 400 and response.status_code != 429:
-                msg = "template '%s' link is invalid (%s)"
-                log.error(msg, self, response.status_code)
-                return False
+            flag = os.path.join(self.root, self.key, self.VALID_LINK_FLAG)
+            if os.path.isfile(flag):
+                log.info("link already checked: %s", self.link)
+            else:
+                log.info("checking link %s ...", self.link)
+                response = requests.get(self.link, timeout=5)
+                if response.status_code >= 400 and response.status_code != 429:
+                    msg = "template '%s' link is invalid (%s)"
+                    log.error(msg, self, response.status_code)
+                    return False
+                else:
+                    with open(flag, 'w') as stream:
+                        stream.write(str(int(time.time())))
         return True

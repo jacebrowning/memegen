@@ -63,3 +63,12 @@ class TestTemplateService:
 
         with patch('os.path.isfile', Mock(return_value=True)):
             assert False is template_service.validate()
+
+    def test_validate_link(self, template_service):
+        templates = [Template(key='abc',
+                              name="The ABC Meme",
+                              link="example.com")]
+        template_service.template_store.filter.return_value = templates
+
+        with patch('os.path.isfile', Mock(return_value=True)):
+            assert True is template_service.validate()
