@@ -29,6 +29,7 @@ docs/*.png
 .coverage
 htmlcov
 pyunit.xml
+*.tmp
 
 # Build and release directories
 build
