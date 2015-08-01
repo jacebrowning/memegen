@@ -18,7 +18,7 @@ def get_index():
 @blueprint.route("flask-api/static/js/default.js")
 def get_javascript():
     tid = current_app.config['GOOGLE_ANALYTICS_TID']
-    return render_template("js/default.js", ga_tid=tid)
+    return Response(render_template("js/default.js", ga_tid=tid))
 
 
 @blueprint.route("api")
