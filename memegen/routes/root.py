@@ -1,11 +1,24 @@
 from collections import OrderedDict
 
-from flask import Blueprint, url_for
+from flask import Blueprint, url_for, current_app, render_template, Response
 
 from ._common import GITHUB_BASE, CONTRIBUTING
 
 
-blueprint = Blueprint('root', __name__, url_prefix="/")
+blueprint = Blueprint('root', __name__, url_prefix="/",
+                      template_folder='../templates')
+
+
+@blueprint.route("")
+def get_index():
+    tid = current_app.config['GOOGLE_ANALYTICS_TID']
+    return Response(render_template("index.html", ga_tid=tid))
+
+
+@blueprint.route("flask-api/static/js/default.js")
+def get_javascript():
+    tid = current_app.config['GOOGLE_ANALYTICS_TID']
+    return render_template("js/default.js", ga_tid=tid)
 
 
 @blueprint.route("api")
