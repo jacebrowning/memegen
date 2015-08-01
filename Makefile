@@ -95,7 +95,7 @@ run: depends-dev
 
 .PHONY: launch
 launch: env
-	eval "sleep 1; open http://$(IP):$(PORT)" &
+	eval "sleep 3; open http://$(IP):$(PORT)" &
 	$(MAKE) run
 
 .PHONY: validate
