@@ -12,6 +12,8 @@ class Config:
     DEBUG = False
     THREADED = False
 
+    GOOGLE_ANALYTICS_TID = os.getenv('GOOGLE_ANALYTICS_TID')
+
 
 class ProdConfig(Config):
 

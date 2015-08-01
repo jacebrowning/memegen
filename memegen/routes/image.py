@@ -58,7 +58,7 @@ def get_encoded(code):
 def track_request(title):
     data = dict(
         v=1,
-        tid='UA-6468614-10',
+        tid=app.config['GOOGLE_ANALYTICS_TID'],
         cid=request.remote_addr,
 
         t='pageview',
