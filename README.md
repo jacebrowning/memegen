@@ -34,7 +34,6 @@ Spaces can be inserted using dashes or underscores:
 Reserved URL characters can be escaped:
 
 * Tilde Q `~q` → `?` question mark
-* Tilde E `~e` → `!` exclamation point
 
 For example: http://memegen.link/doge/underscore__-dash--/question~q-bang~e.jpg
 
