@@ -7,6 +7,7 @@ import pytest
 from memegen.domain import Template
 
 
+@patch('memegen.domain.Template.validate', Mock(return_value=True))
 class TestTemplateService:
 
     def test_find_template_not_found(self, template_service):
@@ -33,8 +34,7 @@ class TestTemplateService:
                               aliases=['def2'])]
         template_service.template_store.filter.return_value = templates
 
-        with patch('os.path.isfile', Mock(return_value=True)):
-            assert True is template_service.validate()
+        assert True is template_service.validate()
 
     def test_validate_with_bad_templates(self, template_service):
         mock_template = Mock()
@@ -52,8 +52,7 @@ class TestTemplateService:
                               aliases=['the-meme'])]
         template_service.template_store.filter.return_value = templates
 
-        with patch('os.path.isfile', Mock(return_value=True)):
-            assert False is template_service.validate()
+        assert False is template_service.validate()
 
     def test_validate_with_misformatted_aliases(self, template_service):
         templates = [Template(key='abc',
@@ -61,14 +60,4 @@ class TestTemplateService:
                               aliases=['abc-meme', 'Bad Format'])]
         template_service.template_store.filter.return_value = templates
 
-        with patch('os.path.isfile', Mock(return_value=True)):
-            assert False is template_service.validate()
-
-    def test_validate_link(self, template_service):
-        templates = [Template(key='abc',
-                              name="The ABC Meme",
-                              link="example.com")]
-        template_service.template_store.filter.return_value = templates
-
-        with patch('os.path.isfile', Mock(return_value=True)):
-            assert True is template_service.validate()
+        assert False is template_service.validate()

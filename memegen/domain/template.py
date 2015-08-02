@@ -3,6 +3,7 @@ import logging
 
 import time
 import requests
+from PIL import Image
 
 from .text import Text
 
@@ -15,6 +16,8 @@ class Template:
 
     DEFAULTS = ("default.png", "default.jpg")
     VALID_LINK_FLAG = '.valid_link.tmp'
+    MIN_HEIGHT = 240
+    MIN_WIDTH = 240
 
     def __init__(self, key,
                  name=None, lines=None, aliases=None, link=None, root=None):
@@ -66,7 +69,19 @@ class Template:
                 text = text.replace(char, '')
         return text
 
-    def validate(self):
+    def validate(self, validators=None):
+        if validators is None:
+            validators = [
+                self.validate_meta,
+                self.validate_link,
+                self.validate_size,
+            ]
+        for validator in validators:
+            if not validator():
+                return False
+        return True
+
+    def validate_meta(self):
         if not self.lines:
             log.warning("template '%s' has no default lines of text", self)
         if not self.name:
@@ -79,11 +94,9 @@ class Template:
         if not self.path:
             log.error("template '%s' has no default image", self)
             return False
-        if not self._validate_link():
-            return False
         return True
 
-    def _validate_link(self):
+    def validate_link(self):
         if self.link:
             flag = os.path.join(self.root, self.key, self.VALID_LINK_FLAG)
             if os.path.isfile(flag):
@@ -98,4 +111,13 @@ class Template:
                 else:
                     with open(flag, 'w') as stream:
                         stream.write(str(int(time.time())))
+        return True
+
+    def validate_size(self):
+        im = Image.open(self.path)
+        w, h = im.size
+        if w < self.MIN_WIDTH or h < self.MIN_HEIGHT:
+            log.error("Image must be at least %ix%i (is %ix%i)",
+                      self.MIN_WIDTH, self.MIN_HEIGHT, w, h)
+            return False
         return True
