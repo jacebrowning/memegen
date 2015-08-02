@@ -1,8 +1,10 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, url_for, redirect
+from flask import Blueprint, current_app as app, redirect
 
 from ..domain import Text
+
+from ._common import url_for
 
 
 blueprint = Blueprint('links', __name__, url_prefix="/")

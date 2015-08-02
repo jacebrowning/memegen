@@ -1,8 +1,8 @@
 from collections import OrderedDict
 
-from flask import Blueprint, url_for, current_app, render_template, Response
+from flask import Blueprint, current_app, render_template, Response
 
-from ._common import GITHUB_BASE, CONTRIBUTING
+from ._common import GITHUB_BASE, CONTRIBUTING, url_for
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/",

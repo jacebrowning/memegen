@@ -56,8 +56,6 @@ class Text:
     def _format_line(part):
         part = part.replace('~q', '?')
         part = part.replace('~Q', '?')
-        part = part.replace('~e', '!')
-        part = part.replace('~E', '!')
 
         part = list(part)
         chars = []
@@ -101,7 +99,6 @@ class Text:
             path = line.replace('-', '--').replace('_', '__')
             path = path.replace(' ', '-')
             path = path.replace('?', '~q')
-            path = path.replace('!', '~e')
             path = path.lower()
 
         return path

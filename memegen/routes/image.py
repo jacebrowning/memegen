@@ -1,8 +1,10 @@
-from flask import Blueprint, url_for, redirect, send_file
+from flask import Blueprint, redirect, send_file
 from flask import current_app as app, request
 import requests
 
 from .. import domain
+
+from ._common import url_for
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
 

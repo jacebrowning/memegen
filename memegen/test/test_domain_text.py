@@ -84,12 +84,12 @@ class TestTextLines:
         assert ["CALLS __INIT__", "WITH _ARGS"] == text.lines
 
     def test_special_characters_are_kept(self):
-        text = Text("special!?")
-        assert ["SPECIAL!?"] == text.lines
+        text = Text("special?")
+        assert ["SPECIAL?"] == text.lines
 
     def test_escaped_characters_are_converted(self):
-        text = Text("special~q~Q~E~e")
-        assert ["SPECIAL??!!"] == text.lines
+        text = Text("special~q~Q")
+        assert ["SPECIAL??"] == text.lines
 
 
 class TestTextPath:
@@ -131,5 +131,5 @@ class TestTextPath:
         assert "calls-____init____/with-__args" == text.path
 
     def test_special_characters_are_escaped(self):
-        text = Text("special!?")
-        assert "special~e~q" == text.path
+        text = Text("special?")
+        assert "special~q" == text.path

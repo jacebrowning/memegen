@@ -1,6 +1,8 @@
-from flask import Blueprint, current_app as app, url_for, render_template
+from flask import Blueprint, current_app as app, render_template
 from flask_api.decorators import set_renderers
 from flask_api.renderers import HTMLRenderer
+
+from ._common import url_for
 
 
 blueprint = Blueprint('overview', __name__, url_prefix="/overview")
