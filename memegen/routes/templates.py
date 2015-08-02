@@ -1,9 +1,9 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, request, url_for, redirect
+from flask import Blueprint, current_app as app, request, redirect
 from flask_api import exceptions
 
-from ._common import CONTRIBUTING
+from ._common import CONTRIBUTING, url_for
 
 
 blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
