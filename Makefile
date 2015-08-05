@@ -276,7 +276,6 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-test
 .clean-test:
-	find data -name '*.tmp' -delete
 	rm -rf .pytest .coverage htmlcov
 
 .PHONY: .clean-dist
@@ -285,4 +284,5 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-workspace
 .clean-workspace:
+	find data -name '*.tmp' -delete
 	rm -rf *.sublime-workspace

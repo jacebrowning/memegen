@@ -11,14 +11,19 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ['memegen/', 'tests/']
+watch_paths = ["memegen", "tests", "data"]
 
 
 @select_runnable('python')
 @file_validator
-def py_files(filename):
-    return all((filename.endswith('.py') or filename.endswith('.yml'),
-               not os.path.basename(filename).startswith('.')))
+def python_files(filename):
+    return filename.endswith('.py')
+
+
+@select_runnable('yaml')
+@file_validator
+def yaml_files(filename):
+    return filename.endswith('.yml')
 
 
 @runnable
@@ -30,6 +35,19 @@ def python(*_):
         (('make', 'check'), "Static Analysis"),
         (('make', 'validate'), "Meme Validation"),
         (('make', 'doc'), None),
+    ), start=1):
+
+        if not run(command, title, count):
+            return False
+
+    return True
+
+
+@runnable
+def yaml(*_):
+
+    for count, (command, title) in enumerate((
+        (('make', 'validate'), "Meme Validation"),
     ), start=1):
 
         if not run(command, title, count):
