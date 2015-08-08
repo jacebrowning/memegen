@@ -105,7 +105,7 @@ class Template:
                 log.info("checking link %s ...", self.link)
                 try:
                     response = requests.get(self.link, timeout=5)
-                except requests.packages.urllib3.exceptions.MaxRetryError:
+                except requests.exceptions.ReadTimeout:
                     log.warning("connection timed out")
                     return True  # assume URL is OK; it will be checked again
                 if response.status_code >= 400 and response.status_code != 429:
