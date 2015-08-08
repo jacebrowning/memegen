@@ -13,11 +13,7 @@ blueprint = Blueprint('links', __name__, url_prefix="/")
 @blueprint.route("<key>")
 def get_without_text(key):
     template = app.template_service.find(key)
-    if template.key != key:
-        return redirect(url_for(".get_without_text", key=template.key))
-
-    text = Text(template.default or '_')
-    return redirect(url_for(".get", key=key, path=text.path))
+    return redirect(url_for("templates.create", key=template.key))
 
 
 @blueprint.route("<key>/<path:path>", endpoint='get')
