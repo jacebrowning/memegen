@@ -103,7 +103,11 @@ class Template:
                 log.info("link already checked: %s", self.link)
             else:
                 log.info("checking link %s ...", self.link)
-                response = requests.get(self.link, timeout=5)
+                try:
+                    response = requests.get(self.link, timeout=5)
+                except requests.packages.urllib3.exceptions.MaxRetryError:
+                    log.warning("connection timed out")
+                    return True  # assume URL is OK; it will be checked again
                 if response.status_code >= 400 and response.status_code != 429:
                     msg = "template '%s' link is invalid (%s)"
                     log.error(msg, self, response.status_code)
