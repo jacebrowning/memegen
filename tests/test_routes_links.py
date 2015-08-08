@@ -51,16 +51,16 @@ class TestLinks:
         assert response.status_code == 302
         assert '<a href="/iw/hello">' in load(response, as_json=False)
 
-    def test_get_redirects_to_default(self, client):
+    def test_get_without_extension_redirects_to_template(self, client):
         response = client.get("/live")
         assert response.status_code == 302
-        assert '<a href="/live/_/do-it-live!">' in \
+        assert '<a href="/templates/live">' in \
             load(response, as_json=False)
 
     def test_get_redirects_when_alias(self, client):
         response = client.get("/insanity-wolf")
         assert response.status_code == 302
-        assert '<a href="/iw">' in load(response, as_json=False)
+        assert '<a href="/templates/iw">' in load(response, as_json=False)
 
     def test_get_redirects_when_alias_with_text(self, client):
         response = client.get("/insanity-wolf/hello/world")
