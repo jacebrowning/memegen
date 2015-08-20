@@ -26,14 +26,15 @@ http://memegen.link/buzz/memes/memes-everywhere
 
 Spaces can be inserted using dashes or underscores:
 
-* dash `-` → ` ` space
-* underscore `_` → ` ` space
-* dashes `--` → `-` dash
-* underscores `__` → `_` underscore 
+* dash (`-`) → space (` `) 
+* underscore `_` → space (` `)
+* dashes (`--`) → dash (`-`)
+* underscores (`__`) → underscore (`_`)
 
 Reserved URL characters can be escaped:
 
-* tilde + Q `~q` → `?` question mark
+* tilde + Q (`~q`) → question mark (`?`)
+* tilde + P (`~p`) → percentage (`%`)
 
 For example: http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg
 

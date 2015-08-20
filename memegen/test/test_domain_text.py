@@ -87,9 +87,13 @@ class TestTextLines:
         text = Text("special?")
         assert ["SPECIAL?"] == text.lines
 
-    def test_escaped_characters_are_converted(self):
+    def test_question_marks_are_escaped(self):
         text = Text("special~q~Q")
         assert ["SPECIAL??"] == text.lines
+
+    def test_percents_are_escaped(self):
+        text = Text("99~p vs. 1~P")
+        assert ["99% VS. 1%"] == text.lines
 
 
 class TestTextPath:
@@ -130,6 +134,10 @@ class TestTextPath:
         text = Text("Calls ____init____/with __args")
         assert "calls-____init____/with-__args" == text.path
 
-    def test_special_characters_are_escaped(self):
+    def test_question_marks_are_escaped(self):
         text = Text("special?")
         assert "special~q" == text.path
+
+    def test_percents_are_escaped(self):
+        text = Text("50% off")
+        assert "50~p-off" == text.path
