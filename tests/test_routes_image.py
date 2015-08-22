@@ -64,3 +64,8 @@ class TestImage:
         assert response.status_code == 302
         assert '<a href="/iw/hello/world.jpg">' in \
             load(response, as_json=False)
+
+    def test_get_latest(self, client):
+        response = client.get("/latest.jpg")
+        assert response.status_code == 200
+        assert response.mimetype == 'image/jpeg'

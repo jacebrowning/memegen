@@ -9,6 +9,12 @@ from ._common import url_for
 blueprint = Blueprint('image', __name__, url_prefix="/")
 
 
+@blueprint.route("latest.jpg")
+def get_latest():
+    path = app.image_service.image_store.latest
+    return send_file(path, mimetype='image/jpeg')
+
+
 @blueprint.route("<key>.jpg")
 def get_without_text(key):
     template = app.template_service.find(key)
