@@ -6,6 +6,7 @@ from .conftest import load
 
 TESTS = os.path.dirname(__file__)
 ROOT = os.path.dirname(TESTS)
+LATEST = os.path.join(ROOT, "data", "images", "latest.jpg")
 
 
 class TestImage:
@@ -64,3 +65,18 @@ class TestImage:
         assert response.status_code == 302
         assert '<a href="/iw/hello/world.jpg">' in \
             load(response, as_json=False)
+
+    def test_get_latest(self, client):
+        open(LATEST, 'w').close()  # force the file to exist
+        response = client.get("/latest.jpg")
+        assert response.status_code == 200
+        assert response.mimetype == 'image/jpeg'
+
+    def test_get_latest_when_no_images(self, client):
+        try:
+            os.remove(LATEST)
+        except FileNotFoundError:
+            pass
+        response = client.get("/latest.jpg")
+        assert response.status_code == 302
+        assert '<a href="/fry/_.jpg">' in load(response, as_json=False)

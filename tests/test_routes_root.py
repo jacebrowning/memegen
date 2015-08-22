@@ -13,6 +13,7 @@ class TestRoot:
         assert dict(
             templates="http://localhost/templates/",
             overview="http://localhost/overview",
+            latest="http://localhost/latest",
             source=GITHUB_BASE,
             contributing=GITHUB_BASE + "blob/master/CONTRIBUTING.md",
         ) == load(response)
