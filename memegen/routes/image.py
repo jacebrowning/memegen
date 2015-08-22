@@ -12,7 +12,11 @@ blueprint = Blueprint('image', __name__, url_prefix="/")
 @blueprint.route("latest.jpg")
 def get_latest():
     path = app.image_service.image_store.latest
-    return send_file(path, mimetype='image/jpeg')
+    try:
+        return send_file(path, mimetype='image/jpeg')
+    except FileNotFoundError:
+        # TODO: return our logo?
+        return get_without_text("fry")
 
 
 @blueprint.route("<key>.jpg")
