@@ -73,7 +73,7 @@ def calc_font_size(top, bottom, max_font_size, min_font_size, max_text_len):
     else:
         top_phrases = [top]
     for phrase in top_phrases:
-        font_size = min(cacl_largest_fontSize(phrase, max_text_len), font_size)
+        font_size = min(calc_largest_fontSize(phrase, max_text_len), font_size)
     
     #calculate font size for bottom text, split if necessary
     if bottom_text_size[0] > max_text_len:
@@ -81,7 +81,7 @@ def calc_font_size(top, bottom, max_font_size, min_font_size, max_text_len):
     else:
         bottom_phrases = [bottom]
     for phrase in bottom_phrases:
-        font_size = min(cacl_largest_fontSize(phrase, max_text_len), font_size)
+        font_size = min(calc_largest_fontSize(phrase, max_text_len), font_size)
 
     #rebuild text with new lines
     top = '\n'.join(top_phrases)
