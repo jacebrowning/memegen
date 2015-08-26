@@ -1,0 +1,13 @@
+{
+  "name":"memegen",
+  "scripts":{},
+  "env":{
+    "CONFIG":{
+      "required":true
+    }
+  },
+  "addons":[
+    "heroku-postgresql",
+    "papertrail"
+  ]
+}
