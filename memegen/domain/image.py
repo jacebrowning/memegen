@@ -70,7 +70,7 @@ def make_meme(top, bottom, background, path):
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
     # Draw black text outlines
-    outline_range = max(1, int(font_size / 40))
+    outline_range = max(1, int(font_size / 25))
     for x in range(-outline_range, outline_range + 1):
         for y in range(-outline_range, outline_range + 1):
             pos = (top_text_position[0] + x, top_text_position[1] + y)
