@@ -50,8 +50,8 @@ def make_meme(top, bottom, background, path):
     draw = ImageDraw.Draw(img)
 
     max_font_size = int(image_size[1] / 5)
-    min_font_size = int(image_size[1] / 15)
-    max_text_len = image_size[0] - 10
+    min_font_size = int(image_size[1] / 17)
+    max_text_len = image_size[0] - 20
     font_size, top, bottom = _optimize_font_size(top, bottom, max_font_size,
                                                  min_font_size, max_text_len)
     font = ImageFont.truetype(FONT, font_size)
@@ -70,7 +70,7 @@ def make_meme(top, bottom, background, path):
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
     # Draw black text outlines
-    outline_range = int(font_size / 15)
+    outline_range = max(1, int(font_size / 40))
     for x in range(-outline_range, outline_range + 1):
         for y in range(-outline_range, outline_range + 1):
             pos = (top_text_position[0] + x, top_text_position[1] + y)
