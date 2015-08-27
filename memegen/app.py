@@ -61,8 +61,8 @@ def register_services(app):
         if current_app.debug:
             path = request.path
             if request.args:
-                path += '?%s' % unquote(urlencode(request.args))
-            log.info('%7s: %s - %i', request.method, path,
+                path += "?%s" % unquote(urlencode(request.args))
+            log.info("%s: %s - %i", request.method, path,
                      response.status_code)
         return response
     app.after_request(log_request)
