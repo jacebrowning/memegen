@@ -3,6 +3,7 @@ from unittest.mock import Mock
 import pytest
 
 from memegen import services
+from memegen.domain import Template
 
 
 def pytest_configure(config):
@@ -32,3 +33,8 @@ def link_service():
 def image_service():
     return services.image.ImageService(template_store=Mock(),
                                        image_store=Mock())
+
+
+@pytest.fixture
+def template():
+    return Template('abc', name='ABC', lines=['foo', 'bar'])

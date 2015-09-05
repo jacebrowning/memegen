@@ -3,13 +3,27 @@ import logging
 from urllib.parse import urlencode, unquote
 
 from flask import request, current_app
-from flask_api import FlaskAPI, exceptions as api_exceptions
+from flask_api import FlaskAPI
+from flask_api.exceptions import APIException, NotFound
 
 from . import services
 from . import stores
 from . import routes
 
 log = logging.getLogger('api')
+
+
+class TemplateNotFound(NotFound):
+    detail = "Template not found."
+
+
+class InvalidMaskedCode(NotFound):
+    detail = "Masked URL does not match any image."
+
+
+class FilenameTooLong(APIException):
+    status_code = 414
+    detail = "Filename too long."
 
 
 def create_app(config):
@@ -33,8 +47,9 @@ def configure_logging():
 
 def register_services(app):
     exceptions = services.Exceptions(
-        not_found=api_exceptions.NotFound,
-        bad_code=api_exceptions.NotFound,
+        TemplateNotFound=TemplateNotFound,
+        InvalidMaskedCode=InvalidMaskedCode,
+        FilenameTooLong=FilenameTooLong,
     )
 
     templates_root = os.path.join(app.config['ROOT'], 'data', 'templates')
