@@ -15,7 +15,7 @@ def get_latest():
     try:
         return send_file(path, mimetype='image/jpeg')
     except FileNotFoundError:
-        # TODO: return our logo?
+        # TODO: return our logo when one exists?
         return get_without_text("fry")
 
 

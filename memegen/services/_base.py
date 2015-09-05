@@ -3,9 +3,10 @@ from abc import ABCMeta
 
 class Exceptions:
 
-    def __init__(self, not_found=KeyError, bad_code=ValueError):
-        self.not_found = not_found
-        self.bad_code = bad_code
+    def __init__(self, **kwargs):
+        self.TemplateNotFound = kwargs.get('TemplateNotFound', KeyError)
+        self.InvalidMaskedCode = kwargs.get('InvalidMaskedCode', ValueError)
+        self.FilenameTooLong = kwargs.get('FilenameTooLong', ValueError)
 
 
 class Service(metaclass=ABCMeta):

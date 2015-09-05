@@ -22,6 +22,6 @@ class LinkService(Service):
             slug = base64.urlsafe_b64decode(code).decode('utf-8')
             key, path = slug.strip('\t').split('\t')
         except ValueError:
-            raise self.exceptions.bad_code
+            raise self.exceptions.InvalidMaskedCode
         else:
             return key, path

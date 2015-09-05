@@ -30,11 +30,21 @@ class TestImage:
 
     def test_get_visible_jpg_with_lots_of_text(self, client):
         top = "-".join(["hello"] * 20)
-        bottom = "-".join(["hello"] * 20)
+        bottom = "-".join(["world"] * 20)
         response = client.get("/iw/" + top + "/" + bottom + ".jpg")
 
         assert 200 == response.status_code
         assert 'image/jpeg' == response.mimetype
+
+    def test_get_visible_jpg_with_too_much_text_for_a_filename(self, client):
+        top = "hello"
+        bottom = "-".join(["world"] * 50)
+        response = client.get("/iw/" + top + "/" + bottom + ".jpg")
+
+        assert 414 == response.status_code
+        assert {
+            'message': "Filename too long."
+        } == load(response)
 
     def test_get_hidden_jpg(self, client):
         response = client.get("/_aXcJaGVsbG8vd29ybGQJ.jpg")

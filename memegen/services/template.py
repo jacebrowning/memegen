@@ -33,7 +33,7 @@ class TemplateService(Service):
                 return template
 
         # Else, no match
-        raise self.exceptions.not_found
+        raise self.exceptions.TemplateNotFound
 
     def validate(self):
         """Ensure all template are valid and conflict-free."""
