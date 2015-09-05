@@ -1,1 +1,1 @@
-web: gunicorn --reload manage:app --log-file -
+web: gunicorn manage:app --config gunicorn.config.py
