@@ -1,4 +1,4 @@
-# pylint: disable=R,C
+# pylint: disable=no-self-use
 
 import pytest
 
@@ -9,7 +9,9 @@ class TestGetConfig:
 
     def test_get_valid(self):
         config = get_config('prod')
+
         assert issubclass(config, Config)
+        assert 'prod' == config.ENV
 
     def test_get_none(self):
         with pytest.raises(AssertionError):

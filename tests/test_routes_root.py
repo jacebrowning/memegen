@@ -9,7 +9,8 @@ class TestRoot:
 
     def test_get_root(self, client):
         response = client.get("/api")
-        assert response.status_code == 200
+
+        assert 200 == response.status_code
         assert dict(
             templates="http://localhost/templates/",
             overview="http://localhost/overview",
