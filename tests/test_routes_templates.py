@@ -28,6 +28,11 @@ class TestTemplates:
             example="http://localhost/live/_/do-it-live!",
         ) == load(response)
 
+    def test_get_with_dash_in_key(self, client):
+        response = client.get("/templates/awkward-awesome")
+
+        assert 200 == response.status_code
+
     def test_get_all(self, client):
         response = client.get("/templates/")
 
