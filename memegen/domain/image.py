@@ -38,7 +38,7 @@ class Image:
 
 
 # based on: https://github.com/danieldiekmeier/memegenerator
-def make_meme(top, bottom, background, path, match_font_size=True):
+def make_meme(top, bottom, background, path, match_font_size=False):
     """Add text to an image and save it."""
     img = ImageFile.open(background)
 
@@ -50,7 +50,7 @@ def make_meme(top, bottom, background, path, match_font_size=True):
     draw = ImageDraw.Draw(img)
 
     max_font_size = int(image_size[1] / 5)
-    min_font_size = int(image_size[1] / 17)
+    min_font_size = int(image_size[1] / 12)
     max_text_len = image_size[0] - 20
     top_font_size, top = _optimize_font_size(top, max_font_size,
                                              min_font_size, max_text_len)
@@ -87,7 +87,7 @@ def make_meme(top, bottom, background, path, match_font_size=True):
 
 
 def _draw_outlined_text(draw_image, text_position, text, font, font_size):
-    """Draws white text with black outline on an image"""
+    """Draw white text with black outline on an image."""
 
     # Draw black text outlines
     outline_range = max(1, font_size // 25)
@@ -116,7 +116,8 @@ def _optimize_font_size(text, max_font_size, min_font_size,
     else:
         phrases = [text]
     for phrase in phrases:
-        font_size = min(_maximize_font_size(phrase, max_text_len), max_font_size)
+        font_size = min(_maximize_font_size(phrase, max_text_len),
+                        max_font_size)
 
     # rebuild text with new lines
     text = '\n'.join(phrases)
@@ -146,9 +147,9 @@ def _split(text):
     ('This is a phrase', 'that can be split.')
 
     >>> _split("This_is_a_phrase_that_can_not_be_split.")
-    ('This_is_a_phrase_that_can_not_be_split.')
+    ('This_is_a_phrase_that_can_not_be_split.',)
     """
-    result = [text]
+    result = (text,)
     if len(text) >= 3 and ' ' in text[1:-1]:  # can split this string
         space_indices = [i for i in range(len(text)) if text[i] == ' ']
         space_proximities = [abs(i - len(text) // 2) for i in space_indices]
