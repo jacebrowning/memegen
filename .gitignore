@@ -11,6 +11,9 @@ Icon*
 .cache
 env
 
+# Temporary server files
+*.pid
+
 # Generated documentation
 docs/gen
 apidocs

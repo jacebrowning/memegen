@@ -20,20 +20,21 @@ class TemplateService(Service):
 
     def find(self, key):
         """Find a template with a matching key."""
-        key = Template.strip(key)
 
         # Find an exact match
+        key = Template.strip(key, keep_special=True)
         template = self.template_store.read(key)
         if template:
             return template
 
         # Else, find an alias match
+        key = Template.strip(key)
         for template in self.all():
             if key in template.aliases_stripped:
                 return template
 
         # Else, no match
-        raise self.exceptions.not_found
+        raise self.exceptions.TemplateNotFound
 
     def validate(self):
         """Ensure all template are valid and conflict-free."""
