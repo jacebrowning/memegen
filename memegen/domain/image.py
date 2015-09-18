@@ -50,12 +50,12 @@ def make_meme(top, bottom, background, path, match_font_size=False):
     draw = ImageDraw.Draw(img)
 
     max_font_size = int(image_size[1] / 5)
-    min_font_size = int(image_size[1] / 12)
+    min_font_size_single_line = int(image_size[1] / 12)
     max_text_len = image_size[0] - 20
     top_font_size, top = _optimize_font_size(top, max_font_size,
-                                             min_font_size, max_text_len)
+                                             min_font_size_single_line, max_text_len)
     bottom_font_size, bottom = _optimize_font_size(bottom, max_font_size,
-                                                   min_font_size, max_text_len)
+                                                   min_font_size_single_line, max_text_len)
 
     if match_font_size is True:
         top_font_size = min(top_font_size, bottom_font_size)
@@ -109,15 +109,15 @@ def _optimize_font_size(text, max_font_size, min_font_size,
     font = ImageFont.truetype(FONT, min_font_size)
     text_size = font.getsize(text)
 
-    font_size = max_font_size
     # calculate font size for text, split if necessary
     if text_size[0] > max_text_len:
         phrases = _split(text)
     else:
         phrases = [text]
+    font_size = max_font_size//len(phrases)
     for phrase in phrases:
         font_size = min(_maximize_font_size(phrase, max_text_len),
-                        max_font_size)
+                        font_size)
 
     # rebuild text with new lines
     text = '\n'.join(phrases)
@@ -130,7 +130,7 @@ def _maximize_font_size(text, max_size):
     font_size = max_size
     font = ImageFont.truetype(FONT, font_size)
     text_size = font.getsize(text)
-    while text_size[0] > max_size:
+    while text_size[0] > max_size and font_size > 1:
         font_size = font_size - 1
         font = ImageFont.truetype(FONT, font_size)
         text_size = font.getsize(text)
