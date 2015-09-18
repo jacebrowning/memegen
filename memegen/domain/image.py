@@ -38,7 +38,7 @@ class Image:
 
 
 # based on: https://github.com/danieldiekmeier/memegenerator
-def make_meme(top, bottom, background, path):
+def make_meme(top, bottom, background, path, match_font_size=False):
     """Add text to an image and save it."""
     img = ImageFile.open(background)
 
@@ -50,14 +50,24 @@ def make_meme(top, bottom, background, path):
     draw = ImageDraw.Draw(img)
 
     max_font_size = int(image_size[1] / 5)
-    min_font_size = int(image_size[1] / 17)
+    min_font_size_single_line = int(image_size[1] / 12)
     max_text_len = image_size[0] - 20
-    font_size, top, bottom = _optimize_font_size(top, bottom, max_font_size,
-                                                 min_font_size, max_text_len)
-    font = ImageFont.truetype(FONT, font_size)
+    top_font_size, top = _optimize_font_size(top, max_font_size,
+                                             min_font_size_single_line,
+                                             max_text_len)
+    bottom_font_size, bottom = _optimize_font_size(bottom, max_font_size,
+                                                   min_font_size_single_line,
+                                                   max_text_len)
 
-    top_text_size = draw.multiline_textsize(top, font)
-    bottom_text_size = draw.multiline_textsize(bottom, font)
+    if match_font_size is True:
+        top_font_size = min(top_font_size, bottom_font_size)
+        bottom_font_size = top_font_size
+
+    top_font = ImageFont.truetype(FONT, top_font_size)
+    bottom_font = ImageFont.truetype(FONT, bottom_font_size)
+
+    top_text_size = draw.multiline_textsize(top, top_font)
+    bottom_text_size = draw.multiline_textsize(bottom, bottom_font)
 
     # Find top centered position for top text
     top_text_position_x = (image_size[0] / 2) - (top_text_size[0] / 2)
@@ -69,58 +79,52 @@ def make_meme(top, bottom, background, path):
     bottom_text_size_y = image_size[1] - bottom_text_size[1] * (7 / 6)
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
-    # Draw black text outlines
-    outline_range = max(1, int(font_size / 25))
-    for x in range(-outline_range, outline_range + 1):
-        for y in range(-outline_range, outline_range + 1):
-            pos = (top_text_position[0] + x, top_text_position[1] + y)
-            draw.multiline_text(pos, top, (0, 0, 0),
-                                font=font, align='center')
-            pos = (bottom_text_position[0] + x, bottom_text_position[1] + y)
-            draw.multiline_text(pos, bottom, (0, 0, 0),
-                                font=font, align='center')
-
-    # Draw inner white text
-    draw.multiline_text(top_text_position, top, (255, 255, 255),
-                        font=font, align='center')
-    draw.multiline_text(bottom_text_position, bottom, (255, 255, 255),
-                        font=font, align='center')
+    _draw_outlined_text(draw, top_text_position,
+                        top, top_font, top_font_size)
+    _draw_outlined_text(draw, bottom_text_position,
+                        bottom, bottom_font, bottom_font_size)
 
     log.info("generated: %s", path)
     return img.save(path)
 
 
-def _optimize_font_size(top, bottom, max_font_size, min_font_size,
+def _draw_outlined_text(draw_image, text_position, text, font, font_size):
+    """Draw white text with black outline on an image."""
+
+    # Draw black text outlines
+    outline_range = max(1, font_size // 25)
+    for x in range(-outline_range, outline_range + 1):
+        for y in range(-outline_range, outline_range + 1):
+            pos = (text_position[0] + x, text_position[1] + y)
+            draw_image.multiline_text(pos, text, (0, 0, 0),
+                                      font=font, align='center')
+
+    # Draw inner white text
+    draw_image.multiline_text(text_position, text, (255, 255, 255),
+                              font=font, align='center')
+
+
+def _optimize_font_size(text, max_font_size, min_font_size,
                         max_text_len):
     """Calculate the optimal font size to fit text in a given size."""
-    font_size = max_font_size
-
     # Check size when using smallest single line font size
     font = ImageFont.truetype(FONT, min_font_size)
-    top_text_size = font.getsize(top)
-    bottom_text_size = font.getsize(bottom)
+    text_size = font.getsize(text)
 
-    # calculate font size for top text, split if necessary
-    if top_text_size[0] > max_text_len:
-        top_phrases = _split(top)
+    # calculate font size for text, split if necessary
+    if text_size[0] > max_text_len:
+        phrases = _split(text)
     else:
-        top_phrases = [top]
-    for phrase in top_phrases:
-        font_size = min(_maximize_font_size(phrase, max_text_len), font_size)
-
-    # calculate font size for bottom text, split if necessary
-    if bottom_text_size[0] > max_text_len:
-        bottom_phrases = _split(bottom)
-    else:
-        bottom_phrases = [bottom]
-    for phrase in bottom_phrases:
-        font_size = min(_maximize_font_size(phrase, max_text_len), font_size)
+        phrases = [text]
+    font_size = max_font_size // len(phrases)
+    for phrase in phrases:
+        font_size = min(_maximize_font_size(phrase, max_text_len),
+                        font_size)
 
     # rebuild text with new lines
-    top = '\n'.join(top_phrases)
-    bottom = '\n'.join(bottom_phrases)
+    text = '\n'.join(phrases)
 
-    return font_size, top, bottom
+    return font_size, text
 
 
 def _maximize_font_size(text, max_size):
@@ -128,7 +132,7 @@ def _maximize_font_size(text, max_size):
     font_size = max_size
     font = ImageFont.truetype(FONT, font_size)
     text_size = font.getsize(text)
-    while text_size[0] > max_size:
+    while text_size[0] > max_size and font_size > 1:
         font_size = font_size - 1
         font = ImageFont.truetype(FONT, font_size)
         text_size = font.getsize(text)
@@ -144,8 +148,10 @@ def _split(text):
     >>> _split("This is a phrase that can be split.")
     ('This is a phrase', 'that can be split.')
 
+    >>> _split("This_is_a_phrase_that_can_not_be_split.")
+    ('This_is_a_phrase_that_can_not_be_split.',)
     """
-    result = [text]
+    result = (text,)
     if len(text) >= 3 and ' ' in text[1:-1]:  # can split this string
         space_indices = [i for i in range(len(text)) if text[i] == ' ']
         space_proximities = [abs(i - len(text) // 2) for i in space_indices]
