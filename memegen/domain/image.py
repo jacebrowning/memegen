@@ -53,9 +53,11 @@ def make_meme(top, bottom, background, path, match_font_size=False):
     min_font_size_single_line = int(image_size[1] / 12)
     max_text_len = image_size[0] - 20
     top_font_size, top = _optimize_font_size(top, max_font_size,
-                                             min_font_size_single_line, max_text_len)
+                                             min_font_size_single_line,
+                                             max_text_len)
     bottom_font_size, bottom = _optimize_font_size(bottom, max_font_size,
-                                                   min_font_size_single_line, max_text_len)
+                                                   min_font_size_single_line,
+                                                   max_text_len)
 
     if match_font_size is True:
         top_font_size = min(top_font_size, bottom_font_size)
