@@ -114,7 +114,7 @@ def _optimize_font_size(text, max_font_size, min_font_size,
         phrases = _split(text)
     else:
         phrases = [text]
-    font_size = max_font_size//len(phrases)
+    font_size = max_font_size // len(phrases)
     for phrase in phrases:
         font_size = min(_maximize_font_size(phrase, max_text_len),
                         font_size)
