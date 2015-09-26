@@ -10,9 +10,8 @@ blueprint = Blueprint('overview', __name__, url_prefix="/overview")
 
 def _gen():
     for template in sorted(app.template_service.all()):
-        path = template.default or "hello/world"
-        url = url_for("image.get", key=template.key, path=path,
-                      _external=True)
+        path = template.default or "your-text/goes-here"
+        url = url_for("image.get", key=template.key, path=path, _external=True)
         link = url_for("links.get", key=template.key, path=path)
         yield {
             'url': url,
