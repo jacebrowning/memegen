@@ -3,7 +3,7 @@
 from memegen.domain import Text
 
 
-class TestTextInit:
+class TestInit:
 
     def test_none(self):
         text = Text()
@@ -33,7 +33,19 @@ class TestTextInit:
         assert "" == text.get_line(3)
 
 
-class TestTextLines:
+class TestBool:
+
+    def test_content_is_truthy(self):
+        assert True is bool(Text("Hello, world!"))
+
+    def test_empty_is_falsey(self):
+        assert False is bool(Text())
+
+    def test_only_spaces_is_falsey(self):
+        assert False is bool(Text("_/_/_"))
+
+
+class TestLines:
 
     def test_split_underscore_as_spaces(self):
         text = Text("hello_world")
@@ -116,7 +128,7 @@ class TestTextLines:
         assert ["99% VS. 1%"] == text.lines
 
 
-class TestTextPath:
+class TestPath:
 
     def test_case_ignored(self):
         text = Text("hello/World")

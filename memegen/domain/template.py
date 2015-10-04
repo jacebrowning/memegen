@@ -14,8 +14,11 @@ log = logging.getLogger(__name__)
 class Template:
     """Blank image to generate a meme."""
 
-    DEFAULTS = ("default.png", "default.jpg")
+    DEFAULT_IMAGES = ("default.png", "default.jpg")
+    DEFAULT_LINES = ["YOUR TEXT", "GOES HERE"]
+
     VALID_LINK_FLAG = '.valid_link.tmp'
+
     MIN_HEIGHT = 240
     MIN_WIDTH = 240
 
@@ -42,16 +45,27 @@ class Template:
 
     @property
     def path(self):
-        for default in self.DEFAULTS:
+        for default in self.DEFAULT_IMAGES:
             path = os.path.join(self.root, self.key, default)
             if os.path.isfile(path):
                 return path
         return None
 
     @property
-    def default(self):
-        text = Text('/'.join(self.lines))
-        return text.path
+    def default_text(self):
+        return Text('/'.join(self.lines))
+
+    @property
+    def default_path(self):
+        return self.default_text.path
+
+    @property
+    def sample_text(self):
+        return self.default_text or Text('/'.join(self.DEFAULT_LINES))
+
+    @property
+    def sample_path(self):
+        return self.sample_text.path
 
     @property
     def aliases_lowercase(self):

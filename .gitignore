@@ -12,6 +12,7 @@ Icon*
 env
 
 # Temporary server files
+.env
 *.pid
 
 # Generated documentation

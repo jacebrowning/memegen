@@ -34,13 +34,21 @@ class TestTemplate:
 
         assert None is path
 
-    def test_default(self, template):
-        assert "foo/bar" == template.default
+    def test_default_path(self, template):
+        assert "foo/bar" == template.default_path
 
-    def test_default_with_no_lines(self, template):
+    def test_default_path_with_no_lines(self, template):
         template.lines = []
 
-        assert "" == template.default
+        assert "" == template.default_path
+
+    def test_sample_path(self, template):
+        assert "foo/bar" == template.sample_path
+
+    def test_sample_path_with_no_lines(self, template):
+        template.lines = []
+
+        assert "your-text/goes-here" == template.sample_path
 
     def test_validate_meta_with_no_name(self, template):
         template.name = None

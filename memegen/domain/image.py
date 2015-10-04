@@ -84,7 +84,7 @@ def make_meme(top, bottom, background, path, match_font_size=False):
     _draw_outlined_text(draw, bottom_text_position,
                         bottom, bottom_font, bottom_font_size)
 
-    log.info("generated: %s", path)
+    log.info("generating: %s", path)
     return img.save(path)
 
 

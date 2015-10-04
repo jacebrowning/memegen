@@ -6,6 +6,9 @@ class Text:
     def __str__(self):
         return ' / '.join(self.lines)
 
+    def __bool__(self):
+        return bool(self.path.strip("_/"))
+
     def __getitem__(self, key):
         try:
             part = self._parts[key]
