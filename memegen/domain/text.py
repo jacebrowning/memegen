@@ -1,10 +1,22 @@
 class Text:
 
+    EMPTY = '_'
+    SPACE = '-'
+
     def __init__(self, path=None):
-        self._parts = [] if path is None else path.split('/')
+        if path is None:
+            self._parts = []
+        elif isinstance(path, str):
+            self._parts = path.split('/')
+        else:
+            assert isinstance(path, list)
+            self._parts = path
 
     def __str__(self):
         return ' / '.join(self.lines)
+
+    def __bool__(self):
+        return bool(self.path.strip(self.EMPTY + '/'))
 
     def __getitem__(self, key):
         try:
@@ -52,8 +64,8 @@ class Text:
 
         return '/'.join(paths)
 
-    @staticmethod
-    def _format_line(part):
+    @classmethod
+    def _format_line(cls, part):
         part = part.replace('~q', '?')
         part = part.replace('~Q', '?')
         part = part.replace('~p', '%')
@@ -65,7 +77,7 @@ class Text:
         previous_upper = True
         previous_char = None
         for i, char in enumerate(part):
-            if char in ('_', '-'):
+            if char in (cls.EMPTY, cls.SPACE):
                 if char == previous_char:
                     chars[-1] = char
                     previous_char = None
@@ -93,13 +105,14 @@ class Text:
 
         return ''.join(chars)
 
-    @staticmethod
-    def _format_path(line):
+    @classmethod
+    def _format_path(cls, line):
         if line == ' ':
-            path = '_'
+            path = cls.EMPTY
         else:
-            path = line.replace('-', '--').replace('_', '__')
-            path = path.replace(' ', '-')
+            path = line.replace(cls.SPACE, cls.SPACE * 2)
+            path = path.replace(cls.EMPTY, cls.EMPTY * 2)
+            path = path.replace(' ', cls.SPACE)
             path = path.replace('?', '~q')
             path = path.replace('%', '~p')
             path = path.lower()

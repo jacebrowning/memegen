@@ -90,7 +90,7 @@ $(ALL_FLAG): $(SOURCES)
 ci: check test tests validate
 
 .PHONY: run
-run: depends-dev
+run: depends-dev .env
 	$(HONCHO) start
 
 .PHONY: launch
@@ -106,6 +106,9 @@ validate: env
 watch: depends-dev .clean-test
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
+
+.env:
+	echo "CONFIG = dev" >> .env
 
 # Development Installation #####################################################
 
