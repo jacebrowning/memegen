@@ -40,7 +40,7 @@ class TestTemplate:
     def test_default_path_with_no_lines(self, template):
         template.lines = []
 
-        assert "" == template.default_path
+        assert "_" == template.default_path
 
     def test_sample_path(self, template):
         assert "foo/bar" == template.sample_path

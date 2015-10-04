@@ -15,7 +15,7 @@ class Template:
     """Blank image to generate a meme."""
 
     DEFAULT_IMAGES = ("default.png", "default.jpg")
-    DEFAULT_LINES = ["YOUR TEXT", "GOES HERE"]
+    SAMPLE_LINES = ["YOUR TEXT", "GOES HERE"]
 
     VALID_LINK_FLAG = '.valid_link.tmp'
 
@@ -53,15 +53,15 @@ class Template:
 
     @property
     def default_text(self):
-        return Text('/'.join(self.lines))
+        return Text(self.lines)
 
     @property
     def default_path(self):
-        return self.default_text.path
+        return self.default_text.path or Text.EMPTY
 
     @property
     def sample_text(self):
-        return self.default_text or Text('/'.join(self.DEFAULT_LINES))
+        return self.default_text or Text(self.SAMPLE_LINES)
 
     @property
     def sample_path(self):
