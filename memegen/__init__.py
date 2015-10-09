@@ -3,9 +3,9 @@
 import sys
 
 __project__ = 'MemeGen'
-__version__ = '0.0.0'
+__version__ = '1'
 
-VERSION = __project__ + '-' + __version__
+VERSION = "{} v{}".format(__project__, __version__)
 
 PYTHON_VERSION = 3, 4
 

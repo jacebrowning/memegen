@@ -12,6 +12,7 @@ class TestRoot:
 
         assert 200 == response.status_code
         assert dict(
+            version="1",
             templates="http://localhost/templates/",
             overview="http://localhost/overview",
             latest="http://localhost/latest",
