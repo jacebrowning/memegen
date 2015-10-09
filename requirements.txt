@@ -1,5 +1,5 @@
 Flask == 0.10.1
-Flask-API == 0.6.3
+Flask-API == 0.6.4
 Pillow == 2.9.0
 YORM == 0.4.1
 requests == 2.7.0
