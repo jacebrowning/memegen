@@ -10,7 +10,6 @@ class Exceptions:
 
 
 class Service(metaclass=ABCMeta):
-
     """Base class for domain services."""
 
     def __init__(self, exceptions=None):

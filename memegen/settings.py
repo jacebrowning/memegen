@@ -2,7 +2,6 @@ import os
 
 
 class Config:
-
     """Base configuration."""
 
     ENV = None
@@ -16,14 +15,12 @@ class Config:
 
 
 class ProdConfig(Config):
-
     """Production configuration."""
 
     ENV = 'prod'
 
 
 class TestConfig(Config):
-
     """Test configuration."""
 
     ENV = 'test'
@@ -33,7 +30,6 @@ class TestConfig(Config):
 
 
 class DevConfig(Config):
-
     """Development configuration."""
 
     ENV = 'dev'
