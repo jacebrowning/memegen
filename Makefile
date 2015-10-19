@@ -94,7 +94,7 @@ run: depends-dev .env
 	$(HONCHO) start
 
 .PHONY: launch
-launch: env
+launch: depends-dev
 	eval "sleep 3; open http://$(IP):$(PORT)" &
 	$(MAKE) run
 
