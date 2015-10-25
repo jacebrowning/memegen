@@ -10,13 +10,13 @@ from memegen.settings import ProdConfig
 from memegen.app import create_app
 
 
-def run():
+def run(loop=True):
+    logging.info("generating sample images...")
+
     app = create_app(ProdConfig)
-    while True:
-        logging.info("generating sample images...")
-        for template in app.template_service.all():
-            app.image_service.create_image(template, template.sample_text)
-        time.sleep(60)
+
+    for template in app.template_service.all():
+        app.image_service.create_image(template, template.sample_text)
 
 
 if __name__ == '__main__':

@@ -91,6 +91,7 @@ ci: check test tests validate
 
 .PHONY: run
 run: depends-dev .env
+	$(HONCHO) run bin/post_compile
 	$(HONCHO) start
 
 .PHONY: launch
