@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+indent() {
+  sed "s/^/       /"
+}
+
+puts-step() {
+  echo "-----> $@"
+}
+
+puts-step "Generating images..."
+
+python scripts/generate_sample_images.py 2>&1 | indent
