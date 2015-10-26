@@ -29,6 +29,7 @@ def get():
     data['version'] = __version__
     data['templates'] = url_for("templates.get", _external=True)
     data['overview'] = url_for("overview.get", _external=True)
+    data['generator'] = url_for("generator.get", _external=True)
     data['latest'] = url_for("latest.get", _external=True)
     data['source'] = GITHUB_BASE
     data['contributing'] = CONTRIBUTING
