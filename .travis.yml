@@ -8,10 +8,11 @@ cache:
   pip: true
   directories:
   - env
+  - data
 
 env:
   global:
-  - RANDOM_SEED=12345
+  - RANDOM_SEED=0
 
 install:
 - pip install coveralls scrutinizer-ocular
