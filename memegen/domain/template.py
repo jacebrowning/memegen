@@ -98,6 +98,7 @@ class Template:
     def validate_meta(self):
         if not self.lines:
             log.warning("template '%s' has no default lines of text", self)
+            return False
         if not self.name:
             log.error("template '%s' has no name", self)
             return False
