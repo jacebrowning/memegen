@@ -3,7 +3,7 @@ import os
 
 class ImageStore:
 
-    LATEST = 'latest.jpg'
+    LATEST = "latest.jpg"
 
     def __init__(self, root):
         self.root = root

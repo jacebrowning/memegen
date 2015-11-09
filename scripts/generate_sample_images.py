@@ -11,7 +11,7 @@ from memegen.app import create_app
 
 
 def run(loop=True):
-    logging.info("generating sample images...")
+    logging.info("Generating sample images...")
 
     app = create_app(ProdConfig)
 

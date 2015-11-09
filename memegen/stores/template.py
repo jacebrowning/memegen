@@ -36,7 +36,7 @@ class TemplateModel:
 
 def load_before(func):
     def wrapped(self, *args, **kwargs):
-        # pylint: disable=W0212
+        # pylint: disable=protected-access
         if self._items is None:
             self._load()
         return func(self, *args, **kwargs)
