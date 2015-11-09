@@ -1,25 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Memes Overview</title>
+  <title>Meme Overview</title>
   <style type="text/css">
-  div {
-    vertical-align: top;
-    display: inline-block;
-    text-align: center;
-    margin: 1em;
+  /* Base CSS */
+  * {
+    box-sizing: border-box;
   }
-  a {
-    display: block;
+
+  html, body {
+    font-family: Helvetica, sans-serif;
+    background-color: #f5f5f5;
+  }
+
+  label {
+    cursor: pointer;
+  }
+
+  /* Based on flexbox component */
+  /* https://github.com/csswizardry/inuit.css/blob/v5.0.1/objects/_flexbox.scss */
+  .grid {
+    display: table;
+    width: 100%;
+  }
+
+  .grid__col {
+      display: table-cell;
+      padding-right: 20px;
+  }
+
+  /* CSS widths */
+  .one-half {
+    width: 50%;
+  }
+  .one-third {
+    width: 33.3333%;
+  }
+  .one-quarter {
+    width: 25%;
+  }
+
+  .one-whole {
+    width: 100%;
+  }
+
+  /* Page specific CSS */
+  .meme-img {
+    width: 400px;
+  }
+
+  .meme-item {
+    padding: 25px;
+    display: inline-block;
+    width: 450px; /* 400px img + (25px * 2 padding) */
+    vertical-align: middle;
   }
   </style>
 </head>
 <body>
-  {% for img in imgs %}
-  <div>
-    <a href="{{ img.url }}"><img src="{{ img.url }}"/></a>
-    <a href="{{ img.link }}">{{ img.link }}</a>
+
+  <div class="grid">
+    <div class="grid__col one-half">
+      <div>
+      {% for img in imgs %}
+        <label class="meme-item">
+          <a href="{{ img.url }}"><img src="{{ img.url }}" class="meme-img"/></a>
+          <a href="{{ img.link }}">{{ img.link }}</a>
+        </label>
+      {% endfor %}
+      </div>
+    </div>
   </div>
-  {% endfor %}
+
 </body>
 </html>
