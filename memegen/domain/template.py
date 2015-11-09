@@ -97,16 +97,17 @@ class Template:
 
     def validate_meta(self):
         if not self.lines:
-            log.warning("template '%s' has no default lines of text", self)
+            log.error("Template '%s' has no default lines of text", self)
+            return False
         if not self.name:
-            log.error("template '%s' has no name", self)
+            log.error("Template '%s' has no name", self)
             return False
         if not self.name[0].isalnum():
-            msg = "template '%s' name %r should start with an alphanumeric"
+            msg = "Template '%s' name %r should start with an alphanumeric"
             log.error(msg, self, self.name)
             return False
         if not self.path:
-            log.error("template '%s' has no default image", self)
+            log.error("Template '%s' has no default image", self)
             return False
         return True
 
@@ -114,16 +115,16 @@ class Template:
         if self.link:
             flag = os.path.join(self.root, self.key, self.VALID_LINK_FLAG)
             if os.path.isfile(flag):
-                log.info("link already checked: %s", self.link)
+                log.info("Link already checked: %s", self.link)
             else:
-                log.info("checking link %s ...", self.link)
+                log.info("Checking link %s ...", self.link)
                 try:
                     response = requests.get(self.link, timeout=5)
                 except requests.exceptions.ReadTimeout:
-                    log.warning("connection timed out")
+                    log.warning("Connection timed out")
                     return True  # assume URL is OK; it will be checked again
                 if response.status_code >= 400 and response.status_code != 429:
-                    msg = "template '%s' link is invalid (%s)"
+                    msg = "Template '%s' link is invalid (%s)"
                     log.error(msg, self, response.status_code)
                     return False
                 else:

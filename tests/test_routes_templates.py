@@ -13,7 +13,7 @@ class TestTemplates:
             name="Insanity Wolf",
             description="http://knowyourmeme.com/memes/insanity-wolf",
             aliases=['insanity', 'insanity-wolf', 'iw'],
-            example="http://localhost/iw/your-text/goes-here",
+            example="http://localhost/iw/does-testing/in-production",
         ) == load(response)
 
     def test_get_with_default(self, client):

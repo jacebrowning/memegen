@@ -14,7 +14,7 @@ def get():
     """Get a list of all meme templates."""
     data = OrderedDict()
     for template in sorted(app.template_service.all()):
-        url = url_for(".create", key=template.key, _external=True)
+        url = url_for('.create', key=template.key, _external=True)
         data[template.name] = url
     return data
 
@@ -30,14 +30,14 @@ def create_meme(key):
     if request.method == 'GET':
         template = app.template_service.find(key)
         if template.key != key:
-            return redirect(url_for(".create", key=template.key))
+            return redirect(url_for('.create', key=template.key))
 
         data = OrderedDict()
         data['name'] = template.name
         data['description'] = template.link
         data['aliases'] = sorted(template.aliases + [template.key])
         path = template.sample_path
-        url = url_for("links.get", key=key, path=path, _external=True)
+        url = url_for('links.get', key=key, path=path, _external=True)
         data['example'] = url
         return data
 

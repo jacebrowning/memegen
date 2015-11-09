@@ -13,7 +13,7 @@ blueprint = Blueprint('links', __name__, url_prefix="/")
 @blueprint.route("<key>")
 def get_without_text(key):
     template = app.template_service.find(key)
-    return redirect(url_for("templates.create", key=template.key))
+    return redirect(url_for('templates.create', key=template.key))
 
 
 @blueprint.route("<key>/<path:path>", endpoint='get')
@@ -21,11 +21,11 @@ def get_with_text(key, path):
     """Get links for generated images."""
     template = app.template_service.find(key)
     if template.key != key:
-        return redirect(url_for(".get", key=template.key, path=path))
+        return redirect(url_for('.get', key=template.key, path=path))
 
     text = Text(path)
     if text.path != path:
-        return redirect(url_for(".get", key=key, path=text.path))
+        return redirect(url_for('.get', key=key, path=text.path))
 
     data = OrderedDict()
     data['direct'] = OrderedDict()

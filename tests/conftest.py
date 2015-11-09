@@ -22,7 +22,7 @@ def load(response, as_json=True, key=None):
             data = data[key]
     else:
         data = None
-    logging.debug("response: %r", data)
+    logging.debug("Response: %r", data)
     return data
 
 

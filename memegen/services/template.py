@@ -41,13 +41,13 @@ class TemplateService(Service):
         templates = self.all()
         keys = {template.key: template for template in templates}
         for template in templates:
-            log.info("checking template '%s' ...", template)
+            log.info("Checking template '%s' ...", template)
             if not template.validate():
                 return False
             for alias in template.aliases:
-                log.info("checking alias '%s' -> '%s' ...", alias, template.key)
+                log.info("Checking alias '%s' -> '%s' ...", alias, template.key)
                 if alias not in template.aliases_lowercase:
-                    msg = "alias '%s' should be lowercase characters or dashes"
+                    msg = "Alias '%s' should be lowercase characters or dashes"
                     log.error(msg, alias)
                     return False
                 try:
@@ -55,7 +55,7 @@ class TemplateService(Service):
                 except KeyError:
                     keys[alias] = template
                 else:
-                    msg = "alias '%s' already used in template: %s"
+                    msg = "Alias '%s' already used in template: %s"
                     log.error(msg, alias, existing)
                     return False
         return True

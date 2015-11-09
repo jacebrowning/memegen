@@ -2,7 +2,7 @@ from flask import Blueprint
 
 
 blueprint = Blueprint('static', __name__, url_prefix="/",
-                      static_folder='../static')
+                      static_folder="../static")
 
 
 @blueprint.route("stylesheets/<filename>")

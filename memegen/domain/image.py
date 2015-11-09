@@ -84,7 +84,7 @@ def make_meme(top, bottom, background, path, match_font_size=False):
     _draw_outlined_text(draw, bottom_text_position,
                         bottom, bottom_font, bottom_font_size)
 
-    log.info("generating: %s", path)
+    log.info("Generating: %s", path)
     return img.save(path)
 
 
@@ -107,11 +107,12 @@ def _draw_outlined_text(draw_image, text_position, text, font, font_size):
 def _optimize_font_size(text, max_font_size, min_font_size,
                         max_text_len):
     """Calculate the optimal font size to fit text in a given size."""
+
     # Check size when using smallest single line font size
     font = ImageFont.truetype(FONT, min_font_size)
     text_size = font.getsize(text)
 
-    # calculate font size for text, split if necessary
+    # Calculate font size for text, split if necessary
     if text_size[0] > max_text_len:
         phrases = _split(text)
     else:
@@ -121,7 +122,7 @@ def _optimize_font_size(text, max_font_size, min_font_size,
         font_size = min(_maximize_font_size(phrase, max_text_len),
                         font_size)
 
-    # rebuild text with new lines
+    # Rebuild text with new lines
     text = '\n'.join(phrases)
 
     return font_size, text
@@ -130,12 +131,14 @@ def _optimize_font_size(text, max_font_size, min_font_size,
 def _maximize_font_size(text, max_size):
     """Find the biggest font size that will fit."""
     font_size = max_size
+
     font = ImageFont.truetype(FONT, font_size)
     text_size = font.getsize(text)
     while text_size[0] > max_size and font_size > 1:
         font_size = font_size - 1
         font = ImageFont.truetype(FONT, font_size)
         text_size = font.getsize(text)
+
     return font_size
 
 
@@ -150,8 +153,10 @@ def _split(text):
 
     >>> _split("This_is_a_phrase_that_can_not_be_split.")
     ('This_is_a_phrase_that_can_not_be_split.',)
+
     """
     result = (text,)
+
     if len(text) >= 3 and ' ' in text[1:-1]:  # can split this string
         space_indices = [i for i in range(len(text)) if text[i] == ' ']
         space_proximities = [abs(i - len(text) // 2) for i in space_indices]
@@ -159,4 +164,5 @@ def _split(text):
             if i == min(space_proximities):
                 result = (text[:j], text[j + 1:])
                 break
+
     return result

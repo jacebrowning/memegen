@@ -107,5 +107,5 @@ class TestImage:
 
         response = client.get("/latest.jpg")
 
-        assert 302 == response.status_code
-        assert '<a href="/fry/_.jpg">' in load(response, as_json=False)
+        assert 200 == response.status_code
+        assert 'image/png' == response.mimetype

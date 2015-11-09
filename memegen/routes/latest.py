@@ -12,5 +12,5 @@ blueprint = Blueprint('latest', __name__, url_prefix="/latest")
 @set_renderers(HTMLRenderer)
 def get():
     return render_template('latest.html',
-                           src=url_for("image.get_latest"),
+                           src=url_for('image.get_latest'),
                            refresh=10)
