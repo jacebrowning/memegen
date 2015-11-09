@@ -1,6 +1,7 @@
 name: Insanity Wolf
 default:
--
+- DOES TESTING
+- IN PRODUCTION
 link: http://knowyourmeme.com/memes/insanity-wolf
 aliases:
 - insanity-wolf
