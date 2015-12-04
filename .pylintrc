@@ -1,6 +1,6 @@
 [MESSAGES CONTROL]
 
-disable=locally-disabled,fixme,too-few-public-methods,too-many-public-methods,invalid-name,global-statement,too-many-ancestors
+disable=locally-disabled,fixme,too-few-public-methods,too-many-public-methods,invalid-name,global-statement,too-many-ancestors,misplaced-comparison-constant
 
 [FORMAT]
 
