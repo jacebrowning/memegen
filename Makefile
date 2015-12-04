@@ -6,7 +6,7 @@ EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # Python settings
 PYTHON_MAJOR ?= 3
-PYTHON_MINOR ?= 4
+PYTHON_MINOR ?= 5
 
 # Test settings
 UNIT_TEST_COVERAGE := 66
