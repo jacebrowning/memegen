@@ -8,7 +8,7 @@ PYTHON_MAJOR ?= 3
 PYTHON_MINOR ?= 5
 
 # Test settings
-UNIT_TEST_COVERAGE := 65
+UNIT_TEST_COVERAGE := 66
 INTEGRATION_TEST_COVERAGE := 75
 COMBINED_TEST_COVERAGE := 95
 
@@ -205,7 +205,7 @@ fix: depends-dev
 
 RANDOM_SEED ?= $(shell date +%s)
 
-PYTEST_CORE_OPTS := -r xXw -vv
+PYTEST_CORE_OPTS := --doctest-modules -r xXv -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
