@@ -141,7 +141,7 @@ $(DEPENDS_DEV_FLAG): Makefile
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
-	$(PIP) install --upgrade pync MacFSEvents
+	$(PIP) install --upgrade pync MacFSEvents==0.4
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
