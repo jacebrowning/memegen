@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, send_file
 from flask import current_app as app, request
+from webargs import fields, flaskparser
 import requests
 
 from .. import domain
@@ -7,6 +8,10 @@ from .. import domain
 from ._common import url_for
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
+
+options = {
+    'alt': fields.Str(missing=None)  # pylint: disable=no-member
+}
 
 
 @blueprint.route("latest.jpg")
@@ -20,10 +25,11 @@ def get_latest():
 
 
 @blueprint.route("<key>.jpg")
-def get_without_text(key):
+@flaskparser.use_kwargs(options)
+def get_without_text(key, alt):
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
-    return redirect(url_for('.get', key=key, path=text.path))
+    return redirect(url_for('.get', key=key, path=text.path, style=alt))
 
 
 @blueprint.route("<key>.jpeg")
@@ -32,18 +38,22 @@ def get_without_text_jpeg(key):
 
 
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
-def get_with_text(key, path):
+@flaskparser.use_kwargs(options)
+def get_with_text(key, path, alt):
     text = domain.Text(path)
     track_request(text)
 
     template = app.template_service.find(key)
     if template.key != key:
-        return redirect(url_for('.get', key=template.key, path=path))
+        return redirect(url_for('.get', key=template.key, path=path, alt=alt))
+
+    if alt and template.path == template.get_path(alt):
+        return redirect(url_for('.get', key=key, path=path))
 
     if path != text.path:
-        return redirect(url_for('.get', key=key, path=text.path))
+        return redirect(url_for('.get', key=key, path=text.path, alt=alt))
 
-    image = app.image_service.create_image(template, text)
+    image = app.image_service.create_image(template, text, style=alt)
 
     track_request(text)
     return send_file(image.path, mimetype='image/jpeg')

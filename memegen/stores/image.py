@@ -14,7 +14,8 @@ class ImageStore:
 
     def exists(self, image):
         image.root = self.root
-        return os.path.isfile(image.path)
+        # TODO: add a way to determine if the styled image was already generated
+        return os.path.isfile(image.path) and not image.style
 
     def create(self, image):
         image.root = self.root

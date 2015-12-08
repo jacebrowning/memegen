@@ -14,7 +14,9 @@ log = logging.getLogger(__name__)
 class Template:
     """Blank image to generate a meme."""
 
-    DEFAULT_IMAGES = ("default.png", "default.jpg")
+    DEFAULT = 'default'
+    EXTENSIONS = ('.png', '.jpg')
+
     SAMPLE_LINES = ["YOUR TEXT", "GOES HERE"]
 
     VALID_LINK_FLAG = '.valid_link.tmp'
@@ -45,11 +47,7 @@ class Template:
 
     @property
     def path(self):
-        for default in self.DEFAULT_IMAGES:
-            path = os.path.join(self.root, self.key, default)
-            if os.path.isfile(path):
-                return path
-        return None
+        return self.get_path()
 
     @property
     def default_text(self):
@@ -82,6 +80,14 @@ class Template:
             for char in ('-', '_', '!', "'"):
                 text = text.replace(char, '')
         return text
+
+    def get_path(self, *styles):
+        for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
+            for extension in self.EXTENSIONS:
+                path = os.path.join(self.root, self.key, name + extension)
+                if os.path.isfile(path):
+                    return path
+        return None
 
     def validate(self, validators=None):
         if validators is None:

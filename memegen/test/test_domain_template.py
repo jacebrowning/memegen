@@ -1,15 +1,18 @@
-# pylint: disable=no-self-use
+# pylint: disable=unused-variable
+# pylint: disable=expression-not-assigned
+# pylint: disable=misplaced-comparison-constant
 
 from unittest.mock import patch, Mock
 
 import pytest
+from expecter import expect
 
 from memegen.domain import Template
 
 
-class TestTemplate:
+def describe_template():
 
-    def test_comparison(self):
+    def it_supports_comparison():
         t1 = Template('abc', "A Thing")
         t2 = Template('def')
         t3 = Template('def', "Do This")
@@ -18,91 +21,119 @@ class TestTemplate:
         assert t2 == t3
         assert t1 < t3
 
-    def test_path(self, template):
-        template.root = "my_root"
+    def describe_get_path():
 
-        with patch('os.path.isfile', Mock(return_value=True)):
-            path = template.path
+        @patch('os.path.isfile', Mock(return_value=True))
+        def it_returns_default_when_no_style(template):
+            expect(template.get_path()) == "abc/default.png"
 
-        assert "my_root/abc/default.png" == path
+        @patch('os.path.isfile', Mock(return_value=True))
+        def it_returns_alternate_when_style_provided(template):
+            expect(template.get_path('Custom')) == "abc/custom.png"
 
-    def test_path_is_none_with_no_file(self, template):
-        template.root = "my_root"
+        @patch('os.path.isfile', Mock(return_value=True))
+        def it_returns_default_when_style_is_none(template):
+            expect(template.get_path(None)) == "abc/default.png"
 
-        with patch('os.path.isfile', Mock(return_value=False)):
-            path = template.path
+    def describe_path():
 
-        assert None is path
+        def is_returned_when_file_exists(template):
+            template.root = "my_root"
 
-    def test_default_path(self, template):
-        assert "foo/bar" == template.default_path
+            with patch('os.path.isfile', Mock(return_value=True)):
+                path = template.path
 
-    def test_default_path_with_no_lines(self, template):
-        template.lines = []
+            assert "my_root/abc/default.png" == path
 
-        assert "_" == template.default_path
+        def is_none_when_no_file(template):
+            template.root = "my_root"
 
-    def test_sample_path(self, template):
-        assert "foo/bar" == template.sample_path
+            with patch('os.path.isfile', Mock(return_value=False)):
+                path = template.path
 
-    def test_sample_path_with_no_lines(self, template):
-        template.lines = []
+            assert None is path
 
-        assert "your-text/goes-here" == template.sample_path
+    def describe_default_path():
 
-    def test_validate_meta_with_no_name(self, template):
-        template.name = None
+        def is_based_on_lines(template):
+            assert "foo/bar" == template.default_path
 
-        assert False is template.validate_meta()
+        def is_underscore_when_no_lines(template):
+            template.lines = []
 
-    def test_validate_meta_with_no_default_image(self, template):
-        assert False is template.validate_meta()
+            assert "_" == template.default_path
 
-    def test_validate_meta_with_nonalphanumberic_name(self, template):
-        template.name = "'ABC' Meme"
+    def describe_sample_path():
 
-        assert False is template.validate_meta()
+        def is_based_on_lines(template):
+            assert "foo/bar" == template.sample_path
 
-    def test_validate_link_with_bad_link(self, template):
-        mock_response = Mock()
-        mock_response.status_code = 404
+        def is_placeholder_when_no_lines(template):
+            template.lines = []
 
-        with patch('requests.get', Mock(return_value=mock_response)):
-            template.link = "example.com/fake"
+            assert "your-text/goes-here" == template.sample_path
 
-            assert False is template.validate_link()
+    def describe_validate_meta():
 
-    def test_validate_pass(self, template):
-        assert True is template.validate(validators=[])
+        def with_no_name(template):
+            template.name = None
 
-    def test_validate_all_pass(self, template):
-        """Verify a template is valid if all validators pass."""
-        mock_validators = [lambda: True]
+            assert False is template.validate_meta()
 
-        assert True is template.validate(validators=mock_validators)
+        def with_no_default_image(template):
+            assert False is template.validate_meta()
 
-    def test_validate_fail(self, template):
-        """Verify a template is invalid if any validators fail."""
-        mock_validators = [lambda: False]
+        def with_nonalphanumberic_name(template):
+            template.name = "'ABC' Meme"
 
-        assert False is template.validate(validators=mock_validators)
+            assert False is template.validate_meta()
 
-    @patch('os.path.isfile', Mock(return_value=True))
-    def test_validate_link(self, template):
-        template.link = "example.com"
+    def describe_validate_link():
 
-        assert True is template.validate_link()
+        def with_bad_link(template):
+            mock_response = Mock()
+            mock_response.status_code = 404
 
-    @pytest.mark.parametrize('dimensions,valid', [
-        ((Template.MIN_WIDTH, Template.MIN_HEIGHT), True),
-        ((Template.MIN_WIDTH - 1, Template.MIN_HEIGHT), False),
-        ((Template.MIN_WIDTH, Template.MIN_HEIGHT - 1), False),
-        ((Template.MIN_WIDTH - 1, Template.MIN_HEIGHT - 1), False),
-    ])
-    @patch('PIL.Image.open')
-    def test_validate_size(self, mock_open, template, dimensions, valid):
-        mock_img = Mock()
-        mock_img.size = dimensions
-        mock_open.return_value = mock_img
+            with patch('requests.get', Mock(return_value=mock_response)):
+                template.link = "example.com/fake"
 
-        assert valid is template.validate_size()
+                assert False is template.validate_link()
+
+        @patch('os.path.isfile', Mock(return_value=True))
+        def with_cached_valid_link(template):
+            template.link = "example.com"
+
+            assert True is template.validate_link()
+
+    def describe_validate_size():
+
+        @pytest.mark.parametrize('dimensions,valid', [
+            ((Template.MIN_WIDTH, Template.MIN_HEIGHT), True),
+            ((Template.MIN_WIDTH - 1, Template.MIN_HEIGHT), False),
+            ((Template.MIN_WIDTH, Template.MIN_HEIGHT - 1), False),
+            ((Template.MIN_WIDTH - 1, Template.MIN_HEIGHT - 1), False),
+        ])
+        @patch('PIL.Image.open')
+        def with_various_dimenions(mock_open, template, dimensions, valid):
+            mock_img = Mock()
+            mock_img.size = dimensions
+            mock_open.return_value = mock_img
+
+            assert valid is template.validate_size()
+
+    def describe_validate():
+
+        def with_no_validators(template):
+            assert True is template.validate(validators=[])
+
+        def with_all_passing_validators(template):
+            """Verify a template is valid if all validators pass."""
+            mock_validators = [lambda: True]
+
+            assert True is template.validate(validators=mock_validators)
+
+        def with_one_failing_validator(template):
+            """Verify a template is invalid if any validators fail."""
+            mock_validators = [lambda: False]
+
+            assert False is template.validate(validators=mock_validators)

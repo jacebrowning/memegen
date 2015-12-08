@@ -1,4 +1,5 @@
 # pylint: disable=no-self-use
+# pylint: disable=misplaced-comparison-constant
 
 from memegen import app
 from memegen import settings
