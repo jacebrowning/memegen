@@ -4,10 +4,10 @@
 
 ### Requirements
 
-* Python 3.4+
+* Python 3.5+
     * Windows: https://www.python.org/downloads
     * Mac: `$ brew install python3`
-    * Linux: `python3.4` and `python3.4-dev` packages
+    * Linux: `python3.5` and `python3.5-dev` packages
 * Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
