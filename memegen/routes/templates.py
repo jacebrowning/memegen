@@ -37,9 +37,8 @@ def create_meme(key):
         data['description'] = template.link
         data['aliases'] = sorted(template.aliases + [template.key])
         data['styles'] = template.styles
-        path = template.sample_path
-        url = url_for('links.get', key=key, path=path, _external=True)
-        data['example'] = url
+        data['example'] = url_for('links.get', key=key,
+                                  path=template.sample_path, _external=True)
         return data
 
     elif request.method == 'POST':

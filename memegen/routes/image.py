@@ -1,17 +1,13 @@
 from flask import Blueprint, redirect, send_file
 from flask import current_app as app, request
-from webargs import fields, flaskparser
+from webargs import flaskparser
 import requests
 
 from .. import domain
 
-from ._common import url_for
+from ._common import OPTIONS, url_for
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
-
-options = {
-    'alt': fields.Str(missing=None)  # pylint: disable=no-member
-}
 
 
 @blueprint.route("latest.jpg")
@@ -25,7 +21,7 @@ def get_latest():
 
 
 @blueprint.route("<key>.jpg")
-@flaskparser.use_kwargs(options)
+@flaskparser.use_kwargs(OPTIONS)
 def get_without_text(key, alt):
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
@@ -38,7 +34,7 @@ def get_without_text_jpeg(key):
 
 
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
-@flaskparser.use_kwargs(options)
+@flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt):
     text = domain.Text(path)
     track_request(text)

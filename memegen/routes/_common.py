@@ -2,10 +2,15 @@ from urllib.parse import unquote
 
 from flask import current_app as app
 from flask import url_for as _url_for
+from webargs import fields
 
 
 GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
 CONTRIBUTING = GITHUB_BASE + "blob/master/CONTRIBUTING.md"
+
+OPTIONS = {
+    'alt': fields.Str(missing=None)  # pylint: disable=no-member
+}
 
 
 def url_for(*args, **kwargs):
