@@ -1,11 +1,12 @@
-# pylint: disable=no-self-use
+# pylint: disable=unused-variable
+# pylint: disable=misplaced-comparison-constant
 
 from .conftest import load
 
 
-class TestTemplates:
+def describe_get():
 
-    def test_get(self, client):
+    def when_default_text(client):
         response = client.get("/templates/iw")
 
         assert 200 == response.status_code
@@ -13,27 +14,29 @@ class TestTemplates:
             name="Insanity Wolf",
             description="http://knowyourmeme.com/memes/insanity-wolf",
             aliases=['insanity', 'insanity-wolf', 'iw'],
+            styles=[],
             example="http://localhost/iw/does-testing/in-production",
         ) == load(response)
 
-    def test_get_with_default(self, client):
-        response = client.get("/templates/live")
+    def when_no_default_text(client):
+        response = client.get("/templates/keanu")
 
         assert 200 == response.status_code
-        assert dict(
-            name="Do It Live!",
-            description="http://knowyourmeme.com/memes/bill-oreilly-rant",
-            aliases=["bill-o'reilly-rant", 'do-it-live', 'live', "o'reilly",
-                     "o'reilly-rant"],
-            example="http://localhost/live/_/do-it-live!",
-        ) == load(response)
+        assert "http://localhost/keanu/your-text/goes-here" == \
+            load(response)['example']
 
-    def test_get_with_dash_in_key(self, client):
+    def when_alternate_sytles_available(client):
+        response = client.get("/templates/sad-biden")
+
+        assert 200 == response.status_code
+        assert ['down', 'scowl', 'window'] == load(response)['styles']
+
+    def when_dashes_in_key(client):
         response = client.get("/templates/awkward-awesome")
 
         assert 200 == response.status_code
 
-    def test_get_all(self, client):
+    def it_returns_list_when_no_key(client):
         response = client.get("/templates/")
 
         assert 200 == response.status_code
@@ -41,19 +44,22 @@ class TestTemplates:
         assert "http://localhost/templates/iw" == data['Insanity Wolf']
         assert len(data) >= 20  # there should be many memes
 
-    def test_get_redirects_when_text_is_provided(self, client):
+    def it_redirects_when_text_is_provided(client):
         response = client.get("/templates/iw/top/bottom")
 
         assert 302 == response.status_code
         assert '<a href="/iw/top/bottom">' in load(response, as_json=False)
 
-    def test_get_redirects_when_key_is_an_alias(self, client):
+    def it_redirects_when_key_is_an_alias(client):
         response = client.get("/templates/insanity-wolf")
 
         assert 302 == response.status_code
         assert '<a href="/templates/iw">' in load(response, as_json=False)
 
-    def test_post_returns_an_error(self, client):
+
+def describe_post():
+
+    def it_returns_an_error(client):
         response = client.post("/templates/")
 
         assert 403 == response.status_code

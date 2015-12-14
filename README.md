@@ -26,7 +26,7 @@ http://memegen.link/buzz/memes/memes-everywhere
 
 Spaces can be inserted using dashes or underscores:
 
-* dash (`-`) → space (` `) 
+* dash (`-`) → space (` `)
 * underscore `_` → space (` `)
 * dashes (`--`) → dash (`-`)
 * underscores (`__`) → underscore (`_`)
@@ -38,7 +38,15 @@ Reserved URL characters can be escaped:
 
 For example: http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg
 
-## Adding Templates 
+### Alternate Styles
+
+Some memes come in multiple forms, which can be selected via `?alt=<style>`:
+
+http://memegen.link/templates/sad-biden
+
+For example: http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-vote.jpg?alt=scowl
+
+## Adding Templates
 
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
 
