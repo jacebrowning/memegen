@@ -63,6 +63,16 @@ def describe_template():
 
             assert "_" == template.default_path
 
+    def describe_styles():
+
+        @patch('os.listdir', Mock(return_value=[]))
+        def is_empty_when_no_alternate_images(template):
+            expect(template.styles) == []
+
+        @patch('os.listdir', Mock(return_value=['foo.jpg', 'bar.png']))
+        def is_filesnames_of_alternate_images(template):
+            expect(template.styles) == ['bar', 'foo']
+
     def describe_sample_path():
 
         def is_based_on_lines(template):

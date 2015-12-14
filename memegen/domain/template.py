@@ -46,6 +46,10 @@ class Template:
         return self.name < other.name
 
     @property
+    def dirpath(self):
+        return os.path.join(self.root, self.key)
+
+    @property
     def path(self):
         return self.get_path()
 
@@ -73,6 +77,17 @@ class Template:
     def aliases_stripped(self):
         return [self.strip(a, keep_special=False) for a in self.aliases]
 
+    @property
+    def styles(self):
+        return sorted(self._styles())
+
+    def _styles(self):
+        """Yield all template style names."""
+        for filename in os.listdir(self.dirpath):
+            name, ext = os.path.splitext(filename.lower())
+            if ext in self.EXTENSIONS and name != self.DEFAULT:
+                yield name
+
     @staticmethod
     def strip(text, keep_special=False):
         text = text.lower().strip().replace(' ', '-')
@@ -84,7 +99,7 @@ class Template:
     def get_path(self, *styles):
         for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
             for extension in self.EXTENSIONS:
-                path = os.path.join(self.root, self.key, name + extension)
+                path = os.path.join(self.dirpath, name + extension)
                 if os.path.isfile(path):
                     return path
         return None
@@ -119,7 +134,7 @@ class Template:
 
     def validate_link(self):
         if self.link:
-            flag = os.path.join(self.root, self.key, self.VALID_LINK_FLAG)
+            flag = os.path.join(self.dirpath, self.VALID_LINK_FLAG)
             if os.path.isfile(flag):
                 log.info("Link already checked: %s", self.link)
             else:
