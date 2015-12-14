@@ -3,7 +3,8 @@ from collections import OrderedDict
 from flask import Blueprint, current_app, render_template, Response
 
 from .. import __version__
-from ._common import GITHUB_BASE, CONTRIBUTING, url_for
+
+from ._common import url_for
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/",
@@ -27,11 +28,6 @@ def get():
     """Generate memes from templates."""
     data = OrderedDict()
     data['templates'] = url_for('templates.get', _external=True)
-    data['overview'] = url_for('overview.get', _external=True)
-    data['generator'] = url_for('generator.get', _external=True)
-    data['latest'] = url_for('latest.get', _external=True)
-    data['source'] = GITHUB_BASE
-    data['contributing'] = CONTRIBUTING
     data['version'] = __version__
     return data
 

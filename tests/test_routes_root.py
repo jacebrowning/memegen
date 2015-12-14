@@ -13,11 +13,6 @@ class TestRoot:
 
         assert 200 == response.status_code
         assert dict(
-            version="1",
             templates="http://localhost/templates/",
-            overview="http://localhost/overview",
-            generator="http://localhost/generator",
-            latest="http://localhost/latest",
-            source=GITHUB_BASE,
-            contributing=GITHUB_BASE + "blob/master/CONTRIBUTING.md",
+            version="1",
         ) == load(response)

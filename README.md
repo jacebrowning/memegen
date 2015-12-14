@@ -22,30 +22,6 @@ For any MemeGen image, lose the extension to see a list of all format options:
 
 http://memegen.link/buzz/memes/memes-everywhere
 
-### Special Characters
-
-Spaces can be inserted using dashes or underscores:
-
-* dash (`-`) → space (` `)
-* underscore `_` → space (` `)
-* dashes (`--`) → dash (`-`)
-* underscores (`__`) → underscore (`_`)
-
-Reserved URL characters can be escaped:
-
-* tilde + Q (`~q`) → question mark (`?`)
-* tilde + P (`~p`) → percentage (`%`)
-
-For example: http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg
-
-### Alternate Styles
-
-Some memes come in multiple forms, which can be selected via `?alt=<style>`:
-
-http://memegen.link/templates/sad-biden
-
-For example: http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-vote.jpg?alt=scowl
-
 ## Adding Templates
 
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
