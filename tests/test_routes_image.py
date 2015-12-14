@@ -81,7 +81,7 @@ def describe_get():
             response = client.get("/sad-biden.jpg?alt=scowl")
 
             assert 302 == response.status_code
-            assert '-vote.jpg?style=scowl">' in \
+            assert '-vote.jpg?alt=scowl">' in \
                 load(response, as_json=False)
 
     def describe_latest():

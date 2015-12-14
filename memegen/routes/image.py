@@ -29,7 +29,7 @@ def get_latest():
 def get_without_text(key, alt):
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
-    return redirect(url_for('.get', key=key, path=text.path, style=alt))
+    return redirect(url_for('.get', key=key, path=text.path, alt=alt))
 
 
 @blueprint.route("<key>.jpeg")
