@@ -1,3 +1,5 @@
+"""Configuration file for sniffer."""
+
 import os
 import time
 import subprocess
@@ -17,40 +19,26 @@ watch_paths = ["memegen", "tests", "data"]
 @select_runnable('python')
 @file_validator
 def python_files(filename):
-    return filename.endswith('.py')
+    """Match Python source files."""
 
-
-@select_runnable('yaml')
-@file_validator
-def yaml_files(filename):
-    return filename.endswith('.yml')
+    return all(
+        (filename.endswith('.py'),
+        not os.path.basename(filename).startswith('.')),
+    )
 
 
 @runnable
 def python(*_):
+    """Run targets for Python."""
 
-    for count, (command, title) in enumerate((
-        (('make', 'test'), "Unit Tests"),
-        (('make', 'tests'), "Integration Tests"),
-        (('make', 'check'), "Static Analysis"),
-        (('make', 'validate'), "Meme Validation"),
-        (('make', 'doc'), None),
+    for count, (command, title, retry) in enumerate((
+        (('make', 'test'), "Unit Tests", True),
+        (('make', 'tests'), "Integration Tests", False),
+        (('make', 'check'), "Static Analysis", True),
+        (('make', 'doc'), None, True),
     ), start=1):
 
-        if not run(command, title, count):
-            return False
-
-    return True
-
-
-@runnable
-def yaml(*_):
-
-    for count, (command, title) in enumerate((
-        (('make', 'validate'), "Meme Validation"),
-    ), start=1):
-
-        if not run(command, title, count):
+        if not run(command, title, count, retry):
             return False
 
     return True
@@ -62,7 +50,8 @@ _show_coverage = True
 _rerun_args = None
 
 
-def run(command, title, count):
+def run(command, title, count, retry):
+    """Run a command-line program and display the result."""
     global _rerun_args
 
     if _rerun_args:
@@ -85,18 +74,20 @@ def run(command, title, count):
 
     show_coverage()
 
-    if failure:
-        _rerun_args = command, title, count
+    if failure and retry:
+        _rerun_args = command, title, count, retry
 
     return not failure
 
 
 def show_notification(message, title):
+    """Show a user notification."""
     if notify and title:
         notify(message, title=title, group=GROUP)
 
 
 def show_coverage():
+    """Launch the coverage report."""
     global _show_coverage
 
     if _show_coverage:

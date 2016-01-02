@@ -10,7 +10,15 @@
                 ".project",
                 ".pydevproject"
             ],
-            "folder_exclude_patterns": [".*", "__pycache__", "build", "dist", "env", "*.egg-info"]
+            "folder_exclude_patterns": [
+                ".*",
+                "__pycache__",
+                "build",
+                "dist",
+                "env",
+                "*.egg-info",
+                "htmlcov"
+            ]
 		}
 	],
     "settings":

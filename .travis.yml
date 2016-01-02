@@ -14,7 +14,7 @@ before_cache:
 
 env:
   global:
-  - RANDOM_SEED=0
+  - RANDOM_SEED=12345
 
 install:
 - pip install coveralls scrutinizer-ocular

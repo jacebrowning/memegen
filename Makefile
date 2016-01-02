@@ -161,6 +161,12 @@ README-pypi.html: README.rst
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
 
+.PHONY: verify-readme
+verify-readme: $(DOCS_FLAG)
+$(DOCS_FLAG): README.rst
+	$(PYTHON) setup.py check --restructuredtext --strict --metadata
+	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
+
 .PHONY: apidocs
 apidocs: depends-dev apidocs/$(PACKAGE)/index.html
 apidocs/$(PACKAGE)/index.html: $(SOURCES)
@@ -204,7 +210,7 @@ fix: depends-dev
 
 RANDOM_SEED ?= $(shell date +%s)
 
-PYTEST_CORE_OPTS := -vv -r X --maxfail=3
+PYTEST_CORE_OPTS := -r xXw -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
@@ -216,7 +222,6 @@ FAILED_FLAG := .pytest/failed
 .PHONY: test test-unit
 test: test-unit
 test-unit: depends-ci
-	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
 	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
@@ -254,12 +259,8 @@ read-coverage:
 clean: .clean-dist .clean-test .clean-doc .clean-build
 	rm -rf $(ALL_FLAG)
 
-.PHONY: clean-env
-clean-env: clean
-	rm -rf $(ENV)
-
 .PHONY: clean-all
-clean-all: clean clean-env .clean-workspace
+clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-build
 .clean-build:
@@ -278,6 +279,10 @@ clean-all: clean clean-env .clean-workspace
 .PHONY: .clean-dist
 .clean-dist:
 	rm -rf dist build
+
+.PHONY: .clean-env
+.clean-env: clean
+	rm -rf $(ENV)
 
 .PHONY: .clean-workspace
 .clean-workspace:
