@@ -36,6 +36,15 @@ class TemplateService(Service):
         # Else, no match
         raise self.exceptions.TemplateNotFound
 
+    def aliases(self, query=""):
+        """Get all aliases with an optional name filter."""
+        names = []
+        for template in self.all():
+            for name in [template.key] + template.aliases:
+                if query in name:
+                    names.append(name)
+        return names
+
     def validate(self):
         """Ensure all template are valid and conflict-free."""
         templates = self.all()

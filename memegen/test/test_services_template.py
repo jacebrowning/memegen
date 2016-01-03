@@ -27,6 +27,22 @@ class TestTemplateService:
 
         assert 'hello' == template.key
 
+    def test_aliases(self, template_service):
+        template = Template('a', aliases=['b', 'c'])
+        template_service.template_store.filter.return_value = [template]
+
+        aliases = template_service.aliases()
+
+        assert ['a', 'b', 'c'] == sorted(aliases)
+
+    def test_aliases_with_filter(self, template_service):
+        template = Template('a1', aliases=['a2', 'b1'])
+        template_service.template_store.filter.return_value = [template]
+
+        aliases = template_service.aliases('a')
+
+        assert ['a1', 'a2'] == sorted(aliases)
+
     def test_validate_with_good_templates(self, template_service):
         templates = [Template(key='abc',
                               name="The ABC Meme"),
