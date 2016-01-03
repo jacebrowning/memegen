@@ -1,13 +1,17 @@
 from flask import Blueprint, redirect, send_file
 from flask import current_app as app, request
-from webargs import flaskparser
+from webargs import fields, flaskparser
 import requests
 
 from .. import domain
 
-from ._common import OPTIONS, url_for
+from ._common import url_for
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
+
+OPTIONS = {
+    'alt': fields.Str(missing=None)  # pylint: disable=no-member
+}
 
 
 @blueprint.route("latest.jpg")

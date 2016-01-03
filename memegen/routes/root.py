@@ -28,6 +28,7 @@ def get():
     """Generate memes from templates."""
     data = OrderedDict()
     data['templates'] = url_for('templates.get', _external=True)
+    data['aliases'] = url_for('aliases.get', _external=True)
     data['version'] = __version__
     return data
 

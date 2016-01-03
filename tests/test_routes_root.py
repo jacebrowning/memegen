@@ -14,5 +14,6 @@ class TestRoot:
         assert 200 == response.status_code
         assert dict(
             templates="http://localhost/templates/",
+            aliases="http://localhost/aliases/",
             version="1",
         ) == load(response)
