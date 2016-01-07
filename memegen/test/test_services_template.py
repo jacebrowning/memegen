@@ -18,6 +18,15 @@ class TestTemplateService:
         with pytest.raises(KeyError):
             template_service.find('unknown_key')
 
+    def test_find_template_allow_missing(self, template_service):
+        template_service.template_store.read.return_value = None
+        template_service.template_store.filter.return_value = []
+
+        template = template_service.find('unknown_key', allow_missing=True)
+
+        assert 'unknown_key' == template.key
+        assert template.get_path().endswith("/static/images/missing.png")
+
     def test_find_template_by_alias(self, template_service):
         template = Template('hello', aliases=['hello-world', 'helloworld'])
         template_service.template_store.read.return_value = None
