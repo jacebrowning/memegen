@@ -4,8 +4,9 @@ from flask import current_app as app
 from flask import url_for as _url_for
 
 
-GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
-CONTRIBUTING = GITHUB_BASE + "blob/master/CONTRIBUTING.md"
+GITHUB_BASE = "https://raw.githubusercontent.com/jacebrowning/memegen/master/"
+CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
+CHANGES_URL = GITHUB_BASE + "CHANGES.md"
 
 
 def url_for(*args, **kwargs):

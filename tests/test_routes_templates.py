@@ -64,5 +64,5 @@ def describe_post():
 
         assert 403 == response.status_code
         assert dict(
-            message="http://github.com/jacebrowning/memegen/blob/master/CONTRIBUTING.md"
+            message="https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
         ) == load(response)

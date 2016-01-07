@@ -4,7 +4,7 @@ from flask import Blueprint, current_app, render_template, Response
 
 from .. import __version__
 
-from ._common import url_for
+from ._common import CHANGES_URL, url_for
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/",
@@ -30,6 +30,7 @@ def get():
     data['templates'] = url_for('templates.get', _external=True)
     data['aliases'] = url_for('aliases.get', _external=True)
     data['version'] = __version__
+    data['changes'] = CHANGES_URL
     return data
 
 

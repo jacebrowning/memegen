@@ -1,19 +1,17 @@
-# pylint: disable=no-self-use
-# pylint: disable=misplaced-comparison-constant
+# pylint: disable=unused-variable,misplaced-comparison-constant
 
 from .conftest import load
 
-GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
 
+def describe_root():
 
-class TestRoot:
-
-    def test_get_root(self, client):
+    def it_returns_links_and_metadata(client):
         response = client.get("/api")
 
         assert 200 == response.status_code
         assert dict(
             templates="http://localhost/templates/",
             aliases="http://localhost/aliases/",
-            version="1",
+            version="1.0",
+            changes="https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGES.md"
         ) == load(response)

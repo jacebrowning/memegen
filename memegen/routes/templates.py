@@ -3,7 +3,7 @@ from collections import OrderedDict
 from flask import Blueprint, current_app as app, request, redirect
 from flask_api import exceptions
 
-from ._common import CONTRIBUTING, url_for
+from ._common import CONTRIBUTING_URL, url_for
 
 
 blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
@@ -21,7 +21,7 @@ def get():
 
 @blueprint.route("", methods=['POST'])
 def create_template():
-    raise exceptions.PermissionDenied(CONTRIBUTING)
+    raise exceptions.PermissionDenied(CONTRIBUTING_URL)
 
 
 @blueprint.route("<key>", methods=['GET', 'POST'], endpoint='create')
