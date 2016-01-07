@@ -1,2 +1,4 @@
 [pep8]
+
+# E501: line too long (checked by PyLint)
 ignore = E501

@@ -2,7 +2,6 @@
 PROJECT := MemeGen
 PACKAGE := memegen
 SOURCES := Makefile $(shell find $(PACKAGE) -name '*.py')
-EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # Python settings
 PYTHON_MAJOR ?= 3
@@ -19,7 +18,6 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	WINDOWS := 1
 	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
 	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
-	SYS_VIRTUALENV := $(SYS_PYTHON_DIR)\\Scripts\\virtualenv.exe
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
@@ -32,10 +30,9 @@ else
 	ifdef PYTHON_MINOR
 		SYS_PYTHON := $(SYS_PYTHON).$(PYTHON_MINOR)
 	endif
-	SYS_VIRTUALENV := virtualenv
 endif
 
-# virtualenv paths
+# Virtual environment paths
 ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
@@ -49,7 +46,7 @@ else
 	endif
 endif
 
-# virtualenv executables
+# Virtual environment executables
 PYTHON := $(BIN)/python
 PIP := $(BIN)/pip
 EASY_INSTALL := $(BIN)/easy_install
@@ -68,11 +65,11 @@ ACTIVATE := $(BIN)/activate
 HONCHO := . $(ACTIVATE); $(BIN)/honcho
 
 # Flags for PHONY targets
+INSTALLED_FLAG := $(ENV)/.installed
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
 DOCS_FLAG := $(ENV)/.docs
 ALL_FLAG := $(ENV)/.all
-INSTALLED_FLAG := $(ENV)/.installed
 
 # Main Targets #################################################################
 
@@ -87,7 +84,11 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
+ifdef TRAVIS
 ci: check test tests validate
+else
+ci: doc check test tests validate
+endif
 
 .PHONY: run
 run: depends-dev .env
@@ -114,15 +115,15 @@ watch: depends-dev .clean-test
 # Development Installation #####################################################
 
 .PHONY: env
-env: .virtualenv $(INSTALLED_FLAG)
+env: .venv $(INSTALLED_FLAG)
 $(INSTALLED_FLAG): Makefile requirements.txt
 	$(PIP) install -r requirements.txt
 	@ touch $(INSTALLED_FLAG)  # flag to indicate package is installed
 
-.PHONY: .virtualenv
-.virtualenv: $(PIP)
+.PHONY: .venv
+.venv: $(PIP)
 $(PIP):
-	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
+	$(SYS_PYTHON) -m venv $(ENV)
 	$(PIP) install --upgrade pip
 
 .PHONY: depends
@@ -131,7 +132,7 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint expecter pytest pytest-describe pytest-cov pytest-random pytest-runfailed coverage
+	$(PIP) install --upgrade pep8 pep257 pylint coverage pytest pytest-describe pytest-cov pytest-random pytest-runfailed expecter
 	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
@@ -160,12 +161,6 @@ README-pypi.html: README.rst
 	$(RST2HTML) README.rst README-pypi.html
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
-
-.PHONY: verify-readme
-verify-readme: $(DOCS_FLAG)
-$(DOCS_FLAG): README.rst
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
 
 .PHONY: apidocs
 apidocs: depends-dev apidocs/$(PACKAGE)/index.html
@@ -266,7 +261,7 @@ clean-all: clean .clean-env .clean-workspace
 .clean-build:
 	find $(PACKAGE) -name '*.pyc' -delete
 	find $(PACKAGE) -name '__pycache__' -delete
-	rm -rf $(EGG_INFO)
+	rm -rf $(INSTALLED_FLAG)
 
 .PHONY: .clean-doc
 .clean-doc:
