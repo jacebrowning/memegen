@@ -161,3 +161,14 @@ class Template:
                       self.MIN_WIDTH, self.MIN_HEIGHT, w, h)
             return False
         return True
+
+
+class Placeholder:
+    """Default image for missing templates."""
+
+    def __init__(self, key):
+        self.key = key
+
+    @staticmethod
+    def get_path(*_):
+        return os.path.dirname(__file__) + "/../static/images/missing.png"

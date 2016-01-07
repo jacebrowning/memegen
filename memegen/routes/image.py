@@ -20,8 +20,7 @@ def get_latest():
     try:
         return send_file(path, mimetype='image/jpeg')
     except FileNotFoundError:
-        return send_file("static/images/apple-touch-icon.png",
-                         mimetype='image/png')
+        return send_file("static/images/missing.png", mimetype='image/png')
 
 
 @blueprint.route("<key>.jpg")
@@ -43,7 +42,7 @@ def get_with_text(key, path, alt):
     text = domain.Text(path)
     track_request(text)
 
-    template = app.template_service.find(key)
+    template = app.template_service.find(key, allow_missing=True)
     if template.key != key:
         return redirect(url_for('.get', key=template.key, path=path, alt=alt))
 

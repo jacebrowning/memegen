@@ -1,5 +1,4 @@
-# pylint: disable=misplaced-comparison-constant
-# pylint: disable=unused-variable
+# pylint: disable=unused-variable,misplaced-comparison-constant
 
 import os
 
@@ -146,7 +145,9 @@ def describe_get():
         def when_unknown_template(client):
             response = client.get("/make/sudo/give.me.jpg")
 
-            assert 404 == response.status_code
+            assert 200 == response.status_code
+            assert 'image/jpeg' == response.mimetype
+            # unit tests ensure this is a placeholder image
 
         def when_too_much_text_for_a_filename(client):
             top = "hello"
