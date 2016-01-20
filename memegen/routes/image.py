@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, redirect, send_file
 from flask import current_app as app, request
 from webargs import fields, flaskparser
@@ -8,6 +10,7 @@ from .. import domain
 from ._common import url_for
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
+log = logging.getLogger(__name__)
 
 OPTIONS = {
     'alt': fields.Str(missing=None)  # pylint: disable=no-member
@@ -40,7 +43,6 @@ def get_without_text_jpeg(key):
 @flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt):
     text = domain.Text(path)
-    track_request(text)
 
     template = app.template_service.find(key, allow_missing=True)
     if template.key != key:
@@ -55,6 +57,7 @@ def get_with_text(key, path, alt):
     image = app.image_service.create_image(template, text, style=alt)
 
     track_request(text)
+
     return send_file(image.path, mimetype='image/jpeg')
 
 
@@ -65,7 +68,6 @@ def get_with_text_jpeg(key, path):
 
 @blueprint.route("_<code>.jpg")
 def get_encoded(code):
-    track_request(code)
 
     key, path = app.link_service.decode(code)
     template = app.template_service.find(key)
@@ -73,6 +75,7 @@ def get_encoded(code):
     image = app.image_service.create_image(template, text)
 
     track_request(text)
+
     return send_file(image.path, mimetype='image/jpeg')
 
 
@@ -91,5 +94,8 @@ def track_request(title):
         ua=request.user_agent.string,
         dr=request.referrer,
     )
-    if not app.config['TESTING']:  # pragma: no cover (manual)
+    if app.config['DEBUG']:
+        for key in sorted(data):
+            log.debug("%s=%r", key, data[key])
+    else:
         requests.post("http://www.google-analytics.com/collect", data=data)

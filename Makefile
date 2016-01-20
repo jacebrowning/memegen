@@ -110,7 +110,7 @@ watch: depends-dev .clean-test
 	$(SNIFFER)
 
 .env:
-	echo "CONFIG = dev" >> .env
+	echo "CONFIG=dev" >> .env
 
 # Development Installation #####################################################
 

@@ -30,7 +30,7 @@ def create_app(config):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
 
-    configure_logging()
+    configure_logging(app)
 
     register_services(app)
     register_blueprints(app)
@@ -38,9 +38,12 @@ def create_app(config):
     return app
 
 
-def configure_logging():
-    logging.basicConfig(level=logging.INFO,
-                        format="%(levelname)s: %(message)s")
+def configure_logging(app):
+    if app.config['DEBUG']:
+        level = logging.DEBUG
+    else:
+        level = logging.INFO
+    logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
     logging.getLogger('yorm').setLevel(logging.WARNING)
     logging.getLogger('requests').setLevel(logging.WARNING)
 
