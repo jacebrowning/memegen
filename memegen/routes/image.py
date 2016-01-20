@@ -3,11 +3,10 @@ import logging
 from flask import Blueprint, redirect, send_file
 from flask import current_app as app, request
 from webargs import fields, flaskparser
-import requests
 
 from .. import domain
 
-from ._common import url_for
+from ._common import url_for, track
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
 log = logging.getLogger(__name__)
@@ -56,7 +55,7 @@ def get_with_text(key, path, alt):
 
     image = app.image_service.create_image(template, text, style=alt)
 
-    track_request(text)
+    track(app, request, text)
 
     return send_file(image.path, mimetype='image/jpeg')
 
@@ -74,28 +73,6 @@ def get_encoded(code):
     text = domain.Text(path)
     image = app.image_service.create_image(template, text)
 
-    track_request(text)
+    track(app, request, text)
 
     return send_file(image.path, mimetype='image/jpeg')
-
-
-def track_request(title):
-    data = dict(
-        v=1,
-        tid=app.config['GOOGLE_ANALYTICS_TID'],
-        cid=request.remote_addr,
-
-        t='pageview',
-        dh='memegen.link',
-        dp=request.path,
-        dt=str(title),
-
-        uip=request.remote_addr,
-        ua=request.user_agent.string,
-        dr=request.referrer,
-    )
-    if app.config['DEBUG']:
-        for key in sorted(data):
-            log.debug("%s=%r", key, data[key])
-    else:
-        requests.post("http://www.google-analytics.com/collect", data=data)

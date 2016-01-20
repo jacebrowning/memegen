@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app as app
 from flask_api.decorators import set_renderers
 from flask_api.renderers import HTMLRenderer
 
@@ -11,4 +11,4 @@ blueprint = Blueprint('overview', __name__, url_prefix="/overview")
 @blueprint.route("")
 @set_renderers(HTMLRenderer)
 def get():
-    return render_template('overview.html', imgs=samples())
+    return render_template('overview.html', imgs=samples(app))
