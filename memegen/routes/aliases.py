@@ -3,7 +3,7 @@ from collections import OrderedDict
 from flask import Blueprint, current_app as app
 from webargs import fields, flaskparser
 
-from ._common import url_for
+from ._common import route
 
 
 blueprint = Blueprint('aliases', __name__, url_prefix="/aliases/")
@@ -25,7 +25,7 @@ def get(name):
         data = OrderedDict()
         data['styles'] = sorted(template.styles)
         data['template'] = \
-            url_for('templates.create', key=template.key, _external=True)
+            route('templates.create', key=template.key, _external=True)
 
         items[alias] = data
 

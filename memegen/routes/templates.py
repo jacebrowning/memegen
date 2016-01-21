@@ -3,7 +3,7 @@ from collections import OrderedDict
 from flask import Blueprint, current_app as app, request, redirect
 from flask_api import exceptions
 
-from ._common import CONTRIBUTING_URL, url_for
+from ._common import CONTRIBUTING_URL, route
 
 
 blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
@@ -14,7 +14,7 @@ def get():
     """Get a list of all meme templates."""
     data = OrderedDict()
     for template in sorted(app.template_service.all()):
-        url = url_for('.create', key=template.key, _external=True)
+        url = route('.create', key=template.key, _external=True)
         data[template.name] = url
     return data
 
@@ -30,15 +30,15 @@ def create_meme(key):
     if request.method == 'GET':
         template = app.template_service.find(key)
         if template.key != key:
-            return redirect(url_for('.create', key=template.key))
+            return redirect(route('.create', key=template.key))
 
         data = OrderedDict()
         data['name'] = template.name
         data['description'] = template.link
         data['aliases'] = sorted(template.aliases + [template.key])
         data['styles'] = template.styles
-        data['example'] = url_for('links.get', key=key,
-                                  path=template.sample_path, _external=True)
+        data['example'] = route('links.get', key=key,
+                                path=template.sample_path, _external=True)
         return data
 
     elif request.method == 'POST':
