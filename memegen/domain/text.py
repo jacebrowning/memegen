@@ -70,6 +70,7 @@ class Text:
         part = part.replace('~Q', '?')
         part = part.replace('~p', '%')
         part = part.replace('~P', '%')
+        part = part.replace("''", '"')
 
         part = list(part)
         chars = []
@@ -115,6 +116,7 @@ class Text:
             path = path.replace(' ', cls.SPACE)
             path = path.replace('?', '~q')
             path = path.replace('%', '~p')
+            path = path.replace('"', "''")
             path = path.lower()
 
         return path

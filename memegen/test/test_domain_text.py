@@ -128,6 +128,11 @@ class TestLines:
 
         assert ["99% VS. 1%"] == text.lines
 
+    def test_quotes_are_escaped(self):
+        text = Text("the ''word'' said")
+
+        assert ['THE "WORD" SAID'] == text.lines
+
 
 class TestPath:
 
@@ -185,3 +190,8 @@ class TestPath:
         text = Text("50% off")
 
         assert "50~p-off" == text.path
+
+    def test_quotes_are_escaped(self):
+        text = Text('"quoted"')
+
+        assert "''quoted''" == text.path
