@@ -1,10 +1,10 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app, render_template, Response
+from flask import Blueprint, Response, current_app, render_template
 
 from .. import __version__
 
-from ._common import CHANGES_URL, url_for
+from ._common import CHANGES_URL, route
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/",
@@ -27,8 +27,8 @@ def get_javascript():
 def get():
     """Generate memes from templates."""
     data = OrderedDict()
-    data['templates'] = url_for('templates.get', _external=True)
-    data['aliases'] = url_for('aliases.get', _external=True)
+    data['templates'] = route('templates.get', _external=True)
+    data['aliases'] = route('aliases.get', _external=True)
     data['version'] = __version__
     data['changes'] = CHANGES_URL
     return data

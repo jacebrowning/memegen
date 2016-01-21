@@ -1,12 +1,11 @@
 import logging
 
-from flask import Blueprint, redirect, send_file
-from flask import current_app as app, request
+from flask import Blueprint, current_app as app, redirect, send_file
 from webargs import fields, flaskparser
 
 from .. import domain
 
-from ._common import url_for, track
+from ._common import route, display
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
 log = logging.getLogger(__name__)
@@ -18,8 +17,9 @@ OPTIONS = {
 
 @blueprint.route("latest.jpg")
 def get_latest():
-    path = app.image_service.image_store.latest
+    # TODO: use display() for consistency, not send_file()
     try:
+        path = app.image_service.image_store.latest
         return send_file(path, mimetype='image/jpeg')
     except FileNotFoundError:
         return send_file("static/images/missing.png", mimetype='image/png')
@@ -30,12 +30,12 @@ def get_latest():
 def get_without_text(key, alt):
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
-    return redirect(url_for('.get', key=key, path=text.path, alt=alt))
+    return redirect(route('.get', key=key, path=text.path, alt=alt))
 
 
 @blueprint.route("<key>.jpeg")
 def get_without_text_jpeg(key):
-    return redirect(url_for('.get_without_text', key=key))
+    return redirect(route('.get_without_text', key=key))
 
 
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
@@ -45,24 +45,22 @@ def get_with_text(key, path, alt):
 
     template = app.template_service.find(key, allow_missing=True)
     if template.key != key:
-        return redirect(url_for('.get', key=template.key, path=path, alt=alt))
+        return redirect(route('.get', key=template.key, path=path, alt=alt))
 
     if alt and template.path == template.get_path(alt):
-        return redirect(url_for('.get', key=key, path=path))
+        return redirect(route('.get', key=key, path=path))
 
     if path != text.path:
-        return redirect(url_for('.get', key=key, path=text.path, alt=alt))
+        return redirect(route('.get', key=key, path=text.path, alt=alt))
 
     image = app.image_service.create_image(template, text, style=alt)
 
-    track(app, request, text)
-
-    return send_file(image.path, mimetype='image/jpeg')
+    return display(image)
 
 
 @blueprint.route("<key>/<path:path>.jpeg")
 def get_with_text_jpeg(key, path):
-    return redirect(url_for('.get', key=key, path=path))
+    return redirect(route('.get', key=key, path=path))
 
 
 @blueprint.route("_<code>.jpg")
@@ -73,6 +71,4 @@ def get_encoded(code):
     text = domain.Text(path)
     image = app.image_service.create_image(template, text)
 
-    track(app, request, text)
-
-    return send_file(image.path, mimetype='image/jpeg')
+    return display(image)
