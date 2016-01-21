@@ -1,10 +1,10 @@
 from collections import OrderedDict
 
-from flask import Blueprint, Response, current_app, render_template
+from flask import Blueprint, Response, render_template
 
 from .. import __version__
 
-from ._common import CHANGES_URL, route
+from ._common import CHANGES_URL, route, get_tid
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/",
@@ -13,14 +13,12 @@ blueprint = Blueprint('root', __name__, url_prefix="/",
 
 @blueprint.route("")
 def get_index():
-    tid = current_app.config['GOOGLE_ANALYTICS_TID']
-    return Response(render_template("index.html", ga_tid=tid))
+    return Response(render_template("index.html", ga_tid=get_tid()))
 
 
 @blueprint.route("flask-api/static/js/default.js")
 def get_javascript():
-    tid = current_app.config['GOOGLE_ANALYTICS_TID']
-    return Response(render_template("js/default.js", ga_tid=tid))
+    return Response(render_template("js/default.js", ga_tid=get_tid()))
 
 
 @blueprint.route("api")

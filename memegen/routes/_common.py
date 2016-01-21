@@ -32,7 +32,7 @@ def samples():
         }
 
 
-def display(image, mimetype='image/jpeg'):
+def display(title, path, mimetype='image/jpeg'):
     """Render a webpage or raw image based on request."""
     mimetypes = request.headers.get('Accept', "").split(',')
     browser = 'text/html' in mimetypes
@@ -40,26 +40,28 @@ def display(image, mimetype='image/jpeg'):
     if browser:
         log.info("Rending image on page: %s", request.path)
 
-        ga_tid = current_app.config.get('GOOGLE_ANALYTICS_TID', '<local>')
-        html = render_template('image.html', src=request.path,
-                               title=image.text, ga_tid=ga_tid)
+        html = render_template(
+            'image.html',
+            src=request.path,
+            title=title,
+            ga_tid=get_tid(),
+        )
 
         return Response(html)
 
     else:
-        log.info("Sending image: %s", image.path)
+        log.info("Sending image: %s", path)
 
-        _track(image.text)
+        _track(title)
 
-        return send_file(image.path, mimetype=mimetype)
+        return send_file(path, mimetype=mimetype)
 
 
 def _track(title):
     """Log the requested content, server-side."""
-    ga_tid = current_app.config['GOOGLE_ANALYTICS_TID']
     data = dict(
         v=1,
-        tid=ga_tid,
+        tid=get_tid(),
         cid=request.remote_addr,
 
         t='pageview',
@@ -71,7 +73,12 @@ def _track(title):
         ua=request.user_agent.string,
         dr=request.referrer,
     )
-    if ga_tid:
+    if get_tid(default=None):
         requests.post("http://www.google-analytics.com/collect", data=data)
     else:
         log.debug("Analytics data:\n%s", pprint.pformat(data))
+
+
+def get_tid(*, default='local'):
+    """Get the analtyics tracking identifier."""
+    return current_app.config['GOOGLE_ANALYTICS_TID'] or default

@@ -1,6 +1,6 @@
 import logging
 
-from flask import Blueprint, current_app as app, redirect, send_file
+from flask import Blueprint, current_app as app, redirect
 from webargs import fields, flaskparser
 
 from .. import domain
@@ -17,12 +17,11 @@ OPTIONS = {
 
 @blueprint.route("latest.jpg")
 def get_latest():
-    # TODO: use display() for consistency, not send_file()
+    title = "Latest Meme"
     try:
-        path = app.image_service.image_store.latest
-        return send_file(path, mimetype='image/jpeg')
+        return display(title, app.image_service.image_store.latest)
     except FileNotFoundError:
-        return send_file("static/images/missing.png", mimetype='image/png')
+        return display(title, "static/images/missing.png", mimetype='image/png')
 
 
 @blueprint.route("<key>.jpg")
@@ -55,7 +54,7 @@ def get_with_text(key, path, alt):
 
     image = app.image_service.create_image(template, text, style=alt)
 
-    return display(image)
+    return display(image.text, image.path)
 
 
 @blueprint.route("<key>/<path:path>.jpeg")
@@ -71,4 +70,4 @@ def get_encoded(code):
     text = domain.Text(path)
     image = app.image_service.create_image(template, text)
 
-    return display(image)
+    return display(image.text, image.path)
