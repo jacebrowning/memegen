@@ -6,7 +6,7 @@
 
   <style>
     body {
-      background-image: url({{ src }});
+      background-image: url("{{ src | safe }}");
       background-repeat: no-repeat;
     }
   </style>
