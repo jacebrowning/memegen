@@ -4,8 +4,10 @@ PACKAGE := memegen
 SOURCES := Makefile $(shell find $(PACKAGE) -name '*.py')
 
 # Python settings
-PYTHON_MAJOR ?= 3
-PYTHON_MINOR ?= 5
+ifndef TRAVIS
+	PYTHON_MAJOR ?= 3
+	PYTHON_MINOR ?= 5
+endif
 
 # Test settings
 UNIT_TEST_COVERAGE := 65
@@ -36,9 +38,11 @@ endif
 ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
+	ACTIVATE := $(BIN)/activate.bat
 	OPEN := cmd /c start
 else
 	BIN := $(ENV)/bin
+	ACTIVATE := . $(BIN)/activate
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
 	else
@@ -47,22 +51,24 @@ else
 endif
 
 # Virtual environment executables
-PYTHON := $(BIN)/python
-PIP := $(BIN)/pip
-EASY_INSTALL := $(BIN)/easy_install
-RST2HTML := $(PYTHON) $(BIN)/rst2html.py
-PDOC := $(PYTHON) $(BIN)/pdoc
-PEP8 := $(BIN)/pep8
-PEP8RADIUS := $(BIN)/pep8radius
-PEP257 := $(BIN)/pep257
-PYLINT := $(BIN)/pylint
-PYREVERSE := $(BIN)/pyreverse
-NOSE := $(BIN)/nosetests
-PYTEST := $(BIN)/py.test
-COVERAGE := $(BIN)/coverage
-SNIFFER := $(BIN)/sniffer
-ACTIVATE := $(BIN)/activate
-HONCHO := . $(ACTIVATE); $(BIN)/honcho
+ifndef TRAVIS
+	BIN_ := $(BIN)/
+endif
+PYTHON := $(BIN_)python
+PIP := $(BIN_)pip
+EASY_INSTALL := $(BIN_)easy_install
+RST2HTML := $(PYTHON) $(BIN_)rst2html.py
+PDOC := $(PYTHON) $(BIN_)pdoc
+PEP8 := $(BIN_)pep8
+PEP8RADIUS := $(BIN_)pep8radius
+PEP257 := $(BIN_)pep257
+PYLINT := $(BIN_)pylint
+PYREVERSE := $(BIN_)pyreverse
+NOSE := $(BIN_)nosetests
+PYTEST := $(BIN_)py.test
+COVERAGE := $(BIN_)coverage
+SNIFFER := $(BIN_)sniffer
+HONCHO := $(ACTIVATE) && honcho
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
@@ -115,15 +121,13 @@ watch: depends-dev .clean-test
 # Development Installation #####################################################
 
 .PHONY: env
-env: .venv $(INSTALLED_FLAG)
+env: $(PIP) $(INSTALLED_FLAG)
 $(INSTALLED_FLAG): Makefile requirements.txt
 	$(PIP) install -r requirements.txt
 	@ touch $(INSTALLED_FLAG)  # flag to indicate package is installed
 
-.PHONY: .venv
-.venv: $(PIP)
 $(PIP):
-	$(SYS_PYTHON) -m venv $(ENV)
+	$(SYS_PYTHON) -m venv --clear $(ENV)
 	$(PIP) install --upgrade pip
 
 .PHONY: depends
@@ -153,6 +157,12 @@ endif
 .PHONY: doc
 doc: readme apidocs uml
 
+.PHONY: read
+read: doc
+	$(OPEN) apidocs/$(PACKAGE)/index.html
+	$(OPEN) README-pypi.html
+	$(OPEN) README-github.html
+
 .PHONY: readme
 readme: depends-dev README-github.html README-pypi.html
 README-github.html: README.md
@@ -168,17 +178,11 @@ apidocs/$(PACKAGE)/index.html: $(SOURCES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
 .PHONY: uml
-uml: depends-dev docs/*.png
+uml: depends-ci docs/*.png
 docs/*.png: $(SOURCES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: read
-read: doc
-	$(OPEN) apidocs/$(PACKAGE)/index.html
-	$(OPEN) README-pypi.html
-	$(OPEN) README-github.html
 
 # Static Analysis ##############################################################
 

@@ -12,8 +12,6 @@
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make (likely already installed)
-* Pandoc: http://johnmacfarlane.net/pandoc/installing.html
-* Graphviz: http://www.graphviz.org/Download.php
 
 ### Installation
 
