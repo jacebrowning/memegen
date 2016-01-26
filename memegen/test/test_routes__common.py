@@ -18,7 +18,7 @@ def describe_display():
         app.config['GOOGLE_ANALYTICS_TID'] = 'my_tid'
         return app
 
-    request_html = Mock(path="it's a path")
+    request_html = Mock(path="it's a path?alt=style")
     request_html.headers.get = Mock(return_value="text/html")
 
     request_image = Mock(path="it's a path")
@@ -32,7 +32,7 @@ def describe_display():
 
         print(html)
         assert "<title>my_title</title>" in html
-        assert 'url("it\'s a path")' in html
+        assert 'url("it\'s a path?alt=style")' in html
         assert "ga('create', 'my_tid', 'auto');" in html
 
     @patch('memegen.routes._common._track')
