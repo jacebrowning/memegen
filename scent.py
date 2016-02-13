@@ -46,7 +46,7 @@ def python(*_):
 
 GROUP = int(time.time())  # unique per run
 
-_show_coverage = True
+_show_coverage = False
 _rerun_args = None
 
 

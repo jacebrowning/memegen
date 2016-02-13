@@ -59,6 +59,7 @@ PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
 RST2HTML := $(PYTHON) $(BIN_)rst2html.py
 PDOC := $(PYTHON) $(BIN_)pdoc
+MKDOCS := $(BIN_)mkdocs
 PEP8 := $(BIN_)pep8
 PEP8RADIUS := $(BIN_)pep8radius
 PEP257 := $(BIN_)pep257
@@ -73,6 +74,7 @@ HONCHO := $(ACTIVATE) && honcho
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
+DEPENDS_DOC_FLAG := $(ENV)/.depends-doc
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
 DOCS_FLAG := $(ENV)/.docs
 ALL_FLAG := $(ENV)/.all
@@ -111,7 +113,7 @@ validate: env
 	CONFIG=$(CONFIG) $(PYTHON) manage.py validate
 
 .PHONY: watch
-watch: depends-dev .clean-test
+watch: depends .clean-test
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
@@ -130,8 +132,10 @@ $(PIP):
 	$(SYS_PYTHON) -m venv --clear $(ENV)
 	$(PIP) install --upgrade pip
 
+# Tools Installation ###########################################################
+
 .PHONY: depends
-depends: depends-ci depends-dev
+depends: depends-ci depends-doc depends-dev
 
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
@@ -139,10 +143,16 @@ $(DEPENDS_CI_FLAG): Makefile
 	$(PIP) install --upgrade pep8 pep257 pylint coverage pytest pytest-describe pytest-expecter pytest-cov pytest-random pytest-runfailed
 	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
+.PHONY: depends-doc
+depends-doc: env Makefile $(DEPENDS_DOC_FLAG)
+$(DEPENDS_DOC_FLAG): Makefile
+	$(PIP) install --upgrade docutils readme pdoc mkdocs pygments
+	@ touch $(DEPENDS_DOC_FLAG)  # flag to indicate dependencies are installed
+
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
 $(DEPENDS_DEV_FLAG): Makefile
-	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer honcho
+	$(PIP) install --upgrade pip pep8radius wheel sniffer
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
@@ -155,34 +165,51 @@ endif
 # Documentation ################################################################
 
 .PHONY: doc
-doc: readme apidocs uml
+doc: readme uml apidocs
+
+.PHONY: doc-live
+doc-live: doc
+	eval "sleep 3; open http://127.0.0.1:8000" &
+	$(MKDOCS) serve
 
 .PHONY: read
 read: doc
+	$(OPEN) site/index.html
 	$(OPEN) apidocs/$(PACKAGE)/index.html
 	$(OPEN) README-pypi.html
 	$(OPEN) README-github.html
 
 .PHONY: readme
-readme: depends-dev README-github.html README-pypi.html
+readme: depends-doc README-github.html README-pypi.html
 README-github.html: README.md
 	pandoc -f markdown_github -t html -o README-github.html README.md
 README-pypi.html: README.rst
 	$(RST2HTML) README.rst README-pypi.html
-README.rst: README.md
-	pandoc -f markdown_github -t rst -o README.rst README.md
+%.rst: %.md
+	pandoc -f markdown_github -t rst -o $@ $<
 
-.PHONY: apidocs
-apidocs: depends-dev apidocs/$(PACKAGE)/index.html
-apidocs/$(PACKAGE)/index.html: $(SOURCES)
-	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+.PHONY: verify-readme
+verify-readme: $(DOCS_FLAG)
+$(DOCS_FLAG): README.rst CHANGES.rst
+	$(PYTHON) setup.py check --restructuredtext --strict --metadata
+	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
 
 .PHONY: uml
-uml: depends-ci docs/*.png
+uml: depends-doc docs/*.png
 docs/*.png: $(SOURCES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
+
+.PHONY: apidocs
+apidocs: depends-doc apidocs/$(PACKAGE)/index.html
+apidocs/$(PACKAGE)/index.html: $(SOURCES)
+	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+
+.PHONY: mkdocs
+mkdocs: depends-doc site/index.html
+site/index.html: mkdocs.yml docs/*.md
+	$(MKDOCS) build --clean --strict
 
 # Static Analysis ##############################################################
 
@@ -210,7 +237,7 @@ fix: depends-dev
 RANDOM_SEED ?= $(shell date +%s)
 
 PYTEST_CORE_OPTS := -r xXw -vv
-PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
 PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
@@ -221,7 +248,6 @@ FAILED_FLAG := .pytest/failed
 .PHONY: test test-unit
 test: test-unit
 test-unit: depends-ci
-	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
@@ -230,7 +256,6 @@ endif
 .PHONY: test-int
 test-int: depends-ci
 	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
-	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
 	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
@@ -241,7 +266,6 @@ endif
 tests: test-all
 test-all: depends-ci
 	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(PACKAGE) tests; fi
-	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
 ifndef TRAVIS
 	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
@@ -263,9 +287,9 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-build
 .clean-build:
-	find $(PACKAGE) -name '*.pyc' -delete
-	find $(PACKAGE) -name '__pycache__' -delete
-	rm -rf $(INSTALLED_FLAG)
+	find $(PACKAGE) tests -name '*.pyc' -delete
+	find $(PACKAGE) tests -name '__pycache__' -delete
+	rm -rf $(INSTALLED_FLAG) *.egg-info
 
 .PHONY: .clean-doc
 .clean-doc:
