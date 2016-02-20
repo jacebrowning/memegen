@@ -69,7 +69,7 @@ NOSE := $(BIN_)nosetests
 PYTEST := $(BIN_)py.test
 COVERAGE := $(BIN_)coverage
 SNIFFER := $(BIN_)sniffer
-HONCHO := $(ACTIVATE) && honcho
+HONCHO := $(ACTIVATE) && $(BIN_)honcho
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
@@ -99,12 +99,12 @@ ci: doc check test tests validate
 endif
 
 .PHONY: run
-run: depends-dev .env
+run: env depends .env
 	$(HONCHO) run bin/post_compile
 	$(HONCHO) start
 
 .PHONY: launch
-launch: depends-dev
+launch: env depends
 	eval "sleep 3; open http://$(IP):$(PORT)" &
 	$(MAKE) run
 
@@ -152,7 +152,7 @@ $(DEPENDS_DOC_FLAG): Makefile
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
 $(DEPENDS_DEV_FLAG): Makefile
-	$(PIP) install --upgrade pip pep8radius wheel sniffer
+	$(PIP) install --upgrade pip pep8radius wheel sniffer honcho
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
