@@ -5,15 +5,15 @@ import yorm
 from ..domain import Template
 
 
-@yorm.attr(all=yorm.converters.String)
-class StringList(yorm.converters.List):
+@yorm.attr(all=yorm.types.String)
+class StringList(yorm.types.List):
     pass
 
 
-@yorm.attr(key=yorm.converters.String)
-@yorm.attr(name=yorm.converters.String)
+@yorm.attr(key=yorm.types.String)
+@yorm.attr(name=yorm.types.String)
 @yorm.attr(default=StringList)
-@yorm.attr(link=yorm.converters.String)
+@yorm.attr(link=yorm.types.String)
 @yorm.attr(aliases=StringList)
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
