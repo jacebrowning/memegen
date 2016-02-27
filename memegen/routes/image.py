@@ -19,7 +19,13 @@ OPTIONS = {
 def get_latest():
     title = "Latest Meme"
     try:
-        return display(title, app.image_service.image_store.latest)
+        image = app.image_service.image_store.latest
+        if image.style:
+            _route = route('.get', key=image.template.key, path=image.text.path,
+                           alt=image.style)
+        else:
+            _route = route('.get', key=image.template.key, path=image.text.path)
+        return redirect(_route, code=307)
     except FileNotFoundError:
         return display(title, "static/images/missing.png", mimetype='image/png')
 

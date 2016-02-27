@@ -13,6 +13,8 @@ class Config:
 
     GOOGLE_ANALYTICS_TID = os.getenv('GOOGLE_ANALYTICS_TID')
 
+    REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+
 
 class ProdConfig(Config):
     """Production configuration."""

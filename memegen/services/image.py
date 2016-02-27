@@ -1,3 +1,4 @@
+from ..extensions import redis
 from ..domain import Image
 
 from ._base import Service
@@ -21,6 +22,13 @@ class ImageService(Service):
 
     def create_image(self, template, text, style=None):
         image = Image(template, text, style=style)
+
+        data = {
+            'path': text.path,
+            'template': template.key,
+            'style': style,
+        }
+        redis.hmset('latest', data)
 
         if not self.image_store.exists(image) or self.debug:
             try:

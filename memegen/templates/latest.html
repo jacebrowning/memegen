@@ -5,9 +5,11 @@
   <title>Latest Meme</title>
 
 </head>
-<body>
+<body style="margin: 0px;">
 
-  <img src="{{ src }}" alt="Latest Meme" id="latest_meme">
+  <a href={{ src }}>
+    <img src="{{ src }}" alt="Latest Meme" id="latest_meme">
+  </a>
 
   <script>
     var reload = function(){
