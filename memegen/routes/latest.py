@@ -14,6 +14,6 @@ def get():
     return render_template(
         'latest.html',
         src=route('image.get_latest'),
-        refresh=10,
+        refresh=1,
         ga_tid=get_tid(),
     )
