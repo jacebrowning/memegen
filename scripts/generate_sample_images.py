@@ -16,7 +16,7 @@ def run(loop=True):
     app = create_app(ProdConfig)
 
     for template in app.template_service.all():
-        app.image_service.create_image(template, template.sample_text)
+        app.image_service.create(template, template.sample_text)
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ OPTIONS = {
 def get_latest():
     title = "Latest Meme"
     try:
-        return display(title, app.image_service.image_store.latest)
+        return display(title, app.image_service.latest)
     except FileNotFoundError:
         return display(title, "static/images/missing.png", mimetype='image/png')
 
@@ -52,7 +52,7 @@ def get_with_text(key, path, alt):
     if path != text.path:
         return redirect(route('.get', key=key, path=text.path, alt=alt))
 
-    image = app.image_service.create_image(template, text, style=alt)
+    image = app.image_service.create(template, text, style=alt)
 
     return display(image.text, image.path)
 
@@ -68,6 +68,6 @@ def get_encoded(code):
     key, path = app.link_service.decode(code)
     template = app.template_service.find(key)
     text = domain.Text(path)
-    image = app.image_service.create_image(template, text)
+    image = app.image_service.create(template, text)
 
     return display(image.text, image.path)

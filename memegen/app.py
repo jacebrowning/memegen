@@ -58,7 +58,7 @@ def register_services(app):
     templates_root = os.path.join(app.config['ROOT'], 'data', 'templates')
     template_store = stores.template.TemplateStore(templates_root)
     images_root = os.path.join(app.config['ROOT'], 'data', 'images')
-    image_store = stores.image.ImageStore(images_root)
+    image_store = stores.image.ImageStore(images_root, app.config)
 
     app.link_service = services.link.LinkService(
         exceptions=exceptions,
@@ -72,7 +72,6 @@ def register_services(app):
         exceptions=exceptions,
         template_store=template_store,
         image_store=image_store,
-        debug=app.config['DEBUG']
     )
 
     def log_request(response):
