@@ -49,7 +49,7 @@ class TemplateService(Service):
         return names
 
     def validate(self):
-        """Ensure all template are valid and conflict-free."""
+        """Ensure all templates are valid and conflict-free."""
         templates = self.all()
         keys = {template.key: template for template in templates}
         for template in templates:
