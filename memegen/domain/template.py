@@ -1,4 +1,5 @@
 import os
+import re
 import logging
 
 import time
@@ -24,11 +25,12 @@ class Template:
     MIN_HEIGHT = 240
     MIN_WIDTH = 240
 
-    def __init__(self, key,
-                 name=None, lines=None, aliases=None, link=None, root=None):
+    def __init__(self, key, name=None, lines=None, patterns=None,
+                 aliases=None, link=None, root=None):
         self.key = key
         self.name = name or ""
         self.lines = lines or []
+        self.patterns = patterns or []
         self.aliases = aliases or []
         self.link = link or ""
         self.root = root or ""
@@ -103,6 +105,21 @@ class Template:
                 if os.path.isfile(path):
                     return path
         return None
+
+    def match(self, string):
+        if self.patterns:
+            log.debug("Matching patterns in %s", self)
+
+        for pattern in self.patterns:
+            log.debug("Comparing %r to %r", string, pattern)
+            result = re.match(pattern, string)
+            if result:
+                ratio = round(min(len(pattern) / len(string),
+                                  len(string) / len(pattern)), 2)
+                path = Text(result.group(1) + '/' + result.group(2)).path
+                return ratio, path
+
+        return 0, None
 
     def validate(self, validators=None):
         if validators is None:

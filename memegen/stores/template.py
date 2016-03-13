@@ -15,6 +15,7 @@ class StringList(yorm.types.List):
 @yorm.attr(default=StringList)
 @yorm.attr(link=yorm.types.String)
 @yorm.attr(aliases=StringList)
+@yorm.attr(regexes=StringList)
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""
@@ -31,6 +32,7 @@ class TemplateModel:
         template.aliases = model.aliases
         template.link = model.link
         template.root = model.root
+        template.patterns = model.regexes
         return template
 
 

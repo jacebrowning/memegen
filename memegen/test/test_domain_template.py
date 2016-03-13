@@ -83,6 +83,16 @@ def describe_template():
 
             assert "your-text/goes-here" == template.sample_path
 
+    def describe_match():
+
+        def it_returns_none_when_no_match(template):
+            expect(template.match("")) == (0, None)
+
+        def it_returns_the_best_matching_result(template):
+            template.patterns = [r"(\w*)/?(abc)", r"(\w*)/?(def)"]
+
+            expect(template.match("_/def")) == (0.42, "_/def")
+
     def describe_validate_meta():
 
         def with_no_name(template):
