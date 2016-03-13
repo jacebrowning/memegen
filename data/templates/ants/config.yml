@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/do-you-want-ants
 aliases:
 - archer
 - do-you-want
+regexes:
+- (do you want .+)/?(because that'?s how you get .+)

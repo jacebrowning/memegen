@@ -7,3 +7,5 @@ aliases:
 - business
 - none-of-my-business
 - not-my-business
+regexes:
+- (.+)/?(but that'?s none of my business)

@@ -5,3 +5,5 @@ default:
 link: http://knowyourmeme.com/memes/its-an-older-meme-but-it-checks-out
 aliases:
 - older-code
+regexes:
+- (it'?s an older .+)/?(but it checks out)

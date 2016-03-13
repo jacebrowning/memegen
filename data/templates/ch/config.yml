@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/captain-hindsight
 aliases:
 - captain-hindsight
 - hindsight
+regexes:
+- (if you wanted to .+)/?(you should have .+)

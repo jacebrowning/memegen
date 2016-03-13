@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/futurama-fry-not-sure-if
 aliases:
 - futurama-fry
 - not-sure-if
+regexes:
+- (not sure if .+)/?(or .+)
