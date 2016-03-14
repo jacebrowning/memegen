@@ -27,6 +27,7 @@ def get():
     data = OrderedDict()
     data['templates'] = route('templates.get', _external=True)
     data['aliases'] = route('aliases.get', _external=True)
+    data['magic'] = route('magic.get', _external=True)
     data['version'] = __version__
     data['changes'] = CHANGES_URL
     return data

@@ -112,7 +112,7 @@ class Template:
 
         for pattern in self.patterns:
             log.debug("Comparing %r to %r", string, pattern)
-            result = re.match(pattern, string)
+            result = re.match(pattern, string, re.IGNORECASE)
             if result:
                 ratio = round(min(len(pattern) / len(string),
                                   len(string) / len(pattern)), 2)

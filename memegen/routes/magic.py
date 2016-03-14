@@ -1,14 +1,30 @@
 from flask import Blueprint, current_app as app, redirect
 
+from ..domain import Text
+
 from ._common import route
 
 
 blueprint = Blueprint('magic', __name__)
 
 
+@blueprint.route("/magic/")
+def get():
+    """Get a list of all matching links."""
+    return []
+
+
 @blueprint.route("/magic/<pattern>")
 def links(pattern):
     """Get a list of all matching links."""
+    text = Text(pattern)
+    if text.path != pattern:
+        return redirect(route('.links', pattern=text.path))
+
+    return _get_matches(str(text))
+
+
+def _get_matches(pattern):
     items = []
 
     for template in app.template_service.all():
