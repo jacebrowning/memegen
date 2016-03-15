@@ -7,3 +7,4 @@ aliases:
 - dog
 regexes:
 - (such .+)/?(very .+)
+- (such .+)/?(much .+)
