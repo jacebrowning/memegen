@@ -7,3 +7,6 @@ aliases:
 - afraid-to-ask-andy
 - afraid-to-ask
 - andy-dwyer
+regexes:
+- (i don'?t know what .+ is for)/?(and at this point i'?m afraid to ask)
+- (i don'?t know .+)/?(and at this point i'?m afraid to ask)

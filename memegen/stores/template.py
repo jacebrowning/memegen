@@ -15,6 +15,7 @@ class StringList(yorm.types.List):
 @yorm.attr(default=StringList)
 @yorm.attr(link=yorm.types.String)
 @yorm.attr(aliases=StringList)
+@yorm.attr(regexes=StringList)
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""
@@ -23,15 +24,18 @@ class TemplateModel:
         self.key = key
         self.root = root
 
-    @staticmethod
-    def pm_to_dm(model):
-        template = Template(model.key)
-        template.name = model.name
-        template.lines = model.default
-        template.aliases = model.aliases
-        template.link = model.link
-        template.root = model.root
-        return template
+    @property
+    def domain(self):
+        # pylint: disable=no-member
+        return Template(
+            key=self.key,
+            name=self.name,
+            lines=self.default,
+            aliases=self.aliases,
+            patterns=self.regexes,
+            link=self.link,
+            root=self.root,
+        )
 
 
 def load_before(func):
@@ -56,15 +60,13 @@ class TemplateStore:
         except KeyError:
             return None
         else:
-            template = TemplateModel.pm_to_dm(model)
-            return template
+            return model.domain
 
     @load_before
     def filter(self, **_):
         templates = []
         for model in self._items.values():
-            template = TemplateModel.pm_to_dm(model)
-            templates.append(template)
+            templates.append(model.domain)
         return templates
 
     def _load(self):

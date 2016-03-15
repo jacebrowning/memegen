@@ -12,6 +12,7 @@ def describe_root():
         assert dict(
             templates="http://localhost/templates/",
             aliases="http://localhost/aliases/",
+            magic="http://localhost/magic/",
             version="2.0",
             changes="https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGES.md"
         ) == load(response)
