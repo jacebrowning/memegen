@@ -52,10 +52,13 @@ def links_shortened(pattern):
 @blueprint.route("/magic/<pattern>.jpg")
 def image(pattern):
     """Get the first matching image."""
+    # TODO: share this logic
+    text = Text(pattern)
+
     items = []
 
     for template in app.template_service.all():
-        ratio, path = template.match(pattern)
+        ratio, path = template.match(str(text).lower())
         if not ratio:
             continue
 
