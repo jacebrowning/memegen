@@ -18,10 +18,11 @@ def get():
 def links(pattern):
     """Get a list of all matching links."""
     text = Text(pattern)
+
     if text.path != pattern:
         return redirect(route('.links', pattern=text.path))
 
-    return _get_matches(str(text))
+    return _get_matches(str(text).lower())
 
 
 def _get_matches(pattern):
