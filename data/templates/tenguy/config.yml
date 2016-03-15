@@ -7,3 +7,7 @@ aliases:
 - really-high-guy
 - stoner-stanely
 - high-guy
+regexes:
+- (.*)/?(.*really high.*)
+- (.*)/?(.*so high.*)
+- (.*)/?(.*high.*)

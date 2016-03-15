@@ -6,3 +6,5 @@ link: http://simpsons.wikia.com/wiki/Jeffrey_Albertson
 aliases:
 - worst-ever
 - comic-book-guy
+regexes:
+- (.*)/?(worst .+ ever)

@@ -6,3 +6,6 @@ link: https://www.youtube.com/watch?v=dvA-mimf2yg
 aliases:
 - captain-now
 - im-the-captain
+regexes:
+- (.*)/?(i am the captain now)
+- (.*)/?(i'?m the captain now)

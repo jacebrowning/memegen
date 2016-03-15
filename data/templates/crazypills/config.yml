@@ -5,3 +5,6 @@ default:
 link: http://knowyourmeme.com/memes/i-feel-like-im-taking-crazy-pills
 aliases:
 - i'm-taking-crazy-pills
+regexes:
+- (.*)/?(i feel like i'?m takin('|g) crazy pills)
+- ()/?(.*crazy pills)

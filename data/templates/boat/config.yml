@@ -9,3 +9,5 @@ aliases:
 - realization-cat
 - buy-a-boat
 - boat-cat
+regexes:
+- ()/?(.+ should buy .+)

@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/ancient-aliens
 aliases:
 - ag
 - aliens
+regexes:
+- ()/?(aliens)

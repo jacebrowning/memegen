@@ -8,3 +8,5 @@ aliases:
 - el-paso
 - por-que
 - por-que-no-los-dos
+regexes:
+- ()/?(why not both)

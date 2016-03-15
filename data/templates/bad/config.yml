@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/your-musics-bad-and-you-should-feel-bad
 aliases:
 - you-should-feel-bad
 - feel-bad
+regexes:
+- (.+ bad)/?(.+ feel bad)

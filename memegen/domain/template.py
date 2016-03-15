@@ -121,6 +121,7 @@ class Template:
                 ratio = round(min(len(regex.pattern) / len(string),
                                   len(string) / len(regex.pattern)), 2)
                 path = Text(result.group(1) + '/' + result.group(2)).path
+                log.debug("Matched: %r", ratio)
                 return ratio, path
 
         return 0, None
@@ -184,8 +185,9 @@ class Template:
 
     def validate_regexes(self):
         for regex in self.regexes:
-            if ")/?(" not in regex.pattern:
-                self._error("regex missing separator: %r", regex.pattern)
+            pattern = regex.pattern
+            if ")/?(" not in pattern:
+                self._error("regex missing separator: %r", pattern)
                 return False
         return True
 

@@ -40,7 +40,7 @@ def _get_matches(pattern):
 
         items.append(data)
 
-    return sorted(items, key=lambda item: item['ratio'])
+    return sorted(items, key=lambda item: item['ratio'], reverse=True)
 
 
 @blueprint.route("/m/<pattern>")

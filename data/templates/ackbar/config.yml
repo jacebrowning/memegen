@@ -5,3 +5,5 @@ link: http://knowyourmeme.com/memes/its-a-trap
 aliases:
 - its-a-trap
 - trap
+regexes:
+- ()/?(it'?s a trap)
