@@ -6,3 +6,5 @@ link: https://www.apple.com/pr/bios/jonathan-ive.html
 aliases:
 - jony
 - best-thing-ever
+regexes:
+- (.*)/?(we think .+ love it)

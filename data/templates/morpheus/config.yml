@@ -5,3 +5,5 @@ link: http://knowyourmeme.com/memes/matrix-morpheus
 aliases:
 - matrix-morpheus
 - what-if
+regexes:
+- (what .+ you)/?(.+)

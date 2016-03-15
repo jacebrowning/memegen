@@ -8,3 +8,6 @@ aliases:
 - bill-o'reilly-rant
 - o'reilly-rant
 - o'reilly
+regexes:
+- (.*)/?(do it live)
+- ()/?(.+live)

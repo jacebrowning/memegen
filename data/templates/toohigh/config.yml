@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/the-rent-is-too-damn-high-jimmy-mcmillan
 aliases:
 - too-damn-high
 - jimmy-mcmillan
+regexes:
+- (.+)/?(too? damn? .+)

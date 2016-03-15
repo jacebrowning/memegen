@@ -6,3 +6,6 @@ link: http://knowyourmeme.com/memes/stop-trying-to-make-fetch-happen
 aliases:
 - sttmfh
 - make-fetch-happen
+regexes:
+- (stop .+ happen)/?(.+ not .+)
+- (.+ happen)/?(.+)

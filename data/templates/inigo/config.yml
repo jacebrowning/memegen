@@ -8,3 +8,5 @@ aliases:
 - montoya
 - that-word
 - word
+regexes:
+- (.+ that word)/?(.+ think it means)

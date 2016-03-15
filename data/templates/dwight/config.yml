@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/schrute-facts
 aliases:
 - false-dwight
 - false
+regexes:
+- (.+)/?(false .+)

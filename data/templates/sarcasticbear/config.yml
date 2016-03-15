@@ -5,3 +5,5 @@ default:
 link: http://knowyourmeme.com/memes/sarcastic-bear
 aliases:
 - sarcbear
+regexes:
+- (i'?m so sorry)/?(.*)

@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/you-tried
 aliases:
 - at-least-you-tried
 - you-tried
+regexes:
+- (.+)/?(you tried)

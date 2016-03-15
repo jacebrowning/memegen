@@ -9,3 +9,4 @@ aliases:
 - not-my-business
 regexes:
 - (.+)/?(but that'?s none of my business)
+- ()/?(.*none of my business)

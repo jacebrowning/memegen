@@ -8,3 +8,4 @@ aliases:
 - not-sure-if
 regexes:
 - (not sure if .+)/?(or .+)
+- (.+ if .+)/?(or .+)

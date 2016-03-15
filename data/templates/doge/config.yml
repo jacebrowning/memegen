@@ -5,3 +5,5 @@ default:
 link: http://knowyourmeme.com/memes/doge
 aliases:
 - dog
+regexes:
+- (such .+)/?(very .+)

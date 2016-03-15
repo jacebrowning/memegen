@@ -7,3 +7,6 @@ aliases:
 - y-u-no
 - why-you-no
 - why
+regexes:
+- (why you no)/?(.+)
+- (y u no)/?(.+)

@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/super-cool-ski-instructor
 aliases:
 - bad-time
 - ski-instructor
+regexes:
+- (.*)/?(you.* bad time)

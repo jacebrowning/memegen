@@ -5,3 +5,5 @@ default:
 link: http://knowyourmeme.com/memes/oprah-you-get-a-car
 aliases:
 - you-get-a-car
+regexes:
+- (you get .+)/?(and you get .+)

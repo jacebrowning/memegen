@@ -7,3 +7,4 @@ aliases:
 - older-code
 regexes:
 - (it'?s an older .+)/?(but it checks out)
+- (.+ older .+)/?(but it checks out)

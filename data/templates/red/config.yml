@@ -7,3 +7,5 @@ aliases:
 - red-forman
 - going-to-fight
 - going-to-do-today
+regexes:
+- (.+ do today)/?(.+ fight)

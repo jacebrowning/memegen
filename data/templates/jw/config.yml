@@ -6,3 +6,5 @@ link: https://www.youtube.com/watch?v=RFinNxS5KN4&t=86
 aliases:
 - jurrasic-world
 - not-a-good-idea
+regexes:
+- (.+ just .+)/?(probably not .+)

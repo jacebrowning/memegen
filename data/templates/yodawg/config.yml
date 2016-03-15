@@ -6,3 +6,6 @@ link: http://knowyourmeme.com/memes/xzibit-yo-dawg
 aliases:
 - sub-dawg
 - xzibit
+regexes:
+- (.+ dawg ?)/?(i heard .+)
+- (.+ dog ?)/?(i heard .+)

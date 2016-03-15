@@ -8,3 +8,5 @@ aliases:
 - anymoreofthem
 - anymore
 - jobs
+regexes:
+- (.*got any more of them)/?(.+)

@@ -6,3 +6,5 @@ link: http://knowyourmeme.com/memes/you-sit-on-a-throne-of-lies
 aliases:
 - throne
 - thrown-of-lies
+regexes:
+- ()/?(.+ throne of lies)
