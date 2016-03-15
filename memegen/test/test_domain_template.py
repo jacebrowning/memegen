@@ -141,6 +141,13 @@ def describe_template():
 
             assert valid is template.validate_size()
 
+    def describe_validate_regexes():
+
+        def with_missing_split(template):
+            template.compile_regexes([".*"])
+
+            assert False is template.validate_regexes()
+
     def describe_validate():
 
         def with_no_validators(template):

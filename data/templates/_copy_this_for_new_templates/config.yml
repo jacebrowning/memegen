@@ -6,3 +6,5 @@ link: # http://knowyourmeme.com/memes/<link-for-future-reference>
 aliases:
 - # other-short-name
 - # another
+regexes:
+- # (match top with .+)/?(and bottom)

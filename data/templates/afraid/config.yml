@@ -10,3 +10,4 @@ aliases:
 regexes:
 - (i don'?t know what .+ is for)/?(and at this point i'?m afraid to ask)
 - (i don'?t know .+)/?(and at this point i'?m afraid to ask)
+- (i don'?t know .+)/?(and .+ afraid to ask)

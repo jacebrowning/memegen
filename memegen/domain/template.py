@@ -131,6 +131,7 @@ class Template:
                 self.validate_meta,
                 self.validate_link,
                 self.validate_size,
+                self.validate_regexes,
             ]
         for validator in validators:
             if not validator():
@@ -139,17 +140,16 @@ class Template:
 
     def validate_meta(self):
         if not self.lines:
-            log.error("Template '%s' has no default lines of text", self)
+            self._error("has no default lines of text")
             return False
         if not self.name:
-            log.error("Template '%s' has no name", self)
+            self._error("has no name")
             return False
         if not self.name[0].isalnum():
-            msg = "Template '%s' name %r should start with an alphanumeric"
-            log.error(msg, self, self.name)
+            self._error("name %r should start with an alphanumeric", self.name)
             return False
         if not self.path:
-            log.error("Template '%s' has no default image", self)
+            self._error("has no default image")
             return False
         return True
 
@@ -166,8 +166,7 @@ class Template:
                     log.warning("Connection timed out")
                     return True  # assume URL is OK; it will be checked again
                 if response.status_code >= 400 and response.status_code != 429:
-                    msg = "Template '%s' link is invalid (%s)"
-                    log.error(msg, self, response.status_code)
+                    self._error("link is invalid (%s)", response.status_code)
                     return False
                 else:
                     with open(flag, 'w') as stream:
@@ -182,6 +181,16 @@ class Template:
                       self.MIN_WIDTH, self.MIN_HEIGHT, w, h)
             return False
         return True
+
+    def validate_regexes(self):
+        for regex in self.regexes:
+            if ")/?(" not in regex.pattern:
+                self._error("regex missing separator: %r", regex.pattern)
+                return False
+        return True
+
+    def _error(self, fmt, *objects):
+        log.error("Template '%s' " + fmt, self, *objects)
 
 
 class Placeholder:
