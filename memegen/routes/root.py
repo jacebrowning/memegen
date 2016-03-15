@@ -1,3 +1,4 @@
+import os
 from collections import OrderedDict
 
 from flask import Blueprint, Response, render_template
@@ -29,6 +30,7 @@ def get():
     data['aliases'] = route('aliases.get', _external=True)
     data['magic'] = route('magic.get', _external=True)
     data['version'] = __version__
+    data['date'] = os.getenv('DEPLOY_DATE')
     data['changes'] = CHANGES_URL
     return data
 
