@@ -74,3 +74,9 @@ def image(pattern):
         url = route('image.get', key="unknown", path="_")
 
     return redirect(url)
+
+
+@blueprint.route("/m/<pattern>.jpg")
+def image_shortened(pattern):
+    """Redirect to the first magic image."""
+    return redirect(route('.image', pattern=pattern))

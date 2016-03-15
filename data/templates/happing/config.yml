@@ -1,0 +1,11 @@
+name: It's Happening
+default:
+-
+- It's Happening
+link: http://knowyourmeme.com/memes/doom-paul-its-happening
+aliases:
+- its-happening
+- ron-paul
+- doom-paul
+regexes:
+- (.*)/?(\bit'?s happening)

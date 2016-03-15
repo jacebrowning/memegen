@@ -7,5 +7,5 @@ aliases:
 - sttmfh
 - make-fetch-happen
 regexes:
-- (stop .+ happen)/?(.+ not .+)
-- (.+ happen)/?(.+)
+- (stop .+ happen\b)/?(.+ not .+)
+- (.+ happen\b)/?(.+)

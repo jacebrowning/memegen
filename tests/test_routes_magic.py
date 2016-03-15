@@ -41,6 +41,8 @@ def describe_pattern():
         response = client.get("/m/_")
 
         expect(response.status_code) == 302
+        expect(load(response, as_json=False)).contains(
+            '<a href="/magic/_">')
 
 
 def describe_image():
@@ -58,3 +60,10 @@ def describe_image():
         expect(response.status_code) == 302
         expect(load(response, as_json=False)).contains(
             '<a href="/unknown/_.jpg">')
+
+    def it_redirects_when_shortened(client):
+        response = client.get("/m/_.jpg")
+
+        expect(response.status_code) == 302
+        expect(load(response, as_json=False)).contains(
+            '<a href="/magic/_.jpg">')
