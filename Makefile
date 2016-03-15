@@ -108,6 +108,10 @@ launch: env depends
 	eval "sleep 3; open http://$(IP):$(PORT)" &
 	$(MAKE) run
 
+.PHONY: gui
+gui: env depends
+	./scripts/run_gui.py
+
 .PHONY: validate
 validate: env
 	CONFIG=$(CONFIG) $(PYTHON) manage.py validate
