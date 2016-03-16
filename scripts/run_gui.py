@@ -26,7 +26,8 @@ class Application:
         self.label = None
         self.text = None
         self._image = None
-        self._event = None
+        self._update_event = None
+        self._clear_event = None
 
         # Configure root window
         self.root = tk.Tk()
@@ -39,7 +40,7 @@ class Application:
         frame.pack(fill=tk.BOTH, expand=1)
 
         # Start the event loop
-        self.update()
+        self.restart()
         self.root.mainloop()
 
     def init(self, root):
@@ -109,12 +110,23 @@ class Application:
             self.image = ImageTk.PhotoImage(Image.open(image.path))
             self.label.configure(image=self.image)
 
+            self.clear()
+
+        self.restart(update=True, clear=False)
+
+    def clear(self, *_):
+        self.text.delete(0, tk.END)
         self.restart()
 
-    def restart(self, *_):
-        if self._event:
-            self.root.after_cancel(self._event)
-        self._event = self.root.after(1000, self.update)
+    def restart(self, *_, update=True, clear=True):
+        if update:
+            if self._update_event:
+                self.root.after_cancel(self._update_event)
+            self._update_event = self.root.after(1000, self.update)
+        if clear:
+            if self._clear_event:
+                self.root.after_cancel(self._clear_event)
+            self._clear_event = self.root.after(5000, self.clear)
 
 
 if __name__ == '__main__':
