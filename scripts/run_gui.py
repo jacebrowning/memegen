@@ -10,6 +10,7 @@ sys.path.append(ROOT)
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+import speech_recognition
 
 from memegen import __project__, __version__
 from memegen.settings import ProdConfig
@@ -28,6 +29,11 @@ class Application:
         self._image = None
         self._update_event = None
         self._clear_event = None
+        self._recogizer = speech_recognition.Recognizer()
+        self._microphone = speech_recognition.Microphone()
+        with self._microphone as source:
+            self._recogizer.adjust_for_ambient_noise(source)
+        self._recogizer.listen_in_background(self._microphone, self.listen)
 
         # Configure root window
         self.root = tk.Tk()
@@ -91,6 +97,17 @@ class Application:
         frame_text(frame).grid(row=2, **sticky)
 
         return frame
+
+    def listen(self, recognizer, audio):
+        try:
+            value = recognizer.recognize_google(audio)
+        except speech_recognition.UnknownValueError:
+            print("Oops! Didn't catch that")
+        except speech_recognition.RequestError:
+            print("Uh oh! Couldn't request results from Google Speech Recognition service")
+        else:
+            self.clear()
+            self.text.insert(0, value)
 
     def update(self):
         text = Text(self.text.get())

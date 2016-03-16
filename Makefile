@@ -110,6 +110,10 @@ launch: env depends
 
 .PHONY: gui
 gui: env depends
+	brew install portaudio
+	brew install flac
+	$(PIP) install speechrecognition
+	$(PIP) install pyaudio
 	./scripts/run_gui.py
 
 .PHONY: validate
