@@ -1,16 +1,13 @@
-import os
-import sys
-import time
-import logging
+#!env/bin/python
+# pylint: disable=no-member
 
-ROOT = os.path.join(os.path.dirname(__file__), '..')
-sys.path.append(ROOT)
+import logging
 
 from memegen.settings import ProdConfig
 from memegen.app import create_app
 
 
-def run(loop=True):
+def main():
     logging.info("Generating sample images...")
 
     app = create_app(ProdConfig)
@@ -20,4 +17,4 @@ def run(loop=True):
 
 
 if __name__ == '__main__':
-    run()
+    main()

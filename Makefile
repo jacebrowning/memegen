@@ -1,7 +1,8 @@
 # Project settings
 PROJECT := MemeGen
 PACKAGE := memegen
-SOURCES := Makefile $(shell find $(PACKAGE) -name '*.py')
+DIRECTORIES := $(PACKAGE) tests scripts
+FILES := Makefile $(shell find $(DIRECTORIES) -name '*.py')
 
 # Python settings
 ifndef TRAVIS
@@ -87,7 +88,7 @@ PORT := 5000
 
 .PHONY: all
 all: depends doc $(ALL_FLAG)
-$(ALL_FLAG): $(SOURCES)
+$(ALL_FLAG): $(FILES)
 	$(MAKE) check
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
@@ -100,7 +101,7 @@ endif
 
 .PHONY: run
 run: env depends .env
-	$(HONCHO) run bin/post_compile
+	PYTHONPATH=$(PWD) $(HONCHO) run bin/post_compile
 	$(HONCHO) start
 
 .PHONY: launch
@@ -114,7 +115,7 @@ gui: env depends
 	brew install flac
 	$(PIP) install speechrecognition
 	$(PIP) install pyaudio
-	./scripts/run_gui.py
+	PYTHONPATH=$(PWD) scripts/run_gui.py
 
 .PHONY: validate
 validate: env
@@ -204,14 +205,14 @@ $(DOCS_FLAG): README.rst CHANGES.rst
 
 .PHONY: uml
 uml: depends-doc docs/*.png
-docs/*.png: $(SOURCES)
+docs/*.png: $(FILES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: apidocs
 apidocs: depends-doc apidocs/$(PACKAGE)/index.html
-apidocs/$(PACKAGE)/index.html: $(SOURCES)
+apidocs/$(PACKAGE)/index.html: $(FILES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
 .PHONY: mkdocs
@@ -226,15 +227,15 @@ check: pep8 pep257 pylint
 
 .PHONY: pep8
 pep8: depends-ci
-	$(PEP8) $(PACKAGE) tests --config=.pep8rc
+	$(PEP8) $(DIRECTORIES) --config=.pep8rc
 
 .PHONY: pep257
 pep257: depends-ci
-	$(PEP257) $(PACKAGE) tests
+	$(PEP257) $(DIRECTORIES)
 
 .PHONY: pylint
 pylint: depends-ci
-	$(PYLINT) $(PACKAGE) tests --rcfile=.pylintrc
+	$(PYLINT) $(DIRECTORIES) --rcfile=.pylintrc
 
 .PHONY: fix
 fix: depends-dev
@@ -273,8 +274,8 @@ endif
 .PHONY: tests test-all
 tests: test-all
 test-all: depends-ci
-	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(PACKAGE) tests; fi
-	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
+	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(DIRECTORIES); fi
+	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(DIRECTORIES)
 ifndef TRAVIS
 	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(COMBINED_TEST_COVERAGE)
@@ -295,8 +296,8 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-build
 .clean-build:
-	find $(PACKAGE) tests -name '*.pyc' -delete
-	find $(PACKAGE) tests -name '__pycache__' -delete
+	find $(DIRECTORIES) -name '*.pyc' -delete
+	find $(DIRECTORIES) -name '__pycache__' -delete
 	rm -rf $(INSTALLED_FLAG) *.egg-info
 
 .PHONY: .clean-doc

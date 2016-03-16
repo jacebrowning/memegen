@@ -1,11 +1,6 @@
 #!env/bin/python
 
-import os
-import sys
 import logging
-
-ROOT = os.path.join(os.path.dirname(__file__), '..')
-sys.path.append(ROOT)
 
 import tkinter as tk
 from tkinter import ttk
@@ -129,11 +124,11 @@ class Application:
             image = Image.open(domain.path)
             old_size = image.size
             max_size = self.root.winfo_width(), self.root.winfo_height()
-            ratio = min(max_size[0]/old_size[0], max_size[1]/old_size[1]) * .9
-            new_size = [int(s * ratio) for s in old_size]
+            ratio = min(max_size[0] / old_size[0], max_size[1] / old_size[1])
+            new_size = [int(s * ratio * 0.9) for s in old_size]
             image = image.resize(new_size, Image.ANTIALIAS)
-            self.image = ImageTk.PhotoImage(image)
-            self.label.configure(image=self.image)
+            self._image = ImageTk.PhotoImage(image)
+            self.label.configure(image=self._image)
 
             self.clear()
 
