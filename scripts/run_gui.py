@@ -5,7 +5,10 @@ import logging
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-import speech_recognition
+try:
+    import speech_recognition  # pylint: disable=import-error
+except ImportError:
+    speech_recognition = None
 
 from memegen import __project__, __version__
 from memegen.settings import ProdConfig
@@ -24,13 +27,16 @@ class Application:
         self._image = None
         self._update_event = None
         self._clear_event = None
-        self._recogizer = speech_recognition.Recognizer()
-        self._microphone = speech_recognition.Microphone()
-        with self._microphone as source:
-            log.info("Adjusting for ambient noise...")
-            self._recogizer.adjust_for_ambient_noise(source)
-        log.info("Listening in the background...")
-        self._recogizer.listen_in_background(self._microphone, self.listen)
+
+        # Configure speech recognition
+        if speech_recognition:
+            self._recogizer = speech_recognition.Recognizer()
+            self._microphone = speech_recognition.Microphone()
+            with self._microphone as source:
+                log.info("Adjusting for ambient noise...")
+                self._recogizer.adjust_for_ambient_noise(source)
+            log.info("Listening in the background...")
+            self._recogizer.listen_in_background(self._microphone, self.listen)
 
         # Configure root window
         self.root = tk.Tk()
