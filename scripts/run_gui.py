@@ -32,7 +32,9 @@ class Application:
         self._recogizer = speech_recognition.Recognizer()
         self._microphone = speech_recognition.Microphone()
         with self._microphone as source:
+            log.info("Adjusting for ambient noise...")
             self._recogizer.adjust_for_ambient_noise(source)
+        log.info("Listening in the background...")
         self._recogizer.listen_in_background(self._microphone, self.listen)
 
         # Configure root window
@@ -99,13 +101,13 @@ class Application:
         return frame
 
     def listen(self, recognizer, audio):
+        log.info("Recognizing speech...")
         try:
             value = recognizer.recognize_google(audio)
         except speech_recognition.UnknownValueError:
-            print("Oops! Didn't catch that")
-        except speech_recognition.RequestError:
-            print("Uh oh! Couldn't request results from Google Speech Recognition service")
+            log.warning("No text matched")
         else:
+            log.info("Matched text: %s", value)
             self.clear()
             self.text.insert(0, value)
 
