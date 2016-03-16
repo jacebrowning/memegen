@@ -106,8 +106,14 @@ class Application:
                 match = template, Text(path)
 
         if match:
-            image = self.app.image_service.create(*match)
-            self.image = ImageTk.PhotoImage(Image.open(image.path))
+            domain = self.app.image_service.create(*match)
+            image = Image.open(domain.path)
+            old_size = image.size
+            max_size = self.root.winfo_width(), self.root.winfo_height()
+            ratio = min(max_size[0]/old_size[0], max_size[1]/old_size[1]) * .9
+            new_size = [int(s * ratio) for s in old_size]
+            image = image.resize(new_size, Image.ANTIALIAS)
+            self.image = ImageTk.PhotoImage(image)
             self.label.configure(image=self.image)
 
             self.clear()
