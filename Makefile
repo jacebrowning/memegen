@@ -111,7 +111,9 @@ launch: env depends
 
 .PHONY: gui
 gui: env depends
+ifdef MAC
 	brew install flac portaudio swig
+endif
 	$(PIP) install speechrecognition pyaudio pocketsphinx
 	PYTHONPATH=$(PWD) scripts/run_gui.py
 
