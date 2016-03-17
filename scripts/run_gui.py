@@ -31,11 +31,13 @@ class Application:
         # Configure speech recognition
         if speech_recognition:
             self._recogizer = speech_recognition.Recognizer()
+            self._recogizer.energy_threshold = 1500
+            self._recogizer.dynamic_energy_adjustment_ratio = 3
             self._microphone = speech_recognition.Microphone()
             with self._microphone as source:
                 log.info("Adjusting for ambient noise...")
-                self._recogizer.adjust_for_ambient_noise(source)
-            log.info("Listening in the background...")
+                self._recogizer.adjust_for_ambient_noise(source, duration=3)
+            log.info("Listening for audio...")
             self._recogizer.listen_in_background(self._microphone, self.listen)
 
         # Configure root window
@@ -106,14 +108,14 @@ class Application:
         try:
             value = recognizer.recognize_google(audio)
         except speech_recognition.UnknownValueError:
-            log.warning("No text matched")
+            log.warning("No speech detected")
         else:
-            log.info("Matched text: %s", value)
-            self.clear()
-            self.text.insert(0, value)
+            log.info("Detected speech: %s", value)
+            self.update(value)
+        log.info("Listening for audio...")
 
-    def update(self):
-        text = Text(self.text.get())
+    def update(self, value=None):
+        text = Text(value or self.text.get())
 
         ratio = 0
         match = None

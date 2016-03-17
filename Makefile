@@ -111,10 +111,8 @@ launch: env depends
 
 .PHONY: gui
 gui: env depends
-	brew install portaudio
-	brew install flac
-	$(PIP) install speechrecognition
-	$(PIP) install pyaudio
+	brew install flac portaudio swig
+	$(PIP) install speechrecognition pyaudio pocketsphinx
 	PYTHONPATH=$(PWD) scripts/run_gui.py
 
 .PHONY: validate
