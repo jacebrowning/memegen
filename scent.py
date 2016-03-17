@@ -13,7 +13,7 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ["memegen", "tests", "data"]
+watch_paths = ["memegen", "tests", "scripts", "data"]
 
 
 @select_runnable('python')
