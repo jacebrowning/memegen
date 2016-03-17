@@ -12,3 +12,4 @@ regexes:
 - (i don'?t know .+)/?(and at this point i'?m afraid to ask)
 - (i don'?t know .+)/?(and .+ afraid to ask)
 - (.+)/?(and .+ afraid to ask)
+- ()/?(.*afraid to ask)

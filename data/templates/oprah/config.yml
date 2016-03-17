@@ -7,3 +7,4 @@ aliases:
 - you-get-a-car
 regexes:
 - (you get .+)/?(and you get .+)
+- ()/?(.*you get .+)

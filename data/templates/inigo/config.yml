@@ -10,3 +10,4 @@ aliases:
 - word
 regexes:
 - (.+ that word)/?(.+ think it means)
+- (you keep .+ word)/?(.*)

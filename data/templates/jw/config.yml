@@ -8,3 +8,4 @@ aliases:
 - not-a-good-idea
 regexes:
 - (.+ just .+)/?(probably not .+)
+- ()/?(.*not a good idea)

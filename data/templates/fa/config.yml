@@ -6,4 +6,6 @@ link: http://knowyourmeme.com/memes/forever-alone
 aliases:
 - forever-alone
 - alone
-regexes: []
+regexes:
+- (forever)/?(alone)
+- (.*)/?(alone)

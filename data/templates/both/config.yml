@@ -9,4 +9,4 @@ aliases:
 - por-que
 - por-que-no-los-dos
 regexes:
-- ()/?(why not both)
+- (.*)/?(why not both)

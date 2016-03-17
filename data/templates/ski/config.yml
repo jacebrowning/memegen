@@ -8,3 +8,4 @@ aliases:
 - ski-instructor
 regexes:
 - (.*)/?(you.* bad time)
+- ()/?(.*bad time)

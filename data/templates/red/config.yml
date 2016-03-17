@@ -9,3 +9,4 @@ aliases:
 - going-to-do-today
 regexes:
 - (.+ do today)/?(.+ fight)
+- ()/?(.+ fight)

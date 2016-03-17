@@ -7,3 +7,4 @@ aliases:
 - chosen-one
 regexes:
 - (.*)/?(you were the chosen one)
+- ()/?(.* chosen one)

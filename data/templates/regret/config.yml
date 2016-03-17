@@ -10,3 +10,4 @@ aliases:
 - anchorman-regret
 regexes:
 - ()/?(.+ immediately regret .+)
+- ()/?(.+ regret .+)

@@ -8,3 +8,4 @@ aliases:
 - feel-bad
 regexes:
 - (.+ bad)/?(.+ feel bad)
+- ()/?(.*feel bad)

@@ -10,3 +10,4 @@ aliases:
 regexes:
 - (.+)/?(but that'?s none of my business)
 - ()/?(.*none of my business)
+- ()/?(.*my business)
