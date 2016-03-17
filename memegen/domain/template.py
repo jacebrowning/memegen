@@ -184,12 +184,17 @@ class Template:
         return True
 
     def validate_regexes(self):
+        if not self.regexes:
+            self._warn("no regexes")
         for regex in self.regexes:
             pattern = regex.pattern
             if ")/?(" not in pattern:
                 self._error("regex missing separator: %r", pattern)
                 return False
         return True
+
+    def _warn(self, fmt, *objects):
+        log.warning("Template '%s' " + fmt, self, *objects)
 
     def _error(self, fmt, *objects):
         log.error("Template '%s' " + fmt, self, *objects)

@@ -7,5 +7,5 @@ aliases:
 - futurama-fry
 - not-sure-if
 regexes:
-- (not sure if .+)/?(or .+)
+- (not sure .+)/?(or .+)
 - (.+ if .+)/?(or .+)
