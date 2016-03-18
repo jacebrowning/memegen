@@ -17,7 +17,7 @@ def describe_root():
             'templates': "http://localhost/templates/",
             'aliases': "http://localhost/aliases/",
             'magic': "http://localhost/magic/",
-            'version': "2.0",
+            'version': "2.1",
             'date': "today",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGES.md"
         }
