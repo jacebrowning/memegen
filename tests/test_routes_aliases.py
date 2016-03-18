@@ -1,5 +1,7 @@
 # pylint: disable=unused-variable,misplaced-comparison-constant,expression-not-assigned
 
+from expecter import expect
+
 from .conftest import load
 
 
@@ -11,10 +13,17 @@ def describe_get():
         assert 200 == response.status_code
         assert len(load(response)) > 200
 
+    def it_redirects_with_param(client):
+        response = client.get("/aliases/?name=foo")
+
+        expect(response.status_code) == 302
+        expect(load(response, as_json=False)).contains(
+            '<a href="/aliases/foo">')
+
     def describe_filter():
 
         def with_single_match(client):
-            response = client.get("/aliases/?name=sad-biden")
+            response = client.get("/aliases/sad-biden")
 
             assert 200 == response.status_code
             assert {
@@ -29,7 +38,7 @@ def describe_get():
             } == load(response)
 
         def with_many_matches(client):
-            response = client.get("/aliases/?name=votestakes")
+            response = client.get("/aliases/votestakes")
 
             assert 200 == response.status_code
             assert len(load(response)) == 3
