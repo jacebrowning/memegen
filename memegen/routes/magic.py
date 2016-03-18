@@ -8,15 +8,13 @@ from ._common import route
 blueprint = Blueprint('magic', __name__)
 
 
-@blueprint.route("/magic/")
-def get():
-    """Get a list of all matching links."""
-    return []
-
-
+@blueprint.route("/magic/", defaults={'pattern': None}, endpoint='get')
 @blueprint.route("/magic/<pattern>")
 def links(pattern):
     """Get a list of all matching links."""
+    if not pattern:
+        return []
+
     text = Text(pattern)
 
     if text.path != pattern:
