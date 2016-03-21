@@ -124,6 +124,8 @@ watch: depends .clean-test
 
 .env:
 	echo "CONFIG=dev" >> .env
+	echo "DATABASE_URL=postgresql://localhost/memegen_dev" >> .env
+	- createdb memegen_dev
 
 # Development Installation #####################################################
 

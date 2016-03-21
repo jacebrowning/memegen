@@ -1,19 +1,14 @@
 import os
 import logging
+
 import sqlalchemy as sa
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+
+from ..extensions import db
 
 log = logging.getLogger(__name__)
 
-PG_DATABASE_URL = 'postgresql://localhost/memegen'  # TODO make this an env-var
 
-SA_ENGINE = sa.create_engine(PG_DATABASE_URL, echo=True)
-SA_BASE = declarative_base()
-SA = sessionmaker(bind=SA_ENGINE)()
-
-
-class MemeModel(SA_BASE):
+class MemeModel(db.Model):
     __tablename__ = 'memes'
     id = sa.Column(sa.Integer, primary_key=True, nullable=False)
     key = sa.Column(sa.String, nullable=False)
@@ -22,10 +17,10 @@ class MemeModel(SA_BASE):
         return "<Meme(id='%s', key='%s')>" % (self.id, self.key)
 
     def save(self):
-        SA.add(self)
+        db.session.add(self)
 
 
-class WordModel(SA_BASE):
+class WordModel(db.Model):
     __tablename__ = 'words'
     id = sa.Column(sa.String, primary_key=True, nullable=False)
     meme_id = sa.Column(sa.Integer, sa.ForeignKey('memes.id'), nullable=False)
@@ -34,8 +29,6 @@ class WordModel(SA_BASE):
     def __repr__(self):
         return "<Word(id='%s', meme_id='%s', occurances='%s')>" \
             % (self.id, self.meme_id, self.occurances)
-
-SA_BASE.metadata.create_all(SA_ENGINE)  # Creates tables
 
 
 class ImageModel:
@@ -48,11 +41,11 @@ class ImageModel:
         for line in image.text.lines:
             self._words += line.lower().split(' ')
 
-        meme = SA.query(MemeModel).filter_by(key=image.template.key).first()
+        meme = db.session.query(MemeModel).filter_by(key=image.template.key).first()
         if not meme:
             meme = MemeModel(key=image.template.key)
-            SA.add(meme)
-            SA.commit()
+            db.session.add(meme)
+            db.session.commit()
 
         # look-up the word from the database, count the
         # occurances in this particular set of text
@@ -60,7 +53,7 @@ class ImageModel:
             # is there no entry? should we query for one
             # or create a new one?
             if not self._word_models.get(word):
-                model = SA.query(WordModel).filter_by(id=word).first()
+                model = db.session.query(WordModel).filter_by(id=word).first()
 
                 # doesn't exist, create a new model
                 if not model:
@@ -75,8 +68,8 @@ class ImageModel:
         # save all the updated occurance counts
         for key in self._word_models:
             if self._word_models[key]:
-                SA.add(self._word_models[key])
-                SA.commit()
+                db.session.add(self._word_models[key])
+                db.session.commit()
 
 
 class ImageStore:
