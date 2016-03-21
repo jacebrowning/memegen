@@ -7,6 +7,7 @@ from memegen.settings import ProdConfig
 from memegen.app import create_app
 from memegen.stores.image import MemeModel
 
+
 def main():
     logging.info("Generating sample images...")
 

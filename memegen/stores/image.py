@@ -6,39 +6,43 @@ from sqlalchemy.orm import sessionmaker
 
 log = logging.getLogger(__name__)
 
-PG_DATABASE_URL = 'postgresql://localhost/memegen' # TODO make this an env-var
+PG_DATABASE_URL = 'postgresql://localhost/memegen'  # TODO make this an env-var
 
-SA_ENGINE  = sa.create_engine(PG_DATABASE_URL, echo=True)
-SA_BASE    = declarative_base()
-SA         = sessionmaker(bind=SA_ENGINE)()
+SA_ENGINE = sa.create_engine(PG_DATABASE_URL, echo=True)
+SA_BASE = declarative_base()
+SA = sessionmaker(bind=SA_ENGINE)()
+
 
 class MemeModel(SA_BASE):
     __tablename__ = 'memes'
-    id  = sa.Column(sa.Integer, primary_key=True, nullable=False)
+    id = sa.Column(sa.Integer, primary_key=True, nullable=False)
     key = sa.Column(sa.String, nullable=False)
 
     def __repr__(self):
-        return "<Meme(id='%s', key='%s')>" % ( self.id, self.key)
+        return "<Meme(id='%s', key='%s')>" % (self.id, self.key)
 
     def save(self):
         SA.add(self)
 
+
 class WordModel(SA_BASE):
     __tablename__ = 'words'
-    id         = sa.Column(sa.String, primary_key=True, nullable=False)
-    meme_id    = sa.Column(sa.Integer, sa.ForeignKey('memes.id'), nullable=False)
+    id = sa.Column(sa.String, primary_key=True, nullable=False)
+    meme_id = sa.Column(sa.Integer, sa.ForeignKey('memes.id'), nullable=False)
     occurances = sa.Column(sa.Integer)
 
     def __repr__(self):
-        return "<Word(id='%s', meme_id='%s', occurances='%s')>" % ( self.id, self.meme_id, self.occurances)
+        return "<Word(id='%s', meme_id='%s', occurances='%s')>" \
+            % (self.id, self.meme_id, self.occurances)
 
-SA_BASE.metadata.create_all(SA_ENGINE) # Creates tables
+SA_BASE.metadata.create_all(SA_ENGINE)  # Creates tables
+
 
 class ImageModel:
     def __init__(self, image):
         self._word_models = {}
-        self._words       = []
-        self.key          = image.template.key
+        self._words = []
+        self.key = image.template.key
 
         # append all the individual words into an array
         for line in image.text.lines:
