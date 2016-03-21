@@ -93,11 +93,7 @@ $(ALL_FLAG): $(FILES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ifdef TRAVIS
 ci: check test tests validate
-else
-ci: doc check test tests validate
-endif
 
 .PHONY: run
 run: env depends .env
