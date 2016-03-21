@@ -1,13 +1,16 @@
 import os
+import logging
 import sqlalchemy as sa
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-PG_DATABASE_URL = 'postgresql://localhost/memegen'
+log = logging.getLogger(__name__)
+
+PG_DATABASE_URL = 'postgresql://localhost/memegen' # TODO make this an env-var
 
 SA_ENGINE  = sa.create_engine(PG_DATABASE_URL, echo=True)
 SA_BASE    = declarative_base()
-SA         = sessionmaker(bind=SA_ENGINE)
+SA         = sessionmaker(bind=SA_ENGINE)()
 
 class MemeModel(SA_BASE):
     __tablename__ = 'memes'
@@ -29,7 +32,7 @@ class WordModel(SA_BASE):
     def __repr__(self):
         return "<Word(id='%s', meme_id='%s', occurances='%s')>" % ( self.id, self.meme_id, self.occurances)
 
-SA_BASE.metadata.create_all(SA_ENGINE)
+SA_BASE.metadata.create_all(SA_ENGINE) # Creates tables
 
 class ImageModel:
     def __init__(self, image):
@@ -41,19 +44,25 @@ class ImageModel:
         for line in image.text.lines:
             self._words += line.lower().split(' ')
 
+        meme = SA.query(MemeModel).filter_by(key=image.template.key).first()
+        if not meme:
+            meme = MemeModel(key=image.template.key)
+            SA.add(meme)
+            SA.commit()
+
         # look-up the word from the database, count the
         # occurances in this particular set of text
         for word in self._words:
             # is there no entry? should we query for one
             # or create a new one?
-            if not self._word_models[word]:
+            if not self._word_models.get(word):
                 model = SA.query(WordModel).filter_by(id=word).first()
 
                 # doesn't exist, create a new model
                 if not model:
-                    model = WordModel(id=word, meme_id=0, occurances=0)
-                model.occurances += 1
+                    model = WordModel(id=word, meme_id=meme.id, occurances=0)
 
+                model.occurances += 1
                 self._word_models[word] = model
 
             else:
@@ -63,6 +72,7 @@ class ImageModel:
         for key in self._word_models:
             if self._word_models[key]:
                 SA.add(self._word_models[key])
+                SA.commit()
 
 
 class ImageStore:
@@ -85,6 +95,8 @@ class ImageStore:
     def create(self, image):
         if self.exists(image) and not self.debug:
             return
+
+        ImageModel(image)
 
         image.root = self.root
         image.generate()
