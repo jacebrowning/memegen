@@ -27,13 +27,13 @@ class FilenameTooLong(APIException):
     detail = "Filename too long."
 
 
-def create_app(config):
+def create_app(config, **kwargs):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
 
     configure_logging(app)
 
-    register_extensions(app)
+    register_extensions(app, **kwargs)
 
     register_services(app)
     register_blueprints(app)
@@ -51,7 +51,10 @@ def configure_logging(app):
     logging.getLogger('requests').setLevel(logging.WARNING)
 
 
-def register_extensions(app):
+def register_extensions(app, _skip_db=False):
+    if _skip_db:
+        return
+
     extensions.db.init_app(app)
     with app.app_context():
         extensions.db.create_all()

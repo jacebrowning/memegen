@@ -1,3 +1,5 @@
+# pylint: disable=no-member
+
 import os
 import logging
 
@@ -42,7 +44,9 @@ class ImageModel:
         for line in image.text.lines:
             self._words += line.lower().split(' ')
 
-        meme = db.session.query(MemeModel).filter_by(key=image.template.key).first()
+        meme = (db.session.query(MemeModel)
+                .filter_by(key=image.template.key)
+                .first())
         if not meme:
             meme = MemeModel(key=image.template.key)
             db.session.add(meme)

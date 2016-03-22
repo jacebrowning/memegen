@@ -11,7 +11,7 @@ ifndef TRAVIS
 endif
 
 # Test settings
-UNIT_TEST_COVERAGE := 65
+UNIT_TEST_COVERAGE := 64
 INTEGRATION_TEST_COVERAGE := 75
 COMBINED_TEST_COVERAGE := 95
 
@@ -84,6 +84,7 @@ ALL_FLAG := $(ENV)/.all
 
 IP = $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
 CONFIG ?= dev
+DATABASE_URL ?= postgresql://localhost/memegen_dev
 PORT := 5000
 
 .PHONY: all
@@ -96,8 +97,7 @@ $(ALL_FLAG): $(FILES)
 ci: check test tests validate
 
 .PHONY: run
-run: env depends .env
-	PYTHONPATH=$(PWD) $(HONCHO) run bin/post_compile
+run: env depends .env db-dev
 	$(HONCHO) start
 
 .PHONY: launch
@@ -115,17 +115,27 @@ endif
 
 .PHONY: validate
 validate: env
-	CONFIG=$(CONFIG) $(PYTHON) manage.py validate
+	DATABASE_URL=$(DATABASE_URL) CONFIG=$(CONFIG) $(PYTHON) manage.py validate
 
 .PHONY: watch
 watch: depends .clean-test
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
+# Environment Setup ############################################################
+
 .env:
 	echo "CONFIG=dev" >> .env
 	echo "DATABASE_URL=postgresql://localhost/memegen_dev" >> .env
+
+.PHONY: db-dev
+db-dev:
 	- createdb memegen_dev
+
+.PHONY: db-test
+db-test:
+	- dropdb memegen_test
+	createdb memegen_test
 
 # Development Installation #####################################################
 
@@ -254,14 +264,14 @@ FAILED_FLAG := .pytest/failed
 
 .PHONY: test test-unit
 test: test-unit
-test-unit: depends-ci
+test-unit: depends-ci db-test
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
 endif
 
 .PHONY: test-int
-test-int: depends-ci
+test-int: depends-ci db-test
 	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
@@ -271,7 +281,7 @@ endif
 
 .PHONY: tests test-all
 tests: test-all
-test-all: depends-ci
+test-all: depends-ci db-test
 	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(DIRECTORIES); fi
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(DIRECTORIES)
 ifndef TRAVIS
