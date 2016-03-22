@@ -18,6 +18,7 @@ class MemeModel(db.Model):
 
     def save(self):
         db.session.add(self)
+        db.session.commit()
 
 
 class WordModel(db.Model):
@@ -53,7 +54,11 @@ class ImageModel:
             # is there no entry? should we query for one
             # or create a new one?
             if not self._word_models.get(word):
-                model = db.session.query(WordModel).filter_by(id=word).first()
+                model = (
+                    db.session.query(WordModel)
+                    .filter(WordModel.id == word)
+                    .first()
+                )
 
                 # doesn't exist, create a new model
                 if not model:
@@ -69,7 +74,7 @@ class ImageModel:
         for key in self._word_models:
             if self._word_models[key]:
                 db.session.add(self._word_models[key])
-                db.session.commit()
+        db.session.commit()
 
 
 class ImageStore:
