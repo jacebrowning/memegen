@@ -13,9 +13,11 @@ def main():
 
     app = create_app(ProdConfig)
 
-    for template in app.template_service.all():
-        app.image_service.create(template, template.sample_text)
-        MemeModel(key=template.key).save()
+    with app.app_context():
+
+        for template in app.template_service.all():
+            app.image_service.create(template, template.sample_text)
+            MemeModel(key=template.key).save()
 
 
 if __name__ == '__main__':

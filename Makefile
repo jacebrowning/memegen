@@ -98,6 +98,7 @@ ci: check test tests validate
 
 .PHONY: run
 run: env depends .env db-dev
+	PYTHONPATH=$(PWD) $(HONCHO) run bin/post_compile
 	$(HONCHO) start
 
 .PHONY: launch
