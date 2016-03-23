@@ -1,5 +1,6 @@
 Flask == 0.10.1
 Flask-API == 0.6.4
+Flask-SQLAlchemy == 2.1
 webargs == 1.0.0
 Pillow == 3.1.1
 YORM == 0.6.1

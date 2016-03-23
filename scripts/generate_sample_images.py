@@ -17,5 +17,6 @@ def main():
         app.image_service.create(template, template.sample_text)
         MemeModel(key=template.key).save()
 
+
 if __name__ == '__main__':
     main()
