@@ -13,6 +13,8 @@ class Config:
 
     GOOGLE_ANALYTICS_TID = os.getenv('GOOGLE_ANALYTICS_TID')
 
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+
 
 class ProdConfig(Config):
     """Production configuration."""
@@ -27,6 +29,8 @@ class TestConfig(Config):
 
     DEBUG = True
     TESTING = True
+
+    SQLALCHEMY_DATABASE_URI = "postgresql://localhost/memegen_test"
 
 
 class DevConfig(Config):
