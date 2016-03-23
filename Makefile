@@ -114,8 +114,8 @@ endif
 	PYTHONPATH=$(PWD) scripts/run_gui.py
 
 .PHONY: validate
-validate: env
-	DATABASE_URL=$(DATABASE_URL) CONFIG=$(CONFIG) $(PYTHON) manage.py validate
+validate: env db-test
+	CONFIG=test $(PYTHON) manage.py validate
 
 .PHONY: watch
 watch: depends .clean-test
