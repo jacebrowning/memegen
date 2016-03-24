@@ -17,39 +17,21 @@ COMBINED_TEST_COVERAGE := 95
 
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
-ifneq ($(findstring win32, $(PLATFORM)), )
-	WINDOWS := 1
-	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
-	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
-	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
+ifneq ($(findstring darwin, $(PLATFORM)), )
+	MAC := 1
 else
-	ifneq ($(findstring darwin, $(PLATFORM)), )
-		MAC := 1
-	else
-		LINUX := 1
-	endif
-	SYS_PYTHON := python$(PYTHON_MAJOR)
-	ifdef PYTHON_MINOR
-		SYS_PYTHON := $(SYS_PYTHON).$(PYTHON_MINOR)
-	endif
+	LINUX := 1
+endif
+SYS_PYTHON := python$(PYTHON_MAJOR)
+ifdef PYTHON_MINOR
+	SYS_PYTHON := $(SYS_PYTHON).$(PYTHON_MINOR)
 endif
 
 # Virtual environment paths
 ENV := env
-ifneq ($(findstring win32, $(PLATFORM)), )
-	BIN := $(ENV)/Scripts
-	ACTIVATE := $(BIN)/activate.bat
-	OPEN := cmd /c start
-else
-	BIN := $(ENV)/bin
-	ACTIVATE := . $(BIN)/activate
-	ifneq ($(findstring cygwin, $(PLATFORM)), )
-		OPEN := cygstart
-	else
-		OPEN := open
-	endif
-endif
+BIN := $(ENV)/bin
+ACTIVATE := . $(BIN)/activate
+OPEN := open
 
 # Virtual environment executables
 ifndef TRAVIS
@@ -171,9 +153,7 @@ $(DEPENDS_DOC_FLAG): Makefile
 depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
 $(DEPENDS_DEV_FLAG): Makefile
 	$(PIP) install --upgrade pip pep8radius wheel sniffer honcho
-ifdef WINDOWS
-	$(PIP) install --upgrade pywin32
-else ifdef MAC
+ifdef MAC
 	$(PIP) install --upgrade pync MacFSEvents==0.4
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
