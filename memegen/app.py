@@ -49,6 +49,7 @@ def configure_logging(app):
     logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
     logging.getLogger('yorm').setLevel(logging.WARNING)
     logging.getLogger('requests').setLevel(logging.WARNING)
+    logging.getLogger('PIL').setLevel(logging.INFO)
 
 
 def register_extensions(app, _skip_db=False):

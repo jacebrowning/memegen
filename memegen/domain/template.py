@@ -185,7 +185,7 @@ class Template:
 
     def validate_regexes(self):
         if not self.regexes:
-            self._warn("no regexes")
+            self._warn("has no regexes")
         for regex in self.regexes:
             pattern = regex.pattern
             if ")/?(" not in pattern:
