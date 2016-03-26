@@ -70,7 +70,7 @@ NOSE := $(BIN_)nosetests
 PYTEST := $(BIN_)py.test
 COVERAGE := $(BIN_)coverage
 SNIFFER := $(BIN_)sniffer
-HONCHO := $(ACTIVATE) && $(BIN_)honcho
+HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
@@ -97,8 +97,8 @@ $(ALL_FLAG): $(FILES)
 ci: check test tests validate
 
 .PHONY: run
-run: env depends .env db-dev
-	PYTHONPATH=$(PWD) $(HONCHO) run bin/post_compile
+run: .env env depends db-dev
+	$(HONCHO) run bin/post_compile
 	$(HONCHO) start
 
 .PHONY: launch
@@ -107,12 +107,12 @@ launch: env depends
 	$(MAKE) run
 
 .PHONY: gui
-gui: env depends
+gui: .env env depends
 ifdef MAC
 	brew install flac portaudio swig
 endif
 	$(PIP) install speechrecognition pyaudio pocketsphinx
-	PYTHONPATH=$(PWD) scripts/run_gui.py
+	$(HONCHO) run scripts/run_gui.py
 
 .PHONY: validate
 validate: env db-test

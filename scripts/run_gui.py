@@ -1,5 +1,7 @@
 #!env/bin/python
 
+import queue
+import threading
 import logging
 
 import tkinter as tk
@@ -28,22 +30,17 @@ class Application:
         self._update_event = None
         self._clear_event = None
 
-        # Configure speech recognition
-        if speech_recognition:
-            self._recogizer = speech_recognition.Recognizer()
-            self._recogizer.energy_threshold = 1500
-            self._recogizer.dynamic_energy_adjustment_ratio = 3
-            self._microphone = speech_recognition.Microphone()
-            with self._microphone as source:
-                log.info("Adjusting for ambient noise...")
-                self._recogizer.adjust_for_ambient_noise(source, duration=3)
-            log.info("Listening for audio...")
-            self._recogizer.listen_in_background(self._microphone, self.listen)
-
         # Configure root window
         self.root = tk.Tk()
         self.root.title("{} (v{})".format(__project__, __version__))
         self.root.minsize(500, 500)
+
+        # Configure speech recognition
+        self._queue = queue.Queue()
+        self._event = threading.Event()
+        self._speech_recognizer = SpeechRecognizer(self._queue, self._event)
+        self._speech_recognizer.start()
+        self.process_speech()
 
         # Initialize the GUI
         self.label = None
@@ -52,6 +49,7 @@ class Application:
 
         # Start the event loop
         self.restart()
+        self.root.protocol("WM_DELETE_WINDOW", self.close)
         self.root.mainloop()
 
     def init(self, root):
@@ -103,20 +101,22 @@ class Application:
 
         return frame
 
-    def listen(self, recognizer, audio):
-        log.info("Recognizing speech...")
+    def process_speech(self):
         try:
-            value = recognizer.recognize_google(audio)
-        except speech_recognition.UnknownValueError:
-            log.warning("No speech detected")
+            speech = self._queue.get(0)
+        except queue.Empty:
+            pass
         else:
-            log.info("Detected speech: %s", value)
-            self.update(value)
-        log.info("Listening for audio...")
+            self.update(speech)
+        finally:
+            self.root.after(10, self.process_speech)
 
     def update(self, value=None):
-        text = Text(value or self.text.get())
+        if value:
+            self.clear()
+            self.text.insert(0, value)
 
+        text = Text(self.text.get())
         ratio = 0
         match = None
 
@@ -156,6 +156,68 @@ class Application:
                 self.root.after_cancel(self._clear_event)
             self._clear_event = self.root.after(5000, self.clear)
 
+    def close(self):
+        log.info("Closing the application...")
+        self._event.set()
+        self._speech_recognizer.join()
+        self.root.destroy()
+
+
+class SpeechRecognizer(threading.Thread):
+
+    def __init__(self, queue, event):  # pylint: disable=redefined-outer-name
+        super().__init__()
+        self.queue = queue
+        self.event = event
+        self.microphone = None
+        self.recognizer = None
+
+    def run(self):
+        if not speech_recognition:
+            return
+        self.configure()
+        while not self.event.is_set():
+            audio = self.listen()
+            if audio:
+                result = self.recognize(audio)
+                if result:
+                    self.queue.put(result)
+
+    def configure(self):
+        self.recognizer = speech_recognition.Recognizer()
+        self.recognizer.energy_threshold = 1500
+        self.recognizer.dynamic_energy_adjustment_ratio = 3
+        self.microphone = speech_recognition.Microphone()
+        with self.microphone as source:
+            log.info("Adjusting for ambient noise...")
+            self.recognizer.adjust_for_ambient_noise(source, duration=3)
+            log.info("Engery threshold: %s", self.recognizer.energy_threshold)
+
+    def listen(self):
+        log.info("Listening for audio...")
+        audio = None
+        with self.microphone as source:
+            try:
+                audio = self.recognizer.listen(source, timeout=0.5)
+            except speech_recognition.WaitTimeoutError:
+                log.debug("No audio detected")
+            else:
+                log.debug("Audio detected: %s", audio)
+        return audio
+
+    def recognize(self, audio):
+        log.info("Recognizing speech...")
+        speech = None
+        try:
+            speech = self.recognizer.recognize_google(audio)
+        except speech_recognition.UnknownValueError:
+            log.warning("No speech detected")
+        else:
+            log.debug("Detected speech: %s", speech)
+        return speech
+
 
 if __name__ == '__main__':
-    Application(create_app(ProdConfig))
+    api = create_app(ProdConfig)
+    with api.app_context():
+        Application(api)
