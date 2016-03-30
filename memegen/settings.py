@@ -30,8 +30,6 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
-    SQLALCHEMY_DATABASE_URI = "postgresql://localhost/memegen_test"
-
 
 class DevConfig(Config):
     """Development configuration."""

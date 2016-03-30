@@ -115,7 +115,7 @@ endif
 	$(HONCHO) run scripts/run_gui.py
 
 .PHONY: validate
-validate: env db-test
+validate: env
 	CONFIG=test $(PYTHON) manage.py validate
 
 .PHONY: watch
@@ -137,10 +137,6 @@ db-dev:
 		createdb memegen_dev;                 \
 	fi;
 
-.PHONY: db-test
-db-test:
-	- dropdb memegen_test
-	createdb memegen_test
 
 # Development Installation #####################################################
 
@@ -162,7 +158,7 @@ depends: depends-ci depends-doc depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint coverage pytest pytest-describe pytest-expecter pytest-cov pytest-random pytest-runfailed
+	$(PIP) install --upgrade pep8 pep257 pylint coverage pytest pytest-describe pytest-expecter pytest-cov pytest-random pytest-runfailed testing.postgresql
 	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
 .PHONY: depends-doc
@@ -269,14 +265,14 @@ FAILED_FLAG := .pytest/failed
 
 .PHONY: test test-unit
 test: test-unit
-test-unit: depends-ci db-test
+test-unit: depends-ci
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
 endif
 
 .PHONY: test-int
-test-int: depends-ci db-test
+test-int: depends-ci
 	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
@@ -286,7 +282,7 @@ endif
 
 .PHONY: tests test-all
 tests: test-all
-test-all: depends-ci db-test
+test-all: depends-ci
 	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(DIRECTORIES); fi
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(DIRECTORIES)
 ifndef TRAVIS

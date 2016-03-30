@@ -8,7 +8,7 @@ from memegen import settings
 class TestCreateApp:
 
     def test_prod(self):
-        _app = app.create_app(settings.ProdConfig, _skip_db=True)
+        _app = app.create_app(settings.ProdConfig)
 
         assert False is _app.config['DEBUG']
         assert False is _app.config['TESTING']
@@ -20,7 +20,7 @@ class TestCreateApp:
         assert True is _app.config['TESTING']
 
     def test_dev(self):
-        _app = app.create_app(settings.DevConfig, _skip_db=True)
+        _app = app.create_app(settings.DevConfig)
 
         assert True is _app.config['DEBUG']
         assert False is _app.config['TESTING']
