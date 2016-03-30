@@ -14,6 +14,7 @@ class Config:
     GOOGLE_ANALYTICS_TID = os.getenv('GOOGLE_ANALYTICS_TID')
 
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class ProdConfig(Config):
