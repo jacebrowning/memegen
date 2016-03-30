@@ -131,7 +131,11 @@ watch: depends .clean-test
 
 .PHONY: db-dev
 db-dev:
-	- createdb memegen_dev
+	@ if ! psql memegen_dev -c "";            \
+	then                                      \
+		echo "Creating database memegen_dev"; \
+		createdb memegen_dev;                 \
+	fi;
 
 .PHONY: db-test
 db-test:
