@@ -84,7 +84,6 @@ ALL_FLAG := $(ENV)/.all
 
 IP = $(shell ipconfig getifaddr en0 || ipconfig getifaddr en1)
 CONFIG ?= dev
-DATABASE_URL ?= postgresql://localhost/memegen_dev
 PORT := 5000
 
 .PHONY: all
@@ -136,7 +135,21 @@ db-dev:
 		echo "Creating database memegen_dev"; \
 		createdb memegen_dev;                 \
 	fi;
+	$(MAKE) upgrade
 
+# Database Migrations ##########################################################
+
+.PHONY: migrate
+migrate: depends
+	$(PYTHON) manage.py db migrate
+
+.PHONY: upgrade
+upgrade: depends
+	$(PYTHON) manage.py db upgrade
+
+.PHONY: downgrade
+downgrade: depends
+	$(PYTHON) manage.py db downgrade
 
 # Development Installation #####################################################
 

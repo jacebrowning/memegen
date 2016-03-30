@@ -5,13 +5,14 @@ import logging
 from subprocess import check_output
 
 from flask_script import Manager, Server
+from flask_migrate import Migrate, MigrateCommand
 
 from memegen.settings import get_config
 from memegen.app import create_app
 
 
 # Select app configuration from the environment
-config = get_config(os.getenv('CONFIG'))
+config = get_config(os.getenv('CONFIG', 'dev'))
 
 # Build the app using configuration from the environment
 app = create_app(config)
@@ -36,6 +37,7 @@ def validate():
 
 
 manager.add_command('server', Server(host='0.0.0.0'))
+manager.add_command('db', MigrateCommand)
 
 
 if __name__ == '__main__':
