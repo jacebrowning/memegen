@@ -1,8 +1,8 @@
 name: I Immediately Regret This Decision!
-default:
--
-- I IMMEDIATELY REGRET THIS DECISION
 link: https://www.youtube.com/watch?v=gd9ltJGykYc
+default:
+- ''
+- I IMMEDIATELY REGRET THIS DECISION
 aliases:
 - regret-this-decision
 - regret-this

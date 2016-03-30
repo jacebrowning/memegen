@@ -1,8 +1,8 @@
 name: Ancient Aliens Guy
-default:
--
-- ALIENS
 link: http://knowyourmeme.com/memes/ancient-aliens
+default:
+- ''
+- ALIENS
 aliases:
 - ag
 - aliens

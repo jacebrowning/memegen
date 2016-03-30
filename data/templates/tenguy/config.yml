@@ -1,7 +1,7 @@
 name: 10 Guy
-default:
--
 link: http://knowyourmeme.com/memes/10-guy
+default:
+- ''
 aliases:
 - 10guy
 - really-high-guy

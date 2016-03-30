@@ -1,8 +1,8 @@
-name: "X, X Everywhere"
+name: X, X Everywhere
+link: https://imgflip.com/memetemplate/X-Everywhere
 default:
 - MEMES
 - MEMES EVERYWHERE
-link: https://imgflip.com/memetemplate/X-Everywhere
 aliases:
 - everywhere
 - x-everywhere

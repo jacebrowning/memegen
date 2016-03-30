@@ -1,8 +1,8 @@
 name: You Sit on a Throne of Lies
-default:
--
-- YOU SIT ON A THRONE OF LIES
 link: http://knowyourmeme.com/memes/you-sit-on-a-throne-of-lies
+default:
+- ''
+- YOU SIT ON A THRONE OF LIES
 aliases:
 - throne
 - thrown-of-lies

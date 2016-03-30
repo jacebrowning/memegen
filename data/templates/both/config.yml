@@ -1,8 +1,8 @@
 name: Why Not Both?
-default:
--
-- WHY NOT BOTH?
 link: http://knowyourmeme.com/memes/why-not-both-why-dont-we-have-both
+default:
+- ''
+- WHY NOT BOTH?
 aliases:
 - why-don't-we-have-both
 - el-paso

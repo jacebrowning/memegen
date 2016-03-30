@@ -35,6 +35,7 @@ def python(*_):
         (('make', 'test'), "Unit Tests", True),
         (('make', 'tests'), "Integration Tests", False),
         (('make', 'check'), "Static Analysis", True),
+        (('make', 'validate'), "Validate Templates", True),
         (('make', 'doc'), None, True),
     ), start=1):
 

@@ -1,8 +1,8 @@
 name: Drake Always On Beat
-default:
--
-- DrakeAlwaysOnBeat
 link: http://knowyourmeme.com/memes/hotline-bling
+default:
+- ''
+- DrakeAlwaysOnBeat
 aliases:
 - drakebeat
 - alwayson
