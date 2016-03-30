@@ -1,8 +1,8 @@
 name: Oprah You Get a Car
+link: http://knowyourmeme.com/memes/oprah-you-get-a-car
 default:
 - YOU GET A MEME
 - AND YOU GET A MEME
-link: http://knowyourmeme.com/memes/oprah-you-get-a-car
 aliases:
 - you-get-a-car
 regexes:

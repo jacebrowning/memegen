@@ -1,7 +1,7 @@
 name: Matrix Morpheus
-default:
--
 link: http://knowyourmeme.com/memes/matrix-morpheus
+default:
+- ''
 aliases:
 - matrix-morpheus
 - what-if

@@ -1,7 +1,8 @@
 name: It's A Trap!
-default:
--
 link: http://knowyourmeme.com/memes/its-a-trap
+default:
+- ''
+- It's a trap!
 aliases:
 - its-a-trap
 - trap
