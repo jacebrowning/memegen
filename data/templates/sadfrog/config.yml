@@ -1,8 +1,8 @@
 name: Sad Frog / Feels Bad Man
-default:
--
-- FEELS BAD MAN
 link: http://knowyourmeme.com/memes/feels-bad-man-sad-frog
+default:
+- ''
+- FEELS BAD MAN
 aliases:
 - sad-frog
 - feelsbadman

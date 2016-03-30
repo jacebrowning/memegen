@@ -1,21 +1,16 @@
 import os
 
 import yorm
+from yorm.types import String, List
 
 from ..domain import Template
 
 
-@yorm.attr(all=yorm.types.String)
-class StringList(yorm.types.List):
-    pass
-
-
-@yorm.attr(key=yorm.types.String)
-@yorm.attr(name=yorm.types.String)
-@yorm.attr(default=StringList)
-@yorm.attr(link=yorm.types.String)
-@yorm.attr(aliases=StringList)
-@yorm.attr(regexes=StringList)
+@yorm.attr(name=String)
+@yorm.attr(link=String)
+@yorm.attr(default=List.of_type(String))
+@yorm.attr(aliases=List.of_type(String))
+@yorm.attr(regexes=List.of_type(String))
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""
@@ -23,10 +18,14 @@ class TemplateModel:
     def __init__(self, key, root):
         self.key = key
         self.root = root
+        self.name = ""
+        self.default = []
+        self.link = ""
+        self.aliases = []
+        self.regexes = []
 
     @property
     def domain(self):
-        # pylint: disable=no-member
         return Template(
             key=self.key,
             name=self.name,
@@ -38,22 +37,17 @@ class TemplateModel:
         )
 
 
-def load_before(func):
-    def wrapped(self, *args, **kwargs):
-        # pylint: disable=protected-access
-        if self._items is None:
-            self._load()
-        return func(self, *args, **kwargs)
-    return wrapped
-
-
 class TemplateStore:
 
     def __init__(self, root):
         self.root = root
-        self._items = None
+        self._items = {}
+        for key in os.listdir(self.root):
+            if key[0] not in ('.', '_'):
+                model = TemplateModel(key, self.root)
+                yorm.update_file(model)
+                self._items[key] = model
 
-    @load_before
     def read(self, key):
         try:
             model = self._items[key]
@@ -62,16 +56,8 @@ class TemplateStore:
         else:
             return model.domain
 
-    @load_before
     def filter(self, **_):
         templates = []
         for model in self._items.values():
             templates.append(model.domain)
         return templates
-
-    def _load(self):
-        self._items = {}
-        for key in os.listdir(self.root):
-            if key[0] not in ('.', '_'):
-                model = TemplateModel(key, self.root)
-                self._items[key] = model

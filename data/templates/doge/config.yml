@@ -1,8 +1,8 @@
 name: Doge
+link: http://knowyourmeme.com/memes/doge
 default:
 - SUCH MEME
 - VERY SKILL
-link: http://knowyourmeme.com/memes/doge
 aliases:
 - dog
 regexes:

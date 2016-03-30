@@ -1,7 +1,7 @@
 name: Good Guy Greg
-default:
--
 link: http://knowyourmeme.com/memes/good-guy-greg
+default:
+- ''
 aliases:
 - good-guy-greg
 - greg

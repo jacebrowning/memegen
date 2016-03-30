@@ -1,8 +1,8 @@
-name: "Oh, Is That What We're Going to Do Today?"
-default:
-- "Oh, is that what we're going to do today?"
-- "We're going to fight?"
+name: Oh, Is That What We're Going to Do Today?
 link: http://www.tv.com/shows/that-70s-show/a-legal-matter-275493/
+default:
+- Oh, is that what we're going to do today?
+- We're going to fight?
 aliases:
 - red-forman
 - going-to-fight

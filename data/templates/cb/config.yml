@@ -1,8 +1,8 @@
 name: Confession Bear
+link: http://knowyourmeme.com/memes/confession-bear
 default:
 - I STOLE
 - THE PIC-I-NIC BASKET
-link: http://knowyourmeme.com/memes/confession-bear
 aliases:
 - confession-bear
 regexes: []

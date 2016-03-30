@@ -1,7 +1,7 @@
 name: First World Problems
-default:
--
 link: http://knowyourmeme.com/memes/first-world-problems
+default:
+- ''
 aliases:
 - first-world-problems
 - white-whine
