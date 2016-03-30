@@ -5,7 +5,7 @@ from flask import Blueprint, Response, render_template
 
 from .. import __version__
 
-from ._common import CHANGES_URL, route, get_tid
+from ._common import CHANGES_URL, route, get_tid, samples
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/",
@@ -14,12 +14,19 @@ blueprint = Blueprint('root', __name__, url_prefix="/",
 
 @blueprint.route("")
 def get_index():
-    return Response(render_template("index.html", ga_tid=get_tid()))
+    return Response(render_template(
+        "index.html",
+        ga_tid=get_tid(),
+        imgs=samples(),
+    ))
 
 
 @blueprint.route("flask-api/static/js/default.js")
 def get_javascript():
-    return Response(render_template("js/default.js", ga_tid=get_tid()))
+    return Response(render_template(
+        "js/default.js",
+        ga_tid=get_tid(),
+    ))
 
 
 @blueprint.route("api")
@@ -40,6 +47,5 @@ def handle_checks():
     """Return CHECK_OK for zero-downtime deployment.
 
     See: https://labnotes.org/zero-downtime-deploy-with-dokku
-
     """
     return "CHECK_OK"
