@@ -22,7 +22,7 @@ def samples():
     """Generate dictionaries of sample image data for template rendering."""
     for template in sorted(current_app.template_service.all()):
         path = template.sample_path
-        url = route('image.get', key=template.key, path=path, _external=True)
+        url = route('image.get', key=template.key, path=path)
         link = route('links.get', key=template.key, path=path)
         yield {
             'key': template.key,
