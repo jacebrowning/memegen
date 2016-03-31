@@ -6,5 +6,6 @@ from . import image
 from . import overview
 from . import generator
 from . import latest
+from . import future
 from . import aliases
 from . import magic

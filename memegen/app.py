@@ -103,5 +103,6 @@ def register_blueprints(app):
     app.register_blueprint(routes.overview.blueprint)
     app.register_blueprint(routes.generator.blueprint)
     app.register_blueprint(routes.latest.blueprint)
+    app.register_blueprint(routes.future.blueprint)
     app.register_blueprint(routes.aliases.blueprint)
     app.register_blueprint(routes.magic.blueprint)
