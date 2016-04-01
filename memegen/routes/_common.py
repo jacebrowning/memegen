@@ -65,10 +65,10 @@ def _track(title):
         tid=get_tid(),
         cid=request.remote_addr,
 
-        t='pageview',
-        dh='memegen.link',
-        dp=request.path,
-        dt=str(title),
+        t='event',
+        ec='Image',
+        ea='GET',
+        el=str(title),
 
         uip=request.remote_addr,
         ua=request.user_agent.string,
