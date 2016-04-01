@@ -136,13 +136,21 @@
 
     <script type="text/javascript">
 
-      function escapeMemeText(str) {
+      function encodeMemeText(str) {
           return str
             .replace(/-/g, '--')
             .replace(/_/g, '__')
             .replace(/\?/g, '~q')
             .replace(/%/g, '~p')
             .replace(/\s+/g, '-') || '_';
+        }
+
+      function decodeMemeText(str) {
+          return str
+            .replace(/-/g, ' ')
+            .replace(/_/g, '')
+            .replace(/~q/g, '?')
+            .replace(/~p/g, '%')
         }
 
       function formatMeme(meme) {
@@ -156,8 +164,8 @@
 
       function generateMeme() {
         var memeId = $('.js-meme-selector').val();
-        var memeTextTop = escapeMemeText($('#meme-text-top').val());
-        var memeTextBottom = escapeMemeText($('#meme-text-bottom').val());
+        var memeTextTop = encodeMemeText($('#meme-text-top').val());
+        var memeTextBottom = encodeMemeText($('#meme-text-bottom').val());
         if (memeId && memeTextTop && memeTextBottom) {
           var url = '/' + memeId + '/' + memeTextTop + '/' + memeTextBottom;
           $("#meme-link").attr('href', url);
@@ -176,8 +184,8 @@
         var link = $( ".js-meme-selector option:checked").data('link');
         if (link) {
           var pieces = link.split('/');
-          $('#meme-text-top').val(pieces[1]);
-          $('#meme-text-bottom').val(pieces[2])
+          $('#meme-text-top').val(decodeMemeText(pieces[2]));
+          $('#meme-text-bottom').val(decodeMemeText(pieces[3]));
         }
         generateMeme();
       });
