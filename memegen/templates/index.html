@@ -142,7 +142,7 @@
             .replace(/_/g, '__')
             .replace(/\?/g, '~q')
             .replace(/%/g, '~p')
-            .replace(/\s+/g, '-');
+            .replace(/\s+/g, '-') || '_';
         }
 
       function formatMeme(meme) {
