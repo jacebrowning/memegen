@@ -6,7 +6,8 @@ import requests
 from flask import (Response, url_for as _url_for, render_template, send_file,
                    current_app, request)
 
-GITHUB_BASE = "https://raw.githubusercontent.com/jacebrowning/memegen/master/"
+GITHUB_SLUG = "jacebrowning/memegen"
+GITHUB_BASE = "https://raw.githubusercontent.com/{}/master/".format(GITHUB_SLUG)
 CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
 CHANGES_URL = GITHUB_BASE + "CHANGES.md"
 

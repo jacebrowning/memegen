@@ -1,12 +1,13 @@
-# pylint: disable=no-self-use
-# pylint: disable=misplaced-comparison-constant
+# pylint: disable=unused-variable,expression-not-assigned
+
+from expecter import expect
 
 
-class TestGenerator:
+def describe_generator():
 
-    def test_get_generator(self, client):
+    def it_returns_html(client):
         response = client.get("/generator")
 
-        assert 200 == response.status_code
-        assert 'text/html' == response.mimetype
-        assert '<img src="' in response.get_data(as_text=True)
+        expect(response.status_code) == 200
+        expect(response.mimetype) == 'text/html'
+        expect(response.get_data(as_text=True)).contains("Meme Generator")
