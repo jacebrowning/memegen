@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <title>MemeGen.link</title>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <title>MemeGen.link</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="images/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="images/apple-touch-icon-60x60.png">
@@ -29,108 +24,200 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/stylesheets/stylesheet.css"
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">MemeGen.link</h1>
-      <h2 class="project-tagline">The open source meme generator.</h2>
-      <a href="/api" class="btn">Browse the API</a>
-      <a href="https://github.com/jacebrowning/memegen" class="btn">View on GitHub</a>
-    </section>
 
-    <section class="main-content">
+    <div class="masthead">
+      <div class="container">
+        <div class="topbar clearfix">
+          <h3 class="masthead-brand">MemeGen.link</h3>
+          <nav>
+            <ul class="nav masthead-nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/latest">Latest</a></li>
+            </ul>
+          </nav>
+        </div>
 
-<h1>
-<a id="browsing-templates" class="anchor" href="#browsing-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browsing Templates</h1>
+        <div class="tagline">
+          <h2>The open source meme generator.</h2>
+          <p>
+            Create memes on demand!
+          </p>
+        </div>
+      </div>
+      </div>
+    </div>
 
-<ul>
-<li>View the examples: <a href="overview">/overview</a></li>
-<li>Watch what others create: <a href="latest">/latest</a></li>
-<li>Create your own: <a href="generator">/generator</a></li>
-</ul>
+    <div class="generator">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 meme-generator">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="top" class="col-sm-2 control-label">Meme</label>
+                <div class="col-sm-10">
+                  <select class="js-meme-selector" name="meme">
+                    {% for img in imgs %}
+                      <option value="{{ img.key }}" data-url="{{ img.url }}" data-link="{{ img.link }}" data-top="{{ img.top }}">
+                        {{ img.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
 
-<h1>
-<a id="generating-images" class="anchor" href="#generating-images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generating Images</h1>
+              <div class="form-group">
+                <label for="top" class="col-sm-2 control-label">Top Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text-top" name="top" value="I don't know what this meme is for"/>
+                </div>
+              </div>
 
-<p>MemeGen URLs contain all the information necessary to generate the image. For example, <a href="http://memegen.link/buzz/memes/memes-everywhere.jpg">http://memegen.link/buzz/memes/memes-everywhere.jpg</a> produces:</p>
+              <div class="form-group">
+                <label for="bottom" class="col-sm-2 control-label">Bottom Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text-bottom" name="bottom" value="and at this point I'm too afraid to ask"/>
+                </div>
+              </div>
 
-<p><img src="http://memegen.link/buzz/memes/memes-everywhere.jpg" alt="buzz"></p>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="button" id="btn-generate" class="btn btn-primary">Generate</button>
+                </div>
+              </div>
+            </form>
+          </div>
 
-<p>But, the site can also produce masked URLs to conceal the joke:</p>
+          <div class="meme-holder col-md-6">
+            <a id="meme-image" href="">
+              <img width='400' src="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<p><a href="http://memegen.link/_YnV6egltZW1lcy9tZW1lcy1ldmVyeXdoZXJl.jpg">http://memegen.link/_YnV6egltZW1lcy9tZW1lcy1ldmVyeXdoZXJl.jpg</a></p>
+    <hr>
 
-<p>For any MemeGen image, lose the extension to see a list of all format options:</p>
+    <div class="meme-templates">
+        <div class="row">
+        {% for img in imgs %}
 
-<p><a href="http://memegen.link/buzz/memes/memes-everywhere">http://memegen.link/buzz/memes/memes-everywhere</a></p>
 
-<h2>
-<a id="special-characters" class="anchor" href="#special-characters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Special Characters</h2>
+          <div class="col-sm-4">
+             <a href="{{img.url}}">
+               <img class="meme-example" width="240" src="{{ img.url }}" />
+             </a>
+           </div>
 
-<p>In URLs, spaces can be inserted using dashes or underscores:</p>
+         {% if loop.index is divisibleby 3 %}
+         </div>
+         {% endif %}
 
-<ul>
-<li>dash (<code>-</code>) → space (<code> </code>)</li>
-<li>underscore (<code>_</code>) → space (<code> </code>)</li>
-<li>dashes (<code>--</code>) → dash (<code>-</code>)</li>
-<li>underscores (<code>__</code>) → underscore (<code>_</code>)</li>
-</ul>
+         {% if loop.index is divisibleby 3 %}
+         <div class="row">
+         {% endif %}
 
-<p>Reserved URL characters can be escaped:</p>
+         {% if loop.last %}
+          </div>
+         {% endif %}
+       {% endfor %}
+     </div>
 
-<ul>
-<li>tilde + Q (<code>~q</code>) → question mark (<code>?</code>)</li>
-<li>tilde + P (<code>~p</code>) → percentage (<code>%</code>)</li>
-<li>2 single qutoes (<code>''</code>) → double quote (<code>"</code>)</li>
-</ul>
 
-<p>For example: <a href="http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg">http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg</a></p>
+    <div class="footer">
+      <nav>
+        <ul class="nav masthead-nav footer-nav">
+          <li><a href="/api">API</a></li>
+          <li><a href="http://github.com/{{ github_slug }}">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
 
-<h2>
-<a id="alternate-styles" class="anchor" href="#alternate-styles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alternate Styles</h2>
 
-<p>Some memes come in multiple forms, which can be selected via <code>?alt=&lt;style&gt;</code>:</p>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
 
-<p><img src="static/images/template.png" alt="template"></p>
+    <script type="text/javascript">
 
-<p>For example: <a href="http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-vote.jpg?alt=scowl">http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-vote.jpg?alt=scowl</a></p>
+      function encodeMemeText(str) {
+          return str
+            .replace(/-/g, '--')
+            .replace(/_/g, '__')
+            .replace(/\?/g, '~q')
+            .replace(/%/g, '~p')
+            .replace(/\s+/g, '-') || '_';
+        }
 
-<h1>
-<a id="adding-templates" class="anchor" href="#adding-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding Templates</h1>
+      function decodeMemeText(str) {
+          return str
+            .replace(/-/g, ' ')
+            .replace(/_/g, '')
+            .replace(/~q/g, '?')
+            .replace(/~p/g, '%')
+        }
 
-<p>To add a new template, please follow the <a href="https://github.com/jacebrowning/memegen/blob/master/CONTRIBUTING.md">contributor instructions</a>.</p>
+      function formatMeme(meme) {
+        if (!meme.element) { return meme.text; }
+        var source = encodeURI($(meme.element).attr('data-url')).replace(/,/g, '%2C').replace(/'/g, '%27');
+        var $meme = $(
+          "<div class='meme'><img height='50' src='" + source + "' /><span class='meme-text'>" + meme.text + "</span></div>"
+        );
+        return $meme;
+      };
 
-<p>Thanks go to <a href="https://github.com/danieldiekmeier/memegenerator">danieldiekmeier/memegenerator</a> for the inspiration!</p>
+      function generateMeme() {
+        var memeId = $('.js-meme-selector').val();
+        var memeTextTop = encodeMemeText($('#meme-text-top').val());
+        var memeTextBottom = encodeMemeText($('#meme-text-bottom').val());
+        if (memeId && memeTextTop && memeTextBottom) {
+          var url = '/' + memeId + '/' + memeTextTop + '/' + memeTextBottom;
+          $("#meme-link").attr('href', url);
+          $("#meme-link").text(url);
+          $("#meme-image img").attr('src', encodeURI(url).replace(/,/g, '%2C').replace(/'/g, '%27') + '.jpg');
+          $("#meme-image").attr('href', encodeURI(url).replace(/,/g, '%2C').replace(/'/g, '%27') + '.jpg');
+        }
+      }
 
-<h1>
-<a id="slack-integration" class="anchor" href="#slack-integration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Slack Integration</h1>
+      $('.js-meme-selector').select2({
+        templateResult: formatMeme,
+        templateSelection: formatMeme
+      });
 
-<p>Check out one of these options:</p>
+      $( ".js-meme-selector" ).on('change', function() {
+        var link = $( ".js-meme-selector option:checked").data('link');
+        if (link) {
+          var pieces = link.split('/');
+          $('#meme-text-top').val(decodeMemeText(pieces[2]));
+          $('#meme-text-bottom').val(decodeMemeText(pieces[3]));
+        }
+        generateMeme();
+      });
 
-<ul>
-<li><a href="https://github.com/nicolewhite/slack-meme">nicolewhite/slack-meme</a></li>
-<li><a href="https://github.com/CptSpaceToaster/slackbot">CptSpaceToaster/slackbot</a></li>
-<li><a href="http://www.memetizer.com">http://www.memetizer.com</a></li>
-</ul>
+      $("#btn-generate").on('click', function(e) {
+        generateMeme();
+      });
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/jacebrowning/memegen">MemeGen</a> is maintained by <a href="https://github.com/jacebrowning">jacebrowning</a>.</span>
+      $( ".js-meme-selector" ).val('afraid').trigger("change");
+    </script>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-            <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("{{ ga_tid }}");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', '{{ ga_tid }}', 'auto');
+      ga('send', 'pageview');
+    </script>
 
   </body>
 </html>

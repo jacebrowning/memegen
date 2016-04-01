@@ -102,7 +102,7 @@ run: .env env depends db-dev
 
 .PHONY: launch
 launch: env depends
-	eval "sleep 3; open http://$(IP):$(PORT)" &
+	eval "sleep 5; open http://$(IP):$(PORT)" &
 	$(MAKE) run
 
 .PHONY: gui
