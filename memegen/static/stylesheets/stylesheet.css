@@ -9,11 +9,6 @@ body {
   height: 100%;
 }
 
-body {
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
-}
-
 .btn-primary,
 .btn-primary:active,
 .btn-primary:hover,
@@ -73,7 +68,6 @@ body {
 
 .generator {
   color: #555;
-  text-shadow: none;
 }
 
 .generator h1 {
@@ -97,7 +91,7 @@ body {
   position: relative;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-  color: #fff;
+  color: #000;
   font-size: 1.3em;
   padding: 4px 12px;
   height: 50px;
@@ -109,7 +103,6 @@ body {
 
 span.meme-text {
   color: #555;
-  text-shadow: none;
 }
 
 .meme-generator {
@@ -142,7 +135,6 @@ a:hover {
 .meme-templates {
   text-align: center;
   color: #555;
-  text-shadow: none;
 }
 
 .footer {
