@@ -8,15 +8,14 @@ from .. import __version__
 from ._common import GITHUB_SLUG, CHANGES_URL, route, get_tid, samples
 
 
-blueprint = Blueprint('root', __name__, url_prefix="/",
-                      template_folder="../templates")
+blueprint = Blueprint('root', __name__, url_prefix="/")
 
 
 @blueprint.route("")
 def get_index():
     return Response(render_template(
         "index.html",
-        imgs=samples(),
+        imgs=list(samples()),
         github_slug=GITHUB_SLUG,
         ga_tid=get_tid(),
     ))
