@@ -95,13 +95,12 @@ def register_services(app):
 
 
 def register_blueprints(app):
-    app.register_blueprint(routes.static.blueprint)
-    app.register_blueprint(routes.root.blueprint)
-    app.register_blueprint(routes.templates.blueprint)
-    app.register_blueprint(routes.links.blueprint)
-    app.register_blueprint(routes.image.blueprint)
-    app.register_blueprint(routes.overview.blueprint)
-    app.register_blueprint(routes.generator.blueprint)
-    app.register_blueprint(routes.latest.blueprint)
     app.register_blueprint(routes.aliases.blueprint)
+    app.register_blueprint(routes.image.blueprint)
+    app.register_blueprint(routes.index.blueprint)
+    app.register_blueprint(routes.latest.blueprint)
+    app.register_blueprint(routes.links.blueprint)
     app.register_blueprint(routes.magic.blueprint)
+    app.register_blueprint(routes.root.blueprint)
+    app.register_blueprint(routes.static.blueprint)
+    app.register_blueprint(routes.templates.blueprint)

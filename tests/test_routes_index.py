@@ -6,8 +6,8 @@ from expecter import expect
 def describe_generator():
 
     def it_returns_html(client):
-        response = client.get("/generator")
+        response = client.get("/")
 
         expect(response.status_code) == 200
         expect(response.mimetype) == 'text/html'
-        expect(response.get_data(as_text=True)).contains("Meme Generator")
+        expect(response.get_data(as_text=True)).contains("meme generator")

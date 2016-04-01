@@ -1,32 +1,14 @@
 import os
 from collections import OrderedDict
 
-from flask import Blueprint, Response, render_template
+from flask import Blueprint
 
 from .. import __version__
 
-from ._common import GITHUB_SLUG, CHANGES_URL, route, get_tid, samples
+from ._common import CHANGES_URL, route
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
-
-
-@blueprint.route("")
-def get_index():
-    return Response(render_template(
-        "index.html",
-        imgs=list(samples()),
-        github_slug=GITHUB_SLUG,
-        ga_tid=get_tid(),
-    ))
-
-
-@blueprint.route("flask-api/static/js/default.js")
-def get_javascript():
-    return Response(render_template(
-        "js/default.js",
-        ga_tid=get_tid(),
-    ))
 
 
 @blueprint.route("api")
