@@ -67,6 +67,7 @@ body {
 }
 
 .generator {
+  padding: 40px;
   color: #555;
 }
 
@@ -84,7 +85,7 @@ body {
 }
 
 .select2-container--default .select2-selection--single{
-  padding:6px;
+  padding: 6px;
   height: 60px;
   width: 100%;
   font-size: 1.2em;
@@ -118,10 +119,6 @@ span.meme-text {
   margin-right: 8px;
 }
 
-.meme-link-holder {
-  padding: 30px 2px;
-}
-
 a,
 a:hover {
   color: #555;
@@ -135,6 +132,10 @@ a:hover {
 .meme-templates {
   text-align: center;
   color: #555;
+}
+
+.meme-example {
+  margin: 20px;
 }
 
 .footer {

@@ -37,7 +37,6 @@
 
     <div class="generator">
       <div class="container">
-        <h1>Try it!</h1>
         <div class="row">
           <div class="col-md-6 meme-generator">
             <form class="form-horizontal">
@@ -80,27 +79,22 @@
             <a id="meme-image" href="">
               <img width='400' src="" />
             </a>
-            <div class="meme-link-holder">
-              <a id="meme-link" href=""></a>
-            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <hr>
+
     <div class="meme-templates">
-        <h1>Available Templates</h1>
         <div class="row">
         {% for img in imgs %}
 
 
           <div class="col-sm-4">
              <a href="{{img.url}}">
-               <img width="240" src="{{ img.url }}" />
+               <img class="meme-example" width="240" src="{{ img.url }}" />
              </a>
-             <div>
-               <a href="{{img.link}}">{{img.link}}</a>
-             </div>
            </div>
 
          {% if loop.index is divisibleby 3 %}
