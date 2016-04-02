@@ -1,0 +1,13 @@
+name: See? Nobody Cares
+link: http://knowyourmeme.com/memes/see-nobody-cares
+default:
+- We’ve got Dodgson here!
+- See? Nobody Cares
+aliases:
+- dodson
+- nobody-cares
+- nedry
+- dennis-nedry
+regexes:
+- (.*)/?(see.* nobody cares)
+- (.*)/?(nobody cares)

@@ -166,7 +166,9 @@ class Template:
                 except requests.exceptions.ReadTimeout:
                     log.warning("Connection timed out")
                     return True  # assume URL is OK; it will be checked again
-                if response.status_code >= 400 and response.status_code != 429:
+                if response.status_code in [403, 429]:
+                    self._warn("link is unavailable (%s)", response.status_code)
+                elif response.status_code >= 400:
                     self._error("link is invalid (%s)", response.status_code)
                     return False
                 else:
