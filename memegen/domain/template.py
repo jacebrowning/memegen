@@ -103,10 +103,9 @@ class Template:
 
     def get_path(self, *styles):
         for style in styles:
-            if style and style.startswith("http"):
-                path = download_image(style)
-                if path:
-                    return path
+            path = download_image(style)
+            if path:
+                return path
 
         for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
             for extension in self.EXTENSIONS:
@@ -224,10 +223,9 @@ class Placeholder:
         path = None
 
         for style in styles:
-            if style and style.startswith("http"):
-                path = download_image(style)
-                if path:
-                    break
+            path = download_image(style)
+            if path:
+                break
 
         if not path:
             path = os.path.dirname(__file__) + "/../static/images/missing.png"
@@ -236,9 +234,11 @@ class Placeholder:
 
 
 def download_image(url):
+    if not url or not url.startswith("http"):
+        return None
+
     # /tmp is detroyed after every Heroku request
     path = "/tmp/" + hashlib.md5(url.encode('utf-8')).hexdigest()
-
     if os.path.isfile(path):
         log.debug("Already downloaded: %s", url)
         return path
