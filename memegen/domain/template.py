@@ -1,5 +1,7 @@
 import os
 import re
+import hashlib
+import shutil
 import logging
 
 import time
@@ -100,11 +102,18 @@ class Template:
         return text
 
     def get_path(self, *styles):
+        for style in styles:
+            if style and style.startswith("http"):
+                path = download_image(style)
+                if path:
+                    return path
+
         for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
             for extension in self.EXTENSIONS:
                 path = os.path.join(self.dirpath, name + extension)
                 if os.path.isfile(path):
                     return path
+
         return None
 
     def compile_regexes(self, patterns):
@@ -205,9 +214,50 @@ class Template:
 class Placeholder:
     """Default image for missing templates."""
 
+    path = None
+
     def __init__(self, key):
         self.key = key
 
     @staticmethod
-    def get_path(*_):
-        return os.path.dirname(__file__) + "/../static/images/missing.png"
+    def get_path(*styles):
+        path = None
+
+        for style in styles:
+            if style and style.startswith("http"):
+                path = download_image(style)
+                if path:
+                    break
+
+        if not path:
+            path = os.path.dirname(__file__) + "/../static/images/missing.png"
+
+        return path
+
+
+def download_image(url):
+    # /tmp is detroyed after every Heroku request
+    path = "/tmp/" + hashlib.md5(url.encode('utf-8')).hexdigest()
+
+    if os.path.isfile(path):
+        log.debug("Already downloaded: %s", url)
+        return path
+
+    try:
+        response = requests.get(url, stream=True)
+    except requests.exceptions.InvalidURL:
+        log.error("Invalid link: %s", url)
+        return None
+    except requests.exceptions.ConnectionError:
+        log.error("Bad connection: %s", url)
+        return None
+
+    if response.status_code == 200:
+        log.info("Downloading %s", url)
+        with open(path, 'wb') as outfile:
+            response.raw.decode_content = True
+            shutil.copyfileobj(response.raw, outfile)
+        return path
+
+    log.error("Unable to download: %s", url)
+    return None

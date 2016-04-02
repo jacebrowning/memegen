@@ -27,6 +27,11 @@ class FilenameTooLong(APIException):
     detail = "Filename too long."
 
 
+class InvalidImageLink(APIException):
+    status_code = 415
+    detail = "Unsupported image type."
+
+
 def create_app(config):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
@@ -59,9 +64,10 @@ def register_extensions(app):
 
 def register_services(app):
     exceptions = services.Exceptions(
-        TemplateNotFound=TemplateNotFound,
-        InvalidMaskedCode=InvalidMaskedCode,
-        FilenameTooLong=FilenameTooLong,
+        TemplateNotFound,
+        InvalidMaskedCode,
+        FilenameTooLong,
+        InvalidImageLink,
     )
 
     templates_root = os.path.join(app.config['ROOT'], 'data', 'templates')

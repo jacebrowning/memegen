@@ -1,5 +1,9 @@
 # Revision History
 
+## 2.2
+
+- Added support for custom backgrounds: `/custom/test.jpg?alt=http://image.jpg`
+
 ## 2.1
 
 - Redirecting `/aliases/?name=<query>` to `/aliases/<query>`.

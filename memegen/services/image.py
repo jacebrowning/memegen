@@ -18,6 +18,8 @@ class ImageService(Service):
         except OSError as exception:
             if "name too long" in str(exception):
                 exception = self.exceptions.FilenameTooLong
+            elif "image file" in str(exception):
+                exception = self.exceptions.InvalidImageLink
             raise exception from None
 
         return image
