@@ -87,7 +87,7 @@ class ImageStore:
 
     def __init__(self, root, config):
         self.root = root
-        self.debug = config.get('DEBUG', False)
+        self.regenerate_images = config.get('REGENERATE_IMAGES', False)
 
     @property
     def latest(self):
@@ -99,7 +99,7 @@ class ImageStore:
         return os.path.isfile(image.path) and not image.style
 
     def create(self, image):
-        if self.exists(image) and not self.debug:
+        if self.exists(image) and not self.regenerate_images:
             return
 
         ImageModel(image)

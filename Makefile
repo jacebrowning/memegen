@@ -125,8 +125,10 @@ watch: depends .clean-test
 # Environment Setup ############################################################
 
 .env:
-	echo "CONFIG=dev" >> .env
-	echo "DATABASE_URL=postgresql://localhost/memegen_dev" >> .env
+	echo "CONFIG=dev" >> $@
+	echo "#REGENERATE_IMAGES=true" >> $@
+	echo "DATABASE_URL=postgresql://localhost/memegen_dev" >> $@
+	echo "GOOGLE_ANALYTICS_TID=local" >> $@
 
 .PHONY: db-dev
 db-dev:

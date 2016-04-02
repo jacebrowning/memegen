@@ -13,5 +13,5 @@ puts-step() {
 puts-step "Running migrations..."
 python manage.py db upgrade 2>&1 | indent
 
-puts-step "Generating images..."
+puts-step "Prerendering images..."
 python scripts/generate_sample_images.py 2>&1 | indent
