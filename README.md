@@ -49,6 +49,8 @@ For example: [http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-v
 
 ## Adding Templates
 
+[![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)
+
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
 
 Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/memegenerator) for the inspiration!
