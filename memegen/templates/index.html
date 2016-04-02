@@ -207,7 +207,11 @@
         generateMeme();
       });
 
-      $( ".js-meme-selector" ).val("{{ default_template }}").trigger("change");
+      if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
+        $(".js-meme-selector").trigger("change");
+      } else {
+        $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
+      }
     </script>
 
     <script>
