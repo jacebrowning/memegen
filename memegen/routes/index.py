@@ -10,11 +10,13 @@ blueprint = Blueprint('index', __name__, url_prefix="/")
 
 @blueprint.route("")
 def get_index():
-    imgs = list(samples())
+    template_images = list(samples(blank=True))
+    sample_images = list(samples())
     return Response(render_template(
         "index.html",
-        imgs=imgs,
-        default=random.choice(imgs)['key'],
+        template_images=template_images,
+        default_template=random.choice(template_images)['key'],
+        sample_images=sample_images,
         github_slug=GITHUB_SLUG,
         ga_tid=get_tid(),
     ))

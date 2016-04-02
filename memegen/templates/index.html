@@ -63,8 +63,8 @@
                 <label for="top" class="col-sm-2 control-label">Meme</label>
                 <div class="col-sm-10">
                   <select class="js-meme-selector" name="meme">
-                    {% for img in imgs %}
-                      <option value="{{ img.key }}" data-url="{{ img.url }}" data-link="{{ img.link }}" data-top="{{ img.top }}">
+                    {% for img in template_images %}
+                      <option value="{{ img.key }}" data-url="{{ img.url }}" data-top="{{ img.top }}" data-bottom="{{ img.bottom }}">
                         {{ img.name }}
                       </option>
                     {% endfor %}
@@ -75,14 +75,14 @@
               <div class="form-group">
                 <label for="top" class="col-sm-2 control-label">Top Text</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="meme-text-top" name="top" value="I don't know what this meme is for"/>
+                  <input type="text" class="form-control" id="meme-text-top" name="top"/>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="bottom" class="col-sm-2 control-label">Bottom Text</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="meme-text-bottom" name="bottom" value="and at this point I'm too afraid to ask"/>
+                  <input type="text" class="form-control" id="meme-text-bottom" name="bottom"/>
                 </div>
               </div>
 
@@ -107,7 +107,7 @@
 
     <div class="meme-templates">
         <div class="row">
-        {% for img in imgs %}
+        {% for img in sample_images %}
 
 
           <div class="col-sm-4">
@@ -207,7 +207,11 @@
         generateMeme();
       });
 
-      $( ".js-meme-selector" ).val("{{ default }}").trigger("change");
+      if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
+        $(".js-meme-selector").trigger("change");
+      } else {
+        $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
+      }
     </script>
 
     <script>

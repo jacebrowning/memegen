@@ -19,17 +19,15 @@ def route(*args, **kwargs):
     return unquote(_url_for(*args, **kwargs))
 
 
-def samples():
+def samples(blank=False):
     """Generate dictionaries of sample image data for template rendering."""
     for template in sorted(current_app.template_service.all()):
-        path = template.sample_path
+        path = "_" if blank else template.sample_path
         url = route('image.get', key=template.key, path=path)
-        link = route('links.get', key=template.key, path=path)
         yield {
             'key': template.key,
             'name': template.name,
             'url': url,
-            'link': link
         }
 
 
