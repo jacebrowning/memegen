@@ -18,10 +18,10 @@ def describe_display():
         app.config['GOOGLE_ANALYTICS_TID'] = 'my_tid'
         return app
 
-    request_html = Mock(path="it's a path?alt=style")
+    request_html = Mock(url="it's a path?alt=style")
     request_html.headers.get = Mock(return_value="text/html")
 
-    request_image = Mock(path="it's a path")
+    request_image = Mock(url="it's a path")
     request_image.headers.get = Mock(return_value="(not a browser)")
 
     @patch('memegen.routes._common.request', request_html)

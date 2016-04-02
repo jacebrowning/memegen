@@ -39,22 +39,18 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
     browser = 'text/html' in mimetypes
 
     if browser:
-        log.info("Rending image on page: %s", request.path)
-
+        log.info("Rending image on page: %s", request.url)
         html = render_template(
             'image.html',
-            src=request.path,
+            src=request.url,
             title=title,
             ga_tid=get_tid(),
         )
-
         return html if raw else Response(html)
 
     else:
         log.info("Sending image: %s", path)
-
         _track(title)
-
         return send_file(path, mimetype=mimetype)
 
 

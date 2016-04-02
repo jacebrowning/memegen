@@ -41,6 +41,7 @@ class Image:
 # based on: https://github.com/danieldiekmeier/memegenerator
 def make_meme(top, bottom, background, path, match_font_size=False):
     """Add text to an image and save it."""
+    log.info("Loading background: %s", background)
     img = ImageFile.open(background)
 
     # Resize to a maximum height and width
@@ -85,7 +86,7 @@ def make_meme(top, bottom, background, path, match_font_size=False):
     _draw_outlined_text(draw, bottom_text_position,
                         bottom, bottom_font, bottom_font_size)
 
-    log.info("Generating: %s", path)
+    log.info("Generating image: %s", path)
     return img.save(path)
 
 
