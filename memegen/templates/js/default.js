@@ -1,58 +1,71 @@
-function getCookie(c_name)
-{
-    // From http://www.w3schools.com/js/js_cookies.asp
-    var c_value = document.cookie;
-    var c_start = c_value.indexOf(" " + c_name + "=");
-    if (c_start == -1) {
-        c_start = c_value.indexOf(c_name + "=");
-    }
-    if (c_start == -1) {
-        c_value = null;
-    } else {
-        c_start = c_value.indexOf("=", c_start) + 1;
-        var c_end = c_value.indexOf(";", c_start);
-        if (c_end == -1) {
-            c_end = c_value.length;
-        }
-        c_value = unescape(c_value.substring(c_start,c_end));
-    }
-    return c_value;
+function encodeMemeText(str) {
+  return str
+    .replace(/-/g, '--')
+    .replace(/_/g, '__')
+    .replace(/\?/g, '~q')
+    .replace(/%/g, '~p')
+    .replace(/\s+/g, '-') || '_';
 }
 
-// JSON highlighting.
-prettyPrint();
-
-// Bootstrap tooltips.
-$('.js-tooltip').tooltip({
-    delay: 1000
-});
-
-// Deal with rounded tab styling after tab clicks.
-$('a[data-toggle="tab"]:first').on('shown', function (e) {
-    $(e.target).parents('.tabbable').addClass('first-tab-active');
-});
-$('a[data-toggle="tab"]:not(:first)').on('shown', function (e) {
-    $(e.target).parents('.tabbable').removeClass('first-tab-active');
-});
-
-$('a[data-toggle="tab"]').click(function(){
-    document.cookie="tabstyle=" + this.name + "; path=/";
-});
-
-// Store tab preference in cookies & display appropriate tab on load.
-var selectedTab = null;
-var selectedTabName = getCookie('tabstyle');
-
-if (selectedTabName) {
-    selectedTab = $('.form-switcher a[name=' + selectedTabName + ']');
+function decodeMemeText(str) {
+  return str
+    .replace(/-/g, ' ')
+    .replace(/_/g, '')
+    .replace(/~q/g, '?')
+    .replace(/~p/g, '%')
 }
 
-if (selectedTab && selectedTab.length > 0) {
-    // Display whichever tab is selected.
-    selectedTab.tab('show');
-} else {
-    // If no tab selected, display rightmost tab.
-    $('.form-switcher a:first').tab('show');
+function encodeMemeURL(url) {
+  var encodedURL = encodeURI(url);
+  return encodedURL.replace(/,/g, '%2C').replace(/'/g, '%27');
+}
+
+function formateMemeItem(meme) {
+  if (!meme.element) { return meme.text; }
+
+  var $meme = $('<div>').addClass('meme');
+  var memeUrl = encodeMemeURL($(meme.element).attr('data-url'));
+  $meme.append($('<img height="50" src="' + memeUrl + '" />'));
+  $meme.append($('<span class="meme-text">' + meme.text + '</span>'));
+
+  return $meme;
+};
+
+function generateMeme() {
+  var memeId = $('.js-meme-selector').val();
+  var memeTextTop = encodeMemeText($('#meme-text-top').val());
+  var memeTextBottom = encodeMemeText($('#meme-text-bottom').val());
+  if (memeId && memeTextTop && memeTextBottom) {
+    var url = '/' + memeId + '/' + memeTextTop + '/' + memeTextBottom;
+    $("#meme-link").attr('href', url);
+    $("#meme-link").text(url);
+    $("#meme-image img").attr('src', encodeURI(url).replace(/,/g, '%2C').replace(/'/g, '%27') + '.jpg');
+    $("#meme-image").attr('href', encodeURI(url).replace(/,/g, '%2C').replace(/'/g, '%27') + '.jpg');
+  }
+}
+
+/*** Events ****/
+$('.js-meme-selector').select2({
+  templateResult: formateMemeItem,
+  templateSelection: formateMemeItem
+});
+
+$( ".js-meme-selector" ).on('change', function() {
+  var link = $( ".js-meme-selector option:checked").data('link');
+  if (link) {
+    var pieces = link.split('/');
+    $('#meme-text-top').val(decodeMemeText(pieces[2]));
+    $('#meme-text-bottom').val(decodeMemeText(pieces[3]));
+  }
+  generateMeme();
+});
+
+$("#btn-generate").on('click', function(e) {
+  generateMeme();
+});
+
+if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
+  $(".js-meme-selector").trigger("change");
 }
 
 // Google Analytics
