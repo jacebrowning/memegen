@@ -1,6 +1,8 @@
-# pylint: disable=unused-variable,misplaced-comparison-constant
+# pylint: disable=unused-variable,misplaced-comparison-constant,expression-not-assigned
 
 import os
+
+from expecter import expect
 
 from .conftest import load
 
@@ -49,20 +51,20 @@ def describe_get():
 
     def describe_alt():
 
-        def when_valid(client):
+        def when_style(client):
             response = client.get("/sad-biden/hello.jpg?alt=scowl")
 
             assert 200 == response.status_code
             assert 'image/jpeg' == response.mimetype
 
-        def it_redirects_to_lose_alt_when_default(client):
+        def it_redirects_to_lose_alt_when_default_style(client):
             response = client.get("/sad-biden/hello.jpg?alt=default")
 
             assert 302 == response.status_code
             assert '<a href="/sad-biden/hello.jpg">' in \
                 load(response, as_json=False)
 
-        def it_redirects_to_lose_alt_when_unknown(client):
+        def it_redirects_to_lose_alt_when_unknown_style(client):
             response = client.get("/sad-biden/hello.jpg?alt=__unknown__")
 
             assert 302 == response.status_code
@@ -82,6 +84,35 @@ def describe_get():
             assert 302 == response.status_code
             assert '-vote.jpg?alt=scowl">' in \
                 load(response, as_json=False)
+
+        def when_url(client):
+            url = "http://www.gstatic.com/webp/gallery/1.jpg"
+            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
+
+        def it_returns_an_error_with_non_image_urls(client):
+            url = "http://example.com"
+            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+
+            expect(response.status_code) == 415
+
+        def it_redirects_to_lose_alt_when_unknown_url(client):
+            url = "http://example.com/not/a/real/image.jpg"
+            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/sad-biden/hello.jpg">')
+
+        def it_redirects_to_lose_alt_when_bad_url(client):
+            url = "http:invalid"
+            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/sad-biden/hello.jpg">')
 
     def describe_latest():
 

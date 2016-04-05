@@ -1,6 +1,4 @@
-# pylint: disable=unused-variable
-# pylint: disable=expression-not-assigned
-# pylint: disable=misplaced-comparison-constant
+# pylint: disable=unused-variable,expression-not-assigned,misplaced-comparison-constant,singleton-comparison
 
 from unittest.mock import patch, Mock
 
@@ -34,6 +32,22 @@ def describe_template():
         @patch('os.path.isfile', Mock(return_value=True))
         def it_returns_default_when_style_is_none(template):
             expect(template.get_path(None)) == "abc/default.png"
+
+        @patch('os.path.isfile', Mock(return_value=False))
+        def it_considers_urls_valid_styles(template):
+            url = "http://example.com"
+            path = "/tmp/a9b9f04336ce0181a08e774e01113b31"
+            expect(template.get_path(url)) == path
+
+        @patch('os.path.isfile', Mock(return_value=True))
+        def it_caches_file_downloads(template):
+            url = "http://this/will/be/ignored"
+            path = "/tmp/d888710f0697650eb68fc9dcbb976d4c"
+            expect(template.get_path(url)) == path
+
+        def it_handles_bad_urls(template):
+            url = "http://invalid"
+            expect(template.get_path(url)) == None
 
     def describe_path():
 
