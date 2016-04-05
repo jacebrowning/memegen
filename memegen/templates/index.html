@@ -106,10 +106,9 @@
     <hr>
 
     <div class="meme-templates">
+      <div class="container">
         <div class="row">
         {% for img in sample_images %}
-
-
           <div class="col-sm-4">
              <a href="{{img.url}}">
                <img class="meme-example" width="240" src="{{ img.url }}" />
@@ -128,6 +127,7 @@
           </div>
          {% endif %}
        {% endfor %}
+      </div>
      </div>
 
 
@@ -140,87 +140,17 @@
       </nav>
     </div>
 
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+    <script src="flask-api/static/js/default.js"></script>
 
-    <script type="text/javascript">
-
-      function encodeMemeText(str) {
-          return str
-            .replace(/-/g, '--')
-            .replace(/_/g, '__')
-            .replace(/\?/g, '~q')
-            .replace(/%/g, '~p')
-            .replace(/\s+/g, '-') || '_';
-        }
-
-      function decodeMemeText(str) {
-          return str
-            .replace(/-/g, ' ')
-            .replace(/_/g, '')
-            .replace(/~q/g, '?')
-            .replace(/~p/g, '%')
-        }
-
-      function formatMeme(meme) {
-        if (!meme.element) { return meme.text; }
-        var source = encodeURI($(meme.element).attr('data-url')).replace(/,/g, '%2C').replace(/'/g, '%27');
-        var $meme = $(
-          "<div class='meme'><img height='50' src='" + source + "' /><span class='meme-text'>" + meme.text + "</span></div>"
-        );
-        return $meme;
-      };
-
-      function generateMeme() {
-        var memeId = $('.js-meme-selector').val();
-        var memeTextTop = encodeMemeText($('#meme-text-top').val());
-        var memeTextBottom = encodeMemeText($('#meme-text-bottom').val());
-        if (memeId && memeTextTop && memeTextBottom) {
-          var url = '/' + memeId + '/' + memeTextTop + '/' + memeTextBottom;
-          $("#meme-link").attr('href', url);
-          $("#meme-link").text(url);
-          $("#meme-image img").attr('src', encodeURI(url).replace(/,/g, '%2C').replace(/'/g, '%27') + '.jpg');
-          $("#meme-image").attr('href', encodeURI(url).replace(/,/g, '%2C').replace(/'/g, '%27') + '.jpg');
-        }
-      }
-
-      $('.js-meme-selector').select2({
-        templateResult: formatMeme,
-        templateSelection: formatMeme
-      });
-
-      $( ".js-meme-selector" ).on('change', function() {
-        var link = $( ".js-meme-selector option:checked").data('link');
-        if (link) {
-          var pieces = link.split('/');
-          $('#meme-text-top').val(decodeMemeText(pieces[2]));
-          $('#meme-text-bottom').val(decodeMemeText(pieces[3]));
-        }
-        generateMeme();
-      });
-
-      $("#btn-generate").on('click', function(e) {
-        generateMeme();
-      });
-
+    <script>
       if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
         $(".js-meme-selector").trigger("change");
       } else {
         $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
       }
-    </script>
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', '{{ ga_tid }}', 'auto');
-      ga('send', 'pageview');
     </script>
 
   </body>

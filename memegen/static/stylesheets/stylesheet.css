@@ -1,7 +1,10 @@
+/*********************************************/
+/* general */
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: #555;
+  text-decoration: underline;
 }
 
 html,
@@ -11,6 +14,7 @@ body {
 
 .btn-primary,
 .btn-primary:active,
+.btn-primary:focus,
 .btn-primary:hover,
 .btn-primary:active:hover {
   background-color: #555;
@@ -23,7 +27,7 @@ body {
 .masthead {
   background-color: #333;
   color: #fff;
-  height: 350px;
+  height: 250px;
 }
 .masthead-nav > li {
   display: inline-block;
@@ -54,28 +58,26 @@ body {
   border-bottom-color: #fff;
 }
 .masthead .tagline {
-  margin: 50px 0;
+  margin: 25px 0;
   text-align: center;
 }
 
 .tagline h2 {
-  font-size: 42px;
+  font-size: 36px;
 }
 
 .tagline p {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .generator {
-  padding: 40px;
+  padding: 8px;
   color: #555;
 }
 
-.generator h1 {
-  text-align: center;
-  margin: 40px 0 40px 0;
-}
 
+/*********************************************/
+/* select2 dropdown */
 .select2-dropdown.select2-dropdown--below{
   width: 320px !important;
 }
@@ -106,8 +108,11 @@ span.meme-text {
   color: #555;
 }
 
+/*********************************************/
+/* Meme Generator */
+
 .meme-generator {
-  padding: 0 30px;
+  padding: 0;
 }
 
 .meme-holder {
@@ -119,16 +124,13 @@ span.meme-text {
   margin-right: 8px;
 }
 
-a,
-a:hover {
-  color: #555;
-  text-decoration: underline;
-}
-
 .meme-holder {
   margin-top: 40px;
 }
 
+
+/*********************************************/
+/* Meme Templates */
 .meme-templates {
   text-align: center;
   color: #555;
@@ -138,6 +140,9 @@ a:hover {
   margin: 20px;
 }
 
+
+/*********************************************/
+/* Footer */
 .footer {
   min-height: 50px;
   margin-top: 75px;
@@ -149,6 +154,9 @@ a:hover {
   float: none;
 }
 
+
+/*********************************************/
+/* Responsive Hotness */
 @media (min-width: 992px) {
   .meme-holder {
     margin-top: 0;
@@ -166,7 +174,24 @@ a:hover {
     float: right;
   }
   .masthead .tagline {
-    margin: 100px 0;
+    margin: 50px 0;
+  }
+  .tagline h2 {
+    font-size: 42px;
+  }
+  .tagline p {
+    font-size: 18px;
+  }
+  .meme-generator {
+    padding: 0 30px;
+  }
+
+  .generator {
+    padding: 40px;
+  }
+
+  .select2-dropdown.select2-dropdown--below{
+    width: 435px !important;
   }
 }
 
