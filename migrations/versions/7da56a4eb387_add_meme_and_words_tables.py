@@ -1,7 +1,8 @@
-"""Add meme and words tables"""
+"""Add memes and words tables."""
 
 from alembic import op
 import sqlalchemy as sa
+
 
 revision = '7da56a4eb387'
 down_revision = None
