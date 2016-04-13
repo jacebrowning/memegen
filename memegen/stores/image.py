@@ -10,23 +10,12 @@ from ..extensions import db
 log = logging.getLogger(__name__)
 
 
-class MemeModel(db.Model):
-    __tablename__ = 'memes'
-    id = sa.Column(sa.Integer, primary_key=True, nullable=False)
-    key = sa.Column(sa.String, nullable=False)
-
-    def __repr__(self):
-        return "<Meme(id='%s', key='%s')>" % (self.id, self.key)
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-
 class WordModel(db.Model):
+
     __tablename__ = 'words'
+
     id = sa.Column(sa.String, primary_key=True, nullable=False)
-    meme_id = sa.Column(sa.Integer, sa.ForeignKey('memes.id'), nullable=False)
+    meme_id = sa.Column(sa.String, nullable=False)
     occurances = sa.Column(sa.Integer)
 
     def __repr__(self):
@@ -35,6 +24,7 @@ class WordModel(db.Model):
 
 
 class ImageModel:
+
     def __init__(self, image):
         self._word_models = {}
         self._words = []
@@ -43,14 +33,6 @@ class ImageModel:
         # append all the individual words into an array
         for line in image.text.lines:
             self._words += line.lower().split(' ')
-
-        meme = (db.session.query(MemeModel)
-                .filter_by(key=image.template.key)
-                .first())
-        if not meme:
-            meme = MemeModel(key=image.template.key)
-            db.session.add(meme)
-            db.session.commit()
 
         # look-up the word from the database, count the
         # occurances in this particular set of text
@@ -66,7 +48,7 @@ class ImageModel:
 
                 # doesn't exist, create a new model
                 if not model:
-                    model = WordModel(id=word, meme_id=meme.id, occurances=0)
+                    model = WordModel(id=word, meme_id=self.key, occurances=0)
 
                 model.occurances += 1
                 self._word_models[word] = model
