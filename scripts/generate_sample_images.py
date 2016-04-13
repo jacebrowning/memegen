@@ -6,7 +6,6 @@ import logging
 from memegen.settings import ProdConfig
 from memegen.app import create_app
 from memegen.domain import Text
-from memegen.stores.image import MemeModel
 
 
 def main():
@@ -20,7 +19,6 @@ def main():
             app.image_service.create(template, Text("_"))
             app.image_service.create(template, Text("_/_"))
             app.image_service.create(template, template.sample_text)
-            MemeModel(key=template.key).save()
 
 
 if __name__ == '__main__':
