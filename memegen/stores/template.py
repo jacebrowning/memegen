@@ -45,7 +45,7 @@ class TemplateStore:
         for key in os.listdir(self.root):
             if key[0] not in ('.', '_'):
                 model = TemplateModel(key, self.root)
-                yorm.update_file(model)
+                yorm.save(model)
                 self._items[key] = model
 
     def read(self, key):
