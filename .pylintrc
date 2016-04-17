@@ -1,6 +1,6 @@
 [MESSAGES CONTROL]
 
-disable=locally-disabled,fixme,missing-docstring,too-many-locals,too-many-arguments,too-few-public-methods,too-many-public-methods,invalid-name,global-statement,too-many-ancestors,too-many-instance-attributes
+disable=locally-disabled,fixme,too-few-public-methods,too-many-public-methods,invalid-name,global-statement,too-many-ancestors,missing-docstring,too-many-locals,too-many-arguments,too-many-instance-attributes
 
 [FORMAT]
 

@@ -1,5 +1,13 @@
 [pep257]
 
-# D10*: docstring missing (checked by PyLint)
-# D202: No blank lines allowed *after* function docstring (personal preference)
-add-ignore = D100,D101,D102,D103,D104,D105,D202,D203
+# D211: No blank lines allowed before class docstring
+add_select = D211
+
+# D100: Missing docstring in public module
+# D101: Missing docstring in public class
+# D102: Missing docstring in public method
+# D103: Missing docstring in public function
+# D104: Missing docstring in public package
+# D105: Missing docstring in magic method
+# D202: No blank lines allowed after function docstring
+add_ignore = D100,D101,D102,D103,D104,D105,D202
