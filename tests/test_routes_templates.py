@@ -1,5 +1,4 @@
-# pylint: disable=unused-variable
-# pylint: disable=misplaced-comparison-constant
+# pylint: disable=unused-variable,misplaced-comparison-constant
 
 from .conftest import load
 

@@ -30,6 +30,7 @@ Icon*
 *.gdraw
 
 # Testing and coverage results
+.cache
 .pytest
 .coverage
 .coverage.*
