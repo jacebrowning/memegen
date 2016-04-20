@@ -2,6 +2,9 @@
 
 """Setup script for MemeGen."""
 
+import sys
+import logging
+
 import setuptools
 
 from memegen import __project__, __version__
@@ -13,6 +16,24 @@ except IOError:
     DESCRIPTION = "<placeholder>"
 else:
     DESCRIPTION = README + '\n' + CHANGELOG
+
+
+def load_requirements():
+    """Exclude specific requirements based on platform."""
+    requirements = []
+
+    for line in open("requirements.txt").readlines():
+        name = line.split('=')[0].strip()
+
+        if sys.platform == 'win32':
+            if name in ['psycopg2', 'gunicorn']:
+                logging.warning("Skipped requirement: %s", line)
+                continue
+
+        requirements.append(line)
+
+    return requirements
+
 
 setuptools.setup(
     name=__project__,
@@ -36,5 +57,5 @@ setuptools.setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    install_requires=open("requirements.txt").readlines(),
+    install_requires=load_requirements(),
 )
