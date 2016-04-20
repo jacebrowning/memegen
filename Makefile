@@ -153,13 +153,13 @@ downgrade: depends
 
 .PHONY: env
 env: $(PIP) $(INSTALLED_FLAG)
-$(INSTALLED_FLAG): Makefile requirements.txt
-	$(PIP) install -r requirements.txt
-	@ touch $(INSTALLED_FLAG)  # flag to indicate package is installed
+$(INSTALLED_FLAG): Makefile setup.py requirements.txt
+	$(PYTHON) setup.py develop
+	@ touch $@  # flag to indicate package is installed
 
 $(PIP):
 	$(SYS_PYTHON) -m venv --clear $(ENV)
-	$(PIP) install --upgrade pip
+	$(PIP) install --upgrade pip setuptools
 
 # Tools Installation ###########################################################
 
@@ -175,7 +175,7 @@ $(DEPENDS_CI_FLAG): Makefile
 .PHONY: depends-doc
 depends-doc: env Makefile $(DEPENDS_DOC_FLAG)
 $(DEPENDS_DOC_FLAG): Makefile
-	$(PIP) install --upgrade docutils readme pdoc mkdocs pygments
+	$(PIP) install --upgrade pylint docutils readme pdoc mkdocs pygments
 	@ touch $(DEPENDS_DOC_FLAG)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
@@ -194,7 +194,7 @@ endif
 # Documentation ################################################################
 
 .PHONY: doc
-doc: readme uml apidocs
+doc: readme uml
 
 .PHONY: doc-live
 doc-live: doc
@@ -219,7 +219,7 @@ README-pypi.html: README.rst
 
 .PHONY: verify-readme
 verify-readme: $(DOCS_FLAG)
-$(DOCS_FLAG): README.rst CHANGES.rst
+$(DOCS_FLAG): README.rst CHANGELOG.rst
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
 
