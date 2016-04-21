@@ -1,5 +1,6 @@
 # pylint: disable=unused-variable,expression-not-assigned,misplaced-comparison-constant,singleton-comparison
 
+import tempfile
 from pathlib import Path
 from unittest.mock import patch, Mock
 
@@ -7,6 +8,10 @@ import pytest
 from expecter import expect
 
 from memegen.domain import Template
+
+
+def temp(path):
+    return Path(tempfile.gettempdir(), path)
 
 
 def describe_template():
@@ -37,13 +42,13 @@ def describe_template():
         @patch('pathlib.Path.is_file', Mock(return_value=False))
         def it_considers_urls_valid_styles(template):
             url = "http://example.com"
-            path = Path("/tmp/a9b9f04336ce0181a08e774e01113b31")
+            path = temp("a9b9f04336ce0181a08e774e01113b31")
             expect(template.get_path(url)) == path
 
         @patch('pathlib.Path.is_file', Mock(return_value=True))
         def it_caches_file_downloads(template):
             url = "http://this/will/be/ignored"
-            path = Path("/tmp/d888710f0697650eb68fc9dcbb976d4c")
+            path = temp("d888710f0697650eb68fc9dcbb976d4c")
             expect(template.get_path(url)) == path
 
         def it_handles_bad_urls(template):

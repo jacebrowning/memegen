@@ -3,6 +3,7 @@ import re
 import hashlib
 import shutil
 from pathlib import Path
+import tempfile
 import logging
 
 import time
@@ -238,8 +239,9 @@ def download_image(url):
     if not url or not url.startswith("http"):
         return None
 
-    # /tmp is detroyed after every Heroku request
-    path = Path("/tmp/" + hashlib.md5(url.encode('utf-8')).hexdigest())
+    path = Path(tempfile.gettempdir(),
+                hashlib.md5(url.encode('utf-8')).hexdigest())
+
     if path.is_file():
         log.debug("Already downloaded: %s", url)
         return path
