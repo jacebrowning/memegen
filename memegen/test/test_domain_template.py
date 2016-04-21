@@ -1,5 +1,6 @@
 # pylint: disable=unused-variable,expression-not-assigned,misplaced-comparison-constant,singleton-comparison
 
+from pathlib import Path
 from unittest.mock import patch, Mock
 
 import pytest
@@ -21,61 +22,60 @@ def describe_template():
 
     def describe_get_path():
 
-        @patch('os.path.isfile', Mock(return_value=True))
+        @patch('pathlib.Path.is_file', Mock(return_value=True))
         def it_returns_default_when_no_style(template):
-            expect(template.get_path()) == "abc/default.png"
+            expect(template.get_path()) == Path("abc/default.png")
 
-        @patch('os.path.isfile', Mock(return_value=True))
+        @patch('pathlib.Path.is_file', Mock(return_value=True))
         def it_returns_alternate_when_style_provided(template):
-            expect(template.get_path('Custom')) == "abc/custom.png"
+            expect(template.get_path('Custom')) == Path("abc/custom.png")
 
-        @patch('os.path.isfile', Mock(return_value=True))
+        @patch('pathlib.Path.is_file', Mock(return_value=True))
         def it_returns_default_when_style_is_none(template):
-            expect(template.get_path(None)) == "abc/default.png"
+            expect(template.get_path(None)) == Path("abc/default.png")
 
-        @patch('os.path.isfile', Mock(return_value=False))
+        @patch('pathlib.Path.is_file', Mock(return_value=False))
         def it_considers_urls_valid_styles(template):
             url = "http://example.com"
-            path = "/tmp/a9b9f04336ce0181a08e774e01113b31"
+            path = Path("/tmp/a9b9f04336ce0181a08e774e01113b31")
             expect(template.get_path(url)) == path
 
-        @patch('os.path.isfile', Mock(return_value=True))
+        @patch('pathlib.Path.is_file', Mock(return_value=True))
         def it_caches_file_downloads(template):
             url = "http://this/will/be/ignored"
-            path = "/tmp/d888710f0697650eb68fc9dcbb976d4c"
+            path = Path("/tmp/d888710f0697650eb68fc9dcbb976d4c")
             expect(template.get_path(url)) == path
 
         def it_handles_bad_urls(template):
-            url = "http://invalid"
-            expect(template.get_path(url)) == None
+            expect(template.get_path("http://invalid")) == None
 
     def describe_path():
 
         def is_returned_when_file_exists(template):
             template.root = "my_root"
 
-            with patch('os.path.isfile', Mock(return_value=True)):
+            with patch('pathlib.Path.is_file', Mock(return_value=True)):
                 path = template.path
 
-            assert "my_root/abc/default.png" == path
+            expect(path) == Path("my_root/abc/default.png")
 
         def is_none_when_no_file(template):
             template.root = "my_root"
 
-            with patch('os.path.isfile', Mock(return_value=False)):
+            with patch('pathlib.Path.is_file', Mock(return_value=False)):
                 path = template.path
 
-            assert None is path
+            expect(path) == None
 
     def describe_default_path():
 
         def is_based_on_lines(template):
-            assert "foo/bar" == template.default_path
+            expect(template.default_path) == "foo/bar"
 
         def is_underscore_when_no_lines(template):
             template.lines = []
 
-            assert "_" == template.default_path
+            expect(template.default_path) == "_"
 
     def describe_styles():
 
@@ -90,12 +90,12 @@ def describe_template():
     def describe_sample_path():
 
         def is_based_on_lines(template):
-            assert "foo/bar" == template.sample_path
+            expect(template.sample_path) == "foo/bar"
 
         def is_placeholder_when_no_lines(template):
             template.lines = []
 
-            assert "your-text/goes-here" == template.sample_path
+            expect(template.sample_path) == "your-text/goes-here"
 
     def describe_match():
 
@@ -112,15 +112,15 @@ def describe_template():
         def with_no_name(template):
             template.name = None
 
-            assert False is template.validate_meta()
+            expect(template.validate_meta()) == False
 
         def with_no_default_image(template):
-            assert False is template.validate_meta()
+            expect(template.validate_meta()) == False
 
         def with_nonalphanumberic_name(template):
             template.name = "'ABC' Meme"
 
-            assert False is template.validate_meta()
+            expect(template.validate_meta()) == False
 
     def describe_validate_link():
 
@@ -131,13 +131,13 @@ def describe_template():
             with patch('requests.get', Mock(return_value=mock_response)):
                 template.link = "example.com/fake"
 
-                assert False is template.validate_link()
+                expect(template.validate_link()) == False
 
-        @patch('os.path.isfile', Mock(return_value=True))
+        @patch('pathlib.Path.is_file', Mock(return_value=True))
         def with_cached_valid_link(template):
-            template.link = "example.com"
+            template.link = "already_cached_site.com"
 
-            assert True is template.validate_link()
+            expect(template.validate_link()) == True
 
     def describe_validate_size():
 
@@ -153,28 +153,28 @@ def describe_template():
             mock_img.size = dimensions
             mock_open.return_value = mock_img
 
-            assert valid is template.validate_size()
+            expect(template.validate_size()) == valid
 
     def describe_validate_regexes():
 
         def with_missing_split(template):
             template.compile_regexes([".*"])
 
-            assert False is template.validate_regexes()
+            expect(template.validate_regexes()) == False
 
     def describe_validate():
 
         def with_no_validators(template):
-            assert True is template.validate(validators=[])
+            expect(template.validate([])) == True
 
         def with_all_passing_validators(template):
             """Verify a template is valid if all validators pass."""
             mock_validators = [lambda: True]
 
-            assert True is template.validate(validators=mock_validators)
+            expect(template.validate(validators=mock_validators)) == True
 
         def with_one_failing_validator(template):
             """Verify a template is invalid if any validators fail."""
             mock_validators = [lambda: False]
 
-            assert False is template.validate(validators=mock_validators)
+            expect(template.validate(validators=mock_validators)) == False

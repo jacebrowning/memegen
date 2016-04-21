@@ -2,6 +2,7 @@ import os
 import re
 import hashlib
 import shutil
+from pathlib import Path
 import logging
 
 import time
@@ -109,8 +110,8 @@ class Template:
 
         for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
             for extension in self.EXTENSIONS:
-                path = os.path.join(self.dirpath, name + extension)
-                if os.path.isfile(path):
+                path = Path(self.dirpath, name + extension)
+                if path.is_file():
                     return path
 
         return None
@@ -164,8 +165,8 @@ class Template:
 
     def validate_link(self):
         if self.link:
-            flag = os.path.join(self.dirpath, self.VALID_LINK_FLAG)
-            if os.path.isfile(flag):
+            flag = Path(self.dirpath, self.VALID_LINK_FLAG)
+            if flag.is_file():
                 log.info("Link already checked: %s", self.link)
             else:
                 log.info("Checking link %s ...", self.link)
@@ -238,8 +239,8 @@ def download_image(url):
         return None
 
     # /tmp is detroyed after every Heroku request
-    path = "/tmp/" + hashlib.md5(url.encode('utf-8')).hexdigest()
-    if os.path.isfile(path):
+    path = Path("/tmp/" + hashlib.md5(url.encode('utf-8')).hexdigest())
+    if path.is_file():
         log.debug("Already downloaded: %s", url)
         return path
 
@@ -254,7 +255,7 @@ def download_image(url):
 
     if response.status_code == 200:
         log.info("Downloading %s", url)
-        with open(path, 'wb') as outfile:
+        with open(str(path), 'wb') as outfile:
             response.raw.decode_content = True
             shutil.copyfileobj(response.raw, outfile)
         return path
