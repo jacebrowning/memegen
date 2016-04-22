@@ -112,8 +112,11 @@ class Template:
         for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
             for extension in self.EXTENSIONS:
                 path = Path(self.dirpath, name + extension)
-                if path.is_file():
-                    return path
+                try:
+                    if path.is_file():
+                        return path
+                except OSError:
+                    continue
 
         return None
 

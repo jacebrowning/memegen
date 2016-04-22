@@ -54,6 +54,9 @@ def describe_template():
         def it_handles_bad_urls(template):
             expect(template.get_path("http://invalid")) == None
 
+        def it_handles_invalid_paths(template):
+            expect(template.get_path("@#$%^")) == None
+
     def describe_path():
 
         def is_returned_when_file_exists(template):
