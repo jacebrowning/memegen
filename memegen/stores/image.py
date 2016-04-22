@@ -84,7 +84,10 @@ class ImageStore:
         if self.exists(image) and not self.regenerate_images:
             return
 
-        ImageModel(image)
+        try:
+            ImageModel(image)
+        except ImportError:
+            log.warning("Unable to store models on this machine")
 
         image.root = self.root
         image.generate()
