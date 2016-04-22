@@ -2,6 +2,7 @@
 
 import os
 
+import pytest
 from expecter import expect
 
 from .conftest import load
@@ -33,6 +34,7 @@ def describe_get():
             assert 200 == response.status_code
             assert 'image/jpeg' == response.mimetype
 
+        @pytest.mark.xfail(os.name == 'nt', reason="Windows has a path limit")
         def with_lots_of_text(client):
             top = "-".join(["hello"] * 20)
             bottom = "-".join(["world"] * 20)
@@ -180,6 +182,7 @@ def describe_get():
             assert 'image/jpeg' == response.mimetype
             # unit tests ensure this is a placeholder image
 
+        @pytest.mark.xfail(os.name == 'nt', reason="Windows has a path limit")
         def when_too_much_text_for_a_filename(client):
             top = "hello"
             bottom = "-".join(["world"] * 50)

@@ -30,42 +30,53 @@ def load(response, as_json=True, key=None):
 
 
 @pytest.yield_fixture(scope='session')
-def app(postgres):
+def app():
     app = create_app(get_config('test'))
-    app.config['SQLALCHEMY_DATABASE_URI'] = postgres.url()
     yield app
 
 
 @pytest.yield_fixture(scope='session')
 def postgres():
-    with Postgresql() as pg:
-        yield pg
+    try:
+        import psycopg2
+    except ImportError:
+        yield None  # PostgreSQL database adapter is unavailable on this system
+    else:
+        try:
+            with Postgresql() as pg:
+                yield pg
+        except FileNotFoundError:
+            yield None  # PostgreSQL is unavailable on this system
 
 
 @pytest.yield_fixture(scope='module')
-def db_engine(app):
-    _db.app = app
+def db_engine(app, postgres):
+    if postgres:
+        app.config['SQLALCHEMY_DATABASE_URI'] = postgres.url()
+        _db.app = app
 
-    with app.app_context():
-        _db.create_all()
+        with app.app_context():
+            _db.create_all()
 
-    yield _db
+        yield _db
 
-    # http://stackoverflow.com/a/6810165/1255482
-    _db.session.close()  # pylint: disable=no-member
+        # http://stackoverflow.com/a/6810165/1255482
+        _db.session.close()  # pylint: disable=no-member
 
-    try:
-        _db.drop_all()
-    except OperationalError:
-        # Allow tests to be killed cleanly
-        pass
+        try:
+            _db.drop_all()
+        except OperationalError:
+            pass  # allow tests to be killed cleanly
+    else:
+        yield None
 
 
 @pytest.yield_fixture(scope='function')
 def db(db_engine):
     yield db_engine
     # Do a rollback after each test in case bad stuff happened
-    db_engine.session.rollback()
+    if db_engine:
+        db_engine.session.rollback()
 
 
 @pytest.yield_fixture

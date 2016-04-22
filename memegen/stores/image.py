@@ -1,6 +1,8 @@
 # pylint: disable=no-member
 
 import os
+import shutil
+from contextlib import suppress
 import logging
 
 import sqlalchemy as sa
@@ -84,13 +86,14 @@ class ImageStore:
         if self.exists(image) and not self.regenerate_images:
             return
 
-        ImageModel(image)
+        try:
+            ImageModel(image)
+        except ImportError:
+            log.warning("Unable to store models on this machine")
 
         image.root = self.root
         image.generate()
 
-        try:
+        with suppress(IOError):
             os.remove(self.latest)
-        except IOError:
-            pass
-        os.symlink(image.path, self.latest)
+        shutil.copy(image.path, self.latest)
