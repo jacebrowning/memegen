@@ -1,8 +1,8 @@
 #!env/bin/python
 
 import os
+import subprocess
 import logging
-from subprocess import check_output
 
 from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
@@ -21,7 +21,8 @@ app = create_app(config)
 for name, command in [
     ('DEPLOY_DATE', "TZ=America/Detroit date '+%F %T'"),
 ]:
-    output = check_output(command, shell=True, universal_newlines=True).strip()
+    output = subprocess.run(command, shell=True, stdout=subprocess.PIPE,
+                            universal_newlines=True).stdout.strip() or "???"
     os.environ[name] = os.getenv(name, output)
 
 # Configure the command-line interface
