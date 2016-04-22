@@ -283,7 +283,9 @@ test-unit: depends-ci
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE_SPACE) jacebrowning/memegen unit
+endif
 endif
 
 .PHONY: test-int
@@ -291,7 +293,9 @@ test-int: depends-ci
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE_SPACE) jacebrowning/memegen integration
+endif
 endif
 
 .PHONY: tests test-all
@@ -300,7 +304,9 @@ test-all: depends-ci
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE_SPACE) jacebrowning/memegen overall
+endif
 endif
 
 .PHONY: read-coverage
