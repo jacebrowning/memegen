@@ -175,7 +175,7 @@ class Template:
             else:
                 log.info("Checking link %s ...", self.link)
                 try:
-                    response = requests.get(self.link, timeout=5)
+                    response = requests.head(self.link, timeout=5)
                 except requests.exceptions.ReadTimeout:
                     log.warning("Connection timed out")
                     return True  # assume URL is OK; it will be checked again
@@ -185,7 +185,7 @@ class Template:
                     self._error("link is invalid (%s)", response.status_code)
                     return False
                 else:
-                    with open(flag, 'w') as stream:
+                    with open(str(flag), 'w') as stream:
                         stream.write(str(int(time.time())))
         return True
 

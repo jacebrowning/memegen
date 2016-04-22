@@ -136,7 +136,7 @@ def describe_template():
             mock_response = Mock()
             mock_response.status_code = 404
 
-            with patch('requests.get', Mock(return_value=mock_response)):
+            with patch('requests.head', Mock(return_value=mock_response)):
                 template.link = "example.com/fake"
 
                 expect(template.validate_link()) == False
