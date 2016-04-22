@@ -2,7 +2,7 @@
 
 """Setup script for MemeGen."""
 
-import sys
+import os
 import logging
 
 import setuptools
@@ -23,9 +23,10 @@ def load_requirements():
     requirements = []
 
     for line in open("requirements.txt").readlines():
+        line = line.strip()
         name = line.split('=')[0].strip()
 
-        if sys.platform == 'win32':
+        if os.name == 'nt':
             if name in ['psycopg2', 'gunicorn']:
                 logging.warning("Skipped requirement: %s", line)
                 continue
