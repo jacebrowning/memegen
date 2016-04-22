@@ -1,6 +1,8 @@
 # pylint: disable=no-member
 
 import os
+import shutil
+from contextlib import suppress
 import logging
 
 import sqlalchemy as sa
@@ -92,8 +94,6 @@ class ImageStore:
         image.root = self.root
         image.generate()
 
-        try:
+        with suppress(IOError):
             os.remove(self.latest)
-        except IOError:
-            pass
-        os.symlink(image.path, self.latest)
+        shutil.copy(image.path, self.latest)
