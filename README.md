@@ -28,8 +28,8 @@ In URLs, spaces can be inserted using dashes or underscores:
 
 * dash (`-`) → space (` `)
 * underscore (`_`) → space (` `)
-* dashes (`--`) → dash (`-`)
-* underscores (`__`) → underscore (`_`)
+* 2 dashes (`--`) → dash (`-`)
+* 2 underscores (`__`) → underscore (`_`)
 
 Reserved URL characters can be escaped:
 
