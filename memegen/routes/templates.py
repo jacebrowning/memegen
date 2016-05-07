@@ -2,11 +2,19 @@ from collections import OrderedDict
 
 from flask import Blueprint, current_app as app, request, redirect
 from flask_api import exceptions
+from webargs import fields
 
 from ._common import CONTRIBUTING_URL, route
+from ._parser import parser
 
 
 blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
+
+OPTIONS = {
+    # pylint: disable=no-member
+    'top': fields.Str(missing="_"),
+    'bottom': fields.Str(missing="_"),
+}
 
 
 @blueprint.route("")
@@ -21,11 +29,13 @@ def get():
 
 @blueprint.route("", methods=['POST'])
 def create_template():
+    # TODO: https://github.com/jacebrowning/memegen/issues/119
     raise exceptions.PermissionDenied(CONTRIBUTING_URL)
 
 
 @blueprint.route("<key>", methods=['GET', 'POST'], endpoint='create')
-def create_meme(key):
+@parser.use_kwargs(OPTIONS)
+def create_meme(key, top, bottom):
     """Generate a meme from a template."""
     if request.method == 'GET':
         template = app.template_service.find(key)
@@ -42,8 +52,8 @@ def create_meme(key):
         return data
 
     elif request.method == 'POST':
-        # TODO: https://github.com/jacebrowning/memegen/issues/12
-        raise exceptions.PermissionDenied("Feature not implemented.")
+        path = "/".join([top, bottom])
+        return redirect(route('image.get', key=key, path=path), 303)
 
     else:  # pragma: no cover
         assert None

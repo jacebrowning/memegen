@@ -1,4 +1,6 @@
-# pylint: disable=unused-variable,misplaced-comparison-constant
+# pylint: disable=unused-variable,misplaced-comparison-constant,expression-not-assigned
+
+from expecter import expect
 
 from .conftest import load
 
@@ -58,10 +60,19 @@ def describe_get():
 
 def describe_post():
 
-    def it_returns_an_error(client):
+    def creating_new_templates_is_future_behavior(client):
         response = client.post("/templates/")
 
         assert 403 == response.status_code
         assert dict(
             message="https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
         ) == load(response)
+
+    def can_create_a_new_meme(client):
+        params = {'top': "foo", 'bottom': "bar"}
+        response = client.post("/templates/fry", data=params)
+
+        expect(response.status_code) == 303
+        expect(load(response, as_json=False)).contains(
+            '<a href="/fry/foo/bar.jpg">'
+        )
