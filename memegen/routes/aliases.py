@@ -20,7 +20,7 @@ def get(name):
     if name:
         return redirect(route('.get_with_name', name=name))
     else:
-        return _get_aliases()
+        return []
 
 
 @blueprint.route("/aliases/<name>")

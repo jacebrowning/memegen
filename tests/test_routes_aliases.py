@@ -7,11 +7,11 @@ from .conftest import load
 
 def describe_get():
 
-    def it_returns_all_aliases(client):
+    def it_requires_a_name_to_return_aliases(client):
         response = client.get("/aliases/")
 
         assert 200 == response.status_code
-        assert len(load(response)) > 200
+        assert load(response) == []
 
     def it_redirects_with_param(client):
         response = client.get("/aliases/?name=foo")
