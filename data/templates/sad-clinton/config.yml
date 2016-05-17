@@ -1,0 +1,10 @@
+name: Sad Bill Clinton
+link: https://en.wikipedia.org/wiki/Bill_Clinton
+default:
+- Sad Bill Clinton
+- Doesn't Think You'll Vote
+aliases:
+- sad-bill
+- bill-clinton
+- votestakes-bill-clinton
+regexes: []
