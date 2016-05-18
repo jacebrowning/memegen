@@ -41,4 +41,4 @@ def describe_get():
             response = client.get("/aliases/votestakes")
 
             assert 200 == response.status_code
-            assert len(load(response)) == 4
+            assert len(load(response)) == 5
