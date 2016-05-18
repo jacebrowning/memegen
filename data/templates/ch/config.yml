@@ -8,4 +8,4 @@ aliases:
 - hindsight
 regexes:
 - (if you wanted to .+)/?(you should have .+)
-- (.+ wanted .+)/?(/b.+ should have .+)
+- (.+ wanted .+)/?(\b.+ should have .+)

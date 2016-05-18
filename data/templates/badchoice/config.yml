@@ -8,4 +8,4 @@ aliases:
 - milk-was-a-bad-choice
 regexes:
 - (.+)/?(was a bad choice)
-- (.+)/?(/b.+ a bad choice)
+- (.+)/?(\b.+ a bad choice)

@@ -8,4 +8,4 @@ aliases:
 - x-everywhere
 - buzz-lightyear
 regexes:
-- (.+)/?(/b.+ everywhere)
+- (.+)/?(\b.+ everywhere)
