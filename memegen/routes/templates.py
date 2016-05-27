@@ -59,7 +59,7 @@ def create_meme(key, top, bottom):
         assert None
 
 
-@blueprint.route("<key>/<path:path>")
+@blueprint.route("<key>/<text:path>")
 def get_meme_with_path(key, path):
     """Redirect if any additional path is provided."""
     template = app.template_service.find(key)

@@ -1,10 +1,11 @@
-
-from . import aliases
-from . import image
+# Web pages
 from . import index
 from . import latest
-from . import links
-from . import magic
+
+# API routes
 from . import root
-from . import static
 from . import templates
+from . import aliases
+from . import magic
+from . import links
+from . import image
