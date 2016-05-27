@@ -148,6 +148,9 @@
       } else {
         $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
       }
+      $('img').on('load', function(){
+          $(this).css('background-image', 'none');
+      });
     </script>
 
   </body>
