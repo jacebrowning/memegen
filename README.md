@@ -39,7 +39,7 @@ Reserved URL characters can be escaped:
 * tilde + S (`~s`) → slash (`/`)
 * 2 single qutoes (`''`) → double quote (`"`)
 
-For example: [http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg](http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg)
+For example: [http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg](http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg)
 
 ### Alternate Styles
 
