@@ -12,7 +12,7 @@ Visit [http://memegen.link/api](http://memegen.link/api) to browse the API and v
 
 MemeGen URLs contain all the information necessary to generate the image. For example, http://memegen.link/buzz/memes/memes-everywhere.jpg produces:
 
-![buzz](http://memegen.link/buzz/memes/memes-everywhere.jpg)
+![Sample Image](http://memegen.link/buzz/memes/memes-everywhere.jpg)
 
 But, the site can also produce masked URLs to conceal the joke:
 
@@ -39,19 +39,21 @@ Reserved URL characters can be escaped:
 * tilde + S (`~s`) → slash (`/`)
 * 2 single qutoes (`''`) → double quote (`"`)
 
-For example: [http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg](http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg)
+For example, http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg produces:
+
+![Escaped Characters](http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg)
 
 ### Alternate Styles
 
 Some memes come in multiple forms, which can be selected via `?alt=<style>`:
 
-![template](memegen/static/images/template.png)
+![Template with Styles](memegen/static/images/template.png)
 
 For example: [http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-vote.jpg?alt=scowl](http://memegen.link/sad-biden/sad-joe-biden/doesn't-think-you'll-vote.jpg?alt=scowl)
 
 Or, you can use your own image URL as the style. For example, http://memegen.link/custom/my-pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg produces:
 
-![custom](http://memegen.link/custom/my-pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg)
+![Custom Background](http://memegen.link/custom/my-pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg)
 
 ## Adding Templates
 
