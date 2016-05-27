@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 # TODO: move to a fonts store
 FONT = os.path.normpath(os.path.join(
     os.path.dirname(__file__), os.pardir, os.pardir,
-    'data', 'fonts', 'Exo-Black.otf'
+    'data', 'fonts', 'TitilliumWeb-Black.ttf'
 ))
 
 
@@ -94,7 +94,7 @@ def _draw_outlined_text(draw_image, text_position, text, font, font_size):
     """Draw white text with black outline on an image."""
 
     # Draw black text outlines
-    outline_range = max(1, font_size // 25)
+    outline_range = max(1, font_size // 24)
     for x in range(-outline_range, outline_range + 1):
         for y in range(-outline_range, outline_range + 1):
             pos = (text_position[0] + x, text_position[1] + y)
