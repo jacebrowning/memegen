@@ -13,7 +13,7 @@ def test_samples(client):
         ("nominal.jpg", "/ch/a-normal-line-of-top-meme-text-followed-by/"
             "another-normal-line-of-bottom-meme-text.jpg"),
         ("long.jpg", "/ch/" + ("long-" * 15) + "line/short-line.jpg"),
-        ("subscripts.jpg", "/ch/some-unicode-subscripts:/h%E2%82%82o.jpg"),
+        ("subscripts.jpg", "/ch/some-unicode-subscripts/h%E2%82%82o.jpg"),
     ]:
         with SAMPLES.joinpath(name).open('wb') as image:
             response = client.get(url)
