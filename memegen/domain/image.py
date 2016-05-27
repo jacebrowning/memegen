@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 # TODO: move to a fonts store
 FONT = os.path.normpath(os.path.join(
     os.path.dirname(__file__), os.pardir, os.pardir,
-    'data', 'fonts', 'mplus-1c-black.ttf'
+    'data', 'fonts', 'Exo-Black.otf'
 ))
 
 
