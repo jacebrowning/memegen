@@ -72,6 +72,8 @@ class Text:
         part = part.replace('~P', '%')
         part = part.replace('~h', '#')
         part = part.replace('~H', '#')
+        part = part.replace('~s', '/')
+        part = part.replace('~S', '/')
         part = part.replace("''", '"')
 
         part = list(part)
@@ -119,6 +121,7 @@ class Text:
             path = path.replace('?', '~q')
             path = path.replace('%', '~p')
             path = path.replace('#', '~h')
+            path = path.replace('/', '~s')
             path = path.replace('"', "''")
             path = path.lower()
 
