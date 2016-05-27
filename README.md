@@ -36,6 +36,7 @@ Reserved URL characters can be escaped:
 * tilde + Q (`~q`) → question mark (`?`)
 * tilde + P (`~p`) → percentage (`%`)
 * tilde + H (`~h`) → hashtag/pound (`#`)
+* tilde + S (`~s`) → slash (`/`)
 * 2 single qutoes (`''`) → double quote (`"`)
 
 For example: [http://memegen.link/doge/special-characters~q/underscore__-dash--.jpg](http://memegen.link/doge/~hspecial-characters~q/underscore__-dash--.jpg)
