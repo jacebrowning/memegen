@@ -7,6 +7,7 @@ from .. import domain
 
 from ._common import route, display
 
+
 blueprint = Blueprint('image', __name__, url_prefix="/")
 log = logging.getLogger(__name__)
 
