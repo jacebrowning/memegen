@@ -38,7 +38,7 @@ def get_without_text_jpeg(key):
     return redirect(route('.get_without_text', key=key))
 
 
-@blueprint.route(r"<key>/<text:path>.jpg", endpoint='get')
+@blueprint.route("<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt):
     text = domain.Text(path)
@@ -58,7 +58,7 @@ def get_with_text(key, path, alt):
     return display(image.text, image.path)
 
 
-@blueprint.route("<key>/<text:path>.jpeg")
+@blueprint.route("<key>/<path:path>.jpeg")
 def get_with_text_jpeg(key, path):
     return redirect(route('.get', key=key, path=path))
 

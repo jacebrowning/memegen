@@ -2,7 +2,6 @@ import os
 import logging
 from urllib.parse import urlencode, unquote
 
-from werkzeug.routing import BaseConverter
 from flask import request, current_app
 from flask_api import FlaskAPI
 from flask_api.exceptions import APIException, NotFound
@@ -13,10 +12,6 @@ from . import routes
 from . import extensions
 
 log = logging.getLogger('api')
-
-
-class TextConverter(BaseConverter):
-    regex = '[^/][^/]*/?[^/]*'  # string with zero or one slash
 
 
 class TemplateNotFound(NotFound):
@@ -106,7 +101,6 @@ def register_services(app):
 
 
 def register_blueprints(app):
-    app.url_map.converters['text'] = TextConverter
     app.register_blueprint(routes.aliases.blueprint)
     app.register_blueprint(routes.image.blueprint)
     app.register_blueprint(routes.index.blueprint)

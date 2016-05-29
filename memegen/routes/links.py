@@ -16,7 +16,7 @@ def get_without_text(key):
     return redirect(route('templates.create', key=template.key))
 
 
-@blueprint.route("<key>/<text:path>", endpoint='get')
+@blueprint.route("<key>/<path:path>", endpoint='get')
 def get_with_text(key, path):
     """Get links for generated images."""
     template = app.template_service.find(key)
