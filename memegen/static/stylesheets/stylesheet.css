@@ -24,7 +24,7 @@ body {
 /*********************************************/
 /* loading stuff */
 img {
-    background-image: transparent url('/images/loading.gif');
+    background: transparent url('/images/loading.gif');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
