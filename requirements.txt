@@ -1,9 +1,9 @@
-Flask == 0.10.1
-Flask-API == 0.6.4
-Flask-SQLAlchemy == 2.1
+Flask == 0.11.0
+Flask-API == 0.6.6
+Flask-SQLAlchemy == 2.1.0
 webargs == 1.0.0
 Pillow == 3.1.1
-YORM == 0.8
+YORM == 0.8.0
 SQLAlchemy == 1.0.12
 psycopg2 == 2.6.1
 requests == 2.7.0
@@ -11,3 +11,4 @@ requests == 2.7.0
 Flask-Script == 2.0.5
 Flask-Migrate == 1.8.0
 gunicorn == 19.3.0
+whitenoise == 3.1.0

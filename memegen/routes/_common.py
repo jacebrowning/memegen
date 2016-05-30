@@ -3,7 +3,7 @@ import logging
 from urllib.parse import unquote
 
 import requests
-from flask import (Response, url_for as _url_for, render_template, send_file,
+from flask import (Response, url_for, render_template, send_file,
                    current_app, request)
 
 GITHUB_SLUG = "jacebrowning/memegen"
@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 def route(*args, **kwargs):
     """Unquoted version of Flask's `url_for`."""
-    return unquote(_url_for(*args, **kwargs))
+    return unquote(url_for(*args, **kwargs))
 
 
 def samples(blank=False):
