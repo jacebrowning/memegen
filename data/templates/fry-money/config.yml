@@ -1,0 +1,13 @@
+name: Shut up and take my money
+link: # http://knowyourmeme.com/memes/fry-take-my-money
+default:
+- SHUT UP AND
+- TAKE MY MONEY!
+aliases:
+- frymoney
+- shut-up-and-take-my-money
+- take-my-money
+regexes:
+- # (match top with .+)/?(and bottom)
+- (take my .+)/?(or .+)
+- (.+ money .+)/?(or .+)
