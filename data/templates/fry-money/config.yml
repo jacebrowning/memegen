@@ -7,6 +7,8 @@ aliases:
 - frymoney
 - shut-up-and-take-my-money
 - take-my-money
+- shut-up-and-do-that-thing
+- stop-talking-and-take-my-money
 regexes:
 - (.+)/?(shut up and take my money)
 - (.+)/?(stop talking and take my money)
