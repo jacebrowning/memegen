@@ -8,5 +8,6 @@ aliases:
 - shut-up-and-take-my-money
 - take-my-money
 regexes:
-- (take my .+)/?(or .+)
-- (.+ money .+)/?(or .+)
+- (.+)/?(shut up and take my money)
+- (.+)/?(stop talking and take my money)
+- (.+)/?(shut up and do that thing)
