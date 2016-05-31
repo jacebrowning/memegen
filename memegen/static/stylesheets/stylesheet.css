@@ -21,6 +21,13 @@ body {
   border-width: 0;
 }
 
+/*********************************************/
+/* loading stuff */
+img {
+    background: transparent url('/images/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 /*********************************************/
 /* masthead */
