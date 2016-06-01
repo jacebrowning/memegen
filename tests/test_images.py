@@ -1,3 +1,5 @@
+"""Tests for image generation."""
+
 # pylint: disable=bad-continuation
 
 from pathlib import Path

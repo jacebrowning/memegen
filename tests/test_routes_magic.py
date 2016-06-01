@@ -13,7 +13,7 @@ def describe_pattern():
         expect(response.status_code) == 200
         expect(load(response)) == [
             {
-                'template': "http://localhost/xy/do/all-the-things",
+                'link': "http://localhost/xy/do/all-the-things",
                 'ratio': 0.94,
             },
         ]

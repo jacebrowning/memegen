@@ -33,8 +33,8 @@ def _get_matches(pattern):
 
         data = {}
         data['ratio'] = ratio
-        data['template'] = route('links.get', key=template.key,
-                                 path=path, _external=True)
+        data['link'] = route('links.get', key=template.key,
+                             path=path, _external=True)
 
         items.append(data)
 
