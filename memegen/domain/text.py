@@ -2,6 +2,13 @@ class Text:
 
     EMPTY = '_'
     SPACE = '-'
+    SPECIAL = {
+        '?': '~q',
+        '%': '~p',
+        '#': '~h',
+        '/': '~s',
+        '"': "''",
+    }
 
     def __init__(self, path=None):
         if path is None:
@@ -66,15 +73,9 @@ class Text:
 
     @classmethod
     def _format_line(cls, part):
-        part = part.replace('~q', '?')
-        part = part.replace('~Q', '?')
-        part = part.replace('~p', '%')
-        part = part.replace('~P', '%')
-        part = part.replace('~h', '#')
-        part = part.replace('~H', '#')
-        part = part.replace('~s', '/')
-        part = part.replace('~S', '/')
-        part = part.replace("''", '"')
+        for special, replacement in cls.SPECIAL.items():
+            part = part.replace(replacement, special)
+            part = part.replace(replacement.upper(), special)
 
         part = list(part)
         chars = []
@@ -115,14 +116,11 @@ class Text:
         if line == ' ':
             path = cls.EMPTY
         else:
-            path = line.replace(cls.SPACE, cls.SPACE * 2)
+            path = line.lower()
+            path = path.replace(cls.SPACE, cls.SPACE * 2)
             path = path.replace(cls.EMPTY, cls.EMPTY * 2)
             path = path.replace(' ', cls.SPACE)
-            path = path.replace('?', '~q')
-            path = path.replace('%', '~p')
-            path = path.replace('#', '~h')
-            path = path.replace('/', '~s')
-            path = path.replace('"', "''")
-            path = path.lower()
+            for special, replacement in cls.SPECIAL.items():
+                path = path.replace(special, replacement)
 
         return path

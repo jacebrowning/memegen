@@ -4,6 +4,8 @@ function encodeMemeText(str) {
     .replace(/_/g, '__')
     .replace(/\?/g, '~q')
     .replace(/%/g, '~p')
+    .replace(/#/g, '~h')
+    .replace(/\//g, '~s')
     .replace(/\s+/g, '-') || '_';
 }
 
@@ -13,6 +15,8 @@ function decodeMemeText(str) {
     .replace(/_/g, '')
     .replace(/~q/g, '?')
     .replace(/~p/g, '%')
+    .replace(/~h/g, '#')
+    .replace(/~s/g, '/')
 }
 
 function encodeMemeURL(url) {
