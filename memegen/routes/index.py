@@ -20,11 +20,3 @@ def get_index():
         github_slug=GITHUB_SLUG,
         ga_tid=get_tid(),
     ))
-
-
-@blueprint.route("flask-api/static/js/default.js")
-def get_javascript():
-    return Response(render_template(
-        "js/default.js",
-        ga_tid=get_tid(),
-    ))
