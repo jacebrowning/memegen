@@ -9,7 +9,7 @@ from flask import (Response, url_for, render_template, send_file,
 GITHUB_SLUG = "jacebrowning/memegen"
 GITHUB_BASE = "https://raw.githubusercontent.com/{}/master/".format(GITHUB_SLUG)
 CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
-CHANGES_URL = GITHUB_BASE + "CHANGES.md"
+CHANGES_URL = GITHUB_BASE + "CHANGELOG.md"
 
 log = logging.getLogger(__name__)
 

@@ -19,5 +19,5 @@ def describe_root():
             'magic': "http://localhost/magic/",
             'version': "2.1",
             'date': "today",
-            'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGES.md"
+            'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }
