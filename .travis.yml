@@ -8,9 +8,6 @@ cache:
   pip: true
   directories:
   - env
-  - data/templates
-before_cache:
-- find data/templates -name "*.yml" -o "*.png" -o "*.jpg" -delete
 
 env:
   global:
