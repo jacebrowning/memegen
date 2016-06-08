@@ -29,7 +29,6 @@ def get():
 
 @blueprint.route("", methods=['POST'])
 def create_template():
-    # TODO: https://github.com/jacebrowning/memegen/issues/119
     raise exceptions.PermissionDenied(CONTRIBUTING_URL)
 
 

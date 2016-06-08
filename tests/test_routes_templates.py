@@ -60,7 +60,7 @@ def describe_get():
 
 def describe_post():
 
-    def creating_new_templates_is_future_behavior(client):
+    def new_templates_are_created_using_github(client):
         response = client.post("/templates/")
 
         assert 403 == response.status_code

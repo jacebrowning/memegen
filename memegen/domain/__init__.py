@@ -1,3 +1,4 @@
 from .text import Text
-from .image import Image
+from .font import Font
 from .template import Template, Placeholder
+from .image import Image

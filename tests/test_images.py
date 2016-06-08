@@ -17,7 +17,8 @@ def test_samples(client):
         ("long.jpg", "/ch/" + ("long-" * 15) + "line/short-line.jpg"),
         ("subscripts.jpg", "/ch/some-unicode-subscripts/h%E2%82%82o.jpg"),
     ]:
+        response = client.get(url)
+        data = response.get_data()
+
         with SAMPLES.joinpath(name).open('wb') as image:
-            response = client.get(url)
-            data = response.get_data()
             image.write(data)

@@ -5,6 +5,7 @@ from . import latest
 # API routes
 from . import root
 from . import templates
+from . import fonts
 from . import aliases
 from . import magic
 from . import links

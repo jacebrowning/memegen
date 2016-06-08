@@ -1,2 +1,5 @@
 from ._base import Exceptions
-from . import image, link, template
+from . import font
+from . import template
+from . import link
+from . import image
