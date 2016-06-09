@@ -16,3 +16,6 @@ class FontService(Service):
         """Get all fonts."""
         fonts = self.font_store.all()
         return fonts
+
+    def find(self, key):
+        return self.font_store.find(key)

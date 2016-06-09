@@ -94,6 +94,7 @@ def register_services(app):
     app.image_service = services.image.ImageService(
         exceptions=exceptions,
         template_store=template_store,
+        font_store=font_store,
         image_store=image_store,
     )
 

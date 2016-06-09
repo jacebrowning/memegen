@@ -1,3 +1,4 @@
+from pathlib import Path
 import logging
 
 
@@ -8,8 +9,16 @@ class Font:
     """Font file used to render text onto an image."""
 
     def __init__(self, path):
-        self.path = path
+        self._path = path
 
     @property
     def name(self):
-        return self.path.stem.lower().replace('_', '-')
+        return self._path.stem.lower().replace('_', '-')
+
+    @property
+    def path(self):
+        return str(self._path)
+
+    @path.setter
+    def path(self, value):
+        self._path = Path(value)

@@ -5,13 +5,16 @@ from ._base import Service
 
 class ImageService(Service):
 
-    def __init__(self, template_store, image_store, **kwargs):
+    def __init__(self, template_store, font_store, image_store, **kwargs):
         super().__init__(**kwargs)
         self.template_store = template_store
+        self.font_store = font_store
         self.image_store = image_store
 
-    def create(self, template, text, style=None):
-        image = Image(template, text, style=style)
+    def create(self, template, text, style=None, font=None):
+        font = font or self.font_store.find('titilliumweb-black')
+
+        image = Image(template, text, style=style, font=font)
 
         try:
             self.image_store.create(image)
