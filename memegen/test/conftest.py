@@ -31,8 +31,11 @@ def link_service():
 
 @pytest.fixture
 def image_service():
-    return services.image.ImageService(template_store=Mock(),
-                                       image_store=Mock())
+    return services.image.ImageService(
+        template_store=Mock(),
+        font_store=Mock(),
+        image_store=Mock(),
+    )
 
 
 @pytest.fixture

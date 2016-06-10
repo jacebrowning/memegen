@@ -51,9 +51,9 @@ def describe_get():
             assert 200 == response.status_code
             assert 'image/jpeg' == response.mimetype
 
-    def describe_alt():
+    def describe_custom_style():
 
-        def when_style(client):
+        def when_provided(client):
             response = client.get("/sad-biden/hello.jpg?alt=scowl")
 
             assert 200 == response.status_code
@@ -115,6 +115,21 @@ def describe_get():
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
                 '<a href="/sad-biden/hello.jpg">')
+
+    def describe_custom_font():
+
+        def when_provided(client):
+            response = client.get("/iw/hello.jpg?font=impact")
+
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
+
+        def it_redirects_on_unknown_fonts(client):
+            response = client.get("/iw/hello.jpg?font=__unknown__")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/hello.jpg">')
 
     def describe_latest():
 

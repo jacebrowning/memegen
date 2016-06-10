@@ -12,7 +12,8 @@ blueprint = Blueprint('image', __name__, url_prefix="/")
 log = logging.getLogger(__name__)
 
 OPTIONS = {
-    'alt': fields.Str(missing=None)  # pylint: disable=no-member
+    'alt': fields.Str(missing=None),  # pylint: disable=no-member
+    'font': fields.Str(missing=None),  # pylint: disable=no-member
 }
 
 
@@ -27,10 +28,10 @@ def get_latest():
 
 @blueprint.route("<key>.jpg")
 @flaskparser.use_kwargs(OPTIONS)
-def get_without_text(key, alt):
+def get_without_text(key, **kwargs):
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
-    return redirect(route('.get', key=key, path=text.path, alt=alt))
+    return redirect(route('.get', key=key, path=text.path, **kwargs))
 
 
 @blueprint.route("<key>.jpeg")
@@ -40,20 +41,24 @@ def get_without_text_jpeg(key):
 
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
-def get_with_text(key, path, alt):
+def get_with_text(key, path, alt, font):
     text = domain.Text(path)
+    fontfile = app.font_service.find(font)
 
     template = app.template_service.find(key, allow_missing=True)
     if template.key != key:
         return redirect(route('.get', key=template.key, path=path, alt=alt))
 
     if alt and template.path == template.get_path(alt):
-        return redirect(route('.get', key=key, path=path))
+        return redirect(route('.get', key=key, path=path, font=font))
+
+    if font and not fontfile:
+        return redirect(route('.get', key=key, path=path, alt=alt))
 
     if path != text.path:
         return redirect(route('.get', key=key, path=text.path, alt=alt))
 
-    image = app.image_service.create(template, text, style=alt)
+    image = app.image_service.create(template, text, style=alt, font=fontfile)
 
     return display(image.text, image.path)
 

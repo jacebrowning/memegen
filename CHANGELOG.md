@@ -1,5 +1,9 @@
 # Revision History
 
+## 2.3
+
+- Added support for custom fonts: `/custom/test.jpg?font=impact`
+
 ## 2.2
 
 - Added support for custom backgrounds: `/custom/test.jpg?alt=http://image.jpg`

@@ -4,7 +4,7 @@
 import pytest
 from expecter import expect
 
-from .conftest import load
+from .utilities import load
 
 
 @pytest.mark.parametrize("pattern,links", [
@@ -29,6 +29,6 @@ from .conftest import load
 def test_match(client, pattern, links):
     response = client.get("/magic/" + pattern, follow_redirects=True)
 
-    matches = load(response)
+    _, matches = load(response)
 
     expect([match['link'] for match in matches]) == links

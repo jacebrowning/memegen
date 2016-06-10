@@ -72,6 +72,10 @@ def register_services(app):
 
     templates_root = os.path.join(app.config['ROOT'], 'data', 'templates')
     template_store = stores.template.TemplateStore(templates_root)
+
+    fonts_root = os.path.join(app.config['ROOT'], 'data', 'fonts')
+    font_store = stores.font.FontStore(fonts_root)
+
     images_root = os.path.join(app.config['ROOT'], 'data', 'images')
     image_store = stores.image.ImageStore(images_root, app.config)
 
@@ -83,9 +87,14 @@ def register_services(app):
         exceptions=exceptions,
         template_store=template_store,
     )
+    app.font_service = services.font.FontService(
+        exceptions=exceptions,
+        font_store=font_store
+    )
     app.image_service = services.image.ImageService(
         exceptions=exceptions,
         template_store=template_store,
+        font_store=font_store,
         image_store=image_store,
     )
 
@@ -97,11 +106,13 @@ def register_services(app):
             log.info("%s: %s - %i", request.method, path,
                      response.status_code)
         return response
+
     app.after_request(log_request)
 
 
 def register_blueprints(app):
     app.register_blueprint(routes.aliases.blueprint)
+    app.register_blueprint(routes.fonts.blueprint)
     app.register_blueprint(routes.image.blueprint)
     app.register_blueprint(routes.index.blueprint)
     app.register_blueprint(routes.latest.blueprint)

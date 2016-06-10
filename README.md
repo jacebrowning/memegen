@@ -55,6 +55,14 @@ Or, you can use your own image URL as the style. For example, http://memegen.lin
 
 ![Custom Background](http://memegen.link/custom/my-pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg)
 
+### Alternate Fonts
+
+Additional fonts are available (see: http://memegen.link/api/fonts) and can be selected via `?font=<name>`.
+
+For example, http://memegen.link/joker/pick-a-better-font/people-lose-their-minds.jpg?font=typoline_demo produces:
+
+![Custom Font](http://memegen.link/joker/pick-a-better-font/people-lose-their-minds.jpg?font=typoline_demo)
+
 ## Adding Templates
 
 [![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)

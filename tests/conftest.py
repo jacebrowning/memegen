@@ -1,8 +1,5 @@
 # pylint: disable=redefined-outer-name
 
-import json
-import logging
-
 import pytest
 from testing.postgresql import Postgresql
 from sqlalchemy.exc import OperationalError
@@ -14,19 +11,10 @@ from memegen.settings import get_config
 from memegen.test.conftest import pytest_configure  # pylint: disable=unused-import
 
 
-def load(response, as_json=True, key=None):
-    """Convert a response's binary data (JSON) to a dictionary."""
-    text = response.data.decode('utf-8')
-    if not as_json:
-        return text
-    if text:
-        data = json.loads(text)
-        if key:
-            data = data[key]
-    else:
-        data = None
-    logging.debug("Response: %r", data)
-    return data
+# TODO: replace all calls with the new signature
+def load(*args, **kwargs):
+    from .utilities import load
+    return load(*args, **kwargs)[1]
 
 
 @pytest.yield_fixture(scope='session')
