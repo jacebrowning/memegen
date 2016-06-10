@@ -59,9 +59,9 @@ Or, you can use your own image URL as the style. For example, http://memegen.lin
 
 Additional fonts are available (see: http://memegen.link/api/fonts) and can be selected via `?font=<name>`.
 
-For example, http://memegen.link/joker/pick-a-better-font/people-lose-their-minds.jpg?font=typoline_demo produces:
+For example, http://memegen.link/joker/pick-a-different-font/people-lose-their-minds.jpg?font=typoline-demo produces:
 
-![Custom Font](http://memegen.link/joker/pick-a-better-font/people-lose-their-minds.jpg?font=typoline_demo)
+![Custom Font](http://memegen.link/joker/pick-a-different-font/people-lose-their-minds.jpg?font=typoline-demo)
 
 ## Adding Templates
 
