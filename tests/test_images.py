@@ -20,14 +20,20 @@ def test_samples(client):
         save_image(client, url, name)
 
 
-def test_impact_font(client):
-    """Create a meme using a custom font.
+def test_standard_font(client):
+    """Create a meme using the standard meme font.
 
     See: https://github.com/jacebrowning/memegen/issues/216
 
     """
     url = "/ch/we-like-using-the/custom-fonts.jpg?font=impact"
     save_image(client, url, "impact.jpg")
+
+
+def test_japanese_font(client):
+    """Create a meme using a font that supports Japanese characters."""
+    url = "/ch/turning/日本語.jpg?font=notosanscjkjp-black"
+    save_image(client, url, "notosans.jpg")
 
 
 def save_image(client, url, name):
