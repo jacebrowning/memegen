@@ -73,9 +73,12 @@ Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/
 
 ## Slack Integration
 
-Check out one of these options:
+Check out one of these projects:
 
 * [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)
 * [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)
-* http://www.memetizer.com
 * [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme)
+
+or install an app:
+
+* [Meme Bot](https://slack.com/apps/A0H25FSUS-meme-bot)
