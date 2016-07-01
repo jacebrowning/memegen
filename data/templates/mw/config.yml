@@ -1,0 +1,13 @@
+name: I Guarantee It
+link: http://knowyourmeme.com/memes/george-zimmer-i-guarantee-it
+default:
+- YOU'RE GONNA LIKE THE WAY YOU LOOK
+- I GUARANTEE IT
+aliases:
+- george-zimmer
+- i-guarantee-it
+- guarantee-it
+- guarantee
+- mens-wearhouse
+regexes:
+- (.*)/?(\b.+ guarantee .+)
