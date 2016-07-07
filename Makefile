@@ -1,28 +1,31 @@
 # Project settings
 PROJECT := MemeGen
 PACKAGE := memegen
+REPOSITORY := jacebrowning/memegen
 DIRECTORIES := $(PACKAGE) tests scripts
-FILES := Makefile $(shell find $(DIRECTORIES) -name '*.py')
+FILES := Makefile setup.py $(shell find $(DIRECTORIES) -name '*.py')
 
 # Python settings
 ifndef TRAVIS
+ifndef APPVEYOR
 	PYTHON_MAJOR ?= 3
 	PYTHON_MINOR ?= 5
+endif
 endif
 
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
-	WINDOWS := 1
+	WINDOWS := true
 	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
 	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
 	ifneq ($(findstring darwin, $(PLATFORM)), )
-		MAC := 1
+		MAC := true
 	else
-		LINUX := 1
+		LINUX := true
 	endif
 	SYS_PYTHON := python$(PYTHON_MAJOR)
 	ifdef PYTHON_MINOR
@@ -73,7 +76,6 @@ INSTALLED_FLAG := $(ENV)/.installed
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
 DEPENDS_DOC_FLAG := $(ENV)/.depends-doc
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
-DOCS_FLAG := $(ENV)/.docs
 ALL_FLAG := $(ENV)/.all
 
 # Main Targets #################################################################
@@ -85,11 +87,11 @@ PORT := 5000
 .PHONY: all
 all: depends doc $(ALL_FLAG)
 $(ALL_FLAG): $(FILES)
-	$(MAKE) check
-	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
+	make check
+	@ touch $@  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: check test tests validate
+ci: check test tests validate ## Run all targets that determine CI status
 
 .PHONY: run
 run: .env env depends db-dev
@@ -99,7 +101,7 @@ run: .env env depends db-dev
 .PHONY: launch
 launch: env depends
 	eval "sleep 5; open http://$(IP):$(PORT)" &
-	$(MAKE) run
+	make run
 
 .PHONY: gui
 gui: .env env depends
@@ -114,7 +116,7 @@ validate: env
 	CONFIG=test $(PYTHON) manage.py validate
 
 .PHONY: watch
-watch: depends .clean-test
+watch: depends .clean-test ## Continuously run all CI targets when files chanage
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
@@ -133,7 +135,7 @@ db-dev:
 		echo "Creating database memegen_dev"; \
 		createdb memegen_dev;                 \
 	fi;
-	$(MAKE) upgrade
+	make upgrade
 
 # Database Migrations ##########################################################
 
@@ -164,19 +166,19 @@ $(PIP):
 # Tools Installation ###########################################################
 
 .PHONY: depends
-depends: depends-ci depends-doc depends-dev
+depends: depends-ci depends-doc depends-dev ## Install all project dependnecies
 
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
 	$(PIP) install --upgrade pep8 pep257 pylint coverage coverage.space pytest pytest-describe pytest-expecter pytest-cov pytest-random testing.postgresql
-	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
+	@ touch $@  # flag to indicate dependencies are installed
 
 .PHONY: depends-doc
 depends-doc: env Makefile $(DEPENDS_DOC_FLAG)
 $(DEPENDS_DOC_FLAG): Makefile
 	$(PIP) install --upgrade pylint docutils readme pdoc mkdocs pygments
-	@ touch $(DEPENDS_DOC_FLAG)  # flag to indicate dependencies are installed
+	@ touch $@  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
@@ -189,72 +191,50 @@ else ifdef MAC
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
-	@ touch $(DEPENDS_DEV_FLAG)  # flag to indicate dependencies are installed
+	@ touch $@  # flag to indicate dependencies are installed
 
 # Documentation ################################################################
 
 .PHONY: doc
-doc: readme uml
-
-.PHONY: doc-live
-doc-live: doc
-	eval "sleep 3; open http://127.0.0.1:8000" &
-	$(MKDOCS) serve
-
-.PHONY: read
-read: doc
-	$(OPEN) site/index.html
-	$(OPEN) apidocs/$(PACKAGE)/index.html
-	$(OPEN) README-pypi.html
-	$(OPEN) README-github.html
-
-.PHONY: readme
-readme: depends-doc README-github.html README-pypi.html
-README-github.html: README.md
-	pandoc -f markdown_github -t html -o README-github.html README.md
-README-pypi.html: README.rst
-	$(RST2HTML) README.rst README-pypi.html
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
-
-.PHONY: verify-readme
-verify-readme: $(DOCS_FLAG)
-$(DOCS_FLAG): README.rst CHANGELOG.rst
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
+doc: uml ## Run all documentation targets
 
 .PHONY: uml
-uml: depends-doc docs/*.png
+uml: depends-doc docs/*.png ## Generate UML diagrams for classes and packages
 docs/*.png: $(FILES)
-	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
+	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
-.PHONY: apidocs
-apidocs: depends-doc apidocs/$(PACKAGE)/index.html
-apidocs/$(PACKAGE)/index.html: $(FILES)
-	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+.PHONY: pdoc
+pdoc: depends-doc pdoc/$(PACKAGE)/index.html  ## Generate API documentaiton from the code
+pdoc/$(PACKAGE)/index.html: $(FILES)
+	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
 
 .PHONY: mkdocs
-mkdocs: depends-doc site/index.html
+mkdocs: depends-doc site/index.html ## Build the documentation with mkdocs
 site/index.html: mkdocs.yml docs/*.md
 	$(MKDOCS) build --clean --strict
+
+.PHONY: mkdocs-live
+mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
+	eval "sleep 3; open http://127.0.0.1:8000" &
+	$(MKDOCS) serve
 
 # Static Analysis ##############################################################
 
 .PHONY: check
-check: pep8 pep257 pylint
+check: pep8 pep257 pylint ## Run all static analysis targets
 
 .PHONY: pep8
-pep8: depends-ci
+pep8: depends-ci ## Check for convention issues
 	$(PEP8) $(DIRECTORIES) --config=.pep8rc
 
 .PHONY: pep257
-pep257: depends-ci
+pep257: depends-ci ## Check for docstring issues
 	$(PEP257) $(DIRECTORIES)
 
 .PHONY: pylint
-pylint: depends-ci
+pylint: depends-ci ## Check for code issues
 	$(PYLINT) $(DIRECTORIES) --rcfile=.pylintrc
 
 .PHONY: fix
@@ -274,36 +254,37 @@ PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --last-failed --exitfirst
 
 FAILURES := .cache/v/cache/lastfailed
 
-.PHONY: test test-unit
-test: test-unit
-test-unit: depends-ci
+.PHONY: test
+test: test-all
+
+.PHONY: test-unit
+test-unit: depends-ci ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
 ifndef TRAVIS
 ifndef APPVEYOR
-	$(COVERAGE_SPACE) jacebrowning/memegen unit
+	$(COVERAGE_SPACE) $(REPOSITORY) unit
 endif
 endif
 
 .PHONY: test-int
-test-int: depends-ci
+test-int: depends-ci ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
 ifndef APPVEYOR
-	$(COVERAGE_SPACE) jacebrowning/memegen integration
+	$(COVERAGE_SPACE) $(REPOSITORY) integration
 endif
 endif
 
-.PHONY: tests test-all
-tests: test-all
-test-all: depends-ci
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests; fi
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
+.PHONY: test-all
+test-all: depends-ci ## Run all the tests
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(DIRECTORIES); fi
+	$(PYTEST) $(PYTEST_OPTS) $(DIRECTORIES)
 ifndef TRAVIS
 ifndef APPVEYOR
-	$(COVERAGE_SPACE) jacebrowning/memegen overall
+	$(COVERAGE_SPACE) $(REPOSITORY) overall
 endif
 endif
 
@@ -328,7 +309,7 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-doc
 .clean-doc:
-	rm -rf README.rst apidocs *.html docs/*.png site
+	rm -rf README.rst docs/apidocs *.html docs/*.png site
 
 .PHONY: .clean-test
 .clean-test:
@@ -346,3 +327,11 @@ clean-all: clean .clean-env .clean-workspace
 .clean-workspace:
 	find data -name '*.tmp' -delete
 	rm -rf *.sublime-workspace
+
+# Help #########################################################################
+
+.PHONY: help
+help: all
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.DEFAULT_GOAL := help

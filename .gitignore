@@ -17,7 +17,7 @@ Icon*
 
 # Generated documentation
 /docs/gen
-/apidocs
+/docs/apidocs
 /site
 /*.html
 /*.rst

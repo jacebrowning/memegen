@@ -8,7 +8,7 @@ from memegen.app import create_app
 from memegen.extensions import db as _db
 from memegen.settings import get_config
 
-from memegen.test.conftest import pytest_configure  # pylint: disable=unused-import
+from memegen.tests.conftest import pytest_configure  # pylint: disable=unused-import
 
 
 # TODO: replace all calls with the new signature
@@ -26,7 +26,7 @@ def app():
 @pytest.yield_fixture(scope='session')
 def postgres():
     try:
-        import psycopg2
+        import psycopg2  # pylint: disable=unused-variable
     except ImportError:
         yield None  # PostgreSQL database adapter is unavailable on this system
     else:
