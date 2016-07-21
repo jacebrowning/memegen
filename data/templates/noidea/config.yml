@@ -1,0 +1,9 @@
+name: I Have No Idea What I'm Doing
+link: http://knowyourmeme.com/memes/i-have-no-idea-what-i-m-doing
+default:
+- I HAVE NO IDEA
+- WHAT I'M DOING
+aliases:
+- no-idea
+- pc-dog
+regexes: []
