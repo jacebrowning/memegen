@@ -131,6 +131,13 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 '<a href="/iw/hello.jpg">')
 
+        def it_keeps_font_after_redirect(client):
+            response = client.get("/iw/what%3F.jpg?font=impact")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/what~q.jpg?font=impact">')
+
     def describe_latest():
 
         def when_existing(client):

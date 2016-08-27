@@ -56,7 +56,8 @@ def get_with_text(key, path, alt, font):
         return redirect(route('.get', key=key, path=path, alt=alt))
 
     if path != text.path:
-        return redirect(route('.get', key=key, path=text.path, alt=alt))
+        return redirect(route(
+            '.get', key=key, path=text.path, alt=alt, font=font))
 
     image = app.image_service.create(template, text, style=alt, font=fontfile)
 
