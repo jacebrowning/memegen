@@ -7,9 +7,7 @@ from .utilities import load
 
 def describe_root():
 
-    def it_returns_links_and_metadata(client, monkeypatch):
-        monkeypatch.setenv('DEPLOY_DATE', "<now>")
-
+    def it_returns_links_and_metadata(client):
         status, data = load(client.get("/api"))
 
         expect(status) == 200
@@ -18,7 +16,6 @@ def describe_root():
             'fonts': "http://localhost/api/fonts/",
             'aliases': "http://localhost/aliases/",
             'magic': "http://localhost/magic/",
-            'version': "2.3",
-            'date': "<now>",
+            'version': "3.0",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }
