@@ -1,5 +1,9 @@
 # Revision History
 
+## 3.0
+
+- Removed `'date'` key from `/api`.
+
 ## 2.3
 
 - Added support for custom fonts: `/custom/test.jpg?font=impact`

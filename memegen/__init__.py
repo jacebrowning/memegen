@@ -3,7 +3,7 @@
 import sys
 
 __project__ = 'MemeGen'
-__version__ = '2.3'
+__version__ = '3.0'
 
 VERSION = "{} v{}".format(__project__, __version__)
 
