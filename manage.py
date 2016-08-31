@@ -2,7 +2,6 @@
 
 import os
 import subprocess
-import logging
 
 from flask_script import Manager, Server
 from whitenoise import WhiteNoise
@@ -19,7 +18,7 @@ _app = create_app(config)
 
 # Populate unset environment variables
 for name, command in [
-    ('DEPLOY_DATE', "TZ=America/Detroit date '+%F %T'"),
+        ('DEPLOY_DATE', "TZ=America/Detroit date '+%F %T'"),
 ]:
     output = subprocess.run(command, shell=True, stdout=subprocess.PIPE,
                             universal_newlines=True).stdout.strip() or "???"
@@ -31,6 +30,7 @@ manager = Manager(_app)
 
 @manager.command
 def validate():
+    # pylint: disable=no-member
     if _app.template_service.validate():
         return 0
     else:

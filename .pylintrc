@@ -8,6 +8,12 @@ max-line-length=80
 
 ignore-long-lines=^.*((https?:)|(pragma:)|(TODO:)).*$
 
+[SIMILARITIES]
+
+min-similarity-lines=4
+
+ignore-imports=yes
+
 [REPORTS]
 
 reports=no

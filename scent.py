@@ -1,4 +1,5 @@
 """Configuration file for sniffer."""
+# pylint: disable=superfluous-parens,bad-continuation
 
 import os
 import time
@@ -21,10 +22,10 @@ watch_paths = ["memegen", "tests", "scripts", "data"]
 def python_files(filename):
     """Match Python source files."""
 
-    return all(
-        (filename.endswith('.py'),
-        not os.path.basename(filename).startswith('.')),
-    )
+    return all((
+        filename.endswith('.py'),
+        not os.path.basename(filename).startswith('.'),
+    ))
 
 
 @runnable
@@ -32,8 +33,9 @@ def python(*_):
     """Run targets for Python."""
 
     for count, (command, title, retry) in enumerate((
-        (('make', 'test'), "Unit Tests", True),
-        (('make', 'tests'), "Integration Tests", False),
+        (('make', 'test-unit'), "Unit Tests", True),
+        (('make', 'test-int'), "Integration Tests", False),
+        (('make', 'test-all'), "Combined Tests", False),
         (('make', 'check'), "Static Analysis", True),
         (('make', 'validate'), "Validate Templates", True),
         (('make', 'doc'), None, True),

@@ -13,9 +13,9 @@ try:
     README = open("README.rst").read()
     CHANGELOG = open("CHANGELOG.rst").read()
 except IOError:
-    DESCRIPTION = "<placeholder>"
+    LONG_DESCRIPTION = "<placeholder>"
 else:
-    DESCRIPTION = README + '\n' + CHANGELOG
+    LONG_DESCRIPTION = README + '\n' + CHANGELOG
 
 
 def load_requirements():
@@ -49,7 +49,7 @@ setuptools.setup(
 
     entry_points={'console_scripts': []},
 
-    long_description=(DESCRIPTION),
+    long_description=LONG_DESCRIPTION,
     license='MIT',
     classifiers=[
         'Development Status :: 5 - Production/Stable',

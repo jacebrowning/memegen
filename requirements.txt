@@ -1,11 +1,14 @@
+# Server
 Flask == 0.11.0
 Flask-API == 0.6.6
 webargs == 1.0.0
 
+# Models
 Pillow == 3.1.1
 YORM == 0.8.0
 requests == 2.7.0
 
+# Deployment
 Flask-Script == 2.0.5
 gunicorn == 19.3.0
 whitenoise == 3.1.0

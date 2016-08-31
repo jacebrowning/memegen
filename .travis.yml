@@ -1,5 +1,3 @@
-sudo: false
-
 language: python
 python:
 - 3.5
@@ -18,10 +16,12 @@ install:
 
 before_script:
 - make env
-- make depends-ci
+- make depends
 
 script:
-- make ci
+- make check
+- make test
+- make validate
 
 after_success:
 - coveralls

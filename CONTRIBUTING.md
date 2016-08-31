@@ -17,7 +17,7 @@
 
 Create a virtual environment:
 
-```
+```sh
 $ make env
 ```
 
@@ -31,13 +31,13 @@ The `regexes` list is used for pattern matching on http://memegen.link/magic. If
 
 Run the server locally:
 
-```
+```sh
 $ make run
 ```
 
 or also launch it in your browser:
 
-```
+```sh
 $ make launch
 ```
 
@@ -45,7 +45,7 @@ $ make launch
 
 Run the checks to ensure your new template does not conflict with others:
 
-```
+```sh
 $ make validate
 ```
 
@@ -68,7 +68,7 @@ Everything from above with the addition of:
 
 After cloning the repository, create a virtualenv:
 
-```
+```sh
 $ make env
 ```
 
@@ -78,13 +78,13 @@ $ make env
 
 Manually run the tests and checkers:
 
-```
+```sh
 $ make ci
 ```
 
 or keep them running on change:
 
-```
+```sh
 $ make watch
 ```
 
