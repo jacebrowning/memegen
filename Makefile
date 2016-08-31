@@ -92,7 +92,7 @@ $(ALL_FLAG): $(FILES)
 ci: check test tests validate ## Run all targets that determine CI status
 
 .PHONY: run
-run: .env env depends db-dev
+run: .env env depends
 	$(HONCHO) run bin/post_compile
 	$(HONCHO) start
 
@@ -123,31 +123,7 @@ watch: depends .clean-test ## Continuously run all CI targets when files chanage
 .env:
 	echo "CONFIG=dev" >> $@
 	echo "#REGENERATE_IMAGES=true" >> $@
-	echo "DATABASE_URL=postgresql://localhost/memegen_dev" >> $@
 	echo "GOOGLE_ANALYTICS_TID=local" >> $@
-
-.PHONY: db-dev
-db-dev:
-	@ if ! psql memegen_dev -c "";            \
-	then                                      \
-		echo "Creating database memegen_dev"; \
-		createdb memegen_dev;                 \
-	fi;
-	make upgrade
-
-# Database Migrations ##########################################################
-
-.PHONY: migrate
-migrate: depends
-	$(PYTHON) manage.py db migrate
-
-.PHONY: upgrade
-upgrade: depends
-	$(PYTHON) manage.py db upgrade
-
-.PHONY: downgrade
-downgrade: depends
-	$(PYTHON) manage.py db downgrade
 
 # Development Installation #####################################################
 
@@ -169,7 +145,7 @@ depends: depends-ci depends-doc depends-dev ## Install all project dependnecies
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint coverage coverage.space pytest pytest-describe pytest-expecter pytest-cov pytest-random testing.postgresql
+	$(PIP) install --upgrade pep8 pep257 pylint coverage coverage.space pytest pytest-describe pytest-expecter pytest-cov pytest-random
 	@ touch $@  # flag to indicate dependencies are installed
 
 .PHONY: depends-doc

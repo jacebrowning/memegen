@@ -8,10 +8,6 @@
     * Windows: https://www.python.org/downloads
     * Mac: `$ brew install python3`
     * Linux: `python3.5` and `python3.5-dev` packages
-* PostgreSQL
-    * Windows: http://www.postgresql.org/download/windows/
-    * Mac: `$ brew install postgresql && brew services start postgresql`
-    * Linux: http://www.postgresql.org/download/
 * Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
