@@ -5,7 +5,6 @@ import subprocess
 import logging
 
 from flask_script import Manager, Server
-from flask_migrate import Migrate, MigrateCommand
 from whitenoise import WhiteNoise
 
 from memegen.settings import get_config
@@ -39,7 +38,6 @@ def validate():
 
 
 manager.add_command('server', Server(host='0.0.0.0'))
-manager.add_command('db', MigrateCommand)
 
 
 app = WhiteNoise(_app)

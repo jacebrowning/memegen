@@ -10,9 +10,6 @@ puts-step() {
   echo "-----> $@"
 }
 
-puts-step "Running migrations..."
-python manage.py db upgrade 2>&1 | indent
-
 puts-step "Prerendering images..."
 python scripts/generate_sample_images.py 2>&1 | indent
-rm -rfv data/images/latest.jpg | indent
+rm -rf data/images/latest.jpg | indent

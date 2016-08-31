@@ -10,7 +10,6 @@
     }
   },
   "addons":[
-    "heroku-postgresql",
     "papertrail"
   ]
 }
