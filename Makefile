@@ -68,7 +68,7 @@ ci: check test validate ## Run all tasks that determine CI status
 
 .PHONY: validate
 validate: env
-	CONFIG=test $(PYTHON) manage.py validate
+	FLASK_CONFIG=test $(PYTHON) manage.py validate
 
 .PHONY: watch
 watch: depends .clean-test ## Continuously run all CI tasks when files chanage
@@ -102,7 +102,7 @@ doctor:  ## Confirm system dependencies are available
 	@ python --version | tee /dev/stderr | grep -q "3.5."
 
 .env:
-	echo "CONFIG=dev" >> $@
+	echo "FLASK_CONFIG=dev" >> $@
 	echo "#REGENERATE_IMAGES=true" >> $@
 	echo "GOOGLE_ANALYTICS_TID=local" >> $@
 

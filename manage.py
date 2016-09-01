@@ -10,7 +10,7 @@ from memegen.app import create_app
 
 
 # Select app configuration from the environment
-config = get_config(os.getenv('CONFIG', 'dev'))
+config = get_config(os.getenv('FLASK_CONFIG', 'dev'))
 
 # Build the app using configuration from the environment
 _app = create_app(config)
