@@ -146,7 +146,7 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="/iw/my-first-meme.jpg">')
+                '<a href="http://localhost/iw/my-first-meme.jpg">')
 
         def when_missing(client):
             with open(os.path.join(IMAGES, 'cache.yml'), 'w') as cache:
@@ -156,7 +156,7 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="/custom/welcome-to/memegen.link.jpg'
+                '<a href="http://localhost/custom/welcome-to/memegen.link.jpg'
                 '?alt=https://github.com/jacebrowning/memegen/raw/master/'
                 'memegen/static/images/missing.png">')
 

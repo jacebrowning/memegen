@@ -28,7 +28,7 @@ def get_latest():
         kwargs['path'] = "welcome-to/memegen.link"
         kwargs['alt'] = "https://github.com/jacebrowning/memegen/raw/master/memegen/static/images/missing.png"
 
-    return redirect(route('.get', **kwargs))
+    return redirect(route('.get', _external=True, **kwargs))
 
 
 @blueprint.route("<key>.jpg")
