@@ -45,7 +45,7 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
             title=title,
             ga_tid=get_tid(),
         )
-        return html if raw else Response(html)
+        return html if raw else _nocache(Response(html))
 
     else:
         log.info("Sending image: %s", path)
@@ -58,6 +58,14 @@ def _secure(url):
     if current_app.config['ENV'] == 'prod':
         url = url.replace('http:', 'https:')
     return url
+
+
+def _nocache(response):
+    """Ensure a response is not cached."""
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 
 def _track(title):
