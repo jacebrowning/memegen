@@ -6,10 +6,12 @@ from webargs import fields, flaskparser
 from .. import domain
 
 from ._common import route, display
+from ._cache import Cache
 
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
 log = logging.getLogger(__name__)
+cache = Cache()
 
 OPTIONS = {
     'alt': fields.Str(missing=None),  # pylint: disable=no-member
@@ -19,11 +21,14 @@ OPTIONS = {
 
 @blueprint.route("latest.jpg")
 def get_latest():
-    title = "Latest Meme"
-    try:
-        return display(title, app.image_service.latest)
-    except FileNotFoundError:
-        return display(title, "static/images/missing.png", mimetype='image/png')
+    kwargs = cache.get(0)
+
+    if not kwargs:
+        kwargs['key'] = 'custom'
+        kwargs['path'] = "welcome-to/memegen.link"
+        kwargs['alt'] = "https://github.com/jacebrowning/memegen/raw/master/memegen/static/images/missing.png"
+
+    return redirect(route('.get', **kwargs))
 
 
 @blueprint.route("<key>.jpg")
@@ -60,6 +65,8 @@ def get_with_text(key, path, alt, font):
             '.get', key=key, path=text.path, alt=alt, font=font))
 
     image = app.image_service.create(template, text, style=alt, font=fontfile)
+
+    cache.add(key=key, path=path, style=alt, font=font)
 
     return display(image.text, image.path)
 

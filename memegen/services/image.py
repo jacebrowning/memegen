@@ -26,12 +26,3 @@ class ImageService(Service):
             raise exception from None
 
         return image
-
-    def get_latest(self, count):
-        if count != 1:
-            raise NotImplementedError("TODO: support multiple")
-        return self.image_store.latest
-
-    @property
-    def latest(self):
-        return self.get_latest(1)
