@@ -16,10 +16,7 @@ log = logging.getLogger(__name__)
 
 def route(*args, **kwargs):
     """Unquoted version of Flask's `url_for`."""
-    if '_external' in kwargs and current_app.config['ENV'] == 'prod':
-        kwargs['_scheme'] = 'https'
-
-    return unquote(url_for(*args, **kwargs))
+    return _secure(unquote(url_for(*args, **kwargs)))
 
 
 def samples(blank=False):
@@ -41,9 +38,10 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
 
     if browser:
         log.info("Rending image on page: %s", request.url)
+
         html = render_template(
             'image.html',
-            src=request.url,
+            src=_secure(request.url),
             title=title,
             ga_tid=get_tid(),
         )
@@ -53,6 +51,13 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
         log.info("Sending image: %s", path)
         _track(title)
         return send_file(path, mimetype=mimetype)
+
+
+def _secure(url):
+    """Ensure HTTPS is used in production."""
+    if current_app.config['ENV'] == 'prod':
+        url = url.replace('http:', 'https:')
+    return url
 
 
 def _track(title):
