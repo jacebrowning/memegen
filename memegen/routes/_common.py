@@ -16,6 +16,9 @@ log = logging.getLogger(__name__)
 
 def route(*args, **kwargs):
     """Unquoted version of Flask's `url_for`."""
+    if '_external' in kwargs and current_app.config['ENV'] == 'prod':
+        kwargs['_scheme'] = 'https'
+
     return unquote(url_for(*args, **kwargs))
 
 
