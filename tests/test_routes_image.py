@@ -157,8 +157,8 @@ def describe_get():
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
                 '<a href="http://localhost/custom/welcome-to/memegen.link.jpg'
-                '?alt=https://github.com/jacebrowning/memegen/raw/master/'
-                'memegen/static/images/missing.png">')
+                '?alt=https://raw.githubusercontent.com/jacebrowning/memegen/'
+                'master/memegen/static/images/missing.png">')
 
     def describe_redirects():
 
