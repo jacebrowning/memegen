@@ -9,8 +9,7 @@ from .conftest import load
 
 TESTS = os.path.dirname(__file__)
 ROOT = os.path.dirname(TESTS)
-IMAGES = os.path.join(ROOT, "data", "images")
-LATEST = os.path.join(IMAGES, "latest.jpg")
+IMAGES = os.path.join(ROOT, 'data', 'images')
 
 
 def describe_get():
@@ -141,22 +140,25 @@ def describe_get():
     def describe_latest():
 
         def when_existing(client):
-            open(LATEST, 'w').close()  # force the file to exist
+            client.get("/iw/my-first-meme.jpg")
+
             response = client.get("/latest.jpg")
 
-            assert 200 == response.status_code
-            assert 'image/jpeg' == response.mimetype
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/my-first-meme.jpg">')
 
         def when_missing(client):
-            try:
-                os.remove(LATEST)
-            except FileNotFoundError:
-                pass
+            with open(os.path.join(IMAGES, 'cache.yml'), 'w') as cache:
+                cache.write("items: []")
 
             response = client.get("/latest.jpg")
 
-            assert 200 == response.status_code
-            assert 'image/png' == response.mimetype
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/custom/welcome-to/memegen.link.jpg'
+                '?alt=https://github.com/jacebrowning/memegen/raw/master/'
+                'memegen/static/images/missing.png">')
 
     def describe_redirects():
 
