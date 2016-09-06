@@ -2,12 +2,17 @@
 
 # pylint: disable=bad-continuation
 
+import os
 from pathlib import Path
 
+import pytest
 
+
+ENV = 'REGENERATE_IMAGES'
 SAMPLES = Path(__file__).parent.joinpath("samples")
 
 
+@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
 def test_samples(client):
     """Create various sample images for manual verfification."""
     for name, url in [
@@ -20,6 +25,7 @@ def test_samples(client):
         save_image(client, url, name)
 
 
+@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
 def test_standard_font(client):
     """Create a meme using the standard meme font.
 
@@ -30,6 +36,7 @@ def test_standard_font(client):
     save_image(client, url, "impact.jpg")
 
 
+@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
 def test_japanese_font(client):
     """Create a meme using a font that supports Japanese characters."""
     url = "/ch/turning/日本語.jpg?font=notosanscjkjp-black"
