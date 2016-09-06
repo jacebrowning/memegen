@@ -86,14 +86,6 @@ launch: depends
 	eval "sleep 3; open http://localhost:5000" &
 	make run
 
-.PHONY: gui
-gui: depends .env
-ifdef MAC
-	brew install flac portaudio swig
-endif
-	$(PIP) install speechrecognition pyaudio pocketsphinx
-	$(HONCHO) run scripts/run_gui.py
-
 # SYSTEM DEPENDENCIES ##########################################################
 
 .PHONY: doctor
