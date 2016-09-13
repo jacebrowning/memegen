@@ -26,7 +26,7 @@ def get_latest(index=1):
 
     if not kwargs:
         kwargs['key'] = 'custom'
-        kwargs['path'] = "welcome-to/memegen.link"
+        kwargs['path'] = "your-meme/goes-here"
         kwargs['alt'] = "https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png"
 
     return redirect(route('.get', _external=True, **kwargs))

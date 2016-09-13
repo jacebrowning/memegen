@@ -156,7 +156,7 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="http://localhost/custom/welcome-to/memegen.link.jpg'
+                '<a href="http://localhost/custom/your-meme/goes-here.jpg'
                 '?alt=https://raw.githubusercontent.com/jacebrowning/memegen/'
                 'master/memegen/static/images/missing.png">')
 
