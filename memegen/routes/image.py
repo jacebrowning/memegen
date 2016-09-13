@@ -20,8 +20,9 @@ OPTIONS = {
 
 
 @blueprint.route("latest.jpg")
-def get_latest():
-    kwargs = cache.get(0)
+@blueprint.route("latest<int:index>.jpg")
+def get_latest(index=1):
+    kwargs = cache.get(index - 1)
 
     if not kwargs:
         kwargs['key'] = 'custom'

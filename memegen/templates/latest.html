@@ -4,6 +4,11 @@
 
   <title>Latest Meme</title>
 
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/stylesheets/stylesheet.css" />
+
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -17,13 +22,36 @@
 </head>
 <body style="margin: 0px;">
 
-  <img src="{{ src }}" alt="Latest Meme" id="latest_meme">
+  <div class="meme-templates">
+    <div class="container">
+      <div class="row">
+      {% for src in srcs %}
+        <div class="col-sm-4">
+          <img class="meme-example" width="240" src="{{ src }}" id="latest{{ loop.index }}" />
+        </div>
+
+       {% if loop.index is divisibleby 3 %}
+       </div>
+       {% endif %}
+
+       {% if loop.index is divisibleby 3 %}
+       <div class="row">
+       {% endif %}
+
+       {% if loop.last %}
+        </div>
+       {% endif %}
+     {% endfor %}
+    </div>
+   </div>
 
   <script>
     var reload = function(){
-      var el = document.getElementById('latest_meme');
-      url = '{{ src }}?' + Math.random();
-      el.src = url;
+      {% for src in srcs %}
+        var el = document.getElementById('latest{{ loop.index }}');
+        url = '{{ src }}';
+        el.src = url;
+      {% endfor %}
     };
     setInterval(reload, {{ refresh * 1000 }});
   </script>

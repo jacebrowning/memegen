@@ -13,7 +13,7 @@ blueprint = Blueprint('latest', __name__, url_prefix="/latest")
 def get():
     return render_template(
         'latest.html',
-        src=route('image.get_latest'),
+        srcs=[route('image.get_latest', index=i + 1) for i in range(9)],
         refresh=10,
         ga_tid=get_tid(),
     )

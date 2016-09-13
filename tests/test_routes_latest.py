@@ -8,4 +8,4 @@ class TestLatest:
 
         assert 200 == response.status_code
         assert 'text/html' == response.mimetype
-        assert '<img src="/latest.jpg"' in response.get_data(as_text=True)
+        assert 'src="/latest1.jpg"' in response.get_data(as_text=True)
