@@ -27,7 +27,7 @@
       <div class="row">
       {% for src in srcs %}
         <div class="col-sm-4">
-          <img class="meme-example" width="240" src="{{ src }}" id="latest{{ loop.index }}" />
+          <img class="meme-example" width="300" src="{{ src }}" id="latest{{ loop.index }}" />
         </div>
 
        {% if loop.index is divisibleby 3 %}
@@ -47,10 +47,10 @@
 
   <script>
     var reload = function(){
+      console.log("Refreshing images");
       {% for src in srcs %}
-        var el = document.getElementById('latest{{ loop.index }}');
-        url = '{{ src }}';
-        el.src = url;
+        var elem{{ loop.index }} = document.getElementById('latest{{ loop.index }}');
+        elem{{ loop.index }}.src = '{{ src }}?' + Math.random();
       {% endfor %}
     };
     setInterval(reload, {{ refresh * 1000 }});
