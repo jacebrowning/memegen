@@ -17,7 +17,7 @@ class Cache:
         self.items = []
 
     def add(self, **kwargs):
-        if kwargs['key'] == 'custom':
+        if kwargs['key'] == 'custom' or kwargs in self.items:
             return
 
         log.info("Caching: %s", kwargs)
