@@ -14,6 +14,19 @@ def describe_font():
     def font():
         return Font(Path('mock_dir', 'FooBar.otf'))
 
+    def describe_str():
+
+        def is_based_on_name(font):
+            expect(str(font)) == 'foobar'
+
+    def describe_bool():
+
+        def is_based_on_default(font):
+            expect(bool(font)) == True
+
+            font.DEFAULT = 'foobar'
+            expect(bool(font)) == False
+
     def describe_name():
 
         def is_derived_from_filename(font):

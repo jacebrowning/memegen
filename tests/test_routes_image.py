@@ -17,10 +17,7 @@ def describe_get():
     def describe_visible():
 
         def with_nominal_text(client):
-            path = os.path.join(
-                IMAGES, 'iw', 'hello', 'world'
-                '#' + 'c3abd31eefe53bf9ab5265bd3533afd3' + '.jpg'
-            )
+            path = os.path.join(IMAGES, 'iw', 'hello', 'world' + '.jpg')
             if os.path.exists(path):
                 os.remove(path)
 

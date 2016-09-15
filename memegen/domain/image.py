@@ -29,7 +29,10 @@ class Image:
 
         base = os.path.join(self.root, self.template.key, self.text.path)
 
-        return "{}#{}.jpg".format(base, sha.hexdigest())
+        if self.style or self.font:
+            return "{}#{}.jpg".format(base, sha.hexdigest())
+        else:
+            return base + ".jpg"
 
     def generate(self):
         directory = os.path.dirname(self.path)
