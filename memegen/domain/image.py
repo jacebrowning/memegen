@@ -23,7 +23,7 @@ class Image:
         if not self.root:
             return None
 
-        sha = hashlib.sha1()
+        sha = hashlib.md5()
         sha.update((self.style or "").encode('utf-8'))
         sha.update(str(self.font).encode('utf-8'))
 
