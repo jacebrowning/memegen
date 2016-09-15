@@ -1,4 +1,4 @@
-from ..domain import Image
+from ..domain import Image, Font
 
 from ._base import Service
 
@@ -12,7 +12,7 @@ class ImageService(Service):
         self.image_store = image_store
 
     def create(self, template, text, style=None, font=None):
-        font = font or self.font_store.find('titilliumweb-black')
+        font = font or self.font_store.find(Font.DEFAULT)
 
         image = Image(template, text, style=style, font=font)
 

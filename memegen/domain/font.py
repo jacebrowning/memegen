@@ -8,8 +8,16 @@ log = logging.getLogger(__name__)
 class Font:
     """Font file used to render text onto an image."""
 
+    DEFAULT = 'titilliumweb-black'
+
     def __init__(self, path):
         self._path = path
+
+    def __str__(self):
+        return self.name
+
+    def __bool__(self):
+        return self.name != self.DEFAULT
 
     @property
     def name(self):
