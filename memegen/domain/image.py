@@ -1,4 +1,5 @@
 import os
+import hashlib
 import logging
 
 from PIL import Image as ImageFile, ImageFont, ImageDraw
@@ -22,8 +23,13 @@ class Image:
         if not self.root:
             return None
 
-        return os.path.join(
-            self.root, self.template.key, self.text.path + '.jpg')
+        sha = hashlib.sha1()
+        sha.update((self.style or "").encode('utf-8'))
+        sha.update(str(self.font).encode('utf-8'))
+
+        base = os.path.join(self.root, self.template.key, self.text.path)
+
+        return "{}#{}.jpg".format(base, sha.hexdigest())
 
     def generate(self):
         directory = os.path.dirname(self.path)

@@ -11,6 +11,9 @@ class Font:
     def __init__(self, path):
         self._path = path
 
+    def __str__(self):
+        return self.path
+
     @property
     def name(self):
         return self._path.stem.lower().replace('_', '-')
