@@ -77,14 +77,23 @@ watch: depends .clean-test ## Continuously run all CI tasks when files chanage
 # SERVER TARGETS ###############################################################
 
 .PHONY: run
-run: depends .env
-	$(HONCHO) run bin/post_compile
-	$(HONCHO) start
+run: depends ## Run the application
+	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev $(PYTHON) manage.py run; status=$$?; sleep 1; done
 
 .PHONY: launch
 launch: depends
-	eval "sleep 3; open http://localhost:5000" &
+	sleep 3 && open http://localhost:5000 &
 	make run
+
+.PHONY: run-prod
+run-prod: depends .env
+	$(HONCHO) run bin/post_compile
+	$(HONCHO) start
+
+.PHONY: launch-prod
+launch-prod: depends
+	sleep 5 && open http://localhost:5000 &
+	make run-prod
 
 # SYSTEM DEPENDENCIES ##########################################################
 
