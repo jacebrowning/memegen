@@ -30,9 +30,9 @@ class Image:
         base = os.path.join(self.root, self.template.key, self.text.path)
 
         if self.style or self.font:
-            return "{}#{}.jpg".format(base, sha.hexdigest())
+            return "{}#{}.img".format(base, sha.hexdigest())
         else:
-            return base + ".jpg"
+            return base + ".img"
 
     def generate(self):
         directory = os.path.dirname(self.path)
@@ -92,7 +92,7 @@ def make_meme(top, bottom, font, background, path, match_font_size=False):
                         bottom, bottom_font, bottom_font_size)
 
     log.info("Generating image: %s", path)
-    return img.save(path)
+    return img.save(path, format=img.format)
 
 
 def _draw_outlined_text(draw_image, text_position, text, font, font_size):
