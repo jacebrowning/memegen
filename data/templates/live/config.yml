@@ -1,10 +1,13 @@
 name: Do It Live!
-default:
--
-- DO IT LIVE!
 link: http://knowyourmeme.com/memes/bill-oreilly-rant
+default:
+- ''
+- DO IT LIVE!
 aliases:
 - do-it-live
 - bill-o'reilly-rant
 - o'reilly-rant
 - o'reilly
+regexes:
+- (.*)/?(do it live)
+- ()/?(.+live)

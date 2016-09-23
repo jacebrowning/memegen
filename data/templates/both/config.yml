@@ -1,0 +1,12 @@
+name: Why Not Both?
+link: http://knowyourmeme.com/memes/why-not-both-why-dont-we-have-both
+default:
+- ''
+- WHY NOT BOTH?
+aliases:
+- why-don't-we-have-both
+- el-paso
+- por-que
+- por-que-no-los-dos
+regexes:
+- (.*)/?(why not both)

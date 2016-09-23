@@ -1,4 +1,8 @@
 name: Scumbag Brain
 link: http://knowyourmeme.com/memes/scumbag-brain
+default:
+- REMEMBERS THE FACE
+- BUT NOT THE NAME
 aliases:
 - scumbag-brain
+regexes: []

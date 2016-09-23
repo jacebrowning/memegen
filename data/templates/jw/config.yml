@@ -1,0 +1,11 @@
+name: Probably Not a Good Idea
+link: https://www.youtube.com/watch?v=RFinNxS5KN4&t=86
+default:
+- YOU JUST WENT AND MADE A NEW DINOSAUR?
+- PROBABLY NOT A GOOD IDEA
+aliases:
+- jurrasic-world
+- not-a-good-idea
+regexes:
+- (.+ just .+)/?(probably not .+)
+- ()/?(.*not a good idea)

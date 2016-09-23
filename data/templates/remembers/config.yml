@@ -1,8 +1,11 @@
 name: Pepperidge Farm Remembers
-default:
--
-- PEPPERIDGE FARM REMEMBERS
 link: http://knowyourmeme.com/memes/pepperidge-farm-remembers
+default:
+- REMEMBER THIS MEME?
+- PEPPERIDGE FARM REMEMBERS
 aliases:
 - pepperidge-farm
 - pepperidge-farm-remembers
+- farm
+regexes:
+- (.+)/?(pepperidge .+)

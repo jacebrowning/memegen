@@ -1,0 +1,22 @@
+environment:
+  global:
+    RANDOM_SEED: 12345
+
+cache:
+  - env
+
+install:
+  # Export build paths
+  - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
+  - set PATH=%PATH%;C:\MinGW\bin
+  - make --version
+  # Install project dependencies
+  - make env
+  - make depends
+
+build: off
+
+test_script:
+  - make check
+  - make test
+  - make validate

@@ -1,8 +1,11 @@
-name: So hot right now
-default:
-- <OPTIONAL DEFAULT>
-- SO HOT RIGHT NOW
+name: So Hot Right Now
 link: https://www.youtube.com/watch?v=QizsJQNIKhc
+default:
+- THIS MEME IS
+- SO HOT RIGHT NOW
 aliases:
+- hot
 - mugatu
 - sohotrightnow
+regexes:
+- (.+)/?(so hot.*)

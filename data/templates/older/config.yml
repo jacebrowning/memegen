@@ -1,0 +1,10 @@
+name: An Older Code Sir, But It Checks Out
+link: http://knowyourmeme.com/memes/its-an-older-meme-but-it-checks-out
+default:
+- It's an older meme sir
+- But it checks out
+aliases:
+- older-code
+regexes:
+- (it'?s an older .+)/?(but it checks out)
+- (.+ older.*)/?(but it checks out)

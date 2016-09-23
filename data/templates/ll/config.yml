@@ -1,5 +1,9 @@
 name: Laughing Lizard
 link: http://knowyourmeme.com/memes/laughing-lizard-hhhehehe
+default:
+- ''
+- HHHEHEHE
 aliases:
 - laughing-lizard
 - hhhehehe
+regexes: []

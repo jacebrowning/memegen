@@ -1,3 +1,6 @@
+"""Configuration file for sniffer."""
+# pylint: disable=superfluous-parens,bad-continuation
+
 import os
 import time
 import subprocess
@@ -11,45 +14,86 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ['memegen/', 'tests/', 'data/']
-show_coverage = True
+watch_paths = ["memegen", "tests", "scripts", "data"]
 
 
-@select_runnable('python_tests')
+@select_runnable('python')
 @file_validator
-def py_files(filename):
-    return all((filename.endswith('.py') or filename.endswith('.yml'),
-               not os.path.basename(filename).startswith('.')))
+def python_files(filename):
+    """Match Python source files."""
+
+    return all((
+        filename.endswith('.py'),
+        not os.path.basename(filename).startswith('.'),
+    ))
 
 
 @runnable
-def python_tests(*_):
+def python(*_):
+    """Run targets for Python."""
 
-    group = int(time.time())  # unique per run
-
-    for count, (command, title) in enumerate((
-        (('make', 'test-unit'), "Unit Tests"),
-        (('make', 'test-all'), "Integration Tests"),
-        (('make', 'validate'), "Meme Validation"),
-        (('make', 'check'), "Static Analysis"),
-        (('make', 'doc'), None),
+    for count, (command, title, retry) in enumerate((
+        (('make', 'test-unit', 'CIRCLECI=true'), "Unit Tests", True),
+        (('make', 'test-int', 'CIRCLECI=true'), "Integration Tests", False),
+        (('make', 'test-all', 'CIRCLECI=true'), "Combined Tests", False),
+        (('make', 'check'), "Static Analysis", True),
+        (('make', 'validate'), "Validate Templates", True),
+        (('make', 'doc'), None, True),
     ), start=1):
 
-        failure = subprocess.call(command)
-
-        if failure:
-            if notify and title:
-                mark = "❌" * count
-                notify(mark + " [FAIL] " + mark, title=title, group=group)
+        if not run(command, title, count, retry):
             return False
-        else:
-            if notify and title:
-                mark = "✅" * count
-                notify(mark + " [PASS] " + mark, title=title, group=group)
-
-    global show_coverage  # pylint: disable=W0603
-    if show_coverage:
-        subprocess.call(['make', 'read-coverage'])
-    show_coverage = False
 
     return True
+
+
+GROUP = int(time.time())  # unique per run
+
+_show_coverage = False
+_rerun_args = None
+
+
+def run(command, title, count, retry):
+    """Run a command-line program and display the result."""
+    global _rerun_args
+
+    if _rerun_args:
+        args = _rerun_args
+        _rerun_args = None
+        if not run(*args):
+            return False
+
+    print("")
+    print("$ %s" % ' '.join(command))
+    failure = subprocess.call(command)
+
+    if failure:
+        mark = "❌" * count
+        message = mark + " [FAIL] " + mark
+    else:
+        mark = "✅" * count
+        message = mark + " [PASS] " + mark
+    show_notification(message, title)
+
+    show_coverage()
+
+    if failure and retry:
+        _rerun_args = command, title, count, retry
+
+    return not failure
+
+
+def show_notification(message, title):
+    """Show a user notification."""
+    if notify and title:
+        notify(message, title=title, group=GROUP)
+
+
+def show_coverage():
+    """Launch the coverage report."""
+    global _show_coverage
+
+    if _show_coverage:
+        subprocess.call(['make', 'read-coverage'])
+
+    _show_coverage = False

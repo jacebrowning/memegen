@@ -1,0 +1,10 @@
+name: Sad John Boehner
+link: https://en.wikipedia.org/wiki/John_Boehner
+default:
+- Sad John Boehner
+- Doesn't Think You'll Vote
+aliases:
+- boehner
+- john-boehner
+- votestakes-john-boehner
+regexes: []

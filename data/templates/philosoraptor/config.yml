@@ -1,6 +1,7 @@
 name: Philosoraptor
-default:
--
 link: http://knowyourmeme.com/memes/philosoraptor
+default:
+- ''
 aliases:
 - raptor
+regexes: []

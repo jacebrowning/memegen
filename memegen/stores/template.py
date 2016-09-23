@@ -1,20 +1,16 @@
 import os
 
 import yorm
+from yorm.types import String, List
 
 from ..domain import Template
 
 
-@yorm.attr(all=yorm.converters.String)
-class StringList(yorm.converters.List):
-    pass
-
-
-@yorm.attr(key=yorm.converters.String)
-@yorm.attr(name=yorm.converters.String)
-@yorm.attr(default=StringList)
-@yorm.attr(link=yorm.converters.String)
-@yorm.attr(aliases=StringList)
+@yorm.attr(name=String)
+@yorm.attr(link=String)
+@yorm.attr(default=List.of_type(String))
+@yorm.attr(aliases=List.of_type(String))
+@yorm.attr(regexes=List.of_type(String))
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""
@@ -22,16 +18,23 @@ class TemplateModel:
     def __init__(self, key, root):
         self.key = key
         self.root = root
+        self.name = ""
+        self.default = []
+        self.link = ""
+        self.aliases = []
+        self.regexes = []
 
-    @staticmethod
-    def pm_to_dm(model):
-        template = Template(model.key)
-        template.name = model.name
-        template.lines = model.default
-        template.aliases = model.aliases
-        template.link = model.link
-        template.root = model.root
-        return template
+    @property
+    def domain(self):
+        return Template(
+            key=self.key,
+            name=self.name,
+            lines=self.default,
+            aliases=self.aliases,
+            patterns=self.regexes,
+            link=self.link,
+            root=self.root,
+        )
 
 
 class TemplateStore:
@@ -39,28 +42,21 @@ class TemplateStore:
     def __init__(self, root):
         self.root = root
         self._items = {}
+        for key in os.listdir(self.root):
+            if key[0] not in ('.', '_'):
+                model = TemplateModel(key, self.root)
+                self._items[key] = model
 
     def read(self, key):
-        self._load()  # TODO: only do this if needed
         try:
             model = self._items[key]
         except KeyError:
             return None
         else:
-            template = TemplateModel.pm_to_dm(model)
-            return template
+            return model.domain
 
     def filter(self, **_):
-        self._load()  # TODO: only do this if needed
         templates = []
         for model in self._items.values():
-            template = TemplateModel.pm_to_dm(model)
-            templates.append(template)
+            templates.append(model.domain)
         return templates
-
-    def _load(self):
-        self._items = {}
-        for key in os.listdir(self.root):
-            if key[0] not in ('.', '_'):
-                model = TemplateModel(key, self.root)
-                self._items[key] = model

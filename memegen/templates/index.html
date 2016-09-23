@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MemeGen.link</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="images/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="images/manifest.json">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/stylesheets/stylesheet.css" />
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', '{{ ga_tid }}', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body>
+
+    <div class="masthead">
+      <div class="container">
+        <div class="topbar clearfix">
+          <h3 class="masthead-brand">MemeGen.link</h3>
+          <nav>
+            <ul class="nav masthead-nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/latest">Latest</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="tagline">
+          <h2>The open source meme generator.</h2>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="generator">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 meme-generator">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="top" class="col-sm-2 control-label">Meme</label>
+                <div class="col-sm-10">
+                  <select class="js-meme-selector" name="meme">
+                    {% for img in template_images %}
+                      <option value="{{ img.key }}" data-url="{{ img.url }}" data-top="{{ img.top }}" data-bottom="{{ img.bottom }}">
+                        {{ img.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="top" class="col-sm-2 control-label">Top Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text-top" name="top"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bottom" class="col-sm-2 control-label">Bottom Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text-bottom" name="bottom"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="button" id="btn-generate" class="btn btn-primary">Generate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="meme-holder col-md-6">
+            <a id="meme-image" href="">
+              <img width='400' src="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="meme-templates">
+      <div class="container">
+        <div class="row">
+        {% for img in sample_images %}
+          <div class="col-sm-4">
+             <a href="{{img.url}}">
+               <img class="meme-example" width="240" src="{{ img.url }}" />
+             </a>
+          </div>
+
+         {% if loop.index is divisibleby 3 %}
+         </div>
+         {% endif %}
+
+         {% if loop.index is divisibleby 3 %}
+         <div class="row">
+         {% endif %}
+
+         {% if loop.last %}
+          </div>
+         {% endif %}
+       {% endfor %}
+      </div>
+     </div>
+
+
+    <div class="footer">
+      <nav>
+        <ul class="nav masthead-nav footer-nav">
+          <li><a href="/api">API</a></li>
+          <li><a href="https://github.com/{{ github_slug }}">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+    <script src="static/js/default.js"></script>
+
+    <script>
+      if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
+        $(".js-meme-selector").trigger("change");
+      } else {
+        $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
+      }
+      $('img').on('load', function(){
+          $(this).css('background-image', 'none');
+      });
+    </script>
+
+  </body>
+</html>

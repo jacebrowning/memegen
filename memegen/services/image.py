@@ -1,23 +1,28 @@
-from ..domain import Image
+from ..domain import Image, Font
 
-from . import Service
+from ._base import Service
 
 
 class ImageService(Service):
 
-    def __init__(self, template_store, image_store, **kwargs):
+    def __init__(self, template_store, font_store, image_store, **kwargs):
         super().__init__(**kwargs)
         self.template_store = template_store
+        self.font_store = font_store
         self.image_store = image_store
 
-    def find_template(self, key):
-        template = self.template_store.read(key)
-        if not template:
-            raise self.exceptions.not_found
-        return template
+    def create(self, template, text, style=None, font=None):
+        font = font or self.font_store.find(Font.DEFAULT)
 
-    def create_image(self, template, text):
-        image = Image(template, text)
-        if not self.image_store.exists(image):
+        image = Image(template, text, style=style, font=font)
+
+        try:
             self.image_store.create(image)
+        except OSError as exception:
+            if "name too long" in str(exception):
+                exception = self.exceptions.FilenameTooLong
+            elif "image file" in str(exception):
+                exception = self.exceptions.InvalidImageLink
+            raise exception from None
+
         return image

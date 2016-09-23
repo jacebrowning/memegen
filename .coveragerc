@@ -2,4 +2,4 @@
 branch = true
 omit =
     */env/*
-    */test/*
+    */tests/*

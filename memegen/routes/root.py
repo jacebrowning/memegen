@@ -1,25 +1,33 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, url_for, redirect, send_file
+from flask import Blueprint
 
-from ..domain import Image
+from .. import __version__
+
+from ._common import CHANGES_URL, route
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/")
 
-GITHUB_BASE = "http://github.com/jacebrowning/memegen/"
 
-
-@blueprint.route("")
-def get(**kwargs):
+@blueprint.route("api")
+def get():
     """Generate memes from templates."""
     data = OrderedDict()
-    data['templates'] = url_for("templates.get", _external=True)
-    data['source'] = GITHUB_BASE
-    data['contributing'] = GITHUB_BASE + "blob/master/CONTRIBUTING.md"
+    data['templates'] = route('templates.get', _external=True)
+    data['fonts'] = route('fonts.get', _external=True)
+    data['aliases'] = route('aliases.get', _external=True)
+    data['magic'] = route('magic.get', _external=True)
+    data['version'] = __version__
+    data['changes'] = CHANGES_URL
     return data
 
 
-@blueprint.route("flask-api/static/js/default.js")
-def get_javascript():
-    return send_file("routes/default.js", mimetype='application/javascript')
+@blueprint.route("CHECK")
+def handle_checks():
+    """Return CHECK_OK for zero-downtime deployment.
+
+    See: https://labnotes.org/zero-downtime-deploy-with-dokku
+
+    """
+    return "CHECK_OK"

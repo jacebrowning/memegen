@@ -1,6 +1,6 @@
 import base64
 
-from . import Service
+from ._base import Service
 
 
 class LinkService(Service):
@@ -9,7 +9,8 @@ class LinkService(Service):
         super().__init__(**kwargs)
         self.template_store = template_store
 
-    def encode(self, key, path):
+    @staticmethod
+    def encode(key, path):
         slug = '\t'.join((key, path))
         while len(slug) % 3:
             slug += '\t'
@@ -21,6 +22,6 @@ class LinkService(Service):
             slug = base64.urlsafe_b64decode(code).decode('utf-8')
             key, path = slug.strip('\t').split('\t')
         except ValueError:
-            raise self.exceptions.bad_code
+            raise self.exceptions.InvalidMaskedCode
         else:
             return key, path

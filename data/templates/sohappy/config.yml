@@ -1,0 +1,12 @@
+name: I Would Be So Happy
+link: https://www.youtube.com/watch?v=z_17RHGKNTY
+default:
+- IF I COULD USE THIS MEME
+- I WOULD BE SO HAPPY
+aliases:
+- i-would-be-so-happy
+- south-park-so-happy
+regexes:
+- (if i could .+)/?(i would be so happy)
+- (.*)/?(i would be so happy)
+- ()/?(.*so happy)

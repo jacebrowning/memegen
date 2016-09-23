@@ -1,0 +1,11 @@
+name: It's Simple, Kill the Batman
+link: https://www.youtube.com/watch?v=f_XHjqABQQA
+default:
+- IT'S SIMPLE
+- KILL THE BATMAN
+aliases:
+- kill-the-batman
+- it's-simple
+- simple
+regexes:
+- (.*simple)/?(.+)

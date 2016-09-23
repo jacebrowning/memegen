@@ -1,0 +1,11 @@
+name: Super Cool Ski Instructor
+link: http://knowyourmeme.com/memes/super-cool-ski-instructor
+default:
+- ''
+- YOU'RE GONNA HAVE A BAD TIME
+aliases:
+- bad-time
+- ski-instructor
+regexes:
+- (.*)/?(you.* bad time)
+- ()/?(.*bad time)

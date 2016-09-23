@@ -1,0 +1,12 @@
+name: I Should Not Have Said That
+link: https://www.youtube.com/watch?v=498HkRM77gg
+default:
+-
+- I should not have said that
+aliases:
+- should-not
+- said-that
+regexes:
+- (.+)/?(i should not have said that)
+- (.+)/?(\b\S+ should not have .+ that)
+- ()/?(.+ have .+ that)

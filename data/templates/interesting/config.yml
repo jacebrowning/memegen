@@ -1,7 +1,9 @@
 name: The Most Interesting Man in the World
-default:
--
 link: http://knowyourmeme.com/memes/the-most-interesting-man-in-the-world
+default:
+- ''
 aliases:
 - dos-xx
 - i-don't-always
+regexes:
+- (.+ always .+)/?(but .+)

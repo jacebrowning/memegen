@@ -1,0 +1,13 @@
+name: But That's None of My Business
+link: http://knowyourmeme.com/memes/but-thats-none-of-my-business
+default:
+- ''
+- BUT THAT'S NONE OF MY BUSINESS
+aliases:
+- business
+- none-of-my-business
+- not-my-business
+regexes:
+- (.+)/?(but that'?s none of my business)
+- ()/?(.*none of my business)
+- ()/?(.*my business)

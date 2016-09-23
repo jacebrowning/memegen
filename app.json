@@ -1,0 +1,15 @@
+{
+  "name":"memegen",
+  "scripts":{},
+  "env":{
+    "FLASK_CONFIG":{
+      "required":true
+    },
+    "GOOGLE_ANALYTICS_TID":{
+        "required":true
+    }
+  },
+  "addons":[
+    "papertrail"
+  ]
+}

@@ -1,0 +1,9 @@
+name: Socially Awesome Awkward Penguin
+link: http://knowyourmeme.com/memes/socially-awkward-penguin
+default:
+- First day at new job
+- Spill coffee on bossman
+aliases:
+- awesome-awkward-penguin
+- penguin-awesome-awkward
+regexes: []

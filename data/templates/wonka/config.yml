@@ -1,7 +1,8 @@
 name: Condescending Wonka
-default:
--
 link: http://knowyourmeme.com/memes/condescending-wonka-creepy-wonka
+default:
+- ''
 aliases:
 - condescending-wonka
 - creepy-wonka
+regexes: []

@@ -1,4 +1,10 @@
 name: Doge
 link: http://knowyourmeme.com/memes/doge
+default:
+- SUCH MEME
+- VERY SKILL
 aliases:
 - dog
+regexes:
+- (such .+)/?(very .+)
+- (such .+)/?(much .+)

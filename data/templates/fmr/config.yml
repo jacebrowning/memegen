@@ -1,0 +1,11 @@
+name: Fuck Me, Right?
+link: http://knowyourmeme.com/memes/fuck-me-right
+default:
+- ''
+- Fuck Me, Right?
+aliases:
+- fuck-me
+- fuck-me-right
+regexes:
+- (.*)/?(fuck me.* right.*)
+- (.*)/?(\b.+ me.* right.*)

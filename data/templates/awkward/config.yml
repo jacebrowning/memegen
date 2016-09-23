@@ -1,0 +1,10 @@
+name: Socially Awkward Penguin
+link: http://knowyourmeme.com/memes/socially-awkward-penguin
+default:
+- START TELLING JOKE
+- FORGET PUNCHLINE
+aliases:
+- awkward-penguin
+- penguin-awkward
+- penguin
+regexes: []

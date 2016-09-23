@@ -1,5 +1,9 @@
 name: Ermahgerd
 link: http://knowyourmeme.com/memes/ermahgerd
+default:
+- ERMAHGERD
+- MEMES
 aliases:
 - ermahgerd
 - ermagerd
+regexes: []

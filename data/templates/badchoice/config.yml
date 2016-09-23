@@ -1,0 +1,11 @@
+name: Milk Was a Bad Choice
+link: https://www.youtube.com/watch?v=DeY0yPqibb0
+default:
+- MILK
+- WAS A BAD CHOICE
+aliases:
+- so-damn-hot
+- milk-was-a-bad-choice
+regexes:
+- (.+)/?(was a bad choice)
+- (.+)/?(\b.+ a bad choice)

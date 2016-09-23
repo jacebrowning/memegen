@@ -1,0 +1,12 @@
+name: Y U NO Guy
+link: http://knowyourmeme.com/memes/y-u-no-guy
+default:
+- Y U NO
+- USE THIS MEME!?
+aliases:
+- y-u-no
+- why-you-no
+- why
+regexes:
+- (why you no)/?(.+)
+- (y u no)/?(.+)

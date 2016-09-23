@@ -1,9 +1,12 @@
-name: "Y'all got anymore of them"
-default:
-- "Y'all got anymore of them"
-- 
+name: Y'all Got Any More of Them
 link: http://knowyourmeme.com/memes/yall-got-anymore-of
+default:
+- Y'ALL GOT ANY MORE OF THEM
+- MEMES
 aliases:
 - yall
 - anymoreofthem
 - anymore
+- jobs
+regexes:
+- (.*got any more of them)/?(.+)

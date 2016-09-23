@@ -1,0 +1,10 @@
+name: Sad Frog / Feels Bad Man
+link: http://knowyourmeme.com/memes/feels-bad-man-sad-frog
+default:
+- ''
+- FEELS BAD MAN
+aliases:
+- sad-frog
+- feelsbadman
+- feels-bad-man
+regexes: []

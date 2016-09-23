@@ -1,0 +1,11 @@
+name: I am the Captain Now
+link: https://www.youtube.com/watch?v=dvA-mimf2yg
+default:
+- Look at me
+- I am the Captain Now
+aliases:
+- captain-now
+- im-the-captain
+regexes:
+- (.*)/?(i am the captain now)
+- (.*)/?(i'?m the captain now)

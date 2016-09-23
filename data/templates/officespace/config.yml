@@ -1,9 +1,14 @@
 name: That Would Be Great
+link: http://knowyourmeme.com/memes/that-would-be-great
 default:
 - YEAH...
 - THAT'D BE GREAT
-link: http://knowyourmeme.com/memes/that-would-be-great
 aliases:
 - that'd-be-great
 - bill-lumbergh
 - lumbergh
+- be-great
+- great
+regexes:
+- (.*)/?(that would be great)
+- (.*)/?(that'?d be great)

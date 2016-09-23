@@ -1,35 +1,88 @@
-from flask import Blueprint, current_app as app, redirect, url_for, send_file
+import logging
+
+from flask import Blueprint, current_app as app, redirect
+from webargs import fields, flaskparser
 
 from .. import domain
 
+from ._common import route, display
+from ._cache import Cache
+
+
 blueprint = Blueprint('image', __name__, url_prefix="/")
+log = logging.getLogger(__name__)
+cache = Cache()
+
+OPTIONS = {
+    'alt': fields.Str(missing=None),  # pylint: disable=no-member
+    'font': fields.Str(missing=None),  # pylint: disable=no-member
+}
+
+
+@blueprint.route("latest.jpg")
+@blueprint.route("latest<int:index>.jpg")
+def get_latest(index=1):
+    kwargs = cache.get(index - 1)
+
+    if not kwargs:
+        kwargs['key'] = 'custom'
+        kwargs['path'] = "your-meme/goes-here"
+        kwargs['alt'] = "https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png"
+
+    return redirect(route('.get', _external=True, **kwargs))
 
 
 @blueprint.route("<key>.jpg")
-def get_without_text(key):
+@flaskparser.use_kwargs(OPTIONS)
+def get_without_text(key, **kwargs):
     template = app.template_service.find(key)
-    text = domain.Text(template.default or '_')
-    return redirect(url_for(".get", key=key, path=text.path))
+    text = domain.Text(template.default_path)
+    return redirect(route('.get', key=key, path=text.path, **kwargs))
+
+
+@blueprint.route("<key>.jpeg")
+def get_without_text_jpeg(key):
+    return redirect(route('.get_without_text', key=key))
 
 
 @blueprint.route("<key>/<path:path>.jpg", endpoint='get')
-def get_with_text(key, path):
-    template = app.template_service.find(key)
-    if template.key != key:
-        return redirect(url_for(".get", key=template.key, path=path))
-
+@flaskparser.use_kwargs(OPTIONS)
+def get_with_text(key, path, alt, font):
     text = domain.Text(path)
-    if path != text.path:
-        return redirect(url_for(".get", key=key, path=text.path))
+    fontfile = app.font_service.find(font)
 
-    image = app.image_service.create_image(template, text)
-    return send_file(image.path, mimetype='image/jpeg')
+    template = app.template_service.find(key, allow_missing=True)
+    if template.key != key:
+        return redirect(route('.get', key=template.key, path=path, alt=alt))
+
+    if alt and template.path == template.get_path(alt):
+        return redirect(route('.get', key=key, path=path, font=font))
+
+    if font and not fontfile:
+        return redirect(route('.get', key=key, path=path, alt=alt))
+
+    if path != text.path:
+        return redirect(route(
+            '.get', key=key, path=text.path, alt=alt, font=font))
+
+    image = app.image_service.create(template, text, style=alt, font=fontfile)
+
+    cache.add(key=key, path=path, style=alt, font=font)
+
+    return display(image.text, image.path)
+
+
+@blueprint.route("<key>/<path:path>.jpeg")
+def get_with_text_jpeg(key, path):
+    return redirect(route('.get', key=key, path=path))
 
 
 @blueprint.route("_<code>.jpg")
 def get_encoded(code):
+
     key, path = app.link_service.decode(code)
     template = app.template_service.find(key)
     text = domain.Text(path)
-    image = app.image_service.create_image(template, text)
-    return send_file(image.path, mimetype='image/jpeg')
+    image = app.image_service.create(template, text)
+
+    return display(image.text, image.path)

@@ -1,0 +1,10 @@
+name: # Name of Meme as a Title
+link: # http://knowyourmeme.com/memes/<link-for-future-reference>
+default:
+- # OPTIONAL DEFAULT
+- # LINES OF TEXT
+aliases:
+- # other-short-name
+- # another
+regexes:
+- # (match top with .+)/?(and bottom)

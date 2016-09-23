@@ -4,17 +4,20 @@
 
 ### Requirements
 
+* Python 3.5+
+    * Windows: https://www.python.org/downloads
+    * Mac: `$ brew install python3`
+    * Linux: `python3.5` and `python3.5-dev` packages
 * Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make (likely already installed)
-* virtualenv: https://pypi.python.org/pypi/virtualenv#installation
 
 ### Installation
 
-After cloning the repository, create a virtualenv:
+Create a virtual environment:
 
-```
+```sh
 $ make env
 ```
 
@@ -22,17 +25,19 @@ $ make env
 
 In the [`data/templates`](data/templates) directory, use the example to create your own template directory. The name of the directory will be the primary alias for that meme.
 
+The `regexes` list is used for pattern matching on http://memegen.link/magic. If you are not comfortable writing regular expressions, please leave this list empty. Otherwise, add a few [tests](https://github.com/jacebrowning/memegen/blob/master/tests/test_magic.py) to confirm the expected patterns match.
+
 ### Serving
 
 Run the server locally:
 
-```
+```sh
 $ make run
 ```
 
 or also launch it in your browser:
 
-```
+```sh
 $ make launch
 ```
 
@@ -40,7 +45,7 @@ $ make launch
 
 Run the checks to ensure your new template does not conflict with others:
 
-```
+```sh
 $ make validate
 ```
 
@@ -54,11 +59,8 @@ After checks pass, create a pull request to be merged after review.
 
 ### Requirements
 
-* Make:
-    * Windows: http://cygwin.com/install.html
-    * Mac: https://developer.apple.com/xcode
-    * Linux: http://www.gnu.org/software/make (likely already installed)
-* virtualenv: https://pypi.python.org/pypi/virtualenv#installation
+Everything from above with the addition of:
+
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
@@ -66,7 +68,7 @@ After checks pass, create a pull request to be merged after review.
 
 After cloning the repository, create a virtualenv:
 
-```
+```sh
 $ make env
 ```
 
@@ -76,13 +78,13 @@ $ make env
 
 Manually run the tests and checkers:
 
-```
+```sh
 $ make ci
 ```
 
 or keep them running on change:
 
-```
+```sh
 $ make watch
 ```
 

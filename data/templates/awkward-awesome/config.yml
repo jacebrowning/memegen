@@ -1,0 +1,9 @@
+name: Socially Awkward Awesome Penguin
+link: http://knowyourmeme.com/memes/socially-awkward-penguin
+default:
+- Trip guy on the street
+- He was running with a stolen purse
+aliases:
+- awkward-awesome-penguin
+- penuin-awesome-awkward
+regexes: []

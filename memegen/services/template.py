@@ -1,7 +1,7 @@
 import logging
 
-from . import Service
-from ..domain import Template
+from ._base import Service
+from ..domain import Template, Placeholder
 
 
 log = logging.getLogger(__name__)
@@ -18,35 +18,48 @@ class TemplateService(Service):
         templates = self.template_store.filter()
         return templates
 
-    def find(self, key):
+    def find(self, key, *, allow_missing=False):
         """Find a template with a matching key."""
-        key = Template.strip(key)
 
         # Find an exact match
-        template = self.template_store.read(key)
+        key2 = Template.strip(key, keep_special=True)
+        template = self.template_store.read(key2)
         if template:
             return template
 
         # Else, find an alias match
+        key2 = Template.strip(key2)
         for template in self.all():
-            if key in template.aliases_stripped:
+            if key2 in template.aliases_stripped:
                 return template
 
         # Else, no match
-        raise self.exceptions.not_found
+        if allow_missing:
+            return Placeholder(key)
+        else:
+            raise self.exceptions.TemplateNotFound
+
+    def aliases(self, query=""):
+        """Get all aliases with an optional name filter."""
+        names = []
+        for template in self.all():
+            for name in [template.key] + template.aliases:
+                if query in name:
+                    names.append(name)
+        return names
 
     def validate(self):
-        """Ensure all template are valid and conflict-free."""
+        """Ensure all templates are valid and conflict-free."""
         templates = self.all()
         keys = {template.key: template for template in templates}
         for template in templates:
-            log.info("checking template '%s' ...", template)
+            log.info("Checking template '%s' ...", template)
             if not template.validate():
                 return False
             for alias in template.aliases:
-                log.info("checking alias '%s' -> '%s' ...", alias, template.key)
+                log.info("Checking alias '%s' -> '%s' ...", alias, template.key)
                 if alias not in template.aliases_lowercase:
-                    msg = "alias '%s' should be lowercase characters or dashes"
+                    msg = "Alias '%s' should be lowercase characters or dashes"
                     log.error(msg, alias)
                     return False
                 try:
@@ -54,7 +67,7 @@ class TemplateService(Service):
                 except KeyError:
                     keys[alias] = template
                 else:
-                    msg = "alias '%s' already used in template: %s"
+                    msg = "Alias '%s' already used in template: %s"
                     log.error(msg, alias, existing)
                     return False
         return True

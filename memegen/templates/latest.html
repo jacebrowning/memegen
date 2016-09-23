@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Latest Meme</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/stylesheets/stylesheet.css" />
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '{{ ga_tid }}', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+</head>
+<body style="margin: 0px;">
+
+  <div class="meme-templates">
+    <div class="container">
+      <div class="row">
+      {% for src in srcs %}
+        <div class="col-sm-4">
+          <img class="meme-example" width="240" src="{{ src }}" id="latest{{ loop.index }}" />
+        </div>
+
+       {% if loop.index is divisibleby 3 %}
+       </div>
+       {% endif %}
+
+       {% if loop.index is divisibleby 3 %}
+       <div class="row">
+       {% endif %}
+
+       {% if loop.last %}
+        </div>
+       {% endif %}
+     {% endfor %}
+    </div>
+   </div>
+
+  <script>
+    var reload = function(){
+      console.log("Refreshing images");
+      {% for src in srcs %}
+        var elem{{ loop.index }} = document.getElementById('latest{{ loop.index }}');
+        elem{{ loop.index }}.src = '{{ src }}?' + Math.random();
+      {% endfor %}
+    };
+    setInterval(reload, {{ refresh * 1000 }});
+  </script>
+
+</body>
+</html>

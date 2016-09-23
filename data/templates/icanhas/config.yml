@@ -1,9 +1,11 @@
 name: I Can Has Cheezburger?
+link: http://knowyourmeme.com/memes/happy-cat
 default:
 - I CAN HAS
-- CHEEZBURGER?
-link: http://knowyourmeme.com/memes/happy-cat
+- THIS MEME?
 aliases:
 - happy-cat
 - i-can-has-cheezburger
 - i-can-haz
+regexes:
+- (.+ can (?:have)|(?:haz)|(?:has))/?(.+)

@@ -1,0 +1,11 @@
+name: Xzibit Yo Dawg
+link: http://knowyourmeme.com/memes/xzibit-yo-dawg
+default:
+- Yo Dawg
+- I heard you like memes
+aliases:
+- sub-dawg
+- xzibit
+regexes:
+- (.+ dawg ?)/?(i heard .+)
+- (.+ dog ?)/?(i heard .+)

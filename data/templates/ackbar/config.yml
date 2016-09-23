@@ -1,0 +1,10 @@
+name: It's A Trap!
+link: http://knowyourmeme.com/memes/its-a-trap
+default:
+- ''
+- It's a trap!
+aliases:
+- its-a-trap
+- trap
+regexes:
+- ()/?(it'?s a trap)

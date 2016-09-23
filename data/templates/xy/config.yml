@@ -1,5 +1,9 @@
 name: X all the Y
 link: http://knowyourmeme.com/memes/x-all-the-y
+default:
+- ALL THE THINGS!!!
 aliases:
 - all-the-things
 - xy-things
+regexes:
+- (.+)/?(all the .+)

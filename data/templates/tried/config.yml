@@ -1,0 +1,10 @@
+name: At Least You Tried
+link: http://knowyourmeme.com/memes/you-tried
+default:
+- At Least
+- You Tried
+aliases:
+- at-least-you-tried
+- you-tried
+regexes:
+- (.+)/?(you tried)

@@ -1,7 +1,29 @@
 class Text:
 
+    EMPTY = '_'
+    SPACE = '-'
+    SPECIAL = {
+        '?': '~q',
+        '%': '~p',
+        '#': '~h',
+        '/': '~s',
+        '"': "''",
+    }
+
     def __init__(self, path=None):
-        self._parts = [] if path is None else path.split('/')
+        if path is None:
+            self._parts = []
+        elif isinstance(path, str):
+            self._parts = path.split('/')
+        else:
+            assert isinstance(path, list)
+            self._parts = path
+
+    def __str__(self):
+        return ' / '.join(self.lines)
+
+    def __bool__(self):
+        return bool(self.path.strip(self.EMPTY + '/'))
 
     def __getitem__(self, key):
         try:
@@ -34,7 +56,7 @@ class Text:
             elif not previous_part:
                 break
             else:
-                lines.append('_')
+                lines.append(' ')
             previous_part = part
 
         return lines[:-1]
@@ -49,27 +71,56 @@ class Text:
 
         return '/'.join(paths)
 
-    @staticmethod
-    def _format_line(part):
+    @classmethod
+    def _format_line(cls, part):
+        for special, replacement in cls.SPECIAL.items():
+            part = part.replace(replacement, special)
+            part = part.replace(replacement.upper(), special)
+
+        part = list(part)
         chars = []
 
         previous_upper = True
-        for char in part:
-            if char in ('_', '-'):
-                chars.append(' ')
-                previous_upper = True
+        previous_char = None
+        for i, char in enumerate(part):
+            if char in (cls.EMPTY, cls.SPACE):
+                if char == previous_char:
+                    chars[-1] = char
+                    previous_char = None
+                    continue
+                else:
+                    chars.append(' ')
+            elif not char.isalpha():
+                chars.append(char)
             else:
                 if char.isupper():
                     if not previous_upper and chars[-1] != ' ':
                         chars.append(' ')
+                    else:
+                        letters_to_check = part[max(i - 1, 0):i + 2]
+
+                        if len(letters_to_check) == 3:
+                            if all((letters_to_check[0].isupper(),
+                                    letters_to_check[1].isupper(),
+                                    letters_to_check[2].islower())):
+                                chars.append(' ')
+
                 chars.append(char.upper())
                 previous_upper = char.isupper()
+            previous_char = char
 
         return ''.join(chars)
 
-    @staticmethod
-    def _format_path(line):
+    @classmethod
+    def _format_path(cls, line):
         if line == ' ':
-            return '_'
+            path = cls.EMPTY
         else:
-            return line.replace(' ', '-').lower()
+            path = line.lower()
+            path = path.replace(cls.SPACE, cls.SPACE * 2)
+            path = path.replace(cls.EMPTY, cls.EMPTY * 2)
+            path = path.replace(' ', cls.SPACE)
+            for special, replacement in cls.SPECIAL.items():
+                path = path.replace(special, replacement)
+
+        return path

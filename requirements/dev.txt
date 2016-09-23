@@ -1,0 +1,18 @@
+# Documentation
+pylint
+docutils
+readme
+pdoc
+mkdocs
+pygments
+
+# Tooling
+pep8radius
+sniffer
+
+# Runner
+honcho
+
+# Release
+pyinstaller
+wheel

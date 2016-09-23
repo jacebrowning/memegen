@@ -1,7 +1,9 @@
 name: Success Kid
-default:
--
 link: http://knowyourmeme.com/memes/success-kid-i-hate-sandcastles
+default:
+- DON'T KNOW A QUESTION ON THE TEST
+- ANSWER IS IN ANOTHER QUESTION
 aliases:
 - success-kid
 - i-hate-sandcastles
+regexes: []

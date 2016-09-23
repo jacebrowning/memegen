@@ -1,0 +1,10 @@
+name: I Feel Like I'm Taking Crazy Pills
+link: http://knowyourmeme.com/memes/i-feel-like-im-taking-crazy-pills
+default:
+- ''
+- I FEEL LIKE I'M TAKING CRAZY PILLS
+aliases:
+- i'm-taking-crazy-pills
+regexes:
+- (.*)/?(i feel like i'?m taking? crazy pills)
+- ()/?(.*crazy pills)

@@ -1,0 +1,9 @@
+name: Hipster Barista
+link: http://knowyourmeme.com/memes/hipster-barista
+default:
+- ''
+- ''
+aliases:
+- hipster-barista
+- barista
+regexes: []
