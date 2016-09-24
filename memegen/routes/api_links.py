@@ -4,7 +4,7 @@ from flask import Blueprint, current_app as app, redirect
 
 from ..domain import Text
 
-from ._common import route
+from ._utils import route
 
 
 blueprint = Blueprint('links', __name__, url_prefix="/")

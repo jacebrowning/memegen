@@ -4,7 +4,8 @@ from flask import Blueprint
 
 from .. import __version__
 
-from ._common import CHANGES_URL, route
+from ._settings import CHANGES_URL
+from ._utils import route
 
 
 blueprint = Blueprint('root', __name__, url_prefix="/")

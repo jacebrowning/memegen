@@ -3,7 +3,7 @@ from collections import OrderedDict
 from flask import Blueprint, current_app as app, redirect
 from webargs import fields, flaskparser
 
-from ._common import route
+from ._utils import route
 
 
 blueprint = Blueprint('aliases', __name__)

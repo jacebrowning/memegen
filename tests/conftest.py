@@ -10,7 +10,7 @@ from memegen.tests.conftest import pytest_configure  # pylint: disable=unused-im
 
 # TODO: replace all calls with the new signature
 def load(*args, **kwargs):
-    from .utilities import load
+    from .utils import load
     return load(*args, **kwargs)[1]
 
 

@@ -4,7 +4,7 @@
 import pytest
 from expecter import expect
 
-from .utilities import load
+from .utils import load
 
 
 @pytest.mark.parametrize("pattern,links", [

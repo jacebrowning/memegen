@@ -6,10 +6,6 @@ import requests
 from flask import (Response, url_for, render_template, send_file,
                    current_app, request)
 
-GITHUB_SLUG = "jacebrowning/memegen"
-GITHUB_BASE = "https://raw.githubusercontent.com/{}/master/".format(GITHUB_SLUG)
-CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
-CHANGES_URL = GITHUB_BASE + "CHANGELOG.md"
 
 log = logging.getLogger(__name__)
 
@@ -19,16 +15,11 @@ def route(*args, **kwargs):
     return _secure(unquote(url_for(*args, **kwargs)))
 
 
-def samples(blank=False):
-    """Generate dictionaries of sample image data for template rendering."""
-    for template in sorted(current_app.template_service.all()):
-        path = "_" if blank else template.sample_path
-        url = route('image.get', key=template.key, path=path)
-        yield {
-            'key': template.key,
-            'name': template.name,
-            'url': url,
-        }
+def _secure(url):
+    """Ensure HTTPS is used in production."""
+    if current_app.config['ENV'] == 'prod':
+        url = url.replace('http:', 'https:')
+    return url
 
 
 def display(title, path, raw=False, mimetype='image/jpeg'):
@@ -51,13 +42,6 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
         log.info("Sending image: %s", path)
         _track(title)
         return send_file(path, mimetype=mimetype)
-
-
-def _secure(url):
-    """Ensure HTTPS is used in production."""
-    if current_app.config['ENV'] == 'prod':
-        url = url.replace('http:', 'https:')
-    return url
 
 
 def _nocache(response):

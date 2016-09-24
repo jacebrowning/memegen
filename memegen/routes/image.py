@@ -5,8 +5,8 @@ from webargs import fields, flaskparser
 
 from .. import domain
 
-from ._common import route, display
 from ._cache import Cache
+from ._utils import route, display
 
 
 blueprint = Blueprint('image', __name__, url_prefix="/")
