@@ -2,14 +2,14 @@ from flask import Blueprint, current_app as app, redirect
 
 from ..domain import Text
 
-from ._common import route
+from ._utils import route
 
 
-blueprint = Blueprint('magic', __name__)
+blueprint = Blueprint('magic', __name__, url_prefix="/api/magic/")
 
 
-@blueprint.route("/magic/", defaults={'pattern': None}, endpoint='get')
-@blueprint.route("/magic/<pattern>")
+@blueprint.route("", defaults={'pattern': None}, endpoint='get')
+@blueprint.route("<pattern>")
 def links(pattern):
     """Get a list of all matching links."""
     if not pattern:
@@ -41,13 +41,7 @@ def _get_matches(pattern):
     return sorted(items, key=lambda item: item['ratio'], reverse=True)
 
 
-@blueprint.route("/m/<pattern>")
-def links_shortened(pattern):
-    """Redirect to the full magic route."""
-    return redirect(route('.links', pattern=pattern))
-
-
-@blueprint.route("/magic/<pattern>.jpg")
+@blueprint.route("<pattern>.jpg")
 def image(pattern):
     """Get the first matching image."""
     # TODO: share this logic
@@ -72,9 +66,3 @@ def image(pattern):
         url = route('image.get', key="unknown", path="_")
 
     return redirect(url)
-
-
-@blueprint.route("/m/<pattern>.jpg")
-def image_shortened(pattern):
-    """Redirect to the first magic image."""
-    return redirect(route('.image', pattern=pattern))

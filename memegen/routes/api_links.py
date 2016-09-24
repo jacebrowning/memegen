@@ -4,16 +4,10 @@ from flask import Blueprint, current_app as app, redirect
 
 from ..domain import Text
 
-from ._common import route
+from ._utils import route
 
 
-blueprint = Blueprint('links', __name__, url_prefix="/")
-
-
-@blueprint.route("<key>")
-def get_without_text(key):
-    template = app.template_service.find(key)
-    return redirect(route('templates.create', key=template.key))
+blueprint = Blueprint('links', __name__, url_prefix="/api/templates/")
 
 
 @blueprint.route("<key>/<path:path>", endpoint='get')
@@ -28,6 +22,7 @@ def get_with_text(key, path):
         return redirect(route('.get', key=key, path=text.path))
 
     data = OrderedDict()
+
     data['direct'] = OrderedDict()
     visible_url = route('image.get', key=key, path=path, _external=True)
     data['direct']['visible'] = visible_url
@@ -37,10 +32,5 @@ def get_with_text(key, path):
     data['markdown'] = OrderedDict()
     data['markdown']['visible'] = "![{k}]({u})".format(k=key, u=visible_url)
     data['markdown']['masked'] = "![{k}]({u})".format(k=key, u=masked_url)
+
     return data
-
-
-@blueprint.route("_<code>")
-def get_encoded(code):
-    key, path = app.link_service.decode(code)
-    return redirect(route('.get', key=key, path=path))

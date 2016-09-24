@@ -7,7 +7,7 @@ from expecter import expect
 
 from memegen.app import create_app
 from memegen.settings import get_config
-from memegen.routes._common import display
+from memegen.routes._utils import display
 
 
 def describe_display():
@@ -24,7 +24,7 @@ def describe_display():
     request_image = Mock(url="it's a path")
     request_image.headers.get = Mock(return_value="(not a browser)")
 
-    @patch('memegen.routes._common.request', request_html)
+    @patch('memegen.routes._utils.request', request_html)
     def it_returns_html_for_browsers(app):
 
         with app.test_request_context():
@@ -35,9 +35,9 @@ def describe_display():
         assert 'url("it\'s a path?alt=style")' in html
         assert "ga('create', 'my_tid', 'auto');" in html
 
-    @patch('memegen.routes._common._track')
-    @patch('memegen.routes._common.send_file')
-    @patch('memegen.routes._common.request', request_image)
+    @patch('memegen.routes._utils._track')
+    @patch('memegen.routes._utils.send_file')
+    @patch('memegen.routes._utils.request', request_image)
     def it_returns_an_image_otherwise(mock_send_file, mock_track):
 
         display("my_title", "my_path")

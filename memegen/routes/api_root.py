@@ -4,13 +4,14 @@ from flask import Blueprint
 
 from .. import __version__
 
-from ._common import CHANGES_URL, route
+from ._settings import CHANGES_URL
+from ._utils import route
 
 
-blueprint = Blueprint('root', __name__, url_prefix="/")
+blueprint = Blueprint('root', __name__)
 
 
-@blueprint.route("api")
+@blueprint.route("/api")
 def get():
     """Generate memes from templates."""
     data = OrderedDict()
@@ -23,7 +24,7 @@ def get():
     return data
 
 
-@blueprint.route("CHECK")
+@blueprint.route("/CHECK")
 def handle_checks():
     """Return CHECK_OK for zero-downtime deployment.
 

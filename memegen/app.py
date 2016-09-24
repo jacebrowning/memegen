@@ -104,13 +104,14 @@ def register_services(app):
 
 
 def register_blueprints(app):
-    app.register_blueprint(routes.aliases.blueprint)
-    app.register_blueprint(routes.fonts.blueprint)
+    app.register_blueprint(routes.api_aliases.blueprint)
+    app.register_blueprint(routes.api_fonts.blueprint)
+    app.register_blueprint(routes.api_legacy.blueprint)
+    app.register_blueprint(routes.api_links.blueprint)
+    app.register_blueprint(routes.api_magic.blueprint)
+    app.register_blueprint(routes.api_root.blueprint)
+    app.register_blueprint(routes.api_templates.blueprint)
     app.register_blueprint(routes.image.blueprint)
     app.register_blueprint(routes.index.blueprint)
     app.register_blueprint(routes.latest.blueprint)
-    app.register_blueprint(routes.links.blueprint)
-    app.register_blueprint(routes.magic.blueprint)
-    app.register_blueprint(routes.root.blueprint)
     app.register_blueprint(routes.static.blueprint)
-    app.register_blueprint(routes.templates.blueprint)

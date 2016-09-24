@@ -3,17 +3,17 @@ from collections import OrderedDict
 from flask import Blueprint, current_app as app, redirect
 from webargs import fields, flaskparser
 
-from ._common import route
+from ._utils import route
 
 
-blueprint = Blueprint('aliases', __name__)
+blueprint = Blueprint('aliases', __name__, url_prefix="/api/aliases/")
 
 FILTER = {
     'name': fields.Str(missing="")  # pylint: disable=no-member
 }
 
 
-@blueprint.route("/aliases/")
+@blueprint.route("")
 @flaskparser.use_kwargs(FILTER)
 def get(name):
     """Get a list of all matching aliases."""
@@ -23,7 +23,7 @@ def get(name):
         return []
 
 
-@blueprint.route("/aliases/<name>")
+@blueprint.route("<name>")
 def get_with_name(name):
     """Get a list of all matching aliases."""
     return _get_aliases(name)

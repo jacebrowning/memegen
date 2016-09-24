@@ -1,13 +1,18 @@
+# Static files
+from . import static
+
 # Web pages
 from . import index
 from . import latest
+from . import image
 
 # API routes
-from . import root
-from . import static
-from . import templates
-from . import fonts
-from . import aliases
-from . import magic
-from . import links
-from . import image
+from . import api_root
+from . import api_templates
+from . import api_fonts
+from . import api_aliases
+from . import api_magic
+from . import api_links
+
+# Legacy API routes
+from . import api_legacy

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask_api.decorators import set_renderers
 from flask_api.renderers import HTMLRenderer
 
-from ._common import route, get_tid
+from ._utils import route, get_tid
 
 
 blueprint = Blueprint('latest', __name__, url_prefix="/latest")

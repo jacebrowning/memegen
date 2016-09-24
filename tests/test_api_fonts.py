@@ -2,7 +2,7 @@
 
 from expecter import expect
 
-from .utilities import load
+from .utils import load
 
 
 def describe_get():

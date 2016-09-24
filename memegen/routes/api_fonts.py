@@ -1,7 +1,7 @@
 from flask import Blueprint, current_app as app
 from flask_api import exceptions
 
-from ._common import CONTRIBUTING_URL
+from ._settings import CONTRIBUTING_URL
 
 
 blueprint = Blueprint('fonts', __name__, url_prefix="/api/fonts/")

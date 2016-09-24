@@ -4,11 +4,12 @@ from flask import Blueprint, current_app as app, request, redirect
 from flask_api import exceptions
 from webargs import fields
 
-from ._common import CONTRIBUTING_URL, route
 from ._parser import parser
+from ._settings import CONTRIBUTING_URL
+from ._utils import route
 
 
-blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
+blueprint = Blueprint('templates', __name__, url_prefix="/api/templates/")
 
 OPTIONS = {
     # pylint: disable=no-member
