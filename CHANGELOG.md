@@ -1,5 +1,11 @@
 # Revision History
 
+## 4.0
+
+- Moved all API routes to nest under `/api/*`
+    + `/templates/*` is still supported for now via redirect
+- Removed the shorthand `/m/*` redirect to `/magic/*`
+
 ## 3.0
 
 - Removed `'date'` key from `/api`.

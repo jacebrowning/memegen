@@ -13,3 +13,6 @@ from . import api_fonts
 from . import api_aliases
 from . import api_magic
 from . import api_links
+
+# Legacy API routes
+from . import api_legacy

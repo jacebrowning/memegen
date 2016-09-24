@@ -9,7 +9,7 @@ from ._settings import CONTRIBUTING_URL
 from ._utils import route
 
 
-blueprint = Blueprint('templates', __name__, url_prefix="/templates/")
+blueprint = Blueprint('templates', __name__, url_prefix="/api/templates/")
 
 OPTIONS = {
     # pylint: disable=no-member

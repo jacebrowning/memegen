@@ -12,10 +12,10 @@ def describe_root():
 
         expect(status) == 200
         expect(data) == {
-            'templates': "http://localhost/templates/",
+            'templates': "http://localhost/api/templates/",
             'fonts': "http://localhost/api/fonts/",
-            'aliases': "http://localhost/aliases/",
-            'magic': "http://localhost/magic/",
-            'version': "3.0",
+            'aliases': "http://localhost/api/aliases/",
+            'magic': "http://localhost/api/magic/",
+            'version': "4.0",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }
