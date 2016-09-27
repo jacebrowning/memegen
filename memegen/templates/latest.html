@@ -1,27 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-  <title>Latest Meme</title>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/stylesheets/stylesheet.css" />
-
-  <!-- Google Analytics -->
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', '{{ ga_tid }}', 'auto');
-    ga('send', 'pageview');
-  </script>
-
-</head>
-<body style="margin: 0px;">
-
+{% extends "memegen.html" %}
+{% block title %} | Latest{% endblock %}
+{% block navigation %}
+<li><a href="/">Home</a></li>
+<li class="active"><a href="/latest">Latest</a></li>
+{% endblock %}
+{% block content %}
   <div class="meme-templates">
     <div class="container">
       <div class="row">
@@ -55,6 +38,4 @@
     };
     setInterval(reload, {{ refresh * 1000 }});
   </script>
-
-</body>
-</html>
+{% endblock %}

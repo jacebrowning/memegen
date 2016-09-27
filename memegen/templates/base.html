@@ -1,0 +1,210 @@
+<!-- This template renders the Flask API pages. -->
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block head %}
+
+        {% block meta %}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="robots" content="NONE,NOARCHIVE" />
+        {% endblock %}
+
+        <link rel="apple-touch-icon" sizes="57x57" href="images/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="images/apple-touch-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="images/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="images/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="images/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="images/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180x180.png">
+        <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="images/android-chrome-192x192.png" sizes="192x192">
+        <link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="images/manifest.json">
+        <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+        <title>MemeGen.link | API</title>
+
+        {% block style %}
+        {% block bootstrap_theme %}
+            <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/bootstrap.min.css')}}"/>
+            <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/bootstrap-tweaks.css')}}"/>
+        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/prettify.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/default.css')}}"/>
+        {% endblock %}
+
+    {% endblock %}
+    </head>
+
+  <body class="{% block bodyclass %}{% endblock %} container">
+
+    <div class="wrapper">
+
+    {% block navbar %}
+    <div class="navbar {% block bootstrap_navbar_variant %}navbar-inverse{% endblock %}">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <span href="/">
+                    {% block branding %}<a class='brand' rel="nofollow" href='/'>MemeGen.link</span></a>{% endblock %}
+                </span>
+                <ul class="nav pull-right">
+                    {% block userlinks %}
+                        <!--{ if user.is_authenticated }
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    {{ user }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>optional_logout request</li>
+                                </ul>
+                            </li>
+                        { else }-->
+                            <li><!-- optional_login request --></li>
+                        <!--{ endif }-->
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <!--
+    {% block breadcrumbs %}
+    <ul class="breadcrumb">
+        {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
+            <li>
+                <a href="{{ breadcrumb_url }}" {% if forloop.last %}class="active"{% endif %}>{{ breadcrumb_name }}</a> {% if not forloop.last %}<span class="divider">&rsaquo;</span>{% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+    -->
+    <div style="height: 50px"></div>
+
+    <!-- Content -->
+    <div id="content">
+
+        {% if 'GET' in allowed_methods %}
+            <form id="get-form" class="pull-right">
+                <fieldset>
+                    <div class="btn-group format-selection">
+                        <a class="btn btn-primary js-tooltip" href='{{ request.get_full_path }}' rel="nofollow" title="Make a GET request on the {{ name }} resource">GET</a>
+
+                        <button class="btn btn-primary dropdown-toggle js-tooltip" data-toggle="dropdown" title="Specify a format for the GET request">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for format in available_formats %}
+                                <li>
+                                    <a class="js-tooltip format-option" href='<!-- add_query_param request api_settings.URL_FORMAT_OVERRIDE format -->' rel="nofollow" title="Make a GET request on the {{ name }} resource with the format set to `{{ format }}`">{{ format }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </fieldset>
+            </form>
+        {% endif %}
+
+        <!--{% if 'OPTIONS' in allowed_methods %}
+            <form class="button-form" action="{{ request.full_path }}" method="POST" class="pull-right">
+                <- csrf_token ->
+                <input type="hidden" name="_method" value="OPTIONS" />
+                <button class="btn btn-primary js-tooltip" title="Make an OPTIONS request on the resource">OPTIONS</button>
+            </form>
+        {% endif %}-->
+
+        {% if 'DELETE' in allowed_methods %}
+            <form class="button-form" action="{{ request.full_path }}" method="POST" class="pull-right">
+                <!-- csrf_token -->
+                <input type="hidden" name="_method" value="DELETE" />
+                <button class="btn btn-danger js-tooltip" title="Make a DELETE request on the resource">DELETE</button>
+            </form>
+        {% endif %}
+
+        <div class="content-main">
+            <div class="page-header"><h1>{{ view_name }}</h1></div>
+            {% if view_description %}<div style="margin-top: -10px; margin-bottom: 10px">{{ view_description|safe }}</div>{% endif %}
+            <div class="request-info" style="clear: both" >
+                <pre class="prettyprint"><b>{{ request.method }}</b> {{ request.full_path }}</pre>
+            </div>
+            <div class="response-info">
+                <pre class="prettyprint"><div class="meta nocode"><b>HTTP {{ status }}</b>{% autoescape off %}
+{% for key, val in headers.items() %}<b>{{ key }}:</b> <span class="lit">{{ val|e }}<!--{ val|break_long_headers|urlize_quoted_links }--></span>
+{% endfor %}
+</div>{% if content %}{{ content|urlize_quoted_links }}{% endif %}<!-- |urlize_quoted_links --></pre>{% endautoescape %}
+            </div>
+        </div>
+
+
+                {% if 'POST' in allowed_methods or 'PUT' in allowed_methods or 'PATCH' in allowed_methods %}
+                <div>
+                    <div class="well">
+                        <div id="generic-content-form">
+                            <form action="{{ request.full_path }}" method="POST" class="form-horizontal">
+                                <fieldset>
+<div class="control-group">
+        <label for="id__content_type" class="control-label">Media type:</label>
+        <div class="controls">
+            <select id="id__content_type" name="_content_type">
+<option value="application/json" selected="selected">application/json</option>
+<option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+<option value="multipart/form-data">multipart/form-data</option>
+</select>
+            <span class="help-block"></span>
+        </div>
+    </div>
+                                <div class="control-group">
+                                    <label for="id__content" class="control-label">Content:</label>
+                                    <div class="controls">
+                                        <textarea name="_content" cols="40" rows="10"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    {% if 'POST' in allowed_methods %}
+                                    <button class="btn btn-primary" title="Make a POST request on the resource">POST</button>
+                                    {% endif %}
+                                    {% if 'PUT' in allowed_methods %}
+                                    <button class="btn btn-primary js-tooltip" name="_method" value="PUT" title="Make a PUT request on the resource">PUT</button>
+                                    {% endif %}
+                                    {% if 'PATCH' in allowed_methods %}
+                                    <button class="btn btn-primary js-tooltip" name="_method" value="PATCH" title="Make a PATCH request on the resource">PATCH</button>
+                                    {% endif %}
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+        </div>
+        <!-- END content-main -->
+
+    </div>
+    <!-- END Content -->
+
+        <div id="push"></div>
+
+    </div>
+
+    </div><!-- ./wrapper -->
+
+    {% block footer %}
+    {% endblock %}
+
+    {% block script %}
+    <script src="{{url_for('flask-api.static', filename='js/jquery-1.8.1-min.js')}}"></script>
+    <script src="{{url_for('flask-api.static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('flask-api.static', filename='js/prettify-min.js')}}"></script>
+    <script src="{{url_for('flask-api.static', filename='js/default.js')}}"></script>
+    {% endblock %}
+  </body>
+</html>
