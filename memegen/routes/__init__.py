@@ -3,6 +3,7 @@ from . import static
 
 # Web pages
 from . import index
+from . import magic
 from . import latest
 from . import image
 

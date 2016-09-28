@@ -1,0 +1,50 @@
+{% extends "memegen.html" %}
+{% block title %} | Magic{% endblock %}
+{% block navigation %}
+<li><a href="/">Home</a></li>
+<li class="active"><a href="/magic">Magic</a></li>
+<li><a href="/latest">Latest</a></li>
+{% endblock %}
+{% block content %}
+
+    <div class="generator">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-6 meme-generator">
+            <form class="form-horizontal">
+
+              <div class="form-group">
+                <label for="top" class="col-sm-2 control-label">Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text" name="text"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="button" id="btn-generate" class="btn btn-primary">Generate</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="meme-holder col-md-6">
+            <a id="meme-image" href="">
+              <img width='400' src="" />
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="static/js/magic.js"></script>
+
+    <script>
+      $('#meme-text').val("try all the phrases");
+      $('#btn-generate').click();
+    </script>
+{% endblock %}
