@@ -2,6 +2,7 @@ import logging
 
 import yorm
 from yorm.types import List, Object
+import profanityfilter
 
 
 log = logging.getLogger(__name__)
@@ -17,7 +18,14 @@ class Cache:
         self.items = []
 
     def add(self, **kwargs):
-        if kwargs['key'] == 'custom' or kwargs in self.items:
+        if kwargs in self.items:
+            log.debug("Already cached: %s", kwargs)
+            return
+        if kwargs['key'] == 'custom':
+            log.debug("Skipped caching of custom: %s", kwargs)
+            return
+        if profanityfilter.is_profane(kwargs['path']):
+            log.debug("Skipped caching of profanity: %s", kwargs)
             return
 
         log.info("Caching: %s", kwargs)
