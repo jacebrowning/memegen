@@ -114,4 +114,5 @@ def register_blueprints(app):
     app.register_blueprint(routes.image.blueprint)
     app.register_blueprint(routes.index.blueprint)
     app.register_blueprint(routes.latest.blueprint)
+    app.register_blueprint(routes.magic.blueprint)
     app.register_blueprint(routes.static.blueprint)

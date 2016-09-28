@@ -9,7 +9,7 @@ from ._cache import Cache
 from ._utils import route, display
 
 
-blueprint = Blueprint('image', __name__, url_prefix="/")
+blueprint = Blueprint('image', __name__)
 log = logging.getLogger(__name__)
 cache = Cache()
 
@@ -19,8 +19,8 @@ OPTIONS = {
 }
 
 
-@blueprint.route("latest.jpg")
-@blueprint.route("latest<int:index>.jpg")
+@blueprint.route("/latest.jpg")
+@blueprint.route("/latest<int:index>.jpg")
 def get_latest(index=1):
     kwargs = cache.get(index - 1)
 
@@ -32,7 +32,7 @@ def get_latest(index=1):
     return redirect(route('.get', _external=True, **kwargs))
 
 
-@blueprint.route("<key>.jpg")
+@blueprint.route("/<key>.jpg")
 @flaskparser.use_kwargs(OPTIONS)
 def get_without_text(key, **kwargs):
     template = app.template_service.find(key)
@@ -40,12 +40,12 @@ def get_without_text(key, **kwargs):
     return redirect(route('.get', key=key, path=text.path, **kwargs))
 
 
-@blueprint.route("<key>.jpeg")
+@blueprint.route("/<key>.jpeg")
 def get_without_text_jpeg(key):
     return redirect(route('.get_without_text', key=key))
 
 
-@blueprint.route("<key>/<path:path>.jpg", endpoint='get')
+@blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt, font):
     text = domain.Text(path)
@@ -72,12 +72,12 @@ def get_with_text(key, path, alt, font):
     return display(image.text, image.path)
 
 
-@blueprint.route("<key>/<path:path>.jpeg")
+@blueprint.route("/<key>/<path:path>.jpeg")
 def get_with_text_jpeg(key, path):
     return redirect(route('.get', key=key, path=path))
 
 
-@blueprint.route("_<code>.jpg")
+@blueprint.route("/_<code>.jpg")
 def get_encoded(code):
 
     key, path = app.link_service.decode(code)

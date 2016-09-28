@@ -6,10 +6,10 @@ from ._settings import GITHUB_SLUG
 from ._utils import get_tid, route
 
 
-blueprint = Blueprint('index', __name__, url_prefix="/")
+blueprint = Blueprint('index-page', __name__)
 
 
-@blueprint.route("")
+@blueprint.route("/")
 def get_index():
     template_images = list(_samples(blank=True))
     sample_images = list(_samples())
