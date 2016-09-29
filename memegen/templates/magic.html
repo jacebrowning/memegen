@@ -44,6 +44,14 @@
     <script src="static/js/magic.js"></script>
 
     <script>
+      $("#btn-generate").on('click', function(e) {
+        var memeText = $('#meme-text').val();
+        var imageUrl = encodeURIComponent("/api/magic/" + memeText + ".jpg");
+
+        $("#meme-image img").attr('src', imageUrl);
+        $("#meme-image").attr('href', imageUrl);
+      });
+
       $('#meme-text').val("try all the phrases");
       $('#btn-generate').click();
     </script>
