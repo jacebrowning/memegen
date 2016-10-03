@@ -1,10 +1,6 @@
-{% extends "memegen.html" %}
+{% extends "layout.html" %}
+{% set active_page = "latest" %}
 {% block title %} | Latest{% endblock %}
-{% block navigation %}
-<li><a href="/">Home</a></li>
-<li><a href="/magic">Magic</a></li>
-<li class="active"><a href="/latest">Latest</a></li>
-{% endblock %}
 {% block content %}
   <div class="meme-templates">
     <div class="container">

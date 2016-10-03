@@ -1,3 +1,8 @@
+{% set navigation_bar = [
+    ('index', '/', 'Home'),
+    ('magic', '/magic', 'Magic'),
+    ('latest', '/latest', 'Latest')
+] -%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,11 +54,10 @@
           <h3 class="masthead-brand">MemeGen.link</h3>
           <nav>
             <ul class="nav masthead-nav">
-              {% block navigation %}
-              <li class="active"><a href="/">Home</a></li>
-              <li><a href="/magic">Magic</a></li>
-              <li><a href="/latest">Latest</a></li>
-              {% endblock %}
+              {% for id, href, caption in navigation_bar %}
+                <li{% if id == active_page %} class="active"{% endif
+                %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+              {% endfor %}
             </ul>
           </nav>
         </div>
