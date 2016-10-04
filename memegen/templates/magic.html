@@ -7,7 +7,7 @@
         <div class="row">
 
           <div class="col-md-6 meme-generator">
-            <form class="form-horizontal" id=meme-form>
+            <form class="form-horizontal" id="meme-form">
 
               <div class="form-group">
                 <label for="top" class="col-sm-2 control-label">Text</label>
@@ -42,7 +42,7 @@
 
       $("#btn-generate").on('click', function(e) {
         var memeText = $('#meme-text').val();
-        var imageUrl = encodeURIComponent("/api/magic/" + memeText + ".jpg");
+        var imageUrl = encodeURIComponent("api/magic/" + memeText + ".jpg");
 
         $("#meme-image img").attr('src', imageUrl);
         $("#meme-image").attr('href', imageUrl);
