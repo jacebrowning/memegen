@@ -75,21 +75,21 @@
          {% endif %}
        {% endfor %}
       </div>
-     </div>
+    </div>
 
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
-     <script src="static/js/default.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+    <script src="static/js/default.js"></script>
 
-     <script>
-       if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
-         $(".js-meme-selector").trigger("change");
-       } else {
-         $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
-       }
-       $('img').on('load', function(){
-           $(this).css('background-image', 'none');
-       });
-     </script>
+    <script>
+      if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
+        $(".js-meme-selector").trigger("change");
+      } else {
+        $(".js-meme-selector").val("{{ default_template }}").trigger("change");;
+      }
+      $('img').on('load', function(){
+        $(this).css('background-image', 'none');
+      });
+    </script>
 {% endblock %}

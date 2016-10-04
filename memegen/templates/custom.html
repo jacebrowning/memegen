@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% set active_page = "custom" %}
+{% block content %}x
+    <div class="generator">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 meme-generator">
+            <form class="form-horizontal" id="meme-form">
+
+              <div class="form-group">
+                <label for="top" class="col-sm-2 control-label">Top Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text-top" name="top"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bottom" class="col-sm-2 control-label">Bottom Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-text-bottom" name="bottom"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bottom" class="col-sm-2 control-label">Font</label>
+                <div class="col-sm-10">
+                  <select class="js-font-selector" id="meme-font" name="font">
+                    {% for font in fonts %}
+                      <option value="{{ font }}">{{ font }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bottom" class="col-sm-2 control-label">Background</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="meme-background" name="background"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <input type="submit" class="btn btn-primary" id="btn-generate" value="Generate">
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="meme-holder col-md-6">
+            <a id="meme-image" href="">
+              <img width='400' src="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script>
+      $("#meme-form").submit(false);
+
+      $("#btn-generate").on('click', function(e) {
+        var top = $('#meme-text-top').val();
+        var bottom = $('#meme-text-bottom').val();
+        var font = $('#meme-font').val();
+        var alt = $('#meme-background').val();
+        var imageUrl = encodeURIComponent("custom/" + top + "/" + bottom + ".jpg") + "?font=" + font + "&alt=" + alt;
+
+        $("#meme-image img").attr('src', imageUrl);
+        $("#meme-image").attr('href', imageUrl);
+      });
+
+      $('#meme-text-top').val("your text");
+      $('#meme-text-bottom').val("goes here");
+      $('#meme-background').val("http://www.gstatic.com/webp/gallery/1.jpg");
+      $('#btn-generate').click();
+    </script>
+{% endblock %}
