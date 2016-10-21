@@ -1,7 +1,7 @@
 # Server
 Flask==0.11.0
 Flask-API==0.6.6
-webargs==1.0.0
+webargs==1.4.0
 
 # Models
 Pillow==3.1.1
