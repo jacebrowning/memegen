@@ -1,14 +1,14 @@
 # Server
-Flask == 0.11.0
-Flask-API == 0.6.6
-webargs == 1.0.0
+Flask==0.11.0
+Flask-API==0.6.6
+webargs==1.0.0
 
 # Models
-Pillow == 3.1.1
-YORM == 1.0.0
-requests == 2.7.0
-profanityfilter == 1.1
+Pillow==3.1.1
+YORM==1.0.0
+requests==2.7.0
+profanityfilter==1.1
 
 # Deployment
-Flask-Script == 2.0.5
-gunicorn == 19.3.0
+Flask-Script==2.0.5
+gunicorn==19.3.0
