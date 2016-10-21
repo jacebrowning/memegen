@@ -1,6 +1,6 @@
 # Linters
 pep8
-pep257
+pep257==0.7.0
 pylint
 
 # Testing
