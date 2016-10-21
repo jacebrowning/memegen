@@ -4,7 +4,7 @@ docutils
 readme
 pdoc
 mkdocs
-pygments
+pygments==2.1.3
 
 # Tooling
 pep8radius
