@@ -1,7 +1,7 @@
 # Linters
 pep8
 pep257
-pylint
+pylint==1.6.4
 
 # Testing
 pytest
