@@ -3,7 +3,7 @@ pylint
 docutils
 readme
 pdoc
-mkdocs
+mkdocs==0.16.0
 pygments
 
 # Tooling
