@@ -11,8 +11,7 @@ install:
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
   # Install project dependencies
-  - make env
-  - make depends
+  - rm -rf env/.depends* && make depends
 
 build: off
 
