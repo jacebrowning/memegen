@@ -6,6 +6,7 @@ from flask import request, current_app
 from flask_api import FlaskAPI
 from flask_api.exceptions import APIException, NotFound
 
+from . import extensions
 from . import services
 from . import stores
 from . import routes
@@ -38,6 +39,7 @@ def create_app(config):
 
     configure_logging(app)
 
+    register_extensions(app)
     register_services(app)
     register_blueprints(app)
 
@@ -53,6 +55,10 @@ def configure_logging(app):
     logging.getLogger('yorm').setLevel(logging.WARNING)
     logging.getLogger('requests').setLevel(logging.WARNING)
     logging.getLogger('PIL').setLevel(logging.INFO)
+
+
+def register_extensions(app):
+    extensions.cors.init_app(app, methods=['GET', 'OPTIONS'], allow_headers='*')
 
 
 def register_services(app):
