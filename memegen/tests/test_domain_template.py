@@ -105,6 +105,13 @@ def describe_template():
 
             expect(template.sample_path) == "your-text/goes-here"
 
+    def describe_keywords():
+
+        def is_the_set_of_all_relevant_terms(template):
+            template.lines[0] = "A day in the life"
+
+            expect(template.keywords) == {'abc', 'day', 'the', 'bar', 'life'}
+
     def describe_match():
 
         def it_returns_none_when_no_match(template):
@@ -114,6 +121,20 @@ def describe_template():
             template.compile_regexes([r"(\w*)/?(abc)", r"(\w*)/?(def)"])
 
             expect(template.match("_/def")) == (0.42, "_/def")
+
+    def describe_search():
+
+        def it_counts_contained_terms(template):
+            template.key = 'Foo'
+            template.name = "The Foobar Meme"
+            template.aliases.append('Foo')
+            template.aliases.append('Foobar')
+            template.lines[0] = "This on time foobar happened"
+
+            expect(template.search("Foo")) == 5
+
+        def it_treats_none_specially(template):
+            expect(template.search(None)) == -1
 
     def describe_validate_meta():
 

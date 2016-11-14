@@ -1,5 +1,9 @@
 # Revision History
 
+## 4.1
+
+- Added `/api/search/<query>` to support more advanced clients.
+
 ## 4.0
 
 - Moved all API routes to nest under `/api/*`
