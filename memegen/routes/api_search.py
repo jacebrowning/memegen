@@ -29,6 +29,7 @@ def _get_matches(query):
         data['template'] = OrderedDict()
         data['template']['name'] = template.name
         data['template']['description'] = template.link
+        data['template']['keywords'] = sorted(template.keywords)
         data['template']['blank'] = route('image.get', key=template.key,
                                           path='_', _external=True)
         data['template']['example'] = route('image.get', key=template.key,
