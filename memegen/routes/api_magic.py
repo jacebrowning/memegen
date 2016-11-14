@@ -8,8 +8,8 @@ from ._utils import route
 blueprint = Blueprint('magic', __name__, url_prefix="/api/magic/")
 
 
-@blueprint.route("", defaults={'pattern': None}, endpoint='get')
 @blueprint.route("<pattern>")
+@blueprint.route("", defaults={'pattern': None}, endpoint='get')
 def links(pattern):
     """Get a list of all matching links."""
     if not pattern:

@@ -14,6 +14,7 @@ from . import api_templates
 from . import api_fonts
 from . import api_aliases
 from . import api_magic
+from . import api_search
 from . import api_links
 
 # Legacy API routes

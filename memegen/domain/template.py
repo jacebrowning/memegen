@@ -123,21 +123,34 @@ class Template:
     def compile_regexes(self, patterns):
         self.regexes = [re.compile(p, re.IGNORECASE) for p in patterns]
 
-    def match(self, string):
+    def match(self, pattern):
+        """Determine if a pattern matches this templates regexes."""
         if self.regexes:
             log.debug("Matching patterns in %s", self)
 
         for regex in self.regexes:
-            log.debug("Comparing %r to %r", string, regex.pattern)
-            result = regex.match(string)
+            log.debug("Comparing %r to %r", pattern, regex.pattern)
+            result = regex.match(pattern)
             if result:
-                ratio = round(min(len(regex.pattern) / len(string),
-                                  len(string) / len(regex.pattern)), 2)
+                ratio = round(min(len(regex.pattern) / len(pattern),
+                                  len(pattern) / len(regex.pattern)), 2)
                 path = Text(result.group(1) + '/' + result.group(2)).path
                 log.debug("Matched: %r", ratio)
                 return ratio, path
 
         return 0, None
+
+    def search(self, query):
+        """Count the number of times a query exists in relevant fields."""
+        if query is None:
+            return -1
+
+        count = 0
+
+        for field in [self.key, self.name] + self.aliases + self.lines:
+            count += field.lower().count(query.lower())
+
+        return count
 
     def validate(self, validators=None):
         if validators is None:
