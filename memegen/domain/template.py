@@ -100,8 +100,7 @@ class Template:
         words = set()
         for fields in [self.key, self.name] + self.aliases + self.lines:
             for word in fields.lower().replace('-', ' ').split(' '):
-                if len(word) > 2:
-                    words.add(word)
+                words.add(word)
         return words
 
     @staticmethod

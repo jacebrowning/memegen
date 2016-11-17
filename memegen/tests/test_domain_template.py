@@ -110,7 +110,8 @@ def describe_template():
         def is_the_set_of_all_relevant_terms(template):
             template.lines[0] = "A day in the life"
 
-            expect(template.keywords) == {'abc', 'day', 'the', 'bar', 'life'}
+            expect(template.keywords) == \
+                {'bar', 'the', 'day', 'in', 'abc', 'a', 'life'}
 
     def describe_match():
 
