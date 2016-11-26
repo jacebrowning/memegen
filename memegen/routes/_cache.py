@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 @yorm.sync("data/images/cache.yml")
 class Cache:
 
-    SIZE = 9
+    SIZE = 100
 
     def __init__(self):
         self.items = []
