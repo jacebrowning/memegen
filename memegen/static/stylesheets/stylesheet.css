@@ -135,26 +135,28 @@ span.meme-text {
   margin-top: 40px;
 }
 
-
 /*********************************************/
 /* Meme Templates */
 .meme-templates {
+  margin-bottom: 50px;
   text-align: center;
   color: #555;
 }
 
 .meme-img {
   width: auto;
-  max-width:100%;
-  height: 240px;
+  max-width: 100%;
+  height: 250px;
   padding: 20px;
 }
 
 /*********************************************/
 /* Footer */
 .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   min-height: 50px;
-  margin-top: 75px;
   padding: 0 20px;
   background-color: #555;
 }
@@ -162,7 +164,6 @@ span.meme-text {
 .footer-nav {
   float: none;
 }
-
 
 /*********************************************/
 /* Responsive Hotness */
