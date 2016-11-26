@@ -1,4 +1,4 @@
-# pylint: disable=unused-variable,misplaced-comparison-constant,expression-not-assigned
+# pylint: disable=unused-variable,unused-argument,misplaced-comparison-constant,expression-not-assigned
 
 import os
 
@@ -139,7 +139,12 @@ def describe_get():
 
     def describe_latest():
 
-        def when_existing(client):
+        @pytest.fixture()
+        def clear_cache():
+            with open(os.path.join(IMAGES, 'cache.yml'), 'w') as cache:
+                cache.write("items: []")
+
+        def when_existing(client, clear_cache):
             client.get("/iw/my-first-meme.jpg")
 
             response = client.get("/latest.jpg")
@@ -148,10 +153,7 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 '<a href="http://localhost/iw/my-first-meme.jpg">')
 
-        def when_missing(client):
-            with open(os.path.join(IMAGES, 'cache.yml'), 'w') as cache:
-                cache.write("items: []")
-
+        def when_missing(client, clear_cache):
             response = client.get("/latest.jpg")
 
             expect(response.status_code) == 302

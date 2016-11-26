@@ -3,27 +3,14 @@
 {% block title %} | Latest{% endblock %}
 {% block content %}
   <div class="meme-templates">
-    <div class="container">
-      <div class="row">
+    <div class="row">
       {% for src in srcs %}
-        <div class="col-sm-4">
-          <img class="meme-example" width="240" src="{{ src }}" id="latest{{ loop.index }}" />
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+          <img class="meme-img" src="{{ src }}" id="latest{{ loop.index }}" />
         </div>
-
-       {% if loop.index is divisibleby 3 %}
-       </div>
-       {% endif %}
-
-       {% if loop.index is divisibleby 3 %}
-       <div class="row">
-       {% endif %}
-
-       {% if loop.last %}
-        </div>
-       {% endif %}
-     {% endfor %}
+      {% endfor %}
     </div>
-   </div>
+  </div>
 
   <script>
     var reload = function(){
