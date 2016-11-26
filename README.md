@@ -82,3 +82,5 @@ Check out one of these projects:
 or install an app:
 
 * [Meme Bot](https://slack.com/apps/A0H25FSUS-meme-bot)
+
+or search for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
