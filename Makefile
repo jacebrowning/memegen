@@ -1,5 +1,5 @@
 # Project settings
-PROJECT := MemeGen
+PROJECT := memegen
 PACKAGE := memegen
 REPOSITORY := jacebrowning/memegen
 PACKAGES := $(PACKAGE) tests scripts

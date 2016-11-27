@@ -34,7 +34,7 @@ img {
 .masthead {
   background-color: #333;
   color: #fff;
-  height: 250px;
+  padding-bottom: 10px;
 }
 .masthead-nav > li {
   display: inline-block;
@@ -63,18 +63,6 @@ img {
 .masthead-nav > .active > a:focus {
   color: #fff;
   border-bottom-color: #fff;
-}
-.masthead .tagline {
-  margin: 25px 0;
-  text-align: center;
-}
-
-.tagline h2 {
-  font-size: 36px;
-}
-
-.tagline p {
-  font-size: 16px;
 }
 
 .generator {
@@ -183,15 +171,7 @@ span.meme-text {
   .masthead-nav {
     float: right;
   }
-  .masthead .tagline {
-    margin: 50px 0;
-  }
-  .tagline h2 {
-    font-size: 42px;
-  }
-  .tagline p {
-    font-size: 18px;
-  }
+
   .meme-generator {
     padding: 0 30px;
   }

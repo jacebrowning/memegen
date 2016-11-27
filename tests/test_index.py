@@ -10,4 +10,4 @@ def describe_generator():
 
         expect(response.status_code) == 200
         expect(response.mimetype) == 'text/html'
-        expect(response.get_data(as_text=True)).contains("meme generator")
+        expect(response.get_data(as_text=True)).contains("memegen.link")

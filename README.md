@@ -1,4 +1,4 @@
-# MemeGen
+# memegen.link
 
 An API to generate meme images based solely on requested URLs.
 
@@ -10,7 +10,7 @@ Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrownin
 
 Visit [http://memegen.link/api](http://memegen.link/api) to browse the API and view examples.
 
-MemeGen URLs contain all the information necessary to generate the image. For example, http://memegen.link/buzz/memes/memes-everywhere.jpg produces:
+The URLs contain all the information necessary to generate the image. For example, http://memegen.link/buzz/memes/memes-everywhere.jpg produces:
 
 ![Sample Image](http://memegen.link/buzz/memes/memes-everywhere.jpg)
 
@@ -18,7 +18,7 @@ But, the site can also produce masked URLs to conceal the joke:
 
 http://memegen.link/_YnV6egltZW1lcy9tZW1lcy1ldmVyeXdoZXJl.jpg
 
-For any MemeGen image, lose the extension to see a list of all format options:
+For any image, lose the extension to see a list of all format options:
 
 http://memegen.link/buzz/memes/memes-everywhere
 
