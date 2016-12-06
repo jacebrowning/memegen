@@ -1,6 +1,11 @@
+import logging
+
 from ..domain import Image, Font
 
 from ._base import Service
+
+
+log = logging.getLogger(__name__)
 
 
 class ImageService(Service):
@@ -24,5 +29,8 @@ class ImageService(Service):
             elif "image file" in str(exception):
                 exception = self.exceptions.InvalidImageLink
             raise exception from None
+        except SystemError as exception:
+            log.warning(exception)
+            raise self.exceptions.InvalidImageLink from None
 
         return image
