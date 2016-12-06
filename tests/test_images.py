@@ -99,8 +99,15 @@ def describe_get():
 
             expect(response.status_code) == 415
 
-        def it_handles_int32_pixels(client):
+        def it_handles_png_int32_pixels(client):
             url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/201692816359570.jpeg"
+            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
+
+        def it_handles_jpg_cmyk_pixels(client):
+            url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/Channel_digital_image_CMYK_color.jpg"
             response = client.get("/sad-biden/hello.jpg?alt=" + url)
 
             expect(response.status_code) == 200
