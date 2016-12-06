@@ -48,6 +48,13 @@ def make_meme(top, bottom, font, background, path, match_font_size=False):
     """Add text to an image and save it."""
     log.info("Loading background: %s", background)
     img = ImageFile.open(background)
+    if img.mode not in ('RGB', 'RGBA'):
+        if img.format == 'JPEG':
+            img = img.convert('RGB')
+            img.format = 'JPEG'
+        else:
+            img = img.convert('RGBA')
+            img.format = 'PNG'
 
     # Resize to a maximum height and width
     img.thumbnail((500, 500))
