@@ -12,6 +12,14 @@ ENV = 'REGENERATE_IMAGES'
 SAMPLES = Path(__file__).parent.joinpath("examples")
 
 
+def save_image(client, url, name):
+    response = client.get(url)
+    data = response.get_data()
+
+    with SAMPLES.joinpath(name).open('wb') as image:
+        image.write(data)
+
+
 @pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
 def test_examples(client):
     """Create various example images for manual verification."""
@@ -41,11 +49,3 @@ def test_japanese_font(client):
     """Create a meme using a font that supports Japanese characters."""
     url = "/ch/turning/日本語.jpg?font=notosanscjkjp-black"
     save_image(client, url, "notosans.jpg")
-
-
-def save_image(client, url, name):
-    response = client.get(url)
-    data = response.get_data()
-
-    with SAMPLES.joinpath(name).open('wb') as image:
-        image.write(data)
