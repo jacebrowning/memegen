@@ -99,11 +99,12 @@ def describe_get():
 
             expect(response.status_code) == 415
 
-        def it_returns_an_error_with_incorrect_extensions(client):
+        def it_handles_int32_pixels(client):
             url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/201692816359570.jpeg"
             response = client.get("/sad-biden/hello.jpg?alt=" + url)
 
-            expect(response.status_code) == 415
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
 
         def it_redirects_to_lose_alt_when_unknown_url(client):
             url = "http://example.com/not/a/real/image.jpg"

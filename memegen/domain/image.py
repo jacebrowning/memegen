@@ -47,7 +47,7 @@ class Image:
 def make_meme(top, bottom, font, background, path, match_font_size=False):
     """Add text to an image and save it."""
     log.info("Loading background: %s", background)
-    img = ImageFile.open(background)
+    img = ImageFile.open(background).convert('RGBA')
 
     # Resize to a maximum height and width
     img.thumbnail((500, 500))
@@ -92,7 +92,7 @@ def make_meme(top, bottom, font, background, path, match_font_size=False):
                         bottom, bottom_font, bottom_font_size)
 
     log.info("Generating image: %s", path)
-    return img.save(path, format=img.format)
+    return img.save(path, format='png')
 
 
 def _draw_outlined_text(draw_image, text_position, text, font, font_size):
