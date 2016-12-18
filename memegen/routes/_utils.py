@@ -59,14 +59,13 @@ def _track(title):
         tid=get_tid(),
         cid=request.remote_addr,
 
-        t='event',
-        ec='Image',
-        ea='GET',
-        el=str(title),
+        t='pageview',
+        dh='memegen.link',
+        dp=request.full_path,
+        dt=str(title),
 
         uip=request.remote_addr,
         ua=request.user_agent.string,
-        dr=request.referrer,
     )
     if get_tid(default=None):
         requests.post("http://www.google-analytics.com/collect", data=data)
