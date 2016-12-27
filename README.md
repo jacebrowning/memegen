@@ -71,16 +71,14 @@ To add a new template, please follow the [contributor instructions](CONTRIBUTING
 
 Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/memegenerator) for the inspiration!
 
-## Slack Integration
+## Sample Clients
 
-Check out one of these projects:
+| Type | Language | Source | Link |
+| :-: | :-:| :-- | :-- |
+| Slack | Python | [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme) | --- |
+| Slack | Go | [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot) | --- |
+| Slack | --- | --- | http://www.memetizer.com |
+| Hain | JavaScript | [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) | --- |
+| Website | Clojure | [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes) | http://www.mightyfinememes.com |
 
-* [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)
-* [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)
-* [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme)
-
-or install an app:
-
-* [Meme Bot](https://slack.com/apps/A0H25FSUS-meme-bot)
-
-or search for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
+Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
