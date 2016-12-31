@@ -69,10 +69,11 @@ def describe_post():
         ) == load(response)
 
     def can_create_a_new_meme(client):
-        params = {'top': "foo", 'bottom': "bar"}
+        params = {'top': "#special characters?",
+                  'bottom': "underscore_ dash-"}
         response = client.post("/api/templates/fry", data=params)
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="/fry/foo/bar.jpg">'
+            '<a href="/fry/~hspecial-characters~q/underscore__-dash--.jpg">'
         )
