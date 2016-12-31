@@ -4,6 +4,8 @@ from flask import Blueprint, current_app as app, request, redirect
 from flask_api import exceptions
 from webargs import fields
 
+from ..domain import Text
+
 from ._parser import parser
 from ._settings import CONTRIBUTING_URL
 from ._utils import route
@@ -13,8 +15,8 @@ blueprint = Blueprint('templates', __name__, url_prefix="/api/templates/")
 
 OPTIONS = {
     # pylint: disable=no-member
-    'top': fields.Str(missing="_"),
-    'bottom': fields.Str(missing="_"),
+    'top': fields.Str(missing=""),
+    'bottom': fields.Str(missing=""),
 }
 
 
@@ -52,8 +54,8 @@ def create_meme(key, top, bottom):
         return data
 
     elif request.method == 'POST':
-        path = "/".join([top, bottom])
-        return redirect(route('image.get', key=key, path=path), 303)
+        text = Text([top, bottom], translate_spaces=False)
+        return redirect(route('image.get', key=key, path=text.path), 303)
 
     else:  # pragma: no cover
         assert None

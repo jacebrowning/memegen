@@ -194,3 +194,8 @@ class TestPath:
         text = Text('"quoted"')
 
         assert "''quoted''" == text.path
+
+    def test_exact_input_can_be_used(self):
+        text = Text("underscore_ dash-", translate_spaces=False)
+
+        assert "underscore__-dash--" == text.path
