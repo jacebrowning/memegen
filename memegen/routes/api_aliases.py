@@ -9,7 +9,7 @@ from ._utils import route
 blueprint = Blueprint('aliases', __name__, url_prefix="/api/aliases/")
 
 FILTER = {
-    'name': fields.Str(missing="")  # pylint: disable=no-member
+    'name': fields.Str(missing="")
 }
 
 

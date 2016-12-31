@@ -1,5 +1,9 @@
 # Revision History
 
+## 4.4
+
+- Added `?preview=true` option to images to disable caching and analytics for clients that show partial image previews.
+
 ## 4.3
 
 - Added `{"redirect": false}` option on POST to `/api/templates/<key>`.

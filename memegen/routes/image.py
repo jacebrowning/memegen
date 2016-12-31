@@ -6,7 +6,7 @@ from webargs import fields, flaskparser
 from .. import domain
 
 from ._cache import Cache
-from ._utils import route, display
+from ._utils import route, track, display
 
 
 blueprint = Blueprint('image', __name__)
@@ -14,8 +14,9 @@ log = logging.getLogger(__name__)
 cache = Cache()
 
 OPTIONS = {
-    'alt': fields.Str(missing=None),  # pylint: disable=no-member
-    'font': fields.Str(missing=None),  # pylint: disable=no-member
+    'alt': fields.Str(missing=None),
+    'font': fields.Str(missing=None),
+    'preview': fields.Bool(missing=False)
 }
 
 
@@ -34,10 +35,13 @@ def get_latest(index=1):
 
 @blueprint.route("/<key>.jpg")
 @flaskparser.use_kwargs(OPTIONS)
-def get_without_text(key, **kwargs):
+def get_without_text(key, **options):
+    options.pop('preview')
+
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
-    return redirect(route('.get', key=key, path=text.path, **kwargs))
+
+    return redirect(route('.get', key=key, path=text.path, **options))
 
 
 @blueprint.route("/<key>.jpeg")
@@ -47,27 +51,36 @@ def get_without_text_jpeg(key):
 
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
-def get_with_text(key, path, alt, font):
+def get_with_text(key, path, alt, font, preview):
+    options = dict(key=key, path=path, alt=alt, font=font)
+    if preview:
+        options['preview'] = 'true'
+
     text = domain.Text(path)
     fontfile = app.font_service.find(font)
 
     template = app.template_service.find(key, allow_missing=True)
     if template.key != key:
-        return redirect(route('.get', key=template.key, path=path, alt=alt))
+        options['key'] = template.key
+        return redirect(route('.get', **options))
 
     if alt and template.path == template.get_path(alt):
-        return redirect(route('.get', key=key, path=path, font=font))
+        options.pop('alt')
+        return redirect(route('.get', **options))
 
     if font and not fontfile:
-        return redirect(route('.get', key=key, path=path, alt=alt))
+        options.pop('font')
+        return redirect(route('.get', **options))
 
     if path != text.path:
-        return redirect(route(
-            '.get', key=key, path=text.path, alt=alt, font=font))
+        options['path'] = text.path
+        return redirect(route('.get', **options))
 
     image = app.image_service.create(template, text, style=alt, font=fontfile)
 
-    cache.add(key=key, path=path, style=alt, font=font)
+    if not preview:
+        cache.add(key=key, path=path, style=alt, font=font)
+        track(image.text)
 
     return display(image.text, image.path)
 
@@ -84,5 +97,7 @@ def get_encoded(code):
     template = app.template_service.find(key)
     text = domain.Text(path)
     image = app.image_service.create(template, text)
+
+    track(image.text)
 
     return display(image.text, image.path)
