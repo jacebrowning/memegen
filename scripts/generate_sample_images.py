@@ -1,5 +1,4 @@
 #!env/bin/python
-# pylint: disable=no-member
 
 import logging
 

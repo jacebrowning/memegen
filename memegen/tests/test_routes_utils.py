@@ -35,16 +35,12 @@ def describe_display():
         assert 'url("it\'s a path?alt=style")' in html
         assert "ga('create', 'my_tid', 'auto');" in html
 
-    @patch('memegen.routes._utils._track')
     @patch('memegen.routes._utils.send_file')
     @patch('memegen.routes._utils.request', request_image)
-    def it_returns_an_image_otherwise(mock_send_file, mock_track):
+    def it_returns_an_image_otherwise(mock_send_file):
 
         display("my_title", "my_path")
 
-        expect(mock_track.mock_calls) == [
-            call("my_title"),
-        ]
         expect(mock_send_file.mock_calls) == [
             call("my_path", mimetype='image/jpeg'),
         ]

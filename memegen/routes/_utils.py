@@ -40,7 +40,6 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
 
     else:
         log.info("Sending image: %s", path)
-        _track(title)
         return send_file(path, mimetype=mimetype)
 
 
@@ -52,7 +51,7 @@ def _nocache(response):
     return response
 
 
-def _track(title):
+def track(title):
     """Log the requested content, server-side."""
     data = dict(
         v=1,

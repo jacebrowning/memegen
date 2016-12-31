@@ -63,6 +63,10 @@ For example, http://memegen.link/joker/pick-a-different-font/people-lose-their-m
 
 ![Custom Font](http://memegen.link/joker/pick-a-different-font/people-lose-their-minds.jpg?font=typoline-demo)
 
+### Preview Images
+
+API clients that want to show a preview of an image while the user is still typing should disable caching and analytics via `?preview=true`.
+
 ## Adding Templates
 
 [![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)

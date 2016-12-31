@@ -42,7 +42,7 @@ class DevConfig(Config):
 def get_config(name):
     assert name, "no configuration specified"
 
-    for config in Config.__subclasses__():  # pylint: disable=no-member
+    for config in Config.__subclasses__():
         if config.ENV == name:
             return config
 

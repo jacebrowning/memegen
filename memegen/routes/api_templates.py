@@ -14,7 +14,6 @@ from ._utils import route
 blueprint = Blueprint('templates', __name__, url_prefix="/api/templates/")
 
 OPTIONS = {
-    # pylint: disable=no-member
     'top': fields.Str(missing=""),
     'bottom': fields.Str(missing=""),
     '_redirect': fields.Bool(load_from='redirect', missing=True),

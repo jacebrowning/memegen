@@ -11,7 +11,7 @@ from memegen.app import create_app
 class Validate(Command):
     """Checks for issues in all templates."""
 
-    # pylint: disable=method-hidden,no-member
+    # pylint: disable=method-hidden
 
     def run(self):
         if app.template_service.validate():

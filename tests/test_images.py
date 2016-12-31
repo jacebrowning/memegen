@@ -151,6 +151,15 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 '<a href="/iw/what~q.jpg?font=impact">')
 
+    def describe_preview():
+
+        def it_keeps_flag_after_redirect(client):
+            response = client.get("/iw/i am still typi.jpg?preview=true")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/i-am-still-typi.jpg?preview=true">')
+
     def describe_latest():
 
         @pytest.fixture()
