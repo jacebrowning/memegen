@@ -1,5 +1,9 @@
 # Revision History
 
+## 4.3
+
+- Added `{"redirect": false}` option on POST to `/api/templates/<key>`.
+
 ## 4.2
 
 - Added special character support on POST to `/api/templates/<key>`.

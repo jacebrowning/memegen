@@ -103,3 +103,21 @@ def describe_post():
         expect(load(response, as_json=False)).contains(
             '<a href="/fry/_/bar.jpg">'
         )
+
+    def it_supports_no_text(client):
+        params = {}
+        response = client.post("/api/templates/fry", data=params)
+
+        expect(response.status_code) == 303
+        expect(load(response, as_json=False)).contains(
+            '<a href="/fry/_.jpg">'
+        )
+
+    def it_can_return_json_instead_of_redirecting(client):
+        params = {'top': "foo", 'bottom': "bar", 'redirect': False}
+        response = client.post("/api/templates/fry", data=params)
+
+        expect(response.status_code) == 200
+        expect(load(response)) == {
+            'href': "/fry/foo/bar.jpg"
+        }
