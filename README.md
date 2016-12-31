@@ -3,8 +3,13 @@
 An API to generate meme images based solely on requested URLs.
 
 Unix: [![Unix Build Status](http://img.shields.io/travis/jacebrowning/memegen/master.svg)](https://travis-ci.org/jacebrowning/memegen)
-Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/memegen.svg)](https://ci.appveyor.com/project/jacebrowning/memegen)<br>Metrics: [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/master.svg)](https://coveralls.io/r/jacebrowning/memegen)
+Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/memegen.svg)](https://ci.appveyor.com/project/jacebrowning/memegen)
+<br>
+Metrics: [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/master.svg)](https://coveralls.io/r/jacebrowning/memegen)
 [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/memegen.svg)](https://scrutinizer-ci.com/g/jacebrowning/memegen/?branch=master)
+<br>
+Issues: 
+[![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)
 
 ## Generating Images
 
@@ -68,8 +73,6 @@ For example, http://memegen.link/joker/pick-a-different-font/people-lose-their-m
 API clients that want to show a preview of an image while the user is still typing should disable caching and analytics via `?preview=true`.
 
 ## Adding Templates
-
-[![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)
 
 To add a new template, please follow the [contributor instructions](CONTRIBUTING.md).
 
