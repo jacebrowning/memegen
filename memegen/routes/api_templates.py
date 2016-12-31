@@ -17,6 +17,7 @@ OPTIONS = {
     # pylint: disable=no-member
     'top': fields.Str(missing=""),
     'bottom': fields.Str(missing=""),
+    '_redirect': fields.Bool(load_from='redirect', missing=True),
 }
 
 
@@ -37,7 +38,7 @@ def create_template():
 
 @blueprint.route("<key>", methods=['GET', 'POST'], endpoint='create')
 @parser.use_kwargs(OPTIONS)
-def create_meme(key, top, bottom):
+def create_meme(key, top, bottom, _redirect):
     """Generate a meme from a template."""
     if request.method == 'GET':
         template = app.template_service.find(key)
@@ -54,8 +55,17 @@ def create_meme(key, top, bottom):
         return data
 
     elif request.method == 'POST':
-        text = Text([top, bottom], translate_spaces=False)
-        return redirect(route('image.get', key=key, path=text.path), 303)
+        if top or bottom:
+            text = Text([top, bottom], translate_spaces=False)
+        else:
+            text = Text("_")
+
+        url = route('image.get', key=key, path=text.path)
+
+        if _redirect:
+            return redirect(url, 303)
+        else:
+            return dict(href=url)
 
     else:  # pragma: no cover
         assert None

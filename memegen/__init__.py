@@ -3,7 +3,7 @@
 import sys
 
 __project__ = 'memegen.link'
-__version__ = '4.2'
+__version__ = '4.3'
 
 VERSION = "{} v{}".format(__project__, __version__)
 
