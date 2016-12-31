@@ -60,7 +60,7 @@ def describe_get():
 
 def describe_post():
 
-    def new_templates_are_created_using_github(client):
+    def it_requies_an_existing_template(client):
         response = client.post("/api/templates/")
 
         assert 403 == response.status_code
@@ -68,11 +68,38 @@ def describe_post():
             message="https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
         ) == load(response)
 
-    def can_create_a_new_meme(client):
+    def it_can_create_a_new_meme(client):
         params = {'top': "foo", 'bottom': "bar"}
         response = client.post("/api/templates/fry", data=params)
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
             '<a href="/fry/foo/bar.jpg">'
+        )
+
+    def it_escapes_special_characters(client):
+        params = {'top': "#special characters?", 'bottom': "underscore_ dash-"}
+        response = client.post("/api/templates/fry", data=params)
+
+        expect(response.status_code) == 303
+        expect(load(response, as_json=False)).contains(
+            '<a href="/fry/~hspecial-characters~q/underscore__-dash--.jpg">'
+        )
+
+    def it_supports_top_only(client):
+        params = {'top': "foo"}
+        response = client.post("/api/templates/fry", data=params)
+
+        expect(response.status_code) == 303
+        expect(load(response, as_json=False)).contains(
+            '<a href="/fry/foo.jpg">'
+        )
+
+    def it_supports_bottom_only(client):
+        params = {'bottom': "bar"}
+        response = client.post("/api/templates/fry", data=params)
+
+        expect(response.status_code) == 303
+        expect(load(response, as_json=False)).contains(
+            '<a href="/fry/_/bar.jpg">'
         )

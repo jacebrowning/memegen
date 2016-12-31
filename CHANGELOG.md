@@ -1,5 +1,9 @@
 # Revision History
 
+## 4.2
+
+- Added special character support on POST to `/api/templates/<key>`.
+
 ## 4.1
 
 - Added `/api/search/<query>` to support more advanced clients.
