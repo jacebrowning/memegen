@@ -26,6 +26,7 @@ body {
 img {
     background: transparent url('/images/loading.gif');
     background-repeat: no-repeat;
+    background-size: contain;
     background-position: center;
 }
 
