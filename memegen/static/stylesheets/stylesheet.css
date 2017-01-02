@@ -22,15 +22,6 @@ body {
 }
 
 /*********************************************/
-/* loading stuff */
-img {
-    background: transparent url('/images/loading.gif');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-/*********************************************/
 /* masthead */
 .masthead {
   background-color: #333;
@@ -133,7 +124,11 @@ span.meme-text {
 }
 
 .meme-img {
-  width: auto;
+  background: url('/images/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+
+  min-width: 250px;
   max-width: 100%;
   height: 250px;
   padding: 20px;
