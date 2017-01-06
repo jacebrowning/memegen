@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@jasich">
+    <meta name="twitter:title" content="memegen.link">
+    <meta name="twitter:description" content="{{ title }}">
+    <meta name="twitter:image" content="{{ src | safe }}">
+    <meta name="twitter:image:alt" content="oh no!">
 
-  <title>{{ title }}</title>
+    <title>{{ title }}</title>
 
-  <style>
-    body {
+    <style>
+      body {
       background-image: url("{{ src | safe }}");
       background-repeat: no-repeat;
-    }
-  </style>
+      }
+    </style>
 
-  <!-- Google Analytics -->
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', '{{ ga_tid }}', 'auto');
-    ga('send', 'pageview');
-  </script>
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', '{{ ga_tid }}', 'auto');
+      ga('send', 'pageview');
+    </script>
 
-</head>
-<body>
-</body>
+  </head>
+  <body>
+  </body>
 </html>

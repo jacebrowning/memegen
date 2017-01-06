@@ -16,7 +16,8 @@ cache = Cache()
 OPTIONS = {
     'alt': fields.Str(missing=None),
     'font': fields.Str(missing=None),
-    'preview': fields.Bool(missing=False)
+    'preview': fields.Bool(missing=False),
+    'share': fields.Bool(missing=False)
 }
 
 
@@ -37,6 +38,7 @@ def get_latest(index=1):
 @flaskparser.use_kwargs(OPTIONS)
 def get_without_text(key, **options):
     options.pop('preview')
+    options.pop('share')
 
     template = app.template_service.find(key)
     text = domain.Text(template.default_path)
@@ -51,10 +53,13 @@ def get_without_text_jpeg(key):
 
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
-def get_with_text(key, path, alt, font, preview):
+def get_with_text(key, path, alt, font, preview, share):
     options = dict(key=key, path=path, alt=alt, font=font)
     if preview:
         options['preview'] = 'true'
+
+    if share:
+        options['share'] = 'true'
 
     text = domain.Text(path)
     fontfile = app.font_service.find(font)
@@ -82,7 +87,7 @@ def get_with_text(key, path, alt, font, preview):
         cache.add(key=key, path=path, style=alt, font=font)
         track(image.text)
 
-    return display(image.text, image.path)
+    return display(image.text, image.path, share=share)
 
 
 @blueprint.route("/<key>/<path:path>.jpeg")

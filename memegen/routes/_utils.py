@@ -22,12 +22,12 @@ def _secure(url):
     return url
 
 
-def display(title, path, raw=False, mimetype='image/jpeg'):
+def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     """Render a webpage or raw image based on request."""
     mimetypes = request.headers.get('Accept', "").split(',')
     browser = 'text/html' in mimetypes
 
-    if browser:
+    if browser or share:
         log.info("Rending image on page: %s", request.url)
 
         html = render_template(
