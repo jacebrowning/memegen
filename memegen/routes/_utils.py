@@ -22,17 +22,18 @@ def _secure(url):
     return url
 
 
-def display(title, path, raw=False, mimetype='image/jpeg'):
+def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     """Render a webpage or raw image based on request."""
     mimetypes = request.headers.get('Accept', "").split(',')
     browser = 'text/html' in mimetypes
+    src_url = _sanitize_url_query_params(request)
 
-    if browser:
-        log.info("Rending image on page: %s", request.url)
+    if browser or share:
+        log.info("Rending image on page: %s", src_url)
 
         html = render_template(
             'image.html',
-            src=_secure(request.url),
+            src=_secure(src_url),
             title=title,
             ga_tid=get_tid(),
         )
@@ -41,6 +42,17 @@ def display(title, path, raw=False, mimetype='image/jpeg'):
     else:
         log.info("Sending image: %s", path)
         return send_file(path, mimetype=mimetype)
+
+
+def _sanitize_url_query_params(req):
+    """Ensure query string does not affect image rendering."""
+    query_values = dict(req.args)
+    src_query_params = ["{}={}".format(k, v[0])
+                        for k, v in query_values.items() if k != 'share']
+    src_url = req.base_url
+    if len(src_query_params):
+        src_url += "?{}".format("&".join(src_query_params))
+    return src_url
 
 
 def _nocache(response):
