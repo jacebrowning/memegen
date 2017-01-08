@@ -16,10 +16,10 @@ class ImageService(Service):
         self.font_store = font_store
         self.image_store = image_store
 
-    def create(self, template, text, style=None, font=None):
+    def create(self, template, text, font=None, **options):
         font = font or self.font_store.find(Font.DEFAULT)
 
-        image = Image(template, text, style=style, font=font)
+        image = Image(template, text, font=font, **options)
 
         try:
             self.image_store.create(image)
