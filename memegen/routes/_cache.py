@@ -22,10 +22,10 @@ class Cache:
             log.debug("Already cached: %s", kwargs)
             return
         if kwargs['key'] == 'custom':
-            log.debug("Skipped caching of custom: %s", kwargs)
+            log.debug("Skipped caching of custom background: %s", kwargs)
             return
         if profanityfilter.is_profane(kwargs['path']):
-            log.debug("Skipped caching of profanity: %s", kwargs)
+            log.debug("Skipped caching of profane content: %s", kwargs)
             return
 
         log.info("Caching: %s", kwargs)

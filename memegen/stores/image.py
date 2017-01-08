@@ -20,4 +20,4 @@ class ImageStore:
             return
 
         image.root = self.root
-        image.generate()
+        image.save()

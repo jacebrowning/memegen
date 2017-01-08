@@ -17,7 +17,9 @@ OPTIONS = {
     'alt': fields.Str(missing=None),
     'font': fields.Str(missing=None),
     'preview': fields.Bool(missing=False),
-    'share': fields.Bool(missing=False)
+    'share': fields.Bool(missing=False),
+    'width': fields.Int(missing=None),
+    'height': fields.Int(missing=None),
 }
 
 
@@ -53,11 +55,10 @@ def get_without_text_jpeg(key):
 
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
-def get_with_text(key, path, alt, font, preview, share):
+def get_with_text(key, path, alt, font, preview, share, **size):
     options = dict(key=key, path=path, alt=alt, font=font)
     if preview:
         options['preview'] = 'true'
-
     if share:
         options['share'] = 'true'
 
@@ -81,7 +82,8 @@ def get_with_text(key, path, alt, font, preview, share):
         options['path'] = text.path
         return redirect(route('.get', **options))
 
-    image = app.image_service.create(template, text, style=alt, font=fontfile)
+    image = app.image_service.create(template, text,
+                                     style=alt, font=fontfile, size=size)
 
     if not preview:
         cache.add(key=key, path=path, style=alt, font=font)
