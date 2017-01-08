@@ -29,14 +29,17 @@ class Image(object):
         base = os.path.join(self.root, self.template.key, self.text.path)
 
         if self.style or self.font or self.width or self.height:
-            sha = hashlib.md5()
-            sha.update((self.style or "").encode('utf-8'))
-            sha.update(str(self.font).encode('utf-8'))
-            sha.update(str(self.width or "").encode('utf-8'))
-            sha.update(str(self.height or "").encode('utf-8'))
-            return "{}#{}.img".format(base, sha.hexdigest())
+            slug = self.hash(self.style, self.font, self.width, self.height)
+            return "{}#{}.img".format(base, slug)
         else:
             return base + ".img"
+
+    @staticmethod
+    def hash(*values):
+        sha = hashlib.md5()
+        for value in values:
+            sha.update(str(value or "").encode('utf-8'))
+        return sha.hexdigest()
 
     def save(self):
         data = _generate(
