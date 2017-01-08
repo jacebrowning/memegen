@@ -121,7 +121,7 @@ def _generate(top, bottom, font, background, width, height):
     if width and height:
         base_width, base_height = image.size
         padding = ImageFile.new('RGBA', (width, height), (0, 0, 0))
-        padding.format = 'JPEG'
+        padding.format = 'PNG'
         padding_width, padding_height = padding.size
         offset = ((padding_width - base_width) // 2,
                   (padding_height - base_height) // 2)
