@@ -27,15 +27,16 @@ class Image(object):
             return None
 
         base = os.path.join(self.root, self.template.key, self.text.path)
+        custom = [self.style, self.font, self.width, self.height]
 
-        if self.style or self.font or self.width or self.height:
-            slug = self.hash(self.style, self.font, self.width, self.height)
+        if any(custom):
+            slug = self.hash(custom)
             return "{}#{}.img".format(base, slug)
         else:
             return base + ".img"
 
     @staticmethod
-    def hash(*values):
+    def hash(values):
         sha = hashlib.md5()
         for value in values:
             sha.update(str(value or "").encode('utf-8'))
@@ -81,14 +82,13 @@ def _generate(top, bottom, font, background, width, height):
     else:
         max_dimensions = 400, 400
     image.thumbnail(max_dimensions)
-    image_size = image.size
 
     # Draw image
     draw = ImageDraw.Draw(image)
 
-    max_font_size = int(image_size[1] / 5)
-    min_font_size_single_line = int(image_size[1] / 12)
-    max_text_len = image_size[0] - 20
+    max_font_size = int(image.size[1] / 5)
+    min_font_size_single_line = int(image.size[1] / 12)
+    max_text_len = image.size[0] - 20
     top_font_size, top = _optimize_font_size(font, top, max_font_size,
                                              min_font_size_single_line,
                                              max_text_len)
@@ -103,19 +103,30 @@ def _generate(top, bottom, font, background, width, height):
     bottom_text_size = draw.multiline_textsize(bottom, bottom_font)
 
     # Find top centered position for top text
-    top_text_position_x = (image_size[0] / 2) - (top_text_size[0] / 2)
+    top_text_position_x = (image.size[0] / 2) - (top_text_size[0] / 2)
     top_text_position_y = 0
     top_text_position = (top_text_position_x, top_text_position_y)
 
     # Find bottom centered position for bottom text
-    bottom_text_size_x = (image_size[0] / 2) - (bottom_text_size[0] / 2)
-    bottom_text_size_y = image_size[1] - bottom_text_size[1] * (7 / 6)
+    bottom_text_size_x = (image.size[0] / 2) - (bottom_text_size[0] / 2)
+    bottom_text_size_y = image.size[1] - bottom_text_size[1] * (7 / 6)
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
     _draw_outlined_text(draw, top_text_position,
                         top, top_font, top_font_size)
     _draw_outlined_text(draw, bottom_text_position,
                         bottom, bottom_font, bottom_font_size)
+
+    # Pad image if a specific dimension is requested
+    if width and height:
+        base_width, base_height = image.size
+        padding = ImageFile.new('RGBA', (width, height), (0, 0, 0))
+        padding.format = 'JPEG'
+        padding_width, padding_height = padding.size
+        offset = ((padding_width - base_width) // 2,
+                  (padding_height - base_height) // 2)
+        padding.paste(image, offset)
+        image = padding
 
     return image
 
