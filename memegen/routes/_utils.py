@@ -26,15 +26,16 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     """Render a webpage or raw image based on request."""
     mimetypes = request.headers.get('Accept', "").split(',')
     browser = 'text/html' in mimetypes
-    src_url = _sanitize_url_query_params(request)
+    src_url, href_url = _sanitize_url_params(request)
 
     if browser or share:
         log.info("Rending image on page: %s", src_url)
 
         html = render_template(
             'image.html',
-            src=_secure(src_url),
             title=title,
+            src=_secure(src_url),
+            href=_secure(href_url),
             ga_tid=get_tid(),
         )
         return html if raw else _nocache(Response(html))
@@ -44,15 +45,27 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
         return send_file(path, mimetype=mimetype)
 
 
-def _sanitize_url_query_params(req):
-    """Ensure query string does not affect image rendering."""
-    query_values = dict(req.args)
-    src_query_params = ["{}={}".format(k, v[0])
-                        for k, v in query_values.items() if k != 'share']
-    src_url = req.base_url
-    if len(src_query_params):
-        src_url += "?{}".format("&".join(src_query_params))
-    return src_url
+def _sanitize_url_params(req):
+    """Format query sting for rendering and links."""
+    params = dict(req.args)
+
+    src_params = {k: v[0] for k, v in params.items()
+                  if k != 'share'}
+    src_url = _add_params(req.base_url, **src_params)
+
+    href_params = {k: v[0] for k, v in params.items()
+                   if k not in ['width', 'height']}
+    href_url = _add_params(req.base_url, **href_params)
+
+    return src_url, href_url
+
+
+def _add_params(base, **params):
+    formatted_params = ["{}={}".format(k, v) for k, v in params.items()]
+    if formatted_params:
+        return base + "?{}".format("&".join(formatted_params))
+    else:
+        return base
 
 
 def _nocache(response):
