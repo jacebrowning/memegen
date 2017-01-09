@@ -151,6 +151,19 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 '<a href="/iw/what~q.jpg?font=impact">')
 
+    def describe_custom_size():
+
+        def it_keeps_size_after_redirect(client):
+            response = client.get("/iw/what%3F.jpg?width=67&height=89")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/what~q.jpg?')
+            expect(load(response, as_json=False)).contains(
+                'width=67')
+            expect(load(response, as_json=False)).contains(
+                'height=89')
+
     def describe_preview():
 
         def it_keeps_flag_after_redirect(client):

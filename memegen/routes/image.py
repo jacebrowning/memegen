@@ -56,7 +56,7 @@ def get_without_text_jpeg(key):
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt, font, preview, share, **size):
-    options = dict(key=key, path=path, alt=alt, font=font)
+    options = dict(key=key, path=path, alt=alt, font=font, **size)
     if preview:
         options['preview'] = 'true'
     if share:
