@@ -38,8 +38,8 @@ class Image(object):
     @staticmethod
     def hash(values):
         sha = hashlib.md5()
-        for value in values:
-            sha.update(str(value or "").encode('utf-8'))
+        for index, value in enumerate(values):
+            sha.update("{}:{}".format(index, value or "").encode('utf-8'))
         return sha.hexdigest()
 
     def save(self):
@@ -77,11 +77,20 @@ def _generate(top, bottom, font, background, width, height):
             image.format = 'PNG'
 
     # Resize to a maximum height and width
-    if width or height:
-        max_dimensions = width or 2000, height or 2000
+    ratio = image.size[0] / image.size[1]
+    if width and height:
+        if width < height * ratio:
+            dimensions = width, int(width / ratio)
+        else:
+            dimensions = int(height * ratio), height
+    elif width:
+        dimensions = width, int(width / ratio)
+    elif height:
+        dimensions = int(height * ratio), height
     else:
-        max_dimensions = 1000, 1000
-    image.thumbnail(max_dimensions, ImageFile.LANCZOS)
+        dimensions = 800, int(800 / ratio)
+    image = image.resize(dimensions, ImageFile.LANCZOS)
+    image.format = 'PNG'
 
     # Draw image
     draw = ImageDraw.Draw(image)
