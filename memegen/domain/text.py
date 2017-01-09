@@ -34,9 +34,6 @@ class Text:
         else:
             return part.strip()
 
-    def get_line(self, index):
-        return self._format_line(self[index], self._translate_spaces)
-
     @property
     def top(self):
         return self.get_line(0)
@@ -125,3 +122,6 @@ class Text:
                 path = path.replace(special, replacement)
 
         return path
+
+    def get_line(self, index):
+        return self._format_line(self[index], self._translate_spaces)

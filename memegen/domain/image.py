@@ -80,7 +80,7 @@ def _generate(top, bottom, font, background, width, height):
     if width or height:
         max_dimensions = width or 2000, height or 2000
     else:
-        max_dimensions = 400, 400
+        max_dimensions = 1000, 1000
     image.thumbnail(max_dimensions, ImageFile.LANCZOS)
 
     # Draw image
