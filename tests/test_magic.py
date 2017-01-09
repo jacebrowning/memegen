@@ -40,6 +40,10 @@ BASE = "http://localhost/api/templates/"
         BASE + "hagrid/_/they-shouldn't-have-done-that",
     ]),
 
+    ("we found something so we got that, which is nice", [
+        BASE + "nice/we-found-something/so-we-got-that,-which-is-nice",
+    ]),
+
 ])
 def test_match(client, pattern, links):
     response = client.get("/api/magic/" + pattern, follow_redirects=True)

@@ -1,0 +1,13 @@
+name: So I Got That Goin' For Me, Which is Nice
+link: http://knowyourmeme.com/memes/so-i-got-that-goin-for-me-which-is-nice
+default:
+-
+- So I Got That Goin' For Me, Which is Nice
+aliases:
+- going-for-me
+- which-is-nice
+- is-nice
+- caddy-shack
+- bill-murray
+regexes:
+- (.*)/?(so .+ which is nice)
