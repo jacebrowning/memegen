@@ -88,7 +88,7 @@ def _generate(top, bottom, font, background, width, height):
     elif height:
         dimensions = int(height * ratio), height
     else:
-        dimensions = 800, int(800 / ratio)
+        dimensions = 600, int(600 / ratio)
     image = background_image.resize(dimensions, ImageFile.LANCZOS)
     image.format = 'PNG'
 
