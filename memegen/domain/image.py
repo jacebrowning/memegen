@@ -2,7 +2,7 @@ import os
 import hashlib
 import logging
 
-from PIL import Image as ImageFile, ImageFont, ImageDraw
+from PIL import Image as ImageFile, ImageFont, ImageDraw, ImageFilter
 
 
 log = logging.getLogger(__name__)
@@ -67,17 +67,17 @@ class Image(object):
 def _generate(top, bottom, font, background, width, height):
     """Add text to an image and save it."""
     log.info("Loading background: %s", background)
-    image = ImageFile.open(background)
-    if image.mode not in ('RGB', 'RGBA'):
-        if image.format == 'JPEG':
-            image = image.convert('RGB')
-            image.format = 'JPEG'
+    background_image = ImageFile.open(background)
+    if background_image.mode not in ('RGB', 'RGBA'):
+        if background_image.format == 'JPEG':
+            background_image = background_image.convert('RGB')
+            background_image.format = 'JPEG'
         else:
-            image = image.convert('RGBA')
-            image.format = 'PNG'
+            background_image = background_image.convert('RGBA')
+            background_image.format = 'PNG'
 
     # Resize to a maximum height and width
-    ratio = image.size[0] / image.size[1]
+    ratio = background_image.size[0] / background_image.size[1]
     if width and height:
         if width < height * ratio:
             dimensions = width, int(width / ratio)
@@ -89,7 +89,7 @@ def _generate(top, bottom, font, background, width, height):
         dimensions = int(height * ratio), height
     else:
         dimensions = 800, int(800 / ratio)
-    image = image.resize(dimensions, ImageFile.LANCZOS)
+    image = background_image.resize(dimensions, ImageFile.LANCZOS)
     image.format = 'PNG'
 
     # Draw image
@@ -128,32 +128,9 @@ def _generate(top, bottom, font, background, width, height):
 
     # Pad image if a specific dimension is requested
     if width and height:
-        base_width, base_height = image.size
-        padding = ImageFile.new('RGBA', (width, height), (0, 0, 0))
-        padding.format = 'PNG'
-        padding_width, padding_height = padding.size
-        offset = ((padding_width - base_width) // 2,
-                  (padding_height - base_height) // 2)
-        padding.paste(image, offset)
-        image = padding
+        image = _add_blurred_background(image, background_image, width, height)
 
     return image
-
-
-def _draw_outlined_text(draw_image, text_position, text, font, font_size):
-    """Draw white text with black outline on an image."""
-
-    # Draw black text outlines
-    outline_range = max(1, font_size // 25)
-    for x in range(-outline_range, outline_range + 1):
-        for y in range(-outline_range, outline_range + 1):
-            pos = (text_position[0] + x, text_position[1] + y)
-            draw_image.multiline_text(pos, text, (0, 0, 0),
-                                      font=font, align='center')
-
-    # Draw inner white text
-    draw_image.multiline_text(text_position, text, (255, 255, 255),
-                              font=font, align='center')
 
 
 def _optimize_font_size(font, text, max_font_size, min_font_size,
@@ -178,6 +155,47 @@ def _optimize_font_size(font, text, max_font_size, min_font_size,
     text = '\n'.join(phrases)
 
     return font_size, text
+
+
+def _draw_outlined_text(draw_image, text_position, text, font, font_size):
+    """Draw white text with black outline on an image."""
+
+    # Draw black text outlines
+    outline_range = max(1, font_size // 25)
+    for x in range(-outline_range, outline_range + 1):
+        for y in range(-outline_range, outline_range + 1):
+            pos = (text_position[0] + x, text_position[1] + y)
+            draw_image.multiline_text(pos, text, (0, 0, 0),
+                                      font=font, align='center')
+
+    # Draw inner white text
+    draw_image.multiline_text(text_position, text, (255, 255, 255),
+                              font=font, align='center')
+
+
+def _add_blurred_background(foreground, background, width, height):
+    """Add a blurred background to match the requested dimensions."""
+    base_width, base_height = foreground.size
+
+    border_width = min(width, base_width + 2)
+    border_height = min(height, base_height + 2)
+    border_dimensions = border_width, border_height
+    border = ImageFile.new("RGB", border_dimensions)
+    border.paste(foreground, ((border_width - base_width) // 2,
+                              (border_height - base_height) // 2))
+
+    padded_dimensions = (width, height)
+    padded = background.resize(padded_dimensions, ImageFile.LANCZOS)
+
+    blurred = padded.filter(ImageFilter.GaussianBlur(20))
+    blurred.format = 'PNG'
+
+    blurred_width, blurred_height = blurred.size
+    offset = ((blurred_width - border_width) // 2,
+              (blurred_height - border_height) // 2)
+    blurred.paste(border, offset)
+
+    return blurred
 
 
 def _maximize_font_size(font, text, max_size):
