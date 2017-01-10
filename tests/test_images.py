@@ -5,6 +5,8 @@ import os
 import pytest
 from expecter import expect
 
+from memegen.routes.image import cache
+
 from .conftest import load
 
 TESTS = os.path.dirname(__file__)
@@ -176,11 +178,12 @@ def describe_get():
     def describe_latest():
 
         @pytest.fixture()
-        def clear_cache():
-            with open(os.path.join(IMAGES, 'cache.yml'), 'w') as cache:
-                cache.write("items: []")
+        def diable_cache():
+            cache.disable = True
+            cache.items = []
 
-        def when_existing(client, clear_cache):
+        def when_existing(client, diable_cache):
+            cache.disable = False
             client.get("/iw/my-first-meme.jpg")
 
             response = client.get("/latest.jpg")
@@ -189,7 +192,7 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 '<a href="http://localhost/iw/my-first-meme.jpg">')
 
-        def when_missing(client, clear_cache):
+        def when_missing(client, diable_cache):
             response = client.get("/latest.jpg")
 
             expect(response.status_code) == 302

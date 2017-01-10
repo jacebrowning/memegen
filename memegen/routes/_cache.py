@@ -16,8 +16,13 @@ class Cache:
 
     def __init__(self):
         self.items = []
+        self.disable = False
 
     def add(self, **kwargs):
+        if self.disable:
+            log.debug("Caching disabled")
+            return
+
         if kwargs in self.items:
             log.debug("Already cached: %s", kwargs)
             return
