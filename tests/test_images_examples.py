@@ -2,14 +2,22 @@
 
 # pylint: disable=bad-continuation
 
-import os
 from pathlib import Path
 
 import pytest
 
+from memegen.settings import get_config
 
-ENV = 'REGENERATE_IMAGES'
+
 SAMPLES = Path(__file__).parent.joinpath("examples")
+
+
+def unset(name):
+    config = get_config('test')
+    if getattr(config, name):
+        return dict(condition=False, reason="")
+    else:
+        return dict(condition=True, reason="{} unset".format(name))
 
 
 def save_image(client, url, name):
@@ -20,8 +28,8 @@ def save_image(client, url, name):
         image.write(data)
 
 
-@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
-def test_text(client):
+@pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
+def test_text_wrapping(client):
     """Create various example images for manual verification."""
     for name, url in [
         ("text-basic.jpg", "/ch/hello/world.jpg"),
@@ -33,7 +41,7 @@ def test_text(client):
         save_image(client, url, name)
 
 
-@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
+@pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
 def test_standard_font(client):
     """Create a meme using the standard meme font.
 
@@ -44,14 +52,14 @@ def test_standard_font(client):
     save_image(client, url, "font-impact.jpg")
 
 
-@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
+@pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
 def test_japanese_font(client):
     """Create a meme using a font that supports Japanese characters."""
     url = "/ch/turning/日本語.jpg?font=notosanscjkjp-black"
     save_image(client, url, "font-notosans.jpg")
 
 
-@pytest.mark.skipif(not os.getenv(ENV), reason="{} unset".format(ENV))
+@pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
 def test_custom_sizes(client):
     """Create memes using custom sizes."""
     for name, url in [

@@ -28,7 +28,6 @@ class TestConfig(Config):
 
     DEBUG = True
     TESTING = True
-    REGENERATE_IMAGES = True
 
 
 class DevConfig(Config):
