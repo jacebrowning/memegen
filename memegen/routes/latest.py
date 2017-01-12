@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app
 from flask_api.decorators import set_renderers
 from flask_api.renderers import HTMLRenderer
 
-from ._utils import route, get_tid
+from ._utils import route
 
 
 blueprint = Blueprint('latest-page', __name__)
@@ -15,5 +15,5 @@ def get():
         'latest.html',
         srcs=[route('image.get_latest', index=i) for i in range(1, 18 + 1)],
         refresh=30,
-        ga_tid=get_tid(),
+        config=current_app.config,
     )

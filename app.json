@@ -2,11 +2,26 @@
   "name":"memegen",
   "scripts":{},
   "env":{
-    "FLASK_CONFIG":{
-      "required":true
+    "FACEBOOK_APP_ID": {
+      "required": true
     },
-    "GOOGLE_ANALYTICS_TID":{
-        "required":true
+    "FACEBOOK_IMAGE_HEIGHT": {
+      "required": true
+    },
+    "FACEBOOK_IMAGE_WIDTH": {
+      "required": true
+    },
+    "FLASK_CONFIG": {
+      "required": true
+    },
+    "GOOGLE_ANALYTICS_TID": {
+        "required": true
+    },
+    "TWITTER_IMAGE_HEIGHT": {
+      "required": true
+    },
+    "TWITTER_IMAGE_WIDTH": {
+      "required": true
     }
   },
   "addons":[

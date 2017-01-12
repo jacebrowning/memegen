@@ -4,18 +4,18 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@memegenlink" />
     <meta name="twitter:title" content="memegen.link" />
-    <meta name="twitter:description" content="{{ title }}" />
-    <meta name="twitter:image" content="{{ src | safe }}?width=880&height=440" />
-    <meta property="fb:app_id" content="1545063229121076" />
+    <meta name="twitter:description" content="{{ title | safe }}" />
+    <meta name="twitter:image" content="{{ src_twitter | safe }}" />
+    <meta property="fb:app_id" content="{{ config['FACEBOOK_APP_ID'] }}" />
     <meta property="og:title" content="memegen.link" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ href | safe }}" />
-    <meta property="og:image" content="{{ src | safe }}?width=940&height=492" />
-    <meta property="og:image:width" content="940" />
-    <meta property="og:image:height" content="492" />
-    <meta property="og:description" content="{{ title }}" />
+    <meta property="og:image" content="{{ src_facebook | safe }}" />
+    <meta property="og:image:width" content="{{ config['FACEBOOK_IMAGE_WIDTH'] }}" />
+    <meta property="og:image:height" content="{{ config['FACEBOOK_IMAGE_HEIGHT'] }}" />
+    <meta property="og:description" content="{{ title | safe }}" />
 
-    <title>{{ title }}</title>
+    <title>{{ title | safe }}</title>
 
     <style>
       body {
@@ -30,7 +30,7 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', '{{ ga_tid }}', 'auto');
+      ga('create', '{{ config["GOOGLE_ANALYTICS_TID"] }}', 'auto');
       ga('send', 'pageview');
     </script>
 
