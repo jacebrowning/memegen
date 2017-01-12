@@ -1,10 +1,9 @@
 from collections import OrderedDict
 
-from flask import Blueprint
+from flask import Blueprint, current_app
 
 from .. import __version__
 
-from ._settings import CHANGES_URL
 from ._utils import route
 
 
@@ -21,7 +20,7 @@ def get():
     data['magic'] = route('magic.get', _external=True)
     data['search'] = route('search.get', _external=True)
     data['version'] = __version__
-    data['changes'] = CHANGES_URL
+    data['changes'] = current_app.config['CHANGES_URL']
     return data
 
 

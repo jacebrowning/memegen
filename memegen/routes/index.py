@@ -2,8 +2,7 @@ import random
 
 from flask import Blueprint, Response, render_template, current_app
 
-from ._settings import GITHUB_SLUG
-from ._utils import get_tid, route
+from ._utils import route
 
 
 blueprint = Blueprint('index-page', __name__)
@@ -18,8 +17,7 @@ def get_index():
         template_images=template_images,
         default_template=random.choice(template_images)['key'],
         sample_images=sample_images,
-        github_slug=GITHUB_SLUG,
-        ga_tid=get_tid(),
+        config=current_app.config,
     ))
 
 

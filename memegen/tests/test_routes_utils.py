@@ -46,9 +46,10 @@ def describe_display():
 
     @patch('memegen.routes._utils.send_file')
     @patch('memegen.routes._utils.request', request_image)
-    def it_returns_an_image_otherwise(mock_send_file):
+    def it_returns_an_image_otherwise(mock_send_file, app):
 
-        display("my_title", "my_path")
+        with app.test_request_context():
+            display("my_title", "my_path")
 
         expect(mock_send_file.mock_calls) == [
             call("my_path", mimetype='image/jpeg'),
