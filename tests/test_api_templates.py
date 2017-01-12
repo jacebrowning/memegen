@@ -74,7 +74,7 @@ def describe_post():
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="/fry/foo/bar.jpg">'
+            '<a href="http://localhost/fry/foo/bar.jpg">'
         )
 
     def it_escapes_special_characters(client):
@@ -83,7 +83,7 @@ def describe_post():
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="/fry/~hspecial-characters~q/underscore__-dash--.jpg">'
+            '<a href="http://localhost/fry/~hspecial-characters~q/underscore__-dash--.jpg">'
         )
 
     def it_supports_top_only(client):
@@ -92,7 +92,7 @@ def describe_post():
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="/fry/foo.jpg">'
+            '<a href="http://localhost/fry/foo.jpg">'
         )
 
     def it_supports_bottom_only(client):
@@ -101,7 +101,7 @@ def describe_post():
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="/fry/_/bar.jpg">'
+            '<a href="http://localhost/fry/_/bar.jpg">'
         )
 
     def it_supports_no_text(client):
@@ -110,7 +110,7 @@ def describe_post():
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="/fry/_.jpg">'
+            '<a href="http://localhost/fry/_.jpg">'
         )
 
     def it_can_return_json_instead_of_redirecting(client):
@@ -119,5 +119,5 @@ def describe_post():
 
         expect(response.status_code) == 200
         expect(load(response)) == {
-            'href': "/fry/foo/bar.jpg"
+            'href': "http://localhost/fry/foo/bar.jpg"
         }

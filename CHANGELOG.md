@@ -1,5 +1,12 @@
 # Revision History
 
+## 4.5
+
+- Added `?share=true` to force clients to receive HTML on image URLs.
+- Added `?width=<int>` to scale images to a specific width.
+- Added `?height=<int>` to scale images to a specific height.
+- Added `?width=<int>&height=<int>` to pad an image to specified dimensions.
+
 ## 4.4
 
 - Added `?preview=true` option to images to disable caching and analytics for clients that show partial image previews.

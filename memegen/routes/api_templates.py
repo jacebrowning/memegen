@@ -58,7 +58,7 @@ def create_meme(key, top, bottom, _redirect):
         else:
             text = Text("_")
 
-        url = route('image.get', key=key, path=text.path)
+        url = route('image.get', key=key, path=text.path, _external=True)
 
         if _redirect:
             return redirect(url, 303)

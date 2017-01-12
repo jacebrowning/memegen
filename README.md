@@ -68,9 +68,22 @@ For example, http://memegen.link/joker/pick-a-different-font/people-lose-their-m
 
 ![Custom Font](http://memegen.link/joker/pick-a-different-font/people-lose-their-minds.jpg?font=typoline-demo)
 
+### Custom sizes
+
+Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=
+<int>`. If both parameters are provided, the image will be padded to the exact dimensions.
+
+For example, https://memegen.link/both/width-or-height/why-not-both~q.jpg?height=350&width=600 produces:
+
+![Custom Size](https://memegen.link/both/width-or-height/why-not-both~q.jpg?height=350&width=600)
+
 ### Preview Images
 
 API clients that want to show a preview of an image while the user is still typing should disable caching and analytics via `?preview=true`.
+
+### Social Media
+
+Add `?share=true` to optimize images sizes for sharing on social media.
 
 ## Adding Templates
 
