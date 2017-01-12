@@ -11,6 +11,6 @@ blueprint = Blueprint('custom-page', __name__)
 def get():
     return render_template(
         'custom.html',
-        fonts=current_app.font_service.all(),
+        fonts=sorted(current_app.font_service.all()),
         config=current_app.config,
     )
