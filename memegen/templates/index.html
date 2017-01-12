@@ -35,7 +35,12 @@
 
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="button" id="btn-generate" class="btn btn-primary">Generate</button>
+                  <button type="button" id="btn-generate" class="btn btn-primary">
+                    Generate Image
+                  </button>
+                  <button type="button" class="btn btn-primary pull-right" id="btn-copy" data-toggle="tooltip" title="Copy link">
+                    Copy Share Link
+                  </button>
                 </div>
               </div>
             </form>
@@ -66,6 +71,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
     <script src="static/js/default.js"></script>
 
     <script>
@@ -76,6 +82,12 @@
       }
       $('img').on('load', function(){
         $(this).css('background-image', 'none');
+      });
+
+      var clipboard = new Clipboard('#btn-copy', {
+        text: function(trigger) {
+          return $("#meme-image").attr('href') + "?share=true";
+        }
       });
     </script>
 {% endblock %}
