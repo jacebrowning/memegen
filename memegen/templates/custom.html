@@ -42,7 +42,10 @@
 
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <input type="submit" class="btn btn-primary" id="btn-generate" value="Generate">
+                  <input type="submit" class="btn btn-primary" id="btn-generate" value="Generate Image" />
+                  <button type="button" class="btn btn-primary pull-right" id="btn-copy" data-toggle="tooltip" title="Copy link">
+                    Copy Share Link
+                  </button>
                 </div>
               </div>
             </form>
@@ -58,7 +61,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
     <script>
       $("#meme-form").submit(false);
 
@@ -78,5 +81,11 @@
       $('#meme-font').val("titilliumweb-black");
       $('#meme-background').val("http://www.gstatic.com/webp/gallery/1.jpg");
       $('#btn-generate').click();
+
+      var clipboard = new Clipboard('#btn-copy', {
+        text: function(trigger) {
+          return "https://memegen.link/" + $("#meme-image").attr('href') + "&share=true";
+        }
+      });
     </script>
 {% endblock %}
