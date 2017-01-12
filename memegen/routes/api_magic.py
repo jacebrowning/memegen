@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app as app, redirect
+from flask import Blueprint, redirect, request, current_app
 
 from ..domain import Text
 
@@ -26,7 +26,7 @@ def links(pattern):
 def _get_matches(pattern):
     items = []
 
-    for template in app.template_service.all():
+    for template in current_app.template_service.all():
         ratio, path = template.match(pattern)
         if not ratio:
             continue
@@ -49,14 +49,15 @@ def image(pattern):
 
     items = []
 
-    for template in app.template_service.all():
+    for template in current_app.template_service.all():
         ratio, path = template.match(str(text).lower())
         if not ratio:
             continue
 
         data = {}
         data['ratio'] = ratio
-        data['image'] = route('image.get', key=template.key, path=path)
+        data['image'] = route('image.get',
+                              key=template.key, path=path, **request.args)
 
         items.append(data)
 

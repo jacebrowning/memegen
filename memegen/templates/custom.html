@@ -61,7 +61,9 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
+
     <script>
       $("#meme-form").submit(false);
 
@@ -84,7 +86,7 @@
 
       var clipboard = new Clipboard('#btn-copy', {
         text: function(trigger) {
-          return "https://memegen.link/" + $("#meme-image").attr('href') + "&share=true";
+          return "{{ request.url_root }}" + $("#meme-image").attr('href') + "&share=true";
         }
       });
     </script>
