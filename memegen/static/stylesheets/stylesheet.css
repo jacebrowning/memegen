@@ -28,6 +28,10 @@ body {
   color: #fff;
   padding-bottom: 10px;
 }
+.masthead-brand {
+  color: #fff;
+  text-decoration: none !important;
+}
 .masthead-nav > li {
   display: inline-block;
 }
