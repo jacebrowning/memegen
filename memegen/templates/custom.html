@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% set active_page = "custom" %}
-{% block title %} | custom{% endblock %}
+{% block title %}{{ super() }} | custom{% endblock %}
 {% block content %}
     <div class="generator">
       <div class="container">
