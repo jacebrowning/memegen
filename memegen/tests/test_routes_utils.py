@@ -63,5 +63,5 @@ def describe_display():
 
         print(html)
         assert "<title>my_title</title>" in html
-        assert '<img src="it\'s a path?alt=style"' in html
+        assert 'src="it\'s a path?alt=style"' in html
         assert "ga('create', 'my_tid', 'auto');" in html

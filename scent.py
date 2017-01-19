@@ -1,7 +1,6 @@
 """Configuration file for sniffer."""
 # pylint: disable=superfluous-parens,bad-continuation
 
-import os
 import time
 import subprocess
 
@@ -17,19 +16,20 @@ else:
 watch_paths = ["memegen", "tests", "scripts", "data"]
 
 
-@select_runnable('python')
+@select_runnable('targets')
 @file_validator
 def python_files(filename):
-    """Match Python source files."""
+    return filename.endswith('.py')
 
-    return all((
-        filename.endswith('.py'),
-        not os.path.basename(filename).startswith('.'),
-    ))
+
+@select_runnable('targets')
+@file_validator
+def html_files(filename):
+    return filename.split('.')[-1] in ['html', 'css', 'js']
 
 
 @runnable
-def python(*_):
+def targets(*_):
     """Run targets for Python."""
 
     for count, (command, title, retry) in enumerate((
