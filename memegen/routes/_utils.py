@@ -29,16 +29,27 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
                            height=current_app.config['FACEBOOK_IMAGE_HEIGHT'])
     href = _format(request, 'width', 'height')
 
-    if browser or share:
-        log.info("Rending image on page: %s", src)
+    if share:
+        log.info("Sharing image on page: %s", src)
 
         html = render_template(
-            'image.html',
+            'share.html',
             title=title,
             src=_secure(src),
             src_twitter=_secure(src_twitter),
             src_facebook=_secure(src_facebook),
             href=_secure(href),
+            config=current_app.config,
+        )
+        return html if raw else _nocache(Response(html))
+
+    elif browser:
+        log.info("Embedding image on page: %s", src)
+
+        html = render_template(
+            'image.html',
+            title=title,
+            src=_secure(src),
             config=current_app.config,
         )
         return html if raw else _nocache(Response(html))

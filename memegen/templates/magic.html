@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% set active_page = "magic" %}
-{% block title %} | magic{% endblock %}
+{% block title %}{{ super() }} | magic{% endblock %}
 {% block content %}
     <div class="generator">
       <div class="container">
@@ -40,7 +40,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
-
     <script>
       $("#meme-form").submit(false);
 
