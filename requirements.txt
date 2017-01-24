@@ -7,7 +7,7 @@ webargs==1.5.2
 # Models
 Pillow==4.0.0
 YORM==1.3b2
-requests==2.12.5
+requests==2.13.0
 profanityfilter==1.1
 
 # Deployment
