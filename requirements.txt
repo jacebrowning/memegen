@@ -2,7 +2,7 @@
 Flask==0.12
 Flask-API==0.6.9
 Flask-CORS == 3.0.2
-webargs==1.5.2
+webargs==1.5.3
 
 # Models
 Pillow==4.0.0
