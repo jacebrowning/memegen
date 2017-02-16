@@ -44,6 +44,14 @@ BASE = "http://localhost/api/templates/"
         BASE + "nice/we-found-something/so-we-got-that,-which-is-nice",
     ]),
 
+    ("'member star wars", [
+        BASE + "mb/'member/star-wars",
+    ]),
+
+    ("remember the good times", [
+        BASE + "mb/member/the-good-times",
+    ]),
+
 ])
 def test_match(client, pattern, links):
     response = client.get("/api/magic/" + pattern, follow_redirects=True)
