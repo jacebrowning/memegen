@@ -3,7 +3,7 @@
 import logging
 
 from memegen.settings import ProdConfig
-from memegen.app import create_app
+from memegen.factory import create_app
 from memegen.domain import Text
 
 

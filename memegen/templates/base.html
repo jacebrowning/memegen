@@ -32,11 +32,11 @@
 
         {% block style %}
         {% block bootstrap_theme %}
-            <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/bootstrap.min.css')}}"/>
-            <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/bootstrap-tweaks.css')}}"/>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('flask-api.static', filename='css/bootstrap.min.css') }}"/>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('flask-api.static', filename='css/bootstrap-tweaks.css') }}"/>
         {% endblock %}
-        <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/prettify.css')}}"/>
-        <link rel="stylesheet" type="text/css" href="{{url_for('flask-api.static', filename='css/default.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('flask-api.static', filename='css/prettify.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('flask-api.static', filename='css/default.css') }}"/>
         {% endblock %}
 
     {% endblock %}
@@ -201,10 +201,10 @@
     {% endblock %}
 
     {% block script %}
-    <script src="{{url_for('flask-api.static', filename='js/jquery-1.8.1-min.js')}}"></script>
-    <script src="{{url_for('flask-api.static', filename='js/bootstrap.min.js')}}"></script>
-    <script src="{{url_for('flask-api.static', filename='js/prettify-min.js')}}"></script>
-    <script src="{{url_for('flask-api.static', filename='js/default.js')}}"></script>
+    <script src="{{ url_for('flask-api.static', filename='js/jquery-1.8.1-min.js') }}"></script>
+    <script src="{{ url_for('flask-api.static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('flask-api.static', filename='js/prettify-min.js') }}"></script>
+    <script src="{{ url_for('flask-api.static', filename='js/default.js') }}"></script>
 
     <!-- Google Analytics -->
     <script>

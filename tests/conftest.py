@@ -2,7 +2,7 @@
 
 import pytest
 
-from memegen.app import create_app
+from memegen.factory import create_app
 from memegen.settings import get_config
 
 from memegen.tests.conftest import pytest_configure  # pylint: disable=unused-import
