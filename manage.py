@@ -5,7 +5,7 @@ import os
 from flask_script import Command, Manager, Server
 
 from memegen.settings import get_config
-from memegen.app import create_app
+from memegen.factory import create_app
 
 
 class Validate(Command):

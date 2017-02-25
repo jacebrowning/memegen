@@ -1,8 +1,9 @@
 import os
 import logging
+from pathlib import Path
 from urllib.parse import urlencode, unquote
 
-from flask import request, current_app
+from flask import request, current_app, url_for
 from flask_api import FlaskAPI
 from flask_api.exceptions import APIException, NotFound
 
@@ -42,6 +43,8 @@ def create_app(config):
     register_extensions(app)
     register_services(app)
     register_blueprints(app)
+
+    enable_cache_busting(app)
 
     return app
 
@@ -124,3 +127,16 @@ def register_blueprints(app):
     app.register_blueprint(routes.latest.blueprint)
     app.register_blueprint(routes.magic.blueprint)
     app.register_blueprint(routes.static.blueprint)
+
+
+def enable_cache_busting(app):
+
+    def dated_url_for(endpoint, **values):
+        if endpoint == 'static':
+            filename = values.get('filename', None)
+            if filename:
+                path = Path(app.root_path, endpoint, filename)
+                values['q'] = int(path.stat().st_mtime)
+        return url_for(endpoint, **values)
+
+    app.context_processor(lambda: dict(url_for=dated_url_for))
