@@ -12,4 +12,4 @@ profanityfilter==1.1
 
 # Deployment
 Flask-Script==2.0.5
-gunicorn==19.6.0
+gunicorn==19.7.0
