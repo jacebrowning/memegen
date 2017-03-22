@@ -1,6 +1,6 @@
 # Server
 Flask==0.12
-Flask-API==0.6.9
+Flask-API==0.7b2
 Flask-CORS == 3.0.2
 webargs==1.6.0
 
