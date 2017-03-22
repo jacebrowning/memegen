@@ -11,5 +11,5 @@ pytest-cov
 pytest-random
 
 # Coverage
-coverage
+coverage==4.2
 coverage.space >= 0.6.1
