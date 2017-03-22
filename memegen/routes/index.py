@@ -1,6 +1,6 @@
 import random
 
-from flask import Blueprint, Response, render_template, current_app
+from flask import Blueprint, render_template, current_app
 
 from ._utils import route
 
@@ -12,13 +12,13 @@ blueprint = Blueprint('index-page', __name__)
 def get_index():
     template_images = list(_samples(blank=True))
     sample_images = list(_samples())
-    return Response(render_template(
+    return render_template(
         "index.html",
         template_images=template_images,
         default_template=random.choice(template_images)['key'],
         sample_images=sample_images,
         config=current_app.config,
-    ))
+    )
 
 
 def _samples(blank=False):
