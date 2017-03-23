@@ -1,5 +1,5 @@
 # Documentation
-pylint
+pylint==1.6.4
 docutils
 readme
 pdoc
