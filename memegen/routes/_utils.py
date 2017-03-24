@@ -86,7 +86,8 @@ def track(title):
 def _secure(url):
     """Ensure HTTPS is used in production."""
     if current_app.config['ENV'] == 'prod':
-        url = url.replace('http:', 'https:', 1)
+        if url.startswith('http:'):
+            url = url.replace('http:', 'https:', 1)
     return url
 
 
