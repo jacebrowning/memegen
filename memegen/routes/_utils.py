@@ -20,36 +20,36 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     mimetypes = request.headers.get('Accept', "").split(',')
     browser = 'text/html' in mimetypes
 
-    src = _format(request, 'share')
-    src_twitter = _format(request, 'share',
+    img = _format(request, 'share')
+    img_twitter = _format(request, 'share',
                           width=current_app.config['TWITTER_IMAGE_WIDTH'],
                           height=current_app.config['TWITTER_IMAGE_HEIGHT'])
-    src_facebook = _format(request, 'share',
+    img_facebook = _format(request, 'share',
                            width=current_app.config['FACEBOOK_IMAGE_WIDTH'],
                            height=current_app.config['FACEBOOK_IMAGE_HEIGHT'])
-    href = _format(request, 'width', 'height')
+    url = _format(request, 'width', 'height')
 
     if share:
-        log.info("Sharing image on page: %s", src)
+        log.info("Sharing image on page: %s", img)
 
         html = render_template(
             'share.html',
             title=title,
-            src=_secure(src),
-            src_twitter=_secure(src_twitter),
-            src_facebook=_secure(src_facebook),
-            href=_secure(href),
+            img=_secure(img),
+            img_twitter=_secure(img_twitter),
+            img_facebook=_secure(img_facebook),
+            url=_secure(url),
             config=current_app.config,
         )
         return html if raw else _nocache(Response(html))
 
     elif browser:
-        log.info("Embedding image on page: %s", src)
+        log.info("Embedding image on page: %s", img)
 
         html = render_template(
             'image.html',
             title=title,
-            src=_secure(src),
+            img=_secure(img),
             config=current_app.config,
         )
         return html if raw else _nocache(Response(html))
