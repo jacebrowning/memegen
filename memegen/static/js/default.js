@@ -24,6 +24,7 @@ function generateMeme() {
 }
 
 /*** Events ****/
+
 $('.js-meme-selector').select2({
   templateResult: formateMemeItem,
   templateSelection: formateMemeItem
@@ -39,8 +40,10 @@ $('.js-meme-selector').on('change', function() {
   generateMeme();
 });
 
-$("#btn-generate").on('click', function(e) {
+$('#meme-form').on('submit', function(event) {
+  event.preventDefault();
   generateMeme();
+
 });
 
 if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
