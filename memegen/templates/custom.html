@@ -61,6 +61,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
 
     <script>
@@ -87,6 +88,12 @@
         text: function(trigger) {
           return "{{ request.url_root }}" + $("#meme-image").attr('href') + "&share=true";
         }
+      });
+      clipboard.on('success', function(event) {
+        $(event.trigger).attr('title', 'Link Copied').tooltip('fixTitle').tooltip('show');
+      });
+      clipboard.on('error', function(event) {
+        console.log(event);
       });
     </script>
 {% endblock %}
