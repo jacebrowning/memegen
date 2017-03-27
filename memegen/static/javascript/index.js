@@ -23,7 +23,11 @@ function generateMeme() {
   });
 }
 
-/*** Events ****/
+function getShareLink() {
+  return $("#meme-image").attr('href') + "?share=true";
+}
+
+/*** Events ***/
 
 $('.js-meme-selector').select2({
   templateResult: formateMemeItem,
@@ -46,6 +50,30 @@ $('#meme-form').on('submit', function(event) {
 
 });
 
-if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
-  $(".js-meme-selector").trigger("change");
-}
+var clipboard = new Clipboard('#btn-copy', {
+  text: function(trigger) {
+    return getShareLink();
+  }
+});
+clipboard.on('success', function(event) {
+  $(event.trigger).attr('title', 'Link Copied').tooltip('fixTitle').tooltip('show');
+});
+clipboard.on('error', function(event) {
+  console.log(event);
+});
+
+$('#btn-share').on('click', function(event) {
+  var url = getShareLink();
+  var win = window.open(url, '_blank');
+  if (win) {
+    win.focus();
+  } else {
+    window.location.href = url;
+  }
+});
+
+/*** Loading ***/
+
+$('img').on('load', function(){
+  $(this).css('background-image', 'none');
+});

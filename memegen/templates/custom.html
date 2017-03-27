@@ -43,9 +43,18 @@
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <input type="submit" class="btn btn-primary" id="btn-generate" value="Generate Image" />
-                  <button type="button" class="btn btn-primary pull-right" id="btn-copy" data-toggle="tooltip" title="Copy link">
-                    Copy Share Link
-                  </button>
+                  <div class="pull-right">
+                    <button type="button" class="btn btn-primary" id="btn-copy" data-toggle="tooltip" title="Copy link">
+                      <span class="glyphicon glyphicon-copy"></span>
+                      &nbsp;
+                      Copy Link
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-share" data-toggle="tooltip" title="View sharing options">
+                      <span class="glyphicon glyphicon-share"></span>
+                      &nbsp;
+                      Share...
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
@@ -65,6 +74,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
 
     <script>
+      function getShareLink() {
+        return "{{ request.url_root }}" + $("#meme-image").attr('href') + "&share=true";
+      }
+
       $("#meme-form").submit(false);
 
       $("#btn-generate").on('click', function(e) {
@@ -86,7 +99,7 @@
 
       var clipboard = new Clipboard('#btn-copy', {
         text: function(trigger) {
-          return "{{ request.url_root }}" + $("#meme-image").attr('href') + "&share=true";
+          return getShareLink();
         }
       });
       clipboard.on('success', function(event) {
@@ -94,6 +107,16 @@
       });
       clipboard.on('error', function(event) {
         console.log(event);
+      });
+
+      $('#btn-share').on('click', function(event) {
+        var url = getShareLink();
+        var win = window.open(url, '_blank');
+        if (win) {
+            win.focus();
+        } else {
+            window.location.href = url;
+        }
       });
     </script>
 {% endblock %}
