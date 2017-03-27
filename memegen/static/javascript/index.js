@@ -11,8 +11,8 @@ function formateMemeItem(meme) {
 
 function generateMeme() {
   var key = $('.js-meme-selector').val();
-  var top = $('#meme-text-top').val();
-  var bottom = $('#meme-text-bottom').val();
+  var top = $('#meme-line-1').val();
+  var bottom = $('#meme-line-2').val();
 
   var url = "/api/templates/" + key;
   var data = {"top": top, "bottom": bottom, "redirect": false};
@@ -38,8 +38,8 @@ $('.js-meme-selector').on('change', function() {
   var link = $(".js-meme-selector option:checked").data('link');
   if (link) {
     var pieces = link.split('/');
-    $('#meme-text-top').val(pieces[2]);
-    $('#meme-text-bottom').val(pieces[3]);
+    $('#meme-line-1').val(pieces[2]);
+    $('#meme-line-2').val(pieces[3]);
   }
   generateMeme();
 });
