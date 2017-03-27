@@ -27,8 +27,20 @@
         </div>
         <br>
         <div class="row text-center">
+          <a class="btn btn-primary disable-link" href="https://www.facebook.com/sharer/sharer.php?u={{ url }}" target="_blank">
+              <img src="{{ url_for('static', filename='images/facebook.png') }}" height=20></img>
+              &nbsp;
+              Share on Facebook
+          </a>
+          <a class="btn btn-primary disable-link" href="https://twitter.com/home?status={{ url }}" target="_blank">
+              <img src="{{ url_for('static', filename='images/twitter.png') }}" height=20></img>
+              &nbsp;
+              Share on Twitter
+          </a>
           <button type="button" class="btn btn-primary" id="btn-copy" data-toggle="tooltip" title="Copy link">
-            Copy Share Link
+            <span class="glyphicon glyphicon-copy"></span>
+            &nbsp;
+            Copy Link
           </button>
         </div>
       </div>

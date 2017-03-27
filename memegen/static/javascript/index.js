@@ -11,8 +11,8 @@ function formateMemeItem(meme) {
 
 function generateMeme() {
   var key = $('.js-meme-selector').val();
-  var top = $('#meme-text-top').val();
-  var bottom = $('#meme-text-bottom').val();
+  var top = $('#meme-line-1').val();
+  var bottom = $('#meme-line-2').val();
 
   var url = "/api/templates/" + key;
   var data = {"top": top, "bottom": bottom, "redirect": false};
@@ -23,7 +23,11 @@ function generateMeme() {
   });
 }
 
-/*** Events ****/
+function getShareLink() {
+  return $("#meme-image").attr('href') + "?share=true";
+}
+
+/*** Events ***/
 
 $('.js-meme-selector').select2({
   templateResult: formateMemeItem,
@@ -34,8 +38,8 @@ $('.js-meme-selector').on('change', function() {
   var link = $(".js-meme-selector option:checked").data('link');
   if (link) {
     var pieces = link.split('/');
-    $('#meme-text-top').val(pieces[2]);
-    $('#meme-text-bottom').val(pieces[3]);
+    $('#meme-line-1').val(pieces[2]);
+    $('#meme-line-2').val(pieces[3]);
   }
   generateMeme();
 });
@@ -46,6 +50,30 @@ $('#meme-form').on('submit', function(event) {
 
 });
 
-if ($('#meme-text-top').val() || $('#meme-text-bottom').val()) {
-  $(".js-meme-selector").trigger("change");
-}
+var clipboard = new Clipboard('#btn-copy', {
+  text: function(trigger) {
+    return getShareLink();
+  }
+});
+clipboard.on('success', function(event) {
+  $(event.trigger).attr('title', 'Link Copied').tooltip('fixTitle').tooltip('show');
+});
+clipboard.on('error', function(event) {
+  console.log(event);
+});
+
+$('#btn-share').on('click', function(event) {
+  var url = getShareLink();
+  var win = window.open(url, '_blank');
+  if (win) {
+    win.focus();
+  } else {
+    window.location.href = url;
+  }
+});
+
+/*** Loading ***/
+
+$('img').on('load', function(){
+  $(this).css('background-image', 'none');
+});

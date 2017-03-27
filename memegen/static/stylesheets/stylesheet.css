@@ -1,5 +1,6 @@
 /*********************************************/
 /* general */
+
 a,
 a:focus,
 a:hover {
@@ -21,8 +22,13 @@ body {
   border-width: 0;
 }
 
+.disable-link {
+  text-decoration: none !important;
+}
+
 /*********************************************/
 /* masthead */
+
 .masthead {
   background-color: #333;
   color: #fff;
@@ -68,6 +74,7 @@ body {
 
 /*********************************************/
 /* select2 dropdown */
+
 .select2-dropdown.select2-dropdown--below{
   width: 320px !important;
 }
@@ -120,6 +127,7 @@ span.meme-text {
 
 /*********************************************/
 /* Meme Templates */
+
 .meme-templates {
   margin-bottom: 50px;
   text-align: center;
@@ -139,6 +147,7 @@ span.meme-text {
 
 /*********************************************/
 /* Footer */
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -154,6 +163,7 @@ span.meme-text {
 
 /*********************************************/
 /* Responsive Hotness */
+
 @media (min-width: 992px) {
   .meme-holder {
     margin-top: 0;
