@@ -154,11 +154,17 @@ span.meme-text {
   width: 100%;
   min-height: 50px;
   padding: 0 20px;
-  background-color: #555;
+  background-color: #333;
 }
 
 .footer-nav {
   float: none;
+}
+
+@media (max-width: 576px) {
+  #footer-links {
+    display: none;
+  }
 }
 
 /*********************************************/
