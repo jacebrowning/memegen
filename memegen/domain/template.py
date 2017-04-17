@@ -108,7 +108,7 @@ class Template:
     def strip(text, keep_special=False):
         text = text.lower().strip().replace(' ', '-')
         if not keep_special:
-            for char in ('-', '_', '!', "'"):
+            for char in ('_', '!', "'"):
                 text = text.replace(char, '')
         return text
 
