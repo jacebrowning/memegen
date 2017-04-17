@@ -1,7 +1,7 @@
 # Linters
 pep8
 pep257
-pylint
+pylint~=1.7.0
 
 # Testing
 pytest
@@ -12,4 +12,4 @@ pytest-random
 
 # Coverage
 coverage
-coverage.space >= 0.6.1
+coverage.space==0.8b4

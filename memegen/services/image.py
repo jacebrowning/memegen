@@ -28,7 +28,7 @@ class ImageService(Service):
                 exception = self.exceptions.FilenameTooLong
             elif "image file" in str(exception):
                 exception = self.exceptions.InvalidImageLink
-            raise exception from None
+            raise exception from None  # pylint: disable=raising-bad-type
         except SystemError as exception:
             log.warning(exception)
             raise self.exceptions.InvalidImageLink from None

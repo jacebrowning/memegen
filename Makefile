@@ -174,15 +174,16 @@ COVERAGE := $(BIN_)coverage
 COVERAGE_SPACE := $(BIN_)coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
-
-PYTEST_CORE_OPTS := -r xXw -vv
-PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing --cov-report=html
-PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
-
-PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
-PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --last-failed --exitfirst
-
 FAILURES := .cache/v/cache/lastfailed
+PYTEST_CORE_OPTIONS := -ra -vv
+PYTEST_COV_OPTIONS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing:skip-covered --cov-report=html
+PYTEST_RANDOM_OPTIONS := --random --random-seed=$(RANDOM_SEED)
+
+PYTEST_OPTIONS := $(PYTEST_CORE_OPTIONS) $(PYTEST_RANDOM_OPTIONS)
+ifndef DISABLE_COVERAGE
+PYTEST_OPTIONS += $(PYTEST_COV_OPTIONS)
+endif
+PYTEST_RERUN_OPTIONS := $(PYTEST_CORE_OPTIONS) --last-failed --exitfirst
 
 .PHONY: test
 test: test-all
@@ -190,7 +191,7 @@ test: test-all
 .PHONY: test-unit
 test-unit: depends ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
+	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -200,8 +201,9 @@ endif
 
 .PHONY: test-int
 test-int: depends ## Run the integration tests
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
-	$(PYTEST) $(PYTEST_OPTS) tests
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) tests; fi
+	@ rm -rf $(FAILURES)
+	$(PYTEST) $(PYTEST_OPTIONS) tests
 ifndef TRAVIS
 ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
@@ -210,8 +212,9 @@ endif
 
 .PHONY: test-all
 test-all: depends ## Run all the tests
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES)
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) $(PACKAGES); fi
+	@ rm -rf $(FAILURES)
+	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGES)
 ifndef TRAVIS
 ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
