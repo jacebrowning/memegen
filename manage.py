@@ -38,7 +38,7 @@ app = create_app(config)
 # Configure the command-line interface
 manager = Manager(app)
 manager.add_command('validate', Validate())
-manager.add_command('run', Server(host='0.0.0.0', extra_files=find_assets()))
+manager.add_command('run', Server(extra_files=find_assets()))
 
 
 if __name__ == '__main__':
