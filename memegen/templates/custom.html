@@ -81,7 +81,7 @@
       $("#meme-form").submit(false);
 
       $("#btn-generate").on('click', function(e) {
-        var top = $('#meme-line-1').val();
+        var top = $('#meme-line-1').val() || '_';
         var bottom = $('#meme-line-2').val();
         var font = $('#meme-font').val();
         var alt = $('#meme-background').val();
