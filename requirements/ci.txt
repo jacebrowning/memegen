@@ -7,7 +7,7 @@ pylint~=1.7.0
 pytest
 pytest-describe
 pytest-expecter
-pytest-cov
+pytest-cov==2.4.0
 pytest-random
 
 # Coverage
