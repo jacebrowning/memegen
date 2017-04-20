@@ -6,7 +6,7 @@ pylint~=1.7.0
 # Testing
 pytest
 pytest-describe
-pytest-expecter
+pytest-expecter==0.2.2.post3
 pytest-cov
 pytest-random
 
