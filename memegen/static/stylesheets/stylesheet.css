@@ -161,12 +161,6 @@ span.meme-text {
   float: none;
 }
 
-@media (max-width: 576px) {
-  #footer-links {
-    display: none;
-  }
-}
-
 /*********************************************/
 /* Responsive Hotness */
 
