@@ -5,7 +5,7 @@ import os
 import pytest
 from expecter import expect
 
-from memegen.routes.image import cache
+from memegen.routes.image import cache_filtered, cache_unfiltered
 
 from .conftest import load
 
@@ -178,12 +178,20 @@ def describe_get():
     def describe_latest():
 
         @pytest.fixture()
-        def diable_cache():
-            cache.disable = True
-            cache.items = []
+        def enable_cache():
+            cache_filtered.disabled = False
+            cache_unfiltered.disabled = False
+            cache_filtered.items = []
+            cache_unfiltered.items = []
 
-        def when_existing(client, diable_cache):
-            cache.disable = False
+        @pytest.fixture()
+        def disable_cache():
+            cache_filtered.disabled = True
+            cache_unfiltered.disabled = True
+            cache_filtered.items = []
+            cache_unfiltered.items = []
+
+        def it_returns_the_last_image(client, enable_cache):
             client.get("/iw/my-first-meme.jpg")
 
             response = client.get("/latest.jpg")
@@ -192,7 +200,7 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 '<a href="http://localhost/iw/my-first-meme.jpg">')
 
-        def when_missing(client, diable_cache):
+        def it_returns_a_placeholder_with_an_empty_cache(client, disable_cache):
             response = client.get("/latest.jpg")
 
             expect(response.status_code) == 302
@@ -200,6 +208,36 @@ def describe_get():
                 '<a href="http://localhost/custom/your-meme/goes-here.jpg'
                 '?alt=https://raw.githubusercontent.com/jacebrowning/memegen/'
                 'master/memegen/static/images/missing.png">')
+
+        def it_filters_blocked_words(client, enable_cache):
+            client.get("/iw/nazis.jpg")
+
+            response = client.get("/latest.jpg")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).excludes(
+                '<a href="http://localhost/iw/nazis.jpg">')
+
+            response = client.get("/latest.jpg?filtered=False")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="http://localhost/iw/nazis.jpg">')
+
+        def it_filters_custom_images(client, enable_cache):
+            client.get("/custom/test.jpg")
+
+            response = client.get("/latest.jpg")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).excludes(
+                '<a href="http://localhost/custom/test.jpg">')
+
+            response = client.get("/latest.jpg?filtered=False")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="http://localhost/custom/test.jpg">')
 
     def describe_redirects():
 
