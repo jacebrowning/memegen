@@ -89,8 +89,8 @@ def get_with_text(key, path, alt, font, preview, share, **size):
                                      style=alt, font=fontfile, size=size)
 
     if not preview:
-        cache_filtered.add(key=key, path=path, style=alt, font=font)
-        cache_unfiltered.add(key=key, path=path, style=alt, font=font)
+        cache_filtered.add(key=key, path=path, alt=alt, font=font)
+        cache_unfiltered.add(key=key, path=path, alt=alt, font=font)
         track(image.text)
 
     return display(image.text, image.path, share=share)

@@ -56,7 +56,7 @@ class Cache:
 
         if self.filtered:
 
-            if kwargs['key'] == 'custom':
+            if kwargs['key'] == 'custom' or kwargs.get('alt'):
                 log.debug("Skipped caching of custom background: %s", kwargs)
                 return True
             if profanityfilter.is_profane(kwargs['path']):
