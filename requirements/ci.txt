@@ -6,10 +6,10 @@ pylint~=1.7.0
 # Testing
 pytest
 pytest-describe
-pytest-expecter
+pytest-expecter~=0.2.2.post6
 pytest-cov
 pytest-random
 
 # Coverage
 coverage
-coverage.space==0.8b4
+coverage.space~=0.8 

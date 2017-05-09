@@ -11,7 +11,8 @@ from ._utils import route, track, display
 
 blueprint = Blueprint('image', __name__)
 log = logging.getLogger(__name__)
-cache = Cache()
+cache_filtered = Cache()
+cache_unfiltered = Cache(filtered=False)
 
 OPTIONS = {
     'alt': fields.Str(missing=None),
@@ -25,7 +26,9 @@ OPTIONS = {
 
 @blueprint.route("/latest.jpg")
 @blueprint.route("/latest<int:index>.jpg")
-def get_latest(index=1):
+@flaskparser.use_kwargs({'filtered': fields.Bool(missing=True)})
+def get_latest(index=1, filtered=True):
+    cache = cache_filtered if filtered else cache_unfiltered
     kwargs = cache.get(index - 1)
 
     if not kwargs:
@@ -86,7 +89,8 @@ def get_with_text(key, path, alt, font, preview, share, **size):
                                      style=alt, font=fontfile, size=size)
 
     if not preview:
-        cache.add(key=key, path=path, style=alt, font=font)
+        cache_filtered.add(key=key, path=path, alt=alt, font=font)
+        cache_unfiltered.add(key=key, path=path, alt=alt, font=font)
         track(image.text)
 
     return display(image.text, image.path, share=share)
