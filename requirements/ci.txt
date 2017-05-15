@@ -1,5 +1,5 @@
 # Linters
-pep8
+pep8==1.7.0
 pep257
 pylint~=1.7.0
 
