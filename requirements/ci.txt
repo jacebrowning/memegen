@@ -4,7 +4,7 @@ pep257
 pylint~=1.7.0
 
 # Testing
-pytest
+pytest==3.0.3
 pytest-describe
 pytest-expecter~=0.2.2.post6
 pytest-cov
