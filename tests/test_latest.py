@@ -11,7 +11,7 @@ def describe_latest():
         expect(response.status_code) == 200
         expect(response.mimetype) == 'text/html'
         expect(response.get_data(as_text=True)).contains(
-            'src="/latest1.jpg?filtered=True"')
+            'src="/latest1.jpg?filtered=true"')
 
     def it_returns_unfiltered_images_when_nsfw(client):
         response = client.get("/latest?nsfw=true")
@@ -19,4 +19,4 @@ def describe_latest():
         expect(response.status_code) == 200
         expect(response.mimetype) == 'text/html'
         expect(response.get_data(as_text=True)).contains(
-            'src="/latest1.jpg?filtered=False"')
+            'src="/latest1.jpg?filtered=false"')

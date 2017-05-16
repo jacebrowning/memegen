@@ -218,7 +218,7 @@ def describe_get():
             expect(load(response, as_json=False)).excludes(
                 '<a href="http://localhost/iw/nazis.jpg">')
 
-            response = client.get("/latest.jpg?filtered=False")
+            response = client.get("/latest.jpg?filtered=false")
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
@@ -233,7 +233,7 @@ def describe_get():
             expect(load(response, as_json=False)).excludes(
                 '<a href="http://localhost/custom/test.jpg">')
 
-            response = client.get("/latest.jpg?filtered=False")
+            response = client.get("/latest.jpg?filtered=false")
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
