@@ -17,7 +17,7 @@
       console.log("Refreshing images");
       {% for src in srcs %}
         var elem{{ loop.index }} = document.getElementById('latest{{ loop.index }}');
-        elem{{ loop.index }}.src = '{{ src }}?height=250&' + Math.random();
+        elem{{ loop.index }}.src = '{{ src }}&' + Math.random();
       {% endfor %}
     };
     setInterval(reload, {{ refresh * 1000 }});
