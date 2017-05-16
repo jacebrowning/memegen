@@ -20,13 +20,19 @@
 
 {% block content %}
     <div class="container">
-      <div class="col-xs-12">
-        <div class="row">
-          <br>
+
+      <br>
+
+      <div class="row">
+        <div class="col-xs-12">
           <img class="center-block img-responsive" src="{{ img | safe }}" />
         </div>
-        <br>
-        <div class="row text-center">
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="col-xs-12 text-center">
           <a class="btn btn-primary disable-link" href="https://www.facebook.com/sharer/sharer.php?u={{ url | urlencode }}" target="_blank">
               <img src="{{ url_for('static', filename='images/facebook.png') }}" height=20></img>
               &nbsp;
@@ -44,6 +50,7 @@
           </button>
         </div>
       </div>
+
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
