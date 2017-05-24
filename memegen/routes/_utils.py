@@ -61,11 +61,12 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
 
 def track(title):
     """Log the requested content, server-side."""
-    tid = current_app.config['GOOGLE_ANALYTICS_TID']
+    google_tid = current_app.config['GOOGLE_ANALYTICS_TID']
+    remote_url = current_app.config['REMOTE_TRACKING_URL']
 
     data = dict(
         v=1,
-        tid=tid,
+        tid=google_tid,
         cid=request.remote_addr,
 
         t='pageview',
@@ -77,10 +78,13 @@ def track(title):
         ua=request.user_agent.string,
     )
 
-    if tid == 'localhost':
+    if google_tid == 'localhost':
         log.debug("Analytics data:\n%s", pprint.pformat(data))
     else:
         requests.post("http://www.google-analytics.com/collect", data=data)
+
+    if remote_url:
+        requests.get(remote_url + str(title))
 
 
 def _secure(url):
