@@ -68,9 +68,9 @@ class TestLines:
         assert ["HELLO WORLD"] == text.lines
 
     def test_case_ignored_after_space(self):
-        text = Text("HELLO WORLD")
+        text = Text("HELLO iOS")
 
-        assert ["HELLO WORLD"] == text.lines
+        assert ["HELLO IOS"] == text.lines
 
     def test_ignore_initial_capital(self):
         text = Text("HelloWorld")

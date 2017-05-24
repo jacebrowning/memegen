@@ -70,44 +70,45 @@ class Text:
         return '/'.join(paths)
 
     @classmethod
-    def _format_line(cls, part, translate_spaces):
+    def _format_line(cls, text, translate_spaces):
         for special, replacement in cls.SPECIAL.items():
-            part = part.replace(replacement, special)
-            part = part.replace(replacement.upper(), special)
+            text = text.replace(replacement, special)
+            text = text.replace(replacement.upper(), special)
 
-        part = list(part)
         chars = []
+        escape = None
 
-        previous_upper = True
-        previous_char = None
-        for i, char in enumerate(part):
-            if translate_spaces and char in (cls.EMPTY, cls.SPACE):
-                if char == previous_char:
-                    chars[-1] = char
-                    previous_char = None
-                    continue
+        for index, char in enumerate(text):
+
+            if char in (cls.EMPTY, cls.SPACE) and translate_spaces:
+                if char == escape:
+                    chars[-1] = escape
+                    escape = None
                 else:
                     chars.append(' ')
-            elif not char.isalpha():
-                chars.append(char)
+                    escape = char
+                continue
             else:
-                if char.isupper():
-                    if not previous_upper and chars[-1] != ' ':
-                        chars.append(' ')
-                    else:
-                        letters_to_check = part[max(i - 1, 0):i + 2]
+                escape = None
 
-                        if len(letters_to_check) == 3:
-                            if all((letters_to_check[0].isupper(),
-                                    letters_to_check[1].isupper(),
-                                    letters_to_check[2].islower())):
-                                chars.append(' ')
+            if not char.isalpha():
+                chars.append(char)
+                continue
 
-                chars.append(char.upper())
-                previous_upper = char.isupper()
-            previous_char = char
+            if len(chars) >= 2:
+                if char.isupper() and chars[-1].islower() and chars[-2] != ' ':
+                    chars.append(' ' + char)
+                    continue
 
-        return ''.join(chars)
+            if len(chars) >= 1 and len(text) > index + 1:
+                n_char = text[index + 1]
+                if char.isupper() and chars[-1].isupper() and n_char.islower():
+                    chars.append(' ' + char)
+                    continue
+
+            chars.append(char)
+
+        return ''.join(chars).upper()
 
     @classmethod
     def _format_path(cls, line):
