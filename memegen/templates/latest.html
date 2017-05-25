@@ -6,7 +6,7 @@
     <div class="row">
       {% for src in srcs %}
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-          <img class="meme-img" src="{{ src }}" id="latest{{ loop.index }}" />
+          <img class="meme-img" src="{{ src }}&{{ range(1, 99999) | random }}" id="latest{{ loop.index }}" />
         </div>
       {% endfor %}
     </div>
@@ -16,8 +16,8 @@
     var reload = function(){
       console.log("Refreshing images");
       {% for src in srcs %}
-        var elem{{ loop.index }} = document.getElementById('latest{{ loop.index }}');
-        elem{{ loop.index }}.src = '{{ src }}&' + Math.random();
+        var elem{{ loop.index }} = document.getElementById("latest{{ loop.index }}");
+        elem{{ loop.index }}.src = "{{ src }}&" + Math.floor((Math.random() * 99999) + 1);
       {% endfor %}
     };
     setInterval(reload, {{ refresh * 1000 }});
