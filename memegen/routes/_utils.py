@@ -1,4 +1,3 @@
-import pprint
 import logging
 from urllib.parse import unquote
 
@@ -61,10 +60,9 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
 
 def track(title):
     """Log the requested content, server-side."""
+    google_url = current_app.config['GOOGLE_ANALYTICS_URL']
     google_tid = current_app.config['GOOGLE_ANALYTICS_TID']
-    remote_url = current_app.config['REMOTE_TRACKING_URL']
-
-    data = dict(
+    google_data = dict(
         v=1,
         tid=google_tid,
         cid=request.remote_addr,
@@ -77,14 +75,17 @@ def track(title):
         uip=request.remote_addr,
         ua=request.user_agent.string,
     )
+    if google_tid != 'localhost':
+        requests.post(google_url, data=google_data)
 
-    if google_tid == 'localhost':
-        log.debug("Analytics data:\n%s", pprint.pformat(data))
-    else:
-        requests.post("http://www.google-analytics.com/collect", data=data)
-
+    remote_url = current_app.config['REMOTE_TRACKING_URL']
+    remote_data = dict(
+        text=str(title),
+        source='memegen.link',
+        context=request.full_path,
+    )
     if remote_url:
-        requests.get(remote_url + str(title))
+        requests.get(remote_url, params=remote_data)
 
 
 def _secure(url):

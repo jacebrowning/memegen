@@ -22,6 +22,7 @@ class Config:
     FACEBOOK_APP_ID = 'localhost'
     FACEBOOK_IMAGE_HEIGHT = os.getenv('FACEBOOK_IMAGE_HEIGHT', 402)
     FACEBOOK_IMAGE_WIDTH = os.getenv('FACEBOOK_IMAGE_WIDTH', 802)
+    GOOGLE_ANALYTICS_URL = "http://www.google-analytics.com/collect"
     GOOGLE_ANALYTICS_TID = 'localhost'
     REGENERATE_IMAGES = os.getenv('REGENERATE_IMAGES')
     REMOTE_TRACKING_URL = os.getenv('REMOTE_TRACKING_URL')
