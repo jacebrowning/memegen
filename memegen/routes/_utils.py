@@ -82,7 +82,7 @@ def track(title):
     remote_data = dict(
         text=str(title),
         source='memegen.link',
-        context=request.full_path,
+        context=request.url,
     )
     if remote_url:
         requests.get(remote_url, params=remote_data)
