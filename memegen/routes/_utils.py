@@ -19,14 +19,18 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     mimetypes = request.headers.get('Accept', "").split(',')
     browser = 'text/html' in mimetypes
 
-    img = _format(request, 'share')
-    img_twitter = _format(request, 'share',
-                          width=current_app.config['TWITTER_IMAGE_WIDTH'],
-                          height=current_app.config['TWITTER_IMAGE_HEIGHT'])
-    img_facebook = _format(request, 'share',
-                           width=current_app.config['FACEBOOK_IMAGE_WIDTH'],
-                           height=current_app.config['FACEBOOK_IMAGE_HEIGHT'])
-    url = _format(request, 'width', 'height')
+    img = _format_url(request, 'share')
+    img_twitter = _format_url(
+        request, 'share',
+        width=current_app.config['TWITTER_IMAGE_WIDTH'],
+        height=current_app.config['TWITTER_IMAGE_HEIGHT'],
+    )
+    img_facebook = _format_url(
+        request, 'share',
+        width=current_app.config['FACEBOOK_IMAGE_WIDTH'],
+        height=current_app.config['FACEBOOK_IMAGE_HEIGHT'],
+    )
+    url = _format_url(request, 'width', 'height')
 
     if share:
         log.info("Sharing image on page: %s", img)
@@ -76,16 +80,19 @@ def track(title):
         ua=request.user_agent.string,
     )
     if google_tid != 'localhost':
-        requests.post(google_url, data=google_data)
+        response = requests.post(google_url, data=google_data)
+        params = _format_query(google_data, as_string=True)
+        log.debug("Tracking POST: %s %s", response.url, params)
 
     remote_url = current_app.config['REMOTE_TRACKING_URL']
     remote_data = dict(
         text=str(title),
         source='memegen.link',
-        context=request.url,
+        context=unquote(request.url),
     )
     if remote_url:
-        requests.get(remote_url, params=remote_data)
+        response = requests.get(remote_url, params=remote_data)
+        log.debug("Tracking GET: %s", response.url)
 
 
 def _secure(url):
@@ -96,19 +103,27 @@ def _secure(url):
     return url
 
 
-def _format(req, *skip, **add):
+def _format_url(req, *skip, **add):
     """Get a formatted URL with sanitized query parameters."""
     base = req.base_url
 
     options = {k: v[0] for k, v in dict(req.args).items() if k not in skip}
     options.update(add)
 
-    params = sorted("{}={}".format(k, v) for k, v in options.items())
+    params = _format_query(options)
 
     if params:
         return base + "?{}".format("&".join(params))
     else:
         return base
+
+
+def _format_query(options, *, as_string=False):
+    pattern = "{}={!r}" if as_string else "{}={}"
+    pairs = sorted(pattern.format(k, v) for k, v in options.items())
+    if as_string:
+        return ' '.join(pairs)
+    return pairs
 
 
 def _nocache(response):
