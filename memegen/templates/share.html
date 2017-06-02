@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
+
 {% block title %}{{ title | safe }}{% endblock %}
-{% block meta %}
-{{- super() }}
+
+{% block meta -%}
+    <!-- Meta tags (shared image) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@memegenlink" />
     <meta name="twitter:title" content="memegen.link" />
@@ -15,7 +17,6 @@
     <meta property="og:image:width" content="{{ config['FACEBOOK_IMAGE_WIDTH'] }}" />
     <meta property="og:image:height" content="{{ config['FACEBOOK_IMAGE_HEIGHT'] }}" />
     <meta property="og:description" content="{{ title | safe }}" />
-
 {%- endblock -%}
 
 {% block content %}
