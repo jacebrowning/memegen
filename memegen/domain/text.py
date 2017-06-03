@@ -1,8 +1,9 @@
 class Text:
 
     EMPTY = '_'
-    SPACE = '-'
-    SPECIAL = {
+    SPACE = '_'
+    ALTERNATE_SPACES = ['_', '-']
+    SPECIAL_CHARACTERS = {
         '?': '~q',
         '%': '~p',
         '#': '~h',
@@ -24,7 +25,7 @@ class Text:
         return ' / '.join(self.lines)
 
     def __bool__(self):
-        return bool(self.path.strip(self.EMPTY + '/'))
+        return bool(self.path.strip(self.SPACE + '/'))
 
     def __getitem__(self, key):
         try:
@@ -71,7 +72,7 @@ class Text:
 
     @classmethod
     def _format_line(cls, text, translate_spaces):
-        for special, replacement in cls.SPECIAL.items():
+        for special, replacement in cls.SPECIAL_CHARACTERS.items():
             text = text.replace(replacement, special)
             text = text.replace(replacement.upper(), special)
 
@@ -80,7 +81,7 @@ class Text:
 
         for index, char in enumerate(text):
 
-            if char in (cls.EMPTY, cls.SPACE) and translate_spaces:
+            if char in cls.ALTERNATE_SPACES and translate_spaces:
                 if char == escape:
                     chars[-1] = escape
                     escape = None
@@ -116,10 +117,10 @@ class Text:
             path = cls.EMPTY
         else:
             path = line.lower()
-            path = path.replace(cls.SPACE, cls.SPACE * 2)
-            path = path.replace(cls.EMPTY, cls.EMPTY * 2)
+            for space in cls.ALTERNATE_SPACES:
+                path = path.replace(space, space * 2)
             path = path.replace(' ', cls.SPACE)
-            for special, replacement in cls.SPECIAL.items():
+            for special, replacement in cls.SPECIAL_CHARACTERS.items():
                 path = path.replace(special, replacement)
 
         return path

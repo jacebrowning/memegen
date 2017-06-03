@@ -16,14 +16,14 @@ def describe_get():
             description="http://knowyourmeme.com/memes/insanity-wolf",
             aliases=['insanity', 'insanity-wolf', 'iw'],
             styles=[],
-            example="http://localhost/api/templates/iw/does-testing/in-production",
+            example="http://localhost/api/templates/iw/does_testing/in_production",
         ) == load(response)
 
     def when_no_default_text(client):
         response = client.get("/api/templates/keanu")
 
         assert 200 == response.status_code
-        assert "http://localhost/api/templates/keanu/your-text/goes-here" == \
+        assert "http://localhost/api/templates/keanu/your_text/goes_here" == \
             load(response)['example']
 
     def when_alternate_sytles_available(client):
@@ -83,7 +83,7 @@ def describe_post():
 
         expect(response.status_code) == 303
         expect(load(response, as_json=False)).contains(
-            '<a href="http://localhost/fry/~hspecial-characters~q/underscore__-dash--.jpg">'
+            '<a href="http://localhost/fry/~hspecial_characters~q/underscore___dash--.jpg">'
         )
 
     def it_supports_top_only(client):

@@ -103,7 +103,7 @@ def describe_template():
         def is_placeholder_when_no_lines(template):
             template.lines = []
 
-            expect(template.sample_path) == "your-text/goes-here"
+            expect(template.sample_path) == "your_text/goes_here"
 
     def describe_keywords():
 

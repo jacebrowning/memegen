@@ -193,33 +193,21 @@ test-unit: depends ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
-endif
-endif
 
 .PHONY: test-int
 test-int: depends ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) tests; fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) tests
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
-endif
-endif
 
 .PHONY: test-all
 test-all: depends ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) $(PACKAGES); fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGES)
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
-endif
-endif
 
 .PHONY: read-coverage
 read-coverage:

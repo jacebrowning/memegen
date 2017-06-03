@@ -99,7 +99,7 @@ class Template:
     def keywords(self):
         words = set()
         for fields in [self.key, self.name] + self.aliases + self.lines:
-            for word in fields.lower().replace('-', ' ').split(' '):
+            for word in fields.lower().replace(Text.SPACE, ' ').split(' '):
                 if word:
                     words.add(word)
         return words

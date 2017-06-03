@@ -44,7 +44,7 @@ def describe_get():
         response = client.get("/api/templates/iw/HelloThere_World/How-areYOU")
 
         expect(response.status_code) == 302
-        assert '<a href="/api/templates/iw/hello-there-world/how-are-you">' in \
+        assert '<a href="/api/templates/iw/hello_there_world/how_are_you">' in \
             load(response, as_json=False)
 
     def when_masked(client):

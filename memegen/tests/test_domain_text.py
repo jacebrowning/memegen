@@ -140,25 +140,25 @@ class TestPath:
 
         assert "hello/world" == text.path
 
-    def test_single_dashes_kept(self):
-        text = Text("with-dashes/in-it")
-
-        assert "with-dashes/in-it" == text.path
-
-    def test_underscores_become_dashes(self):
+    def test_single_underscores_kept(self):
         text = Text("with_underscores/in_it")
 
-        assert "with-underscores/in-it" == text.path
+        assert "with_underscores/in_it" == text.path
 
-    def test_case_changes_become_dashes(self):
+    def test_dashes_become_underscores(self):
+        text = Text("with-dashes/in-it")
+
+        assert "with_dashes/in_it" == text.path
+
+    def test_case_changes_become_underscores(self):
         text = Text("withCaseChanges/InIT")
 
-        assert "with-case-changes/in-it" == text.path
+        assert "with_case_changes/in_it" == text.path
 
     def test_extra_spaces_are_stripped(self):
         text = Text("  with  spaces/  in it   / ")
 
-        assert "with--spaces/in-it" == text.path
+        assert "with__spaces/in_it" == text.path
 
     def test_single_underscore_is_kept(self):
         text = Text(" _     ")
@@ -168,17 +168,17 @@ class TestPath:
     def test_duplicate_capitals_are_ignored(self):
         text = Text("IWantTHISPattern_to-Work")
 
-        assert "i-want-this-pattern-to-work" == text.path
+        assert "i_want_this_pattern_to_work" == text.path
 
     def test_double_dashes_are_escaped(self):
         text = Text("i'm----  /working 9--5")
 
-        assert "i'm----/working-9--5" == text.path
+        assert "i'm----/working_9--5" == text.path
 
     def test_double_underscores_are_escaped(self):
-        text = Text("Calls ____init____/with __args")
+        text = Text("Calls ____init____/with args")
 
-        assert "calls-____init____/with-__args" == text.path
+        assert "calls_____init____/with_args" == text.path
 
     def test_question_marks_are_escaped(self):
         text = Text("special?")
@@ -188,7 +188,7 @@ class TestPath:
     def test_percents_are_escaped(self):
         text = Text("50% off")
 
-        assert "50~p-off" == text.path
+        assert "50~p_off" == text.path
 
     def test_quotes_are_escaped(self):
         text = Text('"quoted"')
@@ -198,4 +198,4 @@ class TestPath:
     def test_exact_input_can_be_used(self):
         text = Text("underscore_ dash-", translate_spaces=False)
 
-        assert "underscore__-dash--" == text.path
+        assert "underscore___dash--" == text.path
