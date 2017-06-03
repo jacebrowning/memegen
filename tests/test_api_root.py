@@ -17,6 +17,6 @@ def describe_root():
             'aliases': "http://localhost/api/aliases/",
             'magic': "http://localhost/api/magic/",
             'search': "http://localhost/api/search/",
-            'version': "4.5",
+            'version': "4.6",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }

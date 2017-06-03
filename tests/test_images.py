@@ -37,8 +37,8 @@ def describe_get():
 
         @pytest.mark.xfail(os.name == 'nt', reason="Windows has a path limit")
         def with_lots_of_text(client):
-            top = "-".join(["hello"] * 20)
-            bottom = "-".join(["world"] * 20)
+            top = "_".join(["hello"] * 20)
+            bottom = "_".join(["world"] * 20)
             response = client.get("/iw/" + top + "/" + bottom + ".jpg")
 
             assert 200 == response.status_code
@@ -85,7 +85,7 @@ def describe_get():
             response = client.get("/sad-biden.jpg?alt=scowl")
 
             assert 302 == response.status_code
-            assert '-vote.jpg?alt=scowl">' in \
+            assert '_vote.jpg?alt=scowl">' in \
                 load(response, as_json=False)
 
         def when_url(client):
@@ -173,7 +173,7 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="/iw/i-am-still-typi.jpg?preview=true">')
+                '<a href="/iw/i_am_still_typi.jpg?preview=true">')
 
     def describe_latest():
 
@@ -192,20 +192,20 @@ def describe_get():
             cache_unfiltered.items = []
 
         def it_returns_the_last_image(client, enable_cache):
-            client.get("/iw/my-first-meme.jpg")
+            client.get("/iw/my_first_meme.jpg")
 
             response = client.get("/latest.jpg")
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="http://localhost/iw/my-first-meme.jpg">')
+                '<a href="http://localhost/iw/my_first_meme.jpg">')
 
         def it_returns_a_placeholder_with_an_empty_cache(client, disable_cache):
             response = client.get("/latest.jpg")
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="http://localhost/custom/your-meme/goes-here.jpg'
+                '<a href="http://localhost/custom/your_meme/goes_here.jpg'
                 '?alt=https://raw.githubusercontent.com/jacebrowning/memegen/'
                 'master/memegen/static/images/missing.png">')
 
@@ -245,14 +245,14 @@ def describe_get():
             response = client.get("/iw/HelloThere_World/How-areYOU.jpg")
 
             assert 302 == response.status_code
-            assert '<a href="/iw/hello-there-world/how-are-you.jpg">' in \
+            assert '<a href="/iw/hello_there_world/how_are_you.jpg">' in \
                 load(response, as_json=False)
 
         def when_no_text(client):
             response = client.get("/live.jpg")
 
             assert 302 == response.status_code
-            assert '<a href="/live/_/do-it-live!.jpg">' in \
+            assert '<a href="/live/_/do_it_live!.jpg">' in \
                 load(response, as_json=False)
 
         def when_aliased_template(client):
@@ -288,7 +288,7 @@ def describe_get():
         @pytest.mark.xfail(os.name == 'nt', reason="Windows has a path limit")
         def when_too_much_text_for_a_filename(client):
             top = "hello"
-            bottom = "-".join(["world"] * 50)
+            bottom = "_".join(["world"] * 50)
             response = client.get("/iw/" + top + "/" + bottom + ".jpg")
 
             assert 414 == response.status_code

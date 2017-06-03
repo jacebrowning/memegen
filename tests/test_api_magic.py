@@ -8,12 +8,12 @@ from .conftest import load
 def describe_pattern():
 
     def it_returns_matches(client):
-        response = client.get("/api/magic/do-all-the-things")
+        response = client.get("/api/magic/do_all_the_things")
 
         expect(response.status_code) == 200
         expect(load(response)) == [
             {
-                'link': "http://localhost/api/templates/xy/do/all-the-things",
+                'link': "http://localhost/api/templates/xy/do/all_the_things",
                 'ratio': 0.94,
             },
         ]
@@ -35,7 +35,7 @@ def describe_pattern():
 
         expect(response.status_code) == 302
         expect(load(response, as_json=False)).contains(
-            '<a href="/api/magic/do-all-the-things">')
+            '<a href="/api/magic/do_all_the_things">')
 
 
 def describe_image():
@@ -45,7 +45,7 @@ def describe_image():
 
         expect(response.status_code) == 302
         expect(load(response, as_json=False)).contains(
-            '<a href="/xy/do/all-the-things.jpg">')
+            '<a href="/xy/do/all_the_things.jpg">')
 
     def even_when_no_match(client):
         response = client.get("/api/magic/_.jpg")

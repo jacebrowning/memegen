@@ -1,5 +1,9 @@
 # Revision History
 
+## 4.6
+
+- Switch to underscores as the default space character.
+
 ## 4.5
 
 - Added `?share=true` to force clients to receive HTML on image URLs.
