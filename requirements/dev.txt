@@ -1,7 +1,7 @@
 # Documentation
 pylint
 docutils
-readme
+readme==0.7.1
 pdoc
 mkdocs==0.16.0
 pygments
