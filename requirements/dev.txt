@@ -15,4 +15,4 @@ honcho
 
 # Release
 pyinstaller
-wheel
+wheel==0.29.0
