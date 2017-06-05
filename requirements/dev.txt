@@ -14,5 +14,5 @@ sniffer
 honcho
 
 # Release
-pyinstaller
+pyinstaller==3.2
 wheel
