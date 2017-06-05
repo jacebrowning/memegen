@@ -8,7 +8,7 @@ pytest
 pytest-describe==0.11.0
 pytest-expecter==0.2.2.post6
 pytest-cov
-pytest-random
+pytest-random==0.02
 
 # Coverage
 coverage
