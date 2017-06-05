@@ -11,7 +11,7 @@ pep8radius
 sniffer
 
 # Runner
-honcho
+honcho==0.7.1
 
 # Release
 pyinstaller
