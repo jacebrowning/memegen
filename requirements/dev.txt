@@ -1,6 +1,6 @@
 # Documentation
 pylint
-docutils
+docutils==0.12
 readme
 pdoc
 mkdocs==0.16.0
