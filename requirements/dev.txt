@@ -8,7 +8,7 @@ pygments
 
 # Tooling
 pep8radius
-sniffer
+sniffer==0.3.6
 
 # Runner
 honcho
