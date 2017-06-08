@@ -5,6 +5,3 @@ default:
 - VERY SKILL
 aliases:
 - dog
-regexes:
-- (such .+)/?(very .+)
-- (such .+)/?(much .+)

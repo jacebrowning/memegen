@@ -6,6 +6,3 @@ default:
 aliases:
 - fuck-me
 - fuck-me-right
-regexes:
-- (.*)/?(fuck me.* right.*)
-- (.*)/?(\b.+ me.* right.*)

@@ -5,5 +5,3 @@ default:
 aliases:
 - dos-xx
 - i-don't-always
-regexes:
-- (.+ always .+)/?(but .+)

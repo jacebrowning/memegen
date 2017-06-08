@@ -8,6 +8,3 @@ aliases:
 - nobody-cares
 - nedry
 - dennis-nedry
-regexes:
-- (.*)/?(see.* nobody cares)
-- (.*)/?(nobody cares)

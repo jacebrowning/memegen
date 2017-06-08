@@ -9,5 +9,3 @@ aliases:
 - guarantee-it
 - guarantee
 - mens-wearhouse
-regexes:
-- (.*)/?(\b.+ guarantee .+)

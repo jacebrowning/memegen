@@ -1,5 +1,4 @@
 import os
-import re
 import hashlib
 import shutil
 from pathlib import Path
@@ -29,16 +28,14 @@ class Template:
     MIN_HEIGHT = 240
     MIN_WIDTH = 240
 
-    def __init__(self, key, name=None, lines=None, patterns=None,
-                 aliases=None, link=None, root=None):
+    def __init__(self, key, name=None, lines=None, aliases=None, link=None,
+                 root=None):
         self.key = key
         self.name = name or ""
         self.lines = lines or []
-        self.regexes = []
         self.aliases = aliases or []
         self.link = link or ""
         self.root = root or ""
-        self.compile_regexes(patterns or [])
 
     def __str__(self):
         return self.key
@@ -129,26 +126,6 @@ class Template:
 
         return None
 
-    def compile_regexes(self, patterns):
-        self.regexes = [re.compile(p, re.IGNORECASE) for p in patterns]
-
-    def match(self, pattern):
-        """Determine if a pattern matches this templates regexes."""
-        if self.regexes:
-            log.debug("Matching patterns in %s", self)
-
-        for regex in self.regexes:
-            log.debug("Comparing %r to %r", pattern, regex.pattern)
-            result = regex.match(pattern)
-            if result:
-                ratio = round(min(len(regex.pattern) / len(pattern),
-                                  len(pattern) / len(regex.pattern)), 2)
-                path = Text(result.group(1) + '/' + result.group(2)).path
-                log.debug("Matched: %r", ratio)
-                return ratio, path
-
-        return 0, None
-
     def search(self, query):
         """Count the number of times a query exists in relevant fields."""
         if query is None:
@@ -167,7 +144,6 @@ class Template:
                 self.validate_meta,
                 self.validate_link,
                 self.validate_size,
-                self.validate_regexes,
             ]
         for validator in validators:
             if not validator():
@@ -218,16 +194,6 @@ class Template:
             log.error("Image must be at least %ix%i (is %ix%i)",
                       self.MIN_WIDTH, self.MIN_HEIGHT, w, h)
             return False
-        return True
-
-    def validate_regexes(self):
-        if not self.regexes:
-            self._warn("has no regexes")
-        for regex in self.regexes:
-            pattern = regex.pattern
-            if ")/?(" not in pattern:
-                self._error("regex missing separator: %r", pattern)
-                return False
         return True
 
     def _warn(self, fmt, *objects):

@@ -6,6 +6,3 @@ default:
 aliases:
 - sub-dawg
 - xzibit
-regexes:
-- (.+ dawg ?)/?(i heard .+)
-- (.+ dog ?)/?(i heard .+)

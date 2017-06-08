@@ -6,7 +6,3 @@ default:
 aliases:
 - i-would-be-so-happy
 - south-park-so-happy
-regexes:
-- (if i could .+)/?(i would be so happy)
-- (.*)/?(i would be so happy)
-- ()/?(.*so happy)

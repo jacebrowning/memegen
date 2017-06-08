@@ -7,5 +7,3 @@ aliases:
 - pepperidge-farm
 - pepperidge-farm-remembers
 - farm
-regexes:
-- (.+)/?(pepperidge .+)

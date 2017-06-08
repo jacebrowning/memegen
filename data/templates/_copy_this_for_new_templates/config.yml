@@ -6,5 +6,3 @@ default:
 aliases:
 - # other-short-name
 - # another
-regexes:
-- # (match top with .+)/?(and bottom)

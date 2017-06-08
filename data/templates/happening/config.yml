@@ -7,5 +7,3 @@ aliases:
 - its-happening
 - ron-paul
 - doom-paul
-regexes:
-- (.*)/?(\bit'?s happening)

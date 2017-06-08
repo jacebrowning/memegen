@@ -5,5 +5,3 @@ default:
 aliases:
 - all-the-things
 - xy-things
-regexes:
-- (.+)/?(all the .+)

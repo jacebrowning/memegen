@@ -6,6 +6,3 @@ default:
 aliases:
 - futurama-fry
 - not-sure-if
-regexes:
-- (not sure .+)/?(or .+)
-- (.+ if .+)/?(or .+)

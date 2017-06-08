@@ -6,5 +6,3 @@ default:
 aliases:
 - at-least-you-tried
 - you-tried
-regexes:
-- (.+)/?(you tried)

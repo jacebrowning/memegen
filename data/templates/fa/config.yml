@@ -6,6 +6,3 @@ default:
 aliases:
 - forever-alone
 - alone
-regexes:
-- (forever)/?(alone)
-- (.*)/?(alone)
