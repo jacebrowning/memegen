@@ -6,7 +6,3 @@ default:
 aliases:
 - fry-money
 - take-my-money
-regexes:
-- (.+)/?(take my .+)
-- (shut up and)/?(.+)
-- (.*)/?(take my money)

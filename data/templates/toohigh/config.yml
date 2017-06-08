@@ -6,5 +6,3 @@ default:
 aliases:
 - too-damn-high
 - jimmy-mcmillan
-regexes:
-- (.+)/?(too? damn? .+)

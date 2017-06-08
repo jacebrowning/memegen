@@ -9,6 +9,3 @@ aliases:
 - lumbergh
 - be-great
 - great
-regexes:
-- (.*)/?(that would be great)
-- (.*)/?(that'?d be great)

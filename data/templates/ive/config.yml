@@ -6,5 +6,3 @@ default:
 aliases:
 - jony
 - best-thing-ever
-regexes:
-- (.*)/?(we think .+ love it)

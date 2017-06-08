@@ -7,5 +7,3 @@ aliases:
 - boromir
 - one-does-not
 - one-does-not-simply
-regexes:
-- (.+ simply)/?(.+)

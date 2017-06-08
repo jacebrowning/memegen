@@ -10,7 +10,6 @@ from ..domain import Template
 @yorm.attr(link=String)
 @yorm.attr(default=List.of_type(String))
 @yorm.attr(aliases=List.of_type(String))
-@yorm.attr(regexes=List.of_type(String))
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""
@@ -22,7 +21,6 @@ class TemplateModel:
         self.default = []
         self.link = ""
         self.aliases = []
-        self.regexes = []
 
     @property
     def domain(self):
@@ -31,7 +29,6 @@ class TemplateModel:
             name=self.name,
             lines=self.default,
             aliases=self.aliases,
-            patterns=self.regexes,
             link=self.link,
             root=self.root,
         )

@@ -6,6 +6,3 @@ default:
 aliases:
 - bad-time
 - ski-instructor
-regexes:
-- (.*)/?(you.* bad time)
-- ()/?(.*bad time)

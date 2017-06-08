@@ -5,5 +5,3 @@ default:
 aliases:
 - matrix-morpheus
 - what-if
-regexes:
-- (what .+ you)/?(.+)

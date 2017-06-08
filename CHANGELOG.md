@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.0
+
+- Removed `/api/magic` route.
+
 ## 4.6
 
 - Switch to underscores as the default space character.

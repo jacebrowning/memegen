@@ -7,5 +7,3 @@ aliases:
 - hot
 - mugatu
 - sohotrightnow
-regexes:
-- (.+)/?(so hot.*)

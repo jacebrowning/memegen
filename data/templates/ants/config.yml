@@ -6,5 +6,3 @@ default:
 aliases:
 - archer
 - do-you-want
-regexes:
-- (do you want .+)/?(because that'?s how you get .+)

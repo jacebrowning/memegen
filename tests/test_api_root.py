@@ -15,8 +15,7 @@ def describe_root():
             'templates': "http://localhost/api/templates/",
             'fonts': "http://localhost/api/fonts/",
             'aliases': "http://localhost/api/aliases/",
-            'magic': "http://localhost/api/magic/",
             'search': "http://localhost/api/search/",
-            'version': "4.6",
+            'version': "5.0",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }

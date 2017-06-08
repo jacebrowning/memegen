@@ -7,5 +7,3 @@ aliases:
 - everywhere
 - x-everywhere
 - buzz-lightyear
-regexes:
-- (.+)/?(\b.+ everywhere)

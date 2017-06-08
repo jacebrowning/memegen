@@ -9,5 +9,3 @@ aliases:
 - sneaky-snake
 - sneaky-snek
 - skeptical-snek
-regexes:
-- # (match top with .+)/?(and bottom)

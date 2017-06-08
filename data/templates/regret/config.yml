@@ -8,6 +8,3 @@ aliases:
 - regret-this
 - immediate-regret
 - anchorman-regret
-regexes:
-- ()/?(.+ immediately regret .+)
-- ()/?(.+ regret .+)

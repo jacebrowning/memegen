@@ -7,5 +7,3 @@ aliases:
 - kill-the-batman
 - it's-simple
 - simple
-regexes:
-- (.*simple)/?(.+)

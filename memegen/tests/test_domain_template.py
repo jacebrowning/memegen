@@ -113,16 +113,6 @@ def describe_template():
             expect(template.keywords) == \
                 {'bar', 'the', 'day', 'in', 'abc', 'a', 'life'}
 
-    def describe_match():
-
-        def it_returns_none_when_no_match(template):
-            expect(template.match("")) == (0, None)
-
-        def it_returns_the_best_matching_result(template):
-            template.compile_regexes([r"(\w*)/?(abc)", r"(\w*)/?(def)"])
-
-            expect(template.match("_/def")) == (0.42, "_/def")
-
     def describe_search():
 
         def it_counts_contained_terms(template):
@@ -184,13 +174,6 @@ def describe_template():
             mock_open.return_value = mock_img
 
             expect(template.validate_size()) == valid
-
-    def describe_validate_regexes():
-
-        def with_missing_split(template):
-            template.compile_regexes([".*"])
-
-            expect(template.validate_regexes()) == False
 
     def describe_validate():
 

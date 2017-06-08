@@ -6,6 +6,3 @@ default:
 aliases:
 - sttmfh
 - make-fetch-happen
-regexes:
-- (stop .+ happen\b)/?(.+ not .+)
-- (.+ happen\b)/?(.+)

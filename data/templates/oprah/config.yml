@@ -5,6 +5,3 @@ default:
 - AND YOU GET A MEME
 aliases:
 - you-get-a-car
-regexes:
-- (you get .+)/?(and you get .+)
-- ()/?(.*you get .+)

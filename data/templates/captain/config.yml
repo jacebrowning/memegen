@@ -6,6 +6,3 @@ default:
 aliases:
 - captain-now
 - im-the-captain
-regexes:
-- (.*)/?(i am the captain now)
-- (.*)/?(i'?m the captain now)

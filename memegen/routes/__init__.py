@@ -4,7 +4,6 @@ from . import static
 # Web pages
 from . import index
 from . import custom
-from . import magic
 from . import latest
 from . import image
 
@@ -13,7 +12,6 @@ from . import api_root
 from . import api_templates
 from . import api_fonts
 from . import api_aliases
-from . import api_magic
 from . import api_search
 from . import api_links
 

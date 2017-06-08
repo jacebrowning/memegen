@@ -117,7 +117,6 @@ def register_blueprints(app):
     app.register_blueprint(routes.api_fonts.blueprint)
     app.register_blueprint(routes.api_legacy.blueprint)
     app.register_blueprint(routes.api_links.blueprint)
-    app.register_blueprint(routes.api_magic.blueprint)
     app.register_blueprint(routes.api_root.blueprint)
     app.register_blueprint(routes.api_search.blueprint)
     app.register_blueprint(routes.api_templates.blueprint)
@@ -125,7 +124,6 @@ def register_blueprints(app):
     app.register_blueprint(routes.image.blueprint)
     app.register_blueprint(routes.index.blueprint)
     app.register_blueprint(routes.latest.blueprint)
-    app.register_blueprint(routes.magic.blueprint)
     app.register_blueprint(routes.static.blueprint)
 
 

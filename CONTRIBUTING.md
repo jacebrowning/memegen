@@ -33,8 +33,6 @@ $ make env
 
 In the [`data/templates`](data/templates) directory, use the example to create your own template directory. The name of the directory will be the primary alias for that meme.
 
-The `regexes` list is used for pattern matching on http://memegen.link/magic. If you are not comfortable writing regular expressions, please leave this list empty. Otherwise, add a few [tests](https://github.com/jacebrowning/memegen/blob/master/tests/test_magic.py) to confirm the expected patterns match.
-
 ### Serving
 
 Run the server locally:

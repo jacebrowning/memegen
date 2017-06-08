@@ -6,6 +6,3 @@ default:
 aliases:
 - you-should-feel-bad
 - feel-bad
-regexes:
-- (.+ bad)/?(.+ feel bad)
-- ()/?(.*feel bad)

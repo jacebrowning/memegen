@@ -7,5 +7,3 @@ aliases:
 - happy-cat
 - i-can-has-cheezburger
 - i-can-haz
-regexes:
-- (.+ can (?:have)|(?:haz)|(?:has))/?(.+)

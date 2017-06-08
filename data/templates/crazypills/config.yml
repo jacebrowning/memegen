@@ -5,6 +5,3 @@ default:
 - I FEEL LIKE I'M TAKING CRAZY PILLS
 aliases:
 - i'm-taking-crazy-pills
-regexes:
-- (.*)/?(i feel like i'?m taking? crazy pills)
-- ()/?(.*crazy pills)
