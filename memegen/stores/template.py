@@ -6,9 +6,18 @@ from yorm.types import String, List
 from ..domain import Template
 
 
+class UpperString(String):
+
+    @classmethod
+    def to_data(cls, obj):
+        value = super().to_data(obj)
+        value = value.upper()
+        return value
+
+
 @yorm.attr(name=String)
 @yorm.attr(link=String)
-@yorm.attr(default=List.of_type(String))
+@yorm.attr(default=List.of_type(UpperString))
 @yorm.attr(aliases=List.of_type(String))
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
@@ -42,6 +51,7 @@ class TemplateStore:
         for key in os.listdir(self.root):
             if key[0] not in ('.', '_'):
                 model = TemplateModel(key, self.root)
+                yorm.save(model)
                 self._items[key] = model
 
     def read(self, key):
