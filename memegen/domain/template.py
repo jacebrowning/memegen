@@ -165,7 +165,7 @@ class Template:
             return False
         return True
 
-    def validate_link(self):
+    def validate_link(self, delay=3):
         if self.link:
             flag = Path(self.dirpath, self.VALID_LINK_FLAG)
             if flag.is_file():
@@ -183,8 +183,9 @@ class Template:
                     self._error("link is invalid (%s)", response.status_code)
                     return False
                 else:
-                    with open(str(flag), 'w') as stream:
-                        stream.write(str(int(time.time())))
+                    with open(str(flag), 'w') as f:
+                        f.write(str(int(time.time())))
+                time.sleep(delay)
         return True
 
     def validate_size(self):

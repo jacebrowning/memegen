@@ -151,13 +151,13 @@ def describe_template():
             with patch('requests.head', Mock(return_value=mock_response)):
                 template.link = "example.com/fake"
 
-                expect(template.validate_link()) == False
+                expect(template.validate_link(delay=0)) == False
 
         @patch('pathlib.Path.is_file', Mock(return_value=True))
         def with_cached_valid_link(template):
             template.link = "already_cached_site.com"
 
-            expect(template.validate_link()) == True
+            expect(template.validate_link(delay=0)) == True
 
     def describe_validate_size():
 
