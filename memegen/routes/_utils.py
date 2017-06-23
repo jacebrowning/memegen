@@ -11,6 +11,10 @@ log = logging.getLogger(__name__)
 
 def route(*args, **kwargs):
     """Unquoted version of Flask's `url_for`."""
+    for key, value in sorted(kwargs.items()):
+        if value is True:
+            kwargs[key] = 'true'
+
     return _secure(unquote(url_for(*args, **kwargs)))
 
 
