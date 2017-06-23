@@ -31,7 +31,9 @@ def get_latest(index=1, filtered=True):
     cache = cache_filtered if filtered else cache_unfiltered
     kwargs = cache.get(index - 1)
 
-    if not kwargs:
+    if kwargs:
+        kwargs['preview'] = True
+    else:
         kwargs['key'] = 'custom'
         kwargs['path'] = "your_meme/goes_here"
         kwargs['alt'] = "https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png"
@@ -61,9 +63,9 @@ def get_without_text_jpeg(key):
 def get_with_text(key, path, alt, font, preview, share, **size):
     options = dict(key=key, path=path, alt=alt, font=font, **size)
     if preview:
-        options['preview'] = 'true'
+        options['preview'] = True
     if share:
-        options['share'] = 'true'
+        options['share'] = True
 
     text = domain.Text(path)
     fontfile = app.font_service.find(font)

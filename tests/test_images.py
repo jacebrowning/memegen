@@ -198,7 +198,7 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="http://localhost/iw/my_first_meme.jpg">')
+                '<a href="http://localhost/iw/my_first_meme.jpg?preview=true">')
 
         def it_returns_a_placeholder_with_an_empty_cache(client, disable_cache):
             response = client.get("/latest.jpg")
@@ -216,13 +216,13 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).excludes(
-                '<a href="http://localhost/iw/nazis.jpg">')
+                '<a href="http://localhost/iw/nazis.jpg')
 
             response = client.get("/latest.jpg?filtered=false")
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="http://localhost/iw/nazis.jpg">')
+                '<a href="http://localhost/iw/nazis.jpg?preview=true">')
 
         def it_filters_custom_images(client, enable_cache):
             client.get("/custom/test.jpg")
@@ -231,13 +231,13 @@ def describe_get():
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).excludes(
-                '<a href="http://localhost/custom/test.jpg">')
+                '<a href="http://localhost/custom/test.jpg')
 
             response = client.get("/latest.jpg?filtered=false")
 
             expect(response.status_code) == 302
             expect(load(response, as_json=False)).contains(
-                '<a href="http://localhost/custom/test.jpg">')
+                '<a href="http://localhost/custom/test.jpg?preview=true">')
 
     def describe_redirects():
 
