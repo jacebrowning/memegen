@@ -16,6 +16,7 @@ OPTIONS = {
     'top': fields.Str(missing=""),
     'bottom': fields.Str(missing=""),
     '_redirect': fields.Bool(load_from='redirect', missing=True),
+    '_masked': fields.Bool(load_from='masked', missing=False),
 }
 
 
@@ -36,7 +37,7 @@ def create_template():
 
 @blueprint.route("<key>", methods=['GET', 'POST'], endpoint='create')
 @parser.use_kwargs(OPTIONS)
-def create_meme(key, top, bottom, _redirect):
+def create_meme(key, top, bottom, _redirect, _masked):
     """Generate a meme from a template."""
     if request.method == 'GET':
         template = current_app.template_service.find(key)
@@ -58,7 +59,11 @@ def create_meme(key, top, bottom, _redirect):
         else:
             text = Text("_")
 
-        url = route('image.get', key=key, path=text.path, _external=True)
+        if _masked:
+            code = current_app.link_service.encode(key, text.path)
+            url = route('image.get_encoded', code=code, _external=True)
+        else:
+            url = route('image.get', key=key, path=text.path, _external=True)
 
         if _redirect:
             return redirect(url, 303)
