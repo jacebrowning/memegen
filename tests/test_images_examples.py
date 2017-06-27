@@ -33,10 +33,10 @@ def test_text_wrapping(client):
     """Create various example images for manual verification."""
     for name, url in [
         ("text-basic.jpg", "/ch/hello/world.jpg"),
-        ("text-nominal.jpg", "/ch/a-normal-line-of-top-meme-text-followed-by/"
-            "another-normal-line-of-bottom-meme-text.jpg"),
-        ("text-long.jpg", "/ch/" + ("long-" * 15) + "line/short-line.jpg"),
-        ("text-subscripts.jpg", "/ch/some-unicode-subscripts/h%E2%82%82o.jpg"),
+        ("text-nominal.jpg", "/ch/a_normal_line_of_top_meme_text_followed_by/"
+            "another_normal_line_of_bottom_meme_text.jpg"),
+        ("text-long.jpg", "/ch/" + ("long_" * 15) + "line/short_line.jpg"),
+        ("text-subscripts.jpg", "/ch/some_unicode_subscripts/h%E2%82%82o.jpg"),
     ]:
         save_image(client, url, name)
 
@@ -48,7 +48,7 @@ def test_standard_font(client):
     See: https://github.com/jacebrowning/memegen/issues/216
 
     """
-    url = "/ch/we-like-using-the/custom-fonts.jpg?font=impact"
+    url = "/ch/we_like_using_the/custom_fonts.jpg?font=impact"
     save_image(client, url, "font-impact.jpg")
 
 
@@ -63,8 +63,8 @@ def test_japanese_font(client):
 def test_custom_sizes(client):
     """Create memes using custom sizes."""
     for name, url in [
-        ("size-width.jpg", "/older/hello/world.jpg?width=200"),
-        ("size-height.jpg", "/older/hello/world.jpg?height=300"),
-        ("size-both.jpg", "/older/hello/world.jpg?width=200&height=300"),
+        ("size-width.jpg", "/fry/hello/world.jpg?width=200"),
+        ("size-height.jpg", "/fry/hello/world.jpg?height=300"),
+        ("size-both.jpg", "/fry/hello/world.jpg?width=200&height=300"),
     ]:
         save_image(client, url, name)

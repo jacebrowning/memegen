@@ -180,14 +180,16 @@ def _add_blurred_background(foreground, background, width, height):
     border_width = min(width, base_width + 2)
     border_height = min(height, base_height + 2)
     border_dimensions = border_width, border_height
-    border = ImageFile.new("RGB", border_dimensions)
+    border = ImageFile.new('RGB', border_dimensions)
     border.paste(foreground, ((border_width - base_width) // 2,
                               (border_height - base_height) // 2))
 
     padded_dimensions = (width, height)
     padded = background.resize(padded_dimensions, ImageFile.LANCZOS)
 
-    blurred = padded.filter(ImageFilter.GaussianBlur(20))
+    darkened = padded.point(lambda p: p * 0.4)
+
+    blurred = darkened.filter(ImageFilter.GaussianBlur(5))
     blurred.format = 'PNG'
 
     blurred_width, blurred_height = blurred.size
