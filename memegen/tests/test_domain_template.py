@@ -144,6 +144,10 @@ def describe_template():
 
     def describe_validate_link():
 
+        @pytest.fixture(autouse=True)
+        def enable_validation(monkeypatch):
+            monkeypatch.setenv('VALIDATE_LINKS', "true")
+
         def with_bad_link(template):
             mock_response = Mock()
             mock_response.status_code = 404

@@ -166,6 +166,9 @@ class Template:
         return True
 
     def validate_link(self, delay=3):
+        if not os.getenv('VALIDATE_LINKS'):
+            log.warning("Link validation skipped ('VALIDATE_LINKS' unset)")
+            return True
         if self.link:
             flag = Path(self.dirpath, self.VALID_LINK_FLAG)
             if flag.is_file():

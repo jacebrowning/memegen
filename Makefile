@@ -104,8 +104,9 @@ doctor:  ## Confirm system dependencies are available
 
 .env:
 	echo "FLASK_CONFIG=dev" >> $@
-	echo "#REGENERATE_IMAGES=true" >> $@
 	echo "GOOGLE_ANALYTICS_TID=local" >> $@
+	echo "#REGENERATE_IMAGES=true" >> $@
+	echo "#VALIDATE_LINKS=true" >> $@
 
 # PROJECT DEPENDENCIES #########################################################
 
