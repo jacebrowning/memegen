@@ -1,5 +1,7 @@
 import os
 
+from . import __project__
+
 
 class Config:
     """Base configuration."""
@@ -28,6 +30,7 @@ class Config:
     REMOTE_TRACKING_URL = os.getenv('REMOTE_TRACKING_URL')
     TWITTER_IMAGE_HEIGHT = os.getenv('TWITTER_IMAGE_HEIGHT', 401)
     TWITTER_IMAGE_WIDTH = os.getenv('TWITTER_IMAGE_WIDTH', 801)
+    WATERMARK_OPTIONS = os.getenv('WATERMARK_OPTIONS', "").split(',')
 
 
 class ProdConfig(Config):
@@ -47,6 +50,8 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
+    WATERMARK_OPTIONS = ['test']
+
 
 class DevConfig(Config):
     """Development configuration."""
@@ -54,6 +59,8 @@ class DevConfig(Config):
     ENV = 'dev'
 
     DEBUG = True
+
+    WATERMARK_OPTIONS = ['dev', 'localhost', '127.0.0.1']
 
 
 def get_config(name):

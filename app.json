@@ -22,6 +22,9 @@
     },
     "TWITTER_IMAGE_WIDTH": {
       "required": true
+    },
+    "WATERMARK_OPTIONS": {
+      "required": true
     }
   },
   "addons":[
