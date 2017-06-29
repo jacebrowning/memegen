@@ -166,6 +166,28 @@ def describe_get():
             expect(load(response, as_json=False)).contains(
                 'height=89')
 
+    def describe_watermark():
+
+        def it_accept_supported_watermark(client):
+            response = client.get("/iw/test.jpg?watermark=test")
+
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
+
+        def it_redirects_with_unsupported_watermark(client):
+            response = client.get("/iw/test.jpg?watermark=unsupported")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/test.jpg"')
+
+        def it_keeps_watermark_after_redirect(client):
+            response = client.get("/iw/test 2.jpg?watermark=test")
+
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains(
+                '<a href="/iw/test_2.jpg?watermark=test"')
+
     def describe_preview():
 
         def it_keeps_flag_after_redirect(client):

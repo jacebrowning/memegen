@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.1
+
+- Added `?watermark=<str>` option to include name of supported clients.
+
 ## 5.0
 
 - Removed `/api/magic` route.

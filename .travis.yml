@@ -10,6 +10,7 @@ cache:
 env:
   global:
   - RANDOM_SEED=12345
+  - REGENERATE_IMAGES=true
   - VALIDATE_LINKS=true
 
 install:

@@ -68,3 +68,14 @@ def test_custom_sizes(client):
         ("size-both.jpg", "/fry/hello/world.jpg?width=200&height=300"),
     ]:
         save_image(client, url, name)
+
+
+@pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
+def test_forced_watermark(client):
+    """Create meme with a watermark."""
+    for name, partial in [
+        ("watermark.jpg", "/fry/hello/world.jpg?"),
+        ("watermark-pad-h.jpg", "/fry/hello/world.jpg?width=300&height=200&"),
+        ("watermark-pad-v.jpg", "/fry/hello/world.jpg?width=200&height=300&"),
+    ]:
+        save_image(client, partial + "watermark=test", name)

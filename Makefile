@@ -107,6 +107,7 @@ doctor:  ## Confirm system dependencies are available
 	echo "GOOGLE_ANALYTICS_TID=local" >> $@
 	echo "#REGENERATE_IMAGES=true" >> $@
 	echo "#VALIDATE_LINKS=true" >> $@
+	echo "WATERMARK_OPTIONS=localhost" >> $@
 
 # PROJECT DEPENDENCIES #########################################################
 

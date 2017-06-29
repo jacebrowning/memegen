@@ -21,6 +21,7 @@ OPTIONS = {
     'share': fields.Bool(missing=False),
     'width': fields.Int(missing=None),
     'height': fields.Int(missing=None),
+    'watermark': fields.Str(missing=None),
 }
 
 
@@ -60,8 +61,9 @@ def get_without_text_jpeg(key):
 
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
-def get_with_text(key, path, alt, font, preview, share, **size):
-    options = dict(key=key, path=path, alt=alt, font=font, **size)
+def get_with_text(key, path, alt, font, watermark, preview, share, **size):
+    options = dict(key=key, path=path,
+                   alt=alt, font=font, watermark=watermark, **size)
     if preview:
         options['preview'] = True
     if share:
@@ -79,16 +81,22 @@ def get_with_text(key, path, alt, font, preview, share, **size):
         options.pop('alt')
         return redirect(route('.get', **options))
 
-    if font and not fontfile:
-        options.pop('font')
-        return redirect(route('.get', **options))
-
     if path != text.path:
         options['path'] = text.path
         return redirect(route('.get', **options))
 
-    image = app.image_service.create(template, text,
-                                     style=alt, font=fontfile, size=size)
+    if font and not fontfile:
+        options.pop('font')
+        return redirect(route('.get', **options))
+
+    if watermark and watermark not in app.config['WATERMARK_OPTIONS']:
+        options.pop('watermark')
+        return redirect(route('.get', **options))
+
+    image = app.image_service.create(
+        template, text,
+        style=alt, font=fontfile, size=size, watermark=watermark,
+    )
 
     if not preview:
         cache_filtered.add(key=key, path=path, alt=alt, font=font)
