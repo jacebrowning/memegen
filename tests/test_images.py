@@ -1,6 +1,7 @@
 # pylint: disable=unused-variable,unused-argument,misplaced-comparison-constant,expression-not-assigned
 
 import os
+from unittest.mock import patch
 
 import pytest
 from expecter import expect
@@ -18,6 +19,7 @@ def describe_get():
 
     def describe_visible():
 
+        @patch('memegen.domain.image.FINGERPRINT_WATERMARK', False)
         def with_nominal_text(client):
             path = os.path.join(IMAGES, 'iw', 'hello', 'world' + '.img')
             if os.path.exists(path):
@@ -84,9 +86,9 @@ def describe_get():
         def it_keeps_alt_after_text_redirect(client):
             response = client.get("/sad-biden.jpg?alt=scowl")
 
-            assert 302 == response.status_code
-            assert '_vote.jpg?alt=scowl">' in \
-                load(response, as_json=False)
+            expect(response.status_code) == 302
+            expect(load(response, as_json=False)).contains("_vote.jpg")
+            expect(load(response, as_json=False)).contains("alt=scowl")
 
         def when_url(client):
             url = "http://www.gstatic.com/webp/gallery/1.jpg"

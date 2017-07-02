@@ -1,6 +1,6 @@
 import logging
 
-from flask import Blueprint, current_app as app, redirect
+from flask import Blueprint, current_app, request, redirect
 from webargs import fields, flaskparser
 
 from .. import domain
@@ -48,7 +48,7 @@ def get_without_text(key, **options):
     options.pop('preview')
     options.pop('share')
 
-    template = app.template_service.find(key)
+    template = current_app.template_service.find(key)
     text = domain.Text(template.default_path)
 
     return redirect(route('.get', key=key, path=text.path, **options))
@@ -70,9 +70,9 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options['share'] = True
 
     text = domain.Text(path)
-    fontfile = app.font_service.find(font)
+    fontfile = current_app.font_service.find(font)
 
-    template = app.template_service.find(key, allow_missing=True)
+    template = current_app.template_service.find(key, allow_missing=True)
     if template.key != key:
         options['key'] = template.key
         return redirect(route('.get', **options))
@@ -89,11 +89,12 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options.pop('font')
         return redirect(route('.get', **options))
 
-    if watermark and watermark not in app.config['WATERMARK_OPTIONS']:
+    options['watermark'] = watermark = _get_watermark(request, watermark)
+    if watermark and watermark not in current_app.config['WATERMARK_OPTIONS']:
         options.pop('watermark')
         return redirect(route('.get', **options))
 
-    image = app.image_service.create(
+    image = current_app.image_service.create(
         template, text,
         style=alt, font=fontfile, size=size, watermark=watermark,
     )
@@ -114,11 +115,23 @@ def get_with_text_jpeg(key, path):
 @blueprint.route("/_<code>.jpg")
 def get_encoded(code):
 
-    key, path = app.link_service.decode(code)
-    template = app.template_service.find(key)
+    key, path = current_app.link_service.decode(code)
+    template = current_app.template_service.find(key)
     text = domain.Text(path)
-    image = app.image_service.create(template, text)
+    image = current_app.image_service.create(template, text)
 
     track(image.text)
 
     return display(image.text, image.path)
+
+
+def _get_watermark(_request, watermark):
+    if watermark:
+        return watermark
+
+    referer = _request.environ.get('HTTP_REFERER', "")
+    for option in current_app.config['WATERMARK_OPTIONS']:
+        if option in referer:
+            return None
+
+    return current_app.config['WATERMARK_OPTIONS'][0]

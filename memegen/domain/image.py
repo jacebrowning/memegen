@@ -4,6 +4,7 @@ import logging
 
 from PIL import Image as ImageFile, ImageFont, ImageDraw, ImageFilter
 
+FINGERPRINT_WATERMARK = True
 
 log = logging.getLogger(__name__)
 
@@ -28,8 +29,9 @@ class Image(object):
             return None
 
         base = os.path.join(self.root, self.template.key, self.text.path)
-        custom = [self.style, self.font,
-                  self.width, self.height, self.watermark]
+        custom = [self.style, self.font, self.width, self.height]
+        if FINGERPRINT_WATERMARK:
+            custom.append(self.watermark)
 
         if any(custom):
             slug = self.hash(custom)
@@ -118,6 +120,8 @@ def _generate(top, bottom, font, background, width, height, watermark):
     # Find bottom centered position for bottom text
     bottom_text_size_x = (image.size[0] / 2) - (bottom_text_size[0] / 2)
     bottom_text_size_y = image.size[1] - bottom_text_size[1] * (7 / 6)
+    if watermark:
+        bottom_text_size_y = bottom_text_size_y - 5
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
     _draw_outlined_text(draw, top_text_position,
