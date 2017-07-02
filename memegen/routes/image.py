@@ -62,12 +62,12 @@ def get_without_text_jpeg(key):
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt, font, watermark, preview, share, **size):
-    options = dict(key=key, path=path, alt=alt, font=font, **size)
+    options = dict(key=key, path=path,
+                   alt=alt, font=font, watermark=watermark, **size)
     if preview:
         options['preview'] = True
     if share:
         options['share'] = True
-    options['watermark'] = watermark = _get_watermark(request, watermark)
 
     text = domain.Text(path)
     fontfile = current_app.font_service.find(font)
@@ -89,6 +89,7 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options.pop('font')
         return redirect(route('.get', **options))
 
+    options['watermark'] = watermark = _get_watermark(request, watermark)
     if watermark and watermark not in current_app.config['WATERMARK_OPTIONS']:
         options.pop('watermark')
         return redirect(route('.get', **options))
