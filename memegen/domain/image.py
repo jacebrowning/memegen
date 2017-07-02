@@ -4,6 +4,7 @@ import logging
 
 from PIL import Image as ImageFile, ImageFont, ImageDraw, ImageFilter
 
+FINGERPRINT_WATERMARK = True
 
 log = logging.getLogger(__name__)
 
@@ -28,8 +29,9 @@ class Image(object):
             return None
 
         base = os.path.join(self.root, self.template.key, self.text.path)
-        custom = [self.style, self.font,
-                  self.width, self.height, self.watermark]
+        custom = [self.style, self.font, self.width, self.height]
+        if FINGERPRINT_WATERMARK:
+            custom.append(self.watermark)
 
         if any(custom):
             slug = self.hash(custom)
