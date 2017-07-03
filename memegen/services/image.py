@@ -17,9 +17,12 @@ class ImageService(Service):
         self.image_store = image_store
 
     def create(self, template, text, font=None, **options):
-        font = font or self.font_store.find(Font.DEFAULT)
-
-        image = Image(template, text, font=font, **options)
+        image = Image(
+            template, text,
+            font=font or self.font_store.find(Font.DEFAULT),
+            watermark_font=self.font_store.find(Font.DEFAULT),
+            **options,
+        )
 
         try:
             self.image_store.create(image)
