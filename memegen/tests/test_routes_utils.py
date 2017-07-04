@@ -18,11 +18,6 @@ def describe_display():
         app.config['GOOGLE_ANALYTICS_TID'] = 'my_tid'
         return app
 
-    request_html = Mock(url="http://foo.com?alt=http://bar.com/qux.jpg")
-    request_html.headers.get = Mock(return_value="text/html")
-    request_html.base_url = "http://foo.com"
-    request_html.args = {'alt': ["http://bar.com/qux.jpg"]}
-
     request_image = Mock(url="it's a path")
     request_image.headers.get = Mock(return_value="(not a browser)")
     request_image.base_url = "it's a path"
@@ -32,16 +27,6 @@ def describe_display():
     request_share.headers.get = Mock(return_value="*/*")
     request_share.base_url = "it's a path"
     request_share.args = {'alt': ['style'], 'share': ['true']}
-
-    @patch('memegen.routes._utils.request', request_html)
-    def it_returns_html_for_browsers(app):
-        with app.test_request_context():
-            html = display("my_title", "my_path", raw=True)
-
-        print(html)
-        assert "<title>my_title</title>" in html
-        assert 'url("http://foo.com?alt=http://bar.com/qux.jpg")' in html
-        assert "ga('create', 'my_tid', 'auto');" in html
 
     @patch('memegen.routes._utils.send_file')
     @patch('memegen.routes._utils.request', request_image)
@@ -61,15 +46,4 @@ def describe_display():
         print(html)
         assert "<title>my_title</title>" in html
         assert 'src="it\'s a path?alt=style"' in html
-        assert "ga('create', 'my_tid', 'auto');" in html
-
-    @patch('memegen.routes._utils.request', request_html)
-    def it_forces_https_in_production(app):
-        app.config['ENV'] = 'prod'
-        with app.test_request_context():
-            html = display("my_title", "my_path", raw=True)
-
-        print(html)
-        assert "<title>my_title</title>" in html
-        assert 'url("https://foo.com?alt=http://bar.com/qux.jpg")' in html
         assert "ga('create', 'my_tid', 'auto');" in html

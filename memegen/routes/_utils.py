@@ -20,9 +20,6 @@ def route(*args, **kwargs):
 
 def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     """Render a webpage or raw image based on request."""
-    mimetypes = request.headers.get('Accept', "").split(',')
-    browser = 'text/html' in mimetypes
-
     img = _format_url(request, 'share')
     img_twitter = _format_url(
         request, 'share',
@@ -46,17 +43,6 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
             img_twitter=_secure(img_twitter),
             img_facebook=_secure(img_facebook),
             url=_secure(url),
-            config=current_app.config,
-        )
-        return html if raw else _nocache(Response(html))
-
-    elif browser:
-        log.info("Embedding image on page: %s", img)
-
-        html = render_template(
-            'image.html',
-            title=title,
-            img=_secure(img),
             config=current_app.config,
         )
         return html if raw else _nocache(Response(html))
