@@ -90,7 +90,7 @@
         var alt = $('#meme-background').val();
         var imageUrl = encodeURIComponent("custom/" + top + "/" + bottom + ".jpg") + "?font=" + font + "&alt=" + alt;
 
-        $("#meme-image img").attr('src', imageUrl);
+        $("#meme-image img").attr('src', imageUrl + '&watermark=none');
         $("#meme-image").attr('href', imageUrl);
       });
 

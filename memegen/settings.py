@@ -60,7 +60,7 @@ class DevConfig(Config):
 
     DEBUG = True
 
-    WATERMARK_OPTIONS = Config.WATERMARK_OPTIONS + ['localhost', '127.0.0.1']
+    WATERMARK_OPTIONS = ['localhost'] + Config.WATERMARK_OPTIONS
 
 
 def get_config(name):
