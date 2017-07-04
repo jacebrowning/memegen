@@ -133,18 +133,21 @@ def _get_watermark(_request, watermark):
     if watermark == 'none':
         for option in current_app.config['WATERMARK_OPTIONS']:
             for identity in (referrer, agent):
+                log.debug("Checking request: %r in %r", option, identity)
                 if option in identity:
                     log.debug("Watermark disabled (%r in %r)", option, identity)
                     return None, True
+        log.warning("Request does not support unmarked images")
+        return None, False
 
     if watermark and watermark not in current_app.config['WATERMARK_OPTIONS']:
-        log.warning("Unsupported custom watermark: %s", watermark)
+        log.warning("Unsupported custom watermark: %r", watermark)
         return watermark, False
 
     if watermark:
-        log.debug("Using custom watermark: %s", watermark)
+        log.debug("Using custom watermark: %r", watermark)
         return watermark, True
 
     default = current_app.config['WATERMARK_OPTIONS'][0]
-    log.debug("Using default watermark: %s", default)
+    log.debug("Using default watermark: %r", default)
     return default, True
