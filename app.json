@@ -1,6 +1,5 @@
 {
   "name":"memegen",
-  "scripts":{},
   "env":{
     "FACEBOOK_APP_ID": {
       "required": true
