@@ -50,7 +50,7 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
-    WATERMARK_OPTIONS = ['test']
+    WATERMARK_OPTIONS = ['test', '']
 
 
 class DevConfig(Config):
