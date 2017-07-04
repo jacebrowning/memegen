@@ -19,7 +19,7 @@ function generateMeme() {
   var data = {"top": top, "bottom": bottom, "redirect": false, "masked" : masked};
 
   $.post(url, data, function(data){
-    $("#meme-image img").attr('src', data.href);
+    $("#meme-image img").attr('src', data.href + '?watermark=none');
     $("#meme-image").attr('href', data.href);
   });
 }

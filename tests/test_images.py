@@ -1,4 +1,4 @@
-# pylint: disable=unused-variable,unused-argument,misplaced-comparison-constant,expression-not-assigned
+# pylint: disable=unused-variable,unused-argument,misplaced-comparison-constant,expression-not-assigned,singleton-comparison
 
 import os
 
@@ -25,9 +25,9 @@ def describe_get():
 
             response = client.get("/iw/hello/world.jpg?watermark=none")
 
-            assert 200 == response.status_code
-            assert 'image/jpeg' == response.mimetype
-            assert os.path.isfile(path)
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
+            expect(os.path.isfile(path)) == True
 
         def with_only_1_line(client):
             response = client.get("/iw/hello.jpg")
