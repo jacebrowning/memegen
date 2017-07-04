@@ -133,7 +133,6 @@ def _get_watermark(_request, watermark):
     if watermark == 'none':
         for option in current_app.config['WATERMARK_OPTIONS']:
             for identity in (referrer, agent):
-                log.debug("Checking request: %r in %r", option, identity)
                 if option in identity:
                     log.debug("Watermark disabled (%r in %r)", option, identity)
                     return None, True
