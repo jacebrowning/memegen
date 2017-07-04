@@ -1,7 +1,6 @@
 # pylint: disable=unused-variable,unused-argument,misplaced-comparison-constant,expression-not-assigned
 
 import os
-from unittest.mock import patch
 
 import pytest
 from expecter import expect
@@ -19,13 +18,12 @@ def describe_get():
 
     def describe_visible():
 
-        @patch('memegen.domain.image.FINGERPRINT_WATERMARK', False)
         def with_nominal_text(client):
             path = os.path.join(IMAGES, 'iw', 'hello', 'world' + '.img')
             if os.path.exists(path):
                 os.remove(path)
 
-            response = client.get("/iw/hello/world.jpg")
+            response = client.get("/iw/hello/world.jpg?watermark=none")
 
             assert 200 == response.status_code
             assert 'image/jpeg' == response.mimetype
