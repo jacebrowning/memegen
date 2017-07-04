@@ -126,12 +126,13 @@ def get_encoded(code):
 
 
 def _get_watermark(_request, watermark):
-    ref = _request.environ.get('HTTP_REFERER', "")
-    log.debug("HTTP_REFERER: %r", ref)
+    referrer = _request.environ.get('HTTP_REFERER', "")
+    agent = _request.environ.get('HTTP_USER_AGENT', "")
+    log.debug("Referrer: %r, Agent: %r", referrer, agent)
 
     if watermark == 'none':
         for option in current_app.config['WATERMARK_OPTIONS']:
-            if option in ref:
+            if option in referrer or option in agent:
                 return None
 
     if watermark:
