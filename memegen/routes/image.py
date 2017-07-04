@@ -89,8 +89,8 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options.pop('font')
         return redirect(route('.get', **options))
 
-    options['watermark'] = watermark = _get_watermark(request, watermark)
-    if watermark and watermark not in current_app.config['WATERMARK_OPTIONS']:
+    watermark, valid = _get_watermark(request, watermark)
+    if not valid:
         options.pop('watermark')
         return redirect(route('.get', **options))
 
@@ -132,10 +132,19 @@ def _get_watermark(_request, watermark):
 
     if watermark == 'none':
         for option in current_app.config['WATERMARK_OPTIONS']:
-            if option in referrer or option in agent:
-                return None
+            for identity in (referrer, agent):
+                if option in identity:
+                    log.debug("Watermark disabled (%r in %r)", option, identity)
+                    return None, True
+
+    if watermark and watermark not in current_app.config['WATERMARK_OPTIONS']:
+        log.warning("Unsupported custom watermark: %s", watermark)
+        return watermark, False
 
     if watermark:
-        return watermark
+        log.debug("Using custom watermark: %s", watermark)
+        return watermark, True
 
-    return current_app.config['WATERMARK_OPTIONS'][0]
+    default = current_app.config['WATERMARK_OPTIONS'][0]
+    log.debug("Using default watermark: %s", default)
+    return default, True
