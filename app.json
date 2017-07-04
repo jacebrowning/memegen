@@ -22,9 +22,7 @@
     "TWITTER_IMAGE_WIDTH": {
       "required": true
     },
-    "WATERMARK_OPTIONS": {
-      "required": true
-    }
+    "WATERMARK_OPTIONS": "herokuapp.com,facebook.com,twitter.com"
   },
   "addons":[
     "papertrail"

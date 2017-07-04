@@ -25,7 +25,8 @@ def _samples(blank=False):
     """Generate dictionaries of sample image data for template rendering."""
     for template in sorted(current_app.template_service.all()):
         path = "_" if blank else template.sample_path
-        url = route('image.get', key=template.key, path=path, preview=True)
+        url = route('image.get', key=template.key, path=path,
+                    preview=True, watermark='none')
         yield {
             'key': template.key,
             'name': template.name,

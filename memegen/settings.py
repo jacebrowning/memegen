@@ -50,7 +50,7 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
-    WATERMARK_OPTIONS = ['test', '']
+    WATERMARK_OPTIONS = ['test', 'werkzeug']
 
 
 class DevConfig(Config):
@@ -60,8 +60,7 @@ class DevConfig(Config):
 
     DEBUG = True
 
-    WATERMARK_OPTIONS = os.getenv('WATERMARK_OPTIONS', "").split(',') + \
-        ['dev', 'localhost', '127.0.0.1']
+    WATERMARK_OPTIONS = Config.WATERMARK_OPTIONS + ['localhost', '127.0.0.1']
 
 
 def get_config(name):
