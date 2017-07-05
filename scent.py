@@ -26,7 +26,6 @@ class Options(object):
         (('make', 'test-all'), "Integration Tests", False),
         (('make', 'check'), "Static Analysis", True),
         (('make', 'validate'), "Validate Templates", True),
-        (('make', 'doc'), None, True),
     ]
 
 

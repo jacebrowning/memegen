@@ -83,8 +83,8 @@ launch: install
 
 .PHONY: run-prod
 run-prod: install .env
-	$(HONCHO) run bin/post_compile
-	$(HONCHO) start
+	pipenv shell -c "bin/post_compile; exit $$?"
+	pipenv shell -c "heroku local web=1; exit $$?"
 
 .PHONY: launch-prod
 launch-prod: install
@@ -114,7 +114,7 @@ DEPENDENCIES := $(ENV)/.installed
 METADATA := *.egg-info
 
 .PHONY: install
-install: $(DEPENDENCIES) $(METADATA)
+install: $(DEPENDENCIES)
 
 $(DEPENDENCIES): $(PIP) Pipfile*
 	pipenv install --dev
@@ -125,10 +125,6 @@ else ifdef MAC
 else ifdef LINUX
 	$(PIP) install pyinotify
 endif
-	@ touch $@
-
-$(METADATA): $(PYTHON) setup.py
-	$(PYTHON) setup.py develop
 	@ touch $@
 
 $(PYTHON) $(PIP):
@@ -202,96 +198,10 @@ test-all: install
 read-coverage:
 	$(OPEN) htmlcov/index.html
 
-# DOCUMENTATION ################################################################
-
-PYREVERSE := pipenv run pyreverse
-MKDOCS := pipenv run mkdocs
-
-MKDOCS_INDEX := site/index.html
-
-.PHONY: doc
-doc: uml ## Generate documentation
-
-.PHONY: uml
-uml: install docs/*.png
-docs/*.png: $(MODULES)
-	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png docs/classes.png
-	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: mkdocs
-mkdocs: install $(MKDOCS_INDEX)
-$(MKDOCS_INDEX): mkdocs.yml docs/*.md
-	ln -sf `realpath README.md --relative-to=docs` docs/index.md
-	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
-	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
-	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/license.md
-	$(MKDOCS) build --clean --strict
-
-.PHONY: mkdocs-live
-mkdocs-live: mkdocs
-	eval "sleep 3; open http://127.0.0.1:8000" &
-	$(MKDOCS) serve
-
-# BUILD ########################################################################
-
-PYINSTALLER := pipenv run pyinstaller
-PYINSTALLER_MAKESPEC := pipenv run pyi-makespec
-
-DIST_FILES := dist/*.tar.gz dist/*.whl
-EXE_FILES := dist/$(PROJECT).*
-
-.PHONY: dist
-dist: install $(DIST_FILES)
-$(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
-	rm -f $(DIST_FILES)
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	$(PYTHON) setup.py sdist
-	$(PYTHON) setup.py bdist_wheel
-
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
-
-.PHONY: exe
-exe: install $(EXE_FILES)
-$(EXE_FILES): $(MODULES) $(PROJECT).spec
-	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
-	$(PYINSTALLER) $(PROJECT).spec --noconfirm --clean
-
-$(PROJECT).spec:
-	$(PYINSTALLER_MAKESPEC) $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
-
-# RELEASE ######################################################################
-
-TWINE := pipenv run twine
-
-.PHONY: register
-register: dist ## Register the project on PyPI
-	@ echo NOTE: your project must be registered manually
-	@ echo https://github.com/pypa/python-packaging-user-guide/issues/263
-	# TODO: switch to twine when the above issue is resolved
-	# $(TWINE) register dist/*.whl
-
-.PHONY: upload
-upload: .git-no-changes register ## Upload the current version to PyPI
-	$(TWINE) upload dist/*.*
-	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
-
-.PHONY: .git-no-changes
-.git-no-changes:
-	@ if git diff --name-only --exit-code;        \
-	then                                          \
-		echo Git working copy is clean...;        \
-	else                                          \
-		echo ERROR: Git working copy is dirty!;   \
-		echo Commit your changes and try again.;  \
-		exit -1;                                  \
-	fi;
-
 # CLEANUP ######################################################################
 
 .PHONY: clean
-clean: .clean-dist .clean-test .clean-doc .clean-build ## Delete all generated and temporary files
+clean: .clean-test .clean-build ## Delete all generated and temporary files
 
 .PHONY: clean-all
 clean-all: clean .clean-env .clean-workspace
@@ -302,17 +212,9 @@ clean-all: clean .clean-env .clean-workspace
 	find $(PACKAGES) -name '__pycache__' -delete
 	rm -rf *.egg-info
 
-.PHONY: .clean-doc
-.clean-doc:
-	rm -rf README.rst docs/apidocs *.html docs/*.png site
-
 .PHONY: .clean-test
 .clean-test:
 	rm -rf .cache .pytest .coverage htmlcov
-
-.PHONY: .clean-dist
-.clean-dist:
-	rm -rf *.spec dist build
 
 .PHONY: .clean-env
 .clean-env: clean

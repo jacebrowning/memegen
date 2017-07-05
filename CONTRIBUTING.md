@@ -66,11 +66,6 @@ After checks pass, create a pull request to be merged after review.
 
 ### Requirements
 
-Everything from above with the addition of:
-
-* Pandoc: http://johnmacfarlane.net/pandoc/installing.html
-* Graphviz: http://www.graphviz.org/Download.php
-
 ### Installation
 
 After cloning the repository, create a virtualenv:

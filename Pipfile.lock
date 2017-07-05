@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "12ddd5208bada881974bb80f9e6c7a39725952a011fa7a247d7372a80c2a4772"
+            "sha256": "f543784439ef4d46eab08c0feb10a9d6f2f1650847e0996c8b8c4ca2c8bec5c6"
         },
         "requires": {
             "python_version": "3.6"
@@ -100,9 +100,6 @@
         "chardet": {
             "version": "==3.0.4"
         },
-        "click": {
-            "version": "==6.7"
-        },
         "colorama": {
             "version": "==0.3.9"
         },
@@ -115,44 +112,20 @@
         "docopt": {
             "version": "==0.6.2"
         },
-        "docutils": {
-            "version": "==0.13.1"
-        },
-        "honcho": {
-            "version": "==1.0.1"
-        },
         "idna": {
             "version": "==2.5"
         },
         "isort": {
             "version": "==4.2.15"
         },
-        "jinja2": {
-            "version": "==2.9.6"
-        },
         "lazy-object-proxy": {
             "version": "==1.3.1"
-        },
-        "livereload": {
-            "version": "==2.5.1"
-        },
-        "markdown": {
-            "version": "==2.6.8"
-        },
-        "markupsafe": {
-            "version": "==1.0"
         },
         "mccabe": {
             "version": "==0.6.1"
         },
-        "mkdocs": {
-            "version": "==0.16.3"
-        },
         "nose": {
             "version": "==1.3.7"
-        },
-        "pkginfo": {
-            "version": "==1.4.1"
         },
         "py": {
             "version": "==1.4.34"
@@ -162,12 +135,6 @@
         },
         "pydocstyle": {
             "version": "==2.0.0"
-        },
-        "pygments": {
-            "version": "==2.2.0"
-        },
-        "pyinstaller": {
-            "version": "==3.2.1"
         },
         "pylint": {
             "version": "==1.7.2"
@@ -190,14 +157,8 @@
         "python-termstyle": {
             "version": "==0.1.10"
         },
-        "pyyaml": {
-            "version": "==3.12"
-        },
         "requests": {
             "version": "==2.18.1"
-        },
-        "requests-toolbelt": {
-            "version": "==0.8.0"
         },
         "setuptools": {
             "version": "==36.0.1"
@@ -211,20 +172,8 @@
         "snowballstemmer": {
             "version": "==1.2.1"
         },
-        "tornado": {
-            "version": "==4.5.1"
-        },
-        "tqdm": {
-            "version": "==4.14.0"
-        },
-        "twine": {
-            "version": "==1.9.1"
-        },
         "urllib3": {
             "version": "==1.21.1"
-        },
-        "wheel": {
-            "version": "==0.29.0"
         },
         "wrapt": {
             "version": "==1.10.10"
