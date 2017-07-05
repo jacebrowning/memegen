@@ -1,1 +1,1 @@
-"""Unit tests for the `memegen` package."""
+"""Unit tests for the package."""

@@ -1,0 +1,182 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "f543784439ef4d46eab08c0feb10a9d6f2f1650847e0996c8b8c4ca2c8bec5c6"
+        },
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "certifi": {
+            "version": "==2017.4.17"
+        },
+        "chardet": {
+            "version": "==3.0.4"
+        },
+        "click": {
+            "version": "==6.7"
+        },
+        "flask": {
+            "version": "==0.12.2"
+        },
+        "flask-api": {
+            "version": "==0.7.1"
+        },
+        "flask-cors": {
+            "version": "==3.0.3"
+        },
+        "flask-script": {
+            "version": "==2.0.5"
+        },
+        "gunicorn": {
+            "version": "==19.7.1"
+        },
+        "idna": {
+            "version": "==2.5"
+        },
+        "itsdangerous": {
+            "version": "==0.24"
+        },
+        "jinja2": {
+            "version": "==2.9.6"
+        },
+        "markupsafe": {
+            "version": "==1.0"
+        },
+        "marshmallow": {
+            "version": "==2.13.5"
+        },
+        "olefile": {
+            "version": "==0.44"
+        },
+        "pillow": {
+            "version": "==4.1.1"
+        },
+        "profanityfilter": {
+            "version": "==1.1.2"
+        },
+        "pyyaml": {
+            "version": "==3.12"
+        },
+        "requests": {
+            "version": "==2.18.1"
+        },
+        "simplejson": {
+            "version": "==3.11.1"
+        },
+        "six": {
+            "version": "==1.10.0"
+        },
+        "urllib3": {
+            "version": "==1.21.1"
+        },
+        "webargs": {
+            "version": "==1.7.0"
+        },
+        "werkzeug": {
+            "version": "==0.12.2"
+        },
+        "yorm": {
+            "version": "==1.4"
+        }
+    },
+    "develop": {
+        "astroid": {
+            "version": "==1.5.3"
+        },
+        "backports.shutil-get-terminal-size": {
+            "version": "==1.0.0"
+        },
+        "certifi": {
+            "version": "==2017.4.17"
+        },
+        "chardet": {
+            "version": "==3.0.4"
+        },
+        "colorama": {
+            "version": "==0.3.9"
+        },
+        "coverage": {
+            "version": "==4.4.1"
+        },
+        "coverage.space": {
+            "version": "==0.8"
+        },
+        "docopt": {
+            "version": "==0.6.2"
+        },
+        "idna": {
+            "version": "==2.5"
+        },
+        "isort": {
+            "version": "==4.2.15"
+        },
+        "lazy-object-proxy": {
+            "version": "==1.3.1"
+        },
+        "mccabe": {
+            "version": "==0.6.1"
+        },
+        "nose": {
+            "version": "==1.3.7"
+        },
+        "py": {
+            "version": "==1.4.34"
+        },
+        "pycodestyle": {
+            "version": "==2.3.1"
+        },
+        "pydocstyle": {
+            "version": "==2.0.0"
+        },
+        "pylint": {
+            "version": "==1.7.2"
+        },
+        "pytest": {
+            "version": "==3.1.3"
+        },
+        "pytest-cov": {
+            "version": "==2.5.1"
+        },
+        "pytest-describe": {
+            "version": "==0.11.0"
+        },
+        "pytest-expecter": {
+            "version": "==0.2.2.post6"
+        },
+        "pytest-random": {
+            "version": "==0.02"
+        },
+        "python-termstyle": {
+            "version": "==0.1.10"
+        },
+        "requests": {
+            "version": "==2.18.1"
+        },
+        "setuptools": {
+            "version": "==36.0.1"
+        },
+        "six": {
+            "version": "==1.10.0"
+        },
+        "sniffer": {
+            "version": "==0.4.0"
+        },
+        "snowballstemmer": {
+            "version": "==1.2.1"
+        },
+        "urllib3": {
+            "version": "==1.21.1"
+        },
+        "wrapt": {
+            "version": "==1.10.10"
+        }
+    }
+}

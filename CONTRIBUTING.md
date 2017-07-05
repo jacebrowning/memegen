@@ -4,29 +4,30 @@
 
 ### Requirements
 
-* Python 3.5+
-    - Windows: https://www.python.org/downloads
-    - macOS: `$ brew install python3`
-    - Linux: `python3.5` and `python3.5-dev` packages
+* Python 3.6+
+    * Windows: https://www.python.org/downloads
+    * macOS: `$ brew install python3`
+    * Linux: `python3.6` and `python3.6-dev` packages
+* pipenv: http://docs.pipenv.org
 * Make:
-    - Windows: http://cygwin.com/install.html
-    - macOS: https://developer.apple.com/xcode
-    - Linux: http://www.gnu.org/software/make (likely already installed)
+    * Windows: http://mingw.org/download/installer
+    * Mac: http://developer.apple.com/xcode
+    * Linux: http://www.gnu.org/software/make
 * OpenJPEG:
-    - Windows: ?
-    - macOS: `$ brew install openjpeg`
-    - Linux: ?
+    * Windows: ?
+    * macOS: `$ brew install openjpeg`
+    * Linux: ?
 * libfreetype:
-    - Windows: ?
-    - macOS: `$ brew install freetype`
-    - Linux: ?
+    * Windows: ?
+    * macOS: `$ brew install freetype`
+    * Linux: ?
 
 ### Installation
 
-Create a virtual environment:
+Install project dependencies into a virtual environment:
 
 ```sh
-$ make env
+$ make install
 ```
 
 ## Adding Templates
@@ -65,17 +66,12 @@ After checks pass, create a pull request to be merged after review.
 
 ### Requirements
 
-Everything from above with the addition of:
-
-* Pandoc: http://johnmacfarlane.net/pandoc/installing.html
-* Graphviz: http://www.graphviz.org/Download.php
-
 ### Installation
 
 After cloning the repository, create a virtualenv:
 
 ```sh
-$ make env
+$ make install
 ```
 
 ## Development

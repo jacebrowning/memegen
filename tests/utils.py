@@ -1,26 +1,22 @@
-
 import json
 import logging
+from typing import Union
+
+import flask
+
 
 log = logging.getLogger(__name__)
 
 
-def load(response, as_json=True, key=None):
-    """Convert a response's binary data (JSON) to a native data type.
-
-    :param reponse: Flask `Response` object.
-    :param bool as_json: Treat the response's data as JSON.
-    :param str key: Dictionary key to return the value of, `None` for all.
-
-    """
+def load(response: flask.Response) -> (int, Union[dict, str]):
+    """Convert a response's binary data (JSON) to a dictionary."""
     text = response.data.decode('utf-8')
 
-    if not as_json:
-        return response.status_code, text
     if text:
-        data = json.loads(text)
-        if key:
-            data = data[key]
+        try:
+            data = json.loads(text)
+        except json.decoder.JSONDecodeError:
+            data = text
     else:
         data = None
 

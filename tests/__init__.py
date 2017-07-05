@@ -1,1 +1,1 @@
-"""Integration tests for the `memegen` package."""
+"""Integration tests for the package."""

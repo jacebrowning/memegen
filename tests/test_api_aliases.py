@@ -14,10 +14,10 @@ def describe_get():
         expect(data) == []
 
     def it_redirects_with_param(client):
-        status, text = load(client.get("/api/aliases/?name=foo"), as_json=False)
+        status, data = load(client.get("/api/aliases/?name=foo"))
 
         expect(status) == 302
-        expect(text).contains('<a href="/api/aliases/foo">')
+        expect(data).contains('<a href="/api/aliases/foo">')
 
     def describe_filter():
 
