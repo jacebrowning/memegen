@@ -2,122 +2,120 @@
 
 from expecter import expect
 
-from .conftest import load
+from .utils import load
 
 
 def describe_get():
 
     def it_returns_template_info(client):
-        response = client.get("/api/templates/iw")
+        status, data = load(client.get("/api/templates/iw"))
 
-        assert 200 == response.status_code
-        assert dict(
-            name="Insanity Wolf",
-            description="http://knowyourmeme.com/memes/insanity-wolf",
-            aliases=['insanity', 'insanity-wolf', 'iw'],
-            styles=[],
-            example="http://localhost/api/templates/iw/does_testing/in_production",
-        ) == load(response)
+        expect(status) == 200
+        expect(data) == {
+            'name': "Insanity Wolf",
+            'description': "http://knowyourmeme.com/memes/insanity-wolf",
+            'aliases': ['insanity', 'insanity-wolf', 'iw'],
+            'styles': [],
+            'example': "http://localhost/api/templates/iw/does_testing/in_production",
+        }
 
     def when_no_default_text(client):
-        response = client.get("/api/templates/keanu")
+        status, data = load(client.get("/api/templates/keanu"))
 
-        assert 200 == response.status_code
-        assert "http://localhost/api/templates/keanu/your_text/goes_here" == \
-            load(response)['example']
+        expect(status) == 200
+        expect(data['example']) == "http://localhost/api/templates/keanu/your_text/goes_here"
 
     def when_alternate_sytles_available(client):
-        response = client.get("/api/templates/sad-biden")
+        status, data = load(client.get("/api/templates/sad-biden"))
 
-        assert 200 == response.status_code
-        assert ['down', 'scowl', 'window'] == load(response)['styles']
+        expect(status) == 200
+        expect(data['styles']) == ['down', 'scowl', 'window']
 
     def when_dashes_in_key(client):
-        response = client.get("/api/templates/awkward-awesome")
+        status, data = load(client.get("/api/templates/awkward-awesome"))
 
-        assert 200 == response.status_code
+        expect(status) == 200
 
     def it_returns_list_when_no_key(client):
-        response = client.get("/api/templates/")
+        status, data = load(client.get("/api/templates/"))
 
-        assert 200 == response.status_code
-        data = load(response)
-        assert "http://localhost/api/templates/iw" == data['Insanity Wolf']
-        assert len(data) >= 20  # there should be many memes
+        expect(status) == 200
+        expect(data['Insanity Wolf']) == "http://localhost/api/templates/iw"
+        expect(len(data)) >= 20  # there should be many memes
 
     def it_redirects_when_key_is_an_alias(client):
-        response = client.get("/api/templates/insanity-wolf")
+        status, data = load(client.get("/api/templates/insanity-wolf"))
 
-        assert 302 == response.status_code
-        assert '<a href="/api/templates/iw">' in load(response, as_json=False)
+        expect(status) == 302
+        expect(data).contains('<a href="/api/templates/iw">')
 
     def old_api_is_still_supported_via_redirect(client):
-        response = client.get("/templates/")
+        status, data = load(client.get("/templates/"))
 
-        assert 302 == response.status_code
-        assert '<a href="/api/templates/">' in load(response, as_json=False)
+        expect(status) == 302
+        expect(data).contains('<a href="/api/templates/">')
 
 
 def describe_post():
 
     def it_requies_an_existing_template(client):
-        response = client.post("/api/templates/")
+        status, data = load(client.post("/api/templates/"))
 
-        assert 403 == response.status_code
-        assert dict(
-            message="https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
-        ) == load(response)
+        expect(status) == 403
+        expect(data) == {
+            'message': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
+        }
 
     def it_can_create_a_new_meme(client):
         params = {'top': "foo", 'bottom': "bar"}
-        response = client.post("/api/templates/fry", data=params)
+        status, data = load(client.post("/api/templates/fry", data=params))
 
-        expect(response.status_code) == 303
-        expect(load(response, as_json=False)).contains(
+        expect(status) == 303
+        expect(data).contains(
             '<a href="http://localhost/fry/foo/bar.jpg">'
         )
 
     def it_escapes_special_characters(client):
         params = {'top': "#special characters?", 'bottom': "underscore_ dash-"}
-        response = client.post("/api/templates/fry", data=params)
+        status, data = load(client.post("/api/templates/fry", data=params))
 
-        expect(response.status_code) == 303
-        expect(load(response, as_json=False)).contains(
+        expect(status) == 303
+        expect(data).contains(
             '<a href="http://localhost/fry/~hspecial_characters~q/underscore___dash--.jpg">'
         )
 
     def it_supports_top_only(client):
         params = {'top': "foo"}
-        response = client.post("/api/templates/fry", data=params)
+        status, data = load(client.post("/api/templates/fry", data=params))
 
-        expect(response.status_code) == 303
-        expect(load(response, as_json=False)).contains(
+        expect(status) == 303
+        expect(data).contains(
             '<a href="http://localhost/fry/foo.jpg">'
         )
 
     def it_supports_bottom_only(client):
         params = {'bottom': "bar"}
-        response = client.post("/api/templates/fry", data=params)
+        status, data = load(client.post("/api/templates/fry", data=params))
 
-        expect(response.status_code) == 303
-        expect(load(response, as_json=False)).contains(
+        expect(status) == 303
+        expect(data).contains(
             '<a href="http://localhost/fry/_/bar.jpg">'
         )
 
     def it_supports_no_text(client):
         params = {}
-        response = client.post("/api/templates/fry", data=params)
+        status, data = load(client.post("/api/templates/fry", data=params))
 
-        expect(response.status_code) == 303
-        expect(load(response, as_json=False)).contains(
+        expect(status) == 303
+        expect(data).contains(
             '<a href="http://localhost/fry/_.jpg">'
         )
 
     def it_can_return_json_instead_of_redirecting(client):
         params = {'top': "foo", 'bottom': "bar", 'redirect': False}
-        response = client.post("/api/templates/fry", data=params)
+        status, data = load(client.post("/api/templates/fry", data=params))
 
-        expect(response.status_code) == 200
-        expect(load(response)) == {
+        expect(status) == 200
+        expect(data) == {
             'href': "http://localhost/fry/foo/bar.jpg"
         }

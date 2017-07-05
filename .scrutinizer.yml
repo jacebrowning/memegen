@@ -1,9 +1,11 @@
+build:
+  tests:
+    override:
+      - pylint-run --rcfile=.pylint.ini
 checks:
-    python:
-        code_rating: true
-        duplicate_code: true
-tools:
-    external_code_coverage: true
-    pylint:
-        python_version: 3
-        config_file: '.pylintrc'
+  python:
+    code_rating: true
+    duplicate_code: true
+filter:
+  excluded_paths:
+    - "*/tests/*"

@@ -1,4 +1,4 @@
-# pylint: disable=redefined-outer-name
+"""Integration tests configuration file."""
 
 import pytest
 
@@ -8,18 +8,11 @@ from memegen.settings import get_config
 from memegen.tests.conftest import pytest_configure  # pylint: disable=unused-import
 
 
-# TODO: replace all calls with the new signature
-def load(*args, **kwargs):
-    from .utils import load
-    return load(*args, **kwargs)[1]
-
-
 @pytest.yield_fixture(scope='session')
 def app():
-    app = create_app(get_config('test'))
-    yield app
+    yield create_app(get_config('test'))
 
 
 @pytest.yield_fixture
-def client(app):  # pylint: disable=unused-argument
+def client(app):  # pylint: disable=redefined-outer-name
     yield app.test_client()

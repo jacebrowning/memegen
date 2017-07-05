@@ -1,3 +1,5 @@
+"""Unit tests configuration file."""
+
 from unittest.mock import Mock
 
 import pytest

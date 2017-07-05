@@ -55,7 +55,7 @@ setuptools.setup(
         'Development Status :: 5 - Production/Stable',
         'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
 
     install_requires=load_requirements(),

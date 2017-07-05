@@ -1,0 +1,38 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[requires]
+python_version = "3.6"
+
+[packages]
+Flask = "~=0.12.2"
+Flask-API = "==0.7.1"
+Flask-Cors = "~=3.0.3"
+webargs = "~=1.7.0"
+Pillow = "~=4.1.1"
+YORM = "~=1.4"
+requests = "~=2.18.1"
+profanityfilter = "~=1.1.2"
+Flask-Script = "~=2.0.5"
+gunicorn = "~=19.7.1"
+
+[dev-packages]
+pylint = "~=1.7"
+pycodestyle = "~=2.3"
+pydocstyle = "~=2.0"
+pytest = "~=3.0.7"
+pytest-describe = "==0.11.0"
+pytest-expecter = "==0.2.2.post6"
+pytest-cov = "*"
+pytest-random = "*"
+coverage = "~=4.0"
+"coverage.space" = "~=0.8"
+mkdocs = "*"
+docutils = "*"
+wheel = "*"
+twine = "*"
+sniffer = "*"
+Pygments = "*"
+PyInstaller = "*"
+honcho = "*"

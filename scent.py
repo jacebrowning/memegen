@@ -1,5 +1,5 @@
 """Configuration file for sniffer."""
-# pylint: disable=superfluous-parens,bad-continuation,line-too-long
+# pylint: disable=superfluous-parens,bad-continuation
 
 import time
 import subprocess
@@ -23,8 +23,7 @@ class Options(object):
 
     targets = [
         (('make', 'test-unit', 'DISABLE_COVERAGE=true'), "Unit Tests", True),
-        (('make', 'test-int', 'DISABLE_COVERAGE=true'), "Integration Tests", False),
-        (('make', 'test-all'), "Combined Tests", False),
+        (('make', 'test-all'), "Integration Tests", False),
         (('make', 'check'), "Static Analysis", True),
         (('make', 'validate'), "Validate Templates", True),
         (('make', 'doc'), None, True),

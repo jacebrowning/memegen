@@ -1,35 +1,37 @@
 language: python
 python:
-- 3.5
+  - 3.6
 
 cache:
   pip: true
   directories:
-  - env
+    - .venv
 
 env:
   global:
-  - RANDOM_SEED=12345
-  - REGENERATE_IMAGES=true
-  - VALIDATE_LINKS=true
+    - RANDOM_SEED=0
+    - PIPENV_NOSPIN=true
+    - REGENERATE_IMAGES=true
+    - VALIDATE_LINKS=true
+
+before_install:
+  - pip install pipenv~=5.0
+  - make doctor
 
 install:
-- pip install coveralls scrutinizer-ocular
-
-before_script:
-- make env
-- make depends
+  - make install
 
 script:
-- make check
-- make test
-- make validate
+  - make check
+  - make test
+  - make validate
 
 after_success:
-- coveralls
-- ocular
+  - pip install coveralls scrutinizer-ocular
+  - coveralls
+  - ocular
 
 notifications:
   email:
     on_success: never
-    on_failure: change
+    on_failure: never
