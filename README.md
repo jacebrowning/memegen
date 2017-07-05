@@ -17,7 +17,7 @@ Visit [https://memegen.link/api](https://memegen.link/api) to browse the API and
 
 The URLs contain all the information necessary to generate the image. For example, https://memegen.link/buzz/memes/memes_everywhere.jpg produces:
 
-![Sample Image](https://memegen.link/buzz/memes/memes_everywhere.jpg)
+![Sample Image](https://memegen.link/buzz/memes/memes_everywhere.jpg?watermark=none)
 
 But, the site can also produce masked URLs to conceal the joke:
 
@@ -47,7 +47,7 @@ Reserved URL characters can be escaped:
 
 For example, https://memegen.link/doge/~hspecial_characters~q/underscore__-dash--.jpg produces:
 
-![Escaped Characters](https://memegen.link/doge/~hspecial_characters~q/underscore__-dash--.jpg)
+![Escaped Characters](https://memegen.link/doge/~hspecial_characters~q/underscore__-dash--.jpg?watermark=none)
 
 ### Alternate Styles
 
@@ -59,7 +59,7 @@ For example: [https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_
 
 Or, you can use your own image URL as the style. For example, https://memegen.link/custom/my_pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg produces:
 
-![Custom Background](https://memegen.link/custom/my_pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg)
+![Custom Background](https://memegen.link/custom/my_pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg&watermark=none)
 
 ### Alternate Fonts
 
@@ -67,7 +67,7 @@ Additional fonts are available (see: https://memegen.link/api/fonts) and can be 
 
 For example, https://memegen.link/joker/pick_a_different_font/people_lose_their_minds.jpg?font=typoline-demo produces:
 
-![Custom Font](https://memegen.link/joker/pick-a-different-font/people-lose-their-minds.jpg?font=typoline-demo)
+![Custom Font](https://memegen.link/joker/pick-a-different-font/people-lose-their-minds.jpg?font=typoline-demo&watermark=none)
 
 ### Custom sizes
 
@@ -75,7 +75,7 @@ Images can be scaled to a specific width via `?width=<int>` or a specific height
 
 For example, https://memegen.link/both/width_or_height/why_not_both~q.jpg?height=350&width=600 produces:
 
-![Custom Size](https://memegen.link/both/width_or_height/why_not_both~q.jpg?height=350&width=600)
+![Custom Size](https://memegen.link/both/width_or_height/why_not_both~q.jpg?height=350&width=600&watermark=none)
 
 ### Preview Images
 
