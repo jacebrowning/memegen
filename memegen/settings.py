@@ -1,4 +1,5 @@
 import os
+import logging
 
 from . import __project__
 
@@ -21,6 +22,7 @@ class Config:
     CHANGES_URL = GITHUB_BASE + "CHANGELOG.md"
 
     # Variables
+    LOG_LEVEL = getattr(logging, os.getenv('LOG_LEVEL', 'INFO'))
     FACEBOOK_APP_ID = 'localhost'
     FACEBOOK_IMAGE_HEIGHT = os.getenv('FACEBOOK_IMAGE_HEIGHT', 402)
     FACEBOOK_IMAGE_WIDTH = os.getenv('FACEBOOK_IMAGE_WIDTH', 802)
@@ -50,6 +52,7 @@ class TestConfig(Config):
     DEBUG = True
     TESTING = True
 
+    LOG_LEVEL = logging.DEBUG
     WATERMARK_OPTIONS = ['test', 'werkzeug']
 
 
@@ -60,6 +63,7 @@ class DevConfig(Config):
 
     DEBUG = True
 
+    LOG_LEVEL = logging.DEBUG
     WATERMARK_OPTIONS = ['localhost'] + Config.WATERMARK_OPTIONS
 
 
