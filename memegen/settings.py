@@ -22,6 +22,7 @@ class Config:
     CHANGES_URL = GITHUB_BASE + "CHANGELOG.md"
 
     # Variables
+    BUGSNAG_API_KEY = os.getenv('BUGSNAG_API_KEY')
     LOG_LEVEL = getattr(logging, os.getenv('LOG_LEVEL', 'INFO'))
     FACEBOOK_APP_ID = 'localhost'
     FACEBOOK_IMAGE_HEIGHT = os.getenv('FACEBOOK_IMAGE_HEIGHT', 402)

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f543784439ef4d46eab08c0feb10a9d6f2f1650847e0996c8b8c4ca2c8bec5c6"
+            "sha256": "d02e06fbf0d63248d10c97e9828ddfde76cadd91d82e609833f9647aade87a42"
         },
         "requires": {
             "python_version": "3.6"
@@ -14,8 +14,11 @@
         ]
     },
     "default": {
+        "bugsnag": {
+            "version": "==3.1.1"
+        },
         "certifi": {
-            "version": "==2017.4.17"
+            "version": "==2017.7.27.1"
         },
         "chardet": {
             "version": "==3.0.4"
@@ -39,7 +42,7 @@
             "version": "==19.7.1"
         },
         "idna": {
-            "version": "==2.5"
+            "version": "==2.6"
         },
         "itsdangerous": {
             "version": "==0.24"
@@ -51,7 +54,7 @@
             "version": "==1.0"
         },
         "marshmallow": {
-            "version": "==2.13.5"
+            "version": "==2.13.6"
         },
         "olefile": {
             "version": "==0.44"
@@ -66,7 +69,7 @@
             "version": "==3.12"
         },
         "requests": {
-            "version": "==2.18.1"
+            "version": "==2.18.4"
         },
         "simplejson": {
             "version": "==3.11.1"
@@ -75,10 +78,13 @@
             "version": "==1.10.0"
         },
         "urllib3": {
-            "version": "==1.21.1"
+            "version": "==1.22"
         },
         "webargs": {
             "version": "==1.7.0"
+        },
+        "webob": {
+            "version": "==1.7.3"
         },
         "werkzeug": {
             "version": "==0.12.2"
@@ -95,7 +101,7 @@
             "version": "==1.0.0"
         },
         "certifi": {
-            "version": "==2017.4.17"
+            "version": "==2017.7.27.1"
         },
         "chardet": {
             "version": "==3.0.4"
@@ -113,7 +119,7 @@
             "version": "==0.6.2"
         },
         "idna": {
-            "version": "==2.5"
+            "version": "==2.6"
         },
         "isort": {
             "version": "==4.2.15"
@@ -140,7 +146,7 @@
             "version": "==1.7.2"
         },
         "pytest": {
-            "version": "==3.1.3"
+            "version": "==3.2.1"
         },
         "pytest-cov": {
             "version": "==2.5.1"
@@ -158,10 +164,10 @@
             "version": "==0.1.10"
         },
         "requests": {
-            "version": "==2.18.1"
+            "version": "==2.18.4"
         },
         "setuptools": {
-            "version": "==36.0.1"
+            "version": "==36.2.7"
         },
         "six": {
             "version": "==1.10.0"
@@ -173,10 +179,10 @@
             "version": "==1.2.1"
         },
         "urllib3": {
-            "version": "==1.21.1"
+            "version": "==1.22"
         },
         "wrapt": {
-            "version": "==1.10.10"
+            "version": "==1.10.11"
         }
     }
 }
