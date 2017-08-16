@@ -16,7 +16,8 @@ requests = "~=2.18.1"
 profanityfilter = "~=1.1.2"
 Flask-Script = "~=2.0.5"
 gunicorn = "~=19.7.1"
-bugsnag = "*"
+bugsnag = "~=3.1.1"
+blinker = "~=1.4"
 
 [dev-packages]
 pylint = "~=1.7"

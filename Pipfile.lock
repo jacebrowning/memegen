@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d02e06fbf0d63248d10c97e9828ddfde76cadd91d82e609833f9647aade87a42"
+            "sha256": "39b8cfd0ae64d9f41de34b81a93ef62cea51acb8721c9393a99cd7857c978f1a"
         },
         "requires": {
             "python_version": "3.6"
@@ -14,6 +14,9 @@
         ]
     },
     "default": {
+        "blinker": {
+            "version": "==1.4"
+        },
         "bugsnag": {
             "version": "==3.1.1"
         },
