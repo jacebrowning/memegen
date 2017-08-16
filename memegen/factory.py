@@ -6,6 +6,8 @@ from urllib.parse import urlencode, unquote
 from flask import request, current_app, url_for
 from flask_api import FlaskAPI
 from flask_api.exceptions import APIException, NotFound
+import bugsnag
+from bugsnag.flask import handle_exceptions
 
 from . import extensions
 from . import services
@@ -38,6 +40,7 @@ def create_app(config):
     app = FlaskAPI(__name__)
     app.config.from_object(config)
 
+    configure_exceptions(app)
     configure_logging(app)
 
     register_extensions(app)
@@ -47,6 +50,15 @@ def create_app(config):
     enable_cache_busting(app)
 
     return app
+
+
+def configure_exceptions(app):
+    if app.config['BUGSNAG_API_KEY']:  # pragma: no cover
+        bugsnag.configure(
+            api_key=app.config['BUGSNAG_API_KEY'],
+            project_root=app.config['ROOT'],
+        )
+        handle_exceptions(app)
 
 
 def configure_logging(app):

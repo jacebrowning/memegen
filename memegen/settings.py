@@ -18,20 +18,21 @@ class Config:
     GITHUB_SLUG = "jacebrowning/memegen"
     GITHUB_URL = "https://github.com/{}".format(GITHUB_SLUG)
     GITHUB_BASE = "https://raw.githubusercontent.com/{}/master/".format(GITHUB_SLUG)
-    CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
     CHANGES_URL = GITHUB_BASE + "CHANGELOG.md"
+    CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
 
     # Variables
-    LOG_LEVEL = getattr(logging, os.getenv('LOG_LEVEL', 'INFO'))
+    BUGSNAG_API_KEY = os.getenv('BUGSNAG_API_KEY')
     FACEBOOK_APP_ID = 'localhost'
-    FACEBOOK_IMAGE_HEIGHT = os.getenv('FACEBOOK_IMAGE_HEIGHT', 402)
-    FACEBOOK_IMAGE_WIDTH = os.getenv('FACEBOOK_IMAGE_WIDTH', 802)
-    GOOGLE_ANALYTICS_URL = "http://www.google-analytics.com/collect"
+    FACEBOOK_IMAGE_HEIGHT = 492
+    FACEBOOK_IMAGE_WIDTH = 940
     GOOGLE_ANALYTICS_TID = 'localhost'
+    GOOGLE_ANALYTICS_URL = "http://www.google-analytics.com/collect"
+    LOG_LEVEL = getattr(logging, os.getenv('LOG_LEVEL', 'INFO'))
     REGENERATE_IMAGES = os.getenv('REGENERATE_IMAGES')
     REMOTE_TRACKING_URL = os.getenv('REMOTE_TRACKING_URL')
-    TWITTER_IMAGE_HEIGHT = os.getenv('TWITTER_IMAGE_HEIGHT', 401)
-    TWITTER_IMAGE_WIDTH = os.getenv('TWITTER_IMAGE_WIDTH', 801)
+    TWITTER_IMAGE_HEIGHT = 440
+    TWITTER_IMAGE_WIDTH = 880
     WATERMARK_OPTIONS = os.getenv('WATERMARK_OPTIONS', "").split(',')
 
 
