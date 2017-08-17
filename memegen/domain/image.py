@@ -1,6 +1,7 @@
 import os
 import hashlib
 import logging
+from contextlib import suppress
 
 from PIL import Image as ImageFile, ImageFont, ImageDraw, ImageFilter
 
@@ -57,7 +58,7 @@ class Image(object):
         )
 
         directory = os.path.dirname(self.path)
-        if not os.path.isdir(directory):
+        with suppress(FileExistsError):
             os.makedirs(directory)
 
         log.info("Saving image: %s", self.path)
