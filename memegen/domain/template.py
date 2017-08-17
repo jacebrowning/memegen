@@ -243,7 +243,7 @@ def download_image(url):
 
     try:
         response = requests.get(url, stream=True)
-    except requests.exceptions.InvalidURL:
+    except ValueError:
         log.error("Invalid link: %s", url)
         return None
     except requests.exceptions.ConnectionError:

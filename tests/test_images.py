@@ -121,8 +121,15 @@ def describe_get():
             expect(data).contains(
                 '<a href="/sad-biden/hello.jpg">')
 
-        def it_redirects_to_lose_alt_when_bad_url(client):
+        def it_redirects_to_lose_alt_when_invalid_url(client):
             url = "http:invalid"
+            status, data = load(client.get("/sad-biden/hello.jpg?alt=" + url))
+
+            expect(status) == 302
+            expect(data).contains('<a href="/sad-biden/hello.jpg">')
+
+        def it_redirects_to_lose_alt_when_missing_schema(client):
+            url = "http:/www.gstatic.com/webp/gallery/1.jpg"
             status, data = load(client.get("/sad-biden/hello.jpg?alt=" + url))
 
             expect(status) == 302
