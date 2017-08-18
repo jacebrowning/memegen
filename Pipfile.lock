@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "39b8cfd0ae64d9f41de34b81a93ef62cea51acb8721c9393a99cd7857c978f1a"
+            "sha256": "ee92033ee2dc396efd1eb9d67a8e3bb2e99ec6f6cdf9ed04e6873e7c54b7315a"
         },
         "requires": {
             "python_version": "3.6"
@@ -62,6 +62,9 @@
         "olefile": {
             "version": "==0.44"
         },
+        "parse": {
+            "version": "==1.8.2"
+        },
         "pillow": {
             "version": "==4.1.1"
         },
@@ -93,7 +96,7 @@
             "version": "==0.12.2"
         },
         "yorm": {
-            "version": "==1.4"
+            "version": "==1.5b2"
         }
     },
     "develop": {
