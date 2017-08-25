@@ -155,7 +155,7 @@ def _get_watermark(_request, watermark):
     if watermark == 'none':
         for option in current_app.config['WATERMARK_OPTIONS']:
             for identity in (referrer, agent):
-                if option in identity:
+                if option and option in identity:
                     log.debug("Watermark disabled (%r in %r)", option, identity)
                     return None, True
         log.warning("Request does not support unmarked images")
