@@ -25,7 +25,7 @@ function generateMeme() {
 }
 
 function getShareLink() {
-  return $("#meme-image").attr('href') + "?share=true";
+  return $("#meme-image").attr('href') + "?watermark=none&share=true";
 }
 
 /*** Events ***/

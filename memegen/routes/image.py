@@ -62,6 +62,7 @@ def get_without_text_jpeg(key):
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
 def get_with_text(key, path, alt, font, watermark, preview, share, **size):
+    assert len(size) == 2
     options = dict(key=key, path=path,
                    alt=alt, font=font, watermark=watermark, **size)
     if preview:
@@ -113,16 +114,37 @@ def get_with_text_jpeg(key, path):
 
 
 @blueprint.route("/_<code>.jpg")
-def get_encoded(code):
+@flaskparser.use_kwargs(OPTIONS)
+def get_encoded(code, alt, font, watermark, preview, share, **size):
+    assert len(size) == 2
+    options = dict(code=code, font=font, watermark=watermark, **size)
+    if share:
+        options['share'] = True
+
+    if alt or preview:
+        return redirect(route('.get_encoded', **options))
 
     key, path = current_app.link_service.decode(code)
     template = current_app.template_service.find(key)
     text = domain.Text(path)
-    image = current_app.image_service.create(template, text)
+    fontfile = current_app.font_service.find(font)
+
+    if font and not fontfile:
+        options.pop('font')
+        return redirect(route('.get_encoded', **options))
+
+    watermark, valid = _get_watermark(request, watermark)
+    if not valid:
+        options.pop('watermark')
+        return redirect(route('.get_encoded', **options))
+
+    image = current_app.image_service.create(
+        template, text, font=fontfile, size=size, watermark=watermark,
+    )
 
     track(image.text)
 
-    return display(image.text, image.path)
+    return display(image.text, image.path, share=share)
 
 
 def _get_watermark(_request, watermark):
