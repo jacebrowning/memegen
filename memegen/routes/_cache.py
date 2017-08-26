@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 
 
 @yorm.attr(items=List.of_type(Object))
-@yorm.sync("data/cache/{self.name}.yml")
+@yorm.sync("data/cache/{self.name}.yml", auto_resolve=True)
 class Cache:
 
     SIZE = 100

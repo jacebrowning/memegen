@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ee92033ee2dc396efd1eb9d67a8e3bb2e99ec6f6cdf9ed04e6873e7c54b7315a"
+            "sha256": "740f140babdfef119b0b02ac58ad4e4bb33c771fc626ebdfb7796dd31ab61824"
         },
         "requires": {
             "python_version": "3.6"
@@ -96,7 +96,7 @@
             "version": "==0.12.2"
         },
         "yorm": {
-            "version": "==1.5b2"
+            "version": "==1.5b3"
         }
     },
     "develop": {
