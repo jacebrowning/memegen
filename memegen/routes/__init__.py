@@ -3,6 +3,7 @@ from . import static
 
 # Web pages
 from . import index
+from . import examples
 from . import custom
 from . import latest
 from . import image
