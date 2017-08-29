@@ -150,6 +150,7 @@ span.meme-text {
 
 table, th, td {
    border: 1px solid #555;
+   margin-bottom: 10px;
 }
 
 th, tr, td {
