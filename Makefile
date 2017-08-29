@@ -83,8 +83,8 @@ launch: install
 
 .PHONY: run-prod
 run-prod: install .env
-	pipenv shell -c "bin/post_compile; exit $$?"
-	pipenv shell -c "heroku local web=1; exit $$?"
+	pipenv shell -c "bin/post_compile; exit \$$?"
+	pipenv shell -c "heroku local web=1; exit \$$?"
 
 .PHONY: launch-prod
 launch-prod: install
