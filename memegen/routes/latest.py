@@ -17,7 +17,7 @@ def get(nsfw):
     return render_template(
         'latest.html',
         srcs=[route('image.get_latest', index=i, filtered=filtered)
-              for i in range(30)],
+              for i in range(24)],
         refresh=REFRESH_SECONDS,
         config=current_app.config,
     )

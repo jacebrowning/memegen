@@ -12,7 +12,7 @@ blueprint = Blueprint('index-page', __name__)
 
 
 @blueprint.route("/")
-@cache_for(days=2)
+@cache_for(hours=12)
 def get():
     template_images = list(samples(blank=True))
     return render_template(
