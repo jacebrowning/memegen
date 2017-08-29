@@ -7,7 +7,7 @@ python_version = "3.6"
 
 [packages]
 Flask = "~=0.12.2"
-Flask-API = "==0.7.1"
+Flask-API = "~=1.0"
 Flask-Cors = "~=3.0.3"
 Flask-CacheControl =  "==0.1.2"
 webargs = "~=1.7.0"

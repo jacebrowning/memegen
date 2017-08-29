@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f67474577d4b4f4f954279e5d983f55526e250d57c7c9cad614d6801097fb8ce"
+            "sha256": "636d8db89e12590ec25630c3a379669be76b1bc7fab3c1191b9e12c9029dcb6a"
         },
         "requires": {
             "python_version": "3.6"
@@ -33,7 +33,7 @@
             "version": "==0.12.2"
         },
         "flask-api": {
-            "version": "==0.7.1"
+            "version": "==1.0"
         },
         "flask-cachecontrol": {
             "version": "==0.1.2"
