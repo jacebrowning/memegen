@@ -11,11 +11,11 @@ Metrics: [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memege
 Issues: 
 [![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)
 
+<!--content-->
+
 ## Generating Images
 
-Visit [https://memegen.link/api](https://memegen.link/api) to browse the API and view examples.
-
-The URLs contain all the information necessary to generate the image. For example, https://memegen.link/buzz/memes/memes_everywhere.jpg produces:
+The API is stateless so URLs contain all the information necessary to generate meme images. For example, https://memegen.link/buzz/memes/memes_everywhere.jpg produces:
 
 ![Sample Image](https://memegen.link/buzz/memes/memes_everywhere.jpg?watermark=none)
 

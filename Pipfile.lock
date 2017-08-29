@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "740f140babdfef119b0b02ac58ad4e4bb33c771fc626ebdfb7796dd31ab61824"
+            "sha256": "f67474577d4b4f4f954279e5d983f55526e250d57c7c9cad614d6801097fb8ce"
         },
         "requires": {
             "python_version": "3.6"
@@ -35,6 +35,9 @@
         "flask-api": {
             "version": "==0.7.1"
         },
+        "flask-cachecontrol": {
+            "version": "==0.1.2"
+        },
         "flask-cors": {
             "version": "==3.0.3"
         },
@@ -53,6 +56,9 @@
         "jinja2": {
             "version": "==2.9.6"
         },
+        "markdown": {
+            "version": "==2.6.9"
+        },
         "markupsafe": {
             "version": "==1.0"
         },
@@ -70,6 +76,9 @@
         },
         "profanityfilter": {
             "version": "==1.1.2"
+        },
+        "pymdown-extensions": {
+            "version": "==3.5"
         },
         "pyyaml": {
             "version": "==3.12"
@@ -173,7 +182,7 @@
             "version": "==2.18.4"
         },
         "setuptools": {
-            "version": "==36.2.7"
+            "version": "==36.3.0"
         },
         "six": {
             "version": "==1.10.0"

@@ -71,6 +71,7 @@ def configure_logging(app):
 
 def register_extensions(app):
     extensions.cors.init_app(app, methods=['GET', 'OPTIONS'], allow_headers='*')
+    extensions.cache_control.init_app(app)
 
 
 def register_services(app):

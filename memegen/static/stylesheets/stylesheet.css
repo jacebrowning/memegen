@@ -146,6 +146,18 @@ span.meme-text {
 }
 
 /*********************************************/
+/* Tables */
+
+table, th, td {
+   border: 1px solid #555;
+}
+
+th, tr, td {
+  height: 40px;
+  padding: 10px !important;
+}
+
+/*********************************************/
 /* Footer */
 
 .footer {
