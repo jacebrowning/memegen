@@ -58,7 +58,7 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
             url=_secure(url),
             config=current_app.config,
         )
-        return html if raw else _nocache(Response(html))
+        return html if raw else Response(html)
 
     else:
         log.info("Sending image: %s", path)
@@ -127,11 +127,3 @@ def _format_query(options, *, as_string=False):
     if as_string:
         return ' '.join(pairs)
     return pairs
-
-
-def _nocache(response):
-    """Ensure a response is not cached."""
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '0'
-    return response
