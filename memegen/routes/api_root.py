@@ -10,7 +10,7 @@ from ._utils import route
 blueprint = Blueprint('root', __name__)
 
 
-@blueprint.route("/api")
+@blueprint.route("/api/")
 def get():
     """Generate memes from templates."""
     data = OrderedDict()

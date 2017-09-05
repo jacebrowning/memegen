@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.2
+
+- Changed `/api` to redirect to `/api/`.
+
 ## 5.1
 
 - Added `?watermark=<str>` option to include name of supported clients.

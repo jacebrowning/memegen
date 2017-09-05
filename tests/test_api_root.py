@@ -8,7 +8,7 @@ from .utils import load
 def describe_root():
 
     def it_returns_links_and_metadata(client):
-        status, data = load(client.get("/api"))
+        status, data = load(client.get("/api/"))
 
         expect(status) == 200
         expect(data) == {
@@ -16,6 +16,6 @@ def describe_root():
             'fonts': "http://localhost/api/fonts/",
             'aliases': "http://localhost/api/aliases/",
             'search': "http://localhost/api/search/",
-            'version': "5.1",
+            'version': "5.2",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }
