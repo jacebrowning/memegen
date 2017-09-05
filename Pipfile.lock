@@ -1,8 +1,9 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "636d8db89e12590ec25630c3a379669be76b1bc7fab3c1191b9e12c9029dcb6a"
+            "sha256": "6a47b35ea64d8f55e12021445df882a6d6afccb5c85dae760dc01eb3afb1245c"
         },
+        "pipfile-spec": 1,
         "requires": {
             "python_version": "3.6"
         },
@@ -29,6 +30,12 @@
         "click": {
             "version": "==6.7"
         },
+        "enum-compat": {
+            "version": "==0.0.2"
+        },
+        "eventlet": {
+            "version": "==0.21.0"
+        },
         "flask": {
             "version": "==0.12.2"
         },
@@ -43,6 +50,9 @@
         },
         "flask-script": {
             "version": "==2.0.5"
+        },
+        "greenlet": {
+            "version": "==0.4.12"
         },
         "gunicorn": {
             "version": "==19.7.1"
@@ -78,7 +88,7 @@
             "version": "==1.1.2"
         },
         "pymdown-extensions": {
-            "version": "==3.5"
+            "version": "==4.0"
         },
         "pyyaml": {
             "version": "==3.12"
@@ -161,7 +171,7 @@
             "version": "==1.7.2"
         },
         "pytest": {
-            "version": "==3.2.1"
+            "version": "==3.0.7"
         },
         "pytest-cov": {
             "version": "==2.5.1"
@@ -173,16 +183,13 @@
             "version": "==0.2.2.post6"
         },
         "pytest-random": {
-            "version": "==0.02"
+            "version": "==0.2"
         },
         "python-termstyle": {
             "version": "==0.1.10"
         },
         "requests": {
             "version": "==2.18.4"
-        },
-        "setuptools": {
-            "version": "==36.3.0"
         },
         "six": {
             "version": "==1.10.0"
