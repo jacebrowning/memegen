@@ -101,5 +101,6 @@ Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/
 | Hain | JavaScript | [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) | --- |
 | Website | Clojure | [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes) | http://www.mightyfinememes.com |
 | Website | --- | --- | https://memecomplete.com |
+| App | --- | --- | http://app.memeois.com |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
