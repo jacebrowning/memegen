@@ -2,6 +2,7 @@ import os
 import hashlib
 import shutil
 from pathlib import Path
+from contextlib import suppress
 import tempfile
 import logging
 
@@ -109,22 +110,28 @@ class Template:
                 text = text.replace(char, '')
         return text
 
-    def get_path(self, *styles):
-        for style in styles:
-            path = download_image(style)
-            if path:
-                return path
+    def get_path(self, style_or_url=None, *, download=True):
+        path = None
 
-        for name in (n.lower() for n in (*styles, self.DEFAULT) if n):
+        if style_or_url and '://' in style_or_url:
+            if download:
+                path = download_image(style_or_url)
+                if path is None:
+                    path = self._find_path_for_style(self.DEFAULT)
+
+        else:
+            names = [n.lower() for n in [style_or_url, self.DEFAULT] if n]
+            path = self._find_path_for_style(*names)
+
+        return path
+
+    def _find_path_for_style(self, *names):
+        for name in names:
             for extension in self.EXTENSIONS:
                 path = Path(self.dirpath, name + extension)
-                try:
+                with suppress(OSError):
                     if path.is_file():
                         return path
-                except OSError:
-                    continue
-
-        return None
 
     def search(self, query):
         """Count the number of times a query exists in relevant fields."""
@@ -210,29 +217,30 @@ class Template:
 class Placeholder:
     """Default image for missing templates."""
 
+    FALLBACK_PATH = str(Path(__file__)
+                        .parents[1]
+                        .joinpath('static', 'images', 'missing.png'))
+
     path = None
 
     def __init__(self, key):
         self.key = key
 
-    @staticmethod
-    def get_path(*styles):
+    @classmethod
+    def get_path(cls, url=None, download=True):
         path = None
 
-        for style in styles:
-            path = download_image(style)
-            if path:
-                break
+        if url and download:
+            path = download_image(url)
 
-        if not path:
-            path = os.path.dirname(__file__) + "/../static/images/missing.png"
+        if path is None:
+            path = cls.FALLBACK_PATH
 
         return path
 
 
 def download_image(url):
-    if not url or not url.startswith("http"):
-        return None
+    assert url and '://' in url
 
     path = Path(tempfile.gettempdir(),
                 hashlib.md5(url.encode('utf-8')).hexdigest())
@@ -242,11 +250,11 @@ def download_image(url):
         return path
 
     try:
-        response = requests.get(url, stream=True)
+        response = requests.get(url, stream=True, timeout=5)
     except ValueError:
         log.error("Invalid link: %s", url)
         return None
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.RequestException:
         log.error("Bad connection: %s", url)
         return None
 

@@ -1,6 +1,5 @@
 import os
 import logging
-from urllib.parse import urlencode, unquote
 
 from flask import request, current_app
 from flask_api import FlaskAPI
@@ -61,6 +60,7 @@ def configure_exceptions(app):
 def configure_logging(app):
     logging.basicConfig(level=app.config['LOG_LEVEL'],
                         format="%(levelname)s: %(message)s")
+    logging.getLogger('werkzeug').setLevel(logging.WARNING)
     logging.getLogger('yorm').setLevel(logging.WARNING)
     logging.getLogger('requests').setLevel(logging.WARNING)
     logging.getLogger('PIL').setLevel(logging.INFO)
@@ -107,15 +107,14 @@ def register_services(app):
         image_store=image_store,
     )
 
-    def log_request(response):
+    def log_request(response=None):
         if current_app.debug:
-            path = request.path
-            if request.args:
-                path += "?%s" % unquote(urlencode(request.args))
-            log.info("%s: %s - %i", request.method, path,
-                     response.status_code)
+            status = response.status_code if response else ''
+            log.info(f"{request.method}: {request.full_path} - {status}")
+
         return response
 
+    app.before_request(log_request)
     app.after_request(log_request)
 
 

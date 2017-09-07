@@ -113,14 +113,6 @@ def describe_get():
             expect(response.status_code) == 200
             expect(response.mimetype) == 'image/jpeg'
 
-        def it_redirects_to_lose_alt_when_unknown_url(client):
-            url = "http://example.com/not/a/real/image.jpg"
-            status, data = load(client.get("/sad-biden/hello.jpg?alt=" + url))
-
-            expect(status) == 302
-            expect(data).contains(
-                '<a href="/sad-biden/hello.jpg">')
-
         def it_redirects_to_lose_alt_when_invalid_url(client):
             url = "http:invalid"
             status, data = load(client.get("/sad-biden/hello.jpg?alt=" + url))
