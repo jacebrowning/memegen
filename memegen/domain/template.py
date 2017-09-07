@@ -240,7 +240,7 @@ class Placeholder:
 
 
 def download_image(url):
-    assert url and '://' in url
+    assert url and '://' in url, f"Not a URL: {url!r}"
 
     path = Path(tempfile.gettempdir(),
                 hashlib.md5(url.encode('utf-8')).hexdigest())
