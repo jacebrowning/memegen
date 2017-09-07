@@ -24,7 +24,7 @@ class TestTemplateService:
         template = template_service.find('unknown_key', allow_missing=True)
 
         assert 'unknown_key' == template.key
-        assert template.get_path().endswith("/static/images/missing.png")
+        assert template.get_path().endswith("missing.png")
 
     def test_find_template_by_alias(self, template_service):
         template = Template('hello', aliases=['hello-world', 'helloworld'])
