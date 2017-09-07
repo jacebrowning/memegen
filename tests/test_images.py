@@ -99,6 +99,13 @@ def describe_get():
 
             expect(response.status_code) == 415
 
+        def it_returns_an_error_with_non_urls(client):
+            url = "undefined"
+            response = client.get("/custom/hello.jpg?alt=" + url)
+
+            print(response.data)
+            expect(response.status_code) == 415
+
         def it_handles_png_int32_pixels(client):
             url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/201692816359570.jpeg"
             response = client.get("/sad-biden/hello.jpg?alt=" + url)
