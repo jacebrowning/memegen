@@ -15,7 +15,7 @@ env:
     - VALIDATE_LINKS=true
 
 before_install:
-  - pip install pipenv==5.3.5
+  - pip install pipenv==6.2.9
   - make doctor
 
 install:
