@@ -2,6 +2,7 @@ import logging
 from urllib.parse import unquote
 
 import requests
+import background
 from flask import (Response, url_for, render_template, send_file,
                    current_app, request)
 
@@ -82,10 +83,6 @@ def track(title):
         uip=request.remote_addr,
         ua=request.user_agent.string,
     )
-    if google_tid != 'localhost':
-        response = requests.post(google_url, data=google_data)
-        params = _format_query(google_data, as_string=True)
-        log.debug("Tracking POST: %s %s", response.url, params)
 
     remote_url = current_app.config['REMOTE_TRACKING_URL']
     remote_data = dict(
@@ -93,9 +90,18 @@ def track(title):
         source='memegen.link',
         context=unquote(request.url),
     )
-    if remote_url:
-        response = requests.get(remote_url, params=remote_data)
-        log.debug("Tracking GET: %s", response.url)
+
+    @background.task
+    def run():
+        if google_tid != 'localhost':
+            response = requests.post(google_url, data=google_data)
+            params = _format_query(google_data, as_string=True)
+            log.debug("Tracking POST: %s %s", response.url, params)
+
+        if remote_url:
+            response = requests.get(remote_url, params=remote_data)
+            log.debug("Tracking GET: %s", response.url)
+    run()
 
 
 def _secure(url):
