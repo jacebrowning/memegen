@@ -144,10 +144,6 @@ def describe_template():
 
     def describe_validate_link():
 
-        @pytest.fixture(autouse=True)
-        def enable_validation(monkeypatch):
-            monkeypatch.setenv('VALIDATE_LINKS', "true")
-
         def with_bad_link(template):
             mock_response = Mock()
             mock_response.status_code = 404
@@ -155,13 +151,13 @@ def describe_template():
             with patch('requests.head', Mock(return_value=mock_response)):
                 template.link = "example.com/fake"
 
-                expect(template.validate_link(delay=0)) == False
+                expect(template.validate_link()) == False
 
         @patch('pathlib.Path.is_file', Mock(return_value=True))
         def with_cached_valid_link(template):
             template.link = "already_cached_site.com"
 
-            expect(template.validate_link(delay=0)) == True
+            expect(template.validate_link()) == True
 
     def describe_validate_size():
 

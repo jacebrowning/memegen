@@ -8,6 +8,7 @@ environment:
 
 cache:
   - .venv -> Makefile
+  - data/templates -> Makefile
 
 install:
   # Export build paths
