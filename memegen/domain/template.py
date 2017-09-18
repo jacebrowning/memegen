@@ -9,9 +9,12 @@ import logging
 import time
 import requests
 from PIL import Image
+from fake_useragent import UserAgent
 
 from .text import Text
 
+
+DEFAULT_REQUEST_HEADERS = {'User-Agent': UserAgent().chrome}
 
 log = logging.getLogger(__name__)
 
@@ -172,10 +175,7 @@ class Template:
             return False
         return True
 
-    def validate_link(self, delay=3):
-        if not os.getenv('VALIDATE_LINKS'):
-            log.warning("Link validation skipped ('VALIDATE_LINKS' unset)")
-            return True
+    def validate_link(self):
         if self.link:
             flag = Path(self.dirpath, self.VALID_LINK_FLAG)
             if flag.is_file():
@@ -183,7 +183,8 @@ class Template:
             else:
                 log.info("Checking link %s ...", self.link)
                 try:
-                    response = requests.head(self.link, timeout=5)
+                    response = requests.head(self.link, timeout=5,
+                                             headers=DEFAULT_REQUEST_HEADERS)
                 except requests.exceptions.ReadTimeout:
                     log.warning("Connection timed out")
                     return True  # assume URL is OK; it will be checked again
@@ -195,7 +196,6 @@ class Template:
                 else:
                     with open(str(flag), 'w') as f:
                         f.write(str(int(time.time())))
-                time.sleep(delay)
         return True
 
     def validate_size(self):
@@ -251,7 +251,8 @@ def download_image(url):
         return path
 
     try:
-        response = requests.get(url, stream=True, timeout=5)
+        response = requests.get(url, stream=True, timeout=5,
+                                headers=DEFAULT_REQUEST_HEADERS)
     except ValueError:
         log.error("Invalid link: %s", url)
         return None

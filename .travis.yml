@@ -6,13 +6,12 @@ cache:
   pip: true
   directories:
     - .venv
+    - data/templates
 
 env:
   global:
     - RANDOM_SEED=0
     - PIPENV_NOSPIN=true
-    - REGENERATE_IMAGES=true
-    - VALIDATE_LINKS=true
 
 before_install:
   - pip install pipenv==6.2.9
