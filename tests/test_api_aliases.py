@@ -7,12 +7,6 @@ from .utils import load
 
 def describe_get():
 
-    def it_requires_a_name_to_return_aliases(client):
-        status, data = load(client.get("/api/aliases/"))
-
-        expect(status) == 200
-        expect(data) == []
-
     def it_redirects_with_param(client):
         status, data = load(client.get("/api/aliases/?name=foo"))
 

@@ -39,12 +39,12 @@ class TemplateService(Service):
         else:
             raise self.exceptions.TemplateNotFound
 
-    def aliases(self, query=""):
+    def aliases(self, query=None):
         """Get all aliases with an optional name filter."""
         names = []
         for template in self.all():
             for name in [template.key] + template.aliases:
-                if query in name:
+                if query is None or query in name:
                     names.append(name)
         return names
 
