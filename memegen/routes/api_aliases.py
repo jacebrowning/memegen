@@ -1,7 +1,9 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, redirect
+from flask import Blueprint, current_app as app, redirect, request
 from webargs import fields, flaskparser
+
+from ..extensions import cache
 
 from ._utils import route
 
@@ -15,6 +17,7 @@ FILTER = {
 
 @blueprint.route("")
 @flaskparser.use_kwargs(FILTER)
+@cache.cached(unless=lambda: bool(request.args))
 def get(name):
     """Get a list of all matching aliases."""
     if name:

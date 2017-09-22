@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ad71f1b19bf75c1f636c5b4a92463f24cd5b399cb40a408ee9aa4d54414386e6"
+            "sha256": "48ac31367b5b19586ac3ced608bb313697bc11f5936364620aaf6138fc3ca825"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -108,6 +108,13 @@
                 "sha256:be2343290e1f84bf835d1ab105ec8c2777c7d84cede66e4ca441f8605eb4d403"
             ],
             "version": "==0.1.2"
+        },
+        "flask-caching": {
+            "hashes": [
+                "sha256:cefc637f5d917da7f87437b018e8c7fc7b05467f0b5153441aa336101e73cd2e",
+                "sha256:212219a1264d4f81186743633245b1b0110de7fcd7142486dcf6736fb0baade4"
+            ],
+            "version": "==1.3.2"
         },
         "flask-cors": {
             "hashes": [

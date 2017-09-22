@@ -5,6 +5,7 @@ from flask_api import exceptions
 from webargs import fields
 
 from ..domain import Text
+from ..extensions import cache
 
 from ._parser import parser
 from ._utils import route
@@ -21,6 +22,7 @@ OPTIONS = {
 
 
 @blueprint.route("")
+@cache.cached()
 def get():
     """Get a list of all meme templates."""
     data = OrderedDict()
