@@ -11,7 +11,7 @@ from ._utils import route
 blueprint = Blueprint('aliases', __name__, url_prefix="/api/aliases/")
 
 FILTER = {
-    'name': fields.Str(missing="")
+    'name': fields.Str(missing=None)
 }
 
 
@@ -23,7 +23,7 @@ def get(name):
     if name:
         return redirect(route('.get_with_name', name=name))
     else:
-        return []
+        return _get_aliases()
 
 
 @blueprint.route("<name>")
@@ -32,7 +32,7 @@ def get_with_name(name):
     return _get_aliases(name)
 
 
-def _get_aliases(name=""):
+def _get_aliases(name=None):
     items = OrderedDict()
 
     for alias in sorted(app.template_service.aliases(name)):
