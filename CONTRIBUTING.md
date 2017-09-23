@@ -1,4 +1,14 @@
-# To Contribute a Meme Template
+# Contributing Templates
+
+## Add a New Template
+
+In the [`data/templates`](data/templates) directory, use the example to create your own template directory. The name of the directory will be the primary alias for that meme.
+
+## Create a Pull Request
+
+After checks pass, create a pull request to be merged after review.
+
+# Contributing Code
 
 ## Setup
 
@@ -24,17 +34,15 @@
 
 ### Installation
 
-Install project dependencies into a virtual environment:
+After cloning the repository, create a virtualenv:
 
 ```sh
 $ make install
 ```
 
-## Adding Templates
+## Development
 
-In the [`data/templates`](data/templates) directory, use the example to create your own template directory. The name of the directory will be the primary alias for that meme.
-
-### Serving
+### Run the application
 
 Run the server locally:
 
@@ -48,35 +56,7 @@ or also launch it in your browser:
 $ make launch
 ```
 
-### Validation
-
-Run the checks to ensure your new template does not conflict with others:
-
-```sh
-$ make validate
-```
-
-### Pull Request
-
-After checks pass, create a pull request to be merged after review.
-
-# To Contribute Code
-
-## Setup
-
-### Requirements
-
-### Installation
-
-After cloning the repository, create a virtualenv:
-
-```sh
-$ make install
-```
-
-## Development
-
-### Testing and Static Analysis
+### Run the tests
 
 Manually run the tests and checkers:
 
@@ -92,6 +72,6 @@ $ make watch
 
 > In order to have OS X notifications, `brew install terminal-notifier`.
 
-### Pull Request
+### Create a Pull Request
 
 After checks pass, create a pull request to be merged after review.
