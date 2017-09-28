@@ -53,7 +53,7 @@ For example, https://memegen.link/doge/~hspecial_characters~q/underscore__-dash-
 
 Some memes come in multiple forms, which can be selected via `?alt=<style>`:
 
-![Template with Styles](memegen/static/images/template.png)
+<img src="https://memegen.link/static/images/template.png" alt="Template with Styles" style="width: 600px;"/>
 
 For example: [https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl](https://memegen.link/sad_biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl)
 
