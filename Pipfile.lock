@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "48ac31367b5b19586ac3ced608bb313697bc11f5936364620aaf6138fc3ca825"
+            "sha256": "a65712a14f19f6f2eda67ce1faaad33b899253ab14fe2b2f7b00587eaa93fca7"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,14 +9,14 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "16.7.0",
+            "platform_release": "17.0.0",
             "platform_system": "Darwin",
-            "platform_version": "Darwin Kernel Version 16.7.0: Thu Jun 15 17:36:27 PDT 2017; root:xnu-3789.70.16~2/RELEASE_X86_64",
+            "platform_version": "Darwin Kernel Version 17.0.0: Thu Aug 24 21:48:19 PDT 2017; root:xnu-4570.1.46~2/RELEASE_X86_64",
             "python_full_version": "3.6.1",
             "python_version": "3.6",
             "sys_platform": "darwin"
         },
-        "pipfile-spec": 3,
+        "pipfile-spec": 6,
         "requires": {
             "python_version": "3.6"
         },
@@ -83,12 +83,6 @@
             ],
             "version": "==0.21.0"
         },
-        "fake-useragent": {
-            "hashes": [
-                "sha256:729a9b0d31565db6795ee7f123aa4a980d9446550628303307de4cd69e6d42c6"
-            ],
-            "version": "==0.1.7"
-        },
         "flask": {
             "hashes": [
                 "sha256:0749df235e3ff61ac108f69ac178c9770caeaccad2509cb762ce1f65570a8856",
@@ -111,10 +105,9 @@
         },
         "flask-caching": {
             "hashes": [
-                "sha256:cefc637f5d917da7f87437b018e8c7fc7b05467f0b5153441aa336101e73cd2e",
-                "sha256:212219a1264d4f81186743633245b1b0110de7fcd7142486dcf6736fb0baade4"
+                "sha256:21236d2b4567deb9fc95e474a604602097189e834629c24f4d62937abc963636"
             ],
-            "version": "==1.3.2"
+            "version": "==1.3.3"
         },
         "flask-cors": {
             "hashes": [
@@ -204,10 +197,10 @@
         },
         "marshmallow": {
             "hashes": [
-                "sha256:9f95c0d9ca063310a96134b55b12edfc3a1d963faa7b320e0d02352d11e0fecf",
-                "sha256:e3e83f11cade65fc78482a7620f01f82080f032b5fb51756e396635ebc711c75"
+                "sha256:3f2b795b9b0db24f92d7e2dcaa5c1dfef4a08312a0e5c738386e7aa04ec357c1",
+                "sha256:09943a460026b9a61c3f4cedd0e5ccfed7cfce3271debd19e3f97df561088718"
             ],
-            "version": "==2.13.6"
+            "version": "==2.14.0"
         },
         "olefile": {
             "hashes": [
@@ -282,10 +275,10 @@
         },
         "pymdown-extensions": {
             "hashes": [
-                "sha256:2f5091e9f59534ad00cc3aa8b1148f3d96165859d043f1279f8a1fd27d57376f",
-                "sha256:8f0cc6153cb4754ad10e6d75d3adb048bcbc69199cf14c81a00f784b37116a1d"
+                "sha256:8e1102a2692702d607c83f22b7e940ca0082ed2fc8e949ba91758d758d786a66",
+                "sha256:6a02b51ce6001b448f93acf637d7e85fedefeb72b001ad4764c02f92f8c6a18e"
             ],
-            "version": "==4.0"
+            "version": "==4.1"
         },
         "pyyaml": {
             "hashes": [
@@ -555,17 +548,18 @@
         },
         "pydocstyle": {
             "hashes": [
-                "sha256:199fc5d0c03b737f0999613e2784bb5b47ad9ea0211b011ee5ea0afd51aa62e9",
-                "sha256:49680b7ea8c18e911135167e9f6986a3829031b55f2c737e6d2c398df38aafb5"
+                "sha256:08a870edc94508264ed90510db466c6357c7192e0e866561d740624a8fc7d90c",
+                "sha256:af9fcccb303899b83bec82dc9a1d56c60fc369973223a5e80c3dfa9bdf984405",
+                "sha256:4d5bcde961107873bae621f3d580c3e35a426d3687ffc6f8fb356f6628da5a97"
             ],
-            "version": "==2.0.0"
+            "version": "==2.1.1"
         },
         "pylint": {
             "hashes": [
-                "sha256:c7a3ee11db42d00334671b778f042793c837b73f5883132158284b7dbd6f8184",
-                "sha256:ea6afb93a9ed810cf52ff3838eb3a15e2bf6a81b80de0eaede1ce442caa5ca69"
+                "sha256:948679535a28afc54afb9210dabc6973305409042ece8e5768ca1409910c1ed8",
+                "sha256:1f65b3815c3bf7524b845711d54c4242e4057dd93826586620239ecdfe591fb1"
             ],
-            "version": "==1.7.2"
+            "version": "==1.7.4"
         },
         "pytest": {
             "hashes": [

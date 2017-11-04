@@ -9,12 +9,13 @@ import logging
 import time
 import requests
 from PIL import Image
-from fake_useragent import UserAgent
 
 from .text import Text
 
 
-DEFAULT_REQUEST_HEADERS = {'User-Agent': UserAgent().chrome}
+DEFAULT_REQUEST_HEADERS = {
+    'User-Agent': "Googlebot/2.1 (+http://www.googlebot.com/bot.html)",
+}
 
 log = logging.getLogger(__name__)
 

@@ -24,7 +24,6 @@ eventlet = "==0.21.0"
 bugsnag = "~=3.1.1"
 blinker = "~=1.4"
 background = "*"
-fake-useragent = "*"
 
 [dev-packages]
 pylint = "~=1.7"
