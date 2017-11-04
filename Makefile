@@ -8,49 +8,11 @@ PACKAGES := $(PACKAGE) tests scripts
 CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
-# Python settings
-PYTHON_MAJOR ?= 3
-PYTHON_MINOR ?= 6
-
-# System paths
-PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
-ifneq ($(findstring win32, $(PLATFORM)), )
-	WINDOWS := true
-	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
-	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
-	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
-else
-	ifneq ($(findstring darwin, $(PLATFORM)), )
-		MAC := true
-	else
-		LINUX := true
-	endif
-	SYS_PYTHON := python$(PYTHON_MAJOR)
-	ifdef PYTHON_MINOR
-		SYS_PYTHON := $(SYS_PYTHON).$(PYTHON_MINOR)
-	endif
-endif
-
 # Virtual environment paths
+export PIPENV_SHELL_COMPAT=true
+export PIPENV_VENV_IN_PROJECT=true
+export PIPENV_IGNORE_VIRTUALENVS=true
 ENV := .venv
-ifneq ($(findstring win32, $(PLATFORM)), )
-	BIN := $(ENV)/Scripts
-	ACTIVATE := $(BIN)/activate.bat
-	OPEN := cmd /c start
-	PYTHON := $(BIN)/python.exe
-	PIP := $(BIN)/pip.exe
-else
-	BIN := $(ENV)/bin
-	ACTIVATE := . $(BIN)/activate
-	ifneq ($(findstring cygwin, $(PLATFORM)), )
-		OPEN := cygstart
-	else
-		OPEN := open
-	endif
-	PYTHON := $(BIN)/python
-	PIP := $(BIN)/pip
-endif
 
 # MAIN TASKS ###################################################################
 
@@ -64,17 +26,18 @@ ci: check test validate ## Run all tasks that determine CI status
 
 .PHONY: validate
 validate: install
-	FLASK_CONFIG=test $(PYTHON) manage.py validate
+	FLASK_CONFIG=test pipenv run python manage.py validate
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
+	- pipenv run pip install MacFSEvents
 	$(SNIFFER)
 
 # SERVER TARGETS ###############################################################
 
 .PHONY: run
 run: install ## Run the application
-	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev $(PYTHON) manage.py run; status=$$?; sleep 1; done
+	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev pipenv run python manage.py run; status=$$?; sleep 1; done
 
 .PHONY: launch
 launch: install
@@ -105,30 +68,15 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-export PIPENV_SHELL_COMPAT=true
-export PIPENV_VENV_IN_PROJECT=true
-export PIPENV_IGNORE_VIRTUALENVS=true
-
 DEPENDENCIES := $(ENV)/.installed
 METADATA := *.egg-info
 
 .PHONY: install
 install: $(DEPENDENCIES)
 
-$(DEPENDENCIES): $(PIP) Pipfile*
+$(DEPENDENCIES): Pipfile*
 	pipenv install --dev
-ifdef WINDOWS
-	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
-else ifdef MAC
-	$(PIP) install pync MacFSEvents
-else ifdef LINUX
-	$(PIP) install pyinotify
-endif
 	@ touch $@
-
-$(PYTHON) $(PIP):
-	pipenv --python=$(SYS_PYTHON)
-	pipenv run pip --version
 
 # CHECKS #######################################################################
 
@@ -195,7 +143,7 @@ test-all: install
 
 .PHONY: read-coverage
 read-coverage:
-	$(OPEN) htmlcov/index.html
+	bin/open htmlcov/index.html
 
 # CLEANUP ######################################################################
 

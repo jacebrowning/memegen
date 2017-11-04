@@ -1,9 +1,11 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [requires]
-python_version = "3.6"
+
+python_version = "3.6.3"
 
 [packages]
 flask = "~=0.12.2"
@@ -26,14 +28,23 @@ blinker = "~=1.4"
 background = "*"
 
 [dev-packages]
+
+# Linters
 pylint = "~=1.7"
 pycodestyle = "~=2.3"
 pydocstyle = "~=2.0"
+
+# Testing
 pytest = "~=3.0.7"
 pytest-describe = "==0.11.0"
 pytest-expecter = "==0.2.2.post6"
 pytest-cov = "*"
 pytest-random = "*"
+pytest-catchlog = "*"
+
+# Coverage
 coverage = "~=4.0"
 "coverage.space" = "~=0.8"
+
+# Tooling
 sniffer = "*"
