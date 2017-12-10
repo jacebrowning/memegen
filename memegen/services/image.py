@@ -20,7 +20,7 @@ class ImageService(Service):
         image = Image(
             template, text,
             font=font or self.font_store.find(Font.DEFAULT),
-            watermark_font=self.font_store.find(Font.DEFAULT),
+            watermark_font=self.font_store.find(Font.WATERMARK),
             **options,
         )
 

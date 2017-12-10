@@ -32,13 +32,14 @@ def save_image(client, url, name):
 def test_text_wrapping(client):
     """Create various example images for manual verification."""
     for name, url in [
-        ("text-basic.jpg", "/ch/hello/world.jpg"),
+        ("text-short.jpg", "/ch/hello/world.jpg"),
+        ("text-short-on-tall.jpg", "/drake/tabs/spaces.jpg"),
         ("text-nominal.jpg", "/ch/a_normal_line_of_top_meme_text_followed_by/"
             "another_normal_line_of_bottom_meme_text.jpg"),
         ("text-long.jpg", "/ch/" + ("long_" * 15) + "line/short_line.jpg"),
         ("text-subscripts.jpg", "/ch/some_unicode_subscripts/h%E2%82%82o.jpg"),
     ]:
-        save_image(client, url, name)
+        save_image(client, url + "?watermark=none", name)
 
 
 @pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
@@ -48,14 +49,14 @@ def test_standard_font(client):
     See: https://github.com/jacebrowning/memegen/issues/216
 
     """
-    url = "/ch/we_like_using_the/custom_fonts.jpg?font=impact"
+    url = "/ch/we_like_using_the/custom_fonts.jpg?font=impact&watermark=none"
     save_image(client, url, "font-impact.jpg")
 
 
 @pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
 def test_japanese_font(client):
     """Create a meme using a font that supports Japanese characters."""
-    url = "/ch/turning/日本語.jpg?font=notosanscjkjp-black"
+    url = "/ch/turning/日本語.jpg?font=notosanscjkjp-black&watermark=none"
     save_image(client, url, "font-notosans.jpg")
 
 
@@ -67,15 +68,15 @@ def test_custom_sizes(client):
         ("size-height.jpg", "/fry/hello/world.jpg?height=300"),
         ("size-both.jpg", "/fry/hello/world.jpg?width=200&height=300"),
     ]:
-        save_image(client, url, name)
+        save_image(client, url + "?watermark=none", name)
 
 
 @pytest.mark.skipif(**unset('REGENERATE_IMAGES'))
-def test_forced_watermark(client):
+def test_custom_watermark(client):
     """Create meme with a watermark."""
     for name, partial in [
         ("watermark.jpg", "/fry/hello/world.jpg?"),
         ("watermark-pad-h.jpg", "/fry/hello/world.jpg?width=300&height=200&"),
         ("watermark-pad-v.jpg", "/fry/hello/world.jpg?width=200&height=300&"),
     ]:
-        save_image(client, partial + "watermark=test", name)
+        save_image(client, partial + "watermark=memegen.test", name)
