@@ -54,7 +54,7 @@ class TestConfig(Config):
     TESTING = True
 
     LOG_LEVEL = logging.DEBUG
-    WATERMARK_OPTIONS = ['test', 'werkzeug']
+    WATERMARK_OPTIONS = ['test', 'memegen.test', 'werkzeug']
 
 
 class DevConfig(Config):

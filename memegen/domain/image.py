@@ -99,7 +99,7 @@ def _generate(top, bottom, font_path, background, width, height,
     # Draw image
     draw = ImageDraw.Draw(image)
 
-    max_font_size = int(image.size[1] / 5)
+    max_font_size = int(image.size[1] / 9)
     min_font_size_single_line = int(image.size[1] / 12)
     max_text_len = image.size[0] - 20
     top_font_size, top = _optimize_font_size(
@@ -125,8 +125,6 @@ def _generate(top, bottom, font_path, background, width, height,
     # Find bottom centered position for bottom text
     bottom_text_size_x = (image.size[0] / 2) - (bottom_text_size[0] / 2)
     bottom_text_size_y = image.size[1] - bottom_text_size[1] * (7 / 6)
-    if watermark:
-        bottom_text_size_y = bottom_text_size_y - 5
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
     _draw_outlined_text(draw, top_text_position,
@@ -141,8 +139,8 @@ def _generate(top, bottom, font_path, background, width, height,
     # Add watermark
     if watermark:
         draw = ImageDraw.Draw(image)
-        watermark_font = ImageFont.truetype(watermark_font_path, 15)
-        _draw_outlined_text(draw, (3, image.size[1] - 20),
+        watermark_font = ImageFont.truetype(watermark_font_path, 11)
+        _draw_outlined_text(draw, (3, image.size[1] - 15),
                             watermark, watermark_font, 15)
 
     return image
@@ -161,7 +159,7 @@ def _optimize_font_size(font, text, max_font_size, min_font_size,
         phrases = _split(text)
     else:
         phrases = (text,)
-    font_size = max_font_size // len(phrases)
+    font_size = max_font_size
     for phrase in phrases:
         font_size = min(_maximize_font_size(font, phrase, max_text_len),
                         font_size)
