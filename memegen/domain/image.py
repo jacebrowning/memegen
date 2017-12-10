@@ -82,9 +82,12 @@ def _generate(top, bottom, font_path, background, width, height,
 
     # Resize to a maximum height and width
     ratio = background_image.size[0] / background_image.size[1]
-    if width and height:
+    pad_image = bool(width and height)
+    pad_watermark = True
+    if pad_image:
         if width < height * ratio:
             dimensions = width, int(width / ratio)
+            pad_watermark = False
         else:
             dimensions = int(height * ratio), height
     elif width:
@@ -125,6 +128,8 @@ def _generate(top, bottom, font_path, background, width, height,
     # Find bottom centered position for bottom text
     bottom_text_size_x = (image.size[0] / 2) - (bottom_text_size[0] / 2)
     bottom_text_size_y = image.size[1] - bottom_text_size[1] * (7 / 6)
+    if watermark and pad_watermark:
+        bottom_text_size_y = bottom_text_size_y - 5
     bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
 
     _draw_outlined_text(draw, top_text_position,
@@ -133,7 +138,7 @@ def _generate(top, bottom, font_path, background, width, height,
                         bottom, bottom_font, bottom_font_size)
 
     # Pad image if a specific dimension is requested
-    if width and height:
+    if pad_image:
         image = _add_blurred_background(image, background_image, width, height)
 
     # Add watermark
