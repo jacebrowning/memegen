@@ -68,7 +68,7 @@ def test_custom_sizes(client):
         ("size-height.jpg", "/fry/hello/world.jpg?height=300"),
         ("size-both.jpg", "/fry/hello/world.jpg?width=200&height=300"),
     ]:
-        save_image(client, url + "?watermark=none", name)
+        save_image(client, url + "&watermark=none", name)
 
 
 @pytest.mark.skipif(**unset('REGENERATE_IMAGES'))

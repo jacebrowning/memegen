@@ -1,4 +1,4 @@
-These files are generated during the integration tests.
+These files are updated during tests if `REGENERATED_IMAGES` is set.
 
 The following things _could_ cause the images to change:
 
