@@ -13,3 +13,7 @@ test: install
 .PHONY: run
 run: install
 	pipenv run apistar run
+
+.PHONY: run-prod
+run-prod: install
+	pipenv shell "heroku local; exit \$$?"

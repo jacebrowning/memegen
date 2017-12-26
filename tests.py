@@ -1,20 +1,9 @@
 from apistar.test import TestClient
-from app import app, welcome
+from app import app
 
 
-def test_welcome():
-    """
-    Testing a view directly.
-    """
-    data = welcome()
-    assert data == {'message': 'Welcome to API Star!'}
-
-
-def test_http_request():
-    """
-    Testing a view, using the test client.
-    """
+def test_list_templates():
     client = TestClient(app)
-    response = client.get('http://localhost/')
+    response = client.get('http://localhost/templates/')
     assert response.status_code == 200
-    assert response.json() == {'message': 'Welcome to API Star!'}
+    assert response.json() == []
