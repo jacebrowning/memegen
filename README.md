@@ -55,7 +55,7 @@ Some memes come in multiple forms, which can be selected via `?alt=<style>`:
 
 <img src="https://memegen.link/static/images/template.png" alt="Template with Styles" style="width: 600px;"/>
 
-For example: [https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl](https://memegen.link/sad_biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl)
+For example: [https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl](https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl)
 
 Or, you can use your own image URL as the style. For example, https://memegen.link/custom/my_pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg produces:
 
