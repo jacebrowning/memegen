@@ -49,3 +49,6 @@ Icon*
 
 # Eclipse
 .settings
+
+# IDEA
+.idea
