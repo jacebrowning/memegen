@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.3
+
+- Changed image URLs to redirect to `/custom/*` when `?alt=` is a URL.
+
 ## 5.2
 
 - Changed `/api` to redirect to `/api/`.
