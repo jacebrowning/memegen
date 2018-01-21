@@ -86,50 +86,50 @@ def describe_get():
             expect(data).contains("_vote.jpg")
             expect(data).contains("alt=scowl")
 
-        def when_url(client):
+        def it_redirects_to_custom_when_alt_is_url(client):
             url = "http://www.gstatic.com/webp/gallery/1.jpg"
-            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+            status, data = load(client.get(f"/sad-biden/hello.jpg?alt={url}"))
 
-            expect(response.status_code) == 200
-            expect(response.mimetype) == 'image/jpeg'
+            expect(status) == 302
+            expect(data).contains(f'<a href="/custom/hello.jpg?alt={url}">')
 
         def it_returns_an_error_with_non_image_urls(client):
             url = "http://example.com"
-            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+            response = client.get(f"/custom/hello.jpg?alt={url}")
 
             expect(response.status_code) == 415
 
         def it_returns_an_error_with_non_urls(client):
             url = "undefined"
-            response = client.get("/custom/hello.jpg?alt=" + url)
+            response = client.get(f"/custom/hello.jpg?alt={url}")
 
             print(response.data)
             expect(response.status_code) == 415
 
         def it_handles_png_int32_pixels(client):
             url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/201692816359570.jpeg"
-            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+            response = client.get(f"/custom/hello.jpg?alt={url}")
 
             expect(response.status_code) == 200
             expect(response.mimetype) == 'image/jpeg'
 
         def it_handles_jpg_cmyk_pixels(client):
             url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/Channel_digital_image_CMYK_color.jpg"
-            response = client.get("/sad-biden/hello.jpg?alt=" + url)
+            response = client.get(f"/custom/hello.jpg?alt={url}")
 
             expect(response.status_code) == 200
             expect(response.mimetype) == 'image/jpeg'
 
         def it_redirects_to_lose_alt_when_invalid_url(client):
             url = "http:invalid"
-            status, data = load(client.get("/sad-biden/hello.jpg?alt=" + url))
+            status, data = load(client.get(f"/sad-biden/hello.jpg?alt={url}"))
 
             expect(status) == 302
             expect(data).contains('<a href="/sad-biden/hello.jpg">')
 
         def it_redirects_to_lose_alt_when_missing_schema(client):
             url = "http:/www.gstatic.com/webp/gallery/1.jpg"
-            status, data = load(client.get("/sad-biden/hello.jpg?alt=" + url))
+            status, data = load(client.get(f"/sad-biden/hello.jpg?alt={url}"))
 
             expect(status) == 302
             expect(data).contains('<a href="/sad-biden/hello.jpg">')

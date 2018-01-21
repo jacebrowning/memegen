@@ -82,6 +82,10 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options['path'] = text.path
         return redirect(route('.get', **options))
 
+    if alt and "://" in alt and key != 'custom':
+        options['key'] = 'custom'
+        return redirect(route('.get', **options))
+
     if alt and template.path == template.get_path(alt, download=False):
         options.pop('alt')
         return redirect(route('.get', **options))
