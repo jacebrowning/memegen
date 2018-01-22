@@ -55,7 +55,7 @@ Some memes come in multiple forms, which can be selected via `?alt=<style>`:
 
 <img src="https://memegen.link/static/images/template.png" alt="Template with Styles" style="width: 600px;"/>
 
-For example: [https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl](https://memegen.link/sad_biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl)
+For example: [https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl](https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg?alt=scowl)
 
 Or, you can use your own image URL as the style. For example, https://memegen.link/custom/my_pretty/background.jpg?alt=http://www.gstatic.com/webp/gallery/1.jpg produces:
 
@@ -93,14 +93,14 @@ Thanks go to [danieldiekmeier/memegenerator](https://github.com/danieldiekmeier/
 
 ## Sample Clients
 
-| Type | Language | Source | Link |
-| :-: | :-:| :-- | :-- |
-| Slack | Python | [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme) | --- |
-| Slack | Go | [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot) | --- |
-| Slack | --- | --- | http://www.memetizer.com |
-| Hain | JavaScript | [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) | --- |
-| Website | Clojure | [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes) | http://www.mightyfinememes.com |
-| Website | --- | --- | https://memecomplete.com |
-| App | --- | --- | http://app.memeois.com |
+| Platform | Link | Source | 
+| :-: | :-- | :-- |
+| Slack | --- | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme) | --- |
+| Slack | --- | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot) | --- |
+| Slack | http://www.memetizer.com | --- |
+| Hain | --- | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
+| Web | http://www.mightyfinememes.com | Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes) |
+| Web, Slack | https://memecomplete.com | --- |
+| iOS | http://app.memeois.com | --- |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).

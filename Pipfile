@@ -2,49 +2,49 @@
 
 url = "https://pypi.python.org/simple"
 verify_ssl = true
+name = "pypi"
 
 [requires]
 
 python_version = "3.6.3"
 
 [packages]
+
 flask = "~=0.12.2"
 flask-api = "~=1.0"
 flask-cors = "~=3.0.3"
 flask-caching = "*"
 flask-cachecontrol = "==0.1.2"
-webargs = "~=1.7.0"
-pillow = "~=4.1.1"
-yorm = "==1.5b3"
+flask-script = "~=2.0.5"
+
 requests = "~=2.18.1"
+webargs = "~=1.7.0"
+background = "*"
+yorm = "~=1.5"
+pillow = "~=4.1.1"
 profanityfilter = "~=1.1.2"
 markdown = "*"
 pymdown-extensions = "*"
-flask-script = "~=2.0.5"
+
 gunicorn = "~=19.7.1"
 eventlet = "==0.21.0"
+
 bugsnag = "~=3.1.1"
 blinker = "~=1.4"
-background = "*"
 
 [dev-packages]
 
-# Linters
-pylint = "~=1.7"
-pycodestyle = "~=2.3"
-pydocstyle = "~=2.0"
+pylint = "*"
+pycodestyle = "*"
+pydocstyle = "*"
 
-# Testing
-pytest = "~=3.0.7"
-pytest-describe = "==0.11.0"
-pytest-expecter = "==0.2.2.post6"
-pytest-cov = "*"
+pytest = "~=3.3"
+pytest-describe = "*"
+pytest-expecter = "*"
 pytest-random = "*"
-pytest-catchlog = "*"
+pytest-cov = "*"
 
-# Coverage
-coverage = "~=4.0"
-"coverage.space" = "~=0.8"
+"coverage.space" = "*"
 
-# Tooling
 sniffer = "*"
+pync = "*"

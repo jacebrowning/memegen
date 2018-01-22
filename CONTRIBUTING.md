@@ -6,7 +6,7 @@ In the [`data/templates`](data/templates) directory, use the example to create y
 
 ## Create a Pull Request
 
-After checks pass, create a pull request to be merged after review.
+Create a pull request to be merged after review.
 
 # Contributing Code
 
