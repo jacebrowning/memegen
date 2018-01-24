@@ -46,8 +46,8 @@ launch: install
 
 .PHONY: run-prod
 run-prod: install .env
-	pipenv shell -c "bin/post_compile; exit \$$?"
-	pipenv shell -c "heroku local web=1; exit \$$?"
+	pipenv shell "bin/post_compile; exit \$$?"
+	pipenv shell "heroku local web=1; exit \$$?"
 
 .PHONY: launch-prod
 launch-prod: install
@@ -68,13 +68,13 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-DEPENDENCIES := $(ENV)/.installed
+DEPENDENCIES := $(ENV)/.pipenv-$(shell bin/checksum Pipfile*)
 METADATA := *.egg-info
 
 .PHONY: install
 install: $(DEPENDENCIES)
 
-$(DEPENDENCIES): Pipfile*
+$(DEPENDENCIES):
 	pipenv install --dev
 	@ touch $@
 
@@ -176,6 +176,6 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: help
 help: all
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@ grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help

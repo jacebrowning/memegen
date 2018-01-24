@@ -9,6 +9,7 @@ class Font:
     """Font file used to render text onto an image."""
 
     DEFAULT = 'titilliumweb-black'
+    WATERMARK = 'tahoma-bold'
 
     def __init__(self, path):
         self._path = path

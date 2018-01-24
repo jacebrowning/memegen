@@ -15,9 +15,10 @@ def main():
     with app.app_context():
 
         for template in app.template_service.all():
-            app.image_service.create(template, Text("_"))
-            app.image_service.create(template, Text("_/_"))
-            app.image_service.create(template, template.sample_text)
+            for text in [Text("_"), template.sample_text]:
+                for watermark in ["", "memegen.link"]:
+                    app.image_service.create(template, text,
+                                             watermark=watermark)
 
 
 if __name__ == '__main__':

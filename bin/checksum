@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import hashlib
+
+
+def run(paths):
+    hash_md5 = hashlib.md5()
+
+    for path in paths:
+        with open(path, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b''):
+                hash_md5.update(chunk)
+
+    print(hash_md5.hexdigest())
+
+
+if __name__ == '__main__':
+    run(sys.argv[1:])
