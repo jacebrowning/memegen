@@ -24,6 +24,9 @@ script:
   - make test
   - make validate
 
+before_cache:
+  - find data/templates -name "*.yml" -delete
+
 after_success:
   - pip install coveralls scrutinizer-ocular
   - coveralls
