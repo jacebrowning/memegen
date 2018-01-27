@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.4
+
+- Added `?alt=none`  to use the default custom background image.
+
 ## 5.3
 
 - Changed image URLs to redirect to `/custom/*` when `?alt=` is a URL.

@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 cache_filtered = Cache()
 cache_unfiltered = Cache(filtered=False)
 
+PLACEHOLDER = "https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png"
 OPTIONS = {
     'alt': fields.Str(missing=None),
     'font': fields.Str(missing=None),
@@ -37,7 +38,7 @@ def get_latest(index=1, filtered=True):
     else:
         kwargs['key'] = 'custom'
         kwargs['path'] = "your_meme/goes_here"
-        kwargs['alt'] = "https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png"
+        kwargs['alt'] = PLACEHOLDER
 
     return redirect(route('.get', _external=True, **kwargs))
 
@@ -101,7 +102,8 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
 
     image = current_app.image_service.create(
         template, text,
-        style=alt, font=fontfile, size=size, watermark=watermark,
+        style=PLACEHOLDER if alt == 'none' else alt,
+        font=fontfile, size=size, watermark=watermark,
     )
 
     if not preview:
