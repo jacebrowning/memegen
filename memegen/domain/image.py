@@ -121,21 +121,19 @@ def _generate(top, bottom, font_path, background, width, height,
     bottom_text_size = draw.multiline_textsize(bottom, bottom_font)
 
     # Find top centered position for top text
-    top_text_position_x = (image.size[0] / 2) - (top_text_size[0] / 2)
-    top_text_position_y = 0
-    top_text_position = (top_text_position_x, top_text_position_y)
+    top_text_pos_x = (image.size[0] / 2) - (top_text_size[0] / 2)
+    top_text_pos_y = 0
+    top_text_pos = (top_text_pos_x, top_text_pos_y)
 
     # Find bottom centered position for bottom text
     bottom_text_size_x = (image.size[0] / 2) - (bottom_text_size[0] / 2)
     bottom_text_size_y = image.size[1] - bottom_text_size[1] * (7 / 6)
     if watermark and pad_watermark:
         bottom_text_size_y = bottom_text_size_y - 5
-    bottom_text_position = (bottom_text_size_x, bottom_text_size_y)
+    bottom_text_pos = (bottom_text_size_x, bottom_text_size_y)
 
-    _draw_outlined_text(draw, top_text_position,
-                        top, top_font, top_font_size)
-    _draw_outlined_text(draw, bottom_text_position,
-                        bottom, bottom_font, bottom_font_size)
+    _draw_outlined_text(draw, top_text_pos, top, top_font)
+    _draw_outlined_text(draw, bottom_text_pos, bottom, bottom_font)
 
     # Pad image if a specific dimension is requested
     if pad_image:
@@ -145,8 +143,8 @@ def _generate(top, bottom, font_path, background, width, height,
     if watermark:
         draw = ImageDraw.Draw(image)
         watermark_font = ImageFont.truetype(watermark_font_path, 11)
-        _draw_outlined_text(draw, (3, image.size[1] - 15),
-                            watermark, watermark_font, 15)
+        watermark_pos = (3, image.size[1] - 15)
+        _draw_outlined_text(draw, watermark_pos, watermark, watermark_font)
 
     return image
 
@@ -175,19 +173,18 @@ def _optimize_font_size(font, text, max_font_size, min_font_size,
     return font_size, text
 
 
-def _draw_outlined_text(draw_image, text_position, text, font, font_size):
+def _draw_outlined_text(draw_image, text_pos, text, font):
     """Draw white text with black outline on an image."""
 
     # Draw black text outlines
-    outline_range = max(1, font_size // 25)
-    for x in range(-outline_range, outline_range + 1):
-        for y in range(-outline_range, outline_range + 1):
-            pos = (text_position[0] + x, text_position[1] + y)
+    for x in range(-1, 2):
+        for y in range(-1, 2):
+            pos = (text_pos[0] + x, text_pos[1] + y)
             draw_image.multiline_text(pos, text, (0, 0, 0),
                                       font=font, align='center')
 
     # Draw inner white text
-    draw_image.multiline_text(text_position, text, (255, 255, 255),
+    draw_image.multiline_text(text_pos, text, (255, 255, 255),
                               font=font, align='center')
 
 
