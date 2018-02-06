@@ -18,7 +18,7 @@ class TemplateService(Service):
         templates = self.template_store.filter()
         return templates
 
-    def find(self, key, *, allow_missing=False):
+    def find(self, key, *, allow_missing=False):  # pylint: disable=inconsistent-return-statements
         """Find a template with a matching key."""
 
         # Find an exact match
