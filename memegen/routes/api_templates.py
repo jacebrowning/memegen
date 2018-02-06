@@ -55,25 +55,21 @@ def create_meme(key, top, bottom, _redirect, _masked):
                                 path=template.sample_path, _external=True)
         return data
 
-    elif request.method == 'POST':
-        if top or bottom:
-            text = Text([top, bottom], translate_spaces=False)
-        else:
-            text = Text("_")
+    if top or bottom:
+        text = Text([top, bottom], translate_spaces=False)
+    else:
+        text = Text("_")
 
-        if _masked:
-            code = current_app.link_service.encode(key, text.path)
-            url = route('image.get_encoded', code=code, _external=True)
-        else:
-            url = route('image.get', key=key, path=text.path, _external=True)
+    if _masked:
+        code = current_app.link_service.encode(key, text.path)
+        url = route('image.get_encoded', code=code, _external=True)
+    else:
+        url = route('image.get', key=key, path=text.path, _external=True)
 
-        if _redirect:
-            return redirect(url, 303)
-        else:
-            return dict(href=url)
+    if _redirect:
+        return redirect(url, 303)
 
-    else:  # pragma: no cover
-        assert None
+    return dict(href=url)
 
 
 @blueprint.route("<key>/<path:path>")

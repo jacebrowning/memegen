@@ -76,3 +76,4 @@ def get_config(name):
             return config
 
     assert False, "No matching configuration: {}".format(name)
+    return None

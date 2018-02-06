@@ -136,6 +136,7 @@ class Template:
                 with suppress(OSError):
                     if path.is_file():
                         return path
+        return None
 
     def search(self, query):
         """Count the number of times a query exists in relevant fields."""

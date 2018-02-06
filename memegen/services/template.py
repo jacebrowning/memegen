@@ -36,8 +36,8 @@ class TemplateService(Service):
         # Else, no match
         if allow_missing:
             return Placeholder(key)
-        else:
-            raise self.exceptions.TemplateNotFound
+
+        raise self.exceptions.TemplateNotFound
 
     def aliases(self, query=None):
         """Get all aliases with an optional name filter."""
