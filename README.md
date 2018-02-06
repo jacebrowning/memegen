@@ -83,7 +83,7 @@ API clients that want to show a preview of an image while the user is still typi
 
 ### Social Media
 
-Add `?share=true` to optimize images sizes for sharing on social media.
+Add `?share=true` to get HTML with images optimized for sharing on social media.
 
 ## Adding Templates
 
