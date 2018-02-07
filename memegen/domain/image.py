@@ -132,8 +132,11 @@ def _generate(top, bottom, font_path, background, width, height,
         bottom_text_size_y = bottom_text_size_y - 5
     bottom_text_pos = (bottom_text_size_x, bottom_text_size_y)
 
-    _draw_outlined_text(draw, top_text_pos, top, top_font)
-    _draw_outlined_text(draw, bottom_text_pos, bottom, bottom_font)
+    outline = int(round(max(1, min(dimensions) / 300)))
+    t_outline = min(outline, top_font_size // 20)
+    b_outline = min(outline, bottom_font_size // 20)
+    _draw_outlined_text(draw, top_text_pos, top, top_font, t_outline)
+    _draw_outlined_text(draw, bottom_text_pos, bottom, bottom_font, b_outline)
 
     # Pad image if a specific dimension is requested
     if pad_image:
@@ -173,12 +176,12 @@ def _optimize_font_size(font, text, max_font_size, min_font_size,
     return font_size, text
 
 
-def _draw_outlined_text(draw_image, text_pos, text, font):
+def _draw_outlined_text(draw_image, text_pos, text, font, width=1):
     """Draw white text with black outline on an image."""
 
     # Draw black text outlines
-    for x in range(-1, 2):
-        for y in range(-1, 2):
+    for x in range(-width, 1 + width):
+        for y in range(-width, 1 + width):
             pos = (text_pos[0] + x, text_pos[1] + y)
             draw_image.multiline_text(pos, text, (0, 0, 0),
                                       font=font, align='center')
