@@ -133,8 +133,10 @@ def _generate(top, bottom, font_path, background, width, height,
     bottom_text_pos = (bottom_text_size_x, bottom_text_size_y)
 
     outline = int(round(max(1, min(dimensions) / 300)))
-    _draw_outlined_text(draw, top_text_pos, top, top_font, outline)
-    _draw_outlined_text(draw, bottom_text_pos, bottom, bottom_font, outline)
+    t_outline = min(outline, top_font_size // 20)
+    b_outline = min(outline, bottom_font_size // 20)
+    _draw_outlined_text(draw, top_text_pos, top, top_font, t_outline)
+    _draw_outlined_text(draw, bottom_text_pos, bottom, bottom_font, b_outline)
 
     # Pad image if a specific dimension is requested
     if pad_image:
