@@ -6,14 +6,12 @@ from flask_api import FlaskAPI
 from flask_api.exceptions import APIException, NotFound
 import bugsnag
 from bugsnag.flask import handle_exceptions
+import log
 
 from . import extensions
 from . import services
 from . import stores
 from . import routes
-
-
-log = logging.getLogger('api')
 
 
 class TemplateNotFound(NotFound):

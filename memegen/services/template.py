@@ -1,10 +1,7 @@
-import logging
+import log
 
 from ._base import Service
 from ..domain import Template, Placeholder
-
-
-log = logging.getLogger(__name__)
 
 
 class TemplateService(Service):

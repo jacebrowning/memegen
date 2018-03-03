@@ -1,11 +1,7 @@
-import logging
-
-from ..domain import Image, Font
+import log
 
 from ._base import Service
-
-
-log = logging.getLogger(__name__)
+from ..domain import Image, Font
 
 
 class ImageService(Service):

@@ -1,11 +1,7 @@
-import logging
-
 import yorm
 from yorm.types import List, Object
 import profanityfilter
-
-
-log = logging.getLogger(__name__)
+import log
 
 
 @yorm.attr(items=List.of_type(Object))

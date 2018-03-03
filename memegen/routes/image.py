@@ -1,7 +1,6 @@
-import logging
-
 from flask import Blueprint, current_app, request, redirect
 from webargs import fields, flaskparser
+import log
 
 from .. import domain
 
@@ -10,7 +9,6 @@ from ._utils import route, track, display
 
 
 blueprint = Blueprint('image', __name__)
-log = logging.getLogger(__name__)
 cache_filtered = Cache()
 cache_unfiltered = Cache(filtered=False)
 

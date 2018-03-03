@@ -1,9 +1,4 @@
-import logging
-
 from ._base import Service
-
-
-log = logging.getLogger(__name__)
 
 
 class FontService(Service):

@@ -1,11 +1,8 @@
 import json
-import logging
 from typing import Union
 
 import flask
-
-
-log = logging.getLogger(__name__)
+import log
 
 
 def load(response: flask.Response) -> (int, Union[dict, str]):

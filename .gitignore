@@ -9,6 +9,7 @@ Icon*
 
 # Temporary virtual environment files
 /.cache/
+.pytest_cache/
 /.venv/
 
 # Temporary server files

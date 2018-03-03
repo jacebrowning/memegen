@@ -1,13 +1,11 @@
-import logging
 from urllib.parse import unquote
 
+
+import log
 import requests
 import background
 from flask import (Response, url_for, render_template, send_file,
                    current_app, request)
-
-
-log = logging.getLogger(__name__)
 
 
 def samples(blank=False):

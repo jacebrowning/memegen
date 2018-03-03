@@ -1,14 +1,14 @@
 import os
+import time
 import hashlib
 import shutil
 from pathlib import Path
 from contextlib import suppress
 import tempfile
-import logging
 
-import time
 import requests
 from PIL import Image
+import log
 
 from .text import Text
 
@@ -16,8 +16,6 @@ from .text import Text
 DEFAULT_REQUEST_HEADERS = {
     'User-Agent': "Googlebot/2.1 (+http://www.googlebot.com/bot.html)",
 }
-
-log = logging.getLogger(__name__)
 
 
 class Template:

@@ -25,6 +25,7 @@ pillow = "~=4.1.1"
 profanityfilter = "~=1.1.2"
 markdown = "*"
 pymdown-extensions = "*"
+minilog = "*"
 
 gunicorn = "~=19.7.1"
 eventlet = "==0.21.0"

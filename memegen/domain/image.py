@@ -1,12 +1,9 @@
 import os
 import hashlib
-import logging
 from contextlib import suppress
 
 from PIL import Image as ImageFile, ImageFont, ImageDraw, ImageFilter
-
-
-log = logging.getLogger(__name__)
+import log
 
 
 class Image(object):
