@@ -1,6 +1,6 @@
 #!env/bin/python
 
-import logging
+import log
 
 from memegen.settings import ProdConfig
 from memegen.factory import create_app
@@ -8,7 +8,7 @@ from memegen.domain import Text
 
 
 def main():
-    logging.info("Generating sample images...")
+    log.info("Generating sample images...")
 
     app = create_app(ProdConfig)
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1bf2f239580be7fa63a322eef53658c4c8b42aeacf21a6034c989237556e14be"
+            "sha256": "7f4d58d43bad76c215bf412b37b5187853f1fe68305884e656120671bd1409e2"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -202,10 +202,10 @@
         },
         "minilog": {
             "hashes": [
-                "sha256:9a496a068231ed670ae254d140861c6c63f82c11d1679af65de77ee42f58d584",
-                "sha256:1cd8ba9723280e5db952cbf6eb28823e2b344b6a984188ccf78c116dba944e67"
+                "sha256:dcce90572ae3013304b0b10523a39b2cba71735a7d5cbd978bb9eae24e212570",
+                "sha256:f81af54cccff05b1a1ec9c5a6eae3edd20ca84709be2c00627614f1c7537758c"
             ],
-            "version": "==0.1"
+            "version": "==0.2"
         },
         "olefile": {
             "hashes": [
@@ -280,10 +280,10 @@
         },
         "pymdown-extensions": {
             "hashes": [
-                "sha256:2da4ccbc4c9893a02bb9c5d03a88496a5813fbb191b14f895713fa79af8441a7",
-                "sha256:d222d494031bb4f8e528dfd158955428018d5fe985ba14e1daa89c4d484371ff"
+                "sha256:384405d91b2802657ce5faf0a1803570a80787a40fb647fb76d5dc5493426365",
+                "sha256:f2343ab3d8ce45d600de62490ee8299bfd03fbd1a6997301480d58a0c3de44ae"
             ],
-            "version": "==4.8"
+            "version": "==4.9"
         },
         "pyyaml": {
             "hashes": [

@@ -1,5 +1,4 @@
 import os
-import logging
 
 from flask import request, current_app
 from flask_api import FlaskAPI
@@ -56,12 +55,9 @@ def configure_exceptions(app):
 
 
 def configure_logging(app):
-    logging.basicConfig(level=app.config['LOG_LEVEL'],
-                        format="%(levelname)s: %(message)s")
-    logging.getLogger('werkzeug').setLevel(logging.WARNING)
-    logging.getLogger('yorm').setLevel(logging.WARNING)
-    logging.getLogger('requests').setLevel(logging.WARNING)
-    logging.getLogger('PIL').setLevel(logging.INFO)
+    log.init(level=app.config['LOG_LEVEL'])
+    log.silence('requests', 'werkzeug', 'yorm', allow_warning=True)
+    log.silence('PIL', allow_info=True)
 
 
 def register_extensions(app):
