@@ -44,10 +44,20 @@
               &nbsp;
               Share on Twitter
           </a>
-          <button type="button" class="btn btn-primary" id="btn-copy" data-toggle="tooltip" title="Copy link">
-            <span class="glyphicon glyphicon-copy"></span>
+        </div>
+      </div>
+
+      <div class="row" style="padding-top: 5px;">
+        <div class="col-xs-12 text-center">
+          <button type="button" class="btn btn-primary" id="btn-copy-link">
+            <span class="glyphicon glyphicon-globe"></span>
             &nbsp;
             Copy Link
+          </button>
+          <button type="button" class="btn btn-primary" id="btn-copy-image">
+            <span class="glyphicon glyphicon-picture"></span>
+            &nbsp;
+            Copy Image URL
           </button>
         </div>
       </div>
@@ -59,9 +69,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
 
     <script>
-      var clipboard = new Clipboard('#btn-copy', {
+      var clipboard = new Clipboard('.btn', {
         text: function(trigger) {
-          return "{{ url | safe }}";
+          if (trigger.id == 'btn-copy-link') {
+            return "{{ url | safe }}";
+          } else if (trigger.id == 'btn-copy-image') {
+            return "{{ img | safe }}";
+          }
         }
       });
       clipboard.on('success', function(event) {
