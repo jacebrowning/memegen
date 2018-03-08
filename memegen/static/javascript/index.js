@@ -19,13 +19,12 @@ function generateMeme() {
   var data = {"top": top, "bottom": bottom, "redirect": false, "masked" : masked};
 
   $.post(url, data, function(data){
-    $("#meme-image img").attr('src', data.href + '?watermark=none');
-    $("#meme-image").attr('href', data.href);
+    $("#meme-image").attr('src', data.href + '?watermark=none');
   });
 }
 
 function getShareLink() {
-  return $("#meme-image").attr('href') + "?watermark=none&share=true";
+  return $("#meme-image").attr('src') + "&share=true";
 }
 
 /*** Events ***/
@@ -51,26 +50,8 @@ $('#meme-form').on('submit', function(event) {
 
 });
 
-var clipboard = new Clipboard('#btn-copy', {
-  text: function(trigger) {
-    return getShareLink();
-  }
-});
-clipboard.on('success', function(event) {
-  $(event.trigger).attr('title', 'Link Copied').tooltip('fixTitle').tooltip('show');
-});
-clipboard.on('error', function(event) {
-  console.log(event);
-});
-
 $('#btn-share').on('click', function(event) {
-  var url = getShareLink();
-  var win = window.open(url, '_blank');
-  if (win) {
-    win.focus();
-  } else {
-    window.location.href = url;
-  }
+  window.location.href = getShareLink();
 });
 
 /*** Loading ***/

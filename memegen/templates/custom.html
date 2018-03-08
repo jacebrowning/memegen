@@ -45,13 +45,12 @@
 
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <input type="submit" class="btn btn-primary" id="btn-generate" value="Generate Image" />
+                  <button type="submit" class="btn btn-primary" id="btn-generate">
+                    <span class="glyphicon glyphicon-picture"></span>
+                    &nbsp;
+                    Generate
+                  </button>
                   <div class="pull-right">
-                    <button type="button" class="btn btn-primary" id="btn-copy" data-toggle="tooltip" title="Copy link">
-                      <span class="glyphicon glyphicon-copy"></span>
-                      &nbsp;
-                      Copy Link
-                    </button>
                     <button type="button" class="btn btn-primary" id="btn-share" data-toggle="tooltip" title="View sharing options">
                       <span class="glyphicon glyphicon-share"></span>
                       &nbsp;
@@ -74,7 +73,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
 
     <script>
       function getShareLink() {
@@ -94,6 +92,10 @@
         $("#meme-image").attr('href', imageUrl);
       });
 
+      $('#btn-share').on('click', function(event) {
+        window.location.href = getShareLink();
+      });
+
       // Generate with defaults
       $('#meme-line-1').val("your text");
       $('#meme-line-2').val("goes here");
@@ -106,26 +108,5 @@
       $('#meme-line-2').val("");
       $('#meme-background').val("");
 
-      var clipboard = new Clipboard('#btn-copy', {
-        text: function(trigger) {
-          return getShareLink();
-        }
-      });
-      clipboard.on('success', function(event) {
-        $(event.trigger).attr('title', 'Link Copied').tooltip('fixTitle').tooltip('show');
-      });
-      clipboard.on('error', function(event) {
-        console.log(event);
-      });
-
-      $('#btn-share').on('click', function(event) {
-        var url = getShareLink();
-        var win = window.open(url, '_blank');
-        if (win) {
-            win.focus();
-        } else {
-            window.location.href = url;
-        }
-      });
     </script>
 {% endblock %}
