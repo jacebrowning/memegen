@@ -45,7 +45,7 @@ pytest-expecter = "*"
 pytest-random = "*"
 pytest-cov = "*"
 
-"coverage.space" = "*"
+coverage-space = "*"
 
 sniffer = "*"
 pync = {version = "*", sys_platform = "== 'darwin'"}
