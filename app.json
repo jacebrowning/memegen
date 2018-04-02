@@ -1,6 +1,5 @@
 {
-  "name":"memegen",
-  "env":{
+  "env": {
     "PIPENV_COLORBLIND" : {
       "value": "true"
     },
@@ -8,7 +7,7 @@
       "value": "true"
     },
     "HEROKU_APP_NAME": {
-      "required": "true"
+      "required": true
     },
 
     "BUGSNAG_API_KEY": {
@@ -17,7 +16,7 @@
     "FACEBOOK_APP_ID": {
       "required": true
     },
-    "FLASK_CONFIG": {
+    "FLASK_ENV": {
       "required": true
     },
     "GOOGLE_ANALYTICS_TID": {

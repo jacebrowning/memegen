@@ -15,7 +15,7 @@ class TemplateService(Service):
         templates = self.template_store.filter()
         return templates
 
-    def find(self, key, *, allow_missing=False):  # pylint: disable=inconsistent-return-statements
+    def find(self, key, *, allow_missing=False):
         """Find a template with a matching key."""
 
         # Find an exact match
@@ -50,11 +50,11 @@ class TemplateService(Service):
         templates = self.all()
         keys = {template.key: template for template in templates}
         for template in templates:
-            log.info("Checking template '%s' ...", template)
+            log.info(f"Checking template '{template}'")
             if not template.validate():
                 return False
             for alias in template.aliases:
-                log.info("Checking alias '%s' -> '%s' ...", alias, template.key)
+                log.info(f"Checking alias '{alias}' -> '{template.key}'")
                 if alias not in template.aliases_lowercase:
                     msg = "Alias '%s' should be lowercase characters or dashes"
                     log.error(msg, alias)

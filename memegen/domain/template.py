@@ -168,7 +168,7 @@ class Template:
             self._error("has no name")
             return False
         if not self.name[0].isalnum():
-            self._error("name %r should start with an alphanumeric", self.name)
+            self._error(f"name '{self.name}' should start with alphanumeric")
             return False
         if not self.path:
             self._error("has no default image")
@@ -179,9 +179,9 @@ class Template:
         if self.link:
             flag = Path(self.dirpath, self.VALID_LINK_FLAG)
             if flag.is_file():
-                log.info("Link already checked: %s", self.link)
+                log.info(f"Link already checked: {self.link}")
             else:
-                log.info("Checking link %s ...", self.link)
+                log.info(f"Checking link {self.link}")
                 try:
                     response = requests.head(self.link, timeout=5,
                                              headers=DEFAULT_REQUEST_HEADERS)
@@ -189,9 +189,9 @@ class Template:
                     log.warning("Connection timed out")
                     return True  # assume URL is OK; it will be checked again
                 if response.status_code in [403, 429]:
-                    self._warn("link is unavailable (%s)", response.status_code)
+                    self._warn(f"link is unavailable ({response.status_code})")
                 elif response.status_code >= 400:
-                    self._error("link is invalid (%s)", response.status_code)
+                    self._error(f"link is invalid ({response.status_code})")
                     return False
                 else:
                     with open(str(flag), 'w') as f:
@@ -202,16 +202,16 @@ class Template:
         im = Image.open(self.path)
         w, h = im.size
         if w < self.MIN_WIDTH or h < self.MIN_HEIGHT:
-            log.error("Image must be at least %ix%i (is %ix%i)",
-                      self.MIN_WIDTH, self.MIN_HEIGHT, w, h)
+            log.error("Image must be at least "
+                      f"{self.MIN_WIDTH}x{self.MIN_HEIGHT} (is {w}x{h})")
             return False
         return True
 
-    def _warn(self, fmt, *objects):
-        log.warning("Template '%s' " + fmt, self, *objects)
+    def _warn(self, message):
+        log.warning(f"Template '{self}' " + message)
 
-    def _error(self, fmt, *objects):
-        log.error("Template '%s' " + fmt, self, *objects)
+    def _error(self, message):
+        log.error(f"Template '{self}' " + message)
 
 
 class Placeholder:
@@ -247,25 +247,25 @@ def download_image(url):
                 hashlib.md5(url.encode('utf-8')).hexdigest())
 
     if path.is_file():
-        log.debug("Already downloaded: %s", url)
+        log.debug(f"Already downloaded: {url}")
         return path
 
     try:
         response = requests.get(url, stream=True, timeout=5,
                                 headers=DEFAULT_REQUEST_HEADERS)
     except ValueError:
-        log.error("Invalid link: %s", url)
+        log.error(f"Invalid link: {url}")
         return None
     except requests.exceptions.RequestException:
-        log.error("Bad connection: %s", url)
+        log.error(f"Bad connection: {url}")
         return None
 
     if response.status_code == 200:
-        log.info("Downloading %s", url)
+        log.info(f"Downloading {url}")
         with open(str(path), 'wb') as outfile:
             response.raw.decode_content = True
             shutil.copyfileobj(response.raw, outfile)
         return path
 
-    log.error("Unable to download: %s", url)
+    log.error(f"Unable to download: {url}")
     return None

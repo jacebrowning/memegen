@@ -1,5 +1,3 @@
-#!env/bin/python
-
 import os
 
 from flask_script import Command, Manager, Server
@@ -11,9 +9,7 @@ from memegen.factory import create_app
 class Validate(Command):
     """Checks for issues in all templates."""
 
-    # pylint: disable=method-hidden
-
-    def run(self):
+    def run(self):  # pylint: disable=method-hidden
         if app.template_service.validate():
             return 0
         else:
@@ -30,7 +26,7 @@ def find_assets():
 
 
 # Select app configuration from the environment
-config = get_config(os.getenv('FLASK_CONFIG', 'dev'))
+config = get_config(os.getenv('FLASK_ENV', 'local'))
 
 # Build the app using configuration from the environment
 app = create_app(config)

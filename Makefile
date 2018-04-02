@@ -26,7 +26,7 @@ ci: check test validate ## Run all tasks that determine CI status
 
 .PHONY: validate
 validate: install
-	FLASK_CONFIG=test pipenv run python manage.py validate
+	FLASK_ENV=test pipenv run python manage.py validate
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
@@ -36,22 +36,22 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run
 run: install ## Run the application
-	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=dev pipenv run python manage.py run; status=$$?; sleep 1; done
+	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=local pipenv run python manage.py run; status=$$?; sleep 1; done
 
 .PHONY: launch
 launch: install
 	sleep 3 && open http://localhost:5000 &
 	make run
 
-.PHONY: run-prod
-run-prod: install .env
+.PHONY: run-production
+run-production: install .env
 	pipenv shell "bin/post_compile; exit \$$?"
 	pipenv shell "heroku local web=1; exit \$$?"
 
-.PHONY: launch-prod
-launch-prod: install
+.PHONY: launch-production
+launch-production: install
 	sleep 5 && open http://localhost:5000 &
-	make run-prod
+	make run-production
 
 # SYSTEM DEPENDENCIES ##########################################################
 
@@ -60,7 +60,7 @@ doctor:  ## Confirm system dependencies are available
 	bin/verchew
 
 .env:
-	echo "FLASK_CONFIG=dev" >> $@
+	echo "FLASK_ENV=local" >> $@
 	echo "GOOGLE_ANALYTICS_TID=local" >> $@
 	echo "#REGENERATE_IMAGES=true" >> $@
 	echo "WATERMARK_OPTIONS=localhost" >> $@
@@ -121,9 +121,9 @@ test: test-all ## Run unit and integration tests
 
 .PHONY: test-unit
 test-unit: install
-	@- mv $(FAILURES) $(FAILURES).bak
+	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGE)
-	@- mv $(FAILURES).bak $(FAILURES)
+	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
 
 .PHONY: test-int

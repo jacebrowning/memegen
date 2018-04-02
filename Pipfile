@@ -10,43 +10,48 @@ python_version = "3.6"
 
 [packages]
 
-flask = "~=0.12.2"
-flask-api = "~=1.0"
-flask-cors = "~=3.0.3"
-flask-caching = "*"
-flask-cachecontrol = "==0.1.2"
-flask-script = "~=2.0.5"
+# Flask
+Flask = "~=0.12.2"
+Flask-API = "~=1.0"
+Flask-CORS = "~=3.0.3"
+Flask-Caching = "*"
+Flask-Cachecontrol = "==0.1.2"
+Flask-Script = "~=2.0.5"
 
-requests = "~=2.18.1"
-webargs = "~=1.7.0"
+# Utilities
 background = "*"
-yorm = "~=1.5"
+futures = "==3.1.1" # https://github.com/pypa/pipenv/issues/1586
+markdown = "*"
+minilog = ">=0.2"
 pillow = "~=4.1.1"
 profanityfilter = "~=1.1.2"
-markdown = "*"
 pymdown-extensions = "*"
-minilog = ">=0.2"
+requests = "~=2.18.1"
+webargs = "~=1.7.0"
+yorm = "~=1.5"
 
-gunicorn = "~=19.7.1"
-eventlet = "==0.21.0"
-
-bugsnag = "~=3.1.1"
+# Deployment
 blinker = "~=1.4"
+bugsnag = "~=3.1.1"
+eventlet = "==0.21.0"
+gunicorn = "~=19.7.1"
 
 [dev-packages]
 
+# Linters
 pylint = "*"
 pycodestyle = "*"
 pydocstyle = "*"
 
+# Testing
 pytest = "~=3.3"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
 pytest-cov = "*"
-
 coverage-space = "*"
 
+# Tooling
 sniffer = "*"
-pync = {version = "*", sys_platform = "== 'darwin'"}
-MacFSEvents = {version = "*", sys_platform = "== 'darwin'"}
+pync = { version = "<2.0", sys_platform = "== 'darwin'" }
+MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }

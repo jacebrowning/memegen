@@ -2,7 +2,7 @@
 
 import log
 
-from memegen.settings import ProdConfig
+from memegen.settings import ProductionConfig
 from memegen.factory import create_app
 from memegen.domain import Text
 
@@ -10,7 +10,7 @@ from memegen.domain import Text
 def main():
     log.info("Generating sample images...")
 
-    app = create_app(ProdConfig)
+    app = create_app(ProductionConfig)
 
     with app.app_context():
 

@@ -1,11 +1,8 @@
 import os
 import logging
 
-from . import __project__
-
 
 class Config:
-    """Base configuration."""
 
     ENV = None
 
@@ -36,31 +33,22 @@ class Config:
     WATERMARK_OPTIONS = os.getenv('WATERMARK_OPTIONS', "").split(',')
 
 
-class ProdConfig(Config):
-    """Production configuration."""
+class ProductionConfig(Config):
 
-    ENV = 'prod'
+    ENV = 'production'
 
     FACEBOOK_APP_ID = os.getenv('FACEBOOK_APP_ID')
     GOOGLE_ANALYTICS_TID = os.getenv('GOOGLE_ANALYTICS_TID')
 
 
-class TestConfig(Config):
-    """Test configuration."""
+class StagingCongif(ProductionConfig):
 
-    ENV = 'test'
-
-    DEBUG = True
-    TESTING = True
-
-    LOG_LEVEL = logging.DEBUG
-    WATERMARK_OPTIONS = ['test', 'memegen.test', 'werkzeug']
+    ENV = 'staging'
 
 
-class DevConfig(Config):
-    """Development configuration."""
+class LocalConfig(Config):
 
-    ENV = 'dev'
+    ENV = 'local'
 
     DEBUG = True
 
@@ -68,12 +56,26 @@ class DevConfig(Config):
     WATERMARK_OPTIONS = ['localhost'] + Config.WATERMARK_OPTIONS
 
 
+class TestConfig(LocalConfig):
+
+    ENV = 'test'
+
+    TESTING = True
+
+    WATERMARK_OPTIONS = ['test', 'memegen.test', 'werkzeug']
+
+
 def get_config(name):
     assert name, "No configuration specified"
 
-    for config in Config.__subclasses__():
+    for config in _subclasses(Config):
         if config.ENV == name:
             return config
 
-    assert False, "No matching configuration: {}".format(name)
+    assert False, "No matching configuration"
     return None
+
+
+def _subclasses(cls):
+    yield from cls.__subclasses__()
+    yield from (g for s in cls.__subclasses__() for g in _subclasses(s))

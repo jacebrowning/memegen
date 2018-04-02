@@ -221,7 +221,8 @@ def describe_get():
             expect(data).contains(
                 '<a href="http://localhost/iw/my_first_meme.jpg?preview=true">')
 
-        def it_returns_a_placeholder_with_an_empty_cache(client, disable_cache):
+        def it_returns_a_placeholder_with_an_empty_cache(
+                client, disable_cache):
             status, data = load(client.get("/latest.jpg"))
 
             expect(status) == 302

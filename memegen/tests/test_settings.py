@@ -1,22 +1,22 @@
-# pylint: disable=no-self-use,misplaced-comparison-constant
+# pylint: disable=unused-variable,expression-not-assigned
 
-import pytest
-
-from memegen.settings import Config, get_config
+from memegen.settings import get_config
 
 
-class TestGetConfig:
+def describe_get_config():
 
-    def test_get_valid(self):
-        config = get_config('prod')
+    def when_valid(expect):
+        config = get_config('production')
+        expect(config.ENV) == 'production'
 
-        assert issubclass(config, Config)
-        assert 'prod' == config.ENV
+    def when_extended(expect):
+        config = get_config('staging')
+        expect(config.ENV) == 'staging'
 
-    def test_get_none(self):
-        with pytest.raises(AssertionError):
+    def when_empty(expect):
+        with expect.raises(AssertionError):
             get_config('')
 
-    def test_get_unknown(self):
-        with pytest.raises(AssertionError):
-            get_config('not_a_valid_config')
+    def when_unknown(expect):
+        with expect.raises(AssertionError):
+            get_config('unknown')
