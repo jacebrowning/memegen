@@ -26,6 +26,10 @@ body {
   text-decoration: none !important;
 }
 
+.img-preview {
+  pointer-events: none;
+}
+
 /*********************************************/
 /* masthead */
 
