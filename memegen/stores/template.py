@@ -1,7 +1,7 @@
 import os
 
 import yorm
-from yorm.types import String, List
+from yorm.types import String, List, SortedList
 
 from ..domain import Template
 
@@ -18,7 +18,7 @@ class UpperString(String):
 @yorm.attr(name=String)
 @yorm.attr(link=String)
 @yorm.attr(default=List.of_type(UpperString))
-@yorm.attr(aliases=List.of_type(String))
+@yorm.attr(aliases=SortedList.of_type(String))
 @yorm.sync("{self.root}/{self.key}/config.yml")
 class TemplateModel:
     """Persistence model for templates."""

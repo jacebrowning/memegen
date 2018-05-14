@@ -4,5 +4,5 @@ default:
 - FOREVER
 - ALONE
 aliases:
-- forever-alone
 - alone
+- forever-alone
