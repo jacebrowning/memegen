@@ -4,5 +4,5 @@ default:
 - DOES TESTING
 - IN PRODUCTION
 aliases:
-- insanity-wolf
 - insanity
+- insanity-wolf
