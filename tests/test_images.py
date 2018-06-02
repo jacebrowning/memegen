@@ -93,6 +93,13 @@ def describe_get():
             expect(status) == 302
             expect(data).contains(f'<a href="/custom/hello.jpg?alt={url}">')
 
+        def it_redirects_to_standard_when_alt_is_builtin(client):
+            url = "https://memegen.link/cbg/_.jpg"
+            status, data = load(client.get(f"/custom/hello.jpg?alt={url}"))
+
+            expect(status) == 302
+            expect(data).contains(f'<a href="/cbg/hello.jpg">')
+
         def it_returns_an_error_with_non_image_urls(client):
             url = "http://example.com"
             response = client.get(f"/custom/hello.jpg?alt={url}")

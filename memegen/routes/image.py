@@ -81,6 +81,11 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options['path'] = text.path
         return redirect(route('.get', **options))
 
+    if alt and "://memegen.link/" in alt:
+        options.pop('alt')
+        options['key'] = alt.split('/')[3]
+        return redirect(route('.get', **options))
+
     if alt and "://" in alt and key != 'custom':
         options['key'] = 'custom'
         return redirect(route('.get', **options))
