@@ -132,8 +132,8 @@ def _generate(top, bottom, font_path, background, width, height,
     outline = int(round(max(1, min(dimensions) / 300)))
     t_outline = min(outline, top_font_size // 20)
     b_outline = min(outline, bottom_font_size // 20)
-    _draw_outlined_text(draw, top_text_pos, top, top_font, t_outline)
-    _draw_outlined_text(draw, bottom_text_pos, bottom, bottom_font, b_outline)
+    _draw_outlined_text(image, top_text_pos, top, top_font, t_outline)
+    _draw_outlined_text(image, bottom_text_pos, bottom, bottom_font, b_outline)
 
     # Pad image if a specific dimension is requested
     if pad_image:
@@ -141,10 +141,10 @@ def _generate(top, bottom, font_path, background, width, height,
 
     # Add watermark
     if watermark:
-        draw = ImageDraw.Draw(image)
         watermark_font = ImageFont.truetype(watermark_font_path, 11)
         watermark_pos = (3, image.size[1] - 15)
-        _draw_outlined_text(draw, watermark_pos, watermark, watermark_font)
+        _draw_outlined_text(image, watermark_pos, watermark, watermark_font,
+                            alpha=True)
 
     return image
 
@@ -173,19 +173,30 @@ def _optimize_font_size(font, text, max_font_size, min_font_size,
     return font_size, text
 
 
-def _draw_outlined_text(draw_image, text_pos, text, font, width=1):
+def _draw_outlined_text(image, text_pos, text, font, width=1, alpha=False):
     """Draw white text with black outline on an image."""
+    if alpha:
+        black_alpha = 170
+        white_alpha = 128
+    else:
+        black_alpha = 255
+        white_alpha = 240
+
+    overlay = ImageFile.new('RGBA', image.size)
+    draw = ImageDraw.ImageDraw(overlay, 'RGBA')
 
     # Draw black text outlines
     for x in range(-width, 1 + width):
         for y in range(-width, 1 + width):
             pos = (text_pos[0] + x, text_pos[1] + y)
-            draw_image.multiline_text(pos, text, (0, 0, 0),
-                                      font=font, align='center')
+            draw.multiline_text(pos, text, (0, 0, 0, black_alpha),
+                                font=font, align='center')
 
     # Draw inner white text
-    draw_image.multiline_text(text_pos, text, (255, 255, 255),
-                              font=font, align='center')
+    draw.multiline_text(text_pos, text, (255, 255, 255, white_alpha),
+                        font=font, align='center')
+
+    image.paste(overlay, None, overlay)
 
 
 def _add_blurred_background(foreground, background, width, height):
