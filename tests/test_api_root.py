@@ -16,6 +16,6 @@ def describe_root():
             'fonts': "http://localhost/api/fonts/",
             'aliases': "http://localhost/api/aliases/",
             'search': "http://localhost/api/search/",
-            'version': "5.4",
+            'version': "5.5",
             'changes': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CHANGELOG.md"
         }

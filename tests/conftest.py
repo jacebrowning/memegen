@@ -16,3 +16,13 @@ def app():
 @pytest.yield_fixture
 def client(app):  # pylint: disable=redefined-outer-name
     yield app.test_client()
+
+
+@pytest.yield_fixture
+def public_client(app):  # pylint: disable=redefined-outer-name
+    backup = app.config['WATERMARK_OPTIONS']
+    app.config['WATERMARK_OPTIONS'] = ['memegen.link']
+
+    yield app.test_client()
+
+    app.config['WATERMARK_OPTIONS'] = backup

@@ -193,6 +193,12 @@ def describe_get():
             expect(status) == 302
             expect(data).contains('<a href="/iw/test_2.jpg?watermark=test"')
 
+        def it_can_be_disabled_when_no_text(public_client):
+            response = public_client.get("/iw/_.jpg?watermark=none")
+
+            expect(response.status_code) == 200
+            expect(response.mimetype) == 'image/jpeg'
+
     def describe_preview():
 
         def it_keeps_flag_after_redirect(client):

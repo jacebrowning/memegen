@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.5
+
+- Changed watermark to allow `?watermark=none` for blank images.
+
 ## 5.4
 
 - Added `?alt=none`  to use the default custom background image.
