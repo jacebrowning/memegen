@@ -98,7 +98,7 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options.pop('font')
         return redirect(route('.get', **options))
 
-    watermark, valid = _get_watermark(request, text, watermark)
+    final_watermark, valid = _get_watermark(request, text, watermark)
     if not valid:
         options.pop('watermark')
         return redirect(route('.get', **options))
@@ -106,7 +106,7 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
     image = current_app.image_service.create(
         template, text,
         style=PLACEHOLDER if alt == 'none' else alt,
-        font=fontfile, size=size, watermark=watermark,
+        font=fontfile, size=size, watermark=final_watermark,
     )
 
     if not preview:
@@ -161,11 +161,14 @@ def _get_watermark(_request, text: domain.Text, watermark: str):
     agent = _request.environ.get('HTTP_USER_AGENT', "").lower()
     log.debug("Referrer: %r, Agent: %r", referrer, agent)
 
-    if watermark == 'none':
-        if not text:
-            log.debug(f"Watermark disabled (no text)")
+    if not text:
+        log.debug(f"Watermark disabled (no text)")
+        if watermark:
+            return None, False
+        else:
             return None, True
 
+    if watermark == 'none':
         for option in current_app.config['WATERMARK_OPTIONS']:
             for identity in (referrer, agent):
                 if option and identity and option in identity:

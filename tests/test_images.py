@@ -174,13 +174,20 @@ def describe_get():
 
     def describe_watermark():
 
-        def it_accept_supported_watermark(client):
+        def it_is_required_with_text(public_client):
+            url = "/iw/test.jpg?watermark=none"
+            status, data = load(public_client.get(url))
+
+            expect(status) == 302
+            expect(data).contains('<a href="/iw/test.jpg"')
+
+        def it_accepts_supported_custom_watermarks(client):
             response = client.get("/iw/test.jpg?watermark=test")
 
             expect(response.status_code) == 200
             expect(response.mimetype) == 'image/jpeg'
 
-        def it_redirects_with_unsupported_watermark(client):
+        def it_redirects_with_unsupported_watermarks(client):
             status, data = load(client.get(
                 "/iw/test.jpg?watermark=unsupported"))
 
@@ -193,11 +200,17 @@ def describe_get():
             expect(status) == 302
             expect(data).contains('<a href="/iw/test_2.jpg?watermark=test"')
 
-        def it_can_be_disabled_when_no_text(public_client):
-            response = public_client.get("/iw/_.jpg?watermark=none")
+        def it_is_disable_when_no_text(public_client):
+            response = public_client.get("/iw/_.jpg")
 
             expect(response.status_code) == 200
             expect(response.mimetype) == 'image/jpeg'
+
+        def it_redirect_to_be_disabled_when_no_text(client):
+            status, data = load(client.get("/iw/_.jpg?watermark=test"))
+
+            expect(status) == 302
+            expect(data).contains('<a href="/iw/_.jpg"')
 
     def describe_preview():
 
