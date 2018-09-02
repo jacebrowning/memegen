@@ -1,5 +1,9 @@
 # Revision History
 
+## 5.6
+
+- Changed watermark to always be disabled for blank images.
+
 ## 5.5
 
 - Changed watermark to allow `?watermark=none` for blank images.
