@@ -1,8 +1,9 @@
-name: # Name of Meme as a Title
-link: # http://knowyourmeme.com/memes/<link-for-future-reference>
+name: Almost Politically Correct Redneck
+link: https://knowyourmeme.com/memes/almost-politically-correct-redneck
 default:
 - # OPTIONAL DEFAULT
 - # LINES OF TEXT
 aliases:
 - # other-short-name
 - # another
+
