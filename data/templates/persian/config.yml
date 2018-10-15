@@ -1,8 +1,5 @@
 name: Persian Cat Room Guardian
 link: https://knowyourmeme.com/memes/persian-cat-room-guardian
 default:
-- # OPTIONAL DEFAULT
-- # LINES OF TEXT
-aliases:
-- # other-short-name
-- # another
+- ''
+aliases: []
