@@ -20,7 +20,6 @@ Flask-Script = "~=2.0.5"
 
 # Utilities
 background = "*"
-futures = "==3.1.1" # https://github.com/pypa/pipenv/issues/1586
 markdown = "*"
 minilog = ">=0.2"
 pillow = "~=4.1.1"
@@ -44,7 +43,7 @@ pycodestyle = "*"
 pydocstyle = "*"
 
 # Testing
-pytest = "~=3.3"
+pytest = "~=3.5.1"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
