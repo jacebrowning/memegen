@@ -43,6 +43,7 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
         width=current_app.config['FACEBOOK_IMAGE_WIDTH'],
         height=current_app.config['FACEBOOK_IMAGE_HEIGHT'],
     )
+    img_copy = _format_url(request, 'share', 'watermark')
     url = _format_url(request, 'width', 'height')
 
     if share:
@@ -54,6 +55,7 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
             img=_secure(img),
             img_twitter=_secure(img_twitter),
             img_facebook=_secure(img_facebook),
+            img_copy=_secure(img_copy),
             url=_secure(url),
             config=current_app.config,
         )

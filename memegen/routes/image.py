@@ -98,7 +98,7 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
         options.pop('font')
         return redirect(route('.get', **options))
 
-    final_watermark, valid = _get_watermark(request, text, watermark)
+    final_watermark, valid = _get_watermark(request, text, watermark, share)
     if not valid:
         options.pop('watermark')
         return redirect(route('.get', **options))
@@ -142,7 +142,7 @@ def get_encoded(code, alt, font, watermark, preview, share, **size):
         options.pop('font')
         return redirect(route('.get_encoded', **options))
 
-    watermark, valid = _get_watermark(request, text, watermark)
+    watermark, valid = _get_watermark(request, text, watermark, share)
     if not valid:
         options.pop('watermark')
         return redirect(route('.get_encoded', **options))
@@ -156,10 +156,10 @@ def get_encoded(code, alt, font, watermark, preview, share, **size):
     return display(image.text, image.path, share=share)
 
 
-def _get_watermark(_request, text: domain.Text, watermark: str):
+def _get_watermark(_request, text: domain.Text, watermark: str, share: bool):
     referrer = _request.environ.get('HTTP_REFERER', "").lower()
     agent = _request.environ.get('HTTP_USER_AGENT', "").lower()
-    log.debug("Referrer: %r, Agent: %r", referrer, agent)
+    log.debug("Referrer=%r Agent=%r", referrer, agent)
 
     if not text:
         log.debug(f"Watermark disabled (no text)")
@@ -169,6 +169,9 @@ def _get_watermark(_request, text: domain.Text, watermark: str):
             return None, True
 
     if watermark == 'none':
+        if share:
+            log.debug("Watermark disabled (share=true)")
+            return None, True
         for option in current_app.config['WATERMARK_OPTIONS']:
             for identity in (referrer, agent):
                 if option and identity and option in identity:
