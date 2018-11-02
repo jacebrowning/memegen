@@ -100,9 +100,9 @@ pydocstyle: install
 
 # TESTS ########################################################################
 
-PYTEST := pipenv run py.test
+PYTEST := pipenv run pytest
 COVERAGE := pipenv run coverage
-COVERAGE_SPACE := pipenv run coverage.space
+COVERAGESPACE := pipenv run coveragespace
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
@@ -124,21 +124,21 @@ test-unit: install
 	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGE)
 	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
-	$(COVERAGE_SPACE) $(REPOSITORY) unit
+	$(COVERAGESPACE) $(REPOSITORY) unit
 
 .PHONY: test-int
 test-int: install
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) tests; fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) tests
-	$(COVERAGE_SPACE) $(REPOSITORY) integration
+	$(COVERAGESPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) $(PACKAGES); fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGES)
-	$(COVERAGE_SPACE) $(REPOSITORY) overall
+	$(COVERAGESPACE) $(REPOSITORY) overall
 
 .PHONY: read-coverage
 read-coverage:

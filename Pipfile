@@ -21,7 +21,7 @@ Flask-Script = "~=2.0.5"
 # Utilities
 background = "*"
 markdown = "*"
-minilog = ">=0.2"
+minilog = "*"
 pillow = "~=4.1.1"
 profanityfilter = "~=1.1.2"
 pymdown-extensions = "*"
@@ -48,7 +48,7 @@ pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
 pytest-cov = "*"
-coverage-space = "*"
+coveragespace = "*"
 
 # Tooling
 sniffer = "*"
