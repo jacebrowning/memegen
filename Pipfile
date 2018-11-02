@@ -25,7 +25,7 @@ minilog = "*"
 pillow = "~=4.1.1"
 profanityfilter = "~=1.1.2"
 pymdown-extensions = "*"
-requests = "~=2.18.1"
+requests = "~=2.20.0"
 webargs = "~=1.7.0"
 yorm = "~=1.5"
 
