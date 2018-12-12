@@ -1,7 +1,10 @@
 import yorm
 from yorm.types import List, Object
-import profanityfilter
+from profanityfilter import ProfanityFilter
 import log
+
+profanity_filter = ProfanityFilter()
+profanity_filter.remove_word("damn")
 
 
 @yorm.attr(items=List.of_type(Object))
@@ -55,7 +58,7 @@ class Cache:
             if kwargs['key'] == 'custom' or kwargs.get('alt'):
                 log.debug("Skipped caching of custom background: %s", kwargs)
                 return True
-            if profanityfilter.is_profane(kwargs['path']):
+            if profanity_filter.is_profane(kwargs['path']):
                 log.debug("Skipped caching of profane content: %s", kwargs)
                 return True
 
