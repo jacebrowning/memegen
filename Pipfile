@@ -6,23 +6,22 @@ name = "pypi"
 
 [requires]
 
-python_version = "3.6"
+python_version = "3.7"
 
 [packages]
 
 # Flask
-Flask = "~=1.0"
-Flask-API = "~=1.0"
-Flask-CORS = "~=3.0.3"
-Flask-Caching = "*"
-Flask-Cachecontrol = "==0.1.2"
+Flask = "~=1.0.2"
+Flask-API = "~=1.1"
+Flask-CORS = "~=3.0.7"
+Flask-Caching = "~=1.6.0"
 Flask-Script = "~=2.0.6"
 
 # Utilities
 background = "*"
 markdown = "<3"
 minilog = "*"
-pillow = "~=4.1.1"
+pillow = "~=5.3.0"
 profanityfilter = "~=2.0.5"
 pymdown-extensions = "<6"
 requests = "~=2.20.0"

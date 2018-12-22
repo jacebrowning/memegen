@@ -2,7 +2,6 @@ import random
 from pathlib import Path
 
 from flask import Blueprint, Markup, render_template, current_app
-from flask_cachecontrol import cache_for
 from markdown import markdown
 
 from ._utils import samples
@@ -12,7 +11,6 @@ blueprint = Blueprint('index-page', __name__)
 
 
 @blueprint.route("/")
-@cache_for(hours=12)
 def get():
     template_images = list(samples(blank=True))
     return render_template(

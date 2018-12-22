@@ -2,7 +2,7 @@ import os
 
 from flask_cors import CORS
 from flask_caching import Cache
-from flask_cachecontrol import FlaskCacheControl
+
 
 cors = CORS()
 cache = Cache(config={
@@ -12,4 +12,3 @@ cache = Cache(config={
     'CACHE_DEFAULT_TIMEOUT': (60 if os.getenv('FLASK_ENV') == 'local'
                               else 99999),
 })
-cache_control = FlaskCacheControl()
