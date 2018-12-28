@@ -1,14 +1,11 @@
 # memegen.link
 
-An API to generate meme images based solely on requested URLs.
+An API to programatically generate memes based solely on requested URLs.
 
-Unix: [![Unix Build Status](http://img.shields.io/travis/jacebrowning/memegen/master.svg)](https://travis-ci.org/jacebrowning/memegen)
-Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/memegen.svg)](https://ci.appveyor.com/project/jacebrowning/memegen)
-<br>
-Metrics: [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/master.svg)](https://coveralls.io/r/jacebrowning/memegen)
+[![Unix Build Status](http://img.shields.io/travis/jacebrowning/memegen/master.svg?label=unix)](https://travis-ci.org/jacebrowning/memegen)
+[![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/memegen/master.svg?label=windows)](https://ci.appveyor.com/project/jacebrowning/memegen)
+[![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/master.svg)](https://coveralls.io/r/jacebrowning/memegen)
 [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/memegen.svg)](https://scrutinizer-ci.com/g/jacebrowning/memegen/?branch=master)
-<br>
-Issues: 
 [![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)
 
 <!--content-->
