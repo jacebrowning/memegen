@@ -11,7 +11,7 @@ python_version = "3.6"
 [packages]
 
 # Flask
-Flask = "~=0.12.2"
+Flask = "~=1.0"
 Flask-API = "~=1.0"
 Flask-CORS = "~=3.0.3"
 Flask-Caching = "*"
@@ -43,7 +43,7 @@ pycodestyle = "*"
 pydocstyle = "*"
 
 # Testing
-pytest = "~=3.5.1"
+pytest = "<4"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
@@ -52,5 +52,5 @@ coveragespace = "*"
 
 # Tooling
 sniffer = "*"
-pync = { version = "<2.0", sys_platform = "== 'darwin'" }
+pync = { version = "<2", sys_platform = "== 'darwin'" }
 MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }
