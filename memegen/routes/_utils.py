@@ -116,7 +116,15 @@ def _format_url(req, *skip, **add):
     """Get a formatted URL with sanitized query parameters."""
     base = req.base_url
 
-    options = {k: v[0] for k, v in dict(req.args).items() if k not in skip}
+    options = {}
+    for key, value in dict(req.args).items():
+        if key in skip:
+            continue
+        if isinstance(value, str):
+            options[key] = value
+        else:
+            options[key] = value[0]
+
     options.update(add)
 
     params = _format_query(options)
