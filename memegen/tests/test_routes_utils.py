@@ -41,9 +41,11 @@ def describe_display():
     @patch('memegen.routes._utils.request', request_share)
     def it_returns_html_when_sharing(app):
         with app.test_request_context():
+            request_share.args = {'alt': 'foobar', 'share': ['true']}
             html = display("my_title", "my_path", share=True, raw=True)
 
         print(html)
         assert "<title>my_title</title>" in html
-        assert 'src="it\'s a path?alt=style"' in html
+        assert 'src="it\'s a path?alt=foobar"' in html
+        assert 'return "it\'s a path?alt=foobar&share=true"' in html
         assert "ga('create', 'my_tid', 'auto');" in html
