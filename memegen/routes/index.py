@@ -29,5 +29,8 @@ def _load_readme():
     with path.open() as f:
         text = f.read()
         content = text.split('<!--content-->')[-1]
-        html = markdown(content, extensions=['tables', 'pymdownx.magiclink'])
+        html = markdown(content, extensions=[
+            'markdown.extensions.tables',
+            'pymdownx.magiclink',
+        ])
         return Markup(html)

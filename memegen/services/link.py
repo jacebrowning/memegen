@@ -15,7 +15,7 @@ class LinkService(Service):
         while len(slug) % 3:
             slug += '\t'
         code = base64.urlsafe_b64encode(slug.encode('utf-8'))
-        return code
+        return code.decode('utf-8')
 
     def decode(self, code):
         try:
