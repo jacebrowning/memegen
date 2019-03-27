@@ -39,6 +39,7 @@ class ProductionConfig(Config):
 
     FACEBOOK_APP_ID = os.getenv('FACEBOOK_APP_ID')
     GOOGLE_ANALYTICS_TID = os.getenv('GOOGLE_ANALYTICS_TID')
+    SLACK_APP_ID = os.getenv('SLACK_APP_ID')
 
 
 class StagingCongif(ProductionConfig):
