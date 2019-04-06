@@ -3,7 +3,10 @@ environment:
     RANDOM_SEED: 0
   matrix:
     - PYTHON_MAJOR: 3
-      PYTHON_MINOR: 7
+      PYTHON_MINOR: 6
+    # TODO: Enable after switching to Python 3.7
+    # - PYTHON_MAJOR: 3
+    #   PYTHON_MINOR: 7
 
 cache:
   - .venv -> Makefile

@@ -6,7 +6,7 @@ name = "pypi"
 
 [requires]
 
-python_version = "3.7"
+python_version = "3" # TODO: Pin Python minor version after upgrade to 3.7
 
 [packages]
 
@@ -21,7 +21,7 @@ Flask-Script = "~=2.0.6"
 background = "*"
 markdown = "~=3.0.1"
 minilog = "*"
-pillow = "~=6.0.0"
+pillow = "~=4.1.1"
 profanityfilter = "~=2.0.5"
 pymdown-extensions = "<6"
 requests = "~=2.20.0"
@@ -32,7 +32,7 @@ yorm = "~=1.6.2"
 blinker = "~=1.4"
 bugsnag = "~=3.1.1"
 eventlet = "==0.21.0"
-gunicorn = "~=19.9.0"
+gunicorn = "~=19.7.1"
 
 [dev-packages]
 
