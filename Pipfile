@@ -6,7 +6,7 @@ name = "pypi"
 
 [requires]
 
-python_version = "3" # TODO: Pin Python minor version after upgrade to 3.7
+python_version = "3.6"
 
 [packages]
 
