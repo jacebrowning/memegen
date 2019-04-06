@@ -35,13 +35,17 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 # SERVER TARGETS ###############################################################
 
 .PHONY: run
-run: install ## Run the application
+run: install samples ## Run the application
 	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=local pipenv run python manage.py run; status=$$?; sleep 1; done
 
 .PHONY: launch
-launch: install
+launch: install samples
 	sleep 3 && open http://localhost:5000 &
 	make run
+
+.PHONY: samples
+samples: install
+	PYTHONPATH=. pipenv run python scripts/generate_sample_images.py
 
 .PHONY: run-production
 run-production: install .env
