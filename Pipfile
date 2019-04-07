@@ -21,7 +21,7 @@ Flask-Script = "~=2.0.6"
 background = "*"
 markdown = "~=3.0.1"
 minilog = "*"
-pillow = "~=4.1.1"
+pillow = "~=6.0.0"
 profanityfilter = "~=2.0.5"
 pymdown-extensions = "<6"
 requests = "~=2.20.0"
@@ -31,7 +31,7 @@ yorm = "~=1.6.2"
 # Deployment
 blinker = "~=1.4"
 bugsnag = "~=3.1.1"
-eventlet = "==0.21.0"
+eventlet = "~=0.24.1"
 gunicorn = "~=19.9.0"
 
 [dev-packages]
