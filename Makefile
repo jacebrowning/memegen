@@ -151,10 +151,10 @@ read-coverage:
 # CLEANUP ######################################################################
 
 .PHONY: clean
-clean: .clean-test .clean-build ## Delete all generated and temporary files
+clean: .clean-images .clean-test .clean-build ## Delete all generated and temporary files
 
 .PHONY: clean-all
-clean-all: clean .clean-env .clean-workspace
+clean-all: clean .clean-env .clean-workspace  ## Delete the virtual environment
 
 .PHONY: .clean-build
 .clean-build:
@@ -166,13 +166,17 @@ clean-all: clean .clean-env .clean-workspace
 .clean-test:
 	rm -rf .cache .pytest .coverage htmlcov
 
+.PHONY: .clean-images
+.clean-images:
+	find data/images -name "*.img" -delete
+
 .PHONY: .clean-env
 .clean-env: clean
 	rm -rf $(ENV)
 
 .PHONY: .clean-workspace
 .clean-workspace:
-	find data -name '*.tmp' -delete
+	find data/templates -name '*.tmp' -delete
 	rm -rf *.sublime-workspace
 
 # HELP #########################################################################
