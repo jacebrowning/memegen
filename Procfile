@@ -1,1 +1,1 @@
-web: gunicorn manage:app --worker-class eventlet
+web: gunicorn manage:app --worker-class eventlet --no-sendfile
