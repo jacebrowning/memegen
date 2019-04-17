@@ -99,14 +99,13 @@
       // Generate with defaults
       $('#meme-line-1').val("your text");
       $('#meme-line-2').val("goes here");
-      $('#meme-font').val("titilliumweb-black");
-      $('#meme-background').val("http://www.gstatic.com/webp/gallery/1.jpg");
+      $('#meme-font').val('{{ font }}');
+      $('#meme-background').val('{{ image }}');
       $('#btn-generate').click();
 
       // Clear defaults
       $('#meme-line-1').val("");
       $('#meme-line-2').val("");
-      $('#meme-background').val("");
 
     </script>
 {% endblock %}
