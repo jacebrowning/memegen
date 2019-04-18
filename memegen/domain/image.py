@@ -1,9 +1,13 @@
 import os
 import hashlib
 from contextlib import suppress
+from typing import Tuple
 
 from PIL import Image as ImageFile, ImageFont, ImageDraw, ImageFilter
 import log
+
+
+MAXIMUM_PIXELS = 1920 * 1080
 
 
 class Image:
@@ -93,6 +97,7 @@ def _generate(top, bottom, font_path, background, width, height,
         dimensions = int(height * ratio), height
     else:
         dimensions = 600, int(600 / ratio)
+    dimensions = _fit_image(*dimensions)
     image = background_image.resize(dimensions, ImageFile.LANCZOS)
     image.format = 'PNG'
 
@@ -210,7 +215,7 @@ def _add_blurred_background(foreground, background, width, height):
     border.paste(foreground, ((border_width - base_width) // 2,
                               (border_height - base_height) // 2))
 
-    padded_dimensions = (width, height)
+    padded_dimensions = _fit_image(width, height)
     padded = background.resize(padded_dimensions, ImageFile.LANCZOS)
 
     darkened = padded.point(lambda p: p * 0.4)
@@ -238,6 +243,13 @@ def _maximize_font_size(font, text, max_size):
         text_size = fontobj.getsize(text)
 
     return font_size
+
+
+def _fit_image(width: int, height: int) -> Tuple[int, int]:
+    while width * height > MAXIMUM_PIXELS:
+        width *= 0.75
+        height *= 0.75
+    return int(width), int(height)
 
 
 def _split(text):

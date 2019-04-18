@@ -68,6 +68,9 @@ def test_custom_sizes(client):
         ("size-height.jpg", "/fry/hello/world.jpg?height=300"),
         ("size-both.jpg", "/fry/hello/world.jpg?width=200&height=300"),
         ("size-large.jpg", "/fry/hello/world.jpg?height=1000"),
+        ("size-width-huge.jpg", "/fry/hello/world.jpg?width=6000"),
+        ("size-height-huge.jpg", "/fry/hello/world.jpg?height=8000"),
+        ("size-both-huge.jpg", "/fry/hello/world.jpg?height=8000&width=6000"),
     ]:
         save_image(client, url + "&watermark=none", name)
 
