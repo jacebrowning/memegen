@@ -6,7 +6,6 @@ An API to programatically generate memes based solely on requested URLs.
 [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/memegen/master.svg?label=windows)](https://ci.appveyor.com/project/jacebrowning/memegen)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/master.svg)](https://coveralls.io/r/jacebrowning/memegen)
 [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/memegen.svg)](https://scrutinizer-ci.com/g/jacebrowning/memegen/?branch=master)
-[![Stories in Ready](https://badge.waffle.io/jacebrowning/memegen.svg?label=ready&title=ready)](http://waffle.io/jacebrowning/memegen)
 
 <!--content-->
 
