@@ -1,19 +1,26 @@
-ENV = ~/.local/share/virtualenvs/memegen-v2-EVy4QWPh
+.PHONY: all
+all: install
+
+DEPENDENCIES = .venv/.flag
 
 .PHONY: install
-install: $(ENV)
-$(ENV): Pipfile*
-	pipenv install --dev
+install: $(DEPENDENCIES)
+
+$(DEPENDENCIES): poetry.lock
+	@ poetry config settings.virtualenvs.in-project true
+	poetry install
 	@ touch $@
 
-.PHONY: test
-test: install
-	pipenv run apistar test
+poetry.lock: pyproject.toml
+	poetry lock
+	@ touch $@
 
 .PHONY: run
 run: install
-	pipenv run apistar run
+	poetry run python main.py
 
-.PHONY: run-prod
-run-prod: install
-	pipenv shell "heroku local; exit \$$?"
+.PHONY: format
+format: install
+	poetry run isort . --recursive --apply
+	poetry run black .
+
