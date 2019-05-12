@@ -1,11 +1,2 @@
-text:
-  - color: black
-    anchor_x: 0.1
-    anchor_y: 0.1
-    scale_x: 0.5
-    scale_y: 0.5
-    angle: 0.0
-
-
-
-
+name: Insanity Wolf
+source_url: https://knowyourmeme.com/memes/insanity-wolf
