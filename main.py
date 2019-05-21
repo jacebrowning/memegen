@@ -75,14 +75,12 @@ async def index(request):
 
 @app.get("/templates")
 async def templates(request):
-    keys = ["ds", "iw"]
-    templates = [Template.datafiles.get_or_create(key) for key in keys]
-    return response.json([t.data for t in templates])
+    return response.json([t.data for t in Template.objects.all()])
 
 
 @app.get("/templates/<key>")
 async def templates_detail(request, key):
-    template = Template.datafiles.get_or_none(key)
+    template = Template.objects.get_or_none(key)
     if template:
         return response.json(template.data)
     abort(404)
@@ -90,7 +88,7 @@ async def templates_detail(request, key):
 
 @app.get("/images/<key>/<line_0>.jpg")
 async def image_lines_1(request, key, line_0):
-    template = Template.datafiles.get_or_none(key) or error
+    template = Template.objects.get_or_none(key) or error
     path = template.render(line_0)
     return await response.file(path)
 
