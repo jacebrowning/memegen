@@ -37,6 +37,10 @@ class Template:
     styles: List[str] = field(default_factory=lambda: ["default"])
 
     @property
+    def valid(self) -> bool:
+        return self.name and not self.name.startswith("<")
+
+    @property
     def data(self) -> Dict:
         return {
             "name": self.name,
@@ -75,7 +79,8 @@ async def index(request):
 
 @app.get("/templates")
 async def templates(request):
-    return response.json([t.data for t in Template.objects.all()])
+    templates = Template.objects.filter(valid=True)
+    return response.json([t.data for t in templates])
 
 
 @app.get("/templates/<key>")

@@ -66,14 +66,14 @@ description = "File-based ORM for dataclasses."
 name = "datafiles"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.3b2"
+version = "0.3b4"
 
 [package.dependencies]
 cached_property = ">=1.5,<2.0"
 classproperties = ">=0.1.3,<0.2.0"
 minilog = ">=1.2.3,<2.0.0"
 parse = ">=1.12,<2.0"
-"ruamel.yaml" = ">=0.15.46,<0.16.0"
+"ruamel.yaml" = ">=0.15.96,<0.16.0"
 tomlkit = ">=0.5.3,<0.6.0"
 typing-extensions = ">=3.7,<4.0"
 
@@ -203,7 +203,7 @@ python-versions = ">=3.4"
 version = "6.0"
 
 [metadata]
-content-hash = "afa0e90eee6b2a7feb33e88844d9600ad02dbdd49873417cef68b9e74c837234"
+content-hash = "da83402d547e093e02830a48f197e33fcf7c54f3ca497d1cd3283db0011d9e10"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -214,7 +214,7 @@ black = ["09a9dcb7c46ed496a9850b76e4e825d6049ecd38b611f1224857a79bd985a8cf", "68
 cached-property = ["3a026f1a54135677e7da5ce819b0c690f156f37976f3e30c5430740725203d7f", "9217a59f14a5682da7c4b8829deadbfc194ac22e9908ccf7c8820234e80a1504"]
 classproperties = ["97d627d11df056838a9426ff15be71a5a365bca456afba8122740c39c527d5b4"]
 click = ["2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13", "5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"]
-datafiles = ["2c542e76135636841adfb5b27f468af32561ff66755b4207a2047ff9e57dce06", "a7d11096eb39481b9a54b4eebc3b93ca7175a3c8786193b6ba13d8fd5584d0c4"]
+datafiles = ["8d85ed8192ee2039f6198a95e3cd6b2e54e86c51d32c5ef48c560b2c54168f63", "c37134432ece09c39ffe89e30e6ed09de52aabbe93b53c6671c6d41f08ef302d"]
 httptools = ["e00cbd7ba01ff748e494248183abc6e153f49181169d8a3d41bb49132ca01dfc"]
 isort = ["1349c6f7c2a0f7539f5f2ace51a9a8e4a37086ce4de6f78f5f53fb041d0a3cd5", "f09911f6eb114e5592abe635aded8bf3d2c3144ebcfcaf81ee32e7af7b7d1870"]
 minilog = ["226f7c40f9857ef1d86e659b27720476699045b9e619846fed8e5f378407bee7", "d6b1f769bf548e7c9a8223eb008514dbc5f9b4764fec3e132bed0d585bb1b6e8"]

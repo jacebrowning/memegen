@@ -10,7 +10,8 @@ license = "MIT"
 
 python = "^3.7"
 sanic = "^19.3"
-datafiles = "=0.3b2"
+datafiles = "=0.3b4"
+# datafiles = { path = "../datafiles" }
 
 [tool.poetry.dev-dependencies]
 
