@@ -53,7 +53,6 @@ class Template:
                 _external=True,
             ),
             "source_url": self.source_url,
-            "text": self.text,
             "styles": self.styles,
         }
 
@@ -74,7 +73,12 @@ error = Template("_error")
 
 @app.get("/")
 async def index(request):
-    return response.json({"templates": app.url_for("templates", _external=True)})
+    return response.json(
+        {
+            "templates": app.url_for("templates", _external=True),
+            "images": app.url_for("images", _external=True),
+        }
+    )
 
 
 @app.get("/templates")
@@ -89,6 +93,12 @@ async def templates_detail(request, key):
     if template:
         return response.json(template.data)
     abort(404)
+
+
+@app.get("/images")
+async def images(request):
+    templates = Template.objects.filter(valid=True)
+    return response.json([])  # TODO: return sample images
 
 
 @app.get("/images/<key>/<line_0>.jpg")
