@@ -6,8 +6,8 @@ environment:
       PYTHON_MINOR: 7
 
 cache:
-  - .venv -> Makefile
-  - data/templates -> Makefile
+  - .venv -> Pipfile.lock
+  - data/templates -> Pipfile.lock
 
 install:
   # Add Make and Python to the PATH
