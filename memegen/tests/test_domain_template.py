@@ -144,6 +144,11 @@ def describe_template():
 
     def describe_validate_link():
 
+        def when_no_link(template):
+            template.link = None
+
+            expect(template.validate_link()) == True
+
         def with_bad_link(template):
             mock_response = Mock()
             mock_response.status_code = 404
@@ -152,12 +157,6 @@ def describe_template():
                 template.link = "example.com/fake"
 
                 expect(template.validate_link()) == False
-
-        @patch('pathlib.Path.is_file', Mock(return_value=True))
-        def with_cached_valid_link(template):
-            template.link = "already_cached_site.com"
-
-            expect(template.validate_link()) == True
 
     def describe_validate_size():
 

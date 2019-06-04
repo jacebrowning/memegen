@@ -1,5 +1,4 @@
 import os
-import time
 import hashlib
 import shutil
 from pathlib import Path
@@ -176,26 +175,32 @@ class Template:
         return True
 
     def validate_link(self):
-        if self.link:
-            flag = Path(self.dirpath, self.VALID_LINK_FLAG)
-            if flag.is_file():
-                log.info(f"Link already checked: {self.link}")
-            else:
-                log.info(f"Checking link {self.link}")
-                try:
-                    response = requests.head(self.link, timeout=5,
-                                             headers=DEFAULT_REQUEST_HEADERS)
-                except requests.exceptions.ReadTimeout:
-                    log.warning("Connection timed out")
-                    return True  # assume URL is OK; it will be checked again
-                if response.status_code in [403, 429]:
-                    self._warn(f"link is unavailable ({response.status_code})")
-                elif response.status_code >= 400:
-                    self._error(f"link is invalid ({response.status_code})")
-                    return False
-                else:
-                    with open(str(flag), 'w') as f:
-                        f.write(str(int(time.time())))
+        if not self.link:
+            return True
+
+        flag = Path(self.dirpath, self.VALID_LINK_FLAG)
+        with suppress(IOError):
+            with flag.open() as f:
+                if f.read() == self.link:
+                    log.info(f"Link already checked: {self.link}")
+                    return True
+
+        log.info(f"Checking link {self.link}")
+        try:
+            response = requests.head(self.link, timeout=5,
+                                     headers=DEFAULT_REQUEST_HEADERS)
+        except requests.exceptions.ReadTimeout:
+            log.warning("Connection timed out")
+            return True  # assume URL is OK; it will be checked again
+
+        if response.status_code in [403, 429]:
+            self._warn(f"link is unavailable ({response.status_code})")
+        elif response.status_code >= 400:
+            self._error(f"link is invalid ({response.status_code})")
+            return False
+
+        with flag.open('w') as f:
+            f.write(self.link)
         return True
 
     def validate_size(self):
