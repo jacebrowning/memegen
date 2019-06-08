@@ -11,6 +11,7 @@ license = "MIT"
 python = "^3.7"
 sanic = "^19.3"
 datafiles = "=0.3b4"
+sanic-openapi = "^0.5.3"
 # datafiles = { path = "../datafiles" }
 
 [tool.poetry.dev-dependencies]

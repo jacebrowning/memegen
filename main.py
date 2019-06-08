@@ -4,13 +4,26 @@ from typing import Dict, List, Optional
 
 from sanic import Sanic, response
 from sanic.exceptions import abort
+from sanic_openapi import swagger_blueprint
 
-from datafiles import datafile
+from datafiles import converters, datafile
 from models import Template
 
-app = Sanic()
-
+app = Sanic(strict_slashes=True)
+app.blueprint(swagger_blueprint)
 app.config.SERVER_NAME = "localhost:8000"
+
+
+class UpperString(converters.String):
+    @classmethod
+    def to_preserialization_data(cls, python_value, **kwargs):
+        line = super().to_preserialization_data(python_value, **kwargs)
+        return line.upper()
+
+    @classmethod
+    def to_python_value(cls, deserialized_data, **kwargs):
+        line = super().to_python_value(deserialized_data, **kwargs)
+        return line.lower().replace(" ", "_")
 
 
 @dataclass
@@ -19,12 +32,12 @@ class Text:
     color: str = "white"
 
     anchor_x: float = 0.1
-    anchor_y: float = 0.2
+    anchor_y: float = 0.1
 
     angle: float = 0
 
-    scale_x: float = 0.5
-    scale_y: float = 0.6
+    scale_x: float = 0.8
+    scale_y: float = 0.2
 
 
 @datafile("templates/{self.key}/config.yml")
@@ -32,9 +45,12 @@ class Template:
 
     key: str
     name: str = ""
-    source_url: Optional[str] = None
+    source: Optional[str] = None
     text: List[Text] = field(default_factory=lambda: [Text(), Text()])
     styles: List[str] = field(default_factory=lambda: ["default"])
+    sample: List[UpperString] = field(
+        default_factory=lambda: ["YOUR TEXT", "GOES HERE"]
+    )
 
     @property
     def valid(self) -> bool:
@@ -44,16 +60,13 @@ class Template:
     def data(self) -> Dict:
         return {
             "name": self.name,
-            "base_url": app.url_for("templates_detail", key=self.key, _external=True),
-            "icon_url": app.url_for(
-                "image_lines_1",
-                key=self.key,
-                line_0="_",
-                watermark="none",
-                _external=True,
+            "styles": [s for s in self.styles if s != "default"],
+            "blank": app.url_for("image_blank", key=self.key, _external=True),
+            "sample": app.url_for(
+                "image_text", key=self.key, lines="/".join(self.sample), _external=True
             ),
-            "source_url": self.source_url,
-            "styles": self.styles,
+            "source": self.source,
+            "_self": app.url_for("templates_detail", key=self.key, _external=True),
         }
 
     def render(self, *lines) -> Path:
@@ -77,6 +90,7 @@ async def index(request):
         {
             "templates": app.url_for("templates", _external=True),
             "images": app.url_for("images", _external=True),
+            "_docs": app.url_for("swagger.index", _external=True),
         }
     )
 
@@ -101,10 +115,17 @@ async def images(request):
     return response.json([])  # TODO: return sample images
 
 
-@app.get("/images/<key>/<line_0>.jpg")
-async def image_lines_1(request, key, line_0):
+@app.get("/images/<key>.jpg")
+async def image_blank(request, key):
     template = Template.objects.get_or_none(key) or error
-    path = template.render(line_0)
+    path = template.render("_")
+    return await response.file(path)
+
+
+@app.get("/images/<key>/<lines:path>.jpg")
+async def image_text(request, key, lines):
+    template = Template.objects.get_or_none(key) or error
+    path = template.render(lines.split("/"))
     return await response.file(path)
 
 

@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/.cache/": true,
+        "**/.venv/": true,
+        "**/__pycache__/": true
+    },
+    "python.pythonPath": ".venv/bin/python3"
+}

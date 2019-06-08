@@ -1,2 +1,5 @@
 name: Insanity Wolf
-source_url: https://knowyourmeme.com/memes/insanity-wolf
+source: https://knowyourmeme.com/memes/insanity-wolf
+sample:
+- TESTS_CODE
+- IN_PRODUCTION
