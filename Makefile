@@ -4,7 +4,7 @@ all: install
 DEPENDENCIES = .venv/.flag
 
 .PHONY: install
-install: $(DEPENDENCIES)
+install: $(DEPENDENCIES) requirements.txt
 
 $(DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
@@ -14,6 +14,10 @@ $(DEPENDENCIES): poetry.lock
 poetry.lock: pyproject.toml
 	poetry lock
 	@ touch $@
+
+requirements.txt: poetry.lock
+	@ echo "# Exported dependencies for Heroku" > $@
+	@ poetry run pip freeze >> $@ 2> /dev/null
 
 .PHONY: run
 run: install
