@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -130,4 +131,9 @@ async def image_text(request, key, lines):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8000)),
+        workers=int(os.environ.get("WEB_CONCURRENCY", 1)),
+        debug=bool(os.environ.get("DEBUG", False)),
+    )

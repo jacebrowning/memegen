@@ -17,7 +17,7 @@ poetry.lock: pyproject.toml
 
 .PHONY: run
 run: install
-	poetry run python main.py
+	DEBUG=true poetry run python main.py
 
 .PHONY: format
 format: install
