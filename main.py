@@ -11,7 +11,7 @@ from datafiles import converters, datafile
 
 app = Sanic(strict_slashes=True)
 app.blueprint(swagger_blueprint)
-app.config.SERVER_NAME = "localhost:8000"
+app.config.SERVER_NAME = os.getenv("DOMAIN", "localhost:8000")
 
 
 class UpperString(converters.String):

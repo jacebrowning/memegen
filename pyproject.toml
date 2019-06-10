@@ -13,7 +13,7 @@ python = "^3.7"
 sanic = "^19.3"
 sanic-openapi = "^0.5.3"
 
-datafiles = "^0.4b1"
+datafiles = "^0.4b2"
 
 [tool.poetry.dev-dependencies]
 

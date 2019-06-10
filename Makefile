@@ -24,3 +24,6 @@ format: install
 	poetry run isort . --recursive --apply
 	poetry run black .
 
+.PHONY: check
+check: install
+	poetry run mypy .
