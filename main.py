@@ -8,7 +8,6 @@ from sanic.exceptions import abort
 from sanic_openapi import swagger_blueprint
 
 from datafiles import converters, datafile
-from models import Template
 
 app = Sanic(strict_slashes=True)
 app.blueprint(swagger_blueprint)
@@ -50,12 +49,12 @@ class Template:
     text: List[Text] = field(default_factory=lambda: [Text(), Text()])
     styles: List[str] = field(default_factory=lambda: ["default"])
     sample: List[UpperString] = field(
-        default_factory=lambda: ["YOUR TEXT", "GOES HERE"]
+        default_factory=lambda: [UpperString("YOUR TEXT"), UpperString("GOES HERE")]
     )
 
     @property
     def valid(self) -> bool:
-        return self.name and not self.name.startswith("<")
+        return bool(self.name and not self.name.startswith("<"))
 
     @property
     def data(self) -> Dict:
@@ -79,6 +78,7 @@ class Template:
             path = Path("templates", self.key, f"default.{ext}")
             if path.exists():
                 return path
+        raise ValueError(f"No background image for template: {self}")
 
 
 custom = Template("_custom")

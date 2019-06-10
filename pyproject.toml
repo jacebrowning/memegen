@@ -9,14 +9,18 @@ license = "MIT"
 [tool.poetry.dependencies]
 
 python = "^3.7"
+
 sanic = "^19.3"
-datafiles = "=0.3b4"
 sanic-openapi = "^0.5.3"
+
+datafiles = "^0.4b1"
 
 [tool.poetry.dev-dependencies]
 
 isort = "=4.3.18"
 black = "=19.3b0"
+
+mypy = "^0.701.0"
 
 [build-system]
 
