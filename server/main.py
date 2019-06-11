@@ -40,7 +40,7 @@ class Text:
     scale_y: float = 0.2
 
 
-@datafile("templates/{self.key}/config.yml")
+@datafile("../templates/{self.key}/config.yml")
 class Template:
 
     key: str
