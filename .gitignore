@@ -1,3 +1,4 @@
-.cache/
-.venv/
 __pycache__/
+.cache/
+.coverage
+.venv/

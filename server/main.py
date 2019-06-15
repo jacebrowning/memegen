@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 
 from sanic import Sanic, response
 from sanic.exceptions import abort
-from sanic_openapi import swagger_blueprint
+from sanic_openapi import doc, swagger_blueprint
 
 from datafiles import converters, datafile
 
@@ -62,12 +62,16 @@ class Template:
             "name": self.name,
             "styles": [s for s in self.styles if s != "default"],
             "blank": app.url_for("image_blank", key=self.key, _external=True),
-            "sample": app.url_for(
-                "image_text", key=self.key, lines="/".join(self.sample), _external=True
-            ),
+            "sample": self.sample_url,
             "source": self.source,
             "_self": app.url_for("templates_detail", key=self.key, _external=True),
         }
+
+    @property
+    def sample_url(self) -> str:
+        return app.url_for(
+            "image_text", key=self.key, lines="/".join(self.sample), _external=True
+        )
 
     def render(self, *lines) -> Path:
         print(f"TODO: render lines: {lines}")
@@ -113,7 +117,19 @@ async def templates_detail(request, key):
 @app.get("/images")
 async def images(request):
     templates = Template.objects.filter(valid=True)
-    return response.json([])  # TODO: return sample images
+    return response.json([{"url": t.sample_url} for t in templates])
+
+
+@app.post("/images")
+@doc.consumes(doc.JsonBody({"key": str, "lines": [str]}), location="body")
+async def create_image(request):
+    url = app.url_for(
+        "image_text",
+        key=request.json["key"],
+        lines="/".join(request.json["lines"]),
+        _external=True,
+    )
+    return response.json({"url": url}, status=201)
 
 
 @app.get("/images/<key>.jpg")

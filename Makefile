@@ -38,4 +38,12 @@ check: install
 
 .PHONY: test
 test: install
-	poetry run pytest
+	poetry run pytest --cov=server --cov-branch
+
+.PHONY: coverage
+coverage: install
+	poetry run coveragespace jacebrowning/memegen-v2 overall --exit-code
+
+.PHONY: watch
+watch: install
+	poetry run pytest-watch --nobeep --onpass="make coverage format check && clear"
