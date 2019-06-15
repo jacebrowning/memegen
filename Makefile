@@ -46,4 +46,4 @@ coverage: install
 
 .PHONY: watch
 watch: install
-	poetry run pytest-watch --nobeep --onpass="make coverage format check && clear"
+	poetry run pytest-watch --nobeep --runner="make test" --onpass="make coverage format check && clear"

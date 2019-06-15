@@ -1,10 +1,14 @@
 {
   "files.exclude": {
+    "**/__pycache__/": true,
     "**/.cache/": true,
+    "**/.coverage": true,
+    "**/.pytest_cache/": true,
     "**/.venv/": true,
-    "**/__pycache__/": true
+    "setup.py": true,
+    "*.egg-info": true
   },
-  "python.pythonPath": ".venv/bin/python3",
+  "python.pythonPath": ".venv/bin/python",
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
