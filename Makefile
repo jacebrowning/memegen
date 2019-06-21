@@ -47,3 +47,10 @@ coverage: install
 .PHONY: watch
 watch: install
 	poetry run pytest-watch --nobeep --runner="make test" --onpass="make coverage format check && clear"
+
+###############################################################################
+# Production Tasks
+
+.PHONY: run-production
+run-production: install
+	PORT=8000 poetry run heroku local
