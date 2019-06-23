@@ -3,6 +3,9 @@ PACKAGES := server tests
 .PHONY: all
 all: install
 
+.PHONY: ci
+ci: test format check
+
 ###############################################################################
 # Project Dependencies
 
