@@ -17,6 +17,9 @@ install: $(DEPENDENCIES)
 $(DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
 	poetry install
+	poetry run pip freeze > requirements.txt
+	grep -v memegen requirements.txt > requirements.txt.tmp
+	mv requirements.txt.tmp requirements.txt
 	@ touch $@
 
 poetry.lock: pyproject.toml
