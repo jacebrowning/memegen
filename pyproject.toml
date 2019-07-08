@@ -14,7 +14,7 @@ packages = [
 
 python = "^3.7"
 
-sanic = "^19.6.0"
+sanic = "^19.6.2"
 sanic-openapi = "^0.5.3"
 
 aiohttp = "^3.5"
