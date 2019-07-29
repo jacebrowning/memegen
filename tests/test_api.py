@@ -1,6 +1,6 @@
 import json
 
-from server.main import app
+from backend.main import app
 
 
 def describe_templates():

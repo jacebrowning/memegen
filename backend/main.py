@@ -8,7 +8,7 @@ from sanic import Sanic, response
 from sanic.exceptions import abort
 from sanic_openapi import doc, swagger_blueprint
 
-from server.models import Template
+from backend.models import Template
 
 app = Sanic(strict_slashes=True)
 app.blueprint(swagger_blueprint)
