@@ -1,4 +1,4 @@
-PACKAGES := server tests
+PACKAGES := backend tests
 
 .PHONY: all
 all: install
@@ -31,7 +31,7 @@ poetry.lock: pyproject.toml
 
 .PHONY: run
 run: install
-	DEBUG=true poetry run python server/main.py
+	DEBUG=true poetry run python backend/main.py
 
 .PHONY: format
 format: install
@@ -44,7 +44,7 @@ check: install
 
 .PHONY: test
 test: install
-	poetry run pytest --cov=server --cov-branch
+	poetry run pytest --cov=backend --cov-branch
 
 .PHONY: coverage
 coverage: install
