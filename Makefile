@@ -48,7 +48,7 @@ test: install
 
 .PHONY: coverage
 coverage: install
-	poetry run coveragespace jacebrowning/memegen-v2 overall --exit-code
+	poetry run coveragespace jacebrowning/memegen-v2 overall
 
 .PHONY: watch
 watch: install

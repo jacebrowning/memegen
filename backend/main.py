@@ -65,14 +65,14 @@ async def create_image(request):
 @app.get("/images/<key>.jpg")
 async def image_blank(request, key):
     template = Template.objects.get_or_none(key) or error
-    path = template.render("_")
+    path = await template.render("_")
     return await response.file(path)
 
 
 @app.get("/images/<key>/<lines:path>.jpg")
 async def image_text(request, key, lines):
     template = Template.objects.get_or_none(key) or error
-    path = template.render(lines.split("/"))
+    path = await template.render(*lines.split("/"))
     return await response.file(path)
 
 
