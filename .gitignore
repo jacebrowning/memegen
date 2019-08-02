@@ -8,3 +8,5 @@ __pycache__/
 
 setup.py
 *.egg-info
+
+/images/
