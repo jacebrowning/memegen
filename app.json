@@ -1,0 +1,24 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "memegen-link-v2",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
