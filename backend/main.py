@@ -12,8 +12,13 @@ from backend.models import Template
 
 app = Sanic(strict_slashes=True)
 app.blueprint(swagger_blueprint)
-app.config.SERVER_NAME = os.getenv("DOMAIN", "localhost:8000")
 
+if "DOMAIN" in os.environ:
+    app.config.SERVER_NAME = os.environ["DOMAIN"]
+elif "HEROKU_APP_NAME" in os.environ:
+    app.config.SERVER_NAME = os.environ["HEROKU_APP_NAME"] + ".herokuapp.com"
+else:
+    app.config.SERVER_NAME = "localhost:8000"
 
 custom = Template("_custom")
 error = Template("_error")
