@@ -26,22 +26,39 @@ error = Template("_error")
 
 @app.get("/")
 async def index(request):
+    return response.html(
+        """
+<p>Welcome to next version of memegen.link</p>
+
+<ul>
+    <li>
+        <a href="/api/" target="_blank">API</a>
+    </li>
+    <li>
+        <a href="/swagger/" target="_blank">Documentation</a>
+    </li>
+</ul>
+"""
+    )
+
+
+@app.get("/api/")
+async def api(request):
     return response.json(
         {
             "templates": app.url_for("templates", _external=True),
             "images": app.url_for("images", _external=True),
-            "_docs": app.url_for("swagger.index", _external=True),
         }
     )
 
 
-@app.get("/templates")
+@app.get("/api/templates")
 async def templates(request):
     templates = Template.objects.filter(valid=True)
     return response.json([t.json(app) for t in templates])
 
 
-@app.get("/templates/<key>")
+@app.get("/api/templates/<key>")
 async def templates_detail(request, key):
     template = Template.objects.get_or_none(key)
     if template:
@@ -49,13 +66,13 @@ async def templates_detail(request, key):
     abort(404)
 
 
-@app.get("/images")
+@app.get("/api/images")
 async def images(request):
     templates = Template.objects.filter(valid=True)
     return response.json([{"url": t.build_sample_url(app)} for t in templates])
 
 
-@app.post("/images")
+@app.post("/api/images")
 @doc.consumes(doc.JsonBody({"key": str, "lines": [str]}), location="body")
 async def create_image(request):
     url = app.url_for(
@@ -67,14 +84,14 @@ async def create_image(request):
     return response.json({"url": url}, status=201)
 
 
-@app.get("/images/<key>.jpg")
+@app.get("/api/images/<key>.jpg")
 async def image_blank(request, key):
     template = Template.objects.get_or_none(key) or error
     path = await template.render("_")
     return await response.file(path)
 
 
-@app.get("/images/<key>/<lines:path>.jpg")
+@app.get("/api/images/<key>/<lines:path>.jpg")
 async def image_text(request, key, lines):
     template = Template.objects.get_or_none(key) or error
     path = await template.render(*lines.split("/"))
