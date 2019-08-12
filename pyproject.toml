@@ -7,7 +7,7 @@ authors = ["Jace Browning <jacebrowning@gmail.com>"]
 license = "MIT"
 
 packages = [
-    { include = "server" },
+    { include = "backend" },
 ]
 
 [tool.poetry.dependencies]

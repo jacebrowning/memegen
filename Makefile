@@ -7,6 +7,13 @@ all: install
 ci: test format check
 
 ###############################################################################
+# System Dependencies
+
+.PHONY: doctor
+doctor:
+	bin/verchew --exit-code
+
+###############################################################################
 # Project Dependencies
 
 DEPENDENCIES := .venv/.flag
@@ -22,9 +29,11 @@ $(DEPENDENCIES): poetry.lock
 	mv requirements.txt.tmp requirements.txt
 	@ touch $@
 
+ifndef CI
 poetry.lock: pyproject.toml
 	poetry lock
 	@ touch $@
+endif
 
 ###############################################################################
 # Development Tasks
