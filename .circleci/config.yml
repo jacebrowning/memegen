@@ -1,0 +1,55 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/memegen-v2
+
+    docker:
+      - image: circleci/python:3.7.2-browsers
+
+    steps:
+      - checkout
+
+      - run:
+          name: Installing System Dependencies
+          command: sudo pip install poetry
+
+      - run:
+          name: Checking System Dependencies
+          command: make doctor
+
+      - type: cache-restore
+        key: poetry-{{ checksum "poetry.lock" }}
+
+      - run:
+          name: Installing Project Dependencies
+          command: make install
+
+      - type: cache-save
+        key: poetry-{{ checksum "poetry.lock" }}
+        paths:
+          - .venv
+
+      # - run:
+      #     name: Checking Backend Code
+      #     command: make check-backend
+
+      # - run:
+      #     name: Running Backend Tests
+      #     command: make test-backend
+
+      # - run:
+      #     name: Running Frontend Tests
+      #     command: make test-frontend
+
+      # - run:
+      #     name: Running System Tests
+      #     command: make build data test-system
+      #     environment:
+      #       DJANGO_SETTINGS_MODULE: config.settings.staging
+      #       HEROKU_APP_NAME: lunchdown-staging
+      #       SECRET_KEY: staging
+
+      - run:
+          name: Testing All Code
+          command: make ci
