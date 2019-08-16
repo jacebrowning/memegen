@@ -3,7 +3,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
 
+import aiofiles
 from datafiles import converters, datafile
+from jinja2 import Template as JinjaTemplate
 from sanic import Sanic, response
 from sanic.exceptions import abort
 from sanic_openapi import doc, swagger_blueprint
@@ -26,20 +28,11 @@ error = Template("_error")
 
 @app.get("/")
 async def index(request):
-    return response.html(
-        """
-<p>Welcome to next version of memegen.link</p>
-
-<ul>
-    <li>
-        <a href="/api/" target="_blank">API</a>
-    </li>
-    <li>
-        <a href="/swagger/" target="_blank">Documentation</a>
-    </li>
-</ul>
-"""
-    )
+    index_path = Path("frontend", "index.html")
+    index_file = await aiofiles.open(index_path)
+    template = JinjaTemplate(await index_file.read())
+    html = template.render(domain=app.config.SERVER_NAME)
+    return response.html(html)
 
 
 @app.get("/api/")
