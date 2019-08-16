@@ -14,27 +14,37 @@ packages = [
 
 python = "^3.7"
 
+# Sanic
 sanic = "^19.6.2"
 sanic-openapi = "^0.5.3"
 
+# Utilities
 aiohttp = "^3.5"
 datafiles = "^0.4"
 
+# Frontend
+jinja2 = "^2.10.1"
+
+# Deployment
 daphne = "^2.3"
 
 [tool.poetry.dev-dependencies]
 
+# Formatting
 isort = "=4.3.18"
 black = "=19.3b0"
 
+# Type Checking
 mypy = "^0.701.0"
 
+# Testing
 pytest = "^5.0"
 pytest-describe = "^0.12.0"
 pytest-expecter = "^1.3"
 pytest-cov = "^2.7"
 pytest-watch = "^4.2"
 
+# Coverage
 coveragespace = "^2.1"
 
 [build-system]
