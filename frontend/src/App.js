@@ -6,20 +6,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <a
-          className="App-link"
-          href={backend + "/api/"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="App-link" href={backend + "/api/"}>
           API
         </a>
-        <a
-          className="App-link"
-          href={backend + "/swagger/"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="App-link" href={backend + "/swagger/"}>
           Documentation
         </a>
         <img src={backend + "/api/images/iw/tests_code/in_production.jpg"} />
