@@ -21,6 +21,9 @@ jobs:
       - type: cache-restore
         key: poetry-{{ checksum "poetry.lock" }}
 
+      - type: cache-restore
+        key: yarn-{{ checksum "frontend/yarn.lock" }}
+
       - run:
           name: Installing Project Dependencies
           command: make install
@@ -30,26 +33,19 @@ jobs:
         paths:
           - .venv
 
-      # - run:
-      #     name: Checking Backend Code
-      #     command: make check-backend
-
-      # - run:
-      #     name: Running Backend Tests
-      #     command: make test-backend
-
-      # - run:
-      #     name: Running Frontend Tests
-      #     command: make test-frontend
-
-      # - run:
-      #     name: Running System Tests
-      #     command: make build data test-system
-      #     environment:
-      #       DJANGO_SETTINGS_MODULE: config.settings.staging
-      #       HEROKU_APP_NAME: lunchdown-staging
-      #       SECRET_KEY: staging
+      - type: cache-save
+        key: yarn-{{ checksum "frontend/yarn.lock" }}
+        paths:
+          - frontend/node_modules
 
       - run:
-          name: Testing All Code
-          command: make ci
+          name: Checking Backend Code
+          command: make check-backend
+
+      - run:
+          name: Running Backend Tests
+          command: make test-backend
+
+      - run:
+          name: Running Frontend Tests
+          command: make test-frontend

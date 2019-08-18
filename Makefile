@@ -57,13 +57,21 @@ format: install
 	poetry run black $(PACKAGES)
 
 .PHONY: check
-check: install
-	poetry run mypy $(PACKAGES)
+check: check-backend
 
 .PHONY: test
-test: install
+test: test-backend test-frontend
+
+###############################################################################
+# Development Tasks: Backend
+
+.PHONY: check-backend
+check-backend: install
+	poetry run mypy $(PACKAGES)
+
+.PHONY: test-backend
+test-backend: install
 	poetry run pytest tests --cov=backend --cov-branch
-	cd frontend && CI=true yarn test
 
 .PHONY: coverage
 coverage: install
@@ -72,6 +80,13 @@ coverage: install
 .PHONY: watch
 watch: install
 	poetry run pytest-watch --nobeep --runner="make test" --onpass="make coverage format check && clear"
+
+###############################################################################
+# Development Tasks: Frontend
+
+.PHONY: test-frontend
+test-frontend: install
+	cd frontend && CI=true yarn test
 
 ###############################################################################
 # Production Tasks
