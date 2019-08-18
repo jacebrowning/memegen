@@ -37,6 +37,7 @@ jobs:
         key: yarn-{{ checksum "frontend/yarn.lock" }}
         paths:
           - frontend/node_modules
+          - ~/.cache/Cypress
 
       - run:
           name: Checking Backend Code
