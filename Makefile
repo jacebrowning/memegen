@@ -14,11 +14,6 @@ doctor:
 	bin/verchew --exit-code
 
 .envrc: Makefile
-	echo > $@
-	echo export FRONTEND_PORT=5000 >> $@
-	echo export BACKEND_PORT=5001 >> $@
-	echo export REACT_APP_BACKEND_URL=http://localhost:5001 >> $@
-	echo >> $@
 	echo export BROWSER=firefox >> $@
 	direnv allow
 
@@ -67,7 +62,7 @@ check: install
 
 .PHONY: test
 test: install
-	BACKEND_PORT=1234 poetry run pytest tests --cov=backend --cov-branch
+	poetry run pytest tests --cov=backend --cov-branch
 	cd frontend && CI=true yarn test
 
 .PHONY: coverage
@@ -81,7 +76,10 @@ watch: install
 ###############################################################################
 # Production Tasks
 
+.PHONY: build
+build: install
+	cd frontend && yarn build
+
 .PHONY: run-production
-run-production: install
-	unset REACT_APP_BACKEND_URL && cd frontend && yarn build
+run-production: install build
 	poetry run heroku local

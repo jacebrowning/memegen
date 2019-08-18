@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+indent() {
+  sed "s/^/       /"
+}
+
+puts-step() {
+  echo "-----> $@"
+}
+
+puts-step "Building frontend..."
+cd frontend && yarn build

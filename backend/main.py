@@ -19,7 +19,7 @@ if "DOMAIN" in os.environ:
 elif "HEROKU_APP_NAME" in os.environ:
     app.config.SERVER_NAME = os.environ["HEROKU_APP_NAME"] + ".herokuapp.com"
 else:
-    app.config.SERVER_NAME = f'localhost:{os.environ["BACKEND_PORT"]}'
+    app.config.SERVER_NAME = "localhost:5001"
 
 custom = Template("_custom")
 error = Template("_error")
