@@ -62,6 +62,14 @@ check: check-backend
 .PHONY: test
 test: test-backend test-frontend
 
+.PHONY: cypress
+cypress: install
+	cd frontend && CYPRESS_SITE=http://localhost:5000 yarn run cypress open
+
+.PHONY: test-system
+test-system: install
+	cd frontend && yarn run cypress run
+
 ###############################################################################
 # Development Tasks: Backend
 
@@ -91,10 +99,16 @@ test-frontend: install
 ###############################################################################
 # Production Tasks
 
+.PHONY: run-production
+run-production: install build
+	poetry run heroku local
+
 .PHONY: build
 build: install
 	cd frontend && yarn build
 
-.PHONY: run-production
-run-production: install build
-	poetry run heroku local
+.PHONY: promote
+promote: install
+	make test-system CYPRESS_SITE=https://memegen-link-v2-staging.herokuapp.com
+	heroku pipelines:promote --app memegen-link-v2-staging --to memegen-link-v2
+	make test-system CYPRESS_SITE=https://memegen-link-v2.herokuapp.com

@@ -26,6 +26,7 @@ __pycache__/
 
 # testing
 /frontend/coverage
+/frontend/cypress/videos
 
 # production
 /frontend/build
