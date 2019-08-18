@@ -14,11 +14,6 @@ doctor:
 	bin/verchew --exit-code
 
 .envrc: Makefile
-	echo > $@
-	echo export FRONTEND_PORT=5000 >> $@
-	echo export BACKEND_PORT=5001 >> $@
-	echo export REACT_APP_BACKEND_URL=http://localhost:5001 >> $@
-	echo >> $@
 	echo export BROWSER=firefox >> $@
 	direnv allow
 
@@ -62,13 +57,21 @@ format: install
 	poetry run black $(PACKAGES)
 
 .PHONY: check
-check: install
-	poetry run mypy $(PACKAGES)
+check: check-backend
 
 .PHONY: test
-test: install
-	BACKEND_PORT=1234 poetry run pytest tests --cov=backend --cov-branch
-	cd frontend && CI=true yarn test
+test: test-backend test-frontend
+
+###############################################################################
+# Development Tasks: Backend
+
+.PHONY: check-backend
+check-backend: install
+	poetry run mypy $(PACKAGES)
+
+.PHONY: test-backend
+test-backend: install
+	poetry run pytest tests --cov=backend --cov-branch
 
 .PHONY: coverage
 coverage: install
@@ -79,9 +82,19 @@ watch: install
 	poetry run pytest-watch --nobeep --runner="make test" --onpass="make coverage format check && clear"
 
 ###############################################################################
+# Development Tasks: Frontend
+
+.PHONY: test-frontend
+test-frontend: install
+	cd frontend && CI=true yarn test
+
+###############################################################################
 # Production Tasks
 
+.PHONY: build
+build: install
+	cd frontend && yarn build
+
 .PHONY: run-production
-run-production: install
-	unset REACT_APP_BACKEND_URL && cd frontend && yarn build
+run-production: install build
 	poetry run heroku local
