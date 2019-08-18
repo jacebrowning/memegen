@@ -1,8 +1,9 @@
 {
-  "addons": [
-
-  ],
+  "addons": [],
   "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
     {
       "url": "heroku/python"
     }
@@ -17,8 +18,7 @@
       "quantity": 1
     }
   },
-  "name": "memegen-link-v2",
-  "scripts": {
-  },
+  "name": "memegen",
+  "scripts": {},
   "stack": "heroku-18"
 }

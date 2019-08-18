@@ -1,0 +1,2 @@
+backend: cd backend && DEBUG=true poetry run python main.py
+frontend: cd frontend && yarn start

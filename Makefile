@@ -13,20 +13,31 @@ ci: test format check
 doctor:
 	bin/verchew --exit-code
 
+.envrc: Makefile
+	echo export REACT_APP_BACKEND_URL=http://localhost:5000 >> $@
+	echo >> $@
+	echo export BROWSER=firefox >> $@
+	direnv allow
+
 ###############################################################################
 # Project Dependencies
 
-DEPENDENCIES := .venv/.flag
+BACKEND_DEPENDENCIES := .venv/.flag
+FRONTEND_DEPENDENCIES := frontend/node_modules/.flag
 
 .PHONY: install
-install: $(DEPENDENCIES)
+install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES)
 
-$(DEPENDENCIES): poetry.lock
+$(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
 	poetry install
 	poetry run pip freeze > requirements.txt
 	grep -v memegen requirements.txt > requirements.txt.tmp
 	mv requirements.txt.tmp requirements.txt
+	@ touch $@
+
+$(FRONTEND_DEPENDENCIES): frontend/yarn.lock
+	cd frontend && yarn install
 	@ touch $@
 
 ifndef CI
@@ -40,7 +51,7 @@ endif
 
 .PHONY: run
 run: install
-	DEBUG=true poetry run python backend/main.py
+	poetry run honcho start --procfile Procfile.dev
 
 .PHONY: format
 format: install
