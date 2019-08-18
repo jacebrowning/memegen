@@ -20,7 +20,7 @@ if "DOMAIN" in os.environ:
 elif "HEROKU_APP_NAME" in os.environ:
     app.config.SERVER_NAME = os.environ["HEROKU_APP_NAME"] + ".herokuapp.com"
 else:
-    app.config.SERVER_NAME = "localhost:8000"
+    app.config.SERVER_NAME = f'localhost:{os.environ["BACKEND_PORT"]}'
 
 custom = Template("_custom")
 error = Template("_error")
@@ -28,11 +28,16 @@ error = Template("_error")
 
 @app.get("/")
 async def index(request):
-    index_path = Path("frontend", "index.html")
+    index_path = Path("frontend", "build", "index.html").resolve()
     index_file = await aiofiles.open(index_path)
     template = JinjaTemplate(await index_file.read())
     html = template.render(domain=app.config.SERVER_NAME)
     return response.html(html)
+
+
+@app.get("/static/<filename:path>")
+async def static(request, filename):
+    return await response.file(f"frontend/build/static/{filename}")
 
 
 @app.get("/api/")

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 function App() {
-  let backend = process.env.REACT_APP_BACKEND_URL;
+  let backend = process.env.REACT_APP_BACKEND_URL || "";
   return (
     <div className="App">
       <header className="App-header">

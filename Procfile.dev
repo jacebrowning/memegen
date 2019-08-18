@@ -1,2 +1,2 @@
-backend: cd backend && DEBUG=true poetry run python main.py
-frontend: cd frontend && yarn start
+backend: cd backend && DEBUG=true PORT=${BACKEND_PORT} poetry run python main.py
+frontend: cd frontend && PORT=${FRONTEND_PORT} yarn start

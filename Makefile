@@ -14,7 +14,10 @@ doctor:
 	bin/verchew --exit-code
 
 .envrc: Makefile
-	echo export REACT_APP_BACKEND_URL=http://localhost:5000 >> $@
+	echo > $@
+	echo export FRONTEND_PORT=5000 >> $@
+	echo export BACKEND_PORT=5001 >> $@
+	echo export REACT_APP_BACKEND_URL=http://localhost:5001 >> $@
 	echo >> $@
 	echo export BROWSER=firefox >> $@
 	direnv allow
@@ -79,4 +82,5 @@ watch: install
 
 .PHONY: run-production
 run-production: install
-	PORT=8000 poetry run heroku local
+	unset REACT_APP_BACKEND_URL && cd frontend && yarn build
+	poetry run heroku local
