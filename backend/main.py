@@ -5,7 +5,6 @@ from typing import Dict, List, Optional
 
 import aiofiles
 from datafiles import converters, datafile
-from jinja2 import Template as JinjaTemplate
 from sanic import Sanic, response
 from sanic.exceptions import abort
 from sanic_openapi import doc, swagger_blueprint
@@ -24,20 +23,6 @@ else:
 
 custom = Template("_custom")
 error = Template("_error")
-
-
-@app.get("/")
-async def index(request):
-    index_path = Path("frontend", "build", "index.html").resolve()
-    index_file = await aiofiles.open(index_path)
-    template = JinjaTemplate(await index_file.read())
-    html = template.render(domain=app.config.SERVER_NAME)
-    return response.html(html)
-
-
-@app.get("/static/<filename:path>")
-async def static(request, filename):
-    return await response.file(f"frontend/build/static/{filename}")
 
 
 @app.get("/api/")
@@ -94,6 +79,22 @@ async def image_text(request, key, lines):
     template = Template.objects.get_or_none(key) or error
     path = await template.render(*lines.split("/"))
     return await response.file(path)
+
+
+@app.get("/")
+async def frontend(request):
+    path = Path("frontend", "build", "index.html").resolve()
+    return await response.file(path)
+
+
+@app.get("/static/<filename:path>")
+async def frontend_static(request, filename):
+    return await response.file(f"frontend/build/static/{filename}")
+
+
+@app.get("/<filename:path>")
+async def frontend_public(request, filename):
+    return await response.file(f"frontend/build/{filename}")
 
 
 if __name__ == "__main__":

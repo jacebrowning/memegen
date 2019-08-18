@@ -22,9 +22,6 @@ sanic-openapi = "^0.5.3"
 aiohttp = "^3.5"
 datafiles = "^0.4"
 
-# Frontend
-jinja2 = "^2.10.1"
-
 # Deployment
 daphne = "^2.3"
 

@@ -34,9 +34,9 @@ install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES)
 $(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
 	poetry install
-	poetry run pip freeze > requirements.txt
-	grep -v memegen requirements.txt > requirements.txt.tmp
-	mv requirements.txt.tmp requirements.txt
+	@ poetry run pip freeze > requirements.txt
+	@ grep -v memegen requirements.txt > requirements.txt.tmp
+	@ mv requirements.txt.tmp requirements.txt
 	@ touch $@
 
 $(FRONTEND_DEPENDENCIES): frontend/yarn.lock
