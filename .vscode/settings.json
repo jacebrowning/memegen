@@ -1,12 +1,14 @@
 {
   "files.exclude": {
+    "*.egg-info": true,
     "**/__pycache__/": true,
     "**/.cache/": true,
     "**/.coverage": true,
     "**/.pytest_cache/": true,
     "**/.venv/": true,
-    "setup.py": true,
-    "*.egg-info": true
+    "**/dist/": true,
+    "**/node_modules/": true,
+    "setup.py": true
   },
   "python.pythonPath": ".venv/bin/python",
   "python.formatting.provider": "black",

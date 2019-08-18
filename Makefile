@@ -13,20 +13,34 @@ ci: test format check
 doctor:
 	bin/verchew --exit-code
 
+.envrc: Makefile
+	echo > $@
+	echo export FRONTEND_PORT=5000 >> $@
+	echo export BACKEND_PORT=5001 >> $@
+	echo export REACT_APP_BACKEND_URL=http://localhost:5001 >> $@
+	echo >> $@
+	echo export BROWSER=firefox >> $@
+	direnv allow
+
 ###############################################################################
 # Project Dependencies
 
-DEPENDENCIES := .venv/.flag
+BACKEND_DEPENDENCIES := .venv/.flag
+FRONTEND_DEPENDENCIES := frontend/node_modules/.flag
 
 .PHONY: install
-install: $(DEPENDENCIES)
+install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES)
 
-$(DEPENDENCIES): poetry.lock
+$(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
 	poetry install
 	poetry run pip freeze > requirements.txt
 	grep -v memegen requirements.txt > requirements.txt.tmp
 	mv requirements.txt.tmp requirements.txt
+	@ touch $@
+
+$(FRONTEND_DEPENDENCIES): frontend/yarn.lock
+	cd frontend && yarn install
 	@ touch $@
 
 ifndef CI
@@ -40,7 +54,7 @@ endif
 
 .PHONY: run
 run: install
-	DEBUG=true poetry run python backend/main.py
+	poetry run honcho start --procfile Procfile.dev
 
 .PHONY: format
 format: install
@@ -53,7 +67,8 @@ check: install
 
 .PHONY: test
 test: install
-	poetry run pytest --cov=backend --cov-branch
+	BACKEND_PORT=1234 poetry run pytest tests --cov=backend --cov-branch
+	cd frontend && CI=true yarn test
 
 .PHONY: coverage
 coverage: install
@@ -68,4 +83,5 @@ watch: install
 
 .PHONY: run-production
 run-production: install
-	PORT=8000 poetry run heroku local
+	unset REACT_APP_BACKEND_URL && cd frontend && yarn build
+	poetry run heroku local

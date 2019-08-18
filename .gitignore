@@ -1,12 +1,31 @@
+.envrc
+
+/images/
+
+###############################################################################
+# Backend
+
+# dependencies
 .venv/
-
-__pycache__/
-.cache/
-.pytest_cache/
-
-.coverage
-
 setup.py
 *.egg-info
 
-/images/
+# cache
+__pycache__/
+.cache/
+
+# testing
+.pytest_cache/
+.coverage
+
+###############################################################################
+# Frontend
+
+# dependencies
+/frontend/node_modules
+
+# testing
+/frontend/coverage
+
+# production
+/frontend/build
