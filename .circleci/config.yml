@@ -49,3 +49,7 @@ jobs:
       - run:
           name: Running Frontend Tests
           command: make test-frontend
+
+      - run:
+          name: Running System Tests
+          command: make test-system
