@@ -11,7 +11,8 @@ ci: format check test
 doctor:
 	bin/verchew --exit-code
 
-.envrc: Makefile
+.envrc:
+	echo export CYPRESS_SITE=http://localhost:5000 >> $@
 	echo export BROWSER=firefox >> $@
 	direnv allow
 
@@ -100,6 +101,12 @@ watch: install
 .PHONY: test-frontend
 test-frontend: install
 	cd frontend && CI=true yarn test
+
+# Tools
+
+.PHONY: cypress
+cypress: install
+	cd frontend && yarn run cypress open
 
 ###############################################################################
 # Production Tasks
