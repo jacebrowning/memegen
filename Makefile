@@ -1,10 +1,8 @@
-PACKAGES := backend tests
-
 .PHONY: all
 all: install
 
 .PHONY: ci
-ci: test format check
+ci: format check test
 
 ###############################################################################
 # System Dependencies
@@ -52,34 +50,37 @@ run: install
 	poetry run honcho start --procfile Procfile.dev
 
 .PHONY: format
-format: install
-	poetry run isort $(PACKAGES) --recursive --apply
-	poetry run black $(PACKAGES)
+format: format-backend
 
 .PHONY: check
 check: check-backend
 
 .PHONY: test
-test: test-backend test-frontend
-
-.PHONY: cypress
-cypress: install
-	cd frontend && CYPRESS_SITE=http://localhost:5000 yarn run cypress open
+test: test-backend test-frontend test-system
 
 .PHONY: test-system
 test-system: install
+ifdef CYPRESS_SITE
 	cd frontend && yarn run cypress run
+else
+	poetry run honcho start --procfile Procfile.e2e
+endif
 
 ###############################################################################
 # Development Tasks: Backend
 
+.PHONY: format-backend
+format-backend: install
+	poetry run isort backend --recursive --apply
+	poetry run black backend
+
 .PHONY: check-backend
 check-backend: install
-	poetry run mypy $(PACKAGES)
+	poetry run mypy backend
 
 .PHONY: test-backend
 test-backend: install
-	poetry run pytest tests --cov=backend --cov-branch
+	cd backend && poetry run pytest --cov=backend --cov-branch
 
 .PHONY: coverage
 coverage: install

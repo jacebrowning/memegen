@@ -1,8 +1,7 @@
 describe("My First Test", function() {
   it('finds the content "type"', function() {
-    var site = Cypress.env("SITE");
+    var site = Cypress.env("SITE") || "http://localhost:5000";
 
-    console.log(site);
     cy.visit(site);
 
     cy.get("img");

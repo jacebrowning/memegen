@@ -45,7 +45,7 @@ multidict==4.5.2
 mypy==0.701
 mypy-extensions==0.4.1
 packaging==19.1
-parse==1.12.0
+parse==1.12.1
 pathtools==0.1.2
 pluggy==0.12.0
 py==1.8.0

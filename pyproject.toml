@@ -32,7 +32,7 @@ isort = "=4.3.18"
 black = "=19.3b0"
 
 # Type Checking
-mypy = "^0.701.0"
+mypy = "^0.701"
 
 # Testing
 pytest = "^5.0"
@@ -43,6 +43,9 @@ pytest-watch = "^4.2"
 
 # Coverage
 coveragespace = "^2.1"
+
+# Utilities
+honcho = "^1.0"
 
 [build-system]
 
