@@ -67,7 +67,8 @@ check: install
 
 .PHONY: test
 test: install
-	poetry run pytest --cov=backend --cov-branch
+	BACKEND_PORT=1234 poetry run pytest tests --cov=backend --cov-branch
+	cd frontend && CI=true yarn test
 
 .PHONY: coverage
 coverage: install
