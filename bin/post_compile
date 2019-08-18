@@ -15,3 +15,4 @@ cd frontend && yarn build | indent
 
 puts-step "Cleaning up slug..."
 rm -rf node_modules | indent
+rm -rf frontend/node_modules | indent
