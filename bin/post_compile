@@ -11,4 +11,7 @@ puts-step() {
 }
 
 puts-step "Building frontend..."
-cd frontend && yarn build
+cd frontend && yarn build | indent
+
+puts-step "Cleaning up slug..."
+rm -rf node_modules | indent
