@@ -42,6 +42,12 @@ poetry.lock: pyproject.toml
 	@ touch $@
 endif
 
+.PHONY: clean
+clean:
+	rm -rf .venv
+	rm -rf frontend/build
+	rm -rf frontend/node_modules
+
 ###############################################################################
 # Development Tasks
 
@@ -66,8 +72,7 @@ else
 	poetry run honcho start --procfile Procfile.e2e
 endif
 
-###############################################################################
-# Development Tasks: Backend
+# Backend
 
 .PHONY: format-backend
 format-backend: install
@@ -90,8 +95,7 @@ coverage: install
 watch: install
 	poetry run pytest-watch --nobeep --runner="make test" --onpass="make coverage format check && clear"
 
-###############################################################################
-# Development Tasks: Frontend
+# Frontend
 
 .PHONY: test-frontend
 test-frontend: install
