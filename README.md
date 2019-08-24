@@ -11,3 +11,9 @@ Run the application:
 ```
 $ make run
 ```
+
+Run CI checks continuously:
+
+```
+$ make watch
+```

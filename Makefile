@@ -72,6 +72,11 @@ ifdef CYPRESS_SITE
 else
 	poetry run honcho start --procfile Procfile.e2e
 endif
+	@ echo "All system tests passed."
+
+.PHONY: watch
+watch: install
+	poetry run pytest-watch --nobeep --runner="make test CYPRESS_SITE=http://localhost:5000" --onpass="make check && clear"
 
 # Backend
 
@@ -87,14 +92,7 @@ check-backend: install
 .PHONY: test-backend
 test-backend: install
 	cd backend && poetry run pytest --cov=backend --cov-branch
-
-.PHONY: coverage
-coverage: install
-	poetry run coveragespace jacebrowning/memegen-v2 overall
-
-.PHONY: watch
-watch: install
-	poetry run pytest-watch --nobeep --runner="make test" --onpass="make coverage format check && clear"
+	cd backend && poetry run coveragespace jacebrowning/memegen-v2 overall
 
 # Frontend
 
