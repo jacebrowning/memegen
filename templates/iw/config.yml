@@ -1,5 +1,18 @@
 name: Insanity Wolf
-source: https://knowyourmeme.com/memes/insanity-wolf
+source: http://knowyourmeme.com/memes/insanity-wolf
 sample:
-- TESTS_CODE
-- IN_PRODUCTION
+  - DOES TESTING
+  - IN PRODUCTION
+text:
+  - color: ''
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.0
+    scale_y: 0.0
+  - color: ''
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.0
+    scale_y: 0.0

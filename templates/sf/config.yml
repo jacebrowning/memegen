@@ -1,0 +1,18 @@
+text:
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+name: Sealed Fate
+sample:
+  - I ACCIDENTALLY USED A SWEAR WORD
+  - AND I KNOW MY MOM HEARD IT FROM THE OTHER ROOM
+source: https://www.reddit.com/r/AdviceAnimals/comments/3fenos/i_like_the_idea_of_the_impending_doom_seal_i_hope/ctnxw3k

@@ -1,0 +1,18 @@
+text:
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+name: Afraid to Ask Andy
+sample:
+  - I DON'T KNOW WHAT THIS MEME IS FOR
+  - AND AT THIS POINT I'M TOO AFRAID TO ASK
+source: http://knowyourmeme.com/memes/afraid-to-ask-andy
