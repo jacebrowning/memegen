@@ -20,7 +20,7 @@ sanic-openapi = "^0.5.3"
 
 # Utilities
 aiohttp = "^3.5"
-datafiles = { git = "https://github.com/jacebrowning/datafiles", rev = "0bf54d92f6e63e16511bd2921299bb8a1a0ad75c" }
+datafiles = { git = "https://github.com/jacebrowning/datafiles", rev = "fbd2ea2b64e7fdd0e1fa7f4fbf41d543b28b5480" }
 
 # Deployment
 daphne = "^2.3"

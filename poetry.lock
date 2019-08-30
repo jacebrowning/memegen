@@ -258,7 +258,7 @@ tomlkit = "^0.5.3"
 typing-extensions = "^3.7"
 
 [package.source]
-reference = "0bf54d92f6e63e16511bd2921299bb8a1a0ad75c"
+reference = "fbd2ea2b64e7fdd0e1fa7f4fbf41d543b28b5480"
 type = "git"
 url = "https://github.com/jacebrowning/datafiles"
 [[package]]
@@ -849,7 +849,7 @@ version = "4.6.0"
 setuptools = "*"
 
 [metadata]
-content-hash = "1098b6bb13138eddd65470475dd4448be690a9f65f185e9abdf472d6d33d55a5"
+content-hash = "c98f4b1210f8c5edab5ee48039e650a468db150fcf830529dd9db4928ec6e8dd"
 python-versions = "^3.7"
 
 [metadata.hashes]

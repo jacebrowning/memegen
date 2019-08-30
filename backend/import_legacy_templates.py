@@ -15,8 +15,8 @@ class LegacyTemplate:
 
 
 def run():
-    for lt in LegacyTemplate.objects.all():
-        print(lt.key)
+    for count, template in enumerate(LegacyTemplate.objects.all(), start=1):
+        print(f"{count}: {template.key}")
 
 
 if __name__ == "__main__":
