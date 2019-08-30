@@ -1,0 +1,25 @@
+service: service
+
+provider:
+  name: aws
+  runtime: python3.7
+custom:
+  pythonRequirements:
+    usePoetry: false
+  apigwBinary:
+    types:
+      - "image/jpeg"
+      - "image/webp"
+      - "*/*"
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+          contentHandling: CONVERT_TO_BINARY
+plugins:
+  - serverless-python-requirements
+  - serverless-apigw-binary
+  - serverless-apigwy-binary

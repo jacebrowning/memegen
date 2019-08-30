@@ -26,7 +26,7 @@ FRONTEND_DEPENDENCIES := frontend/node_modules/.flag
 install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES)
 
 $(BACKEND_DEPENDENCIES): poetry.lock
-	@ poetry config settings.virtualenvs.in-project true
+	@ poetry config settings.virtualenvs.in-project true || poetry config virtualenvs.in-project true
 	poetry install
 	@ poetry run pip freeze > requirements.txt
 	@ grep -v memegen requirements.txt > requirements.txt.tmp
