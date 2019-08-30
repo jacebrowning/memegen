@@ -20,7 +20,7 @@ sanic-openapi = "^0.5.3"
 
 # Utilities
 aiohttp = "^3.5"
-datafiles = "^0.4"
+datafiles = { git = "https://github.com/jacebrowning/datafiles", rev = "0bf54d92f6e63e16511bd2921299bb8a1a0ad75c" }
 
 # Deployment
 daphne = "^2.3"
@@ -46,6 +46,7 @@ coveragespace = "^2.1"
 
 # Utilities
 honcho = "^1.0"
+gitman = { git = "https://github.com/jacebrowning/gitman", rev = "74b5e14fc42dbab635f41c218aee72980ab40361" }
 
 [build-system]
 

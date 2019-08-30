@@ -1,0 +1,10 @@
+location: .
+sources:
+  - name: templates-legacy
+    repo: https://github.com/jacebrowning/memegen
+    rev: master
+    sparse_paths:
+      - data/templates/*
+    scripts:
+      - mv data/templates/* .
+      - rm -rf data

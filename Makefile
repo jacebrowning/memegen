@@ -107,6 +107,14 @@ cypress: install
 	cd frontend && yarn run cypress open
 
 ###############################################################################
+# Migration Tasks
+
+.PHONY: import
+import: install
+	poetry run gitman update --force --quiet
+	poetry run python backend/import_legacy_templates.py
+
+###############################################################################
 # Production Tasks
 
 .PHONY: run-production
