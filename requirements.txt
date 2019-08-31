@@ -2,7 +2,7 @@ aiofiles==0.4.0
 aiohttp==3.5.4
 appdirs==1.4.3
 argh==0.26.2
-asgiref==3.2.1
+asgiref==3.2.2
 asn1crypto==0.24.0
 async-timeout==3.0.1
 atomicwrites==1.3.0
@@ -23,9 +23,9 @@ coverage==4.5.4
 coveragespace==2.1
 cryptography==2.7
 daphne==2.3.0
--e git+https://github.com/jacebrowning/datafiles@fbd2ea2b64e7fdd0e1fa7f4fbf41d543b28b5480#egg=datafiles
+datafiles==0.5b2
 docopt==0.6.2
--e git+https://github.com/jacebrowning/gitman@74b5e14fc42dbab635f41c218aee72980ab40361#egg=gitman
+-e git+https://github.com/jacebrowning/gitman@645aa09bfe92f4a0fa270c7c7da6b20941b548d8#egg=gitman
 h11==0.8.1
 h2==3.1.1
 honcho==1.0.1
@@ -51,7 +51,7 @@ py==1.8.0
 pycparser==2.19
 PyHamcrest==1.9.0
 pyparsing==2.4.2
-pytest==5.1.1
+pytest==5.1.2
 pytest-cov==2.7.1
 pytest-describe==0.12.0
 pytest-expecter==1.3
