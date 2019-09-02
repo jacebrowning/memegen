@@ -12,7 +12,6 @@ doctor:
 	bin/verchew --exit-code
 
 .envrc:
-	echo export CYPRESS_SITE=http://localhost:5000 >> $@
 	echo export BROWSER=firefox >> $@
 	direnv allow
 
@@ -72,11 +71,12 @@ ifdef CYPRESS_SITE
 else
 	poetry run honcho start --procfile Procfile.e2e
 endif
+	@ echo
 	@ echo "All system tests passed."
 
 .PHONY: watch
 watch: install
-	poetry run pytest-watch --nobeep --runner="make test CYPRESS_SITE=http://localhost:5000" --onpass="make check && clear"
+	poetry run pytest-watch --nobeep --runner="make test CYPRESS_SITE=http://localhost:5000" --onpass="make check && clear && echo 'All tests passed.'"
 
 # Backend
 
@@ -105,6 +105,14 @@ test-frontend: install
 .PHONY: cypress
 cypress: install
 	cd frontend && yarn run cypress open
+
+###############################################################################
+# Migration Tasks
+
+.PHONY: import
+import: install
+	poetry run gitman update --force --quiet
+	poetry run python backend/import_legacy_templates.py
 
 ###############################################################################
 # Production Tasks

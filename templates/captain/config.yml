@@ -1,0 +1,18 @@
+text:
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+name: I am the Captain Now
+sample:
+  - LOOK AT ME
+  - I AM THE CAPTAIN NOW
+source: https://www.youtube.com/watch?v=dvA-mimf2yg

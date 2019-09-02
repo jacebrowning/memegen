@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Iterator, List, Optional
 
 import aiofiles
 import aiohttp
@@ -64,14 +64,17 @@ class Template:
 
     def build_sample_url(self, app: Sanic) -> str:
         return app.url_for(
-            "image_text", key=self.key, lines="/".join(self.sample), _external=True
+            "image_text",
+            key=self.key,
+            lines="/".join(self._encode(*self.sample)),
+            _external=True,
         )
 
     async def render(self, *lines) -> Path:
         print(f"TODO: render lines: {lines}")
         # return self._get_background_image_path()
 
-        path = Path("images/" + self._get_v1_path(lines))
+        path = Path("../images/" + self._get_v1_path(lines))
         path.parent.mkdir(parents=True, exist_ok=True)
 
         url = "https://memegen.link/" + self._get_v1_path(lines)
@@ -97,3 +100,11 @@ class Template:
             if path.exists():
                 return path
         raise ValueError(f"No background image for template: {self}")
+
+    @staticmethod
+    def _encode(*lines: str) -> Iterator[str]:
+        for line in lines:
+            if line:
+                yield line.replace("?", "~q")
+            else:
+                yield "_"
