@@ -1,6 +1,7 @@
 .envrc
 
 /images/
+/templates-legacy/
 
 ###############################################################################
 # Backend
@@ -26,7 +27,8 @@ __pycache__/
 
 # testing
 /frontend/coverage
-/frontend/cypress/videos
+/frontend/cypress/screenshots/
+/frontend/cypress/videos/
 
 # production
 /frontend/build

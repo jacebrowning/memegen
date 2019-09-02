@@ -4,7 +4,7 @@ describe("Default Content", function() {
   it("contains an image preview", function() {
     cy.visit(site);
 
-    cy.get("img");
+    cy.get("img").should("be.visible");
   });
 });
 

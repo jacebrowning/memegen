@@ -20,7 +20,7 @@ sanic-openapi = "^0.5.3"
 
 # Utilities
 aiohttp = "^3.5"
-datafiles = "^0.4"
+datafiles = "^0.5b2"
 
 # Deployment
 daphne = "^2.3"
@@ -47,6 +47,7 @@ coveragespace = "^2.1"
 
 # Utilities
 honcho = "^1.0"
+gitman = "^2.0a1"
 
 [build-system]
 

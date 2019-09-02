@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Iterator, List, Optional
 
 import aiofiles
 import aiohttp
@@ -64,7 +64,10 @@ class Template:
 
     def build_sample_url(self, app: Sanic) -> str:
         return app.url_for(
-            "image_text", key=self.key, lines="/".join(self.sample), _external=True
+            "image_text",
+            key=self.key,
+            lines="/".join(self._encode(*self.sample)),
+            _external=True,
         )
 
     async def render(self, *lines) -> Path:
@@ -87,7 +90,6 @@ class Template:
         return path
 
     def _get_v1_path(self, lines) -> str:
-        print(lines)
         paths = "/".join(lines)
         return f"{self.key}/{paths}.jpg"
 
@@ -97,3 +99,11 @@ class Template:
             if path.exists():
                 return path
         raise ValueError(f"No background image for template: {self}")
+
+    @staticmethod
+    def _encode(*lines: str) -> Iterator[str]:
+        for line in lines:
+            if line:
+                yield line.replace("?", "~q")
+            else:
+                yield "_"
