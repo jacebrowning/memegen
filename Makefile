@@ -20,9 +20,10 @@ doctor:
 
 BACKEND_DEPENDENCIES := .venv/.flag
 FRONTEND_DEPENDENCIES := frontend/node_modules/.flag
+SERVICE_DEPENDENCIES := service/node_modules/.flag
 
 .PHONY: install
-install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES)
+install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES) $(SERVICE_DEPENDENCIES)
 
 $(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true || poetry config virtualenvs.in-project true
@@ -34,6 +35,10 @@ $(BACKEND_DEPENDENCIES): poetry.lock
 
 $(FRONTEND_DEPENDENCIES): frontend/yarn.lock
 	cd frontend && yarn install
+	@ touch $@
+
+$(SERVICE_DEPENDENCIES): service/yarn.lock
+	cd service && yarn install
 	@ touch $@
 
 ifndef CI
@@ -99,6 +104,12 @@ test-backend: install
 .PHONY: test-frontend
 test-frontend: install
 	cd frontend && CI=true yarn test
+
+# Service
+
+.PHONY: test-service
+test-service: install
+	# TODO: Run service tests
 
 # Tools
 
