@@ -74,7 +74,7 @@ class Template:
         print(f"TODO: render lines: {lines}")
         # return self._get_background_image_path()
 
-        path = Path("../images/" + self._get_v1_path(lines))
+        path = Path("images/" + self._get_v1_path(lines))
         path.parent.mkdir(parents=True, exist_ok=True)
 
         url = "https://memegen.link/" + self._get_v1_path(lines)
@@ -90,7 +90,6 @@ class Template:
         return path
 
     def _get_v1_path(self, lines) -> str:
-        print(lines)
         paths = "/".join(lines)
         return f"{self.key}/{paths}.jpg"
 

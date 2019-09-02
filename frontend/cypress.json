@@ -1,4 +1,3 @@
 {
-  "chromeWebSecurity": false,
-  "video": false
+  "chromeWebSecurity": false
 }
