@@ -266,21 +266,17 @@ python-versions = "*"
 version = "0.6.2"
 
 [[package]]
-category = "main"
-description = ""
+category = "dev"
+description = "A language-agnostic dependency manager using Git."
 name = "gitman"
 optional = false
-python-versions = "^3.7"
-version = "1.7"
+python-versions = ">=3.7,<4.0"
+version = "2.0a1"
 
 [package.dependencies]
-datafiles = "^0.5b2"
-minilog = "^1.2"
+datafiles = ">=0.5b2,<0.6"
+minilog = ">=1.2,<2.0"
 
-[package.source]
-reference = "645aa09bfe92f4a0fa270c7c7da6b20941b548d8"
-type = "git"
-url = "https://github.com/jacebrowning/gitman"
 [[package]]
 category = "main"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -846,7 +842,7 @@ version = "4.6.0"
 setuptools = "*"
 
 [metadata]
-content-hash = "b42eec1bb9eab2f2f71fddbf8fa57d10bb6bc8939bc1a03c790ec975e5444b62"
+content-hash = "c27b450f368de7639e0765d38da38e0fb20b662de9056e79014e392fb5d2f3c2"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -877,7 +873,7 @@ cryptography = ["24b61e5fcb506424d3ec4e18bca995833839bf13c59fc43e530e488f28d46b8
 daphne = ["2329b7a74b5559f7ea012879c10ba945c3a53df7d8d2b5932a904e3b4c9abcc2", "3cae286a995ae5b127d7de84916f0480cb5be19f81125b6a150b8326250dadd5"]
 datafiles = ["20cc725f352d889fbaee5ee2a75fb19b187531880559b19a56dfed71d9253b8d", "6f00c457ccbbf4e76399c2e336a5c8bd2774aa749a61f00bf4bf9857503468a3"]
 docopt = ["49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"]
-gitman = []
+gitman = ["394feefba53b871c6896d4cd98c7b2fe3e43ac955447d2b9f6fcb63720316d59", "f15ecf3f32079d2f7a6f02c683f962c3b6955de0fe5c39561550fe030165382e"]
 h11 = ["acca6a44cb52a32ab442b1779adf0875c443c689e9e028f8d831a3769f9c5208", "f2b1ca39bfed357d1f19ac732913d5f9faa54a5062eca7d2ec3a916cfb7ae4c7"]
 h2 = ["ac377fcf586314ef3177bfd90c12c7826ab0840edeb03f0f24f511858326049e", "b8a32bd282594424c0ac55845377eea13fa54fe4a8db012f3a198ed923dc3ab4"]
 honcho = ["af5806bf13e3b20acdcb9ff8c0beb91eee6fe07393c3448dfad89667e6ac7576", "c189402ad2e337777283c6a12d0f4f61dc6dd20c254c9a3a4af5087fc66cea6e"]

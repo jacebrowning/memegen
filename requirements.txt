@@ -25,7 +25,7 @@ cryptography==2.7
 daphne==2.3.0
 datafiles==0.5b2
 docopt==0.6.2
--e git+https://github.com/jacebrowning/gitman@645aa09bfe92f4a0fa270c7c7da6b20941b548d8#egg=gitman
+gitman==2.0a1
 h11==0.8.1
 h2==3.1.1
 honcho==1.0.1
