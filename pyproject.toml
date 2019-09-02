@@ -24,6 +24,7 @@ datafiles = "^0.5b2"
 
 # Deployment
 daphne = "^2.3"
+requests = "^2.22.0"
 
 [tool.poetry.dev-dependencies]
 
