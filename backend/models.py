@@ -71,27 +71,25 @@ class Template:
         )
 
     async def render(self, *lines) -> Path:
-        print(f"TODO: render lines: {lines}")
-        # return self._get_background_image_path()
+        text = "/".join(lines)
+        image_path = Path(f"images/{self.key}/{text}.jpg")
+        image_path.parent.mkdir(parents=True, exist_ok=True)
 
-        path = Path("images/" + self._get_v1_path(lines))
-        path.parent.mkdir(parents=True, exist_ok=True)
-
-        url = "https://memegen.link/" + self._get_v1_path(lines)
-        log.debug(f"Fetching image: {url}")
+        background_image_path = self._get_background_image_path()
+        background_image_url = (
+            f"https://memegen-link-v2.herokuapp.com/{background_image_path}"
+        )
+        image_url = f"https://memegen.link/custom/{text}.jpg?alt={background_image_url}"
+        log.debug(f"Fetching image: {image_url}")
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
+            async with session.get(image_url) as response:
                 if response.status == 200:
-                    f = await aiofiles.open(path, mode="wb")
+                    f = await aiofiles.open(image_path, mode="wb")
                     await f.write(await response.read())
                     await f.close()
 
-        return path
-
-    def _get_v1_path(self, lines) -> str:
-        paths = "/".join(lines)
-        return f"{self.key}/{paths}.jpg"
+        return image_path
 
     def _get_background_image_path(self, name="default") -> Path:
         for ext in ["png", "jpg"]:
