@@ -9,6 +9,8 @@ from aiofiles import os
 from datafiles import converters, datafile
 from sanic import Sanic
 
+from backend import settings
+
 
 class UpperString(converters.String):
     @classmethod
@@ -76,9 +78,7 @@ class Template:
         image_path.parent.mkdir(parents=True, exist_ok=True)
 
         background_image_path = self._get_background_image_path()
-        background_image_url = (
-            f"https://memegen-link-v2.herokuapp.com/{background_image_path}"
-        )
+        background_image_url = f"{settings.IMAGES_URL}/{background_image_path}"
         image_url = f"https://memegen.link/custom/{text}.jpg?alt={background_image_url}"
         log.debug(f"Fetching image: {image_url}")
 
