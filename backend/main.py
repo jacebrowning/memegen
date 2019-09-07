@@ -1,4 +1,3 @@
-import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -10,19 +9,16 @@ from sanic.exceptions import abort
 from sanic_openapi import doc, swagger_blueprint
 
 from backend.models import Template
+from backend import settings
+
+
+CUSTOM_TEMPLATE = Template("_custom")
+ERROR_TEMPLATE = Template("_error")
+
 
 app = Sanic(strict_slashes=True)
 app.blueprint(swagger_blueprint)
-
-if "DOMAIN" in os.environ:
-    app.config.SERVER_NAME = os.environ["DOMAIN"]
-elif "HEROKU_APP_NAME" in os.environ:
-    app.config.SERVER_NAME = os.environ["HEROKU_APP_NAME"] + ".herokuapp.com"
-else:
-    app.config.SERVER_NAME = "localhost:5001"
-
-custom = Template("_custom")
-error = Template("_error")
+app.config.SERVER_NAME = settings.SITE_DOMAIN
 
 
 @app.get("/api/")
@@ -69,14 +65,14 @@ async def create_image(request):
 
 @app.get("/api/images/<key>.jpg")
 async def image_blank(request, key):
-    template = Template.objects.get_or_none(key) or error
+    template = Template.objects.get_or_none(key) or ERROR_TEMPLATE
     path = await template.render("_")
     return await response.file(path)
 
 
 @app.get("/api/images/<key>/<lines:path>.jpg")
 async def image_text(request, key, lines):
-    template = Template.objects.get_or_none(key) or error
+    template = Template.objects.get_or_none(key) or ERROR_TEMPLATE
     path = await template.render(*lines.split("/"))
     return await response.file(path)
 
@@ -105,7 +101,7 @@ async def frontend_public(request, filename):
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", 8000)),
-        workers=int(os.environ.get("WEB_CONCURRENCY", 1)),
-        debug=bool(os.environ.get("DEBUG", False)),
+        port=settings.PORT,
+        workers=settings.WORKERS,
+        debug=settings.DEBUG,
     )
