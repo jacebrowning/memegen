@@ -26,11 +26,11 @@ SERVICE_DEPENDENCIES := service/node_modules/.flag
 install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES) $(SERVICE_DEPENDENCIES)
 
 $(BACKEND_DEPENDENCIES): poetry.lock
-	@ poetry config settings.virtualenvs.in-project true || poetry config virtualenvs.in-project true
+	@ poetry config virtualenvs.in-project true || poetry config settings.virtualenvs.in-project true
 	poetry install
-	@ poetry run pip freeze > requirements.txt
-	@ grep -v memegen requirements.txt > requirements.txt.tmp
-	@ mv requirements.txt.tmp requirements.txt
+ifndef CI
+	@ poetry export --format requirements.txt --output requirements.txt
+endif
 	@ touch $@
 
 $(FRONTEND_DEPENDENCIES): frontend/yarn.lock
