@@ -8,9 +8,8 @@ from sanic import Sanic, response
 from sanic.exceptions import abort
 from sanic_openapi import doc, swagger_blueprint
 
-from backend.models import Template
 from backend import settings
-
+from backend.models import Template
 
 CUSTOM_TEMPLATE = Template("_custom")
 ERROR_TEMPLATE = Template("_error")
