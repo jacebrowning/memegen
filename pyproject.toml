@@ -15,12 +15,12 @@ packages = [
 python = "^3.7"
 
 # Sanic
-sanic = "*"
+sanic = "^19.9.0"
 sanic-openapi = "*"
 
 # Utilities
 aiohttp = "^3.5"
-datafiles = "^0.5b2"
+datafiles = "^0.5"
 
 # Deployment
 daphne = "^2.3"
