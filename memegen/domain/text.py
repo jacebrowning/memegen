@@ -89,8 +89,8 @@ class Text:
                     chars.append(' ')
                     escape = char
                 continue
-            else:
-                escape = None
+
+            escape = None
 
             if not char.isalpha():
                 chars.append(char)
