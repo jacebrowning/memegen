@@ -34,7 +34,7 @@ class Template:
                  root=None):
         self.key = key
         self.name = name or ""
-        self.lines = lines or []
+        self.lines = lines or [""]
         self.aliases = aliases or []
         self.link = link or ""
         self.root = root or ""
