@@ -12,6 +12,8 @@ doctor:
 	bin/verchew --exit-code
 
 .envrc:
+	echo export TBD_SERVERLESS_TOKEN=??? >> $@
+	echo >> $@
 	echo export BROWSER=firefox >> $@
 	direnv allow
 
@@ -109,7 +111,7 @@ test-frontend: install
 
 .PHONY: test-service
 test-service: install
-	# TODO: Run service tests
+	cd service && sls test
 
 # Tools
 
