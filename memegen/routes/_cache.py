@@ -40,6 +40,11 @@ class Cache:
         except IndexError:
             data = {}
 
+        if not isinstance(data, dict):
+            log.error("Invalid cache")
+            self.items = []
+            data = {}
+
         log.info("Retrieved cache: %s", data)
 
         return data
