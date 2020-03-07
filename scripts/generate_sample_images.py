@@ -1,14 +1,15 @@
 """Prerender common images used in the application."""
 
+import asyncio
 
 from memegen.settings import ProductionConfig
 from memegen.factory import create_app
 from memegen.domain import Text
 
 
-def run():
+async def generate_sample_images():
     app = create_app(ProductionConfig)
-    with app.app_context():
+    async with app.app_context():
 
         options = []
         for template in app.template_service.all():
@@ -22,4 +23,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    asyncio.run(generate_sample_images())

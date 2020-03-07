@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app, request, redirect
+from quart import Blueprint, current_app, request, redirect
 from flask_api import exceptions
 from webargs import fields
 
@@ -23,7 +23,7 @@ OPTIONS = {
 
 @blueprint.route("")
 @cache.cached()
-def get():
+async def get():
     """Get a list of all meme templates."""
     data = OrderedDict()
     for template in sorted(current_app.template_service.all()):
@@ -33,13 +33,13 @@ def get():
 
 
 @blueprint.route("", methods=['POST'])
-def create_template():
+async def create_template():
     raise exceptions.PermissionDenied(current_app.config['CONTRIBUTING_URL'])
 
 
 @blueprint.route("<key>", methods=['GET', 'POST'], endpoint='create')
 @parser.use_kwargs(OPTIONS)
-def create_meme(key, top, bottom, _redirect, _masked):
+async def create_meme(key, top, bottom, _redirect, _masked):
     """Generate a meme from a template."""
     if request.method == 'GET':
         template = current_app.template_service.find(key)
@@ -73,7 +73,7 @@ def create_meme(key, top, bottom, _redirect, _masked):
 
 
 @blueprint.route("<key>/<path:path>")
-def get_meme_with_path(key, path):
+async def get_meme_with_path(key, path):
     """Redirect if any additional path is provided."""
     template = current_app.template_service.find(key)
     return redirect("/{}/{}".format(template.key, path))

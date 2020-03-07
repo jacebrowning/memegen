@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app
+from quart import Blueprint, current_app
 
 from .. import __version__
 
@@ -11,7 +11,7 @@ blueprint = Blueprint('root', __name__)
 
 
 @blueprint.route("/api/")
-def get():
+async def get():
     """Generate memes from templates."""
     data = OrderedDict()
     data['templates'] = route('templates.get', _external=True)
@@ -24,7 +24,7 @@ def get():
 
 
 @blueprint.route("/CHECK")
-def handle_checks():
+async def handle_checks():
     """Return CHECK_OK for zero-downtime deployment.
 
     See: https://labnotes.org/zero-downtime-deploy-with-dokku

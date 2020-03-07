@@ -4,7 +4,7 @@ from urllib.parse import unquote
 import log
 import requests
 import background
-from flask import (Response, url_for, render_template, send_file,
+from quart import (Response, url_for, render_template, send_file,
                    current_app, request)
 
 
@@ -30,7 +30,7 @@ def route(*args, **kwargs):
     return _secure(unquote(url_for(*args, **kwargs)))
 
 
-def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
+async def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     """Render a webpage or raw image based on request."""
     img = _format_url(request, 'share')
     img_twitter = _format_url(
@@ -49,7 +49,7 @@ def display(title, path, share=False, raw=False, mimetype='image/jpeg'):
     if share:
         log.info("Sharing image on page: %s", img)
 
-        html = render_template(
+        html = await render_template(
             'share.html',
             title=title,
             img=_secure(img),

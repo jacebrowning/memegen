@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, redirect, request
+from quart import Blueprint, current_app as app, redirect, request
 from webargs import fields, flaskparser
 
 from ..extensions import cache
@@ -18,7 +18,7 @@ FILTER = {
 @blueprint.route("")
 @flaskparser.use_kwargs(FILTER)
 @cache.cached(unless=lambda: bool(request.args))
-def get(name):
+async def get(name):
     """Get a list of all matching aliases."""
     if name:
         return redirect(route('.get_with_name', name=name))
@@ -27,7 +27,7 @@ def get(name):
 
 
 @blueprint.route("<name>")
-def get_with_name(name):
+async def get_with_name(name):
     """Get a list of all matching aliases."""
     return _get_aliases(name)
 

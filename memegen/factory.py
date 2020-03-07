@@ -1,11 +1,12 @@
 import os
 
-from flask import request, current_app
-from flask_api import FlaskAPI
+from quart import request, current_app, Quart
 from flask_api.exceptions import APIException, NotFound
 import bugsnag
 from bugsnag.flask import handle_exceptions
 import log
+
+from quart_cors import cors
 
 from . import extensions
 from . import services
@@ -32,7 +33,7 @@ class InvalidImageLink(APIException):
 
 
 def create_app(config):
-    app = FlaskAPI(__name__)
+    app = Quart(__name__)
     app.config.from_object(config)
 
     configure_exceptions(app)
@@ -56,13 +57,12 @@ def configure_exceptions(app):
 
 def configure_logging(app):
     log.init(level=app.config['LOG_LEVEL'])
-    log.silence('requests', 'werkzeug', 'yorm', allow_warning=True)
+    log.silence('asyncio', 'requests', 'werkzeug', 'yorm', allow_warning=True)
     log.silence('PIL', allow_info=True)
 
 
 def register_extensions(app):
-    extensions.cors.init_app(app, methods=['GET', 'OPTIONS'],
-                             allow_headers='*')
+    cors(app, allow_methods=['GET', 'OPTIONS'], allow_headers='*')
     extensions.cache.init_app(app)
 
 

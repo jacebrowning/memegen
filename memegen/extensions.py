@@ -1,10 +1,9 @@
 import os
 
-from flask_cors import CORS
+
 from flask_caching import Cache
 
 
-cors = CORS()
 cache = Cache(config={
     'CACHE_TYPE': 'filesystem',
     'CACHE_DIR': 'data/cache/flask',

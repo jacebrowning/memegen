@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app, redirect
+from quart import Blueprint, current_app as app, redirect
 
 from ..domain import Text
 
@@ -11,7 +11,7 @@ blueprint = Blueprint('links', __name__, url_prefix="/api/templates/")
 
 
 @blueprint.route("<key>/<path:path>", endpoint='get')
-def get_with_text(key, path):
+async def get_with_text(key, path):
     """Get links for generated images."""
     template = app.template_service.find(key)
     if template.key != key:

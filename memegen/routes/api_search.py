@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from flask import Blueprint, current_app as app
+from quart import Blueprint, current_app as app
 
 from ..extensions import cache
 
@@ -13,7 +13,7 @@ blueprint = Blueprint('search', __name__, url_prefix="/api/search/")
 @blueprint.route("<query>")
 @blueprint.route("", defaults={'query': None})
 @cache.cached()
-def get(query):
+async def get(query):
     """Get a list of all matching links."""
     return _get_matches(query)
 

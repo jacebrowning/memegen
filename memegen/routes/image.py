@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, request, redirect
+from quart import Blueprint, current_app, request, redirect
 from webargs import fields, flaskparser
 import log
 
@@ -27,7 +27,7 @@ OPTIONS = {
 @blueprint.route("/latest.jpg")
 @blueprint.route("/latest<int:index>.jpg")
 @flaskparser.use_kwargs({'filtered': fields.Bool(missing=True)})
-def get_latest(index=1, filtered=True):
+async def get_latest(index=1, filtered=True):
     cache = cache_filtered if filtered else cache_unfiltered
     kwargs = cache.get(index - 1)
 
@@ -43,7 +43,7 @@ def get_latest(index=1, filtered=True):
 
 @blueprint.route("/<key>.jpg")
 @flaskparser.use_kwargs(OPTIONS)
-def get_without_text(key, **options):
+async def get_without_text(key, **options):
     options.pop('preview')
     options.pop('share')
 
@@ -54,13 +54,15 @@ def get_without_text(key, **options):
 
 
 @blueprint.route("/<key>.jpeg")
-def get_without_text_jpeg(key):
+async def get_without_text_jpeg(key):
     return redirect(route('.get_without_text', key=key))
 
 
 @blueprint.route("/<key>/<path:path>.jpg", endpoint='get')
 @flaskparser.use_kwargs(OPTIONS)
-def get_with_text(key, path, alt, font, watermark, preview, share, **size):
+async def get_with_text(
+        key, path, alt, font, watermark, preview, share, **size
+):
     assert len(size) == 2
     options = dict(key=key, path=path,
                    alt=alt, font=font, watermark=watermark, **size)
@@ -118,13 +120,13 @@ def get_with_text(key, path, alt, font, watermark, preview, share, **size):
 
 
 @blueprint.route("/<key>/<path:path>.jpeg")
-def get_with_text_jpeg(key, path):
+async def get_with_text_jpeg(key, path):
     return redirect(route('.get', key=key, path=path))
 
 
 @blueprint.route("/_<code>.jpg")
 @flaskparser.use_kwargs(OPTIONS)
-def get_encoded(code, alt, font, watermark, preview, share, **size):
+async def get_encoded(code, alt, font, watermark, preview, share, **size):
     assert len(size) == 2
     options = dict(code=code, font=font, watermark=watermark, **size)
     if share:

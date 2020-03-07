@@ -1,7 +1,7 @@
 import random
 from pathlib import Path
 
-from flask import (Blueprint, Markup,
+from quart import (Blueprint, Markup,
                    render_template, current_app, make_response)
 from markdown import markdown
 
@@ -12,16 +12,16 @@ blueprint = Blueprint('index-page', __name__)
 
 
 @blueprint.route("/")
-def get():
+async def get():
     template_images = list(samples(blank=True))
-    html = render_template(
+    html = await render_template(
         "index.html",
         template_images=template_images,
         default_template=random.choice(template_images)['key'],
         readme=_load_readme(),
         config=current_app.config,
     )
-    response = make_response(html)
+    response = await make_response(html)
     response.headers['Cache-Control'] = f'max-age={60*60*12}'
     return response
 

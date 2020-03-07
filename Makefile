@@ -36,7 +36,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run
 run: install samples ## Run the application
-	status=1; while [ $$status -eq 1 ]; do FLASK_ENV=local pipenv run python manage.py run; status=$$?; sleep 1; done
+	FLASK_ENV=local pipenv run python main.py
 
 .PHONY: launch
 launch: install samples
