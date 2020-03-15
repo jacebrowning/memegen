@@ -11,6 +11,7 @@ from sanic_openapi import doc, swagger_blueprint
 from backend import settings
 from backend.models import Template
 
+
 CUSTOM_TEMPLATE = Template("_custom")
 ERROR_TEMPLATE = Template("_error")
 
@@ -18,6 +19,9 @@ ERROR_TEMPLATE = Template("_error")
 app = Sanic(name="memegen", strict_slashes=True)
 app.blueprint(swagger_blueprint)
 app.config.SERVER_NAME = settings.SITE_DOMAIN
+app.config.API_SCHEMES = settings.API_SCHEMES
+app.config.API_VERSION = "0.0"
+app.config.API_TITLE = "Memes API"
 
 
 @app.get("/api/")
@@ -31,14 +35,14 @@ async def api(request):
 
 
 @app.get("/api/templates")
-@doc.tag("templates")
+@doc.tag("Template")
 async def templates(request):
     templates = Template.objects.filter(valid=True)
     return response.json([t.jsonify(app) for t in templates])
 
 
 @app.get("/api/templates/<key>")
-@doc.tag("templates")
+@doc.tag("Template")
 async def templates_detail(request, key):
     template = Template.objects.get_or_none(key)
     if template:
@@ -47,14 +51,14 @@ async def templates_detail(request, key):
 
 
 @app.get("/api/images")
-@doc.tag("images")
+@doc.tag("Image")
 async def images(request):
     templates = Template.objects.filter(valid=True)
     return response.json([{"url": t.build_sample_url(app)} for t in templates])
 
 
 @app.post("/api/images")
-@doc.tag("images")
+@doc.tag("Image")
 @doc.consumes(doc.JsonBody({"key": str, "lines": [str]}), location="body")
 async def create_image(request):
     url = app.url_for(
@@ -67,7 +71,7 @@ async def create_image(request):
 
 
 @app.get("/api/images/<key>.jpg")
-@doc.tag("images")
+@doc.tag("Image")
 async def image_blank(request, key):
     template = Template.objects.get_or_none(key) or ERROR_TEMPLATE
     path = await template.render("_")
@@ -75,7 +79,7 @@ async def image_blank(request, key):
 
 
 @app.get("/api/images/<key>/<lines:path>.jpg")
-@doc.tag("images")
+@doc.tag("Image")
 async def image_text(request, key, lines):
     template = Template.objects.get_or_none(key) or ERROR_TEMPLATE
     path = await template.render(*lines.split("/"))
