@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/memegen-v2
 
     docker:
-      - image: circleci/python:3.7.2-node-browsers
+      - image: circleci/python:3.7.6-node-browsers
 
     steps:
       - checkout
@@ -13,7 +13,6 @@ jobs:
       - run:
           name: Installing System Dependencies
           command: |
-            sudo pip install poetry>=1.0
             sudo npm install -g serverless
 
       - run:
