@@ -15,7 +15,7 @@ CUSTOM_TEMPLATE = Template("_custom")
 ERROR_TEMPLATE = Template("_error")
 
 
-app = Sanic(strict_slashes=True)
+app = Sanic(name="memegen", strict_slashes=True)
 app.blueprint(swagger_blueprint)
 app.config.SERVER_NAME = settings.SITE_DOMAIN
 
