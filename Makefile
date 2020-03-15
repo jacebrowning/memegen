@@ -82,6 +82,7 @@ watch: install
 
 .PHONY: format-backend
 format-backend: install
+	poetry run autoflake --recursive backend --in-place
 	poetry run isort backend --recursive --apply
 	poetry run black backend
 

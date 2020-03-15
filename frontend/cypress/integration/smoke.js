@@ -24,7 +24,7 @@ describe("Developer Links", function() {
     cy.contains("Documentation").click();
 
     cy.contains("Swagger UI");
-    cy.contains("Template");
-    cy.contains("Image");
+    cy.contains("images");
+    cy.contains("templates");
   });
 });
