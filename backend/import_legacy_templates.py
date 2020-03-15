@@ -34,7 +34,7 @@ def run():
         template = Template(legacy.key)
         template.name = legacy.name
         template.source = legacy.link
-        template.sample = legacy.default
+        template.sample = legacy.default or ["YOUR TEXT", "GOES HERE"]
         template.datafile.save()
 
         legacy.copy_images(template.datafile.path.parent)

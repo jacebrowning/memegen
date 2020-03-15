@@ -86,6 +86,11 @@ async def image_text(request, key, lines):
     return await response.file(path)
 
 
+@app.get("/templates/<filename:path>")
+async def backend(request, filename):
+    return await response.file(f"templates/{filename}")
+
+
 @app.get("/")
 @doc.exclude(True)
 async def frontend(request):

@@ -12,18 +12,6 @@ from sanic import Sanic
 from backend import settings
 
 
-class UpperString(converters.String):
-    @classmethod
-    def to_preserialization_data(cls, python_value, **kwargs):
-        line = super().to_preserialization_data(python_value, **kwargs)
-        return line.upper()
-
-    @classmethod
-    def to_python_value(cls, deserialized_data, **kwargs):
-        line = super().to_python_value(deserialized_data, **kwargs)
-        return line.lower().replace(" ", "_")
-
-
 @dataclass
 class Text:
 
@@ -46,9 +34,7 @@ class Template:
     source: Optional[str] = None
     text: List[Text] = field(default_factory=lambda: [Text(), Text()])
     styles: List[str] = field(default_factory=lambda: ["default"])
-    sample: List[UpperString] = field(
-        default_factory=lambda: [UpperString("YOUR TEXT"), UpperString("GOES HERE")]
-    )
+    sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
 
     @property
     def valid(self) -> bool:
@@ -102,6 +88,6 @@ class Template:
     def _encode(*lines: str) -> Iterator[str]:
         for line in lines:
             if line:
-                yield line.replace("?", "~q")
+                yield line.lower().replace(" ", "_").replace("?", "~q")
             else:
                 yield "_"
