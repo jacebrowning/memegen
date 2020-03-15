@@ -44,15 +44,15 @@ class Template:
         return {
             "name": self.name,
             "styles": [s for s in self.styles if s != "default"],
-            "blank": app.url_for("image_blank", key=self.key, _external=True),
+            "blank": app.url_for("images.blank", key=self.key, _external=True),
             "sample": self.build_sample_url(app),
             "source": self.source,
-            "_self": app.url_for("templates_detail", key=self.key, _external=True),
+            "_self": app.url_for("templates.detail", key=self.key, _external=True),
         }
 
     def build_sample_url(self, app: Sanic) -> str:
         return app.url_for(
-            "image_text",
+            "images.text",
             key=self.key,
             lines="/".join(self._encode(*self.sample)),
             _external=True,
@@ -91,3 +91,7 @@ class Template:
                 yield line.lower().replace(" ", "_").replace("?", "~q")
             else:
                 yield "_"
+
+
+CUSTOM_TEMPLATE = Template("_custom")
+ERROR_TEMPLATE = Template("_error")

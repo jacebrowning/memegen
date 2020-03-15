@@ -15,10 +15,6 @@
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
   "editor.formatOnSave": true,
-  "cSpell.words": [
-    "aiofiles",
-    "aiohttp",
-    "jsonify",
-    "sanic"
-  ]
+  "python.linting.lintOnSave": true,
+  "cSpell.words": ["aiofiles", "aiohttp", "jsonify", "sanic"]
 }

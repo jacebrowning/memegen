@@ -1,5 +1,4 @@
 import shutil
-from contextlib import suppress
 from pathlib import Path
 from typing import List
 
