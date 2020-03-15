@@ -49,7 +49,7 @@ poetry.lock: pyproject.toml
 runtime.txt: .python-version
 	echo "python-$(shell cat $<)" > $@
 requirements.txt: poetry.lock
-	poetry export --format requirements.txt --output $@
+	poetry export --format requirements.txt --output $@ --without-hashes
 endif
 
 .PHONY: clean

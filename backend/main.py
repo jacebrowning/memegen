@@ -15,7 +15,7 @@ CUSTOM_TEMPLATE = Template("_custom")
 ERROR_TEMPLATE = Template("_error")
 
 
-app = Sanic(strict_slashes=True)
+app = Sanic(name="memegen", strict_slashes=True)
 app.blueprint(swagger_blueprint)
 app.config.SERVER_NAME = settings.SITE_DOMAIN
 
@@ -31,12 +31,14 @@ async def api(request):
 
 
 @app.get("/api/templates")
+@doc.tag("templates")
 async def templates(request):
     templates = Template.objects.filter(valid=True)
-    return response.json([t.json(app) for t in templates])
+    return response.json([t.jsonify(app) for t in templates])
 
 
 @app.get("/api/templates/<key>")
+@doc.tag("templates")
 async def templates_detail(request, key):
     template = Template.objects.get_or_none(key)
     if template:
@@ -45,12 +47,14 @@ async def templates_detail(request, key):
 
 
 @app.get("/api/images")
+@doc.tag("images")
 async def images(request):
     templates = Template.objects.filter(valid=True)
     return response.json([{"url": t.build_sample_url(app)} for t in templates])
 
 
 @app.post("/api/images")
+@doc.tag("images")
 @doc.consumes(doc.JsonBody({"key": str, "lines": [str]}), location="body")
 async def create_image(request):
     url = app.url_for(
@@ -63,6 +67,7 @@ async def create_image(request):
 
 
 @app.get("/api/images/<key>.jpg")
+@doc.tag("images")
 async def image_blank(request, key):
     template = Template.objects.get_or_none(key) or ERROR_TEMPLATE
     path = await template.render("_")
@@ -70,29 +75,28 @@ async def image_blank(request, key):
 
 
 @app.get("/api/images/<key>/<lines:path>.jpg")
+@doc.tag("images")
 async def image_text(request, key, lines):
     template = Template.objects.get_or_none(key) or ERROR_TEMPLATE
     path = await template.render(*lines.split("/"))
     return await response.file(path)
 
 
-@app.get("/templates/<filename:path>")
-async def backend(request, filename):
-    return await response.file(f"templates/{filename}")
-
-
 @app.get("/")
+@doc.exclude(True)
 async def frontend(request):
     path = Path("frontend", "build", "index.html").resolve()
     return await response.file(path)
 
 
 @app.get("/static/<filename:path>")
+@doc.exclude(True)
 async def frontend_static(request, filename):
     return await response.file(f"frontend/build/static/{filename}")
 
 
 @app.get("/<filename:path>")
+@doc.exclude(True)
 async def frontend_public(request, filename):
     return await response.file(f"frontend/build/{filename}")
 

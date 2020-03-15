@@ -54,7 +54,7 @@ class Template:
     def valid(self) -> bool:
         return bool(self.name and not self.name.startswith("<"))
 
-    def json(self, app: Sanic) -> Dict:
+    def jsonify(self, app: Sanic) -> Dict:
         return {
             "name": self.name,
             "styles": [s for s in self.styles if s != "default"],
