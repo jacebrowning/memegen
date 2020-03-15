@@ -29,12 +29,9 @@ SERVICE_DEPENDENCIES := service/node_modules/.flag
 .PHONY: install
 install: $(BACKEND_DEPENDENCIES) $(FRONTEND_DEPENDENCIES) $(SERVICE_DEPENDENCIES)
 
-$(BACKEND_DEPENDENCIES): poetry.lock
-	@ poetry config virtualenvs.in-project true || poetry config settings.virtualenvs.in-project true
+$(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
+	@ poetry config virtualenvs.in-project true
 	poetry install
-ifndef CI
-	@ poetry export --format requirements.txt --output requirements.txt
-endif
 	@ touch $@
 
 $(FRONTEND_DEPENDENCIES): frontend/yarn.lock
@@ -49,6 +46,10 @@ ifndef CI
 poetry.lock: pyproject.toml
 	poetry lock
 	@ touch $@
+runtime.txt: .python-version
+	echo "python-$(shell cat $<)" > $@
+requirements.txt: poetry.lock
+	poetry export --format requirements.txt --output $@
 endif
 
 .PHONY: clean
