@@ -14,5 +14,11 @@
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "aiofiles",
+    "aiohttp",
+    "jsonify",
+    "sanic"
+  ]
 }
