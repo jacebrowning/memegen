@@ -33,7 +33,7 @@ async def api(request):
 @app.get("/api/templates")
 async def templates(request):
     templates = Template.objects.filter(valid=True)
-    return response.json([t.json(app) for t in templates])
+    return response.json([t.jsonify(app) for t in templates])
 
 
 @app.get("/api/templates/<key>")
@@ -76,23 +76,21 @@ async def image_text(request, key, lines):
     return await response.file(path)
 
 
-@app.get("/templates/<filename:path>")
-async def backend(request, filename):
-    return await response.file(f"templates/{filename}")
-
-
 @app.get("/")
+@doc.exclude(True)
 async def frontend(request):
     path = Path("frontend", "build", "index.html").resolve()
     return await response.file(path)
 
 
 @app.get("/static/<filename:path>")
+@doc.exclude(True)
 async def frontend_static(request, filename):
     return await response.file(f"frontend/build/static/{filename}")
 
 
 @app.get("/<filename:path>")
+@doc.exclude(True)
 async def frontend_public(request, filename):
     return await response.file(f"frontend/build/{filename}")
 
