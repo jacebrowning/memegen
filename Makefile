@@ -76,7 +76,7 @@ test: test-backend test-frontend test-system
 
 .PHONY: watch
 watch: install
-	poetry run pytest-watch --nobeep --runner="make test CYPRESS_BASE_URL=http://localhost:5000" --onpass="make check && clear && echo 'All tests passed.'"
+	poetry run pytest-watch --runner="make test CYPRESS_BASE_URL=http://localhost:5000" --onpass="make check && clear && echo 'All tests passed.'" --nobeep --wait
 
 # Backend
 
