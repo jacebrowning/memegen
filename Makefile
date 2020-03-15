@@ -15,6 +15,8 @@ doctor:
 	echo export TBD_SERVERLESS_TOKEN=??? >> $@
 	echo >> $@
 	echo export BROWSER=firefox >> $@
+	echo >> $@
+	echo "# export CYPRESS_BASE_URL=http://localhost:5000" >> $@
 	direnv allow
 
 ###############################################################################
@@ -71,19 +73,9 @@ check: check-backend
 .PHONY: test
 test: test-backend test-frontend test-system
 
-.PHONY: test-system
-test-system: install
-ifdef CYPRESS_SITE
-	cd frontend && yarn run cypress run
-else
-	poetry run honcho start --procfile Procfile.e2e
-endif
-	@ echo
-	@ echo "All system tests passed."
-
 .PHONY: watch
 watch: install
-	poetry run pytest-watch --nobeep --runner="make test CYPRESS_SITE=http://localhost:5000" --onpass="make check && clear && echo 'All tests passed.'"
+	poetry run pytest-watch --nobeep --runner="make test CYPRESS_BASE_URL=http://localhost:5000" --onpass="make check && clear && echo 'All tests passed.'"
 
 # Backend
 
@@ -113,7 +105,17 @@ test-frontend: install
 test-service: install
 	cd service && sls test
 
-# Tools
+# System
+
+.PHONY: test-system
+test-system: install
+ifdef CYPRESS_BASE_URL
+	cd frontend && yarn run cypress run
+else
+	poetry run honcho start --procfile Procfile.e2e
+endif
+	@ echo
+	@ echo "All system tests passed."
 
 .PHONY: cypress
 cypress: install
@@ -140,6 +142,6 @@ build: install
 
 .PHONY: promote
 promote: install
-	make test-system CYPRESS_SITE=https://memegen-link-v2-staging.herokuapp.com
+	make test-system CYPRESS_BASE_URL=https://memegen-link-v2-staging.herokuapp.com
 	heroku pipelines:promote --app memegen-link-v2-staging --to memegen-link-v2
-	make test-system CYPRESS_SITE=https://memegen-link-v2.herokuapp.com
+	make test-system CYPRESS_BASE_URL=https://memegen-link-v2.herokuapp.com

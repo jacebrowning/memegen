@@ -1,4 +1,4 @@
-var site = Cypress.env("SITE") || "http://localhost:5000";
+var site = Cypress.config().baseUrl || "http://localhost:5000";
 
 describe("Default Content", function() {
   it("contains an image preview", function() {
