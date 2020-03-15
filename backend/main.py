@@ -19,6 +19,7 @@ ERROR_TEMPLATE = Template("_error")
 app = Sanic(name="memegen", strict_slashes=True)
 app.blueprint(swagger_blueprint)
 app.config.SERVER_NAME = settings.SITE_DOMAIN
+app.config.API_SCHEMES = settings.API_SCHEMES
 app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
