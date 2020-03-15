@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Installing System Dependencies
           command: |
-            sudo pip install poetry
+            sudo pip install poetry>=1.0
             sudo npm install -g serverless
 
       - run:
