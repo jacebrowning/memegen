@@ -10,7 +10,7 @@ from sanic_openapi import doc, swagger_blueprint
 
 from backend import settings
 from backend.models import Template
-from pkg_resources import get_distribution
+
 
 CUSTOM_TEMPLATE = Template("_custom")
 ERROR_TEMPLATE = Template("_error")
@@ -21,7 +21,7 @@ app.blueprint(swagger_blueprint)
 app.config.SERVER_NAME = settings.SITE_DOMAIN
 app.config.API_HOST = settings.SITE_DOMAIN
 app.config.API_SCHEMES = ["http", "https"]
-app.config.API_VERSION = get_distribution("memegen").version
+app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
 
