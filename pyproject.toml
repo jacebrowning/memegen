@@ -15,12 +15,12 @@ packages = [
 python = "^3.7"
 
 # Sanic
-sanic = "^19.9.0"
-sanic-openapi = "*"
+sanic = "=19.9.0"
+sanic-openapi = "=0.6.0"
 
 # Utilities
 aiohttp = "^3.5"
-datafiles = "^0.5"
+datafiles = "~0.7"
 
 # Deployment
 daphne = "^2.3"
@@ -29,11 +29,11 @@ requests = "^2.22.0"
 [tool.poetry.dev-dependencies]
 
 # Formatting
-isort = "=4.3.18"
-black = "=19.3b0"
+isort = "=4.3.21"
+black = "=19.10b0"
 
 # Type Checking
-mypy = "^0.701"
+mypy = "=0.770"
 
 # Testing
 pytest = "^5.0"
@@ -47,7 +47,7 @@ coveragespace = "^2.1"
 
 # Utilities
 honcho = "^1.0"
-gitman = "^2.0a1"
+gitman = "=2.0a2"
 rope = "^0.14.0"
 
 [build-system]
