@@ -34,13 +34,13 @@ autoflake = "^1.3.1"
 
 # Testing
 pytest = "^5.0"
-pytest-describe = "^0.12.0"
+pytest-describe = { git = "https://github.com/jacebrowning/pytest-describe", branch = "pytest-5.4-support" } # https://github.com/ropez/pytest-describe/pull/27
 pytest-expecter = "^1.3"
 pytest-cov = "^2.7"
 pytest-watch = "^4.2"
 
 # Coverage
-coveragespace = "^2.1"
+coveragespace = "^3.1.1"
 
 # Utilities
 honcho = "^1.0"

@@ -10,15 +10,15 @@ datafiles==0.7
 h11==0.8.1
 h2==3.2.0
 hpack==3.0.0
-hstspreload==2020.3.12
+hstspreload==2020.3.25
 httptools==0.1.1
 httpx==0.9.3
 hyperframe==5.2.0
 idna==2.9
-minilog==1.4
+minilog==1.4.1
 multidict==4.7.5
 parse==1.15.0
-pyyaml==5.3
+pyyaml==5.3.1
 rfc3986==1.3.2
 ruamel.yaml==0.16.10
 ruamel.yaml.clib==0.2.0; platform_python_implementation == "CPython" and python_version < "3.9"
@@ -27,7 +27,7 @@ sanic-openapi==0.6.0
 sniffio==1.1.0
 tomlkit==0.5.11
 typing-extensions==3.7.4.1
-ujson==2.0.2; sys_platform != "win32" and implementation_name == "cpython"
+ujson==2.0.3; sys_platform != "win32" and implementation_name == "cpython"
 uvloop==0.14.0; sys_platform != "win32" and implementation_name == "cpython"
 websockets==8.1
 yarl==1.4.2
