@@ -516,8 +516,8 @@ category = "dev"
 description = "Better testing with expecter and pytest."
 name = "pytest-expecter"
 optional = false
-python-versions = "*"
-version = "1.3"
+python-versions = ">=3.6,<4.0"
+version = "2.1"
 
 [[package]]
 category = "dev"
@@ -786,7 +786,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "6c9eeca62437e5dbdad82b1969f0a8b691df9f57cb181d19952ae866d89e61cd"
+content-hash = "bc629883ae22f3e0e3e2098bc49ee61b748129143ef05aad55b5ddba4455cdf3"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1043,8 +1043,8 @@ pytest-cov = [
 ]
 pytest-describe = []
 pytest-expecter = [
-    {file = "pytest-expecter-1.3.tar.gz", hash = "sha256:1c8e9ab98ddd576436b61a7ba61ea11cfa5a3fc6b00288ce9e91e9dd770daf19"},
-    {file = "pytest_expecter-1.3-py2-none-any.whl", hash = "sha256:27c93dfe87e2f4d28c525031be68d3f89457e3315241d97ee15f7689544e0e37"},
+    {file = "pytest-expecter-2.1.tar.gz", hash = "sha256:70b05fec2a9ae5ec6f15d5c5467c1e2cb9aa2fd85ec9c4783b26e2cf68e66f96"},
+    {file = "pytest_expecter-2.1-py3-none-any.whl", hash = "sha256:ab66120671a22be41f7df4c29d76c02d62e3420b8277b1455d2e683a042a0608"},
 ]
 pytest-watch = [
     {file = "pytest-watch-4.2.0.tar.gz", hash = "sha256:06136f03d5b361718b8d0d234042f7b2f203910d8568f63df2f866b547b3d4b9"},
