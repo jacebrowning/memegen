@@ -6,11 +6,11 @@ cached-property==1.5.1
 certifi==2019.11.28
 chardet==3.0.4
 classproperties==0.1.3
-datafiles==0.8
+datafiles==0.9b2
 h11==0.8.1
 h2==3.2.0
 hpack==3.0.0
-hstspreload==2020.3.25
+hstspreload==2020.3.31
 httptools==0.1.1
 httpx==0.9.3
 hyperframe==5.2.0
@@ -26,7 +26,7 @@ sanic==19.12.2
 sanic-openapi==0.6.0
 sniffio==1.1.0
 tomlkit==0.5.11
-typing-extensions==3.7.4.1
+typing-extensions==3.7.4.2
 ujson==2.0.3; sys_platform != "win32" and implementation_name == "cpython"
 uvloop==0.14.0; sys_platform != "win32" and implementation_name == "cpython"
 websockets==8.1

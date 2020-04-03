@@ -174,7 +174,7 @@ description = "File-based ORM for dataclasses."
 name = "datafiles"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.8"
+version = "0.9b2"
 
 [package.dependencies]
 PyYAML = ">=5.2,<6.0"
@@ -254,7 +254,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.3.25"
+version = "2020.3.31"
 
 [[package]]
 category = "main"
@@ -697,7 +697,7 @@ description = "Backported and Experimental Type Hints for Python 3.5+"
 name = "typing-extensions"
 optional = false
 python-versions = "*"
-version = "3.7.4.1"
+version = "3.7.4.2"
 
 [[package]]
 category = "main"
@@ -786,7 +786,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "bc629883ae22f3e0e3e2098bc49ee61b748129143ef05aad55b5ddba4455cdf3"
+content-hash = "935b907e0a05d19414f636ab9a1d61f24f5d26e8503e5f100bb97ac360f01513"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -892,8 +892,8 @@ coveragespace = [
     {file = "coveragespace-3.1.1.tar.gz", hash = "sha256:c5862d04a91bec32fc7dd8487006922e144280dc05e75b26c38f4ffe4e760fb0"},
 ]
 datafiles = [
-    {file = "datafiles-0.8-py3-none-any.whl", hash = "sha256:d40fd49c5242c515846f5d3261a97111e7562cb513ec15bf5928bec667c42eec"},
-    {file = "datafiles-0.8.tar.gz", hash = "sha256:5c58b2583a72d7359ea1af2ca9ff19db80af67ddbbc9496cc335fc37dddea08c"},
+    {file = "datafiles-0.9b2-py3-none-any.whl", hash = "sha256:3848106f9166c5a847d9697a704af3dfbf708d8b0bfa188e916acc840310ebd3"},
+    {file = "datafiles-0.9b2.tar.gz", hash = "sha256:29e03054de164bdbad8f3142ac34bcdd5feb3083ece00aa02ff16f85c86c77e5"},
 ]
 docopt = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
@@ -919,8 +919,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.3.25-py3-none-any.whl", hash = "sha256:9631272f7078f5aee322e54fdd84ec9006db701804126c4aebf3f7d2abb74153"},
-    {file = "hstspreload-2020.3.25.tar.gz", hash = "sha256:77bb344a034f806f8c4d260f571e4a652b38b4276db1d608d0b6db7201ce95f1"},
+    {file = "hstspreload-2020.3.31-py3-none-any.whl", hash = "sha256:e6b87847b1250c30e67bf68925d5e78b987d4be3fb61f921cdcd8ccea7dd4342"},
+    {file = "hstspreload-2020.3.31.tar.gz", hash = "sha256:0aa4c2ebb768a11109f4d2008b3fce987adaef2de584b93a48756847ec84403c"},
 ]
 httptools = [
     {file = "httptools-0.1.1-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:a2719e1d7a84bb131c4f1e0cb79705034b48de6ae486eb5297a139d6a3296dce"},
@@ -1171,9 +1171,9 @@ typed-ast = [
     {file = "typed_ast-1.4.1.tar.gz", hash = "sha256:8c8aaad94455178e3187ab22c8b01a3837f8ee50e09cf31f1ba129eb293ec30b"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-3.7.4.1-py2-none-any.whl", hash = "sha256:910f4656f54de5993ad9304959ce9bb903f90aadc7c67a0bef07e678014e892d"},
-    {file = "typing_extensions-3.7.4.1-py3-none-any.whl", hash = "sha256:cf8b63fedea4d89bab840ecbb93e75578af28f76f66c35889bd7065f5af88575"},
-    {file = "typing_extensions-3.7.4.1.tar.gz", hash = "sha256:091ecc894d5e908ac75209f10d5b4f118fbdb2eb1ede6a63544054bb1edb41f2"},
+    {file = "typing_extensions-3.7.4.2-py2-none-any.whl", hash = "sha256:f8d2bd89d25bc39dabe7d23df520442fa1d8969b82544370e03d88b5a591c392"},
+    {file = "typing_extensions-3.7.4.2-py3-none-any.whl", hash = "sha256:6e95524d8a547a91e08f404ae485bbb71962de46967e1b71a0cb89af24e761c5"},
+    {file = "typing_extensions-3.7.4.2.tar.gz", hash = "sha256:79ee589a3caca649a9bfd2a8de4709837400dfa00b6cc81962a1e6a1815969ae"},
 ]
 ujson = [
     {file = "ujson-2.0.3-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:7ae13733d9467d16ccac2f38212cdee841b49ae927085c533425be9076b0bc9d"},
