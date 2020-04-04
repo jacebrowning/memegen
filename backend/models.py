@@ -91,7 +91,3 @@ class Template:
                 yield line.lower().replace(" ", "_").replace("?", "~q")
             else:
                 yield "_"
-
-
-CUSTOM_TEMPLATE = Template("_custom")
-ERROR_TEMPLATE = Template("_error")

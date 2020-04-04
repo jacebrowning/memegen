@@ -44,7 +44,7 @@ coveragespace = "^3.1.1"
 
 # Utilities
 honcho = "^1.0"
-gitman = "=2.0a2"
+gitman = "=2.0a3"
 rope = "^0.14.0"
 
 [build-system]

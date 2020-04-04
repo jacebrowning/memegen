@@ -23,6 +23,8 @@ class LegacyTemplate:
 
 
 def run():
+    log.silence("datafiles")
+
     for count, legacy in enumerate(LegacyTemplate.objects.all(), start=1):
 
         if legacy.key.startswith("_"):
@@ -39,5 +41,4 @@ def run():
 
 
 if __name__ == "__main__":
-    log.silence("datafiles")
     run()
