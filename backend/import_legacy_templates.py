@@ -23,7 +23,7 @@ class LegacyTemplate:
 
 
 def run():
-    log.silence("datafiles")
+    log.silence("datafiles", allow_warning=True)
 
     for count, legacy in enumerate(LegacyTemplate.objects.all(), start=1):
 
