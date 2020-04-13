@@ -6,7 +6,7 @@ cached-property==1.5.1
 certifi==2020.4.5.1
 chardet==3.0.4
 classproperties==0.1.3
-datafiles==0.9b6
+datafiles==0.9
 h11==0.8.1
 h2==3.2.0
 hpack==3.0.0

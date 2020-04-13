@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import aiofiles
+import log
 from datafiles import converters, datafile
 from sanic import Sanic, response
 from sanic.exceptions import abort
@@ -61,6 +62,7 @@ async def frontend_public(request, filename):
 
 
 if __name__ == "__main__":
+    log.silence("datafiles", allow_warning=True)
     app.run(
         host="0.0.0.0",
         port=settings.PORT,
