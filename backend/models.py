@@ -1,4 +1,3 @@
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, Iterator, List, Optional
 
@@ -6,13 +5,14 @@ import aiofiles
 import aiohttp
 import log
 from aiofiles import os
-from datafiles import converters, datafile
+from datafiles import converters, datafile, field
 from sanic import Sanic
 
 from backend import settings
+from . import images
 
 
-@dataclass
+@datafile
 class Text:
 
     color: str = "white"
@@ -58,22 +58,21 @@ class Template:
             _external=True,
         )
 
-    async def render(self, *lines) -> Path:
-        text = "/".join(lines)
-        image_path = Path(f"images/{self.key}/{text}.jpg")
+    async def render(self, lines: str) -> Path:
+        image_path = Path(f"images/{self.key}/{lines}.jpg")
         image_path.parent.mkdir(parents=True, exist_ok=True)
 
         background_image_path = self._get_background_image_path()
         background_image_url = f"{settings.IMAGES_URL}/{background_image_path}"
-        image_url = f"https://memegen.link/custom/{text}.jpg?alt={background_image_url}"
-        log.debug(f"Fetching image: {image_url}")
+        log.debug(f"Fetching background image: {background_image_url}")
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(image_url) as response:
+            async with session.get(background_image_url) as response:
                 if response.status == 200:
                     f = await aiofiles.open(image_path, mode="wb")
                     await f.write(await response.read())
                     await f.close()
+                    images.render(image_path, lines)
 
         return image_path
 

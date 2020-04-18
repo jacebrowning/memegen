@@ -18,6 +18,7 @@ idna==2.9
 minilog==1.5
 multidict==4.7.5
 parse==1.15.0
+pillow==7.1.1
 pyyaml==5.3.1
 rfc3986==1.4.0
 ruamel.yaml==0.16.10
