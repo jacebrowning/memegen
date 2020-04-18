@@ -35,5 +35,5 @@ async def blank(request, key):
 @blueprint.get("/<key>/<lines:path>.jpg")
 async def text(request, key, lines):
     template = Template.objects.get_or_none(key) or Template.objects.get("_error")
-    path = await template.render(*lines.split("/"))
+    path = await template.render(lines)
     return await response.file(path)
