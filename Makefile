@@ -92,7 +92,7 @@ check-backend: install
 
 .PHONY: test-backend
 test-backend: install
-	cd backend && poetry run pytest --cov=backend --cov-branch
+	cd backend && poetry run pytest --cov=backend --cov-branch --disable-warnings
 	cd backend && poetry run coveragespace jacebrowning/memegen-v2 overall
 
 # Frontend

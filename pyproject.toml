@@ -12,14 +12,14 @@ packages = [
 
 [tool.poetry.dependencies]
 
-python = "^3.7"
+python = "^3.8"
 
 # Sanic
 sanic = "~19.12.2"
 sanic-openapi = "=0.6.0"
 
 # Utilities
-aiohttp = "^3.5"
+aiohttp = "^3.6.2"
 datafiles = "~0.9"
 
 [tool.poetry.dev-dependencies]
