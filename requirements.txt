@@ -10,7 +10,7 @@ datafiles==0.9
 h11==0.8.1
 h2==3.2.0
 hpack==3.0.0
-hstspreload==2020.4.7
+hstspreload==2020.4.14
 httptools==0.1.1
 httpx==0.9.3
 hyperframe==5.2.0
