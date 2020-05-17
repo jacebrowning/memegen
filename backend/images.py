@@ -26,14 +26,22 @@ def save(template: Template, lines: str, *, path: Optional[Path] = None) -> Path
     #             images.render_legacy(image_path, lines)
 
     image = render(template, lines)
-    image.save(path)
+    image.save(path, format=image.format)
 
     return path
 
 
 def render(template: Template, lines: str) -> Image:
     image = Image.open(template.background_image_path)
-    draw = ImageDraw.Draw(image, "RGBA")
+    if image.mode not in ("RGB", "RGBA"):
+        if image.format == "JPEG":
+            image = image.convert("RGB")
+            image.format = "JPEG"
+        else:
+            image = image.convert("RGBA")
+            image.format = "PNG"
+
+    draw = ImageDraw.Draw(image)
 
     for point, text in build(template, lines):
         draw.text(point, text)
