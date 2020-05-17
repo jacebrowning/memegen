@@ -40,6 +40,14 @@ class Template:
     def valid(self) -> bool:
         return bool(self.name and not self.name.startswith("<"))
 
+    @property
+    def background_image_path(self) -> Path:
+        for ext in ["png", "jpg"]:
+            path = self.datafile.path.parent / f"default.{ext}"
+            if path.exists():
+                return path
+        raise ValueError(f"No background image for template: {self}")
+
     def jsonify(self, app: Sanic) -> Dict:
         return {
             "name": self.name,
@@ -62,26 +70,23 @@ class Template:
         image_path = Path(f"images/{self.key}/{lines}.jpg")
         image_path.parent.mkdir(parents=True, exist_ok=True)
 
-        background_image_path = self._get_background_image_path()
-        background_image_url = f"{settings.IMAGES_URL}/{background_image_path}"
-        log.debug(f"Fetching background image: {background_image_url}")
+        # TODO: handle external images
+        # background_image_path = self._get_background_image_path()
+        # background_image_url = f"{settings.IMAGES_URL}/{background_image_path}"
+        # log.debug(f"Fetching background image: {background_image_url}")
 
-        async with aiohttp.ClientSession() as session:
-            async with session.get(background_image_url) as response:
-                if response.status == 200:
-                    f = await aiofiles.open(image_path, mode="wb")
-                    await f.write(await response.read())
-                    await f.close()
-                    images.render(image_path, lines)
+        # async with aiohttp.ClientSession() as session:
+        #     async with session.get(background_image_url) as response:
+        #         if response.status == 200:
+        #             f = await aiofiles.open(image_path, mode="wb")
+        #             await f.write(await response.read())
+        #             await f.close()
+        #             images.render_legacy(image_path, lines)
+
+        image = images.render(self, lines)
+        image.save(image_path)
 
         return image_path
-
-    def _get_background_image_path(self, name="default") -> Path:
-        for ext in ["png", "jpg"]:
-            path = Path("templates", self.key, f"default.{ext}")
-            if path.exists():
-                return path
-        raise ValueError(f"No background image for template: {self}")
 
     @staticmethod
     def _encode(*lines: str) -> Iterator[str]:
