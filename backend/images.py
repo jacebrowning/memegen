@@ -4,11 +4,16 @@ from typing import Iterator, Optional, Tuple
 from PIL import Image, ImageDraw
 
 from .models import Template
+from .types import Dimensions, Point
 
-Point = Tuple[int, int]
 
-
-def save(template: Template, lines: str, *, path: Optional[Path] = None) -> Path:
+def save(
+    template: Template,
+    lines: str,
+    size: Dimensions = (500, 500),
+    *,
+    path: Optional[Path] = None,
+) -> Path:
     path = path or Path(f"images/{template.key}/{lines}.jpg")
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -25,13 +30,13 @@ def save(template: Template, lines: str, *, path: Optional[Path] = None) -> Path
     #             await f.close()
     #             images.render_legacy(image_path, lines)
 
-    image = render(template, lines)
+    image = render(template, lines, size)
     image.save(path, format=image.format)
 
     return path
 
 
-def render(template: Template, lines: str) -> Image:
+def render(template: Template, lines: str, size: Dimensions) -> Image:
     image = Image.open(template.background_image_path)
     if image.mode not in ("RGB", "RGBA"):
         if image.format == "JPEG":
@@ -41,14 +46,18 @@ def render(template: Template, lines: str) -> Image:
             image = image.convert("RGBA")
             image.format = "PNG"
 
-    draw = ImageDraw.Draw(image)
+    # image = image.resize(size)
 
-    for point, text in build(template, lines):
+    draw = ImageDraw.Draw(image)
+    for point, text in build(template, lines, size):
         draw.text(point, text)
 
     return image
 
 
-def build(template: Template, lines: str) -> Iterator[Tuple[Point, str]]:
-    for index, text in enumerate(lines.split("/")):
-        yield (10, 10 + index * 20), text
+def build(
+    template: Template, lines: str, size: Dimensions
+) -> Iterator[Tuple[Point, str]]:
+    parts = lines.split("/") + ["_", "_", "_"]
+    for index, text in enumerate(template.text):
+        yield text.get_anchor(size), parts[index]

@@ -35,7 +35,7 @@ def index(images_directory):
         f.write(f'<meta http-equiv="refresh" content="60">\n')
         for key, lines in IMAGES:
             href = f"http://localhost:5001/api/images/{key}/{lines}.jpg?time=0"
-            f.write(f'<img src="{href}" width="300" style="padding: 5px;">\n')
+            f.write(f'<img src="{href}" width="500" style="padding: 5px;">\n')
         f.write(SCRIPT)
 
     return path

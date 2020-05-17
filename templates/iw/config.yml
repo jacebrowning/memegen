@@ -4,15 +4,15 @@ sample:
   - DOES TESTING
   - IN PRODUCTION
 text:
-  - color: ''
-    anchor_x: 0.0
-    anchor_y: 0.0
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
     angle: 0.0
-    scale_x: 0.0
-    scale_y: 0.0
-  - color: ''
-    anchor_x: 0.0
-    anchor_y: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.9
     angle: 0.0
-    scale_x: 0.0
-    scale_y: 0.0
+    scale_x: 0.8
+    scale_y: 0.2

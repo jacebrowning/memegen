@@ -20,7 +20,8 @@ sanic-openapi = "0.6.0"
 
 # Utilities
 aiohttp = "^3.6.2"
-datafiles = "~0.9"
+datafiles = "0.10b2"
+minilog = "1.6b5"
 pillow = "^7.1.1"
 
 [tool.poetry.dev-dependencies]

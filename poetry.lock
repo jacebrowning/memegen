@@ -174,13 +174,13 @@ description = "File-based ORM for dataclasses."
 name = "datafiles"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.9"
+version = "0.10b2"
 
 [package.dependencies]
 PyYAML = ">=5.2,<6.0"
 cached_property = ">=1.5,<2.0"
 classproperties = ">=0.1.3,<0.2.0"
-minilog = ">=1.4.1,<2.0.0"
+minilog = ">=1.6b5,<2.0"
 parse = ">=1.12,<2.0"
 "ruamel.yaml" = ">=0.16.10,<0.17.0"
 tomlkit = ">=0.5.3,<0.6.0"
@@ -321,7 +321,7 @@ description = "Minimalistic wrapper for Python logging."
 name = "minilog"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "1.5"
+version = "1.6b5"
 
 [[package]]
 category = "dev"
@@ -752,7 +752,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "5a99ecb934e5ce5d6991efd4957beef3d6863b65c55bffa46aadcc6b9875eb35"
+content-hash = "fcda743059345027e6240e8ecaac51187335955d5a58abc22585de47baca53fd"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -858,8 +858,8 @@ coveragespace = [
     {file = "coveragespace-3.1.1.tar.gz", hash = "sha256:c5862d04a91bec32fc7dd8487006922e144280dc05e75b26c38f4ffe4e760fb0"},
 ]
 datafiles = [
-    {file = "datafiles-0.9-py3-none-any.whl", hash = "sha256:ace4feb1a1c60c25682e57208bfe470efe6012205810ea3eb347c6f58ae86453"},
-    {file = "datafiles-0.9.tar.gz", hash = "sha256:972ec2afec62fe156ea8c3ea6bdbf6285661fa589c4242257bcb68ad152cee11"},
+    {file = "datafiles-0.10b2-py3-none-any.whl", hash = "sha256:169c70c78561eab264de1fe3bb29722c4bbedbe8980fb90f444bcff60ab0f320"},
+    {file = "datafiles-0.10b2.tar.gz", hash = "sha256:e67f9b113d062dd71c6c7761834afe61205a486521620823200d492f87aec1e9"},
 ]
 docopt = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
@@ -919,8 +919,8 @@ isort = [
     {file = "isort-4.3.21.tar.gz", hash = "sha256:54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1"},
 ]
 minilog = [
-    {file = "minilog-1.5-py3-none-any.whl", hash = "sha256:545cacd6a3db3b5b2fa9743acfc3c413c262ada2ea98ab6fe81a9ca56d4163f3"},
-    {file = "minilog-1.5.tar.gz", hash = "sha256:1670d6d2d28b0957ed1b89b4808c966127be118f989463cbcf3e7fb1335e427b"},
+    {file = "minilog-1.6b5-py3-none-any.whl", hash = "sha256:ae2e1099e8dd52352ca934a505a0e86184de659c1f08cee322c0975ce59bed01"},
+    {file = "minilog-1.6b5.tar.gz", hash = "sha256:34549d376da07499a298753d8f66c2972e98557a819266c0cee868038bf4e0c3"},
 ]
 more-itertools = [
     {file = "more-itertools-8.3.0.tar.gz", hash = "sha256:558bb897a2232f5e4f8e2399089e35aecb746e1f9191b6584a151647e89267be"},
