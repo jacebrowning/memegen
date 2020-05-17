@@ -1,6 +1,5 @@
 from sanic import Blueprint, response
 from sanic.exceptions import abort
-from sanic_openapi import doc
 
 from ..models import Template
 

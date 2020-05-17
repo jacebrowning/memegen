@@ -1,16 +1,12 @@
 from pathlib import Path
 
-import aiofiles
 import log
-from datafiles import converters, datafile
 from sanic import Sanic, response
-from sanic.exceptions import abort
 from sanic_openapi import doc, swagger_blueprint
 
 from backend import settings
 from backend.api.images import blueprint as api_images
 from backend.api.templates import blueprint as api_templates
-from backend.models import Template
 
 app = Sanic(name="memegen")
 
@@ -58,6 +54,8 @@ async def frontend_static(request, filename):
 @app.get("/<filename:path>")
 @doc.exclude(True)
 async def frontend_public(request, filename):
+    if filename == "debug":
+        return await response.file(f"backend/tests/images/index.html")
     return await response.file(f"frontend/build/{filename}")
 
 

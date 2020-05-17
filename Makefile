@@ -72,21 +72,17 @@ format: format-backend
 check: check-backend
 
 .PHONY: test
-test: test-backend test-frontend
+test: test-backend test-frontend test-system
 
 .PHONY: watch
 watch: install
-	poetry run pytest-watch --runner="make test" --onpass="make check && clear && echo 'All tests passed.'" --nobeep --wait
-
-.PHONY: watch-all
-watch-all: install
-	poetry run pytest-watch --runner="make test test-system CYPRESS_BASE_URL=http://localhost:5000" --onpass="make check && clear && echo 'All tests passed.'" --nobeep --wait
+	poetry run pytest-watch --runner="make test CYPRESS_BASE_URL=http://localhost:5000" --onpass="make check format && clear && echo 'All tests passed.'" --nobeep --wait
 
 # Backend
 
 .PHONY: format-backend
 format-backend: install
-	poetry run autoflake --recursive backend --in-place
+	poetry run autoflake --recursive backend --in-place --remove-all-unused-imports
 	poetry run isort backend --recursive --apply
 	poetry run black backend
 
