@@ -1,12 +1,10 @@
-from pathlib import Path
-
 import log
 from sanic import Sanic, response
 from sanic_openapi import doc, swagger_blueprint
 
-from backend import settings
-from backend.api.images import blueprint as api_images
-from backend.api.templates import blueprint as api_templates
+from app import settings
+from app.api.images import blueprint as api_images
+from app.api.templates import blueprint as api_templates
 
 app = Sanic(name="memegen")
 
@@ -34,29 +32,14 @@ async def api(request):
 
 @app.get("/templates/<filename:path>")
 @doc.exclude(True)
-async def backend_image(request, filename):
+async def image(request, filename):
     return await response.file(f"templates/{filename}")
 
 
-@app.get("/")
+@app.get("/debug")
 @doc.exclude(True)
-async def frontend_index(request):
-    path = Path("frontend", "build", "index.html").resolve()
-    return await response.file(path)
-
-
-@app.get("/static/<filename:path>")
-@doc.exclude(True)
-async def frontend_static(request, filename):
-    return await response.file(f"frontend/build/static/{filename}")
-
-
-@app.get("/<filename:path>")
-@doc.exclude(True)
-async def frontend_public(request, filename):
-    if filename == "debug":
-        return await response.file(f"backend/tests/images/index.html")
-    return await response.file(f"frontend/build/{filename}")
+async def debug(request):
+    return await response.file(f"app/tests/images/index.html")
 
 
 if __name__ == "__main__":

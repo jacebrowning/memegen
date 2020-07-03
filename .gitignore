@@ -1,10 +1,6 @@
-.envrc
-
+# files
 /images/
 /templates-legacy/
-
-###############################################################################
-# Backend
 
 # dependencies
 .venv/
@@ -18,17 +14,3 @@ __pycache__/
 # testing
 .pytest_cache/
 .coverage
-
-###############################################################################
-# Frontend
-
-# dependencies
-/frontend/node_modules
-
-# testing
-/frontend/coverage
-/frontend/cypress/screenshots/
-/frontend/cypress/videos/
-
-# production
-/frontend/build

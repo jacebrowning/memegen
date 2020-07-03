@@ -1,6 +1,6 @@
 from pkg_resources import get_distribution
 
-from backend.views import app
+from app.views import app
 
 
 def describe_spec():

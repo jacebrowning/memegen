@@ -1,6 +1,6 @@
 import json
 
-from backend.views import app
+from app.views import app
 
 
 def describe_templates():

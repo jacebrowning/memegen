@@ -1,2 +1,0 @@
-backend: DEBUG=true PORT=5001 poetry run python backend/views.py
-frontend: cd frontend && PORT=5000 REACT_APP_BACKEND_URL=http://localhost:5001 yarn start
