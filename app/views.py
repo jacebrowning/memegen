@@ -19,6 +19,14 @@ app.blueprint(api_templates)
 app.blueprint(swagger_blueprint)
 
 
+@app.get("/")
+@doc.exclude(True)
+def index(request):
+    if settings.DEBUG:
+        return response.file(f"app/tests/images/index.html")
+    return response.redirect("/swagger")
+
+
 @app.get("/api/")
 @doc.exclude(True)
 async def api(request):
@@ -34,12 +42,6 @@ async def api(request):
 @doc.exclude(True)
 async def image(request, filename):
     return await response.file(f"templates/{filename}")
-
-
-@app.get("/debug")
-@doc.exclude(True)
-async def debug(request):
-    return await response.file(f"app/tests/images/index.html")
 
 
 if __name__ == "__main__":
