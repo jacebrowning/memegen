@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/memegen-v2
 
     docker:
-      - image: circleci/python:3.8.2-node-browsers
+      - image: circleci/python:3.8.3-node-browsers
 
     steps:
       - checkout
