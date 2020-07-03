@@ -15,7 +15,7 @@ packages = [
 python = "^3.8"
 
 # Sanic
-sanic = "~19.12.2"
+sanic = "~20.6.3"
 sanic-openapi = "=0.6.0"
 
 # Utilities
