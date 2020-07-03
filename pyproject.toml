@@ -16,19 +16,19 @@ python = "^3.8"
 
 # Sanic
 sanic = "~19.12.2"
-sanic-openapi = "0.6.0"
+sanic-openapi = "=0.6.0"
 
 # Utilities
 aiohttp = "^3.6.2"
-datafiles = "0.10b4"
+datafiles = "~0.10"
 minilog = "^1.6"
 pillow = "^7.1.1"
 
 [tool.poetry.dev-dependencies]
 
 # Formatting
-isort = "4.3.21"
-black = "19.10b0"
+isort = "=4.3.21"
+black = "=19.10b0"
 
 # Type Checking
 mypy = "~0.770"
