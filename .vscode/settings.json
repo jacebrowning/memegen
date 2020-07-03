@@ -10,7 +10,6 @@
     "**/node_modules/": true,
     "setup.py": true
   },
-  "python.pythonPath": ".venv/bin/python",
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
