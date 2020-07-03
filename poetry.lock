@@ -227,20 +227,6 @@ hpack = ">=3.0,<4"
 hyperframe = ">=5.2.0,<6"
 
 [[package]]
-category = "dev"
-description = "Honcho: a Python clone of Foreman. For managing Procfile-based applications."
-name = "honcho"
-optional = false
-python-versions = "*"
-version = "1.0.1"
-
-[package.dependencies]
-colorama = "*"
-
-[package.extras]
-export = ["jinja2 (>=2.7,<2.8)"]
-
-[[package]]
 category = "main"
 description = "Pure-Python HPACK header compression"
 name = "hpack"
@@ -752,7 +738,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "0c87ca55f6f1d0d7c67d73a75bb4a51cbcf6a310dfc93326ef2fb7c604345919"
+content-hash = "deb91ebe43c3ba67b3218367b728cc12380eebf99bd2198c11a175e44ca3412d"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -875,10 +861,6 @@ h11 = [
 h2 = [
     {file = "h2-3.2.0-py2.py3-none-any.whl", hash = "sha256:61e0f6601fa709f35cdb730863b4e5ec7ad449792add80d1410d4174ed139af5"},
     {file = "h2-3.2.0.tar.gz", hash = "sha256:875f41ebd6f2c44781259005b157faed1a5031df3ae5aa7bcb4628a6c0782f14"},
-]
-honcho = [
-    {file = "honcho-1.0.1-py2.py3-none-any.whl", hash = "sha256:af5806bf13e3b20acdcb9ff8c0beb91eee6fe07393c3448dfad89667e6ac7576"},
-    {file = "honcho-1.0.1.tar.gz", hash = "sha256:c189402ad2e337777283c6a12d0f4f61dc6dd20c254c9a3a4af5087fc66cea6e"},
 ]
 hpack = [
     {file = "hpack-3.0.0-py2.py3-none-any.whl", hash = "sha256:0edd79eda27a53ba5be2dfabf3b15780928a0dff6eb0c60a3d6767720e970c89"},

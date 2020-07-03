@@ -11,22 +11,11 @@ jobs:
       - checkout
 
       - run:
-          name: Installing System Dependencies
-          command: |
-            sudo npm install -g serverless
-
-      - run:
           name: Checking System Dependencies
           command: make doctor
 
       - type: cache-restore
         key: poetry-{{ checksum "poetry.lock" }}
-
-      - type: cache-restore
-        key: yarn-{{ checksum "frontend/yarn.lock" }}
-
-      - type: cache-restore
-        key: yarn-{{ checksum "service/yarn.lock" }}
 
       - run:
           name: Installing Project Dependencies
@@ -37,33 +26,10 @@ jobs:
         paths:
           - .venv
 
-      - type: cache-save
-        key: yarn-{{ checksum "frontend/yarn.lock" }}
-        paths:
-          - frontend/node_modules
-          - ~/.cache/Cypress
-
-      - type: cache-save
-        key: yarn-{{ checksum "service/yarn.lock" }}
-        paths:
-          - service/node_modules
+      - run:
+          name: Checking Code
+          command: make check
 
       - run:
-          name: Checking Backend Code
-          command: make check-backend
-
-      - run:
-          name: Running Backend Tests
-          command: make test-backend
-
-      - run:
-          name: Running Frontend Tests
-          command: make test-frontend
-
-      - run:
-          name: Running Service Tests
-          command: make test-service
-
-      - run:
-          name: Running System Tests
-          command: make test-system
+          name: Running Tests
+          command: make test

@@ -1,2 +1,0 @@
-app: make run BROWSER=none
-e2e: cd frontend && yarn run cypress run

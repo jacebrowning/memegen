@@ -5,7 +5,7 @@ from typing import List
 import log
 from datafiles import datafile
 
-from backend.models import Template
+from app.models import Template
 
 
 @datafile("../templates-legacy/{self.key}/config.yml")
