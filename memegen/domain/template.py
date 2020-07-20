@@ -193,7 +193,7 @@ class Template:
             log.warning("Connection timed out")
             return True  # assume URL is OK; it will be checked again
 
-        if response.status_code in [403, 429]:
+        if response.status_code in [403, 429, 503]:
             self._warn(f"link is unavailable ({response.status_code})")
         elif response.status_code >= 400:
             self._error(f"link is invalid ({response.status_code})")
