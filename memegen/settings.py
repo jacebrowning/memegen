@@ -14,7 +14,7 @@ class Config:
     # Constants
     GITHUB_SLUG = "jacebrowning/memegen"
     GITHUB_URL = "https://github.com/{}".format(GITHUB_SLUG)
-    GITHUB_BASE = "https://raw.githubusercontent.com/{}/master/".format(GITHUB_SLUG)
+    GITHUB_BASE = "https://raw.githubusercontent.com/{}/main/".format(GITHUB_SLUG)
     CHANGES_URL = GITHUB_BASE + "CHANGELOG.md"
     CONTRIBUTING_URL = GITHUB_BASE + "CONTRIBUTING.md"
 

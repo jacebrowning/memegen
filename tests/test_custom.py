@@ -25,4 +25,4 @@ def describe_custom():
         html = response.get_data(as_text=True)
 
         expect(html).contains("$('#meme-font').val('impact');")
-        expect(html).contains("$('#meme-background').val('https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png');")
+        expect(html).contains("$('#meme-background').val('https://raw.githubusercontent.com/jacebrowning/memegen/main/memegen/static/images/missing.png');")

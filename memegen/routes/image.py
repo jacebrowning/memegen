@@ -12,7 +12,7 @@ blueprint = Blueprint('image', __name__)
 cache_filtered = Cache()
 cache_unfiltered = Cache(filtered=False)
 
-PLACEHOLDER = "https://raw.githubusercontent.com/jacebrowning/memegen/master/memegen/static/images/missing.png"
+PLACEHOLDER = "https://raw.githubusercontent.com/jacebrowning/memegen/main/memegen/static/images/missing.png"
 OPTIONS = {
     'alt': fields.Str(missing=None),
     'font': fields.Str(missing=None),

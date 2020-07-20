@@ -114,14 +114,14 @@ def describe_get():
             expect(response.status_code) == 415
 
         def it_handles_png_int32_pixels(client):
-            url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/201692816359570.jpeg"
+            url = "https://raw.githubusercontent.com/jacebrowning/memegen/main/tests/files/201692816359570.jpeg"
             response = client.get(f"/custom/hello.jpg?alt={url}")
 
             expect(response.status_code) == 200
             expect(response.mimetype) == 'image/jpeg'
 
         def it_handles_jpg_cmyk_pixels(client):
-            url = "https://raw.githubusercontent.com/jacebrowning/memegen/master/tests/files/Channel_digital_image_CMYK_color.jpg"
+            url = "https://raw.githubusercontent.com/jacebrowning/memegen/main/tests/files/Channel_digital_image_CMYK_color.jpg"
             response = client.get(f"/custom/hello.jpg?alt={url}")
 
             expect(response.status_code) == 200
@@ -255,7 +255,7 @@ def describe_get():
             expect(data).contains(
                 '<a href="http://localhost/custom/your_meme/goes_here.jpg'
                 '?alt=https://raw.githubusercontent.com/jacebrowning/memegen/'
-                'master/memegen/static/images/missing.png">')
+                'main/memegen/static/images/missing.png">')
 
         def it_filters_blocked_words(client, enable_cache):
             client.get("/iw/nazis.jpg")

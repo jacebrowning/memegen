@@ -21,5 +21,5 @@ def describe_post():
 
         expect(status) == 403
         expect(data) == dict(
-            message="https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
+            message="https://raw.githubusercontent.com/jacebrowning/memegen/main/CONTRIBUTING.md"
         )

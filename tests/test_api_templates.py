@@ -63,7 +63,7 @@ def describe_post():
 
         expect(status) == 403
         expect(data) == {
-            'message': "https://raw.githubusercontent.com/jacebrowning/memegen/master/CONTRIBUTING.md"
+            'message': "https://raw.githubusercontent.com/jacebrowning/memegen/main/CONTRIBUTING.md"
         }
 
     def it_can_create_a_new_meme(client):
