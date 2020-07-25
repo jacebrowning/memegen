@@ -1,3 +1,5 @@
+import asyncio
+
 from sanic import Blueprint, response
 from sanic_openapi import doc
 
@@ -27,11 +29,13 @@ async def create(request):
 
 @blueprint.get("/<key>.jpg")
 async def blank(request, key):
-    path = save_image(key)
+    loop = asyncio.get_event_loop()
+    path = await loop.run_in_executor(None, save_image, key)
     return await response.file(path)
 
 
 @blueprint.get("/<key>/<lines:path>.jpg")
 async def text(request, key, lines):
-    path = save_image(key, lines)
+    loop = asyncio.get_event_loop()
+    path = await loop.run_in_executor(None, save_image, key, lines)
     return await response.file(path)

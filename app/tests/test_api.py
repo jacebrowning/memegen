@@ -17,7 +17,7 @@ def describe_images():
             expect(response.status) == 200
             expect(response.json).contains(
                 {
-                    "url": "http://localhost:5001/api/images/iw/does_testing/in_production.jpg"
+                    "url": "http://localhost:5000/api/images/iw/does_testing/in_production.jpg"
                 }
             )
 
@@ -29,5 +29,5 @@ def describe_images():
             )
             expect(response.status) == 201
             expect(response.json) == {
-                "url": "http://localhost:5001/api/images/iw/foo/bar.jpg"
+                "url": "http://localhost:5000/api/images/iw/foo/bar.jpg"
             }
