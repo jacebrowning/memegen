@@ -45,8 +45,7 @@ async def image(request, filename):
 
 
 if __name__ == "__main__":
-    log.silence("datafiles", allow_warning=True)
-    log.silence("asyncio", allow_error=True)
+    log.silence("asyncio", "datafiles", allow_warning=True)
     app.run(
         host="0.0.0.0",
         port=settings.PORT,
