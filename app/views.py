@@ -4,7 +4,9 @@ from sanic_openapi import doc, swagger_blueprint
 
 from app import settings
 from app.api.images import blueprint as api_images
+from app.api.images import get_images
 from app.api.templates import blueprint as api_templates
+from app.helpers import display_images
 
 app = Sanic(name="memegen")
 
@@ -22,9 +24,11 @@ app.blueprint(swagger_blueprint)
 @app.get("/")
 @doc.exclude(True)
 def index(request):
-    if settings.DEBUG:
+    if "debug" in request.args and settings.DEBUG:
         return response.file(f"app/tests/images/index.html")
-    return response.redirect("/swagger")
+    urls = get_images(request)
+    text = display_images(urls)
+    return response.html(text)
 
 
 @app.get("/api/")

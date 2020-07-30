@@ -1,4 +1,5 @@
 import asyncio
+from typing import List
 
 from sanic import Blueprint, response
 from sanic_openapi import doc
@@ -6,13 +7,18 @@ from sanic_openapi import doc
 from ..helpers import save_image
 from ..models import Template
 
+
+def get_images(request) -> List[str]:
+    templates = Template.objects.filter(valid=True)
+    return [t.build_sample_url(request.app) for t in templates]
+
+
 blueprint = Blueprint("images", url_prefix="/api/images")
 
 
 @blueprint.get("/")
 async def index(request):
-    templates = Template.objects.filter(valid=True)
-    return response.json([{"url": t.build_sample_url(request.app)} for t in templates])
+    return response.json([{"url": url} for url in get_images(request)])
 
 
 @blueprint.post("/")
