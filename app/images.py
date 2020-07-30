@@ -40,7 +40,7 @@ def render(template: Template, lines: str, size: Dimensions) -> Image:
     image = Image.open(template.background_image_path)
     image = image.convert("RGB")
 
-    image.thumbnail(size)
+    image.thumbnail(size, Image.LANCZOS)
 
     draw = ImageDraw.Draw(image)
     for point, text in build(template, lines, image.size):
