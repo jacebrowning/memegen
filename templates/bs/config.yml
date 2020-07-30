@@ -7,12 +7,12 @@ text:
     scale_y: 0.2
   - color: white
     anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_y: 0.9
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.2
 name: This is Bull, Shark
+source: https://www.reddit.com/r/funny/comments/3grsfs
 sample:
   - WHAT A SURPRISE...
   - YOU CAUGHT ME AGAIN
-source: https://www.reddit.com/r/funny/comments/3grsfs

@@ -7,12 +7,12 @@ text:
     scale_y: 0.2
   - color: white
     anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_y: 0.9
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.2
 name: And Then I Said
+source: https://knowyourmeme.com/memes/and-then-i-said
 sample:
   - AND THEN I SAID
   - THE EXAM WILL ONLY CONTAIN WHAT WE'VE COVERED IN LECTURES
-source: https://knowyourmeme.com/memes/and-then-i-said

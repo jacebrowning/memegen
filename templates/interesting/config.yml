@@ -7,11 +7,11 @@ text:
     scale_y: 0.2
   - color: white
     anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_y: 0.9
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.2
 name: The Most Interesting Man in the World
+source: http://knowyourmeme.com/memes/the-most-interesting-man-in-the-world
 sample:
   - ''
-source: http://knowyourmeme.com/memes/the-most-interesting-man-in-the-world

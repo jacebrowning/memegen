@@ -7,12 +7,12 @@ text:
     scale_y: 0.2
   - color: white
     anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_y: 0.9
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.2
 name: Sad George Bush
+source: http://knowyourmeme.com/memes/sad-joe-biden
 sample:
   - SAD GEORGE BUSH
   - DOESN'T THINK YOU'LL VOTE
-source: http://knowyourmeme.com/memes/sad-joe-biden

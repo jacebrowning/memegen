@@ -7,12 +7,12 @@ text:
     scale_y: 0.2
   - color: white
     anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_y: 0.9
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.2
 name: Schrute Facts
+source: http://knowyourmeme.com/memes/schrute-facts
 sample:
   - LOVE IS ALL YOU NEED?
   - FALSE. YOU NEED WATER AND RATIONS.
-source: http://knowyourmeme.com/memes/schrute-facts

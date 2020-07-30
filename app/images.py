@@ -38,15 +38,8 @@ def save(
 
 def render(template: Template, lines: str, size: Dimensions) -> Image:
     image = Image.open(template.background_image_path)
-    if image.mode not in ("RGB", "RGBA"):
-        if image.format == "JPEG":
-            image = image.convert("RGB")
-            image.format = "JPEG"
-        else:
-            image = image.convert("RGBA")
-            image.format = "PNG"
-
-    # image = image.resize(size)
+    image = image.convert("RGB")
+    image = image.resize(size)  # TODO: preseve aspect ratio
 
     draw = ImageDraw.Draw(image)
     for point, text in build(template, lines, size):

@@ -32,6 +32,8 @@ def run():
 
         log.info(f"Importing template {count}: {legacy.key}")
 
+        shutil.rmtree(f"templates/{legacy.key}")
+
         template = Template(legacy.key)
         template.name = legacy.name
         template.source = legacy.link

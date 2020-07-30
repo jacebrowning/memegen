@@ -7,12 +7,12 @@ text:
     scale_y: 0.2
   - color: white
     anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_y: 0.9
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.2
 name: Comic Book Guy
+source: http://simpsons.wikia.com/wiki/Jeffrey_Albertson
 sample:
   - ''
   - WORST THING EVER!
-source: http://simpsons.wikia.com/wiki/Jeffrey_Albertson
