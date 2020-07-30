@@ -4,7 +4,7 @@ from typing import List, Optional
 from . import images
 from .models import Template
 
-RELOAD_IMAGES_SCRIPT = r"""<script>
+REFRESH_IMAGES_SCRIPT = r"""<script>
 setInterval(function() {
     var images = document.images;
     for (var i=0; i<images.length; i++) {
@@ -23,15 +23,18 @@ def save_image(key: str, lines: str = "_", *, path: Optional[Path] = None) -> Pa
     return path
 
 
-def display_images(urls: List[str], *, debug: bool = False) -> str:
-    html = f'<meta http-equiv="refresh" content="60">\n' if debug else ""
+def display_images(urls: List[str], *, refresh: bool = False) -> str:
+    lines = []
+
+    if refresh:
+        lines.append(f'<meta http-equiv="refresh" content="60">')
 
     for url in urls:
-        if debug:
+        if refresh:
             url += "?time=0"
-        html += f'<img src="{url}" width="500" style="padding: 5px;">\n'
+        lines.append(f'<img src="{url}" width="500" style="padding: 5px;">')
 
-    if debug:
-        html += RELOAD_IMAGES_SCRIPT
+    if refresh:
+        lines.append(REFRESH_IMAGES_SCRIPT)
 
-    return html
+    return "\n".join(lines)

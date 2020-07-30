@@ -21,7 +21,7 @@ def index(images_directory):
         f"http://localhost:5000/api/images/{key}/{lines}.jpg"
         for key, lines in TEST_IMAGES
     ]
-    html = helpers.display_images(urls, debug=True)
+    html = helpers.display_images(urls, refresh=True)
 
     path = images_directory / ".gitignore"
     with path.open("w") as f:

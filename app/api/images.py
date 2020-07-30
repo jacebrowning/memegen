@@ -8,9 +8,9 @@ from ..helpers import save_image
 from ..models import Template
 
 
-def get_images(request) -> List[str]:
+def get_sample_images(request) -> List[str]:
     templates = Template.objects.filter(valid=True)
-    return [t.build_sample_url(request.app) for t in templates]
+    return [template.build_sample_url(request.app) for template in templates]
 
 
 blueprint = Blueprint("images", url_prefix="/api/images")
@@ -18,7 +18,8 @@ blueprint = Blueprint("images", url_prefix="/api/images")
 
 @blueprint.get("/")
 async def index(request):
-    return response.json([{"url": url} for url in get_images(request)])
+    urls = get_sample_images(request)
+    return response.json([{"url": url} for url in urls])
 
 
 @blueprint.post("/")

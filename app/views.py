@@ -4,7 +4,7 @@ from sanic_openapi import doc, swagger_blueprint
 
 from app import settings
 from app.api.images import blueprint as api_images
-from app.api.images import get_images
+from app.api.images import get_sample_images
 from app.api.templates import blueprint as api_templates
 from app.helpers import display_images
 
@@ -26,9 +26,17 @@ app.blueprint(swagger_blueprint)
 def index(request):
     if "debug" in request.args and settings.DEBUG:
         return response.file(f"app/tests/images/index.html")
-    urls = get_images(request)
+    urls = get_sample_images(request)
     text = display_images(urls)
     return response.html(text)
+
+
+@app.get("/test")
+@doc.exclude(True)
+def test(request):
+    if settings.DEBUG:
+        return response.file(f"app/tests/images/index.html")
+    return response.redirect("/")
 
 
 @app.get("/api/")
