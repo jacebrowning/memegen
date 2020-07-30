@@ -3,9 +3,13 @@ from pathlib import Path
 import log
 import pytest
 
-from .. import helpers, images, models
+from .. import helpers, images, models, settings
 
-TEST_IMAGES = [("iw", "tests_code/in_production"), ("unknown", "_/unknown template")]
+TEST_IMAGES = [
+    ("iw", "tests_code/in_production"),
+    ("unknown", "_/unknown template"),
+    ("sparta", "_/this is sparta!"),
+]
 
 
 @pytest.fixture(scope="session")
@@ -18,7 +22,7 @@ def images_directory():
 @pytest.fixture(scope="session", autouse=True)
 def index(images_directory):
     urls = [
-        f"http://localhost:5000/api/images/{key}/{lines}.jpg"
+        f"http://{settings.SERVER_NAME}/api/images/{key}/{lines}.jpg"
         for key, lines in TEST_IMAGES
     ]
     html = helpers.display_images(urls, refresh=True)

@@ -39,10 +39,11 @@ def save(
 def render(template: Template, lines: str, size: Dimensions) -> Image:
     image = Image.open(template.background_image_path)
     image = image.convert("RGB")
-    image = image.resize(size)  # TODO: preseve aspect ratio
+
+    image.thumbnail(size)
 
     draw = ImageDraw.Draw(image)
-    for point, text in build(template, lines, size):
+    for point, text in build(template, lines, image.size):
         draw.text(point, text)
 
     return image

@@ -43,7 +43,7 @@ clean:
 
 .PHONY: run
 run: install
-	DEBUG=true poetry run heroku local
+	DEBUG=true poetry run python app/views.py
 
 .PHONY: format
 format: install
