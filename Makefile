@@ -110,7 +110,7 @@ COVERAGESPACE := pipenv run coveragespace
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
-PYTEST_CORE_OPTIONS := -ra -vv
+PYTEST_CORE_OPTIONS := -ra
 PYTEST_COV_OPTIONS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing:skip-covered --cov-report=html
 PYTEST_RANDOM_OPTIONS := --random --random-seed=$(RANDOM_SEED)
 
