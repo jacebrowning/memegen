@@ -13,7 +13,14 @@ def get_sample_images(request) -> List[str]:
     return [template.build_sample_url(request.app) for template in templates]
 
 
+async def render_image(request, key, lines):
+    loop = asyncio.get_event_loop()
+    path = await loop.run_in_executor(None, save_image, key, lines)
+    return await response.file(path)
+
+
 blueprint = Blueprint("images", url_prefix="/api/images")
+blueprint_legacy = Blueprint("images-legacy", url_prefix="/")
 
 
 @blueprint.get("/")
@@ -43,6 +50,9 @@ async def blank(request, key):
 
 @blueprint.get("/<key>/<lines:path>.jpg")
 async def text(request, key, lines):
-    loop = asyncio.get_event_loop()
-    path = await loop.run_in_executor(None, save_image, key, lines)
-    return await response.file(path)
+    return await render_image(request, key, lines)
+
+
+@blueprint_legacy.get("/<key>/<lines:path>.jpg")
+async def text_legacy(request, key, lines):
+    return await render_image(request, key, lines)
