@@ -3,9 +3,8 @@ from sanic import Sanic, response
 from sanic_openapi import doc, swagger_blueprint
 
 from app import settings
-from app.api.images import blueprint as api_images
+from app.api import images, templates
 from app.api.images import get_sample_images
-from app.api.templates import blueprint as api_templates
 from app.helpers import display_images
 
 app = Sanic(name="memegen")
@@ -16,8 +15,9 @@ app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
 
-app.blueprint(api_images)
-app.blueprint(api_templates)
+app.blueprint(images.blueprint)
+app.blueprint(images.blueprint_legacy)
+app.blueprint(templates.blueprint)
 app.blueprint(swagger_blueprint)
 
 
