@@ -98,7 +98,7 @@ def describe_get():
             status, data = load(client.get(f"/custom/hello.jpg?alt={url}"))
 
             expect(status) == 302
-            expect(data).contains(f'<a href="/cbg/hello.jpg">')
+            expect(data).contains('<a href="/cbg/hello.jpg">')
 
         def it_returns_an_error_with_non_image_urls(client):
             url = "http://example.com"

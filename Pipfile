@@ -47,7 +47,7 @@ pytest = "<4"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
-pytest-cov = "*"
+pytest-cov = "~=2.8.1"
 coveragespace = "*"
 
 # Tooling
