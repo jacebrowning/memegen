@@ -162,7 +162,7 @@ def _get_watermark(_request, text: domain.Text, watermark: str, share: bool):
     log.debug("Referrer=%r Agent=%r", referrer, agent)
 
     if not text:
-        log.debug(f"Watermark disabled (no text)")
+        log.debug("Watermark disabled (no text)")
         if watermark:
             return None, False
         else:
