@@ -14,9 +14,6 @@ def save_image(key: str, lines: str = "_", *, path: Optional[Path] = None) -> Pa
 def display_images(urls: List[str], *, refresh: bool = False) -> str:
     lines = []
 
-    if refresh:
-        lines.append(f'<meta http-equiv="refresh" content="60">')
-
     for url in urls:
         if refresh:
             url += "?time=0"
