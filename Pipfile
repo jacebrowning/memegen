@@ -32,7 +32,7 @@ yorm = "~=1.6.2"
 # Deployment
 blinker = "~=1.4"
 bugsnag = "~=3.1.1"
-eventlet = "~=0.24.1"
+eventlet = "~=0.26.0"
 gunicorn = "~=19.9.0"
 
 [dev-packages]
