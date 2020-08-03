@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, Optional, Tuple
+from typing import Iterator, List, Optional, Tuple
 
 from PIL import Image, ImageDraw
 
@@ -9,7 +9,7 @@ from .types import Dimensions, Point
 
 def save(
     template: Template,
-    lines: str,
+    lines: List[str],
     size: Dimensions = (500, 500),
     *,
     path: Optional[Path] = None,
@@ -36,7 +36,7 @@ def save(
     return path
 
 
-def render(template: Template, lines: str, size: Dimensions) -> Image:
+def render(template: Template, lines: List[str], size: Dimensions) -> Image:
     image = Image.open(template.background_image_path)
     image = image.convert("RGB")
 
@@ -50,8 +50,12 @@ def render(template: Template, lines: str, size: Dimensions) -> Image:
 
 
 def build(
-    template: Template, lines: str, size: Dimensions
+    template: Template, lines: List[str], size: Dimensions
 ) -> Iterator[Tuple[Point, str]]:
-    parts = lines.split("/") + ["_", "_", "_"]
     for index, text in enumerate(template.text):
-        yield text.get_anchor(size), parts[index]
+        point = text.get_anchor(size)
+        try:
+            line = lines[index]
+        except IndexError:
+            line = ""
+        yield point, line

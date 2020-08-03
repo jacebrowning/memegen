@@ -1,13 +1,13 @@
 from pathlib import Path
 from typing import List, Optional
 
-from . import images
+from . import images, text
 from .models import Template
 
 
-def save_image(key: str, lines: str = "_", *, path: Optional[Path] = None) -> Path:
+def save_image(key: str, lines: str, *, path: Optional[Path] = None) -> Path:
     template = Template.objects.get_or_none(key) or Template.objects.get("_error")
-    path = images.save(template, lines, path=path)
+    path = images.save(template, text.decode(lines), path=path)
     return path
 
 
