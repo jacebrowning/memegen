@@ -1,9 +1,10 @@
 from pathlib import Path
-from typing import Dict, Iterator, List, Optional
+from typing import Dict, List, Optional
 
 from datafiles import datafile, field
 from sanic import Sanic
 
+from . import text
 from .types import Dimensions, Point
 
 
@@ -60,16 +61,5 @@ class Template:
 
     def build_sample_url(self, app: Sanic) -> str:
         return app.url_for(
-            "images.text",
-            key=self.key,
-            lines="/".join(self._encode(*self.sample)),
-            _external=True,
+            "images.text", key=self.key, lines=text.encode(self.sample), _external=True,
         )
-
-    @staticmethod
-    def _encode(*lines: str) -> Iterator[str]:
-        for line in lines:
-            if line:
-                yield line.lower().replace(" ", "_").replace("?", "~q")
-            else:
-                yield "_"
