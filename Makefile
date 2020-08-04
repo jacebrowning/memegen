@@ -41,19 +41,21 @@ clean:
 ###############################################################################
 # Development Tasks
 
+PACKAGES := app scripts
+
 .PHONY: run
 run: install
 	DEBUG=true poetry run python app/views.py
 
 .PHONY: format
 format: install
-	poetry run autoflake --recursive app --in-place --remove-all-unused-imports
-	poetry run isort app --recursive --apply
-	poetry run black app
+	poetry run autoflake --recursive $(PACKAGES) --in-place --remove-all-unused-imports
+	poetry run isort $(PACKAGES) --recursive --apply
+	poetry run black $(PACKAGES)
 
 .PHONY: check
 check: install
-	poetry run mypy app
+	poetry run mypy $(PACKAGES)
 
 .PHONY: test
 test: install
@@ -71,3 +73,9 @@ watch: install
 import: install
 	poetry run gitman update --force --quiet
 	poetry run python scripts/import_legacy_templates.py
+
+.PHONY: promote
+promote: install
+	SITE=https://memegen-link-v2-staging.herokuapp.com poetry run pytest scripts
+	heroku pipelines:promote --app memegen-link-v2-staging --to memegen-link-v2
+	SITE=https://memegen-link-v2.herokuapp.com poetry run pytest scripts
