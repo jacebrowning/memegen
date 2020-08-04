@@ -20,7 +20,6 @@ async def render_image(request, key: str, lines: str):
 
 
 blueprint = Blueprint("images", url_prefix="/api/images")
-blueprint_legacy = Blueprint("images-legacy", url_prefix="/")
 
 
 @blueprint.get("/")
@@ -42,12 +41,10 @@ async def create(request):
 
 
 @blueprint.get("/<key>.jpg")
-@blueprint_legacy.get("/<key>.jpg")
 async def blank(request, key):
     return await render_image(request, key, "")
 
 
 @blueprint.get("/<key>/<lines:path>.jpg")
-@blueprint_legacy.get("/<key>/<lines:path>.jpg")
 async def text(request, key, lines):
     return await render_image(request, key, lines)

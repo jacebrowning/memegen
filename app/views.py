@@ -1,10 +1,9 @@
 import log
 from sanic import Sanic, response
-from sanic_openapi import doc, swagger_blueprint
 
 from app import settings
-from app.api import images, templates
-from app.api.images import get_sample_images
+from app.api import docs, images_api, legacy_images_api, templates_api
+from app.api.images_api import get_sample_images
 from app.helpers import display_images
 
 app = Sanic(name="memegen")
@@ -15,14 +14,14 @@ app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
 
-app.blueprint(images.blueprint)
-app.blueprint(images.blueprint_legacy)
-app.blueprint(templates.blueprint)
-app.blueprint(swagger_blueprint)
+app.blueprint(images_api.blueprint)
+app.blueprint(legacy_images_api.blueprint)
+app.blueprint(templates_api.blueprint)
+app.blueprint(docs.blueprint)
 
 
 @app.get("/")
-@doc.exclude(True)
+@docs.exclude
 def index(request):
     if "debug" in request.args and settings.DEBUG:
         return response.file(f"app/tests/images/index.html")
@@ -32,7 +31,7 @@ def index(request):
 
 
 @app.get("/test")
-@doc.exclude(True)
+@docs.exclude
 def test(request):
     if settings.DEBUG:
         return response.file(f"app/tests/images/index.html")
@@ -40,18 +39,19 @@ def test(request):
 
 
 @app.get("/api/")
-@doc.exclude(True)
+@docs.exclude
 async def api(request):
     return response.json(
         {
             "templates": request.app.url_for("templates.index", _external=True),
             "images": request.app.url_for("images.index", _external=True),
+            "docs": request.app.url_for("docs.index", _external=True),
         }
     )
 
 
 @app.get("/templates/<filename:path>")
-@doc.exclude(True)
+@docs.exclude
 async def image(request, filename):
     return await response.file(f"templates/{filename}")
 
