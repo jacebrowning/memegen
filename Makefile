@@ -65,9 +65,9 @@ watch: install
 	poetry run pytest-watch --runner="make test" --onpass="make check format && clear && echo 'All tests passed.'" --nobeep --wait
 
 ###############################################################################
-# Migration Tasks
+# Delivery Tasks
 
 .PHONY: import
 import: install
 	poetry run gitman update --force --quiet
-	poetry run python app/import_legacy_templates.py
+	poetry run python scripts/import_legacy_templates.py
