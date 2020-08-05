@@ -32,7 +32,7 @@ FONT = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
 # Image rendering
 
 IMAGES_DIRECTORY = ROOT / "images"
-DEFAULT_EXT = "jpg"
+DEFAULT_EXT = "png"
 DEFAULT_SIZE = (500, 500)
 
 # Test images

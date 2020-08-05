@@ -36,8 +36,7 @@ def save(
     #             images.render_legacy(image_path, lines)
 
     image = render(template, lines, size)
-    # image.save(path, quality=95)
-    image.save(path)
+    image.save(path, quality=95)
 
     return path
 
