@@ -1,9 +1,14 @@
 import os
 from pathlib import Path
 
+DEBUG = bool(os.environ.get("DEBUG", False))
+ROOT = Path(__file__).parent.parent.resolve()
+
+# Server configuration
+
 PORT = int(os.environ.get("PORT", 5000))
 WORKERS = int(os.environ.get("WEB_CONCURRENCY", 1))
-DEBUG = bool(os.environ.get("DEBUG", False))
+
 
 if "DOMAIN" in os.environ:  # staging / production
     SERVER_NAME = os.environ["DOMAIN"]
@@ -18,14 +23,21 @@ else:  # localhost
     IMAGES_URL = "https://memegen-link-v2.herokuapp.com"
     API_SCHEMES = ["http", "https"]
 
-ROOT_DIRECTORY = Path(__file__).parent.parent.resolve()
 
-FONTS_DIRECTORY = ROOT_DIRECTORY / "fonts"
+# Fonts
+
+FONTS_DIRECTORY = ROOT / "fonts"
 FONT = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
 
-IMAGES_DIRECTORY = ROOT_DIRECTORY / "images"
+# Image rendering
 
-TEST_IMAGES_DIRECTORY = ROOT_DIRECTORY / "app" / "tests" / "images"
+IMAGES_DIRECTORY = ROOT / "images"
+DEFAULT_EXT = "jpg"
+DEFAULT_SIZE = (500, 500)
+
+# Test images
+
+TEST_IMAGES_DIRECTORY = ROOT / "app" / "tests" / "images"
 TEST_IMAGES = [
     ("iw", ["tests code", "in production"]),
     ("unknown", ["unknown template"]),

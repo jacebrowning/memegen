@@ -1,14 +1,16 @@
 from pathlib import Path
 from typing import Iterable
 
-from . import images, text
+from . import images, settings, text
 from .models import Template
 
 
-def save_image(key: str, slug: str, *, root=None) -> Path:
+def save_image(
+    key: str, slug: str, ext: str, *, directory: Path = settings.IMAGES_DIRECTORY,
+) -> Path:
     template = Template.objects.get_or_none(key) or Template.objects.get("_error")
     lines = text.decode_lines(slug)
-    path = images.save(template, lines, root=root)
+    path = images.save(template, lines, ext=ext, directory=directory)
     return path
 
 

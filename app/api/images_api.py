@@ -22,9 +22,9 @@ def get_test_images(request) -> Iterable[str]:
         yield request.app.url_for("images.text", key=key, slug=encode_slug(lines))
 
 
-async def render_image(request, key: str, slug: str = ""):
+async def render_image(key: str, slug: str = "", ext: str = settings.DEFAULT_EXT):
     loop = asyncio.get_event_loop()
-    path = await loop.run_in_executor(None, save_image, key, slug)
+    path = await loop.run_in_executor(None, save_image, key, slug, ext)
     return await response.file(path)
 
 
@@ -49,11 +49,21 @@ async def create(request):
     return response.json({"url": url}, status=201)
 
 
-@blueprint.get("/<key>.jpg")
+@blueprint.get("/<key>.png")
 async def blank(request, key):
-    return await render_image(request, key)
+    return await render_image(key)
+
+
+@blueprint.get("/<key>.jpg")
+async def blank_jpg(request, key):
+    return await render_image(key, ext="jpg")
+
+
+@blueprint.get("/<key>/<slug:path>.png")
+async def text(request, key, slug):
+    return await render_image(key, slug)
 
 
 @blueprint.get("/<key>/<slug:path>.jpg")
-async def text(request, key, slug):
-    return await render_image(request, key, slug)
+async def text_jpg(request, key, slug):
+    return await render_image(key, slug, ext="jpg")

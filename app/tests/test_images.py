@@ -19,4 +19,4 @@ def test_images(images_directory, key, lines):
     log.info(f"Generating test image: {key}, {lines}")
     slug = text.encode_slug(lines)
     path = images_directory / key / f"{slug}.jpg"
-    helpers.save_image(key, slug, root=images_directory)
+    helpers.save_image(key, slug, "jpg", directory=images_directory)

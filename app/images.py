@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, List, Optional, Tuple
+from typing import Iterator, List, Tuple
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -12,14 +12,14 @@ from .types import Dimensions, Point
 def save(
     template: Template,
     lines: List[str],
-    size: Dimensions = (500, 500),
     *,
-    root: Optional[Path] = None,
+    ext: str = settings.DEFAULT_EXT,
+    size: Dimensions = settings.DEFAULT_SIZE,
+    directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
-    root = root or settings.IMAGES_DIRECTORY
     slug = encode_slug(lines)
     # TODO: is this the best filename?
-    path = root / template.key / f"{slug}.jpg"
+    path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
 
     # TODO: handle external images
@@ -36,7 +36,8 @@ def save(
     #             images.render_legacy(image_path, lines)
 
     image = render(template, lines, size)
-    image.save(path, format=image.format)
+    # image.save(path, quality=95)
+    image.save(path)
 
     return path
 
