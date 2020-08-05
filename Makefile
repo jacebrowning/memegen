@@ -59,8 +59,8 @@ check: install
 
 .PHONY: test
 test: install
-	cd app && poetry run pytest --cov=app --cov-branch --disable-warnings
-	cd app && poetry run coveragespace jacebrowning/memegen-v2 overall
+	poetry run pytest app --cov=app --cov-report=term-missing:skip-covered --cov-branch --disable-warnings
+	poetry run coveragespace jacebrowning/memegen-v2 overall
 
 .PHONY: watch
 watch: install
