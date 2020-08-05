@@ -21,8 +21,13 @@ class Text:
     scale_x: float = 0.8
     scale_y: float = 0.2
 
-    def get_anchor(self, size: Dimensions) -> Point:
-        return int(size[0] * self.anchor_x), int(size[1] * self.anchor_y)
+    def get_anchor(self, image_size: Dimensions) -> Point:
+        image_width, image_height = image_size
+        return int(image_width * self.anchor_x), int(image_height * self.anchor_y)
+
+    def get_size(self, image_size: Dimensions) -> Dimensions:
+        image_width, image_height = image_size
+        return int(image_width * self.scale_x), int(image_height * self.scale_y)
 
 
 @datafile("../templates/{self.key}/config.yml")
@@ -32,7 +37,7 @@ class Template:
     name: str = ""
     source: Optional[str] = None
     text: List[Text] = field(
-        default_factory=lambda: [Text(), Text(anchor_x=0.1, anchor_y=0.9)]
+        default_factory=lambda: [Text(), Text(anchor_x=0.1, anchor_y=0.7)]
     )
     styles: List[str] = field(default_factory=lambda: ["default"])
     sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])

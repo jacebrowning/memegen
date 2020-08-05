@@ -5,6 +5,7 @@ from . import images, text
 from .models import Template
 
 
+# TODO: should this accept 'lines' instead of 'slug'?
 def save_image(key: str, lines: str, *, path: Optional[Path] = None) -> Path:
     template = Template.objects.get_or_none(key) or Template.objects.get("_error")
     path = images.save(template, text.decode(lines), path=path)

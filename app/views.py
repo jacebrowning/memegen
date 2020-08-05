@@ -3,7 +3,7 @@ from sanic import Sanic, response
 
 from app import settings
 from app.api import docs, images_api, legacy_images_api, templates_api
-from app.api.images_api import get_sample_images
+from app.api.images_api import get_sample_images, get_test_images
 from app.helpers import display_images
 
 app = Sanic(name="memegen")
@@ -23,10 +23,11 @@ app.blueprint(docs.blueprint)
 @app.get("/")
 @docs.exclude
 def index(request):
-    if "debug" in request.args and settings.DEBUG:
-        return response.file(f"app/tests/images/index.html")
     urls = get_sample_images(request)
-    text = display_images(urls)
+    if "debug" in request.args and settings.DEBUG:
+        text = display_images(urls, refresh=True)
+    else:
+        text = display_images(urls)
     return response.html(text)
 
 
@@ -34,7 +35,9 @@ def index(request):
 @docs.exclude
 def test(request):
     if settings.DEBUG:
-        return response.file(f"app/tests/images/index.html")
+        urls = get_test_images(request)
+        text = display_images(urls, refresh=True)
+        return response.html(text)
     return response.redirect("/")
 
 
