@@ -49,9 +49,9 @@ def render(template: Template, lines: List[str], size: Dimensions) -> Image:
 
     draw = ImageDraw.Draw(image)
     for point, text, max_text_size in build(template, lines, image.size):
-        if settings.SHOW_TEXT_BOXES:
-            point2 = (point[0] + max_text_size[0], point[1] + max_text_size[1])
-            draw.rectangle((point, point2), outline="lime")
+        if settings.DEBUG:
+            box = (point, (point[0] + max_text_size[0], point[1] + max_text_size[1]))
+            draw.rectangle(box, outline="lime")
 
         # TODO: try stroke_fill for outline
         font = get_font(text, max_text_size)
