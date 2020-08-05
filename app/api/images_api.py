@@ -4,13 +4,23 @@ from typing import List
 from sanic import Blueprint, response
 from sanic_openapi import doc
 
+from .. import settings
 from ..helpers import save_image
 from ..models import Template
+from ..text import encode
 
 
 def get_sample_images(request) -> List[str]:
     templates = Template.objects.filter(valid=True)
     return [template.build_sample_url(request.app) for template in templates]
+
+
+def get_test_images(request) -> List[str]:
+    urls = []
+    for key, lines in settings.TEST_IMAGES:
+        url = request.app.url_for("images.text", key=key, lines=encode(lines))
+        urls.append(url)
+    return urls
 
 
 async def render_image(request, key: str, lines: str):
@@ -34,7 +44,7 @@ async def create(request):
     url = request.app.url_for(
         "images.text",
         key=request.json["key"],
-        lines="/".join(request.json["lines"]),
+        lines=encode(request.json["lines"]),
         _external=True,
     )
     return response.json({"url": url}, status=201)
