@@ -13,4 +13,4 @@ def test_post_images(expect, url):
     params = {"key": "iw", "lines": ["test", "deployment"]}
     response = requests.post(f"{url}/api/images", json=params)
     expect(response.status_code) == 201
-    expect(response.json()["url"]).endswith("/api/images/iw/test/deployment.jpg")
+    expect(response.json()["url"]).endswith("/api/images/iw/test/deployment.png")
