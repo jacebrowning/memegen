@@ -66,5 +66,8 @@ class Template:
 
     def build_sample_url(self, app: Sanic) -> str:
         return app.url_for(
-            "images.text", key=self.key, lines=text.encode(self.sample), _external=True,
+            "images.text",
+            key=self.key,
+            slug=text.encode_slug(self.sample),
+            _external=True,
         )

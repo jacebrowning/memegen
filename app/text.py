@@ -1,7 +1,7 @@
 from typing import List
 
 
-def encode(lines: List[str]) -> str:
+def encode_slug(lines: List[str]) -> str:
     parts = []
     for line in lines:
         if line:
@@ -9,8 +9,10 @@ def encode(lines: List[str]) -> str:
             parts.append(encoded)
         else:
             parts.append("_")
-    return "/".join(parts).lower()
+    slug = "/".join(parts).lower()
+    return slug
 
 
-def decode(text: str) -> List[str]:
-    return text.replace("_", " ").replace("~q", "?").upper().split("/")
+def decode_lines(slug: str) -> List[str]:
+    lines = slug.replace("_", " ").replace("~q", "?").upper().split("/")
+    return lines

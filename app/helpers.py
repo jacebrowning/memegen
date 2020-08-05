@@ -1,18 +1,18 @@
 from pathlib import Path
-from typing import List, Optional
+from typing import Iterable
 
 from . import images, text
 from .models import Template
 
 
-# TODO: should this accept 'lines' instead of 'slug'?
-def save_image(key: str, lines: str, *, path: Optional[Path] = None) -> Path:
+def save_image(key: str, slug: str, *, root=None) -> Path:
     template = Template.objects.get_or_none(key) or Template.objects.get("_error")
-    path = images.save(template, text.decode(lines), path=path)
+    lines = text.decode_lines(slug)
+    path = images.save(template, lines, root=root)
     return path
 
 
-def display_images(urls: List[str], *, refresh: bool = False) -> str:
+def display_images(urls: Iterable[str], *, refresh: bool = False) -> str:
     lines = []
 
     for url in urls:

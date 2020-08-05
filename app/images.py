@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from . import settings
 from .models import Template
+from .text import encode_slug
 from .types import Dimensions, Point
 
 
@@ -13,9 +14,12 @@ def save(
     lines: List[str],
     size: Dimensions = (500, 500),
     *,
-    path: Optional[Path] = None,
+    root: Optional[Path] = None,
 ) -> Path:
-    path = path or Path(f"images/{template.key}/{lines}.jpg")
+    root = root or settings.IMAGES_DIRECTORY
+    slug = encode_slug(lines)
+    # TODO: is this the best filename?
+    path = root / template.key / f"{slug}.jpg"
     path.parent.mkdir(parents=True, exist_ok=True)
 
     # TODO: handle external images

@@ -14,9 +14,9 @@ def images_directory():
     return path
 
 
-def test_images(images_directory):
-    for key, lines in settings.TEST_IMAGES:
-        log.info(f"Generating test image: {key}, {lines}")
-        slug = text.encode(lines)
-        path = images_directory / key / f"{slug}.jpg"
-        helpers.save_image(key, slug, path=path)
+@pytest.mark.parametrize(("key", "lines"), settings.TEST_IMAGES)
+def test_images(images_directory, key, lines):
+    log.info(f"Generating test image: {key}, {lines}")
+    slug = text.encode_slug(lines)
+    path = images_directory / key / f"{slug}.jpg"
+    helpers.save_image(key, slug, root=images_directory)

@@ -19,8 +19,11 @@ else:  # localhost
     API_SCHEMES = ["http", "https"]
 
 ROOT_DIRECTORY = Path(__file__).parent.parent.resolve()
+
 FONTS_DIRECTORY = ROOT_DIRECTORY / "fonts"
 FONT = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
+
+IMAGES_DIRECTORY = ROOT_DIRECTORY / "images"
 
 SHOW_TEXT_BOXES = False
 TEST_IMAGES_DIRECTORY = ROOT_DIRECTORY / "app" / "tests" / "images"

@@ -13,7 +13,6 @@ app.config.API_SCHEMES = settings.API_SCHEMES
 app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
-
 app.blueprint(images_api.blueprint)
 app.blueprint(legacy_images_api.blueprint)
 app.blueprint(templates_api.blueprint)
@@ -24,11 +23,9 @@ app.blueprint(docs.blueprint)
 @docs.exclude
 def index(request):
     urls = get_sample_images(request)
-    if "debug" in request.args and settings.DEBUG:
-        text = display_images(urls, refresh=True)
-    else:
-        text = display_images(urls)
-    return response.html(text)
+    refresh = "debug" in request.args and settings.DEBUG
+    content = display_images(urls, refresh=refresh)
+    return response.html(content)
 
 
 @app.get("/test")
@@ -36,8 +33,8 @@ def index(request):
 def test(request):
     if settings.DEBUG:
         urls = get_test_images(request)
-        text = display_images(urls, refresh=True)
-        return response.html(text)
+        content = display_images(urls, refresh=True)
+        return response.html(content)
     return response.redirect("/")
 
 
