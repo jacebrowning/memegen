@@ -89,9 +89,11 @@ def _get_elements(
 
         max_text_size = text.get_size(image_size)
         font = _get_font(line, max_text_size)
-        stroke_width = min(3, max(1, font.size // 12))
 
-        yield point, line, max_text_size, text.color, font.size, stroke_width, "black"
+        stroke_width = min(3, max(1, font.size // 12))
+        stroke_fill = "black" if text.color == "white" else "white"
+
+        yield point, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
 
 
 def _get_font(text: str, max_text_size: Dimensions) -> ImageFont:
