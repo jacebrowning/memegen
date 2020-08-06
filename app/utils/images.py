@@ -48,15 +48,18 @@ def render(template: Template, lines: List[str], size: Dimensions) -> Image:
     image.thumbnail(size, Image.LANCZOS)
 
     draw = ImageDraw.Draw(image)
-    for point, text, max_text_size in build(template, lines, image.size):
+    for (point, text, max_text_size,) in build(template, lines, image.size):
         if settings.DEBUG:
             box = (point, (point[0] + max_text_size[0], point[1] + max_text_size[1]))
             draw.rectangle(box, outline="lime")
 
-        # TODO: try stroke_fill for outline
         font = get_font(text, max_text_size)
+        stroke_width = min(3, max(1, font.size // 12))
+
         # TODO: adjust for font.getoffset(text)
-        draw.text(point, text, font=font)
+        draw.text(
+            point, text, "white", font, stroke_width=stroke_width, stroke_fill="black"
+        )
 
     return image
 
