@@ -1,10 +1,8 @@
 import log
 from sanic import Sanic, response
 
-from app import settings
-from app.api import docs, images_api, legacy_images_api, templates_api
-from app.api.images_api import get_sample_images, get_test_images
-from app.helpers import display_images
+from app import api, settings, utils
+from app.api.images import get_sample_images, get_test_images
 
 app = Sanic(name="memegen")
 
@@ -13,34 +11,35 @@ app.config.API_SCHEMES = settings.API_SCHEMES
 app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
-app.blueprint(images_api.blueprint)
-app.blueprint(legacy_images_api.blueprint)
-app.blueprint(templates_api.blueprint)
-app.blueprint(docs.blueprint)
+app.blueprint(api.images.blueprint)
+app.blueprint(api.legacy_images.blueprint)
+app.blueprint(api.templates.blueprint)
+app.blueprint(api.docs.blueprint)
 
 
 @app.get("/")
-@docs.exclude
+@api.docs.exclude
 def index(request):
     urls = get_sample_images(request)
     refresh = "debug" in request.args and settings.DEBUG
-    content = display_images(urls, refresh=refresh)
+    content = utils.html.gallery(urls, refresh=refresh)
     return response.html(content)
 
 
 @app.get("/test")
-@docs.exclude
+@api.docs.exclude
 def test(request):
     if settings.DEBUG:
         urls = get_test_images(request)
-        content = display_images(urls, refresh=True)
+        content = utils.html.gallery(urls, refresh=True)
         return response.html(content)
     return response.redirect("/")
 
 
+# TODO: move this to the API package
 @app.get("/api/")
-@docs.exclude
-async def api(request):
+@api.docs.exclude
+async def root_api(request):
     return response.json(
         {
             "templates": request.app.url_for("templates.index", _external=True),
@@ -51,7 +50,7 @@ async def api(request):
 
 
 @app.get("/templates/<filename:path>")
-@docs.exclude
+@api.docs.exclude
 async def image(request, filename):
     return await response.file(f"templates/{filename}")
 

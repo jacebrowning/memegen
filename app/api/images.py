@@ -4,10 +4,9 @@ from typing import Iterable
 from sanic import Blueprint, response
 from sanic_openapi import doc
 
-from .. import settings
+from .. import settings, utils
 from ..helpers import save_image
 from ..models import Template
-from ..text import encode_slug
 
 # TODO: move these two functions
 
@@ -19,7 +18,7 @@ def get_sample_images(request) -> Iterable[str]:
 
 def get_test_images(request) -> Iterable[str]:
     for key, lines in settings.TEST_IMAGES:
-        yield request.app.url_for("images.text", key=key, slug=encode_slug(lines))
+        yield request.app.url_for("images.text", key=key, slug=utils.text.encode(lines))
 
 
 async def render_image(key: str, slug: str = "", ext: str = settings.DEFAULT_EXT):
@@ -43,7 +42,7 @@ async def create(request):
     url = request.app.url_for(
         "images.text",
         key=request.json["key"],
-        slug=encode_slug(request.json["lines"]),
+        slug=utils.text.encode(request.json["lines"]),
         _external=True,
     )
     return response.json({"url": url}, status=201)
