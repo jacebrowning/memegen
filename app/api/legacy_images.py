@@ -1,6 +1,6 @@
 from sanic import Blueprint
 
-from .images_api import render_image
+from .images import render_image
 
 blueprint = Blueprint("legacy-images", url_prefix="/")
 

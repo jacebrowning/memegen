@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from datafiles import datafile, field
 from sanic import Sanic
 
-from . import text
+from . import utils
 from .types import Dimensions, Point
 
 
@@ -68,6 +68,6 @@ class Template:
         return app.url_for(
             "images.text",
             key=self.key,
-            slug=text.encode_slug(self.sample),
+            slug=utils.text.encode(self.sample),
             _external=True,
         )

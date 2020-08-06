@@ -3,10 +3,10 @@ from typing import Iterator, List, Tuple
 
 from PIL import Image, ImageDraw, ImageFont
 
-from . import settings
-from .models import Template
-from .text import encode_slug
-from .types import Dimensions, Point
+from .. import settings
+from ..models import Template
+from ..types import Dimensions, Point
+from .text import encode
 
 
 def save(
@@ -17,7 +17,7 @@ def save(
     size: Dimensions = settings.DEFAULT_SIZE,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
-    slug = encode_slug(lines)
+    slug = encode(lines)
     # TODO: is this the best filename?
     path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
