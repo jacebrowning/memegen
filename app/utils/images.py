@@ -35,53 +35,72 @@ def save(
     #             await f.close()
     #             images.render_legacy(image_path, lines)
 
-    image = render(template, lines, size)
+    image = _render_image(template, lines, size)
     image.save(path, quality=95)
 
     return path
 
 
-def render(template: Template, lines: List[str], size: Dimensions) -> Image:
+def _render_image(template: Template, lines: List[str], size: Dimensions) -> Image:
     image = Image.open(template.background_image_path)
     image = image.convert("RGB")
 
     image.thumbnail(size, Image.LANCZOS)
 
     draw = ImageDraw.Draw(image)
-    for (point, text, max_text_size,) in build(template, lines, image.size):
+
+    for (
+        point,
+        text,
+        max_text_size,
+        text_fill,
+        font_size,
+        stroke_width,
+        stroke_fill,
+    ) in _get_elements(template, lines, image.size):
+
         if settings.DEBUG:
             box = (point, (point[0] + max_text_size[0], point[1] + max_text_size[1]))
             draw.rectangle(box, outline="lime")
 
-        font = get_font(text, max_text_size)
-        stroke_width = min(3, max(1, font.size // 12))
-
-        # TODO: adjust for font.getoffset(text)
+        font = ImageFont.truetype(str(settings.FONT), size=font_size)
         draw.text(
-            point, text, "white", font, stroke_width=stroke_width, stroke_fill="black"
+            point,
+            text,
+            text_fill,
+            font,
+            stroke_width=stroke_width,
+            stroke_fill=stroke_fill,
         )
 
     return image
 
 
-def build(
+def _get_elements(
     template: Template, lines: List[str], image_size: Dimensions
-) -> Iterator[Tuple[Point, str, Dimensions]]:
+) -> Iterator[Tuple[Point, str, Dimensions, str, int, int, str]]:
     for index, text in enumerate(template.text):
-        point = text.get_anchor(image_size)
+        point = text.get_anchor(image_size)  # TODO: adjust for font.getoffset(text)
+
         try:
             line = lines[index]
         except IndexError:
             line = ""
-        size = text.get_size(image_size)
-        yield point, line, size
+
+        max_text_size = text.get_size(image_size)
+        font = _get_font(line, max_text_size)
+        stroke_width = min(3, max(1, font.size // 12))
+
+        yield point, line, max_text_size, text.color, font.size, stroke_width, "black"
 
 
-def get_font(text: str, max_text_size: Dimensions) -> ImageFont:
+def _get_font(text: str, max_text_size: Dimensions) -> ImageFont:
     max_text_width, max_text_height = max_text_size
+
     for size in range(72, 5, -1):
         font = ImageFont.truetype(str(settings.FONT), size=size)
         text_width, text_height = font.getsize(text)
         if text_width <= max_text_width and text_height <= max_text_height:
             break
+
     return font
