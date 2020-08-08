@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from .. import settings
 from ..models import Template
-from ..types import Dimensions, Point
+from ..types import Dimensions, Offset, Point
 from .text import encode
 
 
@@ -51,6 +51,7 @@ def _render_image(template: Template, lines: List[str], size: Dimensions) -> Ima
 
     for (
         point,
+        offset,
         text,
         max_text_size,
         text_fill,
@@ -60,12 +61,15 @@ def _render_image(template: Template, lines: List[str], size: Dimensions) -> Ima
     ) in _get_elements(template, lines, image.size):
 
         if settings.DEBUG:
-            box = (point, (point[0] + max_text_size[0], point[1] + max_text_size[1]))
+            box = (
+                point,
+                (point[0] + max_text_size[0], point[1] + max_text_size[1]),
+            )
             draw.rectangle(box, outline="lime")
 
         font = ImageFont.truetype(str(settings.FONT), size=font_size)
         draw.text(
-            point,
+            (point[0] - offset[0], point[1] - offset[1]),
             text,
             text_fill,
             font,
@@ -78,9 +82,9 @@ def _render_image(template: Template, lines: List[str], size: Dimensions) -> Ima
 
 def _get_elements(
     template: Template, lines: List[str], image_size: Dimensions
-) -> Iterator[Tuple[Point, str, Dimensions, str, int, int, str]]:
+) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str]]:
     for index, text in enumerate(template.text):
-        point = text.get_anchor(image_size)  # TODO: adjust for font.getoffset(text)
+        point = text.get_anchor(image_size)
 
         try:
             line = lines[index]
@@ -88,12 +92,14 @@ def _get_elements(
             line = ""
 
         max_text_size = text.get_size(image_size)
+
         font = _get_font(line, max_text_size)
+        offset = _get_text_offset(line, font, max_text_size)
 
         stroke_width = min(3, max(1, font.size // 12))
         stroke_fill = "black" if text.color == "white" else "white"
 
-        yield point, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
+        yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
 
 
 def _get_font(text: str, max_text_size: Dimensions) -> ImageFont:
@@ -101,8 +107,25 @@ def _get_font(text: str, max_text_size: Dimensions) -> ImageFont:
 
     for size in range(72, 5, -1):
         font = ImageFont.truetype(str(settings.FONT), size=size)
-        text_width, text_height = font.getsize(text)
+        text_width, text_height = _get_text_size_minus_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
             break
 
     return font
+
+
+def _get_text_size_minus_offset(text: str, font: ImageFont) -> Dimensions:
+    text_width, text_height = font.getsize(text)
+    offset = font.getoffset(text)
+    return text_width - offset[0], text_height - offset[1]
+
+
+def _get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Offset:
+    text_size = font.getsize(text)
+    x_offset, y_offset = font.getoffset(text)
+
+    x_offset -= (max_text_size[0] - text_size[0]) // 2 - 1
+    # TODO: Get Y offset working
+    # y_offset -= (max_text_size[1] - text_size[1]) // 2
+
+    return x_offset, y_offset
