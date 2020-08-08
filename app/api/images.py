@@ -3,7 +3,7 @@ import asyncio
 from sanic import Blueprint, response
 from sanic_openapi import doc
 
-from .. import helpers, settings, utils
+from .. import helpers, models, settings, utils
 from ..helpers import save_image
 
 blueprint = Blueprint("images", url_prefix="/api/images")
@@ -29,25 +29,38 @@ async def create(request):
 
 @blueprint.get("/<key>.png")
 async def blank(request, key):
-    return await render_image(key)
+    return await render_image(request, key)
 
 
 @blueprint.get("/<key>.jpg")
 async def blank_jpg(request, key):
-    return await render_image(key, ext="jpg")
+    return await render_image(request, key, ext="jpg")
 
 
 @blueprint.get("/<key>/<slug:path>.png")
 async def text(request, key, slug):
-    return await render_image(key, slug)
+    return await render_image(request, key, slug)
 
 
 @blueprint.get("/<key>/<slug:path>.jpg")
 async def text_jpg(request, key, slug):
-    return await render_image(key, slug, ext="jpg")
+    return await render_image(request, key, slug, ext="jpg")
 
 
-async def render_image(key: str, slug: str = "", ext: str = settings.DEFAULT_EXT):
+async def render_image(
+    request, key: str, slug: str = "", ext: str = settings.DEFAULT_EXT
+):
+    status = 200
     loop = asyncio.get_event_loop()
+
+    if key == "custom":
+        url = request.args.get("alt")
+        if url:
+            template = await models.Template.create(url)
+            key = template.key
+        else:
+            status = 422
+
     path = await loop.run_in_executor(None, save_image, key, slug, ext)
-    return await response.file(path)
+
+    return await response.file(path, status)

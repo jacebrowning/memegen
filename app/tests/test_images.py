@@ -27,7 +27,7 @@ def test_jpg_images(images):
 
 @pytest.mark.asyncio
 async def test_custom_template(images):
-    url = "https://www.gstatic.com/webp/gallery/1.jpg"
+    url = "https://www.gstatic.com/webp/gallery/2.jpg"
     template = await models.Template.create(url)
     utils.images.save(template, ["", "Custom Template"], directory=images)
 
