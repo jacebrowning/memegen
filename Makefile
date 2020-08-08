@@ -78,6 +78,6 @@ import: install
 
 .PHONY: promote
 promote: install
-	SITE=https://memegen-link-v2-staging.herokuapp.com poetry run pytest scripts --verbose --no-cov
+	SITE=https://memegen-link-v2-staging.herokuapp.com poetry run pytest scripts --cache-clear --verbose --no-cov
 	heroku pipelines:promote --app memegen-link-v2-staging --to memegen-link-v2
-	SITE=https://memegen-link-v2.herokuapp.com poetry run pytest scripts --verbose --no-cov
+	SITE=https://memegen-link-v2.herokuapp.com poetry run pytest scripts --cache-clear --verbose --no-cov
