@@ -39,17 +39,17 @@ DEFAULT_SIZE = (600, 600)
 
 TEST_IMAGES_DIRECTORY = ROOT / "app" / "tests" / "images"
 TEST_IMAGES = [
-    ("iw", ["tests code", "in production"]),
-    ("fry", ["a", "b"]),
-    ("fry", ["short line", "longer line of text than the short one"]),
-    ("fry", ["longer line of text than the short one", "short line"]),
-    ("sparta", ["", "this is a wide image!"]),
+    ("iw", ["TESTS CODE", "IN PRODUCTION"]),
+    ("fry", ["A", "B"]),
+    ("fry", ["SHORT LINE", "LONGER LINE OF TEXT THAN THE SHORT ONE"]),
+    ("fry", ["LONGER LINE OF TEXT THAN THE SHORT ONE", "SHORT LINE"]),
+    ("sparta", ["", "THIS IS A WIDE IMAGE!"]),
     (
         "ski",
         [
-            "if you try to put a bunch more text than can possibly fit on a meme",
-            "you're gonna have a bad time",
+            "IF YOU TRY TO PUT A BUNCH MORE TEXT THAN CAN POSSIBLY FIT ON A MEME",
+            "YOU'RE GONNA HAVE A BAD TIME",
         ],
     ),
-    ("ds", ["push this button", "or this button", "can't decide which is worse"]),
+    ("ds", ["PUSH THIS BUTTON", "OR THIS BUTTON", "CAN'T DECIDE WHICH IS WORSE"]),
 ]

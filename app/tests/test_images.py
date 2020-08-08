@@ -15,14 +15,14 @@ def images():
 
 @pytest.mark.parametrize(("key", "lines"), settings.TEST_IMAGES)
 def test_png_images(images, key, lines):
-    slug = utils.text.encode(lines)
-    helpers.save_image(key, slug, "png", directory=images)
+    template = models.Template.objects.get(key)
+    utils.images.save(template, lines, "png", directory=images)
 
 
 def test_jpg_images(images):
     key, lines = settings.TEST_IMAGES[0]
-    slug = utils.text.encode(lines)
-    helpers.save_image(key, slug, "jpg", directory=images)
+    template = models.Template.objects.get(key)
+    utils.images.save(template, lines, "jpg", directory=images)
 
 
 @pytest.mark.asyncio
@@ -33,4 +33,5 @@ async def test_custom_template(images):
 
 
 def test_unknown_template(images):
-    helpers.save_image("unknown", "unknown_template", directory=images)
+    template = models.Template.objects.get("_error")
+    utils.images.save(template, ["UNKNOWN TEMPLATE"], directory=images)
