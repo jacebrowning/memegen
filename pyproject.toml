@@ -36,6 +36,7 @@ autoflake = "^1.3.1"
 
 # Testing
 pytest = "^6.0"
+pytest-asyncio = "*"
 pytest-describe = "^1.0"
 pytest-expecter = "^2.1"
 pytest-cov = "^2.7"
@@ -55,7 +56,11 @@ quiet = true
 [tool.pytest.ini_options]
 
 testpaths = "app"
-addopts = "--no-header --disable-warnings --cov=app --cov-report=term-missing:skip-covered --cov-branch"
+addopts = """
+--last-failed \
+--no-header --disable-warnings \
+--cov=app --cov-report=term-missing:skip-covered --cov-branch
+"""
 
 [build-system]
 
