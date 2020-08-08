@@ -2,7 +2,7 @@ import shutil
 
 import pytest
 
-from .. import helpers, settings, utils
+from .. import helpers, models, settings, utils
 
 
 @pytest.fixture(scope="session")
@@ -23,6 +23,13 @@ def test_jpg_images(images):
     key, lines = settings.TEST_IMAGES[0]
     slug = utils.text.encode(lines)
     helpers.save_image(key, slug, "jpg", directory=images)
+
+
+@pytest.mark.asyncio
+async def test_custom_template(images):
+    url = "https://www.gstatic.com/webp/gallery/1.jpg"
+    template = await models.Template.create(url)
+    utils.images.save(template, ["", "Custom Template"], directory=images)
 
 
 def test_unknown_template(images):
