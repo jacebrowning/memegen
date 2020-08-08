@@ -1,8 +1,7 @@
 import log
 from sanic import Sanic, response
 
-from app import api, settings, utils
-from app.api.images import get_sample_images, get_test_images
+from app import api, helpers, settings, utils
 
 app = Sanic(name="memegen")
 
@@ -21,7 +20,7 @@ app.blueprint(api.docs.blueprint)
 @app.get("/")
 @api.docs.exclude
 def index(request):
-    urls = get_sample_images(request)
+    urls = helpers.get_sample_images(request)
     refresh = "debug" in request.args and settings.DEBUG
     content = utils.html.gallery(urls, refresh=refresh)
     return response.html(content)
@@ -31,7 +30,7 @@ def index(request):
 @api.docs.exclude
 def test(request):
     if settings.DEBUG:
-        urls = get_test_images(request)
+        urls = helpers.get_test_images(request)
         content = utils.html.gallery(urls, refresh=True)
         return response.html(content)
     return response.redirect("/")
