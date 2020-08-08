@@ -14,3 +14,9 @@ def test_post_images(expect, url):
     response = requests.post(f"{url}/api/images", json=params)
     expect(response.status_code) == 201
     expect(response.json()["url"]).endswith("/api/images/iw/test/deployment.png")
+
+
+def test_get_image(expect, url):
+    response = requests.get(f"{url}/iw/tests_code/in_production.jpg")
+    expect(response.status_code) == 200
+    expect(response.headers["Content-Type"]) == "image/jpeg"
