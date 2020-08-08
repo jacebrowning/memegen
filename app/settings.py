@@ -40,8 +40,10 @@ DEFAULT_SIZE = (500, 500)
 TEST_IMAGES_DIRECTORY = ROOT / "app" / "tests" / "images"
 TEST_IMAGES = [
     ("iw", ["tests code", "in production"]),
-    ("unknown", ["unknown template"]),
-    ("sparta", ["", "this is sparta!"]),
+    ("fry", ["a", "b"]),
+    ("fry", ["short line", "longer line of text than the short one"]),
+    ("fry", ["longer line of text than the short one", "short line"]),
+    ("sparta", ["", "this is a wide image!"]),
     (
         "ski",
         [
@@ -49,7 +51,6 @@ TEST_IMAGES = [
             "you're gonna have a bad time",
         ],
     ),
-    ("fry", ["a", "b"]),
-    ("fry", ["short line", "longer line of text than the short one"]),
-    ("fry", ["longer line of text than the short one", "short line"]),
+    ("ds", ["push this button", "or this button", "can't decide which is worse"]),
+    ("unknown", ["unknown template"]),
 ]

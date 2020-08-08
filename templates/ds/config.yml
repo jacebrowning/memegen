@@ -1,15 +1,21 @@
 name: Daily Struggle
 source: https://knowyourmeme.com/memes/daily-struggle
 text:
-- color: white
-  anchor_x: 0.1
-  anchor_y: 0.2
-  angle: 0.0
-  scale_x: 0.5
-  scale_y: 0.6
-- color: white
-  anchor_x: 0.1
-  anchor_y: 0.2
-  angle: 0.0
-  scale_x: 0.5
-  scale_y: 0.6
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.35
+    scale_y: 0.1
+  - color: white
+    anchor_x: 0.45
+    anchor_y: 0.08
+    angle: 0.0
+    scale_x: 0.25
+    scale_y: 0.08
+  - color: white
+    anchor_x: 0.1
+    anchor_y: 0.8
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.1
