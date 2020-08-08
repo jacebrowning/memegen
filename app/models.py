@@ -6,6 +6,7 @@ import aiofiles
 import aiohttp
 from datafiles import datafile, field
 from sanic import Sanic
+from sanic.log import logger
 
 from . import utils
 from .types import Dimensions, Point
@@ -50,12 +51,16 @@ class Template:
         return bool(self.name and not self.name.startswith("<"))
 
     @property
-    def background_image_path(self) -> Path:
-        for ext in ["png", "jpg"]:
-            path = self.datafile.path.parent / f"default.{ext}"
-            if path.exists():
+    def image(self) -> Path:
+        directory = self.datafile.path.parent
+        directory.mkdir(exist_ok=True)
+
+        for path in directory.iterdir():
+            if path.stem == "default":
                 return path
-        raise ValueError(f"No background image for template: {self}")
+
+        logger.debug(f"No default background image for template: {self}")
+        return directory / "default.img"
 
     def jsonify(self, app: Sanic) -> Dict:
         return {
@@ -80,11 +85,11 @@ class Template:
         key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
         template = cls.objects.get_or_create(key, url)
 
-        path = template.datafile.path.parent / f"default.png"
+        logger.info(f"Saving {url} to {template.image}")
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
-                    f = await aiofiles.open(path, mode="wb")
+                    f = await aiofiles.open(template.image, mode="wb")
                     await f.write(await response.read())
                     await f.close()
 

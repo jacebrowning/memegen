@@ -1,6 +1,7 @@
 import asyncio
 
 from sanic import Blueprint, response
+from sanic.log import logger
 from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
@@ -59,6 +60,7 @@ async def render_image(
             template = await models.Template.create(url)
             key = template.key
         else:
+            logger.warn("No image URL specified for custom template")
             status = 422
 
     path = await loop.run_in_executor(None, save_image, key, slug, ext)
