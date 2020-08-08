@@ -35,7 +35,7 @@ mypy = "~0.770"
 autoflake = "^1.3.1"
 
 # Testing
-pytest = "^5.0"
+pytest = "^6.0"
 pytest-describe = "^1.0"
 pytest-expecter = "^2.1"
 pytest-cov = "^2.7"
@@ -47,6 +47,11 @@ coveragespace = "^3.1.1"
 # Utilities
 gitman = "^2.0"
 rope = "^0.14.0"
+
+[tool.pytest.ini_options]
+
+testpaths = "app"
+addopts = "--cov=app --cov-report=term-missing:skip-covered --cov-branch --disable-warnings"
 
 [build-system]
 

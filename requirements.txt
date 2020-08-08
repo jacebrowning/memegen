@@ -10,14 +10,14 @@ datafiles==0.10
 h11==0.9.0
 h2==3.2.0
 hpack==3.0.0
-hstspreload==2020.6.30
+hstspreload==2020.8.8
 httptools==0.1.1
 httpx==0.11.1
 hyperframe==5.2.0
 idna==2.10
 minilog==1.6
 multidict==4.7.6
-parse==1.15.0
+parse==1.16.0
 pillow==7.2.0
 pyyaml==5.3.1
 rfc3986==1.4.0
@@ -28,8 +28,8 @@ sanic-openapi==0.6.0
 sniffio==1.1.0
 tomlkit==0.5.11
 typing-extensions==3.7.4.2
-ujson==3.0.0; sys_platform != "win32" and implementation_name == "cpython"
-urllib3==1.25.9
+ujson==3.1.0; sys_platform != "win32" and implementation_name == "cpython"
+urllib3==1.25.10
 uvloop==0.14.0; sys_platform != "win32" and implementation_name == "cpython"
 websockets==8.1
-yarl==1.4.2
+yarl==1.5.1
