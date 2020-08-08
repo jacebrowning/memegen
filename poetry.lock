@@ -33,6 +33,14 @@ python-versions = "*"
 version = "1.4.4"
 
 [[package]]
+category = "dev"
+description = "An unobtrusive argparse wrapper with natural syntax"
+name = "argh"
+optional = false
+python-versions = "*"
+version = "0.26.2"
+
+[[package]]
 category = "main"
 description = "Timeout context manager for asyncio programs"
 name = "async-timeout"
@@ -495,20 +503,6 @@ python-versions = ">=3.6,<4.0"
 version = "2.2"
 
 [[package]]
-category = "dev"
-description = "Local continuous test runner with pytest and watchdog."
-name = "pytest-watch"
-optional = false
-python-versions = "*"
-version = "4.2.0"
-
-[package.dependencies]
-colorama = ">=0.3.3"
-docopt = ">=0.4.0"
-pytest = ">=2.6.4"
-watchdog = ">=0.6.0"
-
-[[package]]
 category = "main"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
@@ -716,6 +710,14 @@ version = "0.10.3"
 [package.dependencies]
 pathtools = ">=0.1.1"
 
+[package.dependencies.PyYAML]
+optional = true
+version = ">=3.10"
+
+[package.dependencies.argh]
+optional = true
+version = ">=0.24.1"
+
 [package.extras]
 watchmedo = ["PyYAML (>=3.10)", "argh (>=0.24.1)"]
 
@@ -740,7 +742,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "3814f1335c698320b10f690609b7b28a93119c8a4d5a0aab18f655b8bb2747ca"
+content-hash = "ee0e7a4b1cd8c6f3027d942e22d69258cc5ea07f5788e404b09b0c43c7611141"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -765,6 +767,10 @@ aiohttp = [
 appdirs = [
     {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
     {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
+]
+argh = [
+    {file = "argh-0.26.2-py2.py3-none-any.whl", hash = "sha256:a9b3aaa1904eeb78e32394cd46c6f37ac0fb4af6dc488daa58971bdc7d7fcaf3"},
+    {file = "argh-0.26.2.tar.gz", hash = "sha256:e9535b8c84dc9571a48999094fda7f33e63c3f1b74f3e5f3ac0105a58405bb65"},
 ]
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
@@ -1030,9 +1036,6 @@ pytest-describe = [
 pytest-expecter = [
     {file = "pytest-expecter-2.2.tar.gz", hash = "sha256:33c5b05008cad9b95ba0deb0a5bac6a51c68ae94f09de74a19cd1384a04c85d6"},
     {file = "pytest_expecter-2.2-py3-none-any.whl", hash = "sha256:15dd0485c23fd03b7a9c0f6819f0cf65c0defd0ce9796725ae51e79e56b279ab"},
-]
-pytest-watch = [
-    {file = "pytest-watch-4.2.0.tar.gz", hash = "sha256:06136f03d5b361718b8d0d234042f7b2f203910d8568f63df2f866b547b3d4b9"},
 ]
 pyyaml = [
     {file = "PyYAML-5.3.1-cp27-cp27m-win32.whl", hash = "sha256:74809a57b329d6cc0fdccee6318f44b9b8649961fa73144a98735b0aaf029f1f"},

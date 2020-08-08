@@ -39,7 +39,6 @@ pytest = "^6.0"
 pytest-describe = "^1.0"
 pytest-expecter = "^2.1"
 pytest-cov = "^2.7"
-pytest-watch = "^4.2"
 
 # Coverage
 coveragespace = "^3.1.1"
@@ -47,11 +46,16 @@ coveragespace = "^3.1.1"
 # Utilities
 gitman = "^2.0"
 rope = "^0.14.0"
+watchdog = { version = "*", extras = ["watchmedo"] }
+
+[tool.black]
+
+quiet = true
 
 [tool.pytest.ini_options]
 
 testpaths = "app"
-addopts = "--cov=app --cov-report=term-missing:skip-covered --cov-branch --disable-warnings"
+addopts = "--no-header --disable-warnings --cov=app --cov-report=term-missing:skip-covered --cov-branch"
 
 [build-system]
 

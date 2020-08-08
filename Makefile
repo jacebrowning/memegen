@@ -65,7 +65,8 @@ test: install
 
 .PHONY: watch
 watch: install
-	poetry run pytest-watch --runner="make test" --onpass="make check format && clear && echo 'All tests passed.'" --nobeep --wait
+	@ sleep 1 && touch */__init__.py &
+	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.toml" --command="clear && make test check format && echo && echo ✅ && echo" --wait --drop
 
 ###############################################################################
 # Delivery Tasks
