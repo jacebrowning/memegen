@@ -74,3 +74,8 @@ def describe_image_detail():
             request, response = client.get("/api/images/custom/test.png")
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
+
+        def it_handles_unknown_templates(expect, client):
+            request, response = client.get("/api/images/unknown/test.png")
+            expect(response.status) == 404
+            expect(response.headers["content-type"]) == "image/png"

@@ -5,7 +5,6 @@ from sanic.log import logger
 from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
-from ..helpers import save_image
 
 blueprint = Blueprint("images", url_prefix="/api/images")
 
@@ -63,6 +62,9 @@ async def render_image(
             logger.warn("No image URL specified for custom template")
             status = 422
 
-    path = await loop.run_in_executor(None, save_image, key, slug, ext)
+    elif not models.Template.objects.get_or_none(key):
+        status = 404
+
+    path = await loop.run_in_executor(None, helpers.save_image, key, slug, ext)
 
     return await response.file(path, status)
