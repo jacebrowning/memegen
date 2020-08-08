@@ -43,4 +43,5 @@ if __name__ == "__main__":
         port=settings.PORT,
         workers=settings.WORKERS,
         debug=settings.DEBUG,
+        access_log=settings.DEBUG,
     )

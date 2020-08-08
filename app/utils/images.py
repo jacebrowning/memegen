@@ -29,7 +29,7 @@ def save(
 
 
 def _render_image(template: Template, lines: List[str], size: Dimensions) -> Image:
-    image = Image.open(template.background_image_path)
+    image = Image.open(template.image)
     image = image.convert("RGB")
 
     image.thumbnail(size, Image.LANCZOS)
