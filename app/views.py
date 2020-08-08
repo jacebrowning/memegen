@@ -11,6 +11,7 @@ app.config.API_SCHEMES = settings.API_SCHEMES
 app.config.API_VERSION = "0.0"
 app.config.API_TITLE = "Memes API"
 
+app.blueprint(api.blueprint)
 app.blueprint(api.images.blueprint)
 app.blueprint(api.legacy_images.blueprint)
 app.blueprint(api.templates.blueprint)
@@ -34,25 +35,6 @@ def test(request):
         content = utils.html.gallery(urls, refresh=True)
         return response.html(content)
     return response.redirect("/")
-
-
-# TODO: move this to the API package
-@app.get("/api/")
-@api.docs.exclude
-async def root_api(request):
-    return response.json(
-        {
-            "templates": request.app.url_for("templates.index", _external=True),
-            "images": request.app.url_for("images.index", _external=True),
-            "docs": request.app.url_for("docs.index", _external=True),
-        }
-    )
-
-
-@app.get("/templates/<filename:path>")
-@api.docs.exclude
-async def image(request, filename):
-    return await response.file(f"templates/{filename}")
 
 
 if __name__ == "__main__":
