@@ -1,6 +1,7 @@
 # files
 /images/
 /templates-legacy/
+/templates/_custom-*
 
 # dependencies
 .venv/

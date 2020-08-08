@@ -1,6 +1,9 @@
+import hashlib
 from pathlib import Path
 from typing import Dict, List, Optional
 
+import aiofiles
+import aiohttp
 from datafiles import datafile, field
 from sanic import Sanic
 
@@ -71,3 +74,18 @@ class Template:
             slug=utils.text.encode(self.sample),
             _external=True,
         )
+
+    @classmethod
+    async def create(cls, url: str) -> "Template":
+        key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
+        template = cls.objects.get_or_create(key, url)
+
+        path = template.datafile.path.parent / f"default.png"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                if response.status == 200:
+                    f = await aiofiles.open(path, mode="wb")
+                    await f.write(await response.read())
+                    await f.close()
+
+        return template

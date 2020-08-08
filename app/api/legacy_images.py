@@ -7,19 +7,19 @@ blueprint = Blueprint("legacy-images", url_prefix="/")
 
 @blueprint.get("/<key>.png")
 async def blank(request, key):
-    return await render_image(key)
+    return await render_image(request, key)
 
 
 @blueprint.get("/<key>.jpg")
 async def blank_jpg(request, key):
-    return await render_image(key, ext="jpg")
+    return await render_image(request, key, ext="jpg")
 
 
 @blueprint.get("/<key>/<slug:path>.png")
 async def text(request, key, slug):
-    return await render_image(key, slug)
+    return await render_image(request, key, slug)
 
 
 @blueprint.get("/<key>/<slug:path>.jpg")
 async def text_jpg(request, key, slug):
-    return await render_image(key, slug, ext="jpg")
+    return await render_image(request, key, slug, ext="jpg")

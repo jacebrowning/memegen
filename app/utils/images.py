@@ -22,19 +22,6 @@ def save(
     path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    # TODO: handle external images
-    # background_image_path = self._get_background_image_path()
-    # background_image_url = f"{settings.IMAGES_URL}/{background_image_path}"
-    # log.debug(f"Fetching background image: {background_image_url}")
-
-    # async with aiohttp.ClientSession() as session:
-    #     async with session.get(background_image_url) as response:
-    #         if response.status == 200:
-    #             f = await aiofiles.open(image_path, mode="wb")
-    #             await f.write(await response.read())
-    #             await f.close()
-    #             images.render_legacy(image_path, lines)
-
     image = _render_image(template, lines, size)
     image.save(path, quality=95)
 
