@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import pytest
 
+from .. import settings
 from ..models import Template, Text
 
 
@@ -25,9 +28,15 @@ def describe_text():
 
 
 def describe_template():
+    def describe_image():
+        def it_has_generic_extension_when_absent(expect):
+            template = Template.objects.get("_test")
+            expect(template.image) == Path.cwd() / "templates" / "_test" / "default.img"
+
     def describe_create():
         @pytest.mark.asyncio
-        async def it_downloads_the_image(expect):
+        async def it_downloads_the_image(expect, monkeypatch):
+            monkeypatch.setattr(settings, "DEBUG", True)
             url = "https://www.gstatic.com/webp/gallery/1.jpg"
             template = await Template.create(url)
             expect(str(template.image)).endswith(

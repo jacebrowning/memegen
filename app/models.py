@@ -9,7 +9,7 @@ from sanic import Sanic
 from sanic.log import logger
 from spongemock import spongemock
 
-from . import utils
+from . import settings, utils
 from .types import Dimensions, Point
 
 
@@ -69,8 +69,6 @@ class Template:
     @property
     def image(self) -> Path:
         directory = self.datafile.path.parent
-        directory.mkdir(exist_ok=True)
-
         for path in directory.iterdir():
             if path.stem == "default":
                 return path
@@ -100,6 +98,10 @@ class Template:
     async def create(cls, url: str) -> "Template":
         key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
         template = cls.objects.get_or_create(key, url)
+
+        if template.image.exists() and not settings.DEBUG:
+            logger.info(f"Found {url} at {template.image}")
+            return template
 
         logger.info(f"Saving {url} to {template.image}")
         async with aiohttp.ClientSession() as session:
