@@ -6,6 +6,8 @@ LINES_SLUG = [
     (["hello world"], "hello_world"),
     (["?%#/"], "~q~p~h~s"),
     (["a/b", "c"], "a~sb/c"),
+    (["variable_name"], "variable__name"),
+    (["variable-name"], "variable--name"),
 ]
 
 
