@@ -23,6 +23,7 @@ aiohttp = "^3.6.2"
 datafiles = "~0.10"
 minilog = "^1.6"
 pillow = "^7.1.1"
+spongemock = "~0.3.4"
 
 [tool.poetry.dev-dependencies]
 
@@ -37,7 +38,7 @@ autoflake = "^1.3.1"
 # Testing
 pytest = "^6.0"
 pytest-asyncio = "*"
-pytest-describe = "^1.0"
+pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "9014bf3ee564518aad3622b5f035f7ca6139e398" }
 pytest-expecter = "^2.1"
 pytest-cov = "^2.7"
 

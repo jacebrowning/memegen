@@ -1,6 +1,27 @@
 import pytest
 
-from ..models import Template
+from ..models import Template, Text
+
+
+def describe_text():
+    def describe_stylize():
+        @pytest.mark.parametrize(
+            ("style", "before", "after"),
+            [
+                ("none", "Hello, world!", "Hello, world!"),
+                ("upper", "Hello, world!", "HELLO, WORLD!"),
+                ("lower", "Hello, world!", "hello, world!"),
+                ("title", "these are words", "These Are Words"),
+                ("capitalize", "these are words", "These are words"),
+                ("mock", "these are words", "ThEsE aRe WorDs"),
+                ("<unknown>", "Hello, world!", "Hello, world!"),
+                ("", "Hello, world!", "HELLO, WORLD!"),
+            ],
+        )
+        def it_applies_style(expect, style, before, after):
+            text = Text()
+            text.style = style
+            expect(text.stylize(before)) == after
 
 
 def describe_template():

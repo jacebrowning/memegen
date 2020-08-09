@@ -19,6 +19,7 @@ minilog==1.6
 multidict==4.7.6
 parse==1.16.0
 pillow==7.2.0
+pyperclip==1.8.0
 pyyaml==5.3.1
 rfc3986==1.4.0
 ruamel.yaml==0.16.10
@@ -26,6 +27,7 @@ ruamel.yaml.clib==0.2.0; platform_python_implementation == "CPython" and python_
 sanic==20.6.3
 sanic-openapi==0.6.0
 sniffio==1.1.0
+spongemock==0.3.4
 tomlkit==0.5.11
 typing-extensions==3.7.4.2
 ujson==3.1.0; sys_platform != "win32" and implementation_name == "cpython"

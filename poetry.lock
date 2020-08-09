@@ -446,6 +446,14 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.7"
 
 [[package]]
+category = "main"
+description = "A cross-platform clipboard module for Python. (Only handles plain text for now.)"
+name = "pyperclip"
+optional = false
+python-versions = "*"
+version = "1.8.0"
+
+[[package]]
 category = "dev"
 description = "pytest: simple powerful testing with Python"
 name = "pytest"
@@ -503,11 +511,15 @@ description = "Describe-style plugin for pytest"
 name = "pytest-describe"
 optional = false
 python-versions = "*"
-version = "1.0.0"
+version = "2.0.0"
 
 [package.dependencies]
-pytest = ">=2.6.0"
+pytest = ">=4.0.0"
 
+[package.source]
+reference = "9014bf3ee564518aad3622b5f035f7ca6139e398"
+type = "git"
+url = "https://github.com/pytest-dev/pytest-describe"
 [[package]]
 category = "dev"
 description = "Better testing with expecter and pytest."
@@ -651,6 +663,17 @@ python-versions = ">=3.5"
 version = "1.1.0"
 
 [[package]]
+category = "main"
+description = "Mock some text like spongebob would. mOCk SoMe TexT lIKe SpONGebOb wOuLd."
+name = "spongemock"
+optional = false
+python-versions = "*"
+version = "0.3.4"
+
+[package.dependencies]
+pyperclip = ">=1.5.27"
+
+[[package]]
 category = "dev"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
@@ -756,7 +779,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "15f3cba3156ba1ba3ecefa434d09f4f96adc54c912eaa58ab671ba80a88a0e72"
+content-hash = "137f4f80a513084463ba1482949fc71781388e8d9164ede91636e2785c1a6678"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1034,6 +1057,9 @@ pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
+pyperclip = [
+    {file = "pyperclip-1.8.0.tar.gz", hash = "sha256:b75b975160428d84608c26edba2dec146e7799566aea42c1fe1b32e72b6028f2"},
+]
 pytest = [
     {file = "pytest-6.0.1-py3-none-any.whl", hash = "sha256:8b6007800c53fdacd5a5c192203f4e531eb2a1540ad9c752e052ec0f7143dbad"},
     {file = "pytest-6.0.1.tar.gz", hash = "sha256:85228d75db9f45e06e57ef9bf4429267f81ac7c0d742cc9ed63d09886a9fe6f4"},
@@ -1046,11 +1072,7 @@ pytest-cov = [
     {file = "pytest-cov-2.10.0.tar.gz", hash = "sha256:1a629dc9f48e53512fcbfda6b07de490c374b0c83c55ff7a1720b3fccff0ac87"},
     {file = "pytest_cov-2.10.0-py2.py3-none-any.whl", hash = "sha256:6e6d18092dce6fad667cd7020deed816f858ad3b49d5b5e2b1cc1c97a4dba65c"},
 ]
-pytest-describe = [
-    {file = "pytest-describe-1.0.0.tar.gz", hash = "sha256:3e2ea0e77efa09edb98cf90423bf1da21a462ed90bd3120f8f98fe7519a167d5"},
-    {file = "pytest_describe-1.0.0-py2-none-any.whl", hash = "sha256:cc3862662faa5a6fb721927aaef46b46cf787e4a8163e5459fc8778e650fabad"},
-    {file = "pytest_describe-1.0.0-py3-none-any.whl", hash = "sha256:95fe78639d4d16c4a1e7d62c70f63030b217c08d2ee6dca49559fe6e730c6696"},
-]
+pytest-describe = []
 pytest-expecter = [
     {file = "pytest-expecter-2.2.tar.gz", hash = "sha256:33c5b05008cad9b95ba0deb0a5bac6a51c68ae94f09de74a19cd1384a04c85d6"},
     {file = "pytest_expecter-2.2-py3-none-any.whl", hash = "sha256:15dd0485c23fd03b7a9c0f6819f0cf65c0defd0ce9796725ae51e79e56b279ab"},
@@ -1143,6 +1165,10 @@ six = [
 sniffio = [
     {file = "sniffio-1.1.0-py3-none-any.whl", hash = "sha256:20ed6d5b46f8ae136d00b9dcb807615d83ed82ceea6b2058cecb696765246da5"},
     {file = "sniffio-1.1.0.tar.gz", hash = "sha256:8e3810100f69fe0edd463d02ad407112542a11ffdc29f67db2bf3771afb87a21"},
+]
+spongemock = [
+    {file = "spongemock-0.3.4-py2.py3-none-any.whl", hash = "sha256:6a7df0a929a8d0f55cae1b2cfb45db471775f6fda0f2c2239d9935dbe6ac500b"},
+    {file = "spongemock-0.3.4.tar.gz", hash = "sha256:40c1316d9ece635d727ac2b3c6e22e5f9d85ba402ee4dc6eeef5a8e8c17ff892"},
 ]
 toml = [
     {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
