@@ -12,8 +12,8 @@ from .text import encode
 def save(
     template: Template,
     lines: List[str],
-    *,
     ext: str = settings.DEFAULT_EXT,
+    *,
     size: Dimensions = settings.DEFAULT_SIZE,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:

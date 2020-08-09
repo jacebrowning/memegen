@@ -51,20 +51,24 @@ async def render_image(
     request, key: str, slug: str = "", ext: str = settings.DEFAULT_EXT
 ):
     status = 200
-    loop = asyncio.get_event_loop()
 
     if key == "custom":
         url = request.args.get("alt")
         if url:
             template = await models.Template.create(url)
-            key = template.key
         else:
             logger.warn("No image URL specified for custom template")
+            template = models.Template.objects.get("_error")
             status = 422
+    else:
+        template = models.Template.objects.get_or_none(key)
+        if not template:
+            template = models.Template.objects.get("_error")
+            status = 404
 
-    elif not models.Template.objects.get_or_none(key):
-        status = 404
+    lines = utils.text.decode(slug)
 
-    path = await loop.run_in_executor(None, helpers.save_image, key, slug, ext)
+    loop = asyncio.get_event_loop()
+    path = await loop.run_in_executor(None, utils.images.save, template, lines, ext)
 
     return await response.file(path, status)
