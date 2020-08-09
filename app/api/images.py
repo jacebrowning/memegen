@@ -11,7 +11,8 @@ blueprint = Blueprint("images", url_prefix="/api/images")
 
 @blueprint.get("/")
 async def index(request):
-    urls = helpers.get_sample_images(request)
+    loop = asyncio.get_event_loop()
+    urls = await loop.run_in_executor(None, helpers.get_sample_images, request)
     return response.json([{"url": url} for url in urls])
 
 

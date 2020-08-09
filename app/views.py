@@ -1,3 +1,5 @@
+import asyncio
+
 import log
 from sanic import Sanic, response
 
@@ -19,8 +21,9 @@ app.blueprint(api.docs.blueprint)
 
 @app.get("/")
 @api.docs.exclude
-def index(request):
-    urls = helpers.get_sample_images(request)
+async def index(request):
+    loop = asyncio.get_event_loop()
+    urls = await loop.run_in_executor(None, helpers.get_sample_images, request)
     refresh = "debug" in request.args and settings.DEBUG
     content = utils.html.gallery(urls, refresh=refresh)
     return response.html(content)
@@ -28,9 +31,10 @@ def index(request):
 
 @app.get("/test")
 @api.docs.exclude
-def test(request):
+async def test(request):
     if settings.DEBUG:
-        urls = helpers.get_test_images(request)
+        loop = asyncio.get_event_loop()
+        urls = await loop.run_in_executor(None, helpers.get_test_images, request)
         content = utils.html.gallery(urls, refresh=True)
         return response.html(content)
     return response.redirect("/")
