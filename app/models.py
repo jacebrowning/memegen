@@ -7,6 +7,7 @@ import aiohttp
 from datafiles import datafile, field
 from sanic import Sanic
 from sanic.log import logger
+from spongemock import spongemock
 
 from . import utils
 from .types import Dimensions, Point
@@ -16,6 +17,7 @@ from .types import Dimensions, Point
 class Text:
 
     color: str = "white"
+    style: str = "upper"
 
     anchor_x: float = 0.05
     anchor_y: float = 0.05
@@ -34,7 +36,18 @@ class Text:
         return int(image_width * self.scale_x), int(image_height * self.scale_y)
 
     def stylize(self, text: str) -> str:
-        return text.upper()  # TODO: support mock text
+        if self.style == "none":
+            return text
+
+        if self.style == "mock":
+            return spongemock.mock(text, diversity_bias=0.75, random_seed=0)
+
+        method = getattr(text, self.style or self.__class__.style, None)
+        if method:
+            return method()
+
+        logger.warn(f"Unsupported text style: {self.style}")
+        return text
 
 
 @datafile("../templates/{self.key}/config.yml")
@@ -51,7 +64,7 @@ class Template:
 
     @property
     def valid(self) -> bool:
-        return bool(self.name and not self.name.startswith("<"))
+        return not self.key.startswith("_")
 
     @property
     def image(self) -> Path:
