@@ -81,6 +81,8 @@ def _get_elements(
             line = lines[index]
         except IndexError:
             line = ""
+        else:
+            line = text.stylize(line)
 
         max_text_size = text.get_size(image_size)
 

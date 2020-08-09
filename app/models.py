@@ -33,6 +33,9 @@ class Text:
         image_width, image_height = image_size
         return int(image_width * self.scale_x), int(image_height * self.scale_y)
 
+    def stylize(self, text: str) -> str:
+        return text.upper()  # TODO: support mock text
+
 
 @datafile("../templates/{self.key}/config.yml")
 class Template:

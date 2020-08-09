@@ -35,3 +35,9 @@ async def test_custom_template(images):
 def test_unknown_template(images):
     template = models.Template.objects.get("_error")
     utils.images.save(template, ["UNKNOWN TEMPLATE"], directory=images)
+
+
+def test_special_characters(images):
+    template = models.Template.objects.get("fry")
+    lines = ["Special? 100% #these-memes", "template_rating: 9/10"]
+    utils.images.save(template, lines, directory=images)
