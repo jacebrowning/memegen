@@ -130,3 +130,11 @@ def describe_image_detail():
             request, response = client.get(path)
             expect(response.status) == 200
             expect(response.headers["content-type"]) == content_type
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_redirects_to_normalized_slug(expect, client, ext):
+            request, response = client.get(
+                f"/api/images/fry/One Two.{ext}", allow_redirects=False
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == f"/api/images/fry/One_Two.{ext}"

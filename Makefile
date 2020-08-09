@@ -61,10 +61,10 @@ check: install
 .PHONY: test
 test: install
 	@ if test -e .cache/v/cache/lastfailed; then \
-		echo "Running previously failed tests..." && \
+		echo "Running failed tests..." && \
 		poetry run pytest --last-failed --maxfail=1 --no-cov && \
 		echo "Running all tests..." && \
-		poetry run pytest --cache-clear --maxfail=1; \
+		poetry run pytest --cache-clear; \
 	else \
 		echo "Running all tests..." && \
 		poetry run pytest --new-first --maxfail=1; \
@@ -74,7 +74,7 @@ test: install
 .PHONY: watch
 watch: install
 	@ sleep 2 && touch */__init__.py &
-	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format && echo && echo ✅ && echo" --wait --drop
+	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.yml" --command="clear && make test check format && echo && echo ✅ && echo" --wait --drop
 
 ###############################################################################
 # Delivery Tasks

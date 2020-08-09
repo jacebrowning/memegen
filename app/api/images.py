@@ -40,11 +40,19 @@ async def blank_jpg(request, key):
 
 @blueprint.get("/<key>/<slug:path>.png")
 async def text(request, key, slug):
+    slug, updated = utils.text.normalize(slug)
+    if updated:
+        url = request.app.url_for("images.text", key=key, slug=slug)
+        return response.redirect(url, status=301)
     return await render_image(request, key, slug)
 
 
 @blueprint.get("/<key>/<slug:path>.jpg")
 async def text_jpg(request, key, slug):
+    slug, updated = utils.text.normalize(slug)
+    if updated:
+        url = request.app.url_for("images.text_jpg", key=key, slug=slug)
+        return response.redirect(url, status=301)
     return await render_image(request, key, slug, ext="jpg")
 
 

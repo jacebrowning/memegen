@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 
 def encode(lines: List[str]) -> str:
@@ -14,7 +14,7 @@ def encode(lines: List[str]) -> str:
         else:
             encoded_lines.append("_")
 
-    slug = "/".join(encoded_lines).lower()
+    slug = "/".join(encoded_lines)
 
     return slug
 
@@ -29,3 +29,8 @@ def decode(slug: str) -> List[str]:
     lines = [line.replace("~s", "/") for line in lines]
 
     return lines
+
+
+def normalize(slug: str) -> Tuple[str, bool]:
+    normalized_slug = encode(decode(slug))
+    return normalized_slug, slug != normalized_slug
