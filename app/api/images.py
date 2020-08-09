@@ -57,13 +57,18 @@ async def render_image(
         url = request.args.get("alt")
         if url:
             template = await models.Template.create(url)
+            if not template.image.exists():
+                logger.error(f"Unable to download image URL: {url}")
+                template = models.Template.objects.get("_error")
+                status = 415
         else:
-            logger.warning("No image URL specified for custom template")
+            logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
             status = 422
     else:
         template = models.Template.objects.get_or_none(key)
         if not template:
+            logger.error(f"No such template: {key}")
             template = models.Template.objects.get("_error")
             status = 404
 

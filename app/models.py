@@ -110,5 +110,7 @@ class Template:
                     f = await aiofiles.open(template.image, mode="wb")
                     await f.write(await response.read())
                     await f.close()
+                else:
+                    logger.info(f"{response.status} response from {url}")
 
         return template

@@ -90,6 +90,14 @@ def describe_image_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
+        def it_handles_invalid_urls_with_custom_templates(expect, client):
+            request, response = client.get(
+                "/api/images/custom/test.png"
+                "?alt=http://example.com/does_not_exist.png"
+            )
+            expect(response.status) == 415
+            expect(response.headers["content-type"]) == "image/png"
+
         @pytest.mark.parametrize(
             ("path", "content_type"),
             [

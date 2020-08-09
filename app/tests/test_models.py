@@ -18,13 +18,17 @@ def describe_text():
                 ("capitalize", "these are words", "These are words"),
                 ("mock", "these are words", "ThEsE aRe WorDs"),
                 ("<unknown>", "Hello, world!", "Hello, world!"),
-                ("", "Hello, world!", "HELLO, WORLD!"),
             ],
         )
         def it_applies_style(expect, style, before, after):
             text = Text()
             text.style = style
             expect(text.stylize(before)) == after
+
+        def it_defaults_to_upper(expect):
+            text = Text()
+            text.style = ""
+            expect(text.stylize("Foobar")) == "FOOBAR"
 
 
 def describe_template():
@@ -38,7 +42,18 @@ def describe_template():
         async def it_downloads_the_image(expect, monkeypatch):
             monkeypatch.setattr(settings, "DEBUG", True)
             url = "https://www.gstatic.com/webp/gallery/1.jpg"
-            template = await Template.create(url)
-            expect(str(template.image)).endswith(
-                "/templates/_custom-2d3c91e23b91d6387050e85efc1f3acb39b5a95d/default.img"
+            path = (
+                Path.cwd()
+                / "templates"
+                / "_custom-2d3c91e23b91d6387050e85efc1f3acb39b5a95d"
+                / "default.img"
             )
+            template = await Template.create(url)
+            expect(template.image) == path
+            expect(template.image.exists()) == True
+
+        @pytest.mark.asyncio
+        async def it_handles_invalid_urls(expect):
+            url = "http://example.com/does_not_exist.png"
+            template = await Template.create(url)
+            expect(template.image.exists()) == False
