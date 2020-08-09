@@ -1,3 +1,4 @@
+import random
 import shutil
 
 import pytest
@@ -8,8 +9,9 @@ from .. import helpers, models, settings, utils
 @pytest.fixture(scope="session")
 def images():
     path = settings.TEST_IMAGES_DIRECTORY
-    shutil.rmtree(path)
-    path.mkdir()
+    if random.random() < 0.1:
+        shutil.rmtree(path)
+        path.mkdir()
     return path
 
 
