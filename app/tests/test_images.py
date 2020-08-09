@@ -1,5 +1,6 @@
 import random
 import shutil
+from pathlib import Path
 
 import pytest
 
@@ -53,7 +54,7 @@ def test_special_characters(images):
     utils.images.save(template, lines, directory=images)
 
 
-def test_extremely_long_text(images):
+def test_extremely_long_text(images, tmpdir):
     template = models.Template.objects.get("fry")
     lines = ["", "word " * 50]
-    utils.images.save(template, lines, directory=images)
+    utils.images.save(template, lines, directory=Path(tmpdir) / "images")
