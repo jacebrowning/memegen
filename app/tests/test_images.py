@@ -25,6 +25,14 @@ def test_jpg_images(images):
     utils.images.save(template, lines, "jpg", directory=images)
 
 
+def test_debug_images(images, monkeypatch):
+    monkeypatch.setattr(settings, "DEBUG", True)
+    key, lines = settings.TEST_IMAGES[0]
+    template = models.Template.objects.get(key)
+    lines[-1] = lines[-1] + " (debug)"
+    utils.images.save(template, lines, directory=images)
+
+
 @pytest.mark.asyncio
 async def test_custom_template(images):
     url = "https://www.gstatic.com/webp/gallery/2.jpg"
