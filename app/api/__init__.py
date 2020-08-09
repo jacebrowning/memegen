@@ -1,6 +1,6 @@
 from sanic import Blueprint, response
 
-from . import docs, images, legacy_images, templates
+from . import docs, images, templates
 
 blueprint = Blueprint("root", url_prefix="/api")
 

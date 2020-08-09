@@ -14,7 +14,6 @@ app.config.API_TITLE = "Memes API"
 
 app.blueprint(api.blueprint)
 app.blueprint(api.images.blueprint)
-app.blueprint(api.legacy_images.blueprint)
 app.blueprint(api.templates.blueprint)
 app.blueprint(api.docs.blueprint)
 

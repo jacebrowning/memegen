@@ -115,22 +115,6 @@ def describe_image_detail():
             expect(response.status) == 404
             expect(response.headers["content-type"]) == "image/png"
 
-        @pytest.mark.parametrize(
-            ("path", "content_type"),
-            [
-                ("/fry.png", "image/png"),
-                ("/fry.jpg", "image/jpeg"),
-                ("/fry/test.png", "image/png"),
-                ("/fry/test.jpg", "image/jpeg"),
-            ],
-        )
-        def it_supports_direct_image_access_for_legacy_support(
-            expect, client, path, content_type
-        ):
-            request, response = client.get(path)
-            expect(response.status) == 200
-            expect(response.headers["content-type"]) == content_type
-
         @pytest.mark.parametrize("ext", ["png", "jpg"])
         def it_redirects_to_normalized_slug(expect, client, ext):
             request, response = client.get(
