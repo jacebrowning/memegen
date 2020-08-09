@@ -66,7 +66,7 @@ test: install
 .PHONY: watch
 watch: install
 	@ sleep 1 && touch */__init__.py &
-	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.toml" --command="clear && make test check format && echo && echo ✅ && echo" --wait --drop
+	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format && echo && echo ✅ && echo" --wait --drop
 
 ###############################################################################
 # Delivery Tasks

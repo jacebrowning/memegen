@@ -58,7 +58,7 @@ async def render_image(
         if url:
             template = await models.Template.create(url)
         else:
-            logger.warn("No image URL specified for custom template")
+            logger.warning("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
             status = 422
     else:

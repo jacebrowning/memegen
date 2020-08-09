@@ -13,5 +13,5 @@ __pycache__/
 .cache/
 
 # testing
-.pytest_cache/
 .coverage
+/htmlcov/

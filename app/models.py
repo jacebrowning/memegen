@@ -46,7 +46,7 @@ class Text:
         if method:
             return method()
 
-        logger.warn(f"Unsupported text style: {self.style}")
+        logger.warning(f"Unsupported text style: {self.style}")
         return text
 
 
