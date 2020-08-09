@@ -107,6 +107,7 @@ class Template:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
+                    template.image.parent.mkdir(exist_ok=True)
                     f = await aiofiles.open(template.image, mode="wb")
                     await f.write(await response.read())
                     await f.close()
