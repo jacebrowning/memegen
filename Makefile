@@ -60,27 +60,21 @@ check: install
 
 .PHONY: test
 test: install
-	poetry run pytest
+	@ if test -e .cache/v/cache/lastfailed; then \
+		echo "Running previously failed tests..." && \
+		poetry run pytest --last-failed --maxfail=1 --no-cov && \
+		echo "Running all tests..." && \
+		poetry run pytest --cache-clear --maxfail=1; \
+	else \
+		echo "Running all tests..." && \
+		poetry run pytest --new-first --maxfail=1; \
+	fi
 	poetry run coveragespace jacebrowning/memegen-v2 overall
 
 .PHONY: watch
 watch: install
-	@ sleep 1 & touch */__init__.py &
-	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make .test-rerun check format && echo && echo ✅ && echo" --wait --drop
-
-.PHONY: .test-rerun
-.test-rerun: install
-	@ if test -e .cache/v/cache/lastfailed; then \
-		echo "Running previous failure..." && \
-		poetry run pytest --last-failed --maxfail=1 --no-cov && \
-		echo "Running all tests..." && \
-		poetry run pytest --cache-clear --maxfail=1 && \
-		poetry run coveragespace jacebrowning/memegen-v2 overall; \
-	else \
-		echo "Running all tests..." && \
-		poetry run pytest --new-first --maxfail=1 && \
-		poetry run coveragespace jacebrowning/memegen-v2 overall; \
-	fi
+	@ sleep 2 && touch */__init__.py &
+	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format && echo && echo ✅ && echo" --wait --drop
 
 ###############################################################################
 # Delivery Tasks
