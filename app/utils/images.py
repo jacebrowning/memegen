@@ -111,8 +111,7 @@ def _get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> O
     text_size = font.getsize(text)
     x_offset, y_offset = font.getoffset(text)
 
-    x_offset -= (max_text_size[0] - text_size[0]) // 2 - 1
-    # TODO: Get Y offset working
-    # y_offset -= (max_text_size[1] - text_size[1]) // 2
+    x_offset -= (max_text_size[0] - text_size[0]) // 2
+    y_offset -= (max_text_size[1] - (text_size[1] / 1.5)) // 2
 
     return x_offset, y_offset
