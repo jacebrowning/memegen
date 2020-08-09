@@ -40,6 +40,7 @@ pytest = "^6.0"
 pytest-asyncio = "*"
 pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "9014bf3ee564518aad3622b5f035f7ca6139e398" }
 pytest-expecter = "^2.1"
+pytest-random = "*"
 pytest-cov = "^2.7"
 
 # Coverage
@@ -59,8 +60,8 @@ quiet = true
 testpaths = "app"
 
 addopts = """
---last-failed \
 --no-header --disable-warnings \
+--random \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html --no-cov-on-fail
 """
 

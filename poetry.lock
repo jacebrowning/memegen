@@ -529,6 +529,17 @@ python-versions = ">=3.6,<4.0"
 version = "2.2"
 
 [[package]]
+category = "dev"
+description = "py.test plugin to randomize tests"
+name = "pytest-random"
+optional = false
+python-versions = "*"
+version = "0.02"
+
+[package.dependencies]
+pytest = ">=2.2.3"
+
+[[package]]
 category = "main"
 description = "YAML parser and emitter for Python"
 name = "pyyaml"
@@ -779,7 +790,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "137f4f80a513084463ba1482949fc71781388e8d9164ede91636e2785c1a6678"
+content-hash = "78b6a9357d64198b810aaa8c59cc9955885a5e4d1934b8c83383e893ab3320d0"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1076,6 +1087,9 @@ pytest-describe = []
 pytest-expecter = [
     {file = "pytest-expecter-2.2.tar.gz", hash = "sha256:33c5b05008cad9b95ba0deb0a5bac6a51c68ae94f09de74a19cd1384a04c85d6"},
     {file = "pytest_expecter-2.2-py3-none-any.whl", hash = "sha256:15dd0485c23fd03b7a9c0f6819f0cf65c0defd0ce9796725ae51e79e56b279ab"},
+]
+pytest-random = [
+    {file = "pytest-random-0.02.tar.gz", hash = "sha256:92f25db8c5d9ffc20d90b51997b914372d6955cb9cf1f6ead45b90514fc0eddd"},
 ]
 pyyaml = [
     {file = "PyYAML-5.3.1-cp27-cp27m-win32.whl", hash = "sha256:74809a57b329d6cc0fdccee6318f44b9b8649961fa73144a98735b0aaf029f1f"},
