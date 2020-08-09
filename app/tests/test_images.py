@@ -49,3 +49,9 @@ def test_special_characters(images):
     template = models.Template.objects.get("fry")
     lines = ["Special? 100% #these-memes", "template_rating: 9/10"]
     utils.images.save(template, lines, directory=images)
+
+
+def test_extremely_long_text(images):
+    template = models.Template.objects.get("fry")
+    lines = ["", "word " * 50]
+    utils.images.save(template, lines, directory=images)
