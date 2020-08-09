@@ -22,6 +22,7 @@ def encode(lines: List[str]) -> str:
 def decode(slug: str) -> List[str]:
     lines = (
         slug.replace("_", " ")
+        .replace("-", " ")
         .replace("~q", "?")
         .replace("~p", "%")
         .replace("~h", "#")
