@@ -1,0 +1,17 @@
+[run]
+
+branch = true
+
+data_file = .cache/coverage
+
+omit =
+    .venv/*
+    */tests/*
+    */settings.py
+
+[report]
+
+exclude_lines =
+    pragma: no cover
+    if __name__ == "__main__"
+    if TYPE_CHECKING

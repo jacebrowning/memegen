@@ -61,7 +61,7 @@ testpaths = "app"
 addopts = """
 --last-failed \
 --no-header --disable-warnings \
---cov=app --cov-report=term-missing:skip-covered --cov-report=html --cov-branch --no-cov-on-fail
+--cov=app --cov-report=term-missing:skip-covered --cov-report=html --no-cov-on-fail
 """
 
 cache_dir = ".cache"
