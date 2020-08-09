@@ -1,15 +1,15 @@
 text:
   - color: white
-    anchor_x: 0.1
-    anchor_y: 0.1
+    anchor_x: 0.05
+    anchor_y: 0.05
     angle: 0.0
-    scale_x: 0.8
+    scale_x: 0.9
     scale_y: 0.2
   - color: white
-    anchor_x: 0.1
-    anchor_y: 0.7
+    anchor_x: 0.05
+    anchor_y: 0.75
     angle: 0.0
-    scale_x: 0.8
+    scale_x: 0.9
     scale_y: 0.2
 name: Y U NO Guy
 source: http://knowyourmeme.com/memes/y-u-no-guy

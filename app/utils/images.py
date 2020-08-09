@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Iterator, List, Tuple
+from typing import TYPE_CHECKING, Iterator, List, Tuple
 
 from PIL import Image, ImageDraw, ImageFont
 
 from .. import settings
-from ..models import Template
 from ..types import Dimensions, Offset, Point
 from .text import encode
+
+if TYPE_CHECKING:
+    from ..models import Template
 
 
 def save(

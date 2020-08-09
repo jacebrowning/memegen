@@ -17,12 +17,12 @@ class Text:
 
     color: str = "white"
 
-    anchor_x: float = 0.1
-    anchor_y: float = 0.1
+    anchor_x: float = 0.05
+    anchor_y: float = 0.05
 
     angle: float = 0
 
-    scale_x: float = 0.8
+    scale_x: float = 0.9
     scale_y: float = 0.2
 
     def get_anchor(self, image_size: Dimensions) -> Point:
@@ -41,7 +41,7 @@ class Template:
     name: str = ""
     source: Optional[str] = None
     text: List[Text] = field(
-        default_factory=lambda: [Text(), Text(anchor_x=0.1, anchor_y=0.7)]
+        default_factory=lambda: [Text(), Text(anchor_x=0.05, anchor_y=0.75)]
     )
     styles: List[str] = field(default_factory=lambda: ["default"])
     sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
