@@ -15,5 +15,11 @@
   "python.linting.enabled": true,
   "editor.formatOnSave": true,
   "python.linting.lintOnSave": true,
-  "cSpell.words": ["aiofiles", "aiohttp", "jsonify", "sanic"]
+  "cSpell.words": [
+    "CIRCLECI",
+    "aiofiles",
+    "aiohttp",
+    "jsonify",
+    "sanic"
+  ]
 }

@@ -1,3 +1,4 @@
+import os
 import random
 import shutil
 from pathlib import Path
@@ -54,6 +55,7 @@ def test_special_characters(images):
     utils.images.save(template, lines, directory=images)
 
 
+@pytest.mark.skipif("CIRCLECI" in os.environ, reason="Long filenames not supported")
 def test_extremely_long_text(images, tmpdir):
     template = models.Template.objects.get("fry")
     lines = ["", "word " * 50]
