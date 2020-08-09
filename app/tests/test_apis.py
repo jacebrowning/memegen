@@ -62,6 +62,15 @@ def describe_image_list():
 
 def describe_image_detail():
     def describe_GET():
+        def it_returns_an_image(expect, client):
+            request, response = client.get("/api/images/fry/test.png")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+            request, response = client.get("/api/images/fry/test.jpg")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/jpeg"
+
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
                 "/api/images/custom/test.png"
@@ -75,7 +84,33 @@ def describe_image_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
+        def it_returns_blank_templates_when_no_slug(expect, client):
+            request, response = client.get("/api/images/fry.png")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+            request, response = client.get("/api/images/fry.jpg")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/jpeg"
+
         def it_handles_unknown_templates(expect, client):
             request, response = client.get("/api/images/unknown/test.png")
             expect(response.status) == 404
             expect(response.headers["content-type"]) == "image/png"
+
+        def it_supports_direct_image_access_for_legacy_support(expect, client):
+            request, response = client.get("/fry.png")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+            request, response = client.get("/fry.jpg")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/jpeg"
+
+            request, response = client.get("/fry/test.png")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+            request, response = client.get("/fry/test.jpg")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/jpeg"
