@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator, List, Tuple
+from typing import TYPE_CHECKING, Iterator, List, Tuple, cast
 
 from PIL import Image, ImageDraw, ImageFont
 
 from .. import settings
-from ..types import Dimensions, Offset, Point
+from ..types import Dimensions, Offset, Point, Size
 from .text import encode
 
 if TYPE_CHECKING:
@@ -18,9 +18,8 @@ def save(
     lines: List[str],
     ext: str = settings.DEFAULT_EXT,
     style: str = "default",
-    /,  # function must be callable from loop.run_in_executor()
+    size: Size = settings.DEFAULT_SIZE,
     *,
-    size: Dimensions = settings.DEFAULT_SIZE,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
     slug = encode(lines)
@@ -28,7 +27,14 @@ def save(
     path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    image = _render_image(template, style, lines, size)
+    if not any(size):
+        size = settings.DEFAULT_SIZE
+    elif size[0] and not size[1]:
+        size = size[0], 9999
+    elif size[1] and not size[0]:
+        size = 9999, size[1]
+
+    image = _render_image(template, style, lines, cast(Dimensions, size))
     image.save(path, quality=95)
 
     return path
