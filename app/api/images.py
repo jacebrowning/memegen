@@ -42,7 +42,9 @@ async def blank_jpg(request, key):
 async def text(request, key, slug):
     slug, updated = utils.text.normalize(slug)
     if updated:
-        url = request.app.url_for("images.text", key=key, slug=slug)
+        url = request.app.url_for(
+            "images.text", key=key, slug=slug, **request.args
+        ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
     return await render_image(request, key, slug)
 
@@ -51,7 +53,9 @@ async def text(request, key, slug):
 async def text_jpg(request, key, slug):
     slug, updated = utils.text.normalize(slug)
     if updated:
-        url = request.app.url_for("images.text_jpg", key=key, slug=slug)
+        url = request.app.url_for(
+            "images.text_jpg", key=key, slug=slug, **request.args
+        ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
     return await render_image(request, key, slug, ext="jpg")
 

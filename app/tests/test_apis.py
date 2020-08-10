@@ -122,3 +122,14 @@ def describe_image_detail():
             )
             expect(response.status) == 301
             expect(response.headers["Location"]) == f"/api/images/fry/One_Two.{ext}"
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_preserves_query_params_when_redirecting(expect, client, ext):
+            request, response = client.get(
+                f"/api/images/custom/One Two.{ext}?alt=http://example.com",
+                allow_redirects=False,
+            )
+            expect(response.status) == 301
+            expect(
+                response.headers["Location"]
+            ) == f"/api/images/custom/One_Two.{ext}?alt=http://example.com"

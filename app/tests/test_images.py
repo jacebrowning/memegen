@@ -41,7 +41,7 @@ def test_debug_images(images, monkeypatch):
 async def test_custom_template(images):
     url = "https://www.gstatic.com/webp/gallery/2.jpg"
     template = await models.Template.create(url)
-    utils.images.save(template, ["", "Custom Template"], directory=images)
+    utils.images.save(template, ["", "My Custom Template"], directory=images)
 
 
 def test_unknown_template(images):

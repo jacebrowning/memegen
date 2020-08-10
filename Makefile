@@ -36,7 +36,7 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf images templates-legacy templates/_custom-*
+	rm -rf images templates-legacy templates/_custom-* tests/images
 	rm -rf *.egg-info .venv
 
 ###############################################################################
