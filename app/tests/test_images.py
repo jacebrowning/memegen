@@ -11,9 +11,9 @@ from .. import helpers, models, settings, utils
 @pytest.fixture(scope="session")
 def images():
     path = settings.TEST_IMAGES_DIRECTORY
-    if random.random() < 0.1:
+    if random.random() < 0.25:
         shutil.rmtree(path)
-        path.mkdir()
+    path.mkdir(exist_ok=True)
     return path
 
 
@@ -60,3 +60,9 @@ def test_extremely_long_text(images, tmpdir):
     template = models.Template.objects.get("fry")
     lines = ["", "word " * 50]
     utils.images.save(template, lines, directory=Path(tmpdir) / "images")
+
+
+def test_style(images):
+    template = models.Template.objects.get("ds")
+    lines = ["one", "two", "three"]
+    utils.images.save(template, lines, "png", "maga", directory=images)
