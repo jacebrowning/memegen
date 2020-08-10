@@ -17,7 +17,7 @@ def save(
     template: Template,
     lines: List[str],
     ext: str = settings.DEFAULT_EXT,
-    style: str = "default",
+    style: str = settings.DEFAULT_STYLE,
     size: Size = settings.DEFAULT_SIZE,
     *,
     directory: Path = settings.IMAGES_DIRECTORY,
