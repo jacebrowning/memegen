@@ -68,13 +68,22 @@ class Template:
 
     @property
     def image(self) -> Path:
+        return self.get_image()
+
+    def get_image(self, style: str = "") -> Path:
+        style = style or "default"
+
         directory = self.datafile.path.parent
         for path in directory.iterdir():
-            if path.stem == "default":
+            if path.stem == style:
                 return path
 
-        logger.debug(f"No default background image for template: {self}")
-        return directory / "default.img"
+        if style == "default":
+            logger.debug(f"No default background image for template: {self.key}")
+            return directory / "default.img"
+        else:
+            logger.warning(f"Style {style!r} not available for {self.key}")
+            return self.get_image()
 
     def jsonify(self, app: Sanic) -> Dict:
         return {

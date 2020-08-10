@@ -17,6 +17,8 @@ def save(
     template: Template,
     lines: List[str],
     ext: str = settings.DEFAULT_EXT,
+    style: str = "default",
+    /,  # function must be callable from loop.run_in_executor()
     *,
     size: Dimensions = settings.DEFAULT_SIZE,
     directory: Path = settings.IMAGES_DIRECTORY,
@@ -26,14 +28,16 @@ def save(
     path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    image = _render_image(template, lines, size)
+    image = _render_image(template, style, lines, size)
     image.save(path, quality=95)
 
     return path
 
 
-def _render_image(template: Template, lines: List[str], size: Dimensions) -> Image:
-    image = Image.open(template.image)
+def _render_image(
+    template: Template, style: str, lines: List[str], size: Dimensions
+) -> Image:
+    image = Image.open(template.get_image(style))
     image = image.convert("RGB")
 
     image.thumbnail(size, Image.LANCZOS)

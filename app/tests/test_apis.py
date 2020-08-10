@@ -4,15 +4,14 @@ import pytest
 
 
 def describe_root():
-    def describe_GET():
-        def it_returns_all_routes(expect, client):
-            request, response = client.get("/api")
-            expect(response.status) == 200
-            expect(response.json) == {
-                "templates": "http://localhost:5000/api/templates",
-                "images": "http://localhost:5000/api/images",
-                "docs": "http://localhost:5000/api/docs",
-            }
+    def it_returns_all_routes(expect, client):
+        request, response = client.get("/api")
+        expect(response.status) == 200
+        expect(response.json) == {
+            "templates": "http://localhost:5000/api/templates",
+            "images": "http://localhost:5000/api/images",
+            "docs": "http://localhost:5000/api/docs",
+        }
 
 
 def describe_template_list():
@@ -63,19 +62,44 @@ def describe_image_list():
 
 
 def describe_image_detail():
-    def describe_GET():
-        @pytest.mark.parametrize(
-            ("path", "content_type"),
-            [
-                ("/api/images/fry/test.png", "image/png"),
-                ("/api/images/fry/test.jpg", "image/jpeg"),
-            ],
-        )
-        def it_returns_an_image(expect, client, path, content_type):
-            request, response = client.get(path)
-            expect(response.status) == 200
-            expect(response.headers["content-type"]) == content_type
+    @pytest.mark.parametrize(
+        ("path", "content_type"),
+        [
+            ("/api/images/fry/test.png", "image/png"),
+            ("/api/images/fry/test.jpg", "image/jpeg"),
+        ],
+    )
+    def it_returns_an_image(expect, client, path, content_type):
+        request, response = client.get(path)
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == content_type
 
+    @pytest.mark.parametrize(
+        ("path", "content_type"),
+        [("/api/images/fry.png", "image/png"), ("/api/images/fry.jpg", "image/jpeg"),],
+    )
+    def it_returns_blank_templates_when_no_slug(expect, client, path, content_type):
+        request, response = client.get(path)
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == content_type
+
+    def it_handles_unknown_templates(expect, client):
+        request, response = client.get("/api/images/unknown/test.png")
+        expect(response.status) == 404
+        expect(response.headers["content-type"]) == "image/png"
+
+    def describe_styles():
+        def it_supports_alternate_styles(expect, client):
+            request, response = client.get("/api/images/ds/one/two.png?style=maga")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_rejects_invalid_styles(expect, client):
+            request, response = client.get("/api/images/ds/one/two.png?style=foobar")
+            expect(response.status) == 422
+            expect(response.headers["content-type"]) == "image/png"
+
+    def describe_custom():
         # TODO: Figure out why this test takes 5+ seconds (pytest --durations=0)
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
@@ -98,23 +122,7 @@ def describe_image_detail():
             expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
 
-        @pytest.mark.parametrize(
-            ("path", "content_type"),
-            [
-                ("/api/images/fry.png", "image/png"),
-                ("/api/images/fry.jpg", "image/jpeg"),
-            ],
-        )
-        def it_returns_blank_templates_when_no_slug(expect, client, path, content_type):
-            request, response = client.get(path)
-            expect(response.status) == 200
-            expect(response.headers["content-type"]) == content_type
-
-        def it_handles_unknown_templates(expect, client):
-            request, response = client.get("/api/images/unknown/test.png")
-            expect(response.status) == 404
-            expect(response.headers["content-type"]) == "image/png"
-
+    def describe_redirect():
         @pytest.mark.parametrize("ext", ["png", "jpg"])
         def it_redirects_to_normalized_slug(expect, client, ext):
             request, response = client.get(

@@ -86,7 +86,13 @@ async def render_image(
 
     lines = utils.text.decode(slug)
 
+    style = request.args.get("style")
+    if style and style not in template.styles:
+        status = 422
+
     loop = asyncio.get_event_loop()
-    path = await loop.run_in_executor(None, utils.images.save, template, lines, ext)
+    path = await loop.run_in_executor(
+        None, utils.images.save, template, lines, ext, style
+    )
 
     return await response.file(path, status)

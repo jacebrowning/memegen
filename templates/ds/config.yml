@@ -19,3 +19,5 @@ text:
     angle: 0.0
     scale_x: 0.8
     scale_y: 0.1
+styles:
+  - maga
