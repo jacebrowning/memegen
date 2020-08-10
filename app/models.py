@@ -59,7 +59,7 @@ class Template:
     text: List[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.05, anchor_y=0.75)]
     )
-    styles: List[str] = field(default_factory=lambda: ["default"])
+    styles: List[str] = field(default_factory=lambda: [settings.DEFAULT_STYLE])
     sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
 
     @property
@@ -71,14 +71,14 @@ class Template:
         return self.get_image()
 
     def get_image(self, style: str = "") -> Path:
-        style = style or "default"
+        style = style or settings.DEFAULT_STYLE
 
         directory = self.datafile.path.parent
         for path in directory.iterdir():
             if path.stem == style:
                 return path
 
-        if style == "default":
+        if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.key}")
             return directory / "default.img"
         else:
@@ -88,7 +88,7 @@ class Template:
     def jsonify(self, app: Sanic) -> Dict:
         return {
             "name": self.name,
-            "styles": [s for s in self.styles if s != "default"],
+            "styles": [s for s in self.styles if s != settings.DEFAULT_STYLE],
             "blank": app.url_for("images.blank", key=self.key, _external=True),
             "sample": self.build_sample_url(app),
             "source": self.source,
