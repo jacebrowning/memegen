@@ -20,7 +20,7 @@ elif "HEROKU_APP_NAME" in os.environ:  # review apps
     API_SCHEMES = ["https"]
 else:  # localhost
     SERVER_NAME = f"localhost:{PORT}"
-    IMAGES_URL = "https://memegen-link-v2.herokuapp.com"
+    IMAGES_URL = "https://api.memegen.link"
     API_SCHEMES = ["http", "https"]
 
 
