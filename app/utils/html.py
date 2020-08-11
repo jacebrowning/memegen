@@ -7,10 +7,12 @@ def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str
     for url, template in samples:
         if refresh:
             url += "?time=0"
+        else:
+            url += "?width=300&height=300"
         lines.append(
             f"""
             <a href="{template or url}">
-                <img src="{url}" width="500" style="padding: 5px;">
+                <img src="{url}" style="padding: 5px;">
             </a>
             """
         )
