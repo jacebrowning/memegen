@@ -56,6 +56,11 @@ def test_custom_larger_height(images, template):
     utils.images.save(template, ["height=500"], size=(0, 500), directory=images)
 
 
+def test_padding(images, template):
+    lines = ["width=500", "height=500"]
+    utils.images.save(template, lines, size=(500, 500), directory=images)
+
+
 # Templates
 
 
