@@ -145,8 +145,9 @@ def get_image_elements(
             line = text.stylize(line)
 
         max_text_size = text.get_size(image_size)
+        max_font_size = max(72, int(image_size[1] / 9))
 
-        font = get_font(line, max_text_size)
+        font = get_font(line, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
 
         stroke_width = min(3, max(1, font.size // 12))
@@ -155,10 +156,10 @@ def get_image_elements(
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
 
 
-def get_font(text: str, max_text_size: Dimensions) -> ImageFont:
+def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
     max_text_width, max_text_height = max_text_size
 
-    for size in range(72, 5, -1):
+    for size in range(max_font_size, 5, -1):
         font = ImageFont.truetype(str(settings.FONT), size=size)
         text_width, text_height = get_text_size_minus_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
