@@ -40,12 +40,20 @@ def test_jpg_images(images):
 # Size
 
 
-def test_custom_width(images, template):
-    utils.images.save(template, ["width=250"], size=(250, None), directory=images)
+def test_custom_smaller_width(images, template):
+    utils.images.save(template, ["width=250"], size=(250, 0), directory=images)
 
 
-def test_custom_height(images, template):
-    utils.images.save(template, ["height=250"], size=(None, 250), directory=images)
+def test_custom_smaller_height(images, template):
+    utils.images.save(template, ["height=250"], size=(0, 250), directory=images)
+
+
+def test_custom_larger_width(images, template):
+    utils.images.save(template, ["width=500"], size=(500, 0), directory=images)
+
+
+def test_custom_larger_height(images, template):
+    utils.images.save(template, ["height=500"], size=(0, 500), directory=images)
 
 
 # Templates
