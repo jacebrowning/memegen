@@ -88,6 +88,7 @@ class Template:
     def jsonify(self, app: Sanic) -> Dict:
         return {
             "name": self.name,
+            "key": self.key,
             "styles": [s for s in self.styles if s != settings.DEFAULT_STYLE],
             "blank": app.url_for("images.blank", key=self.key, _external=True),
             "sample": self.build_sample_url(app),

@@ -1,14 +1,12 @@
 [tool.poetry]
 
 name = "memegen"
-version = "0.0"
+version = "6.0a1"
 description = "The open source meme generator."
 authors = ["Jace Browning <jacebrowning@gmail.com>"]
 license = "MIT"
 
-packages = [
-    { include = "app" },
-]
+packages = [ { include = "app" } ]
 
 [tool.poetry.dependencies]
 

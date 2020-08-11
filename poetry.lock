@@ -248,7 +248,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.8.8"
+version = "2020.8.11"
 
 [[package]]
 category = "main"
@@ -926,8 +926,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.8.8-py3-none-any.whl", hash = "sha256:4659d10695335c9d8a4e515104e1717f6b787e6576df31e48cf501e9a70b4cc0"},
-    {file = "hstspreload-2020.8.8.tar.gz", hash = "sha256:d1b447c6213be6b27ae97d6d6e562cf9ae4a761514de8f1a53b5660875680b9c"},
+    {file = "hstspreload-2020.8.11-py3-none-any.whl", hash = "sha256:e9971e67ed1fe61da1ea4c145f6ebab4591e2cc934def81bbf9c37d20d0abab9"},
+    {file = "hstspreload-2020.8.11.tar.gz", hash = "sha256:88b102ce3cdc1b27bb117d407f886ed16e35522564f1a31d64373ccde33b19af"},
 ]
 httptools = [
     {file = "httptools-0.1.1-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:a2719e1d7a84bb131c4f1e0cb79705034b48de6ae486eb5297a139d6a3296dce"},

@@ -6,10 +6,12 @@ from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
 
-blueprint = Blueprint("images", url_prefix="/api/images")
+blueprint = Blueprint("images", url_prefix="/images")
 
 
 @blueprint.get("/")
+@doc.tag("samples")
+@doc.summary("List sample memes")
 async def index(request):
     loop = asyncio.get_event_loop()
     urls = await loop.run_in_executor(None, helpers.get_sample_images, request)
@@ -17,6 +19,8 @@ async def index(request):
 
 
 @blueprint.post("/")
+@doc.tag("memes")
+@doc.summary("Create a meme from a template")
 @doc.consumes(doc.JsonBody({"key": str, "lines": [str]}), location="body")
 async def create(request):
     url = request.app.url_for(
@@ -29,16 +33,19 @@ async def create(request):
 
 
 @blueprint.get("/<key>.png")
+@doc.summary("Display a template background")
 async def blank(request, key):
     return await render_image(request, key)
 
 
 @blueprint.get("/<key>.jpg")
+@doc.summary("Display a template background")
 async def blank_jpg(request, key):
     return await render_image(request, key, ext="jpg")
 
 
 @blueprint.get("/<key>/<slug:path>.png")
+@doc.summary("Display a custom meme")
 async def text(request, key, slug):
     slug, updated = utils.text.normalize(slug)
     if updated:
@@ -50,6 +57,7 @@ async def text(request, key, slug):
 
 
 @blueprint.get("/<key>/<slug:path>.jpg")
+@doc.summary("Display a custom meme")
 async def text_jpg(request, key, slug):
     slug, updated = utils.text.normalize(slug)
     if updated:
