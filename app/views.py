@@ -1,7 +1,6 @@
 import asyncio
 
 import log
-from pkg_resources import get_distribution
 from sanic import Sanic, response
 
 from app import api, helpers, settings, utils
@@ -10,7 +9,7 @@ app = Sanic(name="memegen")
 
 app.config.SERVER_NAME = settings.SERVER_NAME
 app.config.API_SCHEMES = settings.API_SCHEMES
-app.config.API_VERSION = get_distribution("memegen").version
+app.config.API_VERSION = "6.0a1"
 app.config.API_TITLE = "Memes API"
 
 
