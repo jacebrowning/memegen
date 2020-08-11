@@ -37,18 +37,31 @@ def describe_image_list():
             expect(response.status) == 200
             expect(response.json).contains(
                 {
-                    "url": "http://localhost:5000/images/iw/does_testing/in_production.png"
+                    "url": "http://localhost:5000/images/iw/does_testing/in_production.png",
+                    "template": "http://localhost:5000/templates/iw",
                 }
             )
 
     def describe_POST():
         def it_returns_an_image_url(expect, client):
-            data = {"key": "iw", "lines": ["foo", "bar"]}
+            data = {"template_key": "iw", "text_lines": ["foo", "bar"]}
             request, response = client.post("/images", data=json.dumps(data))
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
             }
+
+        def it_requires_template_key(expect, client):
+            data = {"text_lines": ["foo", "bar"]}
+            request, response = client.post("/images", data=json.dumps(data))
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"template_key" is required'}
+
+        def it_handles_missing_text_lines(expect, client):
+            data = {"template_key": "iw"}
+            request, response = client.post("/images", data=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {"url": "http://localhost:5000/images/iw/_.png"}
 
 
 def describe_image_detail():

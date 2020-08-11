@@ -22,9 +22,9 @@ app.blueprint(api.docs.blueprint)
 @api.docs.exclude
 async def index(request):
     loop = asyncio.get_event_loop()
-    urls = await loop.run_in_executor(None, helpers.get_sample_images, request)
+    samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
     refresh = "debug" in request.args and settings.DEBUG
-    content = utils.html.gallery(urls, refresh=refresh)
+    content = utils.html.gallery(samples, refresh=refresh)
     return response.html(content)
 
 

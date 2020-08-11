@@ -16,7 +16,7 @@ def encode(lines: List[str]) -> str:
 
     slug = "/".join(encoded_lines)
 
-    return slug
+    return slug or "_"
 
 
 def decode(slug: str) -> List[str]:
