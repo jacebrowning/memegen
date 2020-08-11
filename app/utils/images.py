@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator, List, Tuple, cast
+from typing import TYPE_CHECKING, Iterator, List, Tuple
 
 from PIL import Image, ImageDraw, ImageFont
 
 from .. import settings
-from ..types import Dimensions, Offset, Point, Size
+from ..types import Dimensions, Offset, Point
 from .text import encode
 
 if TYPE_CHECKING:
@@ -18,7 +18,7 @@ def save(
     lines: List[str],
     ext: str = settings.DEFAULT_EXT,
     style: str = settings.DEFAULT_STYLE,
-    size: Size = settings.DEFAULT_SIZE,
+    size: Dimensions = (0, 0),
     *,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
@@ -27,14 +27,14 @@ def save(
     path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    if not any(size):
-        size = settings.DEFAULT_SIZE
-    elif size[0] and not size[1]:
-        size = size[0], 9999
-    elif size[1] and not size[0]:
-        size = 9999, size[1]
+    # if not any(size):
+    #     size = settings.DEFAULT_SIZE
+    # elif size[0] and not size[1]:
+    #     size = size[0], 9999
+    # elif size[1] and not size[0]:
+    #     size = 9999, size[1]
 
-    image = _render_image(template, style, lines, cast(Dimensions, size))
+    image = _render_image(template, style, lines, size)
     image.save(path, quality=95)
 
     return path
@@ -45,11 +45,9 @@ def _render_image(
 ) -> Image:
     image = Image.open(template.get_image(style))
     image = image.convert("RGB")
-
-    image.thumbnail(size, Image.LANCZOS)
+    image = _resize_image(image, *size, False)
 
     draw = ImageDraw.Draw(image)
-
     for (
         point,
         offset,
@@ -78,6 +76,28 @@ def _render_image(
             stroke_fill=stroke_fill,
         )
 
+    return image
+
+
+def _resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
+    ratio = image.width / image.height
+
+    if 0 and pad:
+        pass
+        # if width < height * ratio:
+        #     size = width, int(width / ratio)
+        # else:
+        #     size = int(height * ratio), height
+    elif width:
+        size = width, int(width / ratio)
+    elif height:
+        size = int(height * ratio), height
+    elif ratio > 1.0:
+        size = settings.DEFAULT_SIZE[0], int(settings.DEFAULT_SIZE[1] / ratio)
+    else:
+        size = int(settings.DEFAULT_SIZE[0] * ratio), settings.DEFAULT_SIZE[1]
+
+    image = image.resize(size, Image.LANCZOS)
     return image
 
 
