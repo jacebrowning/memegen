@@ -1,3 +1,5 @@
+export PYTHONBREAKPOINT=ipdb.set_trace
+
 .PHONY: all
 all: install
 

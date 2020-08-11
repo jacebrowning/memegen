@@ -46,6 +46,7 @@ coveragespace = "^3.1.1"
 
 # Utilities
 gitman = "^2.0"
+ipdb = "*"
 rope = "^0.14.0"
 watchdog = { version = "*", extras = ["watchmedo"] }
 
