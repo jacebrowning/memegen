@@ -9,10 +9,10 @@ app = Sanic(name="memegen")
 
 app.config.SERVER_NAME = settings.SERVER_NAME
 app.config.API_SCHEMES = settings.API_SCHEMES
-app.config.API_VERSION = "0.0"
+app.config.API_VERSION = "6.0a1"
 app.config.API_TITLE = "Memes API"
 
-app.blueprint(api.blueprint)
+
 app.blueprint(api.images.blueprint)
 app.blueprint(api.templates.blueprint)
 app.blueprint(api.docs.blueprint)
@@ -22,9 +22,9 @@ app.blueprint(api.docs.blueprint)
 @api.docs.exclude
 async def index(request):
     loop = asyncio.get_event_loop()
-    urls = await loop.run_in_executor(None, helpers.get_sample_images, request)
+    samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
     refresh = "debug" in request.args and settings.DEBUG
-    content = utils.html.gallery(urls, refresh=refresh)
+    content = utils.html.gallery(samples, refresh=refresh)
     return response.html(content)
 
 

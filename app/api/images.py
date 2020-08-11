@@ -6,58 +6,75 @@ from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
 
-blueprint = Blueprint("images", url_prefix="/api/images")
+blueprint = Blueprint("images", url_prefix="/images")
 
 
 @blueprint.get("/")
+@doc.tag("samples")
+@doc.summary("List sample memes")
 async def index(request):
     loop = asyncio.get_event_loop()
-    urls = await loop.run_in_executor(None, helpers.get_sample_images, request)
-    return response.json([{"url": url} for url in urls])
+    samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
+    return response.json(
+        [{"url": url, "template": template} for url, template in samples]
+    )
 
 
 @blueprint.post("/")
-@doc.consumes(doc.JsonBody({"key": str, "lines": [str]}), location="body")
+@doc.tag("memes")
+@doc.summary("Create a meme from a template")
+@doc.consumes(doc.JsonBody({"template_key": str, "text_lines": [str]}), location="body")
 async def create(request):
+    try:
+        template_key = request.json["template_key"]
+    except KeyError:
+        return response.json({"error": '"template_key" is required'}, status=400)
     url = request.app.url_for(
         "images.text",
-        key=request.json["key"],
-        slug=utils.text.encode(request.json["lines"]),
+        template_key=template_key,
+        text_paths=utils.text.encode(request.json.get("text_lines", [])),
         _external=True,
     )
     return response.json({"url": url}, status=201)
 
 
-@blueprint.get("/<key>.png")
-async def blank(request, key):
-    return await render_image(request, key)
+@blueprint.get("/<template_key>.png")
+@doc.summary("Display a template background")
+async def blank(request, template_key):
+    return await render_image(request, template_key)
 
 
-@blueprint.get("/<key>.jpg")
-async def blank_jpg(request, key):
-    return await render_image(request, key, ext="jpg")
+@blueprint.get("/<template_key>.jpg")
+@doc.summary("Display a template background")
+async def blank_jpg(request, template_key):
+    return await render_image(request, template_key, ext="jpg")
 
 
-@blueprint.get("/<key>/<slug:path>.png")
-async def text(request, key, slug):
-    slug, updated = utils.text.normalize(slug)
+@blueprint.get("/<template_key>/<text_paths:path>.png")
+@doc.summary("Display a custom meme")
+async def text(request, template_key, text_paths):
+    slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.text", key=key, slug=slug, **request.args
+            "images.text", template_key=template_key, text_paths=slug, **request.args
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
-    return await render_image(request, key, slug)
+    return await render_image(request, template_key, slug)
 
 
-@blueprint.get("/<key>/<slug:path>.jpg")
-async def text_jpg(request, key, slug):
-    slug, updated = utils.text.normalize(slug)
+@blueprint.get("/<template_key>/<text_paths:path>.jpg")
+@doc.summary("Display a custom meme")
+async def text_jpg(request, template_key, text_paths):
+    slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.text_jpg", key=key, slug=slug, **request.args
+            "images.text_jpg",
+            template_key=template_key,
+            text_paths=slug,
+            **request.args,
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
-    return await render_image(request, key, slug, ext="jpg")
+    return await render_image(request, template_key, slug, ext="jpg")
 
 
 async def render_image(

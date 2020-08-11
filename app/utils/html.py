@@ -1,15 +1,15 @@
-from typing import Iterable
+from typing import Iterable, Tuple
 
 
-def gallery(urls: Iterable[str], *, refresh: bool = False) -> str:
+def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str:
     lines = []
 
-    for url in urls:
+    for url, template in samples:
         if refresh:
             url += "?time=0"
         lines.append(
             f"""
-            <a href="{url}">
+            <a href="{template or url}">
                 <img src="{url}" width="500" style="padding: 5px;">
             </a>
             """

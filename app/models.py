@@ -88,18 +88,22 @@ class Template:
     def jsonify(self, app: Sanic) -> Dict:
         return {
             "name": self.name,
+            "key": self.key,
             "styles": [s for s in self.styles if s != settings.DEFAULT_STYLE],
-            "blank": app.url_for("images.blank", key=self.key, _external=True),
+            "blank": app.url_for("images.blank", template_key=self.key, _external=True),
             "sample": self.build_sample_url(app),
             "source": self.source,
-            "_self": app.url_for("templates.detail", key=self.key, _external=True),
+            "_self": self.build_self_url(app),
         }
+
+    def build_self_url(self, app: Sanic) -> str:
+        return app.url_for("templates.detail", key=self.key, _external=True)
 
     def build_sample_url(self, app: Sanic) -> str:
         return app.url_for(
             "images.text",
-            key=self.key,
-            slug=utils.text.encode(self.sample),
+            template_key=self.key,
+            text_paths=utils.text.encode(self.sample),
             _external=True,
         )
 
