@@ -18,7 +18,7 @@ sanic-openapi = "=0.6.0"
 
 # Utilities
 aiohttp = "^3.6.2"
-datafiles = "~0.10"
+datafiles = "=0.11b2"
 minilog = "^1.6"
 pillow = "^7.1.1"
 spongemock = "~0.3.4"
