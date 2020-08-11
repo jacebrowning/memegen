@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterator, List, Tuple
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 from .. import settings
 from ..types import Dimensions, Offset, Point
@@ -27,25 +27,19 @@ def save(
     path = directory / template.key / f"{slug}.{ext}"
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    # if not any(size):
-    #     size = settings.DEFAULT_SIZE
-    # elif size[0] and not size[1]:
-    #     size = size[0], 9999
-    # elif size[1] and not size[0]:
-    #     size = 9999, size[1]
-
-    image = _render_image(template, style, lines, size)
+    image = render_image(template, style, lines, size)
     image.save(path, quality=95)
 
     return path
 
 
-def _render_image(
-    template: Template, style: str, lines: List[str], size: Dimensions
+def render_image(
+    template: Template, style: str, lines: List[str], size: Dimensions,
 ) -> Image:
-    image = Image.open(template.get_image(style))
-    image = image.convert("RGB")
-    image = _resize_image(image, *size, False)
+    background = Image.open(template.get_image(style)).convert("RGB")
+
+    pad = all(size)
+    image = resize_image(background, *size, pad)
 
     draw = ImageDraw.Draw(image)
     for (
@@ -57,7 +51,7 @@ def _render_image(
         font_size,
         stroke_width,
         stroke_fill,
-    ) in _get_elements(template, lines, image.size):
+    ) in get_image_elements(template, lines, image.size):
 
         if settings.DEBUG:
             box = (
@@ -76,32 +70,68 @@ def _render_image(
             stroke_fill=stroke_fill,
         )
 
+    if pad:
+        image = add_blurred_background(image, background, *size)
+
     return image
 
 
-def _resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
+def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
     ratio = image.width / image.height
+    default_width, default_height = settings.DEFAULT_SIZE
 
-    if 0 and pad:
-        pass
-        # if width < height * ratio:
-        #     size = width, int(width / ratio)
-        # else:
-        #     size = int(height * ratio), height
+    if pad:
+        if width < height * ratio:
+            size = width, int(width / ratio)
+        else:
+            size = int(height * ratio), height
     elif width:
         size = width, int(width / ratio)
     elif height:
         size = int(height * ratio), height
     elif ratio > 1.0:
-        size = settings.DEFAULT_SIZE[0], int(settings.DEFAULT_SIZE[1] / ratio)
+        size = default_width, int(default_height / ratio)
     else:
-        size = int(settings.DEFAULT_SIZE[0] * ratio), settings.DEFAULT_SIZE[1]
+        size = int(default_width * ratio), default_height
 
     image = image.resize(size, Image.LANCZOS)
     return image
 
 
-def _get_elements(
+def add_blurred_background(
+    foreground: Image, background: Image, width: int, height: int
+) -> Image:
+    base_width, base_height = foreground.size
+
+    border_width = min(width, base_width + 2)
+    border_height = min(height, base_height + 2)
+    border_dimensions = border_width, border_height
+    border = Image.new("RGB", border_dimensions)
+    border.paste(
+        foreground,
+        ((border_width - base_width) // 2, (border_height - base_height) // 2),
+    )
+
+    # TODO: limit maximum size
+    # padded_dimensions = _fit_image(width, height)
+    padded_dimensions = width, height
+    padded = background.resize(padded_dimensions, Image.LANCZOS)
+
+    darkened = padded.point(lambda p: p * 0.4)
+
+    blurred = darkened.filter(ImageFilter.GaussianBlur(5))
+
+    blurred_width, blurred_height = blurred.size
+    offset = (
+        (blurred_width - border_width) // 2,
+        (blurred_height - border_height) // 2,
+    )
+    blurred.paste(border, offset)
+
+    return blurred
+
+
+def get_image_elements(
     template: Template, lines: List[str], image_size: Dimensions
 ) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str]]:
     for index, text in enumerate(template.text):
@@ -115,9 +145,10 @@ def _get_elements(
             line = text.stylize(line)
 
         max_text_size = text.get_size(image_size)
+        max_font_size = max(72, int(image_size[1] / 9))
 
-        font = _get_font(line, max_text_size)
-        offset = _get_text_offset(line, font, max_text_size)
+        font = get_font(line, max_text_size, max_font_size)
+        offset = get_text_offset(line, font, max_text_size)
 
         stroke_width = min(3, max(1, font.size // 12))
         stroke_fill = "black" if text.color == "white" else "white"
@@ -125,25 +156,25 @@ def _get_elements(
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
 
 
-def _get_font(text: str, max_text_size: Dimensions) -> ImageFont:
+def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
     max_text_width, max_text_height = max_text_size
 
-    for size in range(72, 5, -1):
+    for size in range(max_font_size, 5, -1):
         font = ImageFont.truetype(str(settings.FONT), size=size)
-        text_width, text_height = _get_text_size_minus_offset(text, font)
+        text_width, text_height = get_text_size_minus_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
             break
 
     return font
 
 
-def _get_text_size_minus_offset(text: str, font: ImageFont) -> Dimensions:
+def get_text_size_minus_offset(text: str, font: ImageFont) -> Dimensions:
     text_width, text_height = font.getsize(text)
     offset = font.getoffset(text)
     return text_width - offset[0], text_height - offset[1]
 
 
-def _get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Offset:
+def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Offset:
     text_size = font.getsize(text)
     x_offset, y_offset = font.getoffset(text)
 
