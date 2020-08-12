@@ -1,18 +1,22 @@
+name: Milk Was a Bad Choice
+source: https://www.youtube.com/watch?v=DeY0yPqibb0
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Milk Was a Bad Choice
-source: https://www.youtube.com/watch?v=DeY0yPqibb0
+styles:
+  - default
 sample:
   - MILK
   - WAS A BAD CHOICE

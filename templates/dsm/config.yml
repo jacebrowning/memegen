@@ -1,18 +1,22 @@
+name: Dating Site Murderer
+source: http://knowyourmeme.com/memes/dating-site-murderer
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Dating Site Murderer
-source: http://knowyourmeme.com/memes/dating-site-murderer
+styles:
+  - default
 sample:
   - THEY WILL NEVER FIND YOUR BODY
   - AS ATTRACTIVE AS I DO

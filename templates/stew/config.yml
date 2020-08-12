@@ -1,18 +1,22 @@
+name: Baby, You've Got a Stew Going
+source: https://www.youtube.com/watch?v=Sr2PlqXw03Y
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Baby, You've Got a Stew Going
-source: https://www.youtube.com/watch?v=Sr2PlqXw03Y
+styles:
+  - default
 sample:
   - ''
   - BABY, YOU'VE GOT A STEW GOING!

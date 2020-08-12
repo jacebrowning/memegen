@@ -1,18 +1,22 @@
+name: Do You Want Ants?
+source: http://knowyourmeme.com/memes/do-you-want-ants
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Do You Want Ants?
-source: http://knowyourmeme.com/memes/do-you-want-ants
+styles:
+  - default
 sample:
   - DO YOU WANT ANTS?
   - BECAUSE THAT'S HOW YOU GET ANTS

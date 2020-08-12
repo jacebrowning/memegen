@@ -1,18 +1,22 @@
+name: I Would Be So Happy
+source: https://www.youtube.com/watch?v=z_17RHGKNTY
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: I Would Be So Happy
-source: https://www.youtube.com/watch?v=z_17RHGKNTY
+styles:
+  - default
 sample:
   - IF I COULD USE THIS MEME
   - I WOULD BE SO HAPPY

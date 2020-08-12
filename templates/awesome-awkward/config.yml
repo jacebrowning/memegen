@@ -1,18 +1,22 @@
+name: Socially Awesome Awkward Penguin
+source: http://knowyourmeme.com/memes/socially-awkward-penguin
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Socially Awesome Awkward Penguin
-source: http://knowyourmeme.com/memes/socially-awkward-penguin
+styles:
+  - default
 sample:
   - FIRST DAY AT NEW JOB
   - SPILL COFFEE ON BOSSMAN

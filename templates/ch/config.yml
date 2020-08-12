@@ -1,18 +1,22 @@
+name: Captain Hindsight
+source: http://knowyourmeme.com/memes/captain-hindsight
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Captain Hindsight
-source: http://knowyourmeme.com/memes/captain-hindsight
+styles:
+  - default
 sample:
   - IF YOU WANTED TO AVOID THE FRIEND ZONE
   - YOU SHOULD HAVE MADE YOUR INTENTIONS KNOWN FROM THE START

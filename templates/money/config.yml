@@ -1,18 +1,22 @@
+name: Shut Up and Take My Money!
+source: http://knowyourmeme.com/memes/shut-up-and-take-my-money
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Shut Up and Take My Money!
-source: http://knowyourmeme.com/memes/shut-up-and-take-my-money
+styles:
+  - default
 sample:
   - SHUT UP AND
   - TAKE MY MONEY!

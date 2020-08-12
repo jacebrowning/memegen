@@ -1,18 +1,22 @@
+name: Sad John Boehner
+source: https://en.wikipedia.org/wiki/John_Boehner
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Sad John Boehner
-source: https://en.wikipedia.org/wiki/John_Boehner
+styles:
+  - default
 sample:
   - SAD JOHN BOEHNER
   - DOESN'T THINK YOU'LL VOTE

@@ -1,17 +1,21 @@
+name: Ugandan Knuckles
+source: http://knowyourmeme.com/memes/ugandan-knuckles
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Ugandan Knuckles
-source: http://knowyourmeme.com/memes/ugandan-knuckles
+styles:
+  - default
 sample:
   - ''

@@ -1,18 +1,22 @@
+name: I Immediately Regret This Decision!
+source: https://www.youtube.com/watch?v=gd9ltJGykYc
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: I Immediately Regret This Decision!
-source: https://www.youtube.com/watch?v=gd9ltJGykYc
+styles:
+  - default
 sample:
   - ''
   - I IMMEDIATELY REGRET THIS DECISION

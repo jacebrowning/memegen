@@ -1,17 +1,21 @@
+name: You Were the Chosen One!
+source: http://knowyourmeme.com/memes/you-were-the-chosen-one
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: You Were the Chosen One!
-source: http://knowyourmeme.com/memes/you-were-the-chosen-one
+styles:
+  - default
 sample:
   - YOU WERE THE CHOSEN ONE!

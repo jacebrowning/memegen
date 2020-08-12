@@ -1,18 +1,22 @@
+name: Pepperidge Farm Remembers
+source: http://knowyourmeme.com/memes/pepperidge-farm-remembers
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Pepperidge Farm Remembers
-source: http://knowyourmeme.com/memes/pepperidge-farm-remembers
+styles:
+  - default
 sample:
   - REMEMBER THIS MEME?
   - PEPPERIDGE FARM REMEMBERS

@@ -20,7 +20,7 @@ def describe_template_detail():
                 "key": "iw",
                 "styles": [],
                 "blank": "http://localhost:5000/images/iw.png",
-                "sample": "http://localhost:5000/images/iw/does_testing/in_production.png",
+                "sample": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",
                 "_self": "http://localhost:5000/templates/iw",
             }
@@ -37,7 +37,7 @@ def describe_image_list():
             expect(response.status) == 200
             expect(response.json).contains(
                 {
-                    "url": "http://localhost:5000/images/iw/does_testing/in_production.png",
+                    "url": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
                     "template": "http://localhost:5000/templates/iw",
                 }
             )

@@ -1,18 +1,22 @@
+name: What Year Is It?
+source: http://knowyourmeme.com/memes/what-year-is-it
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: What Year Is It?
-source: http://knowyourmeme.com/memes/what-year-is-it
+styles:
+  - default
 sample:
   - ''
   - WHAT YEAR IS IT?

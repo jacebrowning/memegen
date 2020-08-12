@@ -1,18 +1,22 @@
+name: An Older Code Sir, But It Checks Out
+source: http://knowyourmeme.com/memes/its-an-older-meme-but-it-checks-out
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: An Older Code Sir, But It Checks Out
-source: http://knowyourmeme.com/memes/its-an-older-meme-but-it-checks-out
+styles:
+  - default
 sample:
   - IT'S AN OLDER MEME SIR
   - BUT IT CHECKS OUT

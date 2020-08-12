@@ -1,18 +1,22 @@
+name: I am the Captain Now
+source: https://www.youtube.com/watch?v=dvA-mimf2yg
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: I am the Captain Now
-source: https://www.youtube.com/watch?v=dvA-mimf2yg
+styles:
+  - default
 sample:
   - LOOK AT ME
   - I AM THE CAPTAIN NOW

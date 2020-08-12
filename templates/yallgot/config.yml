@@ -1,18 +1,22 @@
+name: Y'all Got Any More of Them
+source: http://knowyourmeme.com/memes/yall-got-anymore-of
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Y'all Got Any More of Them
-source: http://knowyourmeme.com/memes/yall-got-anymore-of
+styles:
+  - default
 sample:
   - Y'ALL GOT ANY MORE OF THEM
   - MEMES

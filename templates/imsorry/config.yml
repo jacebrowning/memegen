@@ -1,18 +1,22 @@
+name: Oh, I'm Sorry, I Thought This Was America
+source: http://knowyourmeme.com/memes/oh-im-sorry-i-thought-this-was-america
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Oh, I'm Sorry, I Thought This Was America
-source: http://knowyourmeme.com/memes/oh-im-sorry-i-thought-this-was-america
+styles:
+  - default
 sample:
   - OH, I'M SORRY
   - I THOUGHT THIS WAS AMERICA

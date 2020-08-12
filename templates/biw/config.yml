@@ -1,18 +1,22 @@
+name: Baby Insanity Wolf
+source: http://knowyourmeme.com/memes/baby-insanity-wolf
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Baby Insanity Wolf
-source: http://knowyourmeme.com/memes/baby-insanity-wolf
+styles:
+  - default
 sample:
   - GETS ICED COFFEE
   - IN THE WINTER
