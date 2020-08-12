@@ -1,18 +1,22 @@
+name: I Should Not Have Said That
+source: https://www.youtube.com/watch?v=498HkRM77gg
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: I Should Not Have Said That
-source: https://www.youtube.com/watch?v=498HkRM77gg
+styles:
+  - default
 sample:
   - ''
   - I SHOULD NOT HAVE SAID THAT

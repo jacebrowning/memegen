@@ -2,7 +2,7 @@ location: .
 sources:
   - name: templates-legacy
     repo: https://github.com/jacebrowning/memegen
-    rev: master
+    rev: main
     sparse_paths:
       - data/templates/*
     scripts:

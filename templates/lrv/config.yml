@@ -1,18 +1,22 @@
+name: Laundry Room Viking
+source: http://knowyourmeme.com/memes/laundry-room-viking
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Laundry Room Viking
-source: http://knowyourmeme.com/memes/laundry-room-viking
+styles:
+  - default
 sample:
   - DO THE LAUNDRY THEY SAID
   - IT WILL BE FUN THEY SAID

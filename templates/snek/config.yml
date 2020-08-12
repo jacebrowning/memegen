@@ -1,18 +1,22 @@
+name: Skeptical Snake
+source: https://www.reddit.com/r/JoeRogan/comments/5kga5k/skeptical_snake/
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Skeptical Snake
-source: https://www.reddit.com/r/JoeRogan/comments/5kga5k/skeptical_snake/
+styles:
+  - default
 sample:
   - WHEN YOU ALREADY CHECKED THAT ONE LEAF
   - AND IT STARTS MOVING

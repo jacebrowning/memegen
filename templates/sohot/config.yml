@@ -1,18 +1,22 @@
+name: So Hot Right Now
+source: https://www.youtube.com/watch?v=QizsJQNIKhc
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: So Hot Right Now
-source: https://www.youtube.com/watch?v=QizsJQNIKhc
+styles:
+  - default
 sample:
   - THIS MEME IS
   - SO HOT RIGHT NOW

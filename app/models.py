@@ -50,7 +50,7 @@ class Text:
         return text
 
 
-@datafile("../templates/{self.key}/config.yml")
+@datafile("../templates/{self.key}/config.yml", defaults=True)
 class Template:
 
     key: str

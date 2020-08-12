@@ -1,18 +1,22 @@
+name: Crying on Floor
+source: http://knowyourmeme.com/photos/1125083-hold-the-door
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Crying on Floor
-source: http://knowyourmeme.com/photos/1125083-hold-the-door
+styles:
+  - default
 sample:
   - IT'S OKAY
   - LETS JUST RESCHEDULE DRINKING

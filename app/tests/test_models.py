@@ -32,6 +32,11 @@ def describe_text():
 
 
 def describe_template():
+    def describe_text():
+        def it_defaults_to_two_lines(expect):
+            template = Template.objects.get("_test")
+            expect(template.text) == [Text(), Text(anchor_x=0.05, anchor_y=0.75)]
+
     def describe_image():
         def it_has_generic_extension_when_absent(expect):
             template = Template.objects.get("_test")

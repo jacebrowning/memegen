@@ -1,18 +1,22 @@
+name: This is Bull, Shark
+source: https://www.reddit.com/r/funny/comments/3grsfs
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: This is Bull, Shark
-source: https://www.reddit.com/r/funny/comments/3grsfs
+styles:
+  - default
 sample:
   - WHAT A SURPRISE...
   - YOU CAUGHT ME AGAIN

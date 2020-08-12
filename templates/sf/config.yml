@@ -1,18 +1,22 @@
+name: Sealed Fate
+source: https://www.reddit.com/r/AdviceAnimals/comments/3fenos/i_like_the_idea_of_the_impending_doom_seal_i_hope/ctnxw3k
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Sealed Fate
-source: https://www.reddit.com/r/AdviceAnimals/comments/3fenos/i_like_the_idea_of_the_impending_doom_seal_i_hope/ctnxw3k
+styles:
+  - default
 sample:
   - I ACCIDENTALLY USED A SWEAR WORD
   - AND I KNOW MY MOM HEARD IT FROM THE OTHER ROOM

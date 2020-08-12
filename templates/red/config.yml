@@ -1,18 +1,22 @@
+name: Oh, Is That What We're Going to Do Today?
+source: https://www.imdb.com/title/tt0720046/
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Oh, Is That What We're Going to Do Today?
-source: https://www.imdb.com/title/tt0720046/
+styles:
+  - default
 sample:
   - OH, IS THAT WHAT WE'RE GOING TO DO TODAY?
   - WE'RE GOING TO FIGHT?

@@ -1,18 +1,22 @@
+name: Doge
+source: http://knowyourmeme.com/memes/doge
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Doge
-source: http://knowyourmeme.com/memes/doge
+styles:
+  - default
 sample:
   - SUCH MEME
   - VERY SKILL

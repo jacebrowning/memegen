@@ -1,18 +1,22 @@
+name: Scumbag Brain
+source: http://knowyourmeme.com/memes/scumbag-brain
 text:
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.05
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
   - color: white
+    style: upper
     anchor_x: 0.05
     anchor_y: 0.75
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Scumbag Brain
-source: http://knowyourmeme.com/memes/scumbag-brain
+styles:
+  - default
 sample:
   - REMEMBERS THE FACE
   - BUT NOT THE NAME

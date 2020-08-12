@@ -1,3 +1,5 @@
+name: Mocking Spongebob
+source: http://knowyourmeme.com/memes/mocking-spongebob
 text:
   - color: white
     style: none
@@ -13,8 +15,8 @@ text:
     angle: 0.0
     scale_x: 0.9
     scale_y: 0.2
-name: Mocking Spongebob
-source: http://knowyourmeme.com/memes/mocking-spongebob
+styles:
+  - default
 sample:
   - "BF: I don't even know her like that"
   - "Me: i DoN'T eVeN KnOw HeR lIkE tHaT"
