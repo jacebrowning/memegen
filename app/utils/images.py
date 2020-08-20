@@ -66,6 +66,8 @@ def render_image(
             text,
             text_fill,
             font,
+            spacing=0,
+            align="center",
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
         )
@@ -142,7 +144,7 @@ def get_image_elements(
         except IndexError:
             line = ""
         else:
-            line = text.stylize(line)
+            line = text.stylize(wrap(line))
 
         max_text_size = text.get_size(image_size)
         max_font_size = max(72, int(image_size[1] / 9))
@@ -154,6 +156,15 @@ def get_image_elements(
         stroke_fill = "black" if text.color == "white" else "white"
 
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
+
+
+def wrap(line: str) -> str:
+    if len(line) > 40:
+        for midpoint in range(len(line) // 2, len(line) // 4, -1):
+            if line[midpoint] == " ":
+                line = line[:midpoint] + "\n" + line[midpoint:]
+                break
+    return line
 
 
 def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
@@ -169,16 +180,22 @@ def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> Image
 
 
 def get_text_size_minus_offset(text: str, font: ImageFont) -> Dimensions:
-    text_width, text_height = font.getsize(text)
+    text_width, text_height = get_text_size(text, font)
     offset = font.getoffset(text)
     return text_width - offset[0], text_height - offset[1]
 
 
 def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Offset:
-    text_size = font.getsize(text)
+    text_size = get_text_size(text, font)
     x_offset, y_offset = font.getoffset(text)
 
     x_offset -= (max_text_size[0] - text_size[0]) // 2
     y_offset -= (max_text_size[1] - (text_size[1] / 1.5)) // 2
 
     return x_offset, y_offset
+
+
+def get_text_size(text: str, font: ImageFont) -> Dimensions:
+    image = Image.new("RGB", (100, 100))
+    draw = ImageDraw.Draw(image)
+    return draw.textsize(text, font)
