@@ -28,7 +28,7 @@ def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str
                             /\btime=[^&]*/, 'time=' + new Date().getTime()
                         );
                     }
-                }, 2000);
+                }, 3000);
             </script>
             """
         )

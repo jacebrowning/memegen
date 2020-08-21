@@ -3,17 +3,17 @@ source: http://knowyourmeme.com/memes/scumbag-steve
 text:
   - color: white
     style: upper
-    anchor_x: 0.05
-    anchor_y: 0.05
+    anchor_x: 0.0
+    anchor_y: 0.0
     angle: 0.0
-    scale_x: 0.9
+    scale_x: 1.0
     scale_y: 0.2
   - color: white
     style: upper
-    anchor_x: 0.05
-    anchor_y: 0.75
+    anchor_x: 0.0
+    anchor_y: 0.8
     angle: 0.0
-    scale_x: 0.9
+    scale_x: 1.0
     scale_y: 0.2
 styles:
   - default

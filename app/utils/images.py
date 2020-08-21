@@ -56,7 +56,7 @@ def render_image(
         if settings.DEBUG:
             box = (
                 point,
-                (point[0] + max_text_size[0], point[1] + max_text_size[1]),
+                (point[0] + max_text_size[0] - 1, point[1] + max_text_size[1] - 1),
             )
             draw.rectangle(box, outline="lime")
 
@@ -147,7 +147,8 @@ def get_image_elements(
             line = text.stylize(wrap(line))
 
         max_text_size = text.get_size(image_size)
-        max_font_size = max(72, int(image_size[1] / 9))
+        # max_font_size = max(72, int(image_size[1] / 12))
+        max_font_size = int(image_size[1] / 9)
 
         font = get_font(line, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
@@ -172,7 +173,8 @@ def wrap(line: str) -> str:
 
 
 def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
-    max_text_width, max_text_height = max_text_size
+    max_text_width = max_text_size[0] - max_text_size[0] / 40
+    max_text_height = max_text_size[1]
 
     for size in range(max_font_size, 5, -1):
         font = ImageFont.truetype(str(settings.FONT), size=size)
