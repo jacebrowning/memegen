@@ -1,6 +1,6 @@
 import os
-import random
 import shutil
+import time
 from pathlib import Path
 
 import pytest
@@ -11,9 +11,16 @@ from .. import helpers, models, settings, utils
 @pytest.fixture(scope="session")
 def images():
     path = settings.TEST_IMAGES_DIRECTORY
-    if random.random() < 0.25:
-        shutil.rmtree(path)
+
+    flag = path / ".flag"
+    if flag.exists():
+        age = time.time() - flag.stat().st_mtime
+        if age > 60 * 60 * 6:
+            shutil.rmtree(path)
+
     path.mkdir(exist_ok=True)
+    flag.touch()
+
     return path
 
 
