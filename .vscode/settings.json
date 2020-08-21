@@ -11,15 +11,10 @@
     "setup.py": true
   },
   "python.formatting.provider": "black",
+  "python.formatting.blackPath": ".venv/bin/black",
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
   "editor.formatOnSave": true,
   "python.linting.lintOnSave": true,
-  "cSpell.words": [
-    "CIRCLECI",
-    "aiofiles",
-    "aiohttp",
-    "jsonify",
-    "sanic"
-  ]
+  "cSpell.words": ["CIRCLECI", "aiofiles", "aiohttp", "jsonify", "sanic"]
 }
