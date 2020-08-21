@@ -159,11 +159,15 @@ def get_image_elements(
 
 
 def wrap(line: str) -> str:
-    if len(line) > 40:
-        for midpoint in range(len(line) // 2, len(line) // 4, -1):
-            if line[midpoint] == " ":
-                line = line[:midpoint] + "\n" + line[midpoint:]
-                break
+    if len(line) <= 40:
+        return line
+
+    midpoint = len(line) // 2 - 1
+    for offset in range(0, len(line) // 4):
+        for index in [midpoint - offset, midpoint + offset]:
+            if line[index] == " ":
+                return line[:index] + "\n" + line[index:]
+
     return line
 
 

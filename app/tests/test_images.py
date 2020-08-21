@@ -112,6 +112,12 @@ def test_extremely_long_text(images, tmpdir):
     utils.images.save(template, lines, directory=Path(tmpdir) / "images")
 
 
+def test_long_first_word(images, template):
+    template = models.Template.objects.get("fine")
+    lines = ["", "thiiiiiiiiiiiiiiiiiiiiis will probably be fine right now"]
+    utils.images.save(template, lines, directory=images)
+
+
 # Debug
 
 
