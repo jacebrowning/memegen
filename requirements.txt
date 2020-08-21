@@ -1,7 +1,7 @@
 aiofiles==0.5.0
 aiohttp==3.6.2
 async-timeout==3.0.1
-attrs==19.3.0
+attrs==20.1.0
 cached-property==1.5.1
 certifi==2020.6.20
 chardet==3.0.4
@@ -10,7 +10,7 @@ datafiles==0.11b2
 h11==0.9.0
 h2==3.2.0
 hpack==3.0.0
-hstspreload==2020.8.11
+hstspreload==2020.8.18
 httptools==0.1.1
 httpx==0.11.1
 hyperframe==5.2.0
