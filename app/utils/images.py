@@ -173,7 +173,7 @@ def wrap(line: str) -> str:
 
 
 def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
-    max_text_width = max_text_size[0] - max_text_size[0] / 40
+    max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1]
 
     for size in range(max_font_size, 5, -1):
