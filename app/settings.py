@@ -52,6 +52,6 @@ TEST_IMAGES = [
             "you're gonna have a bad time",
         ],
     ),
-    ("ds", ["push this button", "or this button", "can't decide which is worse"]),
+    ("ds", ["Push this button.", "Push that button.", "can't decide which is worse"]),
     ("spongebob", ["You: Stop talking like that", "Me: Stop talking like that"]),
 ]

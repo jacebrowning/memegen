@@ -155,8 +155,11 @@ def get_image_elements(
         font = get_font(line, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
 
-        stroke_width = min(3, max(1, font.size // 12))
-        stroke_fill = "black" if text.color == "white" else "white"
+        stroke_fill = "black"
+        if text.color == "black":
+            stroke_width = 0
+        else:
+            stroke_width = min(3, max(1, font.size // 12))
 
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
 
