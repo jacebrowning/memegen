@@ -174,7 +174,7 @@ def wrap(line: str) -> str:
 
 def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
-    max_text_height = max_text_size[1]
+    max_text_height = max_text_size[1] - max_text_size[1] / 10
 
     for size in range(max_font_size, 5, -1):
         font = ImageFont.truetype(str(settings.FONT), size=size)
@@ -196,7 +196,7 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
     x_offset, y_offset = font.getoffset(text)
 
     x_offset -= (max_text_size[0] - text_size[0]) // 2
-    y_offset -= (max_text_size[1] - (text_size[1] / 1.5)) // 2
+    y_offset -= (max_text_size[1] - text_size[1] / (1.25 if "\n" in text else 1.5)) // 2
 
     return x_offset, y_offset
 
