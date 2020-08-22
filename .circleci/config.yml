@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   build:
-    working_directory: ~/memegen-v2
+    working_directory: ~/memegen-api
 
     docker:
       - image: circleci/python:3.8.5-node-browsers
