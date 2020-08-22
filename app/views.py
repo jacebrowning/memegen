@@ -23,20 +23,31 @@ app.blueprint(api.docs.blueprint)
 async def index(request):
     loop = asyncio.get_event_loop()
     samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
+    urls = [sample[0] for sample in samples]
     refresh = "debug" in request.args and settings.DEBUG
-    content = utils.html.gallery(samples, refresh=refresh)
+    content = utils.html.gallery(urls, refresh=refresh)
     return response.html(content)
 
 
 @app.get("/test")
 @api.docs.exclude
 async def test(request):
-    if settings.DEBUG:
-        loop = asyncio.get_event_loop()
-        urls = await loop.run_in_executor(None, helpers.get_test_images, request)
-        content = utils.html.gallery(urls, refresh=True)
-        return response.html(content)
-    return response.redirect("/")
+    if not settings.DEBUG:
+        return response.redirect("/")
+    loop = asyncio.get_event_loop()
+    urls = await loop.run_in_executor(None, helpers.get_test_images, request)
+    content = utils.html.gallery(urls, refresh=True)
+    return response.html(content)
+
+
+@app.get("/test/<template_key>/<text_paths:path>")
+@api.docs.exclude
+async def test_image(request, template_key, text_paths):
+    if not settings.DEBUG:
+        return response.redirect("/")
+    url = f"/images/{template_key}/{text_paths}.png"
+    content = utils.html.gallery([url], refresh=True)
+    return response.html(content)
 
 
 if __name__ == "__main__":
