@@ -146,15 +146,15 @@ def get_image_elements(
     for index, text in enumerate(template.text):
         point = text.get_anchor(image_size)
 
+        max_text_size = text.get_size(image_size)
+        max_font_size = int(image_size[1] / 9)
+
         try:
             line = lines[index]
         except IndexError:
             line = ""
         else:
-            line = text.stylize(wrap(line))
-
-        max_text_size = text.get_size(image_size)
-        max_font_size = int(image_size[1] / 9)
+            line = text.stylize(wrap(line, max_text_size))
 
         font = get_font(line, text.angle, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
@@ -168,8 +168,8 @@ def get_image_elements(
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
 
 
-def wrap(line: str) -> str:
-    if len(line) <= 40:
+def wrap(line: str, max_text_size: Dimensions) -> str:
+    if len(line) <= 40 and get_font(line, 0, max_text_size, 11).size >= 10:
         return line
 
     midpoint = len(line) // 2 - 1
@@ -187,7 +187,7 @@ def get_font(
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
-    for size in range(max_font_size, 5, -1):
+    for size in range(max_font_size, 6, -1):
 
         if angle:
             font = ImageFont.truetype(str(settings.FONT_THIN), size=size)

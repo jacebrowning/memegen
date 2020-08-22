@@ -118,6 +118,12 @@ def test_long_first_word(images, template):
     utils.images.save(template, lines, directory=images)
 
 
+def test_text_wrap_when_font_is_too_small(images, template):
+    template = models.Template.objects.get("ds")
+    lines = ["this button seems to be ok to push"]
+    utils.images.save(template, lines, directory=images)
+
+
 # Debug
 
 
