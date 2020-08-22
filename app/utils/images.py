@@ -60,7 +60,11 @@ def render_image(
             xy = (0, 0, max_text_size[0] - 1, max_text_size[1] - 1)
             draw.rectangle(xy, outline="lime")
 
-        font = ImageFont.truetype(str(settings.FONT), size=font_size)
+        if angle:
+            font = ImageFont.truetype(str(settings.FONT_THIN), size=font_size)
+        else:
+            font = ImageFont.truetype(str(settings.FONT_THICK), size=font_size)
+
         draw.text(
             (-offset[0], -offset[1]),
             text,
@@ -152,7 +156,7 @@ def get_image_elements(
         max_text_size = text.get_size(image_size)
         max_font_size = int(image_size[1] / 9)
 
-        font = get_font(line, max_text_size, max_font_size)
+        font = get_font(line, text.angle, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
 
         stroke_fill = "black"
@@ -177,12 +181,19 @@ def wrap(line: str) -> str:
     return line
 
 
-def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
+def get_font(
+    text: str, angle: float, max_text_size: Dimensions, max_font_size: int,
+) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
     for size in range(max_font_size, 5, -1):
-        font = ImageFont.truetype(str(settings.FONT), size=size)
+
+        if angle:
+            font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
+        else:
+            font = ImageFont.truetype(str(settings.FONT_THICK), size=size)
+
         text_width, text_height = get_text_size_minus_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
             break

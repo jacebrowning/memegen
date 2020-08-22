@@ -27,7 +27,8 @@ else:  # localhost
 # Fonts
 
 FONTS_DIRECTORY = ROOT / "fonts"
-FONT = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
+FONT_THIN = FONTS_DIRECTORY / "TitilliumWeb-SemiBold.ttf"
+FONT_THICK = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
 
 # Image rendering
 
