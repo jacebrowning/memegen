@@ -98,7 +98,7 @@ def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
         size = width, int(width / ratio)
     elif height:
         size = int(height * ratio), height
-    elif ratio > 1.0:
+    elif ratio < 1.0:
         size = default_width, int(default_height / ratio)
     else:
         size = int(default_width * ratio), default_height
@@ -169,7 +169,7 @@ def get_image_elements(
 
 
 def wrap(line: str, max_text_size: Dimensions) -> str:
-    if len(line) <= 40 and get_font(line, 0, max_text_size, 11).size >= 10:
+    if len(line) <= 40 and get_font(line, 0, max_text_size, 13).size >= 12:
         return line
 
     midpoint = len(line) // 2 - 1
