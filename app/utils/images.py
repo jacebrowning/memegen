@@ -66,7 +66,7 @@ def render_image(
             text,
             text_fill,
             font,
-            spacing=0,
+            spacing=-offset[1] / 2,
             align="center",
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
