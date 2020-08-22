@@ -41,7 +41,6 @@ def render_image(
     pad = all(size)
     image = resize_image(background, *size, pad)
 
-    draw = ImageDraw.Draw(image)
     for (
         point,
         offset,
@@ -51,18 +50,19 @@ def render_image(
         font_size,
         stroke_width,
         stroke_fill,
+        angle,
     ) in get_image_elements(template, lines, image.size):
 
+        box = Image.new("RGBA", max_text_size)
+        draw = ImageDraw.Draw(box)
+
         if settings.DEBUG:
-            box = (
-                point,
-                (point[0] + max_text_size[0] - 1, point[1] + max_text_size[1] - 1),
-            )
-            draw.rectangle(box, outline="lime")
+            xy = (0, 0, max_text_size[0] - 1, max_text_size[1] - 1)
+            draw.rectangle(xy, outline="lime")
 
         font = ImageFont.truetype(str(settings.FONT), size=font_size)
         draw.text(
-            (point[0] - offset[0], point[1] - offset[1]),
+            (-offset[0], -offset[1]),
             text,
             text_fill,
             font,
@@ -71,6 +71,9 @@ def render_image(
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
         )
+
+        box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
+        image.paste(box, point, box)
 
     if pad:
         image = add_blurred_background(image, background, *size)
@@ -135,7 +138,7 @@ def add_blurred_background(
 
 def get_image_elements(
     template: Template, lines: List[str], image_size: Dimensions
-) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str]]:
+) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
     for index, text in enumerate(template.text):
         point = text.get_anchor(image_size)
 
@@ -147,7 +150,6 @@ def get_image_elements(
             line = text.stylize(wrap(line))
 
         max_text_size = text.get_size(image_size)
-        # max_font_size = max(72, int(image_size[1] / 12))
         max_font_size = int(image_size[1] / 9)
 
         font = get_font(line, max_text_size, max_font_size)
@@ -156,7 +158,7 @@ def get_image_elements(
         stroke_width = min(3, max(1, font.size // 12))
         stroke_fill = "black" if text.color == "white" else "white"
 
-        yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
+        yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
 
 
 def wrap(line: str) -> str:
