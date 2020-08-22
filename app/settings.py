@@ -27,7 +27,8 @@ else:  # localhost
 # Fonts
 
 FONTS_DIRECTORY = ROOT / "fonts"
-FONT = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
+FONT_THIN = FONTS_DIRECTORY / "TitilliumWeb-SemiBold.ttf"
+FONT_THICK = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
 
 # Image rendering
 
@@ -52,6 +53,6 @@ TEST_IMAGES = [
             "you're gonna have a bad time",
         ],
     ),
-    ("ds", ["push this button", "or this button", "can't decide which is worse"]),
+    ("ds", ["Push this button.", "Push that button.", "can't decide which is worse"]),
     ("spongebob", ["You: Stop talking like that", "Me: Stop talking like that"]),
 ]

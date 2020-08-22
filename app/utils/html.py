@@ -12,7 +12,7 @@ def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str
         lines.append(
             f"""
             <a href="{url}">
-                <img src="{url}" style="padding: 5px;">
+                <img src="{url}" style="padding: 5px; max-width: 600px; max-height: 600px">
             </a>
             """
         )

@@ -41,7 +41,6 @@ def render_image(
     pad = all(size)
     image = resize_image(background, *size, pad)
 
-    draw = ImageDraw.Draw(image)
     for (
         point,
         offset,
@@ -51,18 +50,23 @@ def render_image(
         font_size,
         stroke_width,
         stroke_fill,
+        angle,
     ) in get_image_elements(template, lines, image.size):
 
-        if settings.DEBUG:
-            box = (
-                point,
-                (point[0] + max_text_size[0] - 1, point[1] + max_text_size[1] - 1),
-            )
-            draw.rectangle(box, outline="lime")
+        box = Image.new("RGBA", max_text_size)
+        draw = ImageDraw.Draw(box)
 
-        font = ImageFont.truetype(str(settings.FONT), size=font_size)
+        if settings.DEBUG:
+            xy = (0, 0, max_text_size[0] - 1, max_text_size[1] - 1)
+            draw.rectangle(xy, outline="lime")
+
+        if angle:
+            font = ImageFont.truetype(str(settings.FONT_THIN), size=font_size)
+        else:
+            font = ImageFont.truetype(str(settings.FONT_THICK), size=font_size)
+
         draw.text(
-            (point[0] - offset[0], point[1] - offset[1]),
+            (-offset[0], -offset[1]),
             text,
             text_fill,
             font,
@@ -71,6 +75,9 @@ def render_image(
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
         )
+
+        box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
+        image.paste(box, point, box)
 
     if pad:
         image = add_blurred_background(image, background, *size)
@@ -91,7 +98,7 @@ def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
         size = width, int(width / ratio)
     elif height:
         size = int(height * ratio), height
-    elif ratio > 1.0:
+    elif ratio < 1.0:
         size = default_width, int(default_height / ratio)
     else:
         size = int(default_width * ratio), default_height
@@ -135,32 +142,34 @@ def add_blurred_background(
 
 def get_image_elements(
     template: Template, lines: List[str], image_size: Dimensions
-) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str]]:
+) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
     for index, text in enumerate(template.text):
         point = text.get_anchor(image_size)
+
+        max_text_size = text.get_size(image_size)
+        max_font_size = int(image_size[1] / 9)
 
         try:
             line = lines[index]
         except IndexError:
             line = ""
         else:
-            line = text.stylize(wrap(line))
+            line = text.stylize(wrap(line, max_text_size))
 
-        max_text_size = text.get_size(image_size)
-        # max_font_size = max(72, int(image_size[1] / 12))
-        max_font_size = int(image_size[1] / 9)
-
-        font = get_font(line, max_text_size, max_font_size)
+        font = get_font(line, text.angle, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
 
-        stroke_width = min(3, max(1, font.size // 12))
-        stroke_fill = "black" if text.color == "white" else "white"
+        stroke_fill = "black"
+        if text.color == "black":
+            stroke_width = 0
+        else:
+            stroke_width = min(3, max(1, font.size // 12))
 
-        yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill
+        yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
 
 
-def wrap(line: str) -> str:
-    if len(line) <= 40:
+def wrap(line: str, max_text_size: Dimensions) -> str:
+    if len(line) <= 40 and get_font(line, 0, max_text_size, 13).size >= 12:
         return line
 
     midpoint = len(line) // 2 - 1
@@ -172,12 +181,19 @@ def wrap(line: str) -> str:
     return line
 
 
-def get_font(text: str, max_text_size: Dimensions, max_font_size: int,) -> ImageFont:
+def get_font(
+    text: str, angle: float, max_text_size: Dimensions, max_font_size: int,
+) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
-    for size in range(max_font_size, 5, -1):
-        font = ImageFont.truetype(str(settings.FONT), size=size)
+    for size in range(max_font_size, 6, -1):
+
+        if angle:
+            font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
+        else:
+            font = ImageFont.truetype(str(settings.FONT_THICK), size=size)
+
         text_width, text_height = get_text_size_minus_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
             break
