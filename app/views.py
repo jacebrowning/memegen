@@ -46,7 +46,7 @@ async def test_image(request, template_key, text_paths):
     if not settings.DEBUG:
         return response.redirect("/")
     url = f"/images/{template_key}/{text_paths}.png"
-    content = utils.html.gallery([url], refresh=True)
+    content = utils.html.gallery([url], refresh=True, rate=1.0)
     return response.html(content)
 
 

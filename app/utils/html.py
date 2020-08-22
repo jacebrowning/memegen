@@ -1,7 +1,7 @@
 from typing import Iterable
 
 
-def gallery(urls: Iterable[str], *, refresh: bool = False) -> str:
+def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) -> str:
     lines = []
 
     for url in urls:
@@ -28,9 +28,11 @@ def gallery(urls: Iterable[str], *, refresh: bool = False) -> str:
                             /\btime=[^&]*/, 'time=' + new Date().getTime()
                         );
                     }
-                }, 2000);
+                }, {interval});
             </script>
-            """
+            """.replace(
+                "{interval}", str(int(rate * 1000))
+            )
         )
 
     return "\n".join(lines).replace("\n" + " " * 12, "\n")
