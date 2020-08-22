@@ -1,10 +1,10 @@
-from typing import Iterable, Tuple
+from typing import Iterable
 
 
-def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str:
+def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) -> str:
     lines = []
 
-    for url, template in samples:
+    for url in urls:
         if refresh:
             url += "?time=0"
         else:
@@ -28,9 +28,11 @@ def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str
                             /\btime=[^&]*/, 'time=' + new Date().getTime()
                         );
                     }
-                }, 2000);
+                }, {interval});
             </script>
-            """
+            """.replace(
+                "{interval}", str(int(rate * 1000))
+            )
         )
 
     return "\n".join(lines).replace("\n" + " " * 12, "\n")
