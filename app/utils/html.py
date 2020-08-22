@@ -11,7 +11,7 @@ def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str
             url += "?width=300&height=300"
         lines.append(
             f"""
-            <a href="{template or url}">
+            <a href="{url}">
                 <img src="{url}" style="padding: 5px;">
             </a>
             """
@@ -28,7 +28,7 @@ def gallery(samples: Iterable[Tuple[str, str]], *, refresh: bool = False) -> str
                             /\btime=[^&]*/, 'time=' + new Date().getTime()
                         );
                     }
-                }, 3000);
+                }, 2000);
             </script>
             """
         )
