@@ -21,6 +21,12 @@ app.blueprint(api.docs.blueprint)
 @app.get("/")
 @api.docs.exclude
 async def index(request):
+    return response.redirect("/docs")
+
+
+@app.get("/samples")
+@api.docs.exclude
+async def samples(request):
     loop = asyncio.get_event_loop()
     samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
     urls = [sample[0] for sample in samples]

@@ -14,7 +14,7 @@ python = "^3.8"
 
 # Sanic
 sanic = "~20.6.3"
-sanic-openapi = "=0.6.0"
+sanic-openapi = "~0.6.2"
 
 # Utilities
 aiohttp = "^3.6.2"
