@@ -4,15 +4,12 @@ from typing import Iterable
 def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) -> str:
     lines = []
 
-    for url in urls:
-        if refresh:
-            url += "?time=0"
-        else:
-            url += "?width=300&height=300"
+    for href in urls:
+        src = href + ("?time=0" if refresh else "?width=300&height=300")
         lines.append(
             f"""
-            <a href="{url}">
-                <img src="{url}" style="padding: 5px; max-width: 600px; max-height: 600px">
+            <a href="{href}">
+                <img src="{src}" style="padding: 5px; max-width: 600px; max-height: 600px">
             </a>
             """
         )
