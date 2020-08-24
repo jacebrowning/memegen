@@ -8,6 +8,7 @@ LINES_SLUG = [
     (["a/b", "c"], "a~sb/c"),
     (["variable_name"], "variable__name"),
     (["variable-name"], "variable--name"),
+    (["foo\nbar"], "foo~nbar"),
 ]
 
 

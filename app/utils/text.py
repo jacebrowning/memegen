@@ -10,6 +10,7 @@ def encode(lines: List[str]) -> str:
             encoded = encoded.replace(" ", "_")
             encoded = encoded.replace("?", "~q").replace("%", "~p").replace("#", "~h")
             encoded = encoded.replace("/", "~s")
+            encoded = encoded.replace("\n", "~n")
             encoded_lines.append(encoded)
         else:
             encoded_lines.append("_")
@@ -23,7 +24,12 @@ def decode(slug: str) -> List[str]:
     slug = slug.replace("_", " ").replace("  ", "_")
     slug = slug.replace("-", " ").replace("  ", "-")
 
-    slug = slug.replace("~q", "?").replace("~p", "%").replace("~h", "#")
+    slug = (
+        slug.replace("~q", "?")
+        .replace("~p", "%")
+        .replace("~h", "#")
+        .replace("~n", "\n")
+    )
 
     lines = slug.split("/")
     lines = [line.replace("~s", "/") for line in lines]
