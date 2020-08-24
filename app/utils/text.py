@@ -6,7 +6,8 @@ def encode(lines: List[str]) -> str:
 
     for line in lines:
         if line:
-            encoded = line.replace("_", "__").replace("-", "--")
+            encoded = line
+            encoded = encoded.replace("_", "__").replace("-", "--")
             encoded = encoded.replace(" ", "_")
             encoded = encoded.replace("?", "~q").replace("%", "~p").replace("#", "~h")
             encoded = encoded.replace("/", "~s")
@@ -21,8 +22,13 @@ def encode(lines: List[str]) -> str:
 
 
 def decode(slug: str) -> List[str]:
+    has_arrow = "_-->" in slug
+
     slug = slug.replace("_", " ").replace("  ", "_")
     slug = slug.replace("-", " ").replace("  ", "-")
+
+    if has_arrow:
+        slug = slug.replace("- >", " ->")
 
     slug = (
         slug.replace("~q", "?")
