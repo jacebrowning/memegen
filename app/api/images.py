@@ -1,6 +1,7 @@
 import asyncio
 
 from sanic import Blueprint, response
+from sanic.exceptions import abort
 from sanic.log import logger
 from sanic_openapi import doc
 
@@ -48,6 +49,16 @@ async def blank(request, template_key):
 @doc.summary("Display a template background")
 async def blank_jpg(request, template_key):
     return await render_image(request, template_key, ext="jpg")
+
+
+@blueprint.get("/<template_key>")
+@doc.summary("Display the sample image for a template")
+async def sample(request, template_key):
+    template = models.Template.objects.get_or_none(template_key)
+    if template:
+        url = template.build_sample_url(request.app, external=False)
+        return response.redirect(url)
+    abort(404, f"Template not found: {template_key}")
 
 
 @blueprint.get("/<template_key>/<text_paths:path>.png")

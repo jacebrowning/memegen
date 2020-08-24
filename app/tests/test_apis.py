@@ -143,3 +143,10 @@ def describe_image_detail():
             expect(
                 response.headers["Location"]
             ) == f"/images/custom/One_Two.{ext}?alt=http://example.com"
+
+        def it_redirects_to_sample_image_when_no_extension(expect, client):
+            request, response = client.get("/images/fry", allow_redirects=False)
+            expect(response.status) == 302
+            expect(
+                response.headers["Location"]
+            ) == "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID.png"
