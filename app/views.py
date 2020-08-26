@@ -3,7 +3,7 @@ import asyncio
 import log
 from sanic import Sanic, response
 
-from app import api, helpers, models, settings, utils
+from app import api, helpers, settings, utils
 
 app = Sanic(name="memegen")
 
@@ -46,16 +46,10 @@ async def test(request):
     return response.html(content)
 
 
-@app.get("/test/<template_key>/<text_paths:path>")
+@app.get("/<template_key>")
 @api.docs.exclude
-async def test_image(request, template_key, text_paths):
-    if not settings.DEBUG:
-        return response.redirect("/")
-    template = models.Template.objects.get_or_create(template_key)
-    template.datafile.save()
-    url = f"/images/{template_key}/{text_paths}.png"
-    content = utils.html.gallery([url], refresh=True, rate=1.0)
-    return response.html(content)
+async def legacy_template(request, template_key):
+    return response.redirect(f"/images/{template_key}")
 
 
 if __name__ == "__main__":

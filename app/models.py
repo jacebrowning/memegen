@@ -64,7 +64,7 @@ class Template:
 
     @property
     def valid(self) -> bool:
-        return not self.key.startswith("_")
+        return not self.key.startswith("_") and self.image.suffix != ".img"
 
     @property
     def image(self) -> Path:
