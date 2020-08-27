@@ -99,9 +99,11 @@ class Template:
     def build_self_url(self, app: Sanic) -> str:
         return app.url_for("templates.detail", key=self.key, _external=True)
 
-    def build_sample_url(self, app: Sanic, *, external: bool = True) -> str:
+    def build_sample_url(
+        self, app: Sanic, view_name: str = "images.text", *, external: bool = True
+    ) -> str:
         return app.url_for(
-            "images.text",
+            view_name,
             template_key=self.key,
             text_paths=utils.text.encode(self.sample),
             _external=external,

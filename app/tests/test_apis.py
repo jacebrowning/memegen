@@ -149,4 +149,4 @@ def describe_image_detail():
             expect(response.status) == 302
             expect(
                 response.headers["Location"]
-            ) == "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID.png"
+            ) == "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID"

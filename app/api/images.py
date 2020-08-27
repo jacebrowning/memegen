@@ -59,7 +59,7 @@ async def sample(request, template_key):
     else:
         template = models.Template.objects.get_or_none(template_key)
     if template and template.valid:
-        url = template.build_sample_url(request.app, external=False)
+        url = template.build_sample_url(request.app, "images.debug", external=False)
         return response.redirect(url)
     if settings.DEBUG:
         template.datafile.save()
