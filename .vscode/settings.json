@@ -10,11 +10,11 @@
     "**/node_modules/": true,
     "setup.py": true
   },
+  "python.pythonPath": ".venv/bin",
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": ".venv/bin/black",
-  "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
-  "editor.formatOnSave": true,
   "python.linting.lintOnSave": true,
+  "python.linting.mypyEnabled": true,
+  "editor.formatOnSave": true,
   "cSpell.words": ["CIRCLECI", "aiofiles", "aiohttp", "jsonify", "sanic"]
 }
