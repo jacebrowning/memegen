@@ -90,7 +90,11 @@ class Template:
             "name": self.name,
             "key": self.key,
             "styles": [s for s in self.styles if s != settings.DEFAULT_STYLE],
-            "blank": app.url_for("images.blank", template_key=self.key, _external=True),
+            "blank": app.url_for(
+                f"images.blank_{settings.DEFAULT_EXT}",
+                template_key=self.key,
+                _external=True,
+            ),
             "sample": self.build_sample_url(app),
             "source": self.source,
             "_self": self.build_self_url(app),
@@ -100,7 +104,11 @@ class Template:
         return app.url_for("templates.detail", key=self.key, _external=True)
 
     def build_sample_url(
-        self, app: Sanic, view_name: str = "images.text", *, external: bool = True
+        self,
+        app: Sanic,
+        view_name: str = f"images.text_{settings.DEFAULT_EXT}",
+        *,
+        external: bool = True,
     ) -> str:
         return app.url_for(
             view_name,

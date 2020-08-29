@@ -30,7 +30,7 @@ async def create(request):
     except KeyError:
         return response.json({"error": '"template_key" is required'}, status=400)
     url = request.app.url_for(
-        "images.text",
+        f"images.text_{settings.DEFAULT_EXT}",
         template_key=template_key,
         text_paths=utils.text.encode(request.json.get("text_lines", [])),
         _external=True,
@@ -40,8 +40,8 @@ async def create(request):
 
 @blueprint.get("/<template_key>.png")
 @doc.summary("Display a template background")
-async def blank(request, template_key):
-    return await render_image(request, template_key)
+async def blank_png(request, template_key):
+    return await render_image(request, template_key, ext="png")
 
 
 @blueprint.get("/<template_key>.jpg")
@@ -52,11 +52,14 @@ async def blank_jpg(request, template_key):
 
 @blueprint.get("/<template_key>/<text_paths:path>.png")
 @doc.summary("Display a custom meme")
-async def text(request, template_key, text_paths):
+async def text_png(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.text", template_key=template_key, text_paths=slug, **request.args
+            "images.text_png",
+            template_key=template_key,
+            text_paths=slug,
+            **request.args,
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
     return await render_image(request, template_key, slug)

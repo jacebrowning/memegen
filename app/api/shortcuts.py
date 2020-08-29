@@ -31,7 +31,9 @@ async def sample(request, template_key):
 async def custom(request, template_key, text_paths):
     if not settings.DEBUG:
         url = request.app.url_for(
-            "images.text", template_key=template_key, text_paths=text_paths
+            f"images.text_{settings.DEFAULT_EXT}",
+            template_key=template_key,
+            text_paths=text_paths,
         )
         return response.redirect(url)
 
@@ -68,7 +70,7 @@ async def legacy_custom_png(request, template_key, text_paths):
     template = models.Template.objects.get_or_none(template_key)
     if template:
         url = request.app.url_for(
-            "images.text", template_key=template_key, text_paths=text_paths
+            "images.text_png", template_key=template_key, text_paths=text_paths,
         )
         return response.redirect(url)
     abort(404, f"Template not found: {template_key}")
