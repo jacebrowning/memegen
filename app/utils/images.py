@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterator, List, Tuple
 
@@ -23,8 +24,13 @@ def save(
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
     slug = encode(lines)
-    # TODO: is this the best filename?
-    path = directory / template.key / f"{slug}.{ext}"
+    variant = str(style) + str(size)
+    fingerprint = hashlib.sha1(variant.encode()).hexdigest()
+
+    path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
+    if path.exists():
+        return path
+
     path.parent.mkdir(parents=True, exist_ok=True)
 
     image = render_image(template, style, lines, size)

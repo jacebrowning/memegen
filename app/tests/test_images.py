@@ -108,7 +108,7 @@ def test_special_characters(images, template):
 @pytest.mark.skipif("CIRCLECI" in os.environ, reason="Long filenames not supported")
 def test_extremely_long_text(images, tmpdir):
     template = models.Template.objects.get("fry")
-    lines = ["", "word " * 50]
+    lines = ["", "word " * 40]
     utils.images.save(template, lines, directory=Path(tmpdir) / "images")
 
 
