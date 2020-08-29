@@ -2,26 +2,12 @@ import asyncio
 
 import log
 from sanic import Sanic, response
-from sanic_openapi import doc, swagger_blueprint
+from sanic_openapi import doc
 
-from app import api, helpers, settings, utils
+from app import helpers, settings, utils
 
 app = Sanic(name="memegen")
-app.config.SERVER_NAME = settings.SERVER_NAME
-app.config.API_SCHEMES = settings.API_SCHEMES
-app.config.API_VERSION = "6.0a1"
-app.config.API_TITLE = "Memegen API"
-app.config.API_LICENSE_NAME = "MIT License"
-app.config.API_LICENSE_URL = (
-    "https://github.com/jacebrowning/memegen-api/blob/main/LICENSE.txt"
-)
-
-swagger_blueprint.url_prefix = "/docs"
-
-app.blueprint(api.images.blueprint)
-app.blueprint(api.templates.blueprint)
-app.blueprint(api.shortcuts.blueprint)
-app.blueprint(swagger_blueprint)
+helpers.configure(app)
 
 
 @app.get("/")
