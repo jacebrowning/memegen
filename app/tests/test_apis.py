@@ -124,7 +124,7 @@ def describe_image_detail():
             expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
 
-    def describe_redirect():
+    def describe_redirects():
         @pytest.mark.parametrize("ext", ["png", "jpg"])
         def it_redirects_to_normalized_slug(expect, client, ext):
             request, response = client.get(
@@ -139,14 +139,31 @@ def describe_image_detail():
                 f"/images/custom/One Two.{ext}?alt=http://example.com",
                 allow_redirects=False,
             )
+            redirect = f"/images/custom/One_Two.{ext}?alt=http://example.com"
             expect(response.status) == 301
-            expect(
-                response.headers["Location"]
-            ) == f"/images/custom/One_Two.{ext}?alt=http://example.com"
+            expect(response.headers["Location"]) == redirect
 
+    def describe_shortcuts():
         def it_redirects_to_sample_image_when_no_extension(expect, client):
             request, response = client.get("/images/fry", allow_redirects=False)
+            redirect = "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID"
             expect(response.status) == 302
-            expect(
-                response.headers["Location"]
-            ) == "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID"
+            expect(response.headers["Location"]) == redirect
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_redirects_to_sample_image_from_legacy_route(expect, client, ext):
+            request, response = client.get(f"/fry.{ext}", allow_redirects=False)
+            redirect = f"/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID.{ext}"
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == redirect
+
+        def it_redirects_to_custom_image_when_no_extension(expect, client):
+            request, response = client.get("/images/fry/test", allow_redirects=False)
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == "/images/fry/test.png"
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_redirects_to_custom_image_from_legacy_route(expect, client, ext):
+            request, response = client.get(f"/fry/test.{ext}", allow_redirects=False)
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"

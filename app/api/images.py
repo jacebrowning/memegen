@@ -1,7 +1,6 @@
 import asyncio
 
 from sanic import Blueprint, response
-from sanic.exceptions import abort
 from sanic.log import logger
 from sanic_openapi import doc
 
@@ -51,26 +50,6 @@ async def blank_jpg(request, template_key):
     return await render_image(request, template_key, ext="jpg")
 
 
-@blueprint.get("/<template_key>")
-@doc.tag("shortcuts")
-@doc.summary("Redirect to a sample image")
-async def sample(request, template_key):
-    if settings.DEBUG:
-        template = models.Template.objects.get_or_create(template_key)
-    else:
-        template = models.Template.objects.get_or_none(template_key)
-
-    if template and template.valid:
-        url = template.build_sample_url(request.app, "images.debug", external=False)
-        return response.redirect(url)
-
-    if settings.DEBUG:
-        template.datafile.save()
-        abort(501, f"Template not implemented: {template_key}")
-
-    abort(404, f"Template not found: {template_key}")
-
-
 @blueprint.get("/<template_key>/<text_paths:path>.png")
 @doc.summary("Display a custom meme")
 async def text(request, template_key, text_paths):
@@ -96,23 +75,6 @@ async def text_jpg(request, template_key, text_paths):
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
     return await render_image(request, template_key, slug, ext="jpg")
-
-
-@blueprint.get("/<template_key>/<text_paths:path>")
-@doc.tag("shortcuts")
-@doc.summary("Redirect to a custom image")
-async def debug(request, template_key, text_paths):
-    if not settings.DEBUG:
-        url = request.app.url_for(
-            "images.text", template_key=template_key, text_paths=text_paths
-        )
-        return response.redirect(url)
-
-    template = models.Template.objects.get_or_create(template_key)
-    template.datafile.save()
-    url = f"/images/{template_key}/{text_paths}.png"
-    content = utils.html.gallery([url], refresh=True, rate=1.0)
-    return response.html(content)
 
 
 async def render_image(

@@ -16,6 +16,7 @@ swagger_blueprint.url_prefix = "/docs"
 
 app.blueprint(api.images.blueprint)
 app.blueprint(api.templates.blueprint)
+app.blueprint(api.shortcuts.blueprint)
 app.blueprint(swagger_blueprint)
 
 

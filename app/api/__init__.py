@@ -1,1 +1,1 @@
-from . import images, templates
+from . import images, shortcuts, templates
