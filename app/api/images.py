@@ -52,18 +52,22 @@ async def blank_jpg(request, template_key):
 
 
 @blueprint.get("/<template_key>")
-@doc.summary("Display the sample image for a template")
+@doc.tag("shortcuts")
+@doc.summary("Redirect to a sample image")
 async def sample(request, template_key):
     if settings.DEBUG:
         template = models.Template.objects.get_or_create(template_key)
     else:
         template = models.Template.objects.get_or_none(template_key)
+
     if template and template.valid:
         url = template.build_sample_url(request.app, "images.debug", external=False)
         return response.redirect(url)
+
     if settings.DEBUG:
         template.datafile.save()
         abort(501, f"Template not implemented: {template_key}")
+
     abort(404, f"Template not found: {template_key}")
 
 
@@ -95,7 +99,8 @@ async def text_jpg(request, template_key, text_paths):
 
 
 @blueprint.get("/<template_key>/<text_paths:path>")
-@doc.exclude(True)
+@doc.tag("shortcuts")
+@doc.summary("Redirect to a custom image")
 async def debug(request, template_key, text_paths):
     if not settings.DEBUG:
         url = request.app.url_for(

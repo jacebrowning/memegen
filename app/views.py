@@ -2,30 +2,31 @@ import asyncio
 
 import log
 from sanic import Sanic, response
+from sanic_openapi import doc, swagger_blueprint
 
 from app import api, helpers, settings, utils
 
 app = Sanic(name="memegen")
-
 app.config.SERVER_NAME = settings.SERVER_NAME
 app.config.API_SCHEMES = settings.API_SCHEMES
 app.config.API_VERSION = "6.0a1"
 app.config.API_TITLE = "Memes API"
 
+swagger_blueprint.url_prefix = "/docs"
 
 app.blueprint(api.images.blueprint)
 app.blueprint(api.templates.blueprint)
-app.blueprint(api.docs.blueprint)
+app.blueprint(swagger_blueprint)
 
 
 @app.get("/")
-@api.docs.exclude
+@doc.exclude(True)
 async def index(request):
     return response.redirect("/docs")
 
 
 @app.get("/samples")
-@api.docs.exclude
+@doc.exclude(True)
 async def samples(request):
     loop = asyncio.get_event_loop()
     samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
@@ -36,7 +37,7 @@ async def samples(request):
 
 
 @app.get("/test")
-@api.docs.exclude
+@doc.exclude(True)
 async def test(request):
     if not settings.DEBUG:
         return response.redirect("/")
@@ -47,7 +48,8 @@ async def test(request):
 
 
 @app.get("/<template_key>")
-@api.docs.exclude
+@doc.tag("shortcuts")
+@doc.summary("Redirect to a sample image")
 async def legacy_template(request, template_key):
     return response.redirect(f"/images/{template_key}")
 

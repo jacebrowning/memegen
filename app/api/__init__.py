@@ -1,1 +1,1 @@
-from . import docs, images, templates
+from . import images, templates
