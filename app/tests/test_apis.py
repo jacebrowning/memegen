@@ -156,3 +156,14 @@ def describe_image_detail():
             redirect = f"/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID.{ext}"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
+
+        def it_redirects_to_custom_image_when_no_extension(expect, client):
+            request, response = client.get("/images/fry/test", allow_redirects=False)
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == "/images/fry/test.png"
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_redirects_to_custom_image_from_legacy_route(expect, client, ext):
+            request, response = client.get(f"/fry/test.{ext}", allow_redirects=False)
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"

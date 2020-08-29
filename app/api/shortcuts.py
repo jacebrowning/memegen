@@ -60,3 +60,27 @@ async def legacy_sample_jpg(request, template_key):
         url = template.build_sample_url(request.app, "images.text_jpg", external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_key}")
+
+
+@blueprint.get("/<template_key>/<text_paths:path>.png")
+@doc.summary("Redirect to a sample image")
+async def legacy_custom_png(request, template_key, text_paths):
+    template = models.Template.objects.get_or_none(template_key)
+    if template:
+        url = request.app.url_for(
+            "images.text", template_key=template_key, text_paths=text_paths
+        )
+        return response.redirect(url)
+    abort(404, f"Template not found: {template_key}")
+
+
+@blueprint.get("/<template_key>/<text_paths:path>.jpg")
+@doc.summary("Redirect to a sample image")
+async def legacy_custom_jpg(request, template_key, text_paths):
+    template = models.Template.objects.get_or_none(template_key)
+    if template:
+        url = request.app.url_for(
+            "images.text_jpg", template_key=template_key, text_paths=text_paths
+        )
+        return response.redirect(url)
+    abort(404, f"Template not found: {template_key}")
