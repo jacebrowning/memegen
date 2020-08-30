@@ -13,5 +13,5 @@ if settings.BUGSNAG_API_KEY:
 
 class BugsnagErrorHandler(ErrorHandler):
     def default(self, request, exception):
-        bugsnag.notify(exception, meta_data={"request": request})
+        bugsnag.notify(exception, meta_data={"request": request.url})
         return super().default(request, exception)
