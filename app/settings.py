@@ -23,6 +23,7 @@ else:  # localhost
     IMAGES_URL = "https://api.memegen.link"
     API_SCHEMES = ["http", "https"]
 
+BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")
 
 # Fonts
 

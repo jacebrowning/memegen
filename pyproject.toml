@@ -23,6 +23,9 @@ minilog = "^1.6"
 pillow = "^7.1.1"
 spongemock = "~0.3.4"
 
+# Production
+bugsnag = "*"
+
 [tool.poetry.dev-dependencies]
 
 # Formatting

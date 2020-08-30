@@ -2,7 +2,7 @@ from typing import Dict, List, Tuple
 
 from sanic_openapi import swagger_blueprint
 
-from . import api, settings, utils
+from . import api, errors, settings, utils
 from .models import Template
 
 
@@ -22,6 +22,8 @@ def configure(app):
 
     swagger_blueprint.url_prefix = "/docs"
     app.blueprint(swagger_blueprint)
+
+    app.error_handler = errors.BugsnagErrorHandler()
 
 
 def get_valid_templates(request) -> List[Dict]:
