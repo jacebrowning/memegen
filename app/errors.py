@@ -5,7 +5,9 @@ from . import settings
 
 if settings.BUGSNAG_API_KEY:
     bugsnag.configure(
-        api_key=settings.BUGSNAG_API_KEY, project_root="/app",
+        api_key=settings.BUGSNAG_API_KEY,
+        project_root="/app",
+        release_state=settings.ENVIRONMENT,
     )
 
 
