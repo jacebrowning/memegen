@@ -193,7 +193,7 @@ def get_font(
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
-    for size in range(max_font_size, 6, -1):
+    for size in range(max(7, max_font_size), 6, -1):
 
         if angle:
             font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
