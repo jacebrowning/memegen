@@ -86,6 +86,7 @@ async def render_image(
     status = 200
 
     if key == "custom":
+        style = "default"
         url = request.args.get("alt")
         if url:
             template = await models.Template.create(url)
@@ -104,11 +105,12 @@ async def render_image(
             template = models.Template.objects.get("_error")
             status = 404
 
-    lines = utils.text.decode(slug)
+        style = request.args.get("style") or request.args.get("alt")
+        if style and style not in template.styles:
+            logger.error(f"Invalid style for template: {style}")
+            status = 422
 
-    style = request.args.get("style")
-    if style and style not in template.styles:
-        status = 422
+    lines = utils.text.decode(slug)
 
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
 

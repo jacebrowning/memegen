@@ -17,6 +17,9 @@ text:
     scale_y: 0.2
 styles:
   - default
+  - scowl
+  - down
+  - window
 sample:
   - SAD JOE BIDEN
   - DOESN'T THINK YOU'LL VOTE
