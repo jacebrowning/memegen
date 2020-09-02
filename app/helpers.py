@@ -16,12 +16,12 @@ def configure(app):
         "https://github.com/jacebrowning/memegen-api/blob/main/LICENSE.txt"
     )
 
+    swagger_blueprint.url_prefix = "/docs"
+    app.blueprint(swagger_blueprint)
+
     app.blueprint(api.images.blueprint)
     app.blueprint(api.templates.blueprint)
     app.blueprint(api.shortcuts.blueprint)
-
-    swagger_blueprint.url_prefix = "/docs"
-    app.blueprint(swagger_blueprint)
 
     app.error_handler = errors.BugsnagErrorHandler()
 
