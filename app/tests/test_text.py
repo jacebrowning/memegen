@@ -10,6 +10,7 @@ LINES_SLUG = [
     (["variable-name"], "variable--name"),
     (["foo\nbar"], "foo~nbar"),
     (["def data() -> Dict"], "def_data()_-->_Dict"),
+    (['That\'s not how "this" works'], "That's_not_how_''this''_works"),
 ]
 
 
