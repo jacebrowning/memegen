@@ -38,13 +38,6 @@ async def test(request):
     return response.html(content)
 
 
-@app.get("/<template_key>")
-@doc.tag("shortcuts")
-@doc.summary("Redirect to a sample image")
-async def legacy_template(request, template_key):
-    return response.redirect(f"/images/{template_key}")
-
-
 if __name__ == "__main__":
     log.silence("asyncio", "datafiles", allow_warning=True)
     app.run(
