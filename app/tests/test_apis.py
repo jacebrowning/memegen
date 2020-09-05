@@ -51,6 +51,16 @@ def describe_image_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
             }
 
+        def it_accepts_form_data(expect, client):
+            data = {"template_key": "iw", "text_lines[]": ["foo", "bar"]}
+            request, response = client.post("/images", data=data)
+            print(response.json)
+            print(response.text)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/foo/bar.png"
+            }
+
         def it_requires_template_key(expect, client):
             data = {"text_lines": ["foo", "bar"]}
             request, response = client.post("/images", data=json.dumps(data))

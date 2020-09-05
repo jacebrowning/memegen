@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 
+from sanic_cors import CORS
 from sanic_openapi import swagger_blueprint
 
 from . import api, errors, settings, utils
@@ -23,6 +24,7 @@ def configure(app):
     app.blueprint(api.templates.blueprint)
     app.blueprint(api.shortcuts.blueprint)
 
+    CORS(app, resources={"/images/*": {"origins": "*"}})
     app.error_handler = errors.BugsnagErrorHandler()
 
 
