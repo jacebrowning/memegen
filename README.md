@@ -21,3 +21,5 @@ Run CI checks continuously:
 ```
 $ make watch
 ```
+
+If you're looking for the previous version of the service, that's here: https://github.com/jacebrowning/memegen-flask
