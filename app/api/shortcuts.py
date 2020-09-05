@@ -1,3 +1,4 @@
+import log
 from sanic import Blueprint, response
 from sanic.exceptions import abort
 from sanic_openapi import doc
@@ -21,7 +22,9 @@ async def sample(request, template_key):
 
     if settings.DEBUG:
         template.datafile.save()
-        abort(501, f"Template not implemented: {template_key}")
+        message = f"Template not fully implemented: {template}"
+        log.warn(message)
+        abort(501, message)
 
     abort(404, f"Template not found: {template_key}")
 

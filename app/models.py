@@ -62,6 +62,9 @@ class Template:
     styles: List[str] = field(default_factory=lambda: [settings.DEFAULT_STYLE])
     sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
 
+    def __str__(self):
+        return str(self.datafile.path.parent)
+
     @property
     def valid(self) -> bool:
         return not self.key.startswith("_") and self.image.suffix != ".img"
