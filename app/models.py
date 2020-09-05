@@ -97,6 +97,7 @@ class Template:
                 f"images.blank_{settings.DEFAULT_EXT}",
                 template_key=self.key,
                 _external=True,
+                _scheme="https" if settings.DEPLOYED else "http",
             ),
             "sample": self.build_sample_url(app),
             "source": self.source,
@@ -104,7 +105,12 @@ class Template:
         }
 
     def build_self_url(self, app: Sanic) -> str:
-        return app.url_for("templates.detail", key=self.key, _external=True)
+        return app.url_for(
+            "templates.detail",
+            key=self.key,
+            _external=True,
+            _scheme="https" if settings.DEPLOYED else "http",
+        )
 
     def build_sample_url(
         self,
@@ -113,12 +119,14 @@ class Template:
         *,
         external: bool = True,
     ) -> str:
-        return app.url_for(
-            view_name,
-            template_key=self.key,
-            text_paths=utils.text.encode(self.sample),
-            _external=external,
-        )
+        kwargs = {
+            "template_key": self.key,
+            "text_paths": utils.text.encode(self.sample),
+            "_external": external,
+        }
+        if external:
+            kwargs["_scheme"] = "https" if settings.DEPLOYED else "http"
+        return app.url_for(view_name, **kwargs)
 
     @classmethod
     async def create(cls, url: str) -> "Template":

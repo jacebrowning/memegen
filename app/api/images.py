@@ -45,6 +45,7 @@ async def create(request):
         template_key=template_key,
         text_paths=utils.text.encode(payload.get("text_lines") or []),
         _external=True,
+        _scheme="https" if settings.DEPLOYED else "http",
     )
     return response.json({"url": url}, status=201)
 
