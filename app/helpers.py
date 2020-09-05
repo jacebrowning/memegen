@@ -9,7 +9,7 @@ from .models import Template
 def configure(app):
     app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.API_SCHEMES = settings.API_SCHEMES
-    app.config.API_VERSION = "6.0a1"
+    app.config.API_VERSION = "6.0"
     app.config.API_TITLE = "Memegen API"
     app.config.API_LICENSE_NAME = "MIT License"
     app.config.API_LICENSE_URL = (
