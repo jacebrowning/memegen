@@ -1,4 +1,5 @@
 import asyncio
+from contextlib import suppress
 
 from sanic import Blueprint, response
 from sanic.log import logger
@@ -25,14 +26,24 @@ async def index(request):
 @doc.summary("Create a meme from a template")
 @doc.consumes(doc.JsonBody({"template_key": str, "text_lines": [str]}), location="body")
 async def create(request):
+    if request.form:
+        payload = dict(request.form)
+        with suppress(KeyError):
+            payload["template_key"] = payload.pop("template_key")[0]
+        with suppress(KeyError):
+            payload["text_lines"] = payload.pop("text_lines[]")
+    else:
+        payload = request.json
+
     try:
-        template_key = request.json["template_key"]
+        template_key = payload["template_key"]
     except KeyError:
         return response.json({"error": '"template_key" is required'}, status=400)
+
     url = request.app.url_for(
         f"images.text_{settings.DEFAULT_EXT}",
         template_key=template_key,
-        text_paths=utils.text.encode(request.json.get("text_lines", [])),
+        text_paths=utils.text.encode(payload.get("text_lines") or []),
         _external=True,
     )
     return response.json({"url": url}, status=201)

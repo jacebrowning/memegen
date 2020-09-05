@@ -26,7 +26,9 @@ rfc3986==1.4.0
 ruamel.yaml==0.16.12
 ruamel.yaml.clib==0.2.2; platform_python_implementation == "CPython" and python_version < "3.9"
 sanic==20.6.3
+sanic-cors==0.10.0.post3
 sanic-openapi==0.6.2
+sanic-plugins-framework==0.9.3
 six==1.15.0
 sniffio==1.1.0
 spongemock==0.3.4
