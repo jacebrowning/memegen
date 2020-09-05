@@ -13,7 +13,7 @@ h2==3.2.0
 hpack==3.0.0
 hstspreload==2020.8.25
 httptools==0.1.1
-httpx==0.11.1
+httpx==0.14.3
 hyperframe==5.2.0
 idna==2.10
 minilog==1.6
