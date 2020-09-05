@@ -39,6 +39,8 @@ async def test(request):
 
 
 if __name__ == "__main__":
+    log.reset()
+    log.init()
     log.silence("asyncio", "datafiles", allow_warning=True)
     app.run(
         host="0.0.0.0",

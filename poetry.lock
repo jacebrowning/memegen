@@ -440,7 +440,7 @@ description = "Minimalistic wrapper for Python logging."
 name = "minilog"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "1.6"
+version = "2.0b1"
 
 [[package]]
 category = "dev"
@@ -1028,7 +1028,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "147ca00cacd5edee46ad80fd1b8585f2289751f4427ad9761a02833fc0c1b140"
+content-hash = "9a2ff7035b8a6df26ed5390997e92fae93a125352cf1d35a9d77fefea462c030"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -1234,8 +1234,8 @@ jedi = [
     {file = "jedi-0.17.2.tar.gz", hash = "sha256:86ed7d9b750603e4ba582ea8edc678657fb4007894a12bcf6f4bb97892f31d20"},
 ]
 minilog = [
-    {file = "minilog-1.6-py3-none-any.whl", hash = "sha256:e999fffce1912560974e9360b1aa0b970f0a2f3dba3b50ffacd5ffa68b27d84c"},
-    {file = "minilog-1.6.tar.gz", hash = "sha256:0dbbe6d8db9e45b3fb1e1975cf8d7f6b8a22446a6e6879992d0dbda3c7431da7"},
+    {file = "minilog-2.0b1-py3-none-any.whl", hash = "sha256:3500f683ac68eb87ba8c6e689c9a83fc509f6ce2d0221711003b13966c4c8b66"},
+    {file = "minilog-2.0b1.tar.gz", hash = "sha256:e6478c2c98e9af09c7ad1b55d89c1ed890342b7da39c54654aaa761812af2c55"},
 ]
 more-itertools = [
     {file = "more-itertools-8.5.0.tar.gz", hash = "sha256:6f83822ae94818eae2612063a5101a7311e68ae8002005b5e05f03fd74a86a20"},
