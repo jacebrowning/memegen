@@ -40,6 +40,7 @@ async def create(request):
     except KeyError:
         return response.json({"error": '"template_key" is required'}, status=400)
 
+    # TODO: move this the Template class
     url = request.app.url_for(
         f"images.text_{settings.DEFAULT_EXT}",
         template_key=template_key,

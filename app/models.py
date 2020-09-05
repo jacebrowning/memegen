@@ -63,11 +63,15 @@ class Template:
     sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
 
     def __str__(self):
-        return str(self.datafile.path.parent)
+        return str(self.directory)
 
     @property
     def valid(self) -> bool:
         return not self.key.startswith("_") and self.image.suffix != ".img"
+
+    @property
+    def directory(self) -> Path:
+        return self.datafile.path.parent
 
     @property
     def image(self) -> Path:
@@ -76,14 +80,14 @@ class Template:
     def get_image(self, style: str = "") -> Path:
         style = style or settings.DEFAULT_STYLE
 
-        directory = self.datafile.path.parent
-        for path in directory.iterdir():
+        self.directory.mkdir(exist_ok=True)
+        for path in self.directory.iterdir():
             if path.stem == style:
                 return path
 
         if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.key}")
-            return directory / "default.img"
+            return self.directory / "default.img"
         else:
             logger.warning(f"Style {style!r} not available for {self.key}")
             return self.get_image()
@@ -141,7 +145,7 @@ class Template:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
-                    template.image.parent.mkdir(exist_ok=True)
+                    template.directory.mkdir(exist_ok=True)
                     f = await aiofiles.open(template.image, mode="wb")
                     await f.write(await response.read())
                     await f.close()

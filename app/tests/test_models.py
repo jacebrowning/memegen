@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import log
 import pytest
 
 from .. import settings
@@ -41,6 +42,13 @@ def describe_template():
         def it_has_generic_extension_when_absent(expect):
             template = Template.objects.get("_test")
             expect(template.image) == Path.cwd() / "templates" / "_test" / "default.img"
+
+        def it_creates_template_directory_automatically(expect):
+            template = Template.objects.get_or_create("_custom-empty")
+            template.datafile.path.unlink()
+            template.datafile.path.parent.rmdir()
+            log.info(template.image)
+            expect(template.datafile.path.parent.exists()) == True
 
     def describe_create():
         @pytest.mark.asyncio
