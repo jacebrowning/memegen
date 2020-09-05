@@ -81,11 +81,6 @@ watch: install
 ###############################################################################
 # Delivery Tasks
 
-.PHONY: import
-import: install
-	poetry run gitman update --force --quiet
-	poetry run python scripts/import_legacy_templates.py
-
 .PHONY: promote
 promote: install
 	SITE=https://staging-api.memegen.link poetry run pytest scripts --verbose --no-cov
