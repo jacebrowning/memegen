@@ -1,3 +1,5 @@
+import pytest
+
 from .. import settings
 
 
@@ -9,6 +11,7 @@ def describe_index():
 
 
 def describe_samples():
+    @pytest.mark.slow
     def it_displays_images(expect, client):
         request, response = client.get("/samples")
         expect(response.status) == 200

@@ -5,6 +5,7 @@ import pytest
 
 def describe_template_list():
     def describe_GET():
+        @pytest.mark.slow
         def it_returns_all_templates(expect, client):
             request, response = client.get("/templates")
             expect(response.status) == 200
@@ -32,6 +33,7 @@ def describe_template_detail():
 
 def describe_image_list():
     def describe_GET():
+        @pytest.mark.slow
         def it_returns_sample_image_urls(expect, client):
             request, response = client.get("/images")
             expect(response.status) == 200
@@ -75,6 +77,7 @@ def describe_image_list():
 
 
 def describe_image_detail():
+    @pytest.mark.slow
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
@@ -87,6 +90,7 @@ def describe_image_detail():
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
+    @pytest.mark.slow
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
@@ -105,17 +109,20 @@ def describe_image_detail():
         expect(response.headers["content-type"]) == "image/png"
 
     def describe_styles():
+        @pytest.mark.slow
         def it_supports_alternate_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=maga")
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
+        @pytest.mark.slow
         def it_rejects_invalid_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=foobar")
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_custom():
+        @pytest.mark.slow
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
                 "/images/custom/test.png"
@@ -169,6 +176,7 @@ def describe_image_detail():
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
     def describe_legacy():
+        @pytest.mark.slow
         def it_accepts_alt_for_template(expect, client):
             request, response = client.get(
                 "/images/custom/test.png"
@@ -177,6 +185,7 @@ def describe_image_detail():
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
+        @pytest.mark.slow
         def it_accepts_alt_for_style(expect, client):
             request, response = client.get("/images/sad-biden/test.png?style=scowl")
             expect(response.status) == 200

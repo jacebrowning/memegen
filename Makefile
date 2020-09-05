@@ -71,12 +71,20 @@ test: install
 		echo "Running all tests..." && \
 		poetry run pytest --new-first --maxfail=1; \
 	fi
+ifdef SKIP_SLOW
+	poetry run coveragespace jacebrowning/memegen unit
+else
 	poetry run coveragespace jacebrowning/memegen overall
+endif
+
+.PHONY: test-slow
+test-slow: install
+	poetry run pytest -m slow --durations=0
 
 .PHONY: watch
 watch: install
 	@ sleep 2 && touch */__init__.py &
-	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.yml" --command="clear && make test check format && echo && echo ✅ && echo"
+	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.yml" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo"
 
 ###############################################################################
 # Delivery Tasks
