@@ -28,7 +28,7 @@ async def sample(request, template_key):
 
 @blueprint.get("/<template_key>.png")
 @doc.summary("Redirect to a sample image")
-@doc.exclude(settings.ENVIRONMENT != "local")
+@doc.exclude(settings.RELEASE_STAGE != "local")
 async def sample_png(request, template_key):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -39,7 +39,7 @@ async def sample_png(request, template_key):
 
 @blueprint.get("/<template_key>.jpg")
 @doc.summary("Redirect to a sample image")
-@doc.exclude(settings.ENVIRONMENT != "local")
+@doc.exclude(settings.RELEASE_STAGE != "local")
 async def sample_jpg(request, template_key):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -50,7 +50,7 @@ async def sample_jpg(request, template_key):
 
 @blueprint.get("/<template_key>")
 @doc.summary("Redirect to a sample image")
-@doc.exclude(settings.ENVIRONMENT != "local")
+@doc.exclude(settings.RELEASE_STAGE != "local")
 async def sample_legacy(request, template_key):
     return response.redirect(f"/images/{template_key}")
 
@@ -75,7 +75,7 @@ async def custom(request, template_key, text_paths):
 
 @blueprint.get("/<template_key>/<text_paths:path>.png")
 @doc.summary("Redirect to a custom image")
-@doc.exclude(settings.ENVIRONMENT != "local")
+@doc.exclude(settings.RELEASE_STAGE != "local")
 async def custom_png(request, template_key, text_paths):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -88,7 +88,7 @@ async def custom_png(request, template_key, text_paths):
 
 @blueprint.get("/<template_key>/<text_paths:path>.jpg")
 @doc.summary("Redirect to a custom image")
-@doc.exclude(settings.ENVIRONMENT != "local")
+@doc.exclude(settings.RELEASE_STAGE != "local")
 async def custom_jpg(request, template_key, text_paths):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -101,6 +101,6 @@ async def custom_jpg(request, template_key, text_paths):
 
 @blueprint.get("/<template_key>/<text_paths:path>")
 @doc.summary("Redirect to a custom image")
-@doc.exclude(settings.ENVIRONMENT != "local")
+@doc.exclude(settings.RELEASE_STAGE != "local")
 async def custom_legacy(request, template_key, text_paths):
     return response.redirect(f"/images/{template_key}/{text_paths}")

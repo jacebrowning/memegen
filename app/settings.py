@@ -12,19 +12,13 @@ WORKERS = int(os.environ.get("WEB_CONCURRENCY", 1))
 
 if "DOMAIN" in os.environ:  # staging / production
     SERVER_NAME = os.environ["DOMAIN"]
-    IMAGES_URL = f"https://{SERVER_NAME}"
-    API_SCHEMES = ["https"]
-    ENVIRONMENT = "staging" if "staging" in SERVER_NAME else "production"
+    RELEASE_STAGE = "staging" if "staging" in SERVER_NAME else "production"
 elif "HEROKU_APP_NAME" in os.environ:  # review apps
     SERVER_NAME = os.environ["HEROKU_APP_NAME"] + ".herokuapp.com"
-    IMAGES_URL = f"https://{SERVER_NAME}"
-    API_SCHEMES = ["https"]
-    ENVIRONMENT = "review"
+    RELEASE_STAGE = "review"
 else:  # localhost
     SERVER_NAME = f"localhost:{PORT}"
-    IMAGES_URL = "https://api.memegen.link"
-    API_SCHEMES = ["http", "https"]
-    ENVIRONMENT = "local"
+    RELEASE_STAGE = "local"
 
 BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")
 
