@@ -8,7 +8,7 @@ from .models import Template
 
 def configure(app):
     app.config.SERVER_NAME = settings.SERVER_NAME
-    app.config.API_SCHEMES = ["https"] if settings.DEPLOYED else ["http", "https"]
+    app.config.API_SCHEMES = None
     app.config.API_VERSION = "6.0"
     app.config.API_TITLE = "Memegen API"
     app.config.API_LICENSE_NAME = "MIT License"
