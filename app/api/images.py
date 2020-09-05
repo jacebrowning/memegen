@@ -87,7 +87,7 @@ async def render_image(
 
     if key == "custom":
         style = "default"
-        url = request.args.get("alt")
+        url = request.args.get("background") or request.args.get("alt")
         if url:
             template = await models.Template.create(url)
             if not template.image.exists():

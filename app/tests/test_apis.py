@@ -103,11 +103,10 @@ def describe_image_detail():
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_custom():
-        # TODO: Figure out why this test takes 5+ seconds (pytest --durations=0)
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
                 "/images/custom/test.png"
-                "?alt=https://www.gstatic.com/webp/gallery/3.jpg"
+                "?background=https://www.gstatic.com/webp/gallery/3.jpg"
             )
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
@@ -119,7 +118,8 @@ def describe_image_detail():
 
         def it_handles_invalid_urls_with_custom_templates(expect, client):
             request, response = client.get(
-                "/images/custom/test.png" "?alt=http://example.com/does_not_exist.png"
+                "/images/custom/test.png"
+                "?background=http://example.com/does_not_exist.png"
             )
             expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
@@ -156,6 +156,14 @@ def describe_image_detail():
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
     def describe_legacy():
+        def it_accepts_alt_for_template(expect, client):
+            request, response = client.get(
+                "/images/custom/test.png"
+                "?alt=https://www.gstatic.com/webp/gallery/3.jpg"
+            )
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
         def it_accepts_alt_for_style(expect, client):
             request, response = client.get("/images/sad-biden/test.png?style=scowl")
             expect(response.status) == 200
