@@ -23,7 +23,7 @@ pillow==7.2.0
 pyperclip==1.8.0
 pyyaml==5.3.1
 rfc3986==1.4.0
-ruamel.yaml==0.16.10
+ruamel.yaml==0.16.12
 ruamel.yaml.clib==0.2.0; platform_python_implementation == "CPython" and python_version < "3.9"
 sanic==20.6.3
 sanic-openapi==0.6.2
