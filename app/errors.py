@@ -3,12 +3,11 @@ from sanic.handlers import ErrorHandler
 
 from . import settings
 
-if settings.BUGSNAG_API_KEY:
-    bugsnag.configure(
-        api_key=settings.BUGSNAG_API_KEY,
-        project_root="/app",
-        release_state=settings.RELEASE_STAGE,
-    )
+bugsnag.configure(
+    api_key=settings.BUGSNAG_API_KEY,
+    project_root="/app",
+    release_stage=settings.RELEASE_STAGE,
+)
 
 
 class BugsnagErrorHandler(ErrorHandler):

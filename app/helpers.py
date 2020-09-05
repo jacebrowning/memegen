@@ -25,7 +25,8 @@ def configure(app):
     app.blueprint(api.shortcuts.blueprint)
 
     CORS(app, resources={"/images/*": {"origins": "*"}})
-    app.error_handler = errors.BugsnagErrorHandler()
+    if settings.BUGSNAG_API_KEY:
+        app.error_handler = errors.BugsnagErrorHandler()
 
 
 def get_valid_templates(request) -> List[Dict]:
