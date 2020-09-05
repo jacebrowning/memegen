@@ -40,11 +40,26 @@ DEFAULT_SIZE = (600, 600)
 
 TEST_IMAGES_DIRECTORY = ROOT / "app" / "tests" / "images"
 TEST_IMAGES = [
-    ("iw", ["tests code", "in production"]),
-    ("fry", ["a", "b"]),
-    ("fry", ["short line", "longer line of text than the short one"]),
-    ("fry", ["longer line of text than the short one", "short line"]),
-    ("sparta", ["", "this is a wide image!"]),
+    (
+        "iw",
+        ["tests code", "in production"],
+    ),
+    (
+        "fry",
+        ["a", "b"],
+    ),
+    (
+        "fry",
+        ["short line", "longer line of text than the short one"],
+    ),
+    (
+        "fry",
+        ["longer line of text than the short one", "short line"],
+    ),
+    (
+        "sparta",
+        ["", "this is a wide image!"],
+    ),
     (
         "ski",
         [
@@ -52,6 +67,12 @@ TEST_IMAGES = [
             "you're gonna have a bad time",
         ],
     ),
-    ("ds", ["Push this button.", "Push that button.", "can't decide which is worse"]),
-    ("spongebob", ["You: Stop talking like that", "Me: Stop talking like that"]),
+    (
+        "ds",
+        ["Push this button.", "Push that button.", "can't decide which is worse"],
+    ),
+    (
+        "spongebob",
+        ["You: Stop talking like that", "Me: Stop talking like that"],
+    ),
 ]

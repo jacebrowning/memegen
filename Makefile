@@ -53,7 +53,7 @@ run: install
 .PHONY: format
 format: install
 	poetry run autoflake --recursive $(PACKAGES) --in-place --remove-all-unused-imports --ignore-init-module-imports
-	poetry run isort $(PACKAGES) --recursive --apply
+	poetry run isort $(PACKAGES)
 	poetry run black $(PACKAGES)
 
 .PHONY: check

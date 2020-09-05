@@ -80,7 +80,7 @@ async def custom_png(request, template_key, text_paths):
     template = models.Template.objects.get_or_none(template_key)
     if template:
         url = request.app.url_for(
-            "images.text_png", template_key=template_key, text_paths=text_paths,
+            "images.text_png", template_key=template_key, text_paths=text_paths
         )
         return response.redirect(url)
     abort(404, f"Template not found: {template_key}")

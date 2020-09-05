@@ -40,7 +40,7 @@ def save(
 
 
 def render_image(
-    template: Template, style: str, lines: List[str], size: Dimensions,
+    template: Template, style: str, lines: List[str], size: Dimensions
 ) -> Image:
     background = Image.open(template.get_image(style)).convert("RGB")
 
@@ -188,7 +188,7 @@ def wrap(line: str, max_text_size: Dimensions) -> str:
 
 
 def get_font(
-    text: str, angle: float, max_text_size: Dimensions, max_font_size: int,
+    text: str, angle: float, max_text_size: Dimensions, max_font_size: int
 ) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10

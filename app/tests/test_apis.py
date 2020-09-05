@@ -79,7 +79,10 @@ def describe_image_detail():
 
     @pytest.mark.parametrize(
         ("path", "content_type"),
-        [("/images/fry.png", "image/png"), ("/images/fry.jpg", "image/jpeg"),],
+        [
+            ("/images/fry.png", "image/png"),
+            ("/images/fry.jpg", "image/jpeg"),
+        ],
     )
     def it_returns_blank_templates_when_no_slug(expect, client, path, content_type):
         request, response = client.get(path)
