@@ -1,7 +1,7 @@
 # memegen.link
 
 [![CircleCI](https://img.shields.io/circleci/build/github/jacebrowning/memegen)](https://circleci.com/gh/jacebrowning/memegen)
-[![GitHub Sponsor](https://img.shields.io/badge/server%20costs-%247%2Fmonth-red)](https://github.com/sponsors/jacebrowning)
+[![GitHub Sponsor](https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red)](https://github.com/sponsors/jacebrowning)
 
 
 Check for the required system dependencies:
