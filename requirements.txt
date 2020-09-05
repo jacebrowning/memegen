@@ -30,7 +30,7 @@ sanic-openapi==0.6.2
 six==1.15.0
 sniffio==1.1.0
 spongemock==0.3.4
-tomlkit==0.5.11
+tomlkit==0.7.0
 typing-extensions==3.7.4.3
 ujson==3.1.0; sys_platform != "win32" and implementation_name == "cpython"
 urllib3==1.25.10
