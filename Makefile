@@ -71,7 +71,7 @@ test: install
 		echo "Running all tests..." && \
 		poetry run pytest --new-first --maxfail=1; \
 	fi
-	poetry run coveragespace jacebrowning/memegen-api overall
+	poetry run coveragespace jacebrowning/memegen overall
 
 .PHONY: watch
 watch: install

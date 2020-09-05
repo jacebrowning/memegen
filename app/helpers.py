@@ -13,7 +13,7 @@ def configure(app):
     app.config.API_TITLE = "Memegen API"
     app.config.API_LICENSE_NAME = "MIT License"
     app.config.API_LICENSE_URL = (
-        "https://github.com/jacebrowning/memegen-api/blob/main/LICENSE.txt"
+        "https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"
     )
 
     swagger_blueprint.url_prefix = "/docs"
