@@ -34,5 +34,8 @@ jobs:
           name: Running Tests
           command: make test && sudo pip install coveralls && coveralls
 
+      - store_test_results:
+          path: results
+
       - store_artifacts:
           path: htmlcov
