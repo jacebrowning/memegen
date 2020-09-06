@@ -11,7 +11,6 @@ blueprint = Blueprint("images", url_prefix="/images")
 
 
 @blueprint.get("/")
-@doc.tag("samples")
 @doc.summary("List sample memes")
 async def index(request):
     loop = asyncio.get_event_loop()
@@ -22,7 +21,6 @@ async def index(request):
 
 
 @blueprint.post("/")
-@doc.tag("memes")
 @doc.summary("Create a meme from a template")
 @doc.consumes(doc.JsonBody({"template_key": str, "text_lines": [str]}), location="body")
 async def create(request):

@@ -132,6 +132,25 @@ class Template:
             kwargs["_scheme"] = "https" if settings.DEPLOYED else "http"
         return app.url_for(view_name, **kwargs)
 
+    def build_custom_url(
+        self,
+        app: Sanic,
+        text_lines: List[str],
+        *,
+        background: str = "",
+        external: bool = False,
+    ):
+        url = app.url_for(
+            f"images.text_{settings.DEFAULT_EXT}",
+            template_key="custom" if self.key == "_custom" else self.key,
+            text_paths=utils.text.encode(text_lines),
+            _external=True,
+            _scheme="https" if settings.DEPLOYED else "http",
+        )
+        if background:
+            url += "?background=" + background
+        return url
+
     @classmethod
     async def create(cls, url: str) -> "Template":
         key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()

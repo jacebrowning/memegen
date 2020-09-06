@@ -30,6 +30,27 @@ def describe_template_detail():
             request, response = client.get("/templates/foobar")
             expect(response.status) == 404
 
+    def describe_POST():
+        def it_returns_an_image_url(expect, client):
+            data = {"text_lines": ["foo", "bar"]}
+            request, response = client.post("/templates/iw", data=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/foo/bar.png"
+            }
+
+        def it_supports_custom_backgrounds(expect, client):
+            data = {
+                "image_url": "https://www.gstatic.com/webp/gallery/3.jpg",
+                "text_lines": ["foo", "bar"],
+            }
+            request, response = client.post("/templates/custom", data=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/custom/foo/bar.png"
+                "?background=https://www.gstatic.com/webp/gallery/3.jpg"
+            }
+
 
 def describe_image_list():
     def describe_GET():

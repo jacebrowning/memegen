@@ -1,4 +1,5 @@
 import asyncio
+from contextlib import suppress
 
 from sanic import Blueprint, response
 from sanic.exceptions import abort
@@ -25,3 +26,38 @@ async def detail(request, key):
     if template:
         return response.json(template.jsonify(request.app))
     abort(404)
+
+
+@blueprint.post("/custom")
+@doc.summary("Create a meme from any image")
+@doc.consumes(doc.JsonBody({"image_url": str, "text_lines": [str]}), location="body")
+async def custom(request):
+    if request.form:
+        payload = dict(request.form)
+        with suppress(KeyError):
+            payload["text_lines"] = payload.pop("text_lines[]")
+    else:
+        payload = request.json
+
+    url = Template("_custom").build_custom_url(
+        request.app,
+        payload.get("text_lines") or [],
+        background=payload["image_url"],
+    )
+    return response.json({"url": url}, status=201)
+
+
+@blueprint.post("/<key>")
+@doc.summary("Create a meme from a template")
+@doc.consumes(doc.JsonBody({"text_lines": [str]}), location="body")
+async def build(request, key):
+    if request.form:
+        payload = dict(request.form)
+        with suppress(KeyError):
+            payload["text_lines"] = payload.pop("text_lines[]")
+    else:
+        payload = request.json
+
+    template = Template.objects.get(key)
+    url = template.build_custom_url(request.app, payload.get("text_lines") or [])
+    return response.json({"url": url}, status=201)
