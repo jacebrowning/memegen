@@ -8,13 +8,13 @@ An API to programatically generate memes based solely on requested URLs.
 [![License](https://img.shields.io/badge/license-mit-blue)](https://github.com/jacebrowning/memegen/blob/main/LICENSE.md)
 [![GitHub Sponsora](https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red)](https://github.com/sponsors/jacebrowning)
 
-## Generating Images
+# Generating Images
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, https://api.memegen.link/images/buzz/memes/memes_everywhere.jpg produces:
 
 ![Sample Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.jpg?&height=400)
 
-### Special Characters
+## Special Characters
 
 In URLs, spaces can be inserted using underscores, dashes, or mixed case:
 
@@ -31,11 +31,11 @@ Reserved URL characters can be escaped:
 * tilde + S (`~s`) → slash (`/`)
 * 2 single qutoes (`''`) → double quote (`"`)
 
-For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.jpg` produces:
+For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.jpg produces:
 
 ![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.jpg?&height=400)
 
-### Alternate Styles
+## Alternate Styles
 
 Some memes come in multiple forms, which can be selected via `?style=<style>`.
 
@@ -45,13 +45,13 @@ For example, these are two styles provided by the https://api.memegen.link/templ
 :-------------------------:|:-------------------------:
 ![](https://api.memegen.link/images/ds.png?width=200)  |  ![](https://api.memegen.link/images/ds.png?style=maga&width=200)
 
-### Custom Backgrounds
+## Custom Backgrounds
 
 You can also use your own image URL as the background. For example, https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.jpg produces:
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.jpg?background=http://www.gstatic.com/webp/gallery/1.jpg&height=400)
 
-### Image Sizing
+## Image Sizing
 
 Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
 
@@ -59,7 +59,7 @@ For example, https://api.memegen.link/images/both/width_or_height/why_not_both~q
 
 ![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.jpg?height=350&width=600)
 
-## API Documentation
+# API Documentation
 
 The full interactive documentation is available here: https://api.memegen.link/docs/
 
