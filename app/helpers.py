@@ -8,7 +8,7 @@ from .models import Template
 
 
 def configure(app):
-    app.config.API_HOST = settings.SERVER_NAME
+    app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.API_BASEPATH = "/"
     app.config.API_SCHEMES = ["https"] if settings.DEPLOYED else ["http", "https"]
     app.config.API_VERSION = "6.0"
