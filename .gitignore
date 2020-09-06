@@ -14,3 +14,4 @@ __pycache__/
 # testing
 .coverage
 /htmlcov/
+/results/

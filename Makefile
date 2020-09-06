@@ -62,6 +62,9 @@ check: install
 
 .PHONY: test
 test: install
+ifdef CI
+	poetry run pytest --verbose --junit-xml=results/junit.xml
+else
 	@ if test -e .cache/v/cache/lastfailed; then \
 		echo "Running failed tests..." && \
 		poetry run pytest --last-failed --maxfail=1 --no-cov && \
@@ -71,6 +74,7 @@ test: install
 		echo "Running all tests..." && \
 		poetry run pytest --new-first --maxfail=1; \
 	fi
+endif
 ifdef SKIP_SLOW
 	poetry run coveragespace jacebrowning/memegen unit
 else
