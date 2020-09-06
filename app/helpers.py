@@ -8,14 +8,20 @@ from .models import Template
 
 
 def configure(app):
-    app.config.SERVER_NAME = settings.SERVER_NAME
-    app.config.API_SCHEMES = None
+    app.config.API_HOST = settings.SERVER_NAME
+    app.config.API_BASEPATH = "/"
+    app.config.API_SCHEMES = ["https"] if settings.DEPLOYED else ["http", "https"]
     app.config.API_VERSION = "6.0"
     app.config.API_TITLE = "Memegen API"
-    app.config.API_LICENSE_NAME = "MIT License"
+    app.config.API_CONTACT_EMAIL = "support@maketested.com"
+    app.config.API_LICENSE_NAME = "View license"
     app.config.API_LICENSE_URL = (
         "https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"
     )
+    app.config.API_SECURITY = [{"ApiKeyAuth": []}]
+    app.config.API_SECURITY_DEFINITIONS = {
+        "ApiKeyAuth": {"type": "apiKey", "in": "header", "name": "X-API-KEY"}
+    }
 
     swagger_blueprint.url_prefix = "/docs"
     app.blueprint(swagger_blueprint)
