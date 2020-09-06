@@ -184,6 +184,14 @@ def describe_image_detail():
             expect(response.status) == 301
             expect(response.headers["Location"]) == redirect
 
+        def it_handles_encoded_newlines(expect, client):
+            request, response = client.get(
+                "/images/fry/1 2%0A3.jpg", allow_redirects=False
+            )
+            redirect = "/images/fry/1_2~n3.jpg"
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == redirect
+
     def describe_shortcuts():
         def it_redirects_to_sample_image_when_no_extension(expect, client):
             request, response = client.get("/images/fry", allow_redirects=False)

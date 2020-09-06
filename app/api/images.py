@@ -55,7 +55,7 @@ async def blank_jpg(request, template_key):
     return await render_image(request, template_key, ext="jpg")
 
 
-@blueprint.get("/<template_key>/<text_paths:path>.png")
+@blueprint.get("/<template_key>/<text_paths:[\s\S]+>.png")
 @doc.summary("Display a custom meme")
 async def text_png(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
@@ -70,7 +70,7 @@ async def text_png(request, template_key, text_paths):
     return await render_image(request, template_key, slug)
 
 
-@blueprint.get("/<template_key>/<text_paths:path>.jpg")
+@blueprint.get("/<template_key>/<text_paths:[\s\S]+>.jpg")
 @doc.summary("Display a custom meme")
 async def text_jpg(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
