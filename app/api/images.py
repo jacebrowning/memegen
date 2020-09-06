@@ -11,7 +11,6 @@ blueprint = Blueprint("images", url_prefix="/images")
 
 
 @blueprint.get("/")
-@doc.tag("samples")
 @doc.summary("List sample memes")
 async def index(request):
     loop = asyncio.get_event_loop()
@@ -22,7 +21,6 @@ async def index(request):
 
 
 @blueprint.post("/")
-@doc.tag("memes")
 @doc.summary("Create a meme from a template")
 @doc.consumes(doc.JsonBody({"template_key": str, "text_lines": [str]}), location="body")
 async def create(request):
@@ -40,14 +38,8 @@ async def create(request):
     except KeyError:
         return response.json({"error": '"template_key" is required'}, status=400)
 
-    # TODO: move this the Template class
-    url = request.app.url_for(
-        f"images.text_{settings.DEFAULT_EXT}",
-        template_key=template_key,
-        text_paths=utils.text.encode(payload.get("text_lines") or []),
-        _external=True,
-        _scheme="https" if settings.DEPLOYED else "http",
-    )
+    template = models.Template.objects.get(template_key)
+    url = template.build_custom_url(request.app, payload.get("text_lines") or [])
     return response.json({"url": url}, status=201)
 
 
