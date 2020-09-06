@@ -10,9 +10,9 @@ An API to programatically generate memes based solely on requested URLs.
 
 # Generating Images
 
-The API is stateless so URLs contain all the information necessary to generate meme images. For example, https://api.memegen.link/images/buzz/memes/memes_everywhere.jpg produces:
+The API is stateless so URLs contain all the information necessary to generate meme images. For example, https://api.memegen.link/images/buzz/memes/memes_everywhere.png produces:
 
-![Sample Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.jpg?&height=400)
+![Sample Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&height=400)
 
 ## Special Characters
 
@@ -31,9 +31,9 @@ Reserved URL characters can be escaped:
 * tilde + S (`~s`) → slash (`/`)
 * 2 single qutoes (`''`) → double quote (`"`)
 
-For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.jpg produces:
+For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
 
-![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.jpg?&height=400)
+![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&height=400)
 
 ## Alternate Styles
 
@@ -47,17 +47,19 @@ For example, these are two styles provided by the https://api.memegen.link/templ
 
 ## Custom Backgrounds
 
-You can also use your own image URL as the background. For example, https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.jpg produces:
+You can also use your own image URL as the background. For example, https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png produces:
 
-![Custom Background](https://api.memegen.link/images/custom/_/my_background.jpg?background=http://www.gstatic.com/webp/gallery/1.jpg&height=400)
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&height=400)
 
 ## Image Sizing
 
 Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
 
-For example, https://api.memegen.link/images/both/width_or_height/why_not_both~q.jpg?height=350&width=600 produces:
+For example, https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600 produces:
 
-![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.jpg?height=350&width=600)
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600)
+
+Clients can also request `.jpg` instead of `.png` for smaller files.
 
 # API Documentation
 
