@@ -4,7 +4,7 @@ from .. import utils
 
 LINES_SLUG = [
     (["hello world"], "hello_world"),
-    (["?%#/"], "~q~p~h~s"),
+    (["?%#/&"], "~q~p~h~s~a"),
     (["a/b", "c"], "a~sb/c"),
     (["variable_name"], "variable__name"),
     (["variable-name"], "variable--name"),

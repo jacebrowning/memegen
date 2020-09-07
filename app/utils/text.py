@@ -7,12 +7,19 @@ def encode(lines: List[str]) -> str:
     for line in lines:
         if line:
             encoded = line
-            encoded = encoded.replace("_", "__").replace("-", "--")
-            encoded = encoded.replace(" ", "_")
-            encoded = encoded.replace("?", "~q").replace("%", "~p").replace("#", "~h")
-            encoded = encoded.replace('"', "''")
-            encoded = encoded.replace("/", "~s")
-            encoded = encoded.replace("\n", "~n")
+            for before, after in [
+                ("_", "__"),
+                ("-", "--"),
+                (" ", "_"),
+                ("?", "~q"),
+                ("%", "~p"),
+                ("#", "~h"),
+                ('"', "''"),
+                ("/", "~s"),
+                ("\n", "~n"),
+                ("&", "~a"),
+            ]:
+                encoded = encoded.replace(before, after)
             encoded_lines.append(encoded)
         else:
             encoded_lines.append("_")
@@ -32,12 +39,14 @@ def decode(slug: str) -> List[str]:
     if has_arrow:
         slug = slug.replace("- >", " ->")
 
-    slug = (
-        slug.replace("~q", "?")
-        .replace("~p", "%")
-        .replace("~h", "#")
-        .replace("~n", "\n")
-    )
+    for before, after in [
+        ("~q", "?"),
+        ("~p", "%"),
+        ("~h", "#"),
+        ("~n", "\n"),
+        ("~a", "&"),
+    ]:
+        slug = slug.replace(before, after)
 
     lines = slug.split("/")
     lines = [line.replace("~s", "/") for line in lines]
