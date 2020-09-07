@@ -16,7 +16,7 @@ httptools==0.1.1
 httpx==0.11.1
 hyperframe==5.2.0
 idna==2.10
-minilog==2.0b1
+minilog==2.0b2
 multidict==4.7.6
 parse==1.17.0
 pillow==7.2.0

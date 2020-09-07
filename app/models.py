@@ -137,11 +137,12 @@ class Template:
         app: Sanic,
         text_lines: List[str],
         *,
+        extension: str = "",
         background: str = "",
         external: bool = False,
     ):
         url = app.url_for(
-            f"images.text_{settings.DEFAULT_EXT}",
+            f"images.text_{extension or settings.DEFAULT_EXT}",
             template_key="custom" if self.key == "_custom" else self.key,
             text_paths=utils.text.encode(text_lines),
             _external=True,

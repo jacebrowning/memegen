@@ -22,7 +22,10 @@ async def index(request):
 
 @blueprint.post("/")
 @doc.summary("Create a meme from a template")
-@doc.consumes(doc.JsonBody({"template_key": str, "text_lines": [str]}), location="body")
+@doc.consumes(
+    doc.JsonBody({"template_key": str, "text_lines": [str], "extension": str}),
+    location="body",
+)
 async def create(request):
     if request.form:
         payload = dict(request.form)
@@ -39,7 +42,11 @@ async def create(request):
         return response.json({"error": '"template_key" is required'}, status=400)
 
     template = models.Template.objects.get(template_key)
-    url = template.build_custom_url(request.app, payload.get("text_lines") or [])
+    url = template.build_custom_url(
+        request.app,
+        payload.get("text_lines") or [],
+        extension=payload.get("extension"),
+    )
     return response.json({"url": url}, status=201)
 
 
