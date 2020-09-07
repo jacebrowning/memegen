@@ -30,7 +30,10 @@ async def detail(request, key):
 
 @blueprint.post("/custom")
 @doc.summary("Create a meme from any image")
-@doc.consumes(doc.JsonBody({"image_url": str, "text_lines": [str]}), location="body")
+@doc.consumes(
+    doc.JsonBody({"image_url": str, "text_lines": [str], "extension": str}),
+    location="body",
+)
 async def custom(request):
     if request.form:
         payload = dict(request.form)
@@ -43,13 +46,14 @@ async def custom(request):
         request.app,
         payload.get("text_lines") or [],
         background=payload["image_url"],
+        extension=payload.get("extension", ""),
     )
     return response.json({"url": url}, status=201)
 
 
 @blueprint.post("/<key>")
 @doc.summary("Create a meme from a template")
-@doc.consumes(doc.JsonBody({"text_lines": [str]}), location="body")
+@doc.consumes(doc.JsonBody({"text_lines": [str], "extension": str}), location="body")
 async def build(request, key):
     if request.form:
         payload = dict(request.form)
@@ -59,5 +63,9 @@ async def build(request, key):
         payload = request.json
 
     template = Template.objects.get(key)
-    url = template.build_custom_url(request.app, payload.get("text_lines") or [])
+    url = template.build_custom_url(
+        request.app,
+        payload.get("text_lines") or [],
+        extension=payload.get("extension"),
+    )
     return response.json({"url": url}, status=201)
