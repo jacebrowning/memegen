@@ -38,6 +38,16 @@ async def test(request):
     return response.html(content)
 
 
+@app.get("/favicon.ico")
+async def favicon(request):
+    return await response.file("app/static/favicon.ico")
+
+
+@app.middleware("response")
+async def set_cache_control(request, response):
+    response.headers["Cache-Control"] = "public, max-age=86400"
+
+
 if __name__ == "__main__":
     log.reset()
     log.silence("asyncio", "datafiles", allow_warning=True)
