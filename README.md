@@ -1,4 +1,4 @@
-# memegen.link
+# api.memegen.link
 
 An API to programatically generate memes based solely on requested URLs.
 
