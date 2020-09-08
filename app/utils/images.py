@@ -4,7 +4,7 @@ import hashlib
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterator, List, Tuple
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 from .. import settings
 from ..types import Dimensions, Offset, Point
@@ -28,7 +28,7 @@ def save(
     fingerprint = hashlib.sha1(variant.encode()).hexdigest()
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
-    if path.exists():
+    if path.exists() and not settings.DEBUG:
         return path
 
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -43,6 +43,7 @@ def render_image(
     template: Template, style: str, lines: List[str], size: Dimensions
 ) -> Image:
     background = Image.open(template.get_image(style)).convert("RGB")
+    background = ImageOps.exif_transpose(background)
 
     pad = all(size)
     image = resize_image(background, *size, pad)
