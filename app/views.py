@@ -39,6 +39,7 @@ async def test(request):
 
 
 @app.get("/favicon.ico")
+@doc.exclude(True)
 async def favicon(request):
     return await response.file("app/static/favicon.ico")
 
