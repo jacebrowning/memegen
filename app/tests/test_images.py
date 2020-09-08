@@ -88,6 +88,13 @@ async def test_custom_template(images):
     utils.images.save(template, ["", "My Custom Template"], directory=images)
 
 
+@pytest.mark.asyncio
+async def test_custom_template_with_exif_rotation(images):
+    url = "https://cdn.discordapp.com/attachments/752902976322142218/752903391281283152/20200608_111430.jpg"
+    template = await models.Template.create(url)
+    utils.images.save(template, ["", "This should not be rotated!"], directory=images)
+
+
 def test_unknown_template(images):
     template = models.Template.objects.get("_error")
     utils.images.save(template, ["UNKNOWN TEMPLATE"], directory=images)
