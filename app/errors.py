@@ -18,6 +18,8 @@ class BugsnagErrorHandler(ErrorHandler):
         return super().default(request, exception)
 
     def _should_report(self, exception) -> bool:
-        return settings.BUGSNAG_API_KEY is not None and (
-            isinstance(exception, (NotFound, MethodNotSupported))
-        )
+        if not settings.BUGSNAG_API_KEY:
+            return False
+        if isinstance(exception, (NotFound, MethodNotSupported)):
+            return False
+        return True
