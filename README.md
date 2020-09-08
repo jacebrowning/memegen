@@ -1,4 +1,4 @@
-# api.memegen.link
+# memegen.link
 
 An API to programatically generate memes based solely on requested URLs.
 
@@ -12,7 +12,7 @@ An API to programatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, https://api.memegen.link/images/buzz/memes/memes_everywhere.png produces:
 
-![Sample Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&height=400)
+![Sample Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&width=600)
 
 ## Special Characters
 
@@ -29,11 +29,11 @@ Reserved URL characters can be escaped:
 * tilde + P (`~p`) → percentage (`%`)
 * tilde + H (`~h`) → hashtag/pound (`#`)
 * tilde + S (`~s`) → slash (`/`)
-* 2 single qutoes (`''`) → double quote (`"`)
+* 2 single quotes (`''`) → double quote (`"`)
 
 For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
 
-![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&height=400)
+![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&width=600)
 
 ## Alternate Styles
 
@@ -43,13 +43,13 @@ For example, these are two styles provided by the https://api.memegen.link/templ
 
 `/images/ds.png`             |  `/images/ds.png?style=maga`
 :-------------------------:|:-------------------------:
-![](https://api.memegen.link/images/ds.png?width=200)  |  ![](https://api.memegen.link/images/ds.png?style=maga&width=200)
+![](https://api.memegen.link/images/ds.png?width=280)  |  ![](https://api.memegen.link/images/ds.png?style=maga&width=280)
 
 ## Custom Backgrounds
 
 You can also use your own image URL as the background. For example, https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png produces:
 
-![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&height=400)
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=600)
 
 ## Image Sizing
 
