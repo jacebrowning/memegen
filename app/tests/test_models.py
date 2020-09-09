@@ -33,14 +33,20 @@ def describe_text():
 
 
 def describe_template():
+    @pytest.fixture
+    def template():
+        return Template.objects.get("_test")
+
+    def describe_str():
+        def it_includes_the_path(expect, template):
+            expect(str(template)).endswith("/memegen/templates/_test")
+
     def describe_text():
-        def it_defaults_to_two_lines(expect):
-            template = Template.objects.get("_test")
+        def it_defaults_to_two_lines(expect, template):
             expect(template.text) == [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
 
     def describe_image():
-        def it_has_generic_extension_when_absent(expect):
-            template = Template.objects.get("_test")
+        def it_has_generic_extension_when_absent(expect, template):
             expect(template.image) == Path.cwd() / "templates" / "_test" / "default.img"
 
         def it_creates_template_directory_automatically(expect):
@@ -66,7 +72,13 @@ def describe_template():
             expect(template.image.exists()) == True
 
         @pytest.mark.asyncio
-        async def it_handles_invalid_urls(expect):
+        async def it_handles_misssing_urls(expect):
             url = "http://example.com/does_not_exist.png"
+            template = await Template.create(url)
+            expect(template.image.exists()) == False
+
+        @pytest.mark.asyncio
+        async def it_handles_invalid_urls(expect):
+            url = "http://127.0.0.1/does_not_exist.png"
             template = await Template.create(url)
             expect(template.image.exists()) == False

@@ -28,7 +28,7 @@ def save(
     fingerprint = hashlib.sha1(variant.encode()).hexdigest()
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
-    if path.exists() and not settings.DEBUG:
+    if path.exists() and settings.DEPLOYED:
         return path
 
     path.parent.mkdir(parents=True, exist_ok=True)

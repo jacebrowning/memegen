@@ -11,7 +11,7 @@ bugsnag.configure(
 )
 
 
-class BugsnagErrorHandler(ErrorHandler):
+class BugsnagErrorHandler(ErrorHandler):  # pragma: no cover
     def default(self, request, exception):
         if self._should_report(exception):
             bugsnag.notify(exception, meta_data={"request": request.url})
