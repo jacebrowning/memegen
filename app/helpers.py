@@ -30,7 +30,7 @@ def configure(app):
     app.blueprint(api.templates.blueprint)
     app.blueprint(api.shortcuts.blueprint)
 
-    CORS(app, resources={"/images/*": {"origins": "*"}})
+    CORS(app)
     app.error_handler = errors.BugsnagErrorHandler()
 
 

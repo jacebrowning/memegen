@@ -46,10 +46,11 @@ async def favicon(request):
 
 @app.middleware("response")
 async def set_cache_control(request, response):
-    if "image" in response.content_type:
-        response.headers["Cache-Control"] = "public, max-age=86400"
-    elif "json" in response.content_type:
-        response.headers["Cache-Control"] = "public, max-age=3600"
+    if response.content_type:
+        if "image" in response.content_type:
+            response.headers["Cache-Control"] = "public, max-age=86400"
+        elif "json" in response.content_type:
+            response.headers["Cache-Control"] = "public, max-age=3600"
 
 
 if __name__ == "__main__":
