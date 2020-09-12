@@ -93,6 +93,10 @@ watch: install
 ###############################################################################
 # Delivery Tasks
 
+.PHONY: run-production
+run-production: install
+	poetry run heroku local
+
 .PHONY: promote
 promote: install
 	SITE=https://staging-api.memegen.link poetry run pytest scripts --verbose --no-cov
