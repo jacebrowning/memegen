@@ -170,7 +170,7 @@ python-versions = "*"
 version = "0.1.3"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Composable command line interface toolkit"
 name = "click"
 optional = false
@@ -280,7 +280,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.9.2"
+version = "2020.9.9"
 
 [[package]]
 category = "main"
@@ -428,7 +428,7 @@ description = "Minimalistic wrapper for Python logging."
 name = "minilog"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "2.0b2"
+version = "2.0"
 
 [[package]]
 category = "dev"
@@ -488,7 +488,7 @@ description = "parse() is the opposite of format()"
 name = "parse"
 optional = false
 python-versions = "*"
-version = "1.17.0"
+version = "1.18.0"
 
 [[package]]
 category = "dev"
@@ -602,7 +602,7 @@ marker = "python_version >= \"3.4\""
 name = "pygments"
 optional = false
 python-versions = ">=3.5"
-version = "2.6.1"
+version = "2.7.0"
 
 [[package]]
 category = "dev"
@@ -626,7 +626,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = ">=3.5"
-version = "6.0.1"
+version = "6.0.2"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -897,7 +897,7 @@ marker = "python_version >= \"3.4\""
 name = "traitlets"
 optional = false
 python-versions = ">=3.7"
-version = "5.0.3"
+version = "5.0.4"
 
 [package.dependencies]
 ipython-genutils = "*"
@@ -928,7 +928,7 @@ marker = "sys_platform != \"win32\" and implementation_name == \"cpython\""
 name = "ujson"
 optional = false
 python-versions = ">=3.5"
-version = "3.1.0"
+version = "3.2.0"
 
 [[package]]
 category = "main"
@@ -945,8 +945,26 @@ socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [[package]]
 category = "main"
+description = "The lightning-fast ASGI server."
+name = "uvicorn"
+optional = false
+python-versions = "*"
+version = "0.11.8"
+
+[package.dependencies]
+click = ">=7.0.0,<8.0.0"
+h11 = ">=0.8,<0.10"
+httptools = ">=0.1.0,<0.2.0"
+uvloop = ">=0.14.0"
+websockets = ">=8.0.0,<9.0.0"
+
+[package.extras]
+watchgodreload = ["watchgod (>=0.6,<0.7)"]
+
+[[package]]
+category = "main"
 description = "Fast implementation of asyncio event loop on top of libuv"
-marker = "sys_platform != \"win32\" and implementation_name == \"cpython\""
+marker = "sys_platform != \"win32\" and implementation_name == \"cpython\" or sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\""
 name = "uvloop"
 optional = false
 python-versions = "*"
@@ -1016,8 +1034,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "44f6276da69e020d37e773f93501f0bf67978db209a920325509e971b7d10284"
-lock-version = "1.0"
+content-hash = "04a7317eb39db8e110765d197fc9b9b5b7a93223e23b97d49bff6222a0a77eae"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1165,8 +1182,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.9.2-py3-none-any.whl", hash = "sha256:0ecd9557e863fb2f9c7a82617a69e961bc0d287fe9c0d906f613647a8b2f9e57"},
-    {file = "hstspreload-2020.9.2.tar.gz", hash = "sha256:aa0b230cb39a2b407310a7fe18b07539bb1b9bc8aa6f042b4473d6e00f381758"},
+    {file = "hstspreload-2020.9.9-py3-none-any.whl", hash = "sha256:dcaa0cdc68e3cc581817c72adb5e9dacc992574397e01c9bab66759d41af72f5"},
+    {file = "hstspreload-2020.9.9.tar.gz", hash = "sha256:61bcfe25cd4c97f014292576863fe142e962fbff6157ea567188a10341b134ef"},
 ]
 httptools = [
     {file = "httptools-0.1.1-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:a2719e1d7a84bb131c4f1e0cb79705034b48de6ae486eb5297a139d6a3296dce"},
@@ -1218,8 +1235,8 @@ jedi = [
     {file = "jedi-0.17.2.tar.gz", hash = "sha256:86ed7d9b750603e4ba582ea8edc678657fb4007894a12bcf6f4bb97892f31d20"},
 ]
 minilog = [
-    {file = "minilog-2.0b2-py3-none-any.whl", hash = "sha256:3a9c0e808ad1647279b56dd7fe4ff4fff2fd7db99b736e43f9f4375f18cab983"},
-    {file = "minilog-2.0b2.tar.gz", hash = "sha256:83a9790e4c7bbc9c8bf7bfe81dcbfe66a3e892d683901a9b223c3d1848b43d1a"},
+    {file = "minilog-2.0-py3-none-any.whl", hash = "sha256:891ad346bdd63aee4c210faa688497f7ba412cf52a54fb6cba6bf511a34a5138"},
+    {file = "minilog-2.0.tar.gz", hash = "sha256:58499302bca86cf507eb3c3dfa3853de9389bfde275ba5155bdc3b4551175918"},
 ]
 more-itertools = [
     {file = "more-itertools-8.5.0.tar.gz", hash = "sha256:6f83822ae94818eae2612063a5101a7311e68ae8002005b5e05f03fd74a86a20"},
@@ -1269,7 +1286,7 @@ packaging = [
     {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
 ]
 parse = [
-    {file = "parse-1.17.0.tar.gz", hash = "sha256:c7806139a481ec8c8336a54418894c8b201314f8ecc63e55f438f4b72bdc4485"},
+    {file = "parse-1.18.0.tar.gz", hash = "sha256:91666032d6723dc5905248417ef0dc9e4c51df9526aaeef271eacad6491f06a4"},
 ]
 parso = [
     {file = "parso-0.7.1-py2.py3-none-any.whl", hash = "sha256:97218d9159b2520ff45eb78028ba8b50d2bc61dcc062a9682666f2dc4bd331ea"},
@@ -1341,8 +1358,8 @@ pyflakes = [
     {file = "pyflakes-2.2.0.tar.gz", hash = "sha256:35b2d75ee967ea93b55750aa9edbbf72813e06a66ba54438df2cfac9e3c27fc8"},
 ]
 pygments = [
-    {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
-    {file = "Pygments-2.6.1.tar.gz", hash = "sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44"},
+    {file = "Pygments-2.7.0-py3-none-any.whl", hash = "sha256:2df50d16b45b977217e02cba6c8422aaddb859f3d0570a88e09b00eafae89c6e"},
+    {file = "Pygments-2.7.0.tar.gz", hash = "sha256:2594e8fdb06fef91552f86f4fd3a244d148ab24b66042036e64f29a291515048"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
@@ -1352,8 +1369,8 @@ pyperclip = [
     {file = "pyperclip-1.8.0.tar.gz", hash = "sha256:b75b975160428d84608c26edba2dec146e7799566aea42c1fe1b32e72b6028f2"},
 ]
 pytest = [
-    {file = "pytest-6.0.1-py3-none-any.whl", hash = "sha256:8b6007800c53fdacd5a5c192203f4e531eb2a1540ad9c752e052ec0f7143dbad"},
-    {file = "pytest-6.0.1.tar.gz", hash = "sha256:85228d75db9f45e06e57ef9bf4429267f81ac7c0d742cc9ed63d09886a9fe6f4"},
+    {file = "pytest-6.0.2-py3-none-any.whl", hash = "sha256:0e37f61339c4578776e090c3b8f6b16ce4db333889d65d0efb305243ec544b40"},
+    {file = "pytest-6.0.2.tar.gz", hash = "sha256:c8f57c2a30983f469bf03e68cdfa74dc474ce56b8f280ddcb080dfd91df01043"},
 ]
 pytest-asyncio = [
     {file = "pytest-asyncio-0.14.0.tar.gz", hash = "sha256:9882c0c6b24429449f5f969a5158b528f39bde47dc32e85b9f0403965017e700"},
@@ -1484,8 +1501,8 @@ tomlkit = [
     {file = "tomlkit-0.5.11.tar.gz", hash = "sha256:f044eda25647882e5ef22b43a1688fb6ab12af2fc50e8456cdfc751c873101cf"},
 ]
 traitlets = [
-    {file = "traitlets-5.0.3-py3-none-any.whl", hash = "sha256:8bdadb17a04c844f444cdefaa3dee47a12ff14cf6277b9eeda29bfa0659d5987"},
-    {file = "traitlets-5.0.3.tar.gz", hash = "sha256:a2e91709a0330b6c5d497ed470b2feb1ed8da5c9dd807c6daab41f727b9391c9"},
+    {file = "traitlets-5.0.4-py3-none-any.whl", hash = "sha256:9664ec0c526e48e7b47b7d14cd6b252efa03e0129011de0a9c1d70315d4309c3"},
+    {file = "traitlets-5.0.4.tar.gz", hash = "sha256:86c9351f94f95de9db8a04ad8e892da299a088a64fd283f9f6f18770ae5eae1b"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:73d785a950fc82dd2a25897d525d003f6378d1cb23ab305578394694202a58c3"},
@@ -1516,27 +1533,35 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
 ]
 ujson = [
-    {file = "ujson-3.1.0-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:585329c16eeb0992308545c7a05eee76c7f1c2042b08317aac64fef1e71e71a9"},
-    {file = "ujson-3.1.0-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:d40d53aa679994624960b1c40bc451c5d9e3a0779f6a04146b417e220ce8f7d4"},
-    {file = "ujson-3.1.0-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:b794a2ddba049daa1fe0f28c4652b54d0d06580e7d3bcae87b4c000fb242654f"},
-    {file = "ujson-3.1.0-cp35-cp35m-win_amd64.whl", hash = "sha256:0789837e7156e07890f2461ec1d9dc2ea4ef7c76fd36e46955d811485daf83b9"},
-    {file = "ujson-3.1.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:f6e229fa9b7d8586f894d18a003703fea4620ff8e6d39c11499755ecec5b43fc"},
-    {file = "ujson-3.1.0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:ebe1bc9536b93c697f042b6c39ed602ad7edd5ef139eb167d9c8e36594b24546"},
-    {file = "ujson-3.1.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:6a2fac9892996c3a46bd3fd8bbf739f19f85fc7ec9cdc11b014f76267c3ee76d"},
-    {file = "ujson-3.1.0-cp36-cp36m-win_amd64.whl", hash = "sha256:083778f4e64f90b4468e73e0baafcde0ab83bff85315d28a5b1287a3f5909e7f"},
-    {file = "ujson-3.1.0-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:d3f28f64b33609be20f985baa72d43ccfdf87e50d47ca2791d26b9c2f348a35b"},
-    {file = "ujson-3.1.0-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:3a049acf176dacbb79ee00b13a78fc2524c35c69400e34aa5f6ff0fc3fdbb1f0"},
-    {file = "ujson-3.1.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:c2be0d511e5dc302f190e510544c4d5fbbb4396632abe33b66e28dad26ea4325"},
-    {file = "ujson-3.1.0-cp37-cp37m-win_amd64.whl", hash = "sha256:7e7cdd8a42428cd2716cfe0a506e57168c6a02b8032478209cb4a8a12b8c2c4e"},
-    {file = "ujson-3.1.0-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:a8194b778adf38ad679c62e2bb6cf71972ae91102e611e4bb31f625be6fb366a"},
-    {file = "ujson-3.1.0-cp38-cp38-manylinux1_i686.whl", hash = "sha256:0184ed23618ce3d793aaf9f5b3dd456cf719b930d3936fb39000589ed0bd2811"},
-    {file = "ujson-3.1.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:8032ca897cfce113cb9ca7f07ff4c750afe18c605eeed2e09cf9b882c99fc76b"},
-    {file = "ujson-3.1.0-cp38-cp38-win_amd64.whl", hash = "sha256:bf30ac68d8b2aed665589cfd3608e43d8cd6cb74cd5a9379ab9af9861c33a8be"},
-    {file = "ujson-3.1.0.tar.gz", hash = "sha256:00bda1de275ed6fe81817902189c75dfd156b4fa29b44dc1f4620775d2f50cf7"},
+    {file = "ujson-3.2.0-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:437e051a3e292ddbd5b4682f9b6c3e2ea4cd059d0d75bc9f8314349d63cbb015"},
+    {file = "ujson-3.2.0-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:a27ea44406100a97fb0fcc0b18dcdaf324824e722a00856a2992fafc65779351"},
+    {file = "ujson-3.2.0-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:6f7c24dabb0ff0ff43744d18211af6035ef37197f530c13edf704e627da7251d"},
+    {file = "ujson-3.2.0-cp35-cp35m-manylinux2014_aarch64.whl", hash = "sha256:5ae6f599ef7c01ef626697f9e15e9d4e2a186ab4c0593ddb529b86866b562efb"},
+    {file = "ujson-3.2.0-cp35-cp35m-win_amd64.whl", hash = "sha256:59048958793e0b0489449a414e2fbe54644457be1dd882b99a4fe16158632af1"},
+    {file = "ujson-3.2.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:a476525862a394018a7a3438c86596815b84518b2744184444fc6f8b0e3e4aee"},
+    {file = "ujson-3.2.0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:2050c7f1ce72055f1b6fba29e4694ccf4509917d3be3ed6f3543ef3ff00eec4a"},
+    {file = "ujson-3.2.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:fda324ca055e671eae46e8fc32b46fab20eb251d3e6e22beb67f71f1d240b0b4"},
+    {file = "ujson-3.2.0-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:0bdc62a1543d697e9c649ac0ac41e0d076a7b886d6b45f9f21971e25b90a2b27"},
+    {file = "ujson-3.2.0-cp36-cp36m-win_amd64.whl", hash = "sha256:d0ad63fc88d4e4cb7630f59aacd742256804a4cee447e9589e55957107a469b7"},
+    {file = "ujson-3.2.0-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:66d47eabb4f0e12b5784b1a49c59bc6f32e91e18e02f2a43c5e91e2f6ad9cc60"},
+    {file = "ujson-3.2.0-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:253edfe274538bb1060ab8877d51fc75e416047d5fab5340454a48b971f30612"},
+    {file = "ujson-3.2.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:6ee651c0210a67e3a72367de53ccac83b623913214e7c75015caadfad2b7e0dc"},
+    {file = "ujson-3.2.0-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:0784f35f2ace41ed55c435ee11f9d9877cf3e6ff03c8850f87504cb93e9a9469"},
+    {file = "ujson-3.2.0-cp37-cp37m-win_amd64.whl", hash = "sha256:812748c8de041f1ef5e9b37f33121c0c7390055fa5f12215b3d06a63b1c055a2"},
+    {file = "ujson-3.2.0-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:17460d88dd4b9630e449e5d29b97301e6dbbbedbf46a6f95f3b2cb7e1333e6ea"},
+    {file = "ujson-3.2.0-cp38-cp38-manylinux1_i686.whl", hash = "sha256:2d50cb3d87d4aabe6dbeb6ef79025bf9fdf350c4355c24819dc5c5cc38bad3dc"},
+    {file = "ujson-3.2.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:7060105de892cada2f01bd072d33b2421b4eefd32536207c1c9f2ade18656139"},
+    {file = "ujson-3.2.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:7b6496b3e2bc396628f114fd96ec41655b10c84adececc0ef8cf1c2329dae36c"},
+    {file = "ujson-3.2.0-cp38-cp38-win_amd64.whl", hash = "sha256:782bdf016da793a3bf138e50ed973428e59006b8d73a9e1911bc6207c6b79fff"},
+    {file = "ujson-3.2.0.tar.gz", hash = "sha256:abb1996ba1c1d2faf5b1e38efa97da7f64e5373a31f705b96fe0587f5f778db4"},
 ]
 urllib3 = [
     {file = "urllib3-1.25.10-py2.py3-none-any.whl", hash = "sha256:e7983572181f5e1522d9c98453462384ee92a0be7fac5f1413a1e35c56cc0461"},
     {file = "urllib3-1.25.10.tar.gz", hash = "sha256:91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a"},
+]
+uvicorn = [
+    {file = "uvicorn-0.11.8-py3-none-any.whl", hash = "sha256:4b70ddb4c1946e39db9f3082d53e323dfd50634b95fd83625d778729ef1730ef"},
+    {file = "uvicorn-0.11.8.tar.gz", hash = "sha256:46a83e371f37ea7ff29577d00015f02c942410288fb57def6440f2653fff1d26"},
 ]
 uvloop = [
     {file = "uvloop-0.14.0-cp35-cp35m-macosx_10_11_x86_64.whl", hash = "sha256:08b109f0213af392150e2fe6f81d33261bb5ce968a288eb698aad4f46eb711bd"},
