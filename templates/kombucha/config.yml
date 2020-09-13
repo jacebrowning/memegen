@@ -1,0 +1,22 @@
+name: Kombucha Girl
+source: https://www.buzzfeed.com/daniellaemanuel/woman-trying-kombucha-meme
+text:
+  - color: black
+    style: none
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.3
+  - color: black
+    style: none
+    anchor_x: 0.5125
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.4875
+    scale_y: 0.3
+styles:
+  - default
+sample:
+  - Trying a thing.
+  - Trying a thing again.

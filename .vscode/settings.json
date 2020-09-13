@@ -16,5 +16,12 @@
   "python.linting.lintOnSave": true,
   "python.linting.mypyEnabled": true,
   "editor.formatOnSave": true,
-  "cSpell.words": ["CIRCLECI", "aiofiles", "aiohttp", "jsonify", "sanic"]
+  "cSpell.words": [
+    "CIRCLECI",
+    "Kombucha",
+    "aiofiles",
+    "aiohttp",
+    "jsonify",
+    "sanic"
+  ]
 }
