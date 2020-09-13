@@ -39,6 +39,9 @@ endif
 .PHONY: clean
 clean:
 	rm -rf images templates-legacy templates/_custom-* tests/images
+
+.PHONY: clean-all
+clean-all: clean
 	rm -rf *.egg-info .venv
 
 ###############################################################################
@@ -99,6 +102,6 @@ run-production: install
 
 .PHONY: promote
 promote: install
-	SITE=https://staging-api.memegen.link poetry run pytest scripts --verbose --no-cov
+	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov
 	heroku pipelines:promote --app memegen-link-api-staging --to memegen-link-api
-	SITE=https://api.memegen.link poetry run pytest scripts --verbose --no-cov
+	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov
