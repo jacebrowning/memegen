@@ -29,12 +29,17 @@ def save(
     fingerprint = hashlib.sha1(variant.encode()).hexdigest()
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
-    if path.exists() and settings.DEPLOYED:
-        logger.info(f"Found meme {slug} at {path}")
-        return path
-
-    logger.info(f"Saving meme {slug} to {path}")
-    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        if settings.DEPLOYED:
+            logger.info(f"Found meme at {path}")
+            return path
+        logger.debug(f"Found meme at {path}")
+    else:
+        if settings.DEPLOYED:
+            logger.info(f"Saving meme to {path}")
+        else:
+            logger.debug(f"Saving meme to {path}")
+        path.parent.mkdir(parents=True, exist_ok=True)
 
     image = render_image(template, style, lines, size)
     image.save(path, quality=95)
