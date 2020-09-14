@@ -102,7 +102,7 @@ class Template:
                 f"images.blank_{settings.DEFAULT_EXT}",
                 template_key=self.key,
                 _external=True,
-                _scheme="https" if settings.DEPLOYED else "http",
+                _scheme=settings.SCHEME,
             ),
             "sample": self.build_sample_url(app),
             "source": self.source,
@@ -114,7 +114,7 @@ class Template:
             "templates.detail",
             key=self.key,
             _external=True,
-            _scheme="https" if settings.DEPLOYED else "http",
+            _scheme=settings.SCHEME,
         )
 
     def build_sample_url(
@@ -130,7 +130,7 @@ class Template:
             "_external": external,
         }
         if external:
-            kwargs["_scheme"] = "https" if settings.DEPLOYED else "http"
+            kwargs["_scheme"] = settings.SCHEME
         return app.url_for(view_name, **kwargs)
 
     def build_custom_url(
@@ -147,7 +147,7 @@ class Template:
             template_key="custom" if self.key == "_custom" else self.key,
             text_paths=utils.text.encode(text_lines),
             _external=True,
-            _scheme="https" if settings.DEPLOYED else "http",
+            _scheme=settings.SCHEME,
         )
         if background:
             url += "?background=" + background

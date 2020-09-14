@@ -1,5 +1,6 @@
 from typing import Dict, List, Tuple
 
+from cachetools import cached
 from sanic_cors import CORS
 from sanic_openapi import swagger_blueprint
 
@@ -10,7 +11,7 @@ from .models import Template
 def configure(app):
     app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.API_BASEPATH = "/"
-    app.config.API_SCHEMES = ["https"] if settings.DEPLOYED else ["http", "https"]
+    app.config.API_SCHEMES = [settings.SCHEME]
     app.config.API_VERSION = "6.1"
     app.config.API_TITLE = "Memegen API"
     app.config.API_CONTACT_EMAIL = "support@maketested.com"
@@ -34,11 +35,13 @@ def configure(app):
     app.error_handler = errors.BugsnagErrorHandler()
 
 
+@cached({}, key=lambda _: settings.SERVER_NAME)
 def get_valid_templates(request) -> List[Dict]:
     templates = Template.objects.filter(valid=True)
     return [t.jsonify(request.app) for t in templates]
 
 
+@cached({}, key=lambda _: settings.SERVER_NAME)
 def get_sample_images(request) -> List[Tuple[str, str]]:
     return [
         (template.build_sample_url(request.app), template.build_self_url(request.app))
