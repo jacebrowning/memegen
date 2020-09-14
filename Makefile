@@ -97,8 +97,13 @@ watch: install
 # Delivery Tasks
 
 .PHONY: run-production
-run-production: install
-	poetry run heroku local
+run-production: install .env
+	poetry run heroku local --showenvs
+
+.env:
+	echo WEB_CONCURRENCY=2 >> $@
+	echo MAX_REQUESTS=0 >> $@
+	echo MAX_REQUESTS_JITTER=0 >> $@
 
 .PHONY: promote
 promote: install

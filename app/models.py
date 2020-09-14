@@ -159,10 +159,10 @@ class Template:
         template = cls.objects.get_or_create(key, url)
 
         if template.image.exists() and not settings.DEBUG:
-            logger.info(f"Found {url} at {template.image}")
+            logger.info(f"Found background {url} at {template.image}")
             return template
 
-        logger.info(f"Saving {url} to {template.image}")
+        logger.info(f"Saving background {url} to {template.image}")
         async with aiohttp.ClientSession() as session:
             try:
                 async with session.get(url) as response:

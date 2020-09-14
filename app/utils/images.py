@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Iterator, List, Tuple
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from sanic.log import logger
 
 from .. import settings
 from ..types import Dimensions, Offset, Point
@@ -29,8 +30,10 @@ def save(
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
     if path.exists() and settings.DEPLOYED:
+        logger.info(f"Found meme {slug} at {path}")
         return path
 
+    logger.info(f"Saving meme {slug} to {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
 
     image = render_image(template, style, lines, size)
