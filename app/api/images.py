@@ -97,7 +97,14 @@ async def render_image(
 ):
     status = 200
 
-    if key == "custom":
+    if len(slug) > 200:
+        logger.error(f"Slug too long: {slug}")
+        slug = slug[:50] + "..."
+        template = models.Template.objects.get("_error")
+        style = "default"
+        status = 414
+
+    elif key == "custom":
         style = "default"
         url = request.args.get("background") or request.args.get("alt")
         if url:
@@ -110,6 +117,7 @@ async def render_image(
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
             status = 422
+
     else:
         template = models.Template.objects.get_or_none(key)
         if not template:

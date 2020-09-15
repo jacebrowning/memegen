@@ -130,6 +130,12 @@ def describe_image_detail():
         expect(response.status) == 404
         expect(response.headers["content-type"]) == "image/png"
 
+    def it_rejects_extremely_long_urls(expect, client):
+        text = "test-" * 50
+        request, response = client.get(f"/images/fry/{text}.jpg")
+        expect(response.status) == 414
+        expect(response.headers["content-type"]) == "image/jpeg"
+
     def describe_styles():
         @pytest.mark.slow
         def it_supports_alternate_styles(expect, client):
