@@ -37,7 +37,7 @@ def configure(app):
 
 @cached({}, key=lambda _: settings.SERVER_NAME)
 def get_valid_templates(request) -> List[Dict]:
-    templates = Template.objects.filter(valid=True)
+    templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [t.jsonify(request.app) for t in templates]
 
 
@@ -45,7 +45,7 @@ def get_valid_templates(request) -> List[Dict]:
 def get_sample_images(request) -> List[Tuple[str, str]]:
     return [
         (template.build_sample_url(request.app), template.build_self_url(request.app))
-        for template in Template.objects.filter(valid=True)
+        for template in Template.objects.filter(valid=True, _exclude="_custom")
     ]
 
 

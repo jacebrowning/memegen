@@ -225,7 +225,7 @@ description = "File-based ORM for dataclasses."
 name = "datafiles"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.11.1"
+version = "0.12b1"
 
 [package.dependencies]
 PyYAML = ">=5.2,<6.0"
@@ -305,7 +305,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.9.9"
+version = "2020.9.15"
 
 [[package]]
 category = "main"
@@ -1059,7 +1059,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "75a961a4af5e841518da46665638b23e95fdcc7a4db78dc8528a2bcceebcfd2c"
+content-hash = "f5a678ef3ffa1a737a6107ac0f91313af5bf096105b9e37e752af246e05a24c6"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1188,8 +1188,8 @@ coveragespace = [
     {file = "coveragespace-3.1.1.tar.gz", hash = "sha256:c5862d04a91bec32fc7dd8487006922e144280dc05e75b26c38f4ffe4e760fb0"},
 ]
 datafiles = [
-    {file = "datafiles-0.11.1-py3-none-any.whl", hash = "sha256:6a587ac1d67ac51e7ef0c2efe08121927d079964d0ab9d8fad204fb560002dc1"},
-    {file = "datafiles-0.11.1.tar.gz", hash = "sha256:99e70b84394129a41f5faeb15e4e8b41ab07fd8abd39cd2733e6dce663ff59c0"},
+    {file = "datafiles-0.12b1-py3-none-any.whl", hash = "sha256:76121ebe019b4c2cf3a0d982ab4050e3cfb114a4fe4f89a3992f34ae311972ce"},
+    {file = "datafiles-0.12b1.tar.gz", hash = "sha256:0a2d9d3a856c37a87f3727e7b30f03e985a2546787fd0b3af43dd52eb6d8a68c"},
 ]
 decorator = [
     {file = "decorator-4.4.2-py2.py3-none-any.whl", hash = "sha256:41fa54c2a0cc4ba648be4fd43cff00aedf5b9465c9bf18d64325bc225f08f760"},
@@ -1215,8 +1215,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.9.9-py3-none-any.whl", hash = "sha256:dcaa0cdc68e3cc581817c72adb5e9dacc992574397e01c9bab66759d41af72f5"},
-    {file = "hstspreload-2020.9.9.tar.gz", hash = "sha256:61bcfe25cd4c97f014292576863fe142e962fbff6157ea567188a10341b134ef"},
+    {file = "hstspreload-2020.9.15-py3-none-any.whl", hash = "sha256:c09f02dd4b7e3953a8353836aea964b868b22905bdb6d8932ca4b273df0f820f"},
+    {file = "hstspreload-2020.9.15.tar.gz", hash = "sha256:059fc2ead7bb83ea9e85d06c1afc7112413f1d2a81e6448bd276af6bced035ac"},
 ]
 httptools = [
     {file = "httptools-0.1.1-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:a2719e1d7a84bb131c4f1e0cb79705034b48de6ae486eb5297a139d6a3296dce"},
