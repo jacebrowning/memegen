@@ -55,7 +55,7 @@ async def set_cache_control(request, response):
 
 if __name__ == "__main__":
     log.reset()
-    log.silence("asyncio", "datafiles", allow_warning=True)
+    log.silence("datafiles", allow_warning=True)
     app.run(
         host="0.0.0.0",
         port=settings.PORT,
