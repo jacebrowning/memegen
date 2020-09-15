@@ -9,11 +9,21 @@ def url():
     return os.getenv("SITE", "http://localhost:5000")
 
 
+def test_get_templates(expect, url):
+    response = requests.get(f"{url}/templates")
+    expect(response.status_code) == 200
+
+
 def test_post_images(expect, url):
     params = {"template_key": "iw", "text_lines": ["test", "deployment"]}
     response = requests.post(f"{url}/images", json=params)
     expect(response.status_code) == 201
     expect(response.json()["url"]).endswith("/images/iw/test/deployment.png")
+
+
+def test_get_samples(expect, url):
+    response = requests.get(f"{url}/samples")
+    expect(response.status_code) == 200
 
 
 def test_get_image(expect, url):
