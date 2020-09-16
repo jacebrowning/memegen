@@ -142,8 +142,12 @@ class Template:
         background: str = "",
         external: bool = False,
     ):
+        if extension in {"jpg", "png"}:
+            view_name = f"images.text_{extension}"
+        else:
+            view_name = f"images.text_{settings.DEFAULT_EXT}"
         url = app.url_for(
-            f"images.text_{extension or settings.DEFAULT_EXT}",
+            view_name,
             template_key="custom" if self.key == "_custom" else self.key,
             text_paths=utils.text.encode(text_lines),
             _external=True,
