@@ -19,10 +19,15 @@ httptools==0.1.1
 httpx==0.11.1
 hyperframe==5.2.0
 idna==2.10
+jinja2==2.11.2
+markdown==3.2.2
+markupsafe==1.1.1
 minilog==2.0
 multidict==4.7.6
 parse==1.18.0
 pillow==7.2.0
+pygments==2.7.0
+pymdown-extensions==8.0
 pyperclip==1.8.0
 pyyaml==5.3.1
 rfc3986==1.4.0
@@ -30,6 +35,7 @@ ruamel.yaml==0.16.12
 ruamel.yaml.clib==0.2.2; platform_python_implementation == "CPython" and python_version < "3.9"
 sanic==20.6.3
 sanic-cors==0.10.0.post3
+sanic-jinja2==0.8.0
 sanic-openapi==0.6.2
 sanic-plugins-framework==0.9.3
 six==1.15.0
