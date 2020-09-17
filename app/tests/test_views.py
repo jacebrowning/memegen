@@ -4,10 +4,10 @@ from .. import settings
 
 
 def describe_index():
-    def it_directs_to_docs(expect, client):
-        request, response = client.get("/", allow_redirects=False)
-        expect(response.status) == 302
-        expect(response.headers["Location"]) == "/docs"
+    def it_contains_the_readme(expect, client):
+        request, response = client.get("/")
+        expect(response.status) == 200
+        expect(response.text).contains("documentation is available here")
 
 
 def describe_samples():

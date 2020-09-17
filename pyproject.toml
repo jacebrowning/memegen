@@ -16,14 +16,22 @@ python = "^3.8"
 sanic = "~20.6.3"
 sanic-cors = "~0.10.0"
 sanic-openapi = "~0.6.2"
+sanic-jinja2 = "~0.8.0"
+
+# Markdown
+markdown = "^3.2.2"
+pymdown-extensions = "^8.0"
+pygments = "^2.7.0"
+
+# Images
+pillow = "^7.1.1"
+spongemock = "~0.3.4"
 
 # Utilities
 aiohttp = "^3.6.2"
 cachetools = "^4.1.1"
 datafiles = "~0.12b1"
 minilog = "^2.0"
-pillow = "^7.1.1"
-spongemock = "~0.3.4"
 
 # Production
 bugsnag = "*"
