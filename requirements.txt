@@ -26,7 +26,7 @@ minilog==2.0
 multidict==4.7.6
 parse==1.18.0
 pillow==7.2.0
-pygments==2.7.0
+pygments==2.7.1
 pymdown-extensions==8.0
 pyperclip==1.8.0
 pyyaml==5.3.1
