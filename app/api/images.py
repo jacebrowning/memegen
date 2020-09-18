@@ -97,7 +97,7 @@ async def render_image(
 ):
     status = 200
 
-    if len(slug) > 200:
+    if len(slug.encode()) > 200:
         logger.error(f"Slug too long: {slug}")
         slug = slug[:50] + "..."
         template = models.Template.objects.get("_error")
