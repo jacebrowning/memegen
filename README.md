@@ -75,5 +75,6 @@ Here are some sample clients to explore:
 | Hain | --- | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
 | Web | ---| Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes) |
 | Web, Slack | https://memecomplete.com | --- |
+| Discord | --- | https://github.com/parshsee/discordbot |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
