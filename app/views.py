@@ -22,6 +22,7 @@ async def index(request):
         Path("README.md").read_text(),
         extensions=["pymdownx.magiclink", "markdown.extensions.tables"],
     )
+    html = html.replace("<code></code>", "<code>&nbsp</code>")
     return {"content": html}
 
 

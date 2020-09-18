@@ -18,18 +18,18 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 In URLs, spaces can be inserted using underscores, dashes, or mixed case:
 
-* underscore (`_`) → space (` `)
-* dash (`-`) → space (` `)
-* 2 underscores (`__`) → underscore (`_`)
-* 2 dashes (`--`) → dash (`-`)
+-   underscore (`_`) → space (` `)
+-   dash (`-`) → space (` `)
+-   2 underscores (`__`) → underscore (`_`)
+-   2 dashes (`--`) → dash (`-`)
 
 Reserved URL characters can be escaped:
 
-* tilde + Q (`~q`) → question mark (`?`)
-* tilde + P (`~p`) → percentage (`%`)
-* tilde + H (`~h`) → hashtag/pound (`#`)
-* tilde + S (`~s`) → slash (`/`)
-* 2 single quotes (`''`) → double quote (`"`)
+-   tilde + Q (`~q`) → question mark (`?`)
+-   tilde + P (`~p`) → percentage (`%`)
+-   tilde + H (`~h`) → hashtag/pound (`#`)
+-   tilde + S (`~s`) → slash (`/`)
+-   2 single quotes (`''`) → double quote (`"`)
 
 For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
 
@@ -41,9 +41,9 @@ Some memes come in multiple forms, which can be selected via `?style=<style>`.
 
 For example, these are two styles provided by the https://api.memegen.link/templates/ds template:
 
-`/images/ds.png`             |  `/images/ds.png?style=maga`
-:-------------------------:|:-------------------------:
-![](https://api.memegen.link/images/ds.png?width=280)  |  ![](https://api.memegen.link/images/ds.png?style=maga&width=280)
+|                   `/images/ds.png`                    |                   `/images/ds.png?style=maga`                    |
+| :---------------------------------------------------: | :--------------------------------------------------------------: |
+| ![](https://api.memegen.link/images/ds.png?width=280) | ![](https://api.memegen.link/images/ds.png?style=maga&width=280) |
 
 ## Custom Backgrounds
 
@@ -67,14 +67,14 @@ The full interactive documentation is available here: https://api.memegen.link/d
 
 Here are some sample clients to explore:
 
-| Platforms | Link | Source |
-| :-: | :-- | :-- |
-| Slack | --- | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme) | --- |
-| Slack | --- | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot) | --- |
-| Slack | http://www.memetizer.com | --- |
-| Hain | --- | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
-| Web | ---| Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes) |
-| Web, Slack | https://memecomplete.com | --- |
-| Discord | --- | JavaScript: https://github.com/parshsee/discordbot |
+| Platforms  | Link                     | Source                                                                                |
+| :--------: | :----------------------- | :------------------------------------------------------------------------------------ |
+|   Slack    | ---                      | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)           | --- |
+|   Slack    | ---                      | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)           | --- |
+|   Slack    | http://www.memetizer.com | ---                                                                                   |
+|    Hain    | ---                      | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
+|    Web     | ---                      | Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes)      |
+| Web, Slack | https://memecomplete.com | ---                                                                                   |
+|  Discord   | ---                      | JavaScript: https://github.com/parshsee/discordbot                                    |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
