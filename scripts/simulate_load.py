@@ -1,27 +1,34 @@
-import time
+from random import randint
 from urllib.parse import quote
 
-import requests
-
-SITE = "http://localhost:5000"
+from locust import HttpUser, between, task
 
 
-timestamp = int(time.time())
-for index in range(999):
-    x = timestamp + index
+class Client(HttpUser):
 
-    background = f"https://api.memegen.link/images/fry.png?height=1000&x={x}"
-    url = (
-        f"{SITE}/images/custom/test-{x}.png?height=1000&background={quote(background)}"
-    )
-    response = requests.get(url)
-    response.raise_for_status()
+    host = "http://localhost:5000"
 
-    response2 = requests.get(f"{SITE}/templates")
-    response2.raise_for_status()
-    data = response2.json()
+    wait_time = between(1, 2)
 
-    print(
-        f"{index + 1:04d}: {response.elapsed} elapsed fetching image, "
-        f"{response2.elapsed} elapsed fetching templates"
-    )
+    @task
+    def index(self):
+        self.client.get("/")
+
+    @task
+    def docs(self):
+        self.client.get("/docs")
+
+    @task
+    def samples(self):
+        self.client.get("/samples")
+
+    @task
+    def templates(self):
+        self.client.get("/templates")
+
+    @task
+    def image(self):
+        x = randint(1000000, 9999999)
+        background = quote(f"https://i.imgur.com/1TnC5pM.jpg?x={x}")
+        path = f"/images/custom/test-{x}.png?height=1000&background={background}"
+        self.client.get(path)
