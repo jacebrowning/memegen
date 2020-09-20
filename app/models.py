@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 
 import aiofiles
 import aiohttp
-from aiohttp.client_exceptions import ClientConnectionError
+from aiohttp.client_exceptions import ClientConnectionError, InvalidURL
 from datafiles import datafile, field
 from sanic import Sanic
 from sanic.log import logger
@@ -177,7 +177,7 @@ class Template:
                         await f.close()
                     else:
                         logger.error(f"{response.status} response from {url}")
-            except ClientConnectionError:
+            except (InvalidURL, ClientConnectionError):
                 logger.error(f"invalid response from {url}")
 
         return template
