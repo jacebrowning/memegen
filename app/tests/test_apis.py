@@ -164,7 +164,14 @@ def describe_image_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_handles_invalid_urls_with_custom_templates(expect, client):
+        def it_handles_invalid_urls(expect, client):
+            request, response = client.get(
+                "/images/custom/test.png" "?background=foobar"
+            )
+            expect(response.status) == 415
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_handles_missing_urls(expect, client):
             request, response = client.get(
                 "/images/custom/test.png"
                 "?background=http://example.com/does_not_exist.png"
