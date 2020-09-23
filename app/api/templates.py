@@ -31,7 +31,9 @@ async def detail(request, key):
 @blueprint.post("/custom")
 @doc.summary("Create a meme from any image")
 @doc.consumes(
-    doc.JsonBody({"image_url": str, "text_lines": [str], "extension": str}),
+    doc.JsonBody(
+        {"image_url": str, "text_lines": [str], "extension": str, "redirect": bool}
+    ),
     location="body",
 )
 async def custom(request):
@@ -45,15 +47,22 @@ async def custom(request):
     url = Template("_custom").build_custom_url(
         request.app,
         payload.get("text_lines") or [],
-        background=payload["image_url"],
+        background=payload.get("image_url", ""),
         extension=payload.get("extension", ""),
     )
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
+
     return response.json({"url": url}, status=201)
 
 
 @blueprint.post("/<key>")
 @doc.summary("Create a meme from a template")
-@doc.consumes(doc.JsonBody({"text_lines": [str], "extension": str}), location="body")
+@doc.consumes(
+    doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
+    location="body",
+)
 async def build(request, key):
     if request.form:
         payload = dict(request.form)
@@ -68,4 +77,8 @@ async def build(request, key):
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
+
     return response.json({"url": url}, status=201)

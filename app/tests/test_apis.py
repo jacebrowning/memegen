@@ -52,6 +52,14 @@ def describe_template_detail():
                 "?background=https://www.gstatic.com/webp/gallery/3.png"
             }
 
+        @pytest.mark.parametrize("key", ["fry", "custom"])
+        def it_redirects_if_requested(expect, client, key):
+            data = {"text_lines": ["abc"], "redirect": True}
+            request, response = client.post(
+                f"/templates/{key}", data=json.dumps(data), allow_redirects=False
+            )
+            expect(response.status) == 302
+
 
 def describe_image_list():
     def describe_GET():
@@ -96,6 +104,13 @@ def describe_image_list():
             request, response = client.post("/images", data=json.dumps(data))
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw/_.png"}
+
+        def it_redirects_if_requested(expect, client):
+            data = {"template_key": "iw", "text_lines": ["abc"], "redirect": True}
+            request, response = client.post(
+                "/images", data=json.dumps(data), allow_redirects=False
+            )
+            expect(response.status) == 302
 
 
 def describe_image_detail():
