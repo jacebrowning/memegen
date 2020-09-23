@@ -31,7 +31,7 @@ Reserved URL characters can be escaped:
 -   tilde + S (`~s`) → slash (`/`)
 -   2 single quotes (`''`) → double quote (`"`)
 
-For example, https://api.memegen.link//images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
+For example, https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
 
 ![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&width=600)
 
