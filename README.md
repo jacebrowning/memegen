@@ -16,14 +16,14 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 ## Special Characters
 
-In URLs, spaces can be inserted using underscores, dashes, or mixed case:
+In URLs, spaces can be inserted using underscores or dashes:
 
 -   underscore (`_`) → space (` `)
 -   dash (`-`) → space (` `)
 -   2 underscores (`__`) → underscore (`_`)
 -   2 dashes (`--`) → dash (`-`)
 
-Reserved URL characters can be escaped:
+Reserved URL characters can be include using escape patterns:
 
 -   tilde + Q (`~q`) → question mark (`?`)
 -   tilde + P (`~p`) → percentage (`%`)
