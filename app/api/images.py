@@ -23,7 +23,9 @@ async def index(request):
 @blueprint.post("/")
 @doc.summary("Create a meme from a template")
 @doc.consumes(
-    doc.JsonBody({"template_key": str, "text_lines": [str], "extension": str}),
+    doc.JsonBody(
+        {"template_key": str, "text_lines": [str], "extension": str, "redirect": bool}
+    ),
     location="body",
 )
 async def create(request):
@@ -47,6 +49,10 @@ async def create(request):
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
+
     return response.json({"url": url}, status=201)
 
 
