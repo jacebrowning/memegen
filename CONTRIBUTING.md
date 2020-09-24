@@ -36,7 +36,7 @@ To add a new meme template:
 1. Visit `/images/<my_new_template_key>`
 2. Add a `default.png` (or JPG) background image in `templates` directory
 3. Update `config.yml` in the `templates` directory
-4. Refresh ``/images/<my_new_template_key>` to see the sample meme
+4. Refresh `/images/<my_new_template_key>` to see the sample meme
 
 # Continuous Integration
 
