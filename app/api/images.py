@@ -101,8 +101,6 @@ async def text_jpg(request, template_key, text_paths):
 async def render_image(
     request, key: str, slug: str = "", ext: str = settings.DEFAULT_EXT
 ):
-    lines = utils.text.decode(slug)
-    size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
     status = 200
 
     if len(slug.encode()) > 200:
@@ -137,6 +135,9 @@ async def render_image(
         if style and style not in template.styles:
             logger.error(f"Invalid style for template: {style}")
             status = 422
+
+    lines = utils.text.decode(slug)
+    size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
 
     await helpers.track(request, lines)
     path = await asyncio.get_event_loop().run_in_executor(
