@@ -1,6 +1,6 @@
 from typing import Dict, List, Tuple
 from urllib.parse import unquote
-
+from sanic.log import logger
 import aiohttp
 from cachetools import cached
 from sanic_cors import CORS
@@ -70,4 +70,6 @@ async def track(request, lines):
                 source="memegen.link",
                 context=unquote(request.url),
             )
-            await session.get(settings.REMOTE_TRACKING_URL, params=params)
+            response = await session.get(settings.REMOTE_TRACKING_URL, params=params)
+            if response.status != 200:
+                logger.error(f"Tracker response: {await response.json()}")
