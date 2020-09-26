@@ -79,3 +79,7 @@ TEST_IMAGES = [
         ["You: Stop talking like that", "Me: Stop talking like that"],
     ),
 ]
+
+# Analytics
+
+REMOTE_TRACKING_URL = os.getenv("REMOTE_TRACKING_URL")

@@ -1,5 +1,7 @@
 from typing import Dict, List, Tuple
+from urllib.parse import unquote
 
+import aiohttp
 from cachetools import cached
 from sanic_cors import CORS
 from sanic_openapi import swagger_blueprint
@@ -58,3 +60,14 @@ def get_test_images(request) -> List[str]:
         )
         for key, lines in settings.TEST_IMAGES
     ]
+
+
+async def track(request, lines):
+    if settings.REMOTE_TRACKING_URL:  # pragma: no cover
+        async with aiohttp.ClientSession() as session:
+            params = dict(
+                text=" ".join(lines),
+                source="memegen.link",
+                context=unquote(request.url),
+            )
+            await session.get(settings.REMOTE_TRACKING_URL, params=params)
