@@ -1,2 +1,7 @@
 tabWidth = 4
 semi = false
+
+[[overrides]]
+
+files = "*.yml"
+options = { "tabWidth" = 2 }

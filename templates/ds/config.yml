@@ -11,11 +11,12 @@ text:
   - color: black
     style: none
     anchor_x: 0.455
-    anchor_y: 0.06
-    angle: 9.5
+    anchor_y: 0.055
+    angle: 10.5
     scale_x: 0.23
-    scale_y: 0.08
+    scale_y: 0.09
   - color: white
+    style: upper
     anchor_x: 0.04
     anchor_y: 0.82
     angle: 0.0
