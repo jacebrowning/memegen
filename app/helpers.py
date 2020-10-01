@@ -1,8 +1,9 @@
 from typing import Dict, List, Tuple
 from urllib.parse import unquote
-from sanic.log import logger
+
 import aiohttp
 from cachetools import cached
+from sanic.log import logger
 from sanic_cors import CORS
 from sanic_openapi import swagger_blueprint
 

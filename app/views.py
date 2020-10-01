@@ -19,10 +19,14 @@ jinja = SanicJinja2(app, pkg_name="app")
 @jinja.template("index.html")
 async def index(request):
     html = markdown(
-        Path("README.md").read_text(),
+        text=Path("README.md").read_text(),
         extensions=["pymdownx.magiclink", "markdown.extensions.tables"],
     )
     html = html.replace("<code></code>", "<code>&nbsp</code>")
+    html = html.replace(
+        "https://api.memegen.link/docs",
+        f"{settings.SCHEME}://{settings.SERVER_NAME}/docs",
+    )
     return {"content": html}
 
 
