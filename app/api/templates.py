@@ -34,6 +34,7 @@ async def detail(request, key):
     doc.JsonBody(
         {"image_url": str, "text_lines": [str], "extension": str, "redirect": bool}
     ),
+    content_type="application/json",
     location="body",
 )
 async def custom(request):
@@ -61,6 +62,7 @@ async def custom(request):
 @doc.summary("Create a meme from a template")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
+    content_type="application/json",
     location="body",
 )
 async def build(request, key):

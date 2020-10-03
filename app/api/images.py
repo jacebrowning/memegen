@@ -26,6 +26,7 @@ async def index(request):
     doc.JsonBody(
         {"template_key": str, "text_lines": [str], "extension": str, "redirect": bool}
     ),
+    content_type="application/json",
     location="body",
 )
 async def create(request):
