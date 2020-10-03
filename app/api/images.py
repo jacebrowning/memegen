@@ -37,7 +37,9 @@ async def index(request):
     location="body",
 )
 @doc.response(201, {"url": str}, description="Successfully created a meme")
-@doc.response(400, {"error": str}, description='Required "template_key" missing in request body')
+@doc.response(
+    400, {"error": str}, description='Required "template_key" missing in request body'
+)
 async def create(request):
     if request.form:
         payload = dict(request.form)
@@ -75,7 +77,11 @@ async def create(request):
 )
 @doc.response(404, doc.File(), description="Template not found")
 @doc.response(415, doc.File(), description="Unable to download image URL")
-@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
+@doc.response(
+    422,
+    doc.File(),
+    description="Invalid style for template or no image URL specified for custom template",
+)
 async def blank_png(request, template_key):
     return await render_image(request, template_key, ext="png")
 
@@ -89,7 +95,11 @@ async def blank_png(request, template_key):
 )
 @doc.response(404, doc.File(), description="Template not found")
 @doc.response(415, doc.File(), description="Unable to download image URL")
-@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
+@doc.response(
+    422,
+    doc.File(),
+    description="Invalid style for template or no image URL specified for custom template",
+)
 async def blank_jpg(request, template_key):
     return await render_image(request, template_key, ext="jpg")
 
@@ -104,7 +114,11 @@ async def blank_jpg(request, template_key):
 @doc.response(404, doc.File(), description="Template not found")
 @doc.response(414, doc.File(), description="Custom text too long (length >200)")
 @doc.response(415, doc.File(), description="Unable to download image URL")
-@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
+@doc.response(
+    422,
+    doc.File(),
+    description="Invalid style for template or no image URL specified for custom template",
+)
 async def text_png(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
@@ -128,7 +142,11 @@ async def text_png(request, template_key, text_paths):
 @doc.response(404, doc.File(), description="Template not found")
 @doc.response(414, doc.File(), description="Custom text too long (length >200)")
 @doc.response(415, doc.File(), description="Unable to download image URL")
-@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
+@doc.response(
+    422,
+    doc.File(),
+    description="Invalid style for template or no image URL specified for custom template",
+)
 async def text_jpg(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:

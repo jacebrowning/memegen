@@ -15,15 +15,17 @@ blueprint = Blueprint("templates", url_prefix="/templates")
 @doc.summary("List all templates")
 @doc.produces(
     # Can't use doc.List(Template) because the jsonify method is slightly different
-    doc.List({
-        "name": str,
-        "key": str,
-        "styles": doc.List(str),
-        "blank": str,
-        "sample": str,
-        "source": str,
-        "_self": str,
-    }),
+    doc.List(
+        {
+            "name": str,
+            "key": str,
+            "styles": doc.List(str),
+            "blank": str,
+            "sample": str,
+            "source": str,
+            "_self": str,
+        }
+    ),
     description="Successfully returned a list of all templates",
     content_type="application/json",
 )
@@ -66,7 +68,9 @@ async def detail(request, key):
     content_type="application/json",
     location="body",
 )
-@doc.response(201, {"url": str}, description="Successfully created a meme from a custom image")
+@doc.response(
+    201, {"url": str}, description="Successfully created a meme from a custom image"
+)
 async def custom(request):
     if request.form:
         payload = dict(request.form)
@@ -96,7 +100,9 @@ async def custom(request):
     content_type="application/json",
     location="body",
 )
-@doc.response(201, {"url": str}, description="Successfully created a meme from a template")
+@doc.response(
+    201, {"url": str}, description="Successfully created a meme from a template"
+)
 async def build(request, key):
     if request.form:
         payload = dict(request.form)

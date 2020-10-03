@@ -14,7 +14,9 @@ def describe_spec():
         def it_contains_the_operation_id(expect, client):
             request, response = client.get("/docs/swagger.json")
             # This is our custom operationId, the default was images.index
-            expect(response.json["paths"]["/images"]["post"]["operationId"]) == "images.create"
+            expect(
+                response.json["paths"]["/images"]["post"]["operationId"]
+            ) == "images.create"
 
         def it_contains_the_request_spec(expect, client):
             request, response = client.get("/docs/swagger.json")
@@ -24,26 +26,15 @@ def describe_spec():
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "template_key": {
-                            "type": "string"
-                        },
-                        "text_lines": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "extension": {
-                            "type": "string"
-                        },
-                        "redirect": {
-                            "type": "boolean"
-                        }
-                    }
+                        "template_key": {"type": "string"},
+                        "text_lines": {"type": "array", "items": {"type": "string"}},
+                        "extension": {"type": "string"},
+                        "redirect": {"type": "boolean"},
+                    },
                 },
                 "name": "body",
                 "required": False,
-                "in": "body"
+                "in": "body",
             }
 
         def it_contains_the_response_spec(expect, client):
@@ -56,10 +47,8 @@ def describe_spec():
             expect(response_spec["201"]["schema"]) == {
                 "type": "object",
                 "properties": {
-                    "url": {
-                        "type": "string"
-                    },
-                }
+                    "url": {"type": "string"},
+                },
             }
             # Error response
             expect(response_spec["400"]["description"]) == (
@@ -68,8 +57,6 @@ def describe_spec():
             expect(response_spec["400"]["schema"]) == {
                 "type": "object",
                 "properties": {
-                    "error": {
-                        "type": "string"
-                    },
-                }
+                    "error": {"type": "string"},
+                },
             }
