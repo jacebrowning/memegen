@@ -73,4 +73,8 @@ async def track(request, lines):
             )
             response = await session.get(settings.REMOTE_TRACKING_URL, params=params)
             if response.status != 200:
-                logger.error(f"Tracker response: {await response.json()}")
+                try:
+                    message = await response.json()
+                except aiohttp.client_exceptions.ContentTypeError:
+                    message = response.text
+                logger.error(f"Tracker response: {message}")
