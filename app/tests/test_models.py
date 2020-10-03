@@ -82,3 +82,9 @@ def describe_template():
             url = "http://127.0.0.1/does_not_exist.png"
             template = await Template.create(url)
             expect(template.image.exists()) == False
+
+        @pytest.mark.asyncio
+        async def it_rejects_non_images(expect):
+            url = "https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4"
+            template = await Template.create(url)
+            expect(template.image.exists()) == False

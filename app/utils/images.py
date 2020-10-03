@@ -43,11 +43,16 @@ def save(
     return path
 
 
+def load(path: Path) -> Image:
+    image = Image.open(path).convert("RGB")
+    image = ImageOps.exif_transpose(image)
+    return image
+
+
 def render_image(
     template: Template, style: str, lines: List[str], size: Dimensions
 ) -> Image:
-    background = Image.open(template.get_image(style)).convert("RGB")
-    background = ImageOps.exif_transpose(background)
+    background = load(template.get_image(style))
 
     pad = all(size)
     image = resize_image(background, *size, pad)
