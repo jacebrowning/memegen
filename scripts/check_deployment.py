@@ -39,3 +39,12 @@ def test_get_image_custom(expect, url):
     )
     expect(response.status_code) == 200
     expect(response.headers["Content-Type"]) == "image/png"
+
+
+def test_swagger(expect, url):
+    response = requests.get(
+        f"https://validator.swagger.io/validator/debug?url="
+        f"{url}%2Fdocs%2Fswagger.json"
+    )
+    expect(response.status_code) == 200
+    expect(response.json()) == {}
