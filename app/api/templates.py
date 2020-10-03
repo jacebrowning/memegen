@@ -21,6 +21,7 @@ async def index(request):
 
 @blueprint.get("/<key>")
 @doc.summary("View a specific template")
+@doc.operation("templates.detail")
 async def detail(request, key):
     template = Template.objects.get_or_none(key)
     if template:
@@ -60,6 +61,7 @@ async def custom(request):
 
 @blueprint.post("/<key>")
 @doc.summary("Create a meme from a template")
+@doc.operation("templates.create")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
     content_type="application/json",

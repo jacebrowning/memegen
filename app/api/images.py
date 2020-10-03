@@ -12,6 +12,7 @@ blueprint = Blueprint("images", url_prefix="/images")
 
 @blueprint.get("/")
 @doc.summary("List sample memes")
+@doc.operation("images.list")
 async def index(request):
     loop = asyncio.get_event_loop()
     samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
@@ -22,6 +23,7 @@ async def index(request):
 
 @blueprint.post("/")
 @doc.summary("Create a meme from a template")
+@doc.operation("images.create")
 @doc.consumes(
     doc.JsonBody(
         {"template_key": str, "text_lines": [str], "extension": str, "redirect": bool}
