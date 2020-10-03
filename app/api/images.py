@@ -12,6 +12,12 @@ blueprint = Blueprint("images", url_prefix="/images")
 
 @blueprint.get("/")
 @doc.summary("List sample memes")
+@doc.operation("images.list")
+@doc.produces(
+    doc.List({"url": str, "template": str}),
+    description="Successfully returned a list of sample memes",
+    content_type="application/json",
+)
 async def index(request):
     loop = asyncio.get_event_loop()
     samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
@@ -22,12 +28,16 @@ async def index(request):
 
 @blueprint.post("/")
 @doc.summary("Create a meme from a template")
+@doc.operation("images.create")
 @doc.consumes(
     doc.JsonBody(
         {"template_key": str, "text_lines": [str], "extension": str, "redirect": bool}
     ),
+    content_type="application/json",
     location="body",
 )
+@doc.response(201, {"url": str}, description="Successfully created a meme")
+@doc.response(400, {"error": str}, description='Required "template_key" missing in request body')
 async def create(request):
     if request.form:
         payload = dict(request.form)
@@ -58,18 +68,43 @@ async def create(request):
 
 @blueprint.get("/<template_key>.png")
 @doc.summary("Display a template background")
+@doc.produces(
+    doc.File(),
+    description="Successfully displayed a template background",
+    content_type="image/png",
+)
+@doc.response(404, doc.File(), description="Template not found")
+@doc.response(415, doc.File(), description="Unable to download image URL")
+@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
 async def blank_png(request, template_key):
     return await render_image(request, template_key, ext="png")
 
 
 @blueprint.get("/<template_key>.jpg")
 @doc.summary("Display a template background")
+@doc.produces(
+    doc.File(),
+    description="Successfully displayed a template background",
+    content_type="image/jpeg",
+)
+@doc.response(404, doc.File(), description="Template not found")
+@doc.response(415, doc.File(), description="Unable to download image URL")
+@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
 async def blank_jpg(request, template_key):
     return await render_image(request, template_key, ext="jpg")
 
 
 @blueprint.get("/<template_key>/<text_paths:[\s\S]+>.png")
 @doc.summary("Display a custom meme")
+@doc.produces(
+    doc.File(),
+    description="Successfully displayed a custom meme",
+    content_type="image/png",
+)
+@doc.response(404, doc.File(), description="Template not found")
+@doc.response(414, doc.File(), description="Custom text too long (length >200)")
+@doc.response(415, doc.File(), description="Unable to download image URL")
+@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
 async def text_png(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
@@ -85,6 +120,15 @@ async def text_png(request, template_key, text_paths):
 
 @blueprint.get("/<template_key>/<text_paths:[\s\S]+>.jpg")
 @doc.summary("Display a custom meme")
+@doc.produces(
+    doc.File(),
+    description="Successfully displayed a custom meme",
+    content_type="image/jpeg",
+)
+@doc.response(404, doc.File(), description="Template not found")
+@doc.response(414, doc.File(), description="Custom text too long (length >200)")
+@doc.response(415, doc.File(), description="Unable to download image URL")
+@doc.response(422, doc.File(), description="Invalid style for template or no image URL specified for custom template")
 async def text_jpg(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:

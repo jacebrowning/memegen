@@ -10,6 +10,9 @@ blueprint = Blueprint("shortcuts", url_prefix="/")
 
 @blueprint.get("/images/<template_key>")
 @doc.summary("Redirect to a sample image")
+@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
+@doc.response(404, str, description="Template not found")
+@doc.response(501, str, description="Template not fully implemented")
 async def sample(request, template_key):
     if settings.DEBUG:
         template = models.Template.objects.get_or_create(template_key)
@@ -32,6 +35,8 @@ async def sample(request, template_key):
 @blueprint.get("/<template_key>.png")
 @doc.summary("Redirect to a sample image")
 @doc.exclude(settings.DEPLOYED)
+@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
+@doc.response(404, str, description="Template not found")
 async def sample_png(request, template_key):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -43,6 +48,8 @@ async def sample_png(request, template_key):
 @blueprint.get("/<template_key>.jpg")
 @doc.summary("Redirect to a sample image")
 @doc.exclude(settings.DEPLOYED)
+@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
+@doc.response(404, str, description="Template not found")
 async def sample_jpg(request, template_key):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -54,12 +61,19 @@ async def sample_jpg(request, template_key):
 @blueprint.get("/<template_key>")
 @doc.summary("Redirect to a sample image")
 @doc.exclude(settings.DEPLOYED)
+@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
 async def sample_legacy(request, template_key):
     return response.redirect(f"/images/{template_key}")
 
 
 @blueprint.get("/images/<template_key>/<text_paths:[\s\S]+>")
 @doc.summary("Redirect to a custom image")
+@doc.produces(
+    str,
+    description="Successfully displayed a custom meme",
+    content_type="text/html",
+)
+@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 async def custom(request, template_key, text_paths):
     if not settings.DEBUG:
         url = request.app.url_for(
@@ -79,6 +93,8 @@ async def custom(request, template_key, text_paths):
 @blueprint.get("/<template_key>/<text_paths:[\s\S]+>.png")
 @doc.summary("Redirect to a custom image")
 @doc.exclude(settings.DEPLOYED)
+@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
+@doc.response(404, str, description="Template not found")
 async def custom_png(request, template_key, text_paths):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -92,6 +108,8 @@ async def custom_png(request, template_key, text_paths):
 @blueprint.get("/<template_key>/<text_paths:[\s\S]+>.jpg")
 @doc.summary("Redirect to a custom image")
 @doc.exclude(settings.DEPLOYED)
+@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
+@doc.response(404, str, description="Template not found")
 async def custom_jpg(request, template_key, text_paths):
     template = models.Template.objects.get_or_none(template_key)
     if template:
@@ -105,5 +123,6 @@ async def custom_jpg(request, template_key, text_paths):
 @blueprint.get("/<template_key>/<text_paths:[\s\S]+>")
 @doc.summary("Redirect to a custom image")
 @doc.exclude(settings.DEPLOYED)
+@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 async def custom_legacy(request, template_key, text_paths):
     return response.redirect(f"/images/{template_key}/{text_paths}")
