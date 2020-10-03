@@ -13,6 +13,20 @@ blueprint = Blueprint("templates", url_prefix="/templates")
 
 @blueprint.get("/")
 @doc.summary("List all templates")
+@doc.produces(
+    # Can't use doc.List(Template) because the jsonify method is slightly different
+    doc.List({
+        "name": str,
+        "key": str,
+        "styles": doc.List(str),
+        "blank": str,
+        "sample": str,
+        "source": str,
+        "_self": str,
+    }),
+    description="Successfully returned a list of all templates",
+    content_type="application/json",
+)
 async def index(request):
     loop = asyncio.get_event_loop()
     data = await loop.run_in_executor(None, helpers.get_valid_templates, request)
@@ -22,6 +36,20 @@ async def index(request):
 @blueprint.get("/<key>")
 @doc.summary("View a specific template")
 @doc.operation("templates.detail")
+@doc.produces(
+    {
+        "name": str,
+        "key": str,
+        "styles": doc.List(str),
+        "blank": str,
+        "sample": str,
+        "source": str,
+        "_self": str,
+    },
+    description="Successfully returned a specific templates",
+    content_type="application/json",
+)
+@doc.response(404, str, description="Template not found")
 async def detail(request, key):
     template = Template.objects.get_or_none(key)
     if template:
@@ -38,6 +66,7 @@ async def detail(request, key):
     content_type="application/json",
     location="body",
 )
+@doc.response(201, {"url": str}, description="Successfully created a meme from a custom image")
 async def custom(request):
     if request.form:
         payload = dict(request.form)
@@ -67,6 +96,7 @@ async def custom(request):
     content_type="application/json",
     location="body",
 )
+@doc.response(201, {"url": str}, description="Successfully created a meme from a template")
 async def build(request, key):
     if request.form:
         payload = dict(request.form)
