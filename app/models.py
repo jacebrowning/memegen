@@ -164,20 +164,27 @@ class Template:
 
         if template.image.exists() and not settings.DEBUG:
             logger.info(f"Found background {url} at {template.image}")
-            return template
 
-        logger.info(f"Saving background {url} to {template.image}")
-        async with aiohttp.ClientSession() as session:
+        else:
+            logger.info(f"Saving background {url} to {template.image}")
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.get(url) as response:
+                        if response.status == 200:
+                            template.directory.mkdir(exist_ok=True)
+                            f = await aiofiles.open(template.image, mode="wb")
+                            await f.write(await response.read())
+                            await f.close()
+                        else:
+                            logger.error(f"{response.status} response from {url}")
+                except (InvalidURL, ClientConnectionError):
+                    logger.error(f"Invalid response from {url}")
+
+        if template.image.exists():
             try:
-                async with session.get(url) as response:
-                    if response.status == 200:
-                        template.directory.mkdir(exist_ok=True)
-                        f = await aiofiles.open(template.image, mode="wb")
-                        await f.write(await response.read())
-                        await f.close()
-                    else:
-                        logger.error(f"{response.status} response from {url}")
-            except (InvalidURL, ClientConnectionError):
-                logger.error(f"invalid response from {url}")
+                utils.images.load(template.image)
+            except OSError as e:
+                logger.error(e)
+                template.image.unlink()
 
         return template
