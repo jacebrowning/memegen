@@ -13,6 +13,11 @@ blueprint = Blueprint("images", url_prefix="/images")
 @blueprint.get("/")
 @doc.summary("List sample memes")
 @doc.operation("images.list")
+@doc.produces(
+    [{"url": str, "template": str}],
+    description="Successfully returned a list of sample memes",
+    content_type="application/json",
+)
 async def index(request):
     loop = asyncio.get_event_loop()
     samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
@@ -30,6 +35,16 @@ async def index(request):
     ),
     content_type="application/json",
     location="body",
+)
+@doc.response(
+    201,
+    {"url": str},
+    description="Successfully created a meme",
+)
+@doc.response(
+    400,
+    {"error": str},
+    description='Required "template_key" missing in request body',
 )
 async def create(request):
     if request.form:
