@@ -6,10 +6,11 @@ def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) ->
 
     for href in urls:
         src = href + ("?time=0" if refresh else "?width=300&height=300")
+        size = "" if refresh else 'width="300" height="300"'
         lines.append(
             f"""
             <a href="{href}">
-                <img src="{src}" style="padding: 5px; max-width: 600px; max-height: 600px">
+                <img src="{src}" loading="lazy" {size} style="padding: 5px; max-width: 600px; max-height: 600px">
             </a>
             """
         )
