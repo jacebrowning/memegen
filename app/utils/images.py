@@ -24,6 +24,8 @@ def save(
     *,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
+    size = fit_image(*size)
+
     slug = encode(lines)
     variant = str(style) + str(size)
     fingerprint = hashlib.sha1(variant.encode()).hexdigest()
@@ -123,6 +125,13 @@ def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
     return image
 
 
+def fit_image(width: float, height: float) -> Tuple[int, int]:
+    while width * height > settings.MAXIMUM_PIXELS:
+        width *= 0.75
+        height *= 0.75
+    return int(width), int(height)
+
+
 def add_blurred_background(
     foreground: Image, background: Image, width: int, height: int
 ) -> Image:
@@ -137,13 +146,8 @@ def add_blurred_background(
         ((border_width - base_width) // 2, (border_height - base_height) // 2),
     )
 
-    # TODO: limit maximum size
-    # padded_dimensions = _fit_image(width, height)
-    padded_dimensions = width, height
-    padded = background.resize(padded_dimensions, Image.LANCZOS)
-
+    padded = background.resize((width, height), Image.LANCZOS)
     darkened = padded.point(lambda p: p * 0.4)
-
     blurred = darkened.filter(ImageFilter.GaussianBlur(5))
 
     blurred_width, blurred_height = blurred.size
