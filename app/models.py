@@ -69,7 +69,11 @@ class Template:
     @property
     def valid(self) -> bool:
         if settings.DEBUG:
-            self.datafile.save()
+            self.styles = []
+            for path in self.directory.iterdir():
+                if path.stem != "config":
+                    self.styles.append(path.stem)
+            self.styles.sort()
         return not self.key.startswith("_") and self.image.suffix != ".img"
 
     @property
