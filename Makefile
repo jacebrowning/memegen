@@ -107,8 +107,8 @@ run-production: install .env
 
 .PHONY: promote
 promote: install
-	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov
+	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 	@ echo
 	heroku pipelines:promote --app memegen-link-api-staging --to memegen-link-api
 	@ echo
-	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov
+	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2

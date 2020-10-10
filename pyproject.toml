@@ -19,7 +19,7 @@ sanic-openapi = "~0.6.2"
 sanic-jinja2 = "~0.8.0"
 
 # Markdown
-markdown = "^3.2.2"
+markdown = "~3.2.2"
 pymdown-extensions = "^8.0"
 pygments = "^2.7.0"
 
@@ -54,6 +54,7 @@ pytest-asyncio = "*"
 pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "9014bf3ee564518aad3622b5f035f7ca6139e398" }
 pytest-expecter = "^2.1"
 pytest-random = "*"
+pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
 locust = "^1.2.3"
 
