@@ -38,6 +38,7 @@ IMAGES_DIRECTORY = ROOT / "images"
 DEFAULT_EXT = "png"
 DEFAULT_STYLE = "default"
 DEFAULT_SIZE = (600, 600)
+MAXIMUM_PIXELS = 1920 * 1080
 
 # Test images
 
