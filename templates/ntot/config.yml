@@ -5,7 +5,7 @@ text:
     style: none
     anchor_x: 0.055
     anchor_y: 0.08
-    angle: 12
+    angle: 12.0
     scale_x: 0.21
     scale_y: 0.15
   - color: black

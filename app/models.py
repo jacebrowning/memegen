@@ -68,6 +68,8 @@ class Template:
 
     @property
     def valid(self) -> bool:
+        if settings.DEBUG:
+            self.datafile.save()
         return not self.key.startswith("_") and self.image.suffix != ".img"
 
     @property
