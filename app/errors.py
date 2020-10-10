@@ -1,8 +1,11 @@
 import bugsnag
+from aiohttp.client_exceptions import ClientPayloadError
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
 
 from . import settings
+
+IGNORED_EXCEPTIONS = (NotFound, MethodNotSupported, ClientPayloadError)
 
 bugsnag.configure(
     api_key=settings.BUGSNAG_API_KEY,
@@ -20,6 +23,6 @@ class BugsnagErrorHandler(ErrorHandler):  # pragma: no cover
     def _should_report(self, exception) -> bool:
         if not settings.BUGSNAG_API_KEY:
             return False
-        if isinstance(exception, (NotFound, MethodNotSupported)):
+        if isinstance(exception, IGNORED_EXCEPTIONS):
             return False
         return True
