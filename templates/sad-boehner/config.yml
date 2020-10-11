@@ -16,7 +16,10 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  - default
+  - frown
+  - really
+  - sad
+  - what
 sample:
   - SAD JOHN BOEHNER
   - DOESN'T THINK YOU'LL VOTE

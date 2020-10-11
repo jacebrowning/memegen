@@ -16,7 +16,12 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  - default
+  - bark
+  - bite
+  - full
+  - growl
+  - pet
+  - roll
 sample:
   - SUCH MEME
   - VERY SKILL

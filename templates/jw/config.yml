@@ -16,7 +16,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  - default
+  - alternate
 sample:
   - YOU JUST WENT AND MADE A NEW DINOSAUR?
   - PROBABLY NOT A GOOD IDEA

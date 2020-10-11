@@ -16,7 +16,10 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  - default
+  - facebook
+  - nervous
+  - unsure
+  - upset
 sample:
   - SAD GEORGE BUSH
   - DOESN'T THINK YOU'LL VOTE
