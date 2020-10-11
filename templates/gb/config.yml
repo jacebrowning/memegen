@@ -30,7 +30,7 @@ text:
     scale_x: 0.49
     scale_y: 0.255
 styles:
-  - default
+  -
 sample:
   - Who
   - Whom

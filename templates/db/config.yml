@@ -23,7 +23,7 @@ text:
     scale_x: 0.2
     scale_y: 0.1
 styles:
-  - default
+  -
 sample:
   - Socialism
   - The Youth
