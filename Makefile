@@ -84,6 +84,10 @@ else
 	poetry run coveragespace jacebrowning/memegen overall
 endif
 
+.PHONY: test-fast
+test-fast: install
+	poetry run pytest -m "not slow" --durations=10
+
 .PHONY: test-slow
 test-slow: install
 	poetry run pytest -m slow --durations=0

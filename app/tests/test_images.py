@@ -73,6 +73,7 @@ def test_small_padding(images, template):
     utils.images.save(template, lines, size=(50, 50), directory=images)
 
 
+@pytest.mark.slow
 def test_large_padding(images, template):
     lines = ["width=2000", "height=2000"]
     utils.images.save(template, lines, size=(2000, 2000), directory=images)
@@ -88,6 +89,7 @@ async def test_custom_template(images):
     utils.images.save(template, ["", "My Custom Template"], directory=images)
 
 
+@pytest.mark.slow
 @pytest.mark.asyncio
 async def test_custom_template_with_exif_rotation(images):
     url = "https://cdn.discordapp.com/attachments/752902976322142218/752903391281283152/20200608_111430.jpg"

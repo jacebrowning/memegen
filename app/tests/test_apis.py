@@ -114,7 +114,6 @@ def describe_image_list():
 
 
 def describe_image_detail():
-    @pytest.mark.slow
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
@@ -127,7 +126,6 @@ def describe_image_detail():
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
-    @pytest.mark.slow
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
@@ -152,13 +150,11 @@ def describe_image_detail():
         expect(response.headers["content-type"]) == "image/jpeg"
 
     def describe_styles():
-        @pytest.mark.slow
         def it_supports_alternate_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=maga")
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
-        @pytest.mark.slow
         def it_rejects_invalid_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=foobar")
             expect(response.status) == 422
