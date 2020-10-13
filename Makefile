@@ -113,6 +113,6 @@ run-production: install .env
 promote: install
 	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 	@ echo
-	heroku pipelines:promote --app memegen-link-api-staging --to memegen-link-api
+	heroku pipelines:promote --app memegen-link-staging --to memegen-link
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2

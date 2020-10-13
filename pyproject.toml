@@ -3,7 +3,7 @@
 name = "memegen-api"
 version = "6.1"
 description = "The open source meme generator."
-authors = ["Jace Browning <jacebrowning@gmail.com>"]
+authors = ["Jace Browning <support@maketested.com>"]
 license = "MIT"
 
 packages = [ { include = "app" } ]
