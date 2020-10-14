@@ -33,8 +33,7 @@ async def index(request):
 @app.get("/samples")
 @doc.exclude(True)
 async def samples(request):
-    loop = asyncio.get_event_loop()
-    samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
+    samples = await asyncio.to_thread(helpers.get_sample_images, request)
     urls = [sample[0] for sample in samples]
     refresh = "debug" in request.args and settings.DEBUG
     content = utils.html.gallery(urls, refresh=refresh)
@@ -46,8 +45,7 @@ async def samples(request):
 async def test(request):
     if not settings.DEBUG:
         return response.redirect("/")
-    loop = asyncio.get_event_loop()
-    urls = await loop.run_in_executor(None, helpers.get_test_images, request)
+    urls = await asyncio.to_thread(helpers.get_test_images, request)
     content = utils.html.gallery(urls, refresh=True)
     return response.html(content)
 
