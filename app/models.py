@@ -182,7 +182,7 @@ class Template:
                     async with session.get(url) as response:
                         if response.status == 200:
                             template.directory.mkdir(exist_ok=True)
-                            f = await aiofiles.open(template.image, mode="wb")
+                            f = await aiofiles.open(template.image, mode="wb")  # type: ignore
                             await f.write(await response.read())
                             await f.close()
                         else:

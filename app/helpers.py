@@ -38,13 +38,13 @@ def configure(app):
     app.error_handler = errors.BugsnagErrorHandler()
 
 
-@cached({}, key=lambda _: settings.SERVER_NAME)
+@cached({}, key=lambda _: settings.SERVER_NAME)  # type: ignore
 def get_valid_templates(request) -> List[Dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [t.jsonify(request.app) for t in templates]
 
 
-@cached({}, key=lambda _: settings.SERVER_NAME)
+@cached({}, key=lambda _: settings.SERVER_NAME)  # type: ignore
 def get_sample_images(request) -> List[Tuple[str, str]]:
     return [
         (template.build_sample_url(request.app), template.build_self_url(request.app))
