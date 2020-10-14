@@ -19,8 +19,7 @@ blueprint = Blueprint("images", url_prefix="/images")
     content_type="application/json",
 )
 async def index(request):
-    loop = asyncio.get_event_loop()
-    samples = await loop.run_in_executor(None, helpers.get_sample_images, request)
+    samples = await asyncio.to_thread(helpers.get_sample_images, request)
     return response.json(
         [{"url": url, "template": template} for url, template in samples]
     )
@@ -202,7 +201,5 @@ async def render_image(
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
 
     await helpers.track(request, lines)
-    path = await asyncio.get_event_loop().run_in_executor(
-        None, utils.images.save, template, lines, ext, style, size
-    )
+    path = await asyncio.to_thread(utils.images.save, template, lines, ext, style, size)
     return await response.file(path, status)

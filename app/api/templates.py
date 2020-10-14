@@ -30,8 +30,7 @@ blueprint = Blueprint("templates", url_prefix="/templates")
     content_type="application/json",
 )
 async def index(request):
-    loop = asyncio.get_event_loop()
-    data = await loop.run_in_executor(None, helpers.get_valid_templates, request)
+    data = await asyncio.to_thread(helpers.get_valid_templates, request)
     return response.json(data)
 
 
