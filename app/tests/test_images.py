@@ -126,15 +126,30 @@ def test_extremely_long_text(images, tmpdir):
     utils.images.save(template, lines, directory=Path(tmpdir) / "images")
 
 
-def test_long_first_word(images, template):
+def test_long_first_word(images):
     template = models.Template.objects.get("fine")
     lines = ["", "thiiiiiiiiiiiiiiiiiiiiis will probably be fine right now"]
     utils.images.save(template, lines, directory=images)
 
 
-def test_text_wrap_when_font_is_too_small(images, template):
+def test_text_wrap_when_font_is_too_small(images):
     template = models.Template.objects.get("ds")
     lines = ["this button seems to be ok to push"]
+    utils.images.save(template, lines, directory=images)
+
+
+def test_descender_vertical_alignment(images):
+    template = models.Template.objects.get("ptj")
+    lines = [
+        "Exit",
+        "Exit",
+        "the",
+        "the",
+        "monorepo",
+        "monorepo",
+        "Exit the monorepo.",
+        "Stop testing!",
+    ]
     utils.images.save(template, lines, directory=images)
 
 
