@@ -183,7 +183,7 @@ def get_image_elements(
         if text.color == "black":
             stroke_width = 0
         else:
-            stroke_width = min(3, max(1, font.size // 12))
+            stroke_width = get_stroke_width(font)
 
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
 
@@ -214,14 +214,14 @@ def get_font(
         else:
             font = ImageFont.truetype(str(settings.FONT_THICK), size=size)
 
-        text_width, text_height = get_text_size_minus_offset(text, font)
+        text_width, text_height = get_text_size_minus_font_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
             break
 
     return font
 
 
-def get_text_size_minus_offset(text: str, font: ImageFont) -> Dimensions:
+def get_text_size_minus_font_offset(text: str, font: ImageFont) -> Dimensions:
     text_width, text_height = get_text_size(text, font)
     offset = font.getoffset(text)
     return text_width - offset[0], text_height - offset[1]
@@ -229,9 +229,14 @@ def get_text_size_minus_offset(text: str, font: ImageFont) -> Dimensions:
 
 def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Offset:
     text_size = get_text_size(text, font)
+    stroke_width = get_stroke_width(font)
+
     x_offset, y_offset = font.getoffset(text)
 
-    x_offset -= (max_text_size[0] - text_size[0]) // 2
+    x_offset -= stroke_width
+    y_offset -= stroke_width
+
+    x_offset -= (max_text_size[0] - text_size[0]) / 2
     y_offset -= (max_text_size[1] - text_size[1] / (1.25 if "\n" in text else 1.5)) // 2
 
     return x_offset, y_offset
@@ -240,4 +245,10 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
 def get_text_size(text: str, font: ImageFont) -> Dimensions:
     image = Image.new("RGB", (100, 100))
     draw = ImageDraw.Draw(image)
-    return draw.textsize(text, font)
+    text_size = draw.textsize(text, font)
+    stroke_width = get_stroke_width(font)
+    return text_size[0] + stroke_width, text_size[1] + stroke_width
+
+
+def get_stroke_width(font: ImageFont) -> int:
+    return min(3, max(1, font.size // 12))
