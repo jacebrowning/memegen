@@ -16,6 +16,7 @@ def encode(lines: List[str]) -> str:
                 ("#", "~h"),
                 ('"', "''"),
                 ("/", "~s"),
+                ("\\", "~b"),
                 ("\n", "~n"),
                 ("&", "~a"),
             ]:
@@ -45,6 +46,7 @@ def decode(slug: str) -> List[str]:
         ("~h", "#"),
         ("~n", "\n"),
         ("~a", "&"),
+        ("~b", "\\"),
     ]:
         slug = slug.replace(before, after)
 

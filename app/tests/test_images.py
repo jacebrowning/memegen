@@ -15,7 +15,7 @@ def images():
     flag = path / ".flag"
     if flag.exists():
         age = time.time() - flag.stat().st_mtime
-        if age > 60 * 60 * 6:
+        if age > 60 * 60 * 6 and "SKIP_SLOW" not in os.environ:
             shutil.rmtree(path)
 
     path.mkdir(exist_ok=True)

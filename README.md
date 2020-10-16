@@ -29,6 +29,7 @@ Reserved URL characters can be include using escape patterns:
 -   tilde + P (`~p`) → percentage (`%`)
 -   tilde + H (`~h`) → hashtag/pound (`#`)
 -   tilde + S (`~s`) → slash (`/`)
+-   tilde + B (`~b`) → backslash (`\`)
 -   2 single quotes (`''`) → double quote (`"`)
 
 For example, https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
