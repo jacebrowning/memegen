@@ -16,7 +16,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  -
+  - default
 sample:
   - IF YOU WANTED TO AVOID THE FRIEND ZONE
   - YOU SHOULD HAVE MADE YOUR INTENTIONS KNOWN FROM THE START

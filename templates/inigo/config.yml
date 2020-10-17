@@ -16,7 +16,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  -
+  - default
 sample:
   - YOU KEEP USING THAT WORD
   - I DO NOT THINK IT MEANS WHAT YOU THINK IT MEANS

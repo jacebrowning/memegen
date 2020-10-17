@@ -16,7 +16,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  - default
+  -
 sample:
   - ''
   - WHAT YEAR IS IT?

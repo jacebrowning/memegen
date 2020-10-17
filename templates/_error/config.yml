@@ -16,7 +16,7 @@ text:
     scale_x: 0.8
     scale_y: 0.2
 styles:
-  -
+  - default
 sample:
   - YOUR TEXT
   - GOES HERE

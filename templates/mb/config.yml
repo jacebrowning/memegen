@@ -17,6 +17,7 @@ text:
     scale_y: 0.2
 styles:
   - box
+  - default
   - flood
 sample:
   - "'MEMBER"

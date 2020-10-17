@@ -58,7 +58,7 @@ text:
     scale_x: 0.5
     scale_y: 0.05
 styles:
-  - default
+  -
 sample:
   - Cast it
   - Cast it
