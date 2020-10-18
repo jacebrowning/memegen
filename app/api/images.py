@@ -168,11 +168,11 @@ async def render_image(
         logger.error(f"Slug too long: {slug}")
         slug = slug[:50] + "..."
         template = models.Template.objects.get("_error")
-        style = "default"
+        style = settings.DEFAULT_STYLE
         status = 414
 
     elif key == "custom":
-        style = "default"
+        style = settings.DEFAULT_STYLE
         url = request.args.get("background") or request.args.get("alt")
         if url:
             template = await models.Template.create(url)

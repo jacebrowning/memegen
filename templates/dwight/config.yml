@@ -16,7 +16,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 styles:
-  - default
+  -
 sample:
   - LOVE IS ALL YOU NEED?
   - FALSE. YOU NEED WATER AND RATIONS.

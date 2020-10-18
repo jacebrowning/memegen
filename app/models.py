@@ -68,13 +68,11 @@ class Template:
 
     @property
     def valid(self) -> bool:
-        if settings.DEBUG:
+        if not settings.DEPLOYED:
             styles = []
             for path in self.directory.iterdir():
-                if path.stem != "config":
+                if path.stem not in {"config", settings.DEFAULT_STYLE}:
                     styles.append(path.stem)
-            if "default" in self.styles:
-                styles.remove("default")
             styles.sort()
             if styles != self.styles:
                 self.styles = styles
@@ -98,7 +96,7 @@ class Template:
 
         if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.key}")
-            return self.directory / "default.img"
+            return self.directory / f"{settings.DEFAULT_STYLE}.img"
         else:
             logger.warning(f"Style {style!r} not available for {self.key}")
             return self.get_image()
@@ -107,7 +105,7 @@ class Template:
         return {
             "name": self.name,
             "key": self.key,
-            "styles": [s for s in self.styles if s != settings.DEFAULT_STYLE],
+            "styles": self.styles,
             "blank": app.url_for(
                 f"images.blank_{settings.DEFAULT_EXT}",
                 template_key=self.key,

@@ -23,7 +23,6 @@ text:
     scale_x: 0.92
     scale_y: 0.15
 styles:
-  - default
   - maga
 sample:
   - The dress is black and blue.
