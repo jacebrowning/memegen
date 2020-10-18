@@ -29,7 +29,7 @@ def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) ->
                 }, {interval});
             </script>
             """.replace(
-                "{interval}", str(int(rate * 1000))
+                "{interval}", str(int(rate * 3000))
             )
         )
 
