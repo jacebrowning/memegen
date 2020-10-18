@@ -174,7 +174,7 @@ def get_image_elements(
         except IndexError:
             line = ""
         else:
-            line = text.stylize(wrap(line, max_text_size))
+            line = text.stylize(wrap(line, max_text_size, max_font_size))
 
         font = get_font(line, text.angle, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
@@ -188,11 +188,24 @@ def get_image_elements(
         yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
 
 
-def wrap(line: str, max_text_size: Dimensions) -> str:
-    if len(line) <= 40 and get_font(line, 0, max_text_size, 13).size >= 12:
+def wrap(line: str, max_text_size: Dimensions, max_font_size: int) -> str:
+    lines = split(line)
+
+    single = get_font(line, 0, max_text_size, max_font_size)
+    double = get_font(lines, 0, max_text_size, max_font_size)
+
+    if single.size >= double.size:
         return line
 
+    if get_text_size(lines, double)[0] >= max_text_size[0] * 0.65:
+        return lines
+
+    return line
+
+
+def split(line: str) -> str:
     midpoint = len(line) // 2 - 1
+
     for offset in range(0, len(line) // 4):
         for index in [midpoint - offset, midpoint + offset]:
             if line[index] == " ":
