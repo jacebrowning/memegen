@@ -70,9 +70,6 @@ async def create(request):
 
 @blueprint.get("/preview.jpg")
 @doc.summary("Display a preview of a custom meme")
-@doc.consumes(doc.String(name="template"), location="query")
-@doc.consumes(doc.String(name="lines[]"), location="query")
-@doc.consumes(doc.String(name="style"), location="query")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a custom meme",
