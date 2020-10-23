@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import hashlib
+import io
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator, List, Tuple
+from typing import TYPE_CHECKING, Iterator, List, Optional, Tuple
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from sanic.log import logger
@@ -13,6 +14,15 @@ from .text import encode
 
 if TYPE_CHECKING:
     from ..models import Template
+
+
+def preview(
+    template: Template, lines: List[str], style: str = settings.DEFAULT_STYLE
+) -> Tuple[bytes, str]:
+    image = render_image(template, style, lines, settings.PREVIEW_SIZE, pad=False)
+    stream = io.BytesIO()
+    image.save(stream, format="JPEG", quality=50)
+    return stream.getvalue(), "image/jpeg"
 
 
 def save(
@@ -52,11 +62,16 @@ def load(path: Path) -> Image:
 
 
 def render_image(
-    template: Template, style: str, lines: List[str], size: Dimensions
+    template: Template,
+    style: str,
+    lines: List[str],
+    size: Dimensions,
+    *,
+    pad: Optional[bool] = None,
 ) -> Image:
     background = load(template.get_image(style))
 
-    pad = all(size)
+    pad = all(size) if pad is None else pad
     image = resize_image(background, *size, pad)
 
     for (

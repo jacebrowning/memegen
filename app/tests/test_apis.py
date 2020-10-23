@@ -113,6 +113,14 @@ def describe_image_list():
             expect(response.status) == 302
 
 
+def describe_preview():
+    def it_returns_an_image(expect, client):
+        path = "/images/preview.jpg"
+        request, response = client.get(path)
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/jpeg"
+
+
 def describe_image_detail():
     @pytest.mark.parametrize(
         ("path", "content_type"),
