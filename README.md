@@ -18,19 +18,19 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 In URLs, spaces can be inserted using underscores or dashes:
 
--   underscore (`_`) → space (` `)
--   dash (`-`) → space (` `)
--   2 underscores (`__`) → underscore (`_`)
--   2 dashes (`--`) → dash (`-`)
+- underscore (`_`) → space (` `)
+- dash (`-`) → space (` `)
+- 2 underscores (`__`) → underscore (`_`)
+- 2 dashes (`--`) → dash (`-`)
 
 Reserved URL characters can be include using escape patterns:
 
--   tilde + Q (`~q`) → question mark (`?`)
--   tilde + P (`~p`) → percentage (`%`)
--   tilde + H (`~h`) → hashtag/pound (`#`)
--   tilde + S (`~s`) → slash (`/`)
--   tilde + B (`~b`) → backslash (`\`)
--   2 single quotes (`''`) → double quote (`"`)
+- tilde + Q (`~q`) → question mark (`?`)
+- tilde + P (`~p`) → percentage (`%`)
+- tilde + H (`~h`) → hashtag/pound (`#`)
+- tilde + S (`~s`) → slash (`/`)
+- tilde + B (`~b`) → backslash (`\`)
+- 2 single quotes (`''`) → double quote (`"`)
 
 For example, https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png produces:
 
@@ -61,6 +61,15 @@ For example, https://api.memegen.link/images/both/width_or_height/why_not_both~q
 ![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600)
 
 Clients can also request `.jpg` instead of `.png` for smaller files.
+
+## Live Previews
+
+If your client is going to show live previews of a custom meme, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth.
+
+Both template keys and URLs are supported:
+
+- https://api.memegen.link/images/preview.jpg?template=fry&line[]=first&line[]=second
+- https://api.memegen.link/images/preview.jpg?template=https://api.memegen.link/images/fry.png&line[]=first&line[]=second
 
 # API Documentation
 

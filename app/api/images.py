@@ -1,5 +1,6 @@
 import asyncio
 from contextlib import suppress
+from typing import List
 
 from sanic import Blueprint, response
 from sanic.log import logger
@@ -65,6 +66,23 @@ async def create(request):
         return response.redirect(url)
 
     return response.json({"url": url}, status=201)
+
+
+@blueprint.get("/preview.jpg")
+@doc.summary("Display a preview of a custom meme")
+@doc.consumes(doc.String(name="template"), location="query")
+@doc.consumes(doc.String(name="lines[]"), location="query")
+@doc.consumes(doc.String(name="style"), location="query")
+@doc.produces(
+    doc.File(),
+    description="Successfully displayed a custom meme",
+    content_type="image/jpeg",
+)
+async def preview(request):
+    key = request.args.get("template", "_error")
+    lines = request.args.getlist("lines[]", [])
+    style = request.args.get("style")
+    return await preview_image(request, key, lines, style)
 
 
 @blueprint.get("/<template_key>.png")
@@ -157,6 +175,18 @@ async def text_jpg(request, template_key, text_paths):
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
     return await render_image(request, template_key, slug, ext="jpg")
+
+
+async def preview_image(request, key: str, lines: List[str], style: str):
+    if "://" in key:
+        template = await models.Template.create(key)
+    else:
+        template = models.Template.objects.get(key)
+
+    data, content_type = await asyncio.to_thread(
+        utils.images.preview, template, lines, style
+    )
+    return response.raw(data, content_type=content_type)
 
 
 async def render_image(

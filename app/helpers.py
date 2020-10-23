@@ -15,7 +15,7 @@ def configure(app):
     app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.API_BASEPATH = "/"
     app.config.API_SCHEMES = [settings.SCHEME]
-    app.config.API_VERSION = "6.1"
+    app.config.API_VERSION = "6.2"
     app.config.API_TITLE = "Memegen API"
     app.config.API_CONTACT_EMAIL = "support@maketested.com"
     app.config.API_LICENSE_NAME = "View license"

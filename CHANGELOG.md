@@ -1,5 +1,9 @@
 # Revision History
 
+## 6.2
+
+- Added `/images/preview.jpg` route for quicker responses when clients want to show live previews of a custom meme.
+
 ## 6.1
 
 - Added `extension` parameter to specify image format when using POST endpoints.

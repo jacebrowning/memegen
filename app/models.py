@@ -167,6 +167,11 @@ class Template:
 
     @classmethod
     async def create(cls, url: str) -> "Template":
+        if "memegen.link/images" in url:
+            logger.debug(f"Handling builtin template: {url}")
+            key = url.split("memegen.link/images/")[-1].split(".")[0]
+            return cls.objects.get(key)
+
         key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
         template = cls.objects.get_or_create(key, url)
 

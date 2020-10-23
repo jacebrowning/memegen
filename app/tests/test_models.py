@@ -88,3 +88,9 @@ def describe_template():
             url = "https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4"
             template = await Template.create(url)
             expect(template.image.exists()) == False
+
+        @pytest.mark.asyncio
+        async def it_handles_builtin_templates(expect):
+            url = "http://api.memegen.link/images/fry.png"
+            template = await Template.create(url)
+            expect(template.key) == "fry"
