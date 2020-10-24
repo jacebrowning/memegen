@@ -1,6 +1,7 @@
 import hashlib
 from pathlib import Path
 from typing import Dict, List, Optional
+from urllib.parse import urlparse
 
 import aiofiles
 import aiohttp
@@ -167,14 +168,14 @@ class Template:
 
     @classmethod
     async def create(cls, url: str) -> "Template":
-        if "memegen.link/images" in url:
+        parts = urlparse(url)
+        if "memegen.link" in parts.netloc:
             logger.debug(f"Handling builtin template: {url}")
-            key = url.split("memegen.link/images/")[-1].split(".")[0]
+            key = parts.path.split(".")[0].split("/")[2]
             return cls.objects.get(key)
 
         key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
         template = cls.objects.get_or_create(key, url)
-
         if template.image.exists() and not settings.DEBUG:
             logger.info(f"Found background {url} at {template.image}")
 
