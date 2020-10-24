@@ -13,6 +13,8 @@ def describe_text():
             ("style", "before", "after"),
             [
                 ("none", "Hello, world!", "Hello, world!"),
+                ("default", "these are words.", "These are words."),
+                ("default", "These ARE words.", "These ARE words."),
                 ("upper", "Hello, world!", "HELLO, WORLD!"),
                 ("lower", "Hello, world!", "hello, world!"),
                 ("title", "these are words", "These Are Words"),

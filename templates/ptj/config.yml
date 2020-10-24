@@ -2,14 +2,14 @@ name: Phoebe Teaching Joey
 source: https://knowyourmeme.com/photos/1846826-phoebe-teaching-joey
 text:
   - color: white
-    style: none
+    style: default
     anchor_x: 0.0
     anchor_y: 0.175
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
   - color: white
-    style: none
+    style: default
     anchor_x: 0.5
     anchor_y: 0.175
     angle: 0.0
@@ -44,14 +44,14 @@ text:
     scale_x: 0.5
     scale_y: 0.05
   - color: white
-    style: none
+    style: default
     anchor_x: 0.0
     anchor_y: 0.925
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
   - color: white
-    style: none
+    style: default
     anchor_x: 0.5
     anchor_y: 0.925
     angle: 0.0

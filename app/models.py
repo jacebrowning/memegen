@@ -41,6 +41,9 @@ class Text:
         if self.style == "none":
             return text
 
+        if self.style == "default":
+            return text.capitalize() if text.islower() else text
+
         if self.style == "mock":
             return spongemock.mock(text, diversity_bias=0.75, random_seed=0)
 
