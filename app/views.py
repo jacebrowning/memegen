@@ -24,8 +24,8 @@ async def index(request):
     )
     html = html.replace("<code></code>", "<code>&nbsp</code>")
     html = html.replace(
-        "https://api.memegen.link/docs",
-        f"{settings.SCHEME}://{settings.SERVER_NAME}/docs",
+        "https://api.memegen.link",
+        f"{settings.SCHEME}://{settings.SERVER_NAME}",
     )
     return {"content": html}
 
