@@ -16,7 +16,7 @@ text:
     scale_x: 0.18
     scale_y: 0.15
   - color: black
-    style: none
+    style: upper
     anchor_x: 0.7
     anchor_y: 0.135
     angle: 0.0
