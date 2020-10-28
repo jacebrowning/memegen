@@ -1,6 +1,8 @@
-# Setup
+# Contributing
 
-## Requirements
+## Setup
+
+### Requirements
 
 * Make:
     * macOS: `$ xcode-select --install`
@@ -15,7 +17,7 @@ To confirm these system dependencies are configured correctly:
 $ make doctor
 ```
 
-## Installation
+### Installation
 
 Install project dependencies into a virtual environment:
 
@@ -23,13 +25,15 @@ Install project dependencies into a virtual environment:
 $ make install
 ```
 
-# Local Development
+## Local Development
 
 To start the API server:
 
 ```text
 $ make run
 ```
+
+### Adding a Template
 
 To add a new meme template:
 
@@ -38,9 +42,9 @@ To add a new meme template:
 3. Update `config.yml` in the `templates` directory
 4. Refresh `/images/<my_new_template_key>` to see the sample meme
 
-# Continuous Integration
+## Continuous Integration
 
-## Manual
+### Manual
 
 Run the tests:
 
@@ -54,7 +58,7 @@ Run static analysis:
 $ make check
 ```
 
-## Automatic
+### Automatic
 
 Keep all of the above tasks running on change:
 
