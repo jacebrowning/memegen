@@ -20,7 +20,6 @@ sanic-jinja2 = "~0.8.0"
 
 # Markdown
 markdown = "~3.2.2"
-pymdown-extensions = "^8.0"
 pygments = "^2.7.0"
 
 # Images
@@ -88,6 +87,9 @@ cache_dir = ".cache"
 [tool.portray]
 modules = ["app"]
 extra_dirs = ["app/static"]
+
+# [tool.portray.mkdocs]
+# markdown_extensions = ["pymdownx.magiclink"]
 
 [tool.portray.mkdocs.theme]
 name = "material"

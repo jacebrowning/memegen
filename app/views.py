@@ -20,7 +20,7 @@ jinja = SanicJinja2(app, pkg_name="app")
 async def index(request):
     html = markdown(
         text=Path("README.md").read_text(),
-        extensions=["pymdownx.magiclink", "markdown.extensions.tables"],
+        extensions=["markdown.extensions.tables"],
     )
     html = html.replace("<code></code>", "<code>&nbsp</code>")
     html = html.replace(
