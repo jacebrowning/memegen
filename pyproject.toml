@@ -66,6 +66,9 @@ ipdb = "*"
 rope = "^0.14.0"
 watchdog = { version = "*", extras = ["watchmedo"] }
 
+# Documentation
+portray = "^1.4.0"
+
 [tool.black]
 
 quiet = true
@@ -81,6 +84,16 @@ addopts = """
 """
 
 cache_dir = ".cache"
+
+[tool.portray]
+modules = ["app"]
+extra_dirs = ["app/static"]
+
+[tool.portray.mkdocs.theme]
+name = "material"
+logo = "app/static/favicon.ico"
+favicon = "app/static/favicon.ico"
+palette = {primary = "blue grey", accent = "pink"}
 
 [build-system]
 
