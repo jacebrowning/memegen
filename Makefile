@@ -97,6 +97,12 @@ watch: install
 	@ sleep 2 && touch */__init__.py &
 	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.yml" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
 
+.PHONY: docs
+docs: install
+	poetry run portray in_browser --overwrite
+# 	Alternatively, only generate the static files without opening a browser
+# 	poetry run portray as_html --overwrite
+
 ###############################################################################
 # Delivery Tasks
 
@@ -117,3 +123,5 @@ promote: install
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+# 	Update the documentation
+	poetry run portray on_github_pages
