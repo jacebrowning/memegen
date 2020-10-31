@@ -2,7 +2,6 @@ from typing import Dict, List, Tuple
 from urllib.parse import unquote
 
 import aiohttp
-from cachetools import cached
 from sanic.log import logger
 from sanic_cors import CORS
 from sanic_openapi import swagger_blueprint
@@ -38,13 +37,11 @@ def configure(app):
     app.error_handler = errors.BugsnagErrorHandler()
 
 
-@cached({}, key=lambda x: 0 if settings.DEPLOYED else x)  # type: ignore
 def get_valid_templates(request) -> List[Dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [t.jsonify(request.app) for t in templates]
 
 
-@cached({}, key=lambda x: 0 if settings.DEPLOYED else x)  # type: ignore
 def get_sample_images(request) -> List[Tuple[str, str]]:
     return [
         (template.build_sample_url(request.app), template.build_self_url(request.app))

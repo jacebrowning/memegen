@@ -29,7 +29,6 @@ spongemock = "~0.3.4"
 
 # Utilities
 aiohttp = "^3.6.2"
-cachetools = "^4.1.1"
 datafiles = "~0.12b1"
 minilog = "^2.0"
 
@@ -75,12 +74,14 @@ quiet = true
 testpaths = "app"
 
 addopts = """
---no-header --disable-warnings \
+--no-header \
 --random \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html --no-cov-on-fail
 """
 
 cache_dir = ".cache"
+
+markers = "slow"
 
 [build-system]
 

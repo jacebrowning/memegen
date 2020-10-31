@@ -112,13 +112,14 @@ run-production: install .env
 .PHONY: promote
 promote: install
 	@ echo
-	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
-	@ echo
-	heroku pipelines:promote --app memegen-staging --to memegen-production
 	curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
      	-H "Authorization: Bearer ${CF_API_KEY}" \
      	-H "Content-Type: application/json" \
      	--data '{"purge_everything":true}'
-	sleep 30
+	@ sleep 30
+	@ echo
+	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+	@ echo
+	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
