@@ -28,7 +28,7 @@ $(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
 
 ifndef CI
 poetry.lock: pyproject.toml
-	poetry lock
+	poetry lock --no-update
 	@ touch $@
 runtime.txt: .python-version
 	echo "python-$(shell cat $<)" > $@
@@ -115,5 +115,10 @@ promote: install
 	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 	@ echo
 	heroku pipelines:promote --app memegen-staging --to memegen-production
+	curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
+     	-H "Authorization: Bearer ${CF_API_KEY}" \
+     	-H "Content-Type: application/json" \
+     	--data '{"purge_everything":true}'
+	sleep 30
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
