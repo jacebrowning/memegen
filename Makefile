@@ -113,7 +113,7 @@ promote: install .envrc
      	--data '{"purge_everything":true}'
 	@ sleep 30
 	@ echo
-	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+	SITE=https://staging.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 	@ echo
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
