@@ -162,7 +162,7 @@ def add_blurred_background(
     )
 
     padded = background.resize((width, height), Image.LANCZOS)
-    darkened = padded.point(lambda p: p * 0.4)
+    darkened = padded.point(lambda p: int(p * 0.4))
     blurred = darkened.filter(ImageFilter.GaussianBlur(5))
 
     blurred_width, blurred_height = blurred.size
