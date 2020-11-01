@@ -105,7 +105,7 @@ run-production: install .env
 	poetry run heroku local --showenvs
 
 .PHONY: promote
-promote: install .envrc
+promote: install .env .envrc
 	@ echo
 	curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
      	-H "Authorization: Bearer ${CF_API_KEY}" \
@@ -124,7 +124,7 @@ promote: install .envrc
 	echo MAX_REQUESTS=0 >> $@
 	echo MAX_REQUESTS_JITTER=0 >> $@
 
-.envrc: .env
+.envrc:
 	echo dotenv >> $@
 	echo >> $@
 	echo "export CF_API_KEY=???" >> $@

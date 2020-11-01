@@ -6,11 +6,11 @@ STYLE = """
    /* Prevent vertical gaps */
    line-height: 0;
 
-   -webkit-column-count: 5;
+   -webkit-column-count: 6;
    -webkit-column-gap:   0px;
-   -moz-column-count:    5;
+   -moz-column-count:    6;
    -moz-column-gap:      0px;
-   column-count:         5;
+   column-count:         6;
    column-gap:           0px;
 }
 
@@ -20,6 +20,13 @@ STYLE = """
   height: auto !important;
 }
 
+@media (max-width: 1400px) {
+  #images {
+  -moz-column-count:    5;
+  -webkit-column-count: 5;
+  column-count:         5;
+  }
+}
 @media (max-width: 1200px) {
   #images {
   -moz-column-count:    4;
@@ -52,6 +59,7 @@ STYLE = """
 body {
   margin: 0;
   padding: 0;
+  background: black;
 }
 </style>
 """.strip()
