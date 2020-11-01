@@ -24,7 +24,7 @@ pymdown-extensions = "^8.0"
 pygments = "^2.7.0"
 
 # Images
-pillow = "^8.0"
+pillow = "^8.0.1"
 spongemock = "~0.3.4"
 
 # Utilities
