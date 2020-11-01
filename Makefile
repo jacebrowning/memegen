@@ -104,13 +104,8 @@ watch: install
 run-production: install .env
 	poetry run heroku local --showenvs
 
-.env:
-	echo WEB_CONCURRENCY=2 >> $@
-	echo MAX_REQUESTS=0 >> $@
-	echo MAX_REQUESTS_JITTER=0 >> $@
-
 .PHONY: promote
-promote: install
+promote: install .envrc
 	@ echo
 	curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
      	-H "Authorization: Bearer ${CF_API_KEY}" \
@@ -123,3 +118,15 @@ promote: install
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+
+.env:
+	echo WEB_CONCURRENCY=2 >> $@
+	echo MAX_REQUESTS=0 >> $@
+	echo MAX_REQUESTS_JITTER=0 >> $@
+
+.envrc: .env
+	echo dotenv >> $@
+	echo >> $@
+	echo "export CF_API_KEY=???" >> $@
+	echo >> $@
+	echo "# export SITE=http://localhost:5000" >> $@
