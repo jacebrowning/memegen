@@ -20,4 +20,5 @@ __pycache__/
 /results/
 
 # Server
+.env
 .envrc
