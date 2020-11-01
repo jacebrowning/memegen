@@ -99,9 +99,7 @@ watch: install
 
 .PHONY: docs
 docs: install
-	poetry run portray in_browser --overwrite
-# 	Alternatively, only generate the static files without opening a browser
-# 	poetry run portray as_html --overwrite
+	poetry run portray server
 
 ###############################################################################
 # Delivery Tasks
@@ -124,8 +122,6 @@ promote: install .env .envrc
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
-# 	Update the documentation
-	poetry run portray on_github_pages
 
 .env:
 	echo WEB_CONCURRENCY=2 >> $@

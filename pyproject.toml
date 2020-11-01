@@ -86,17 +86,22 @@ cache_dir = ".cache"
 markers = "slow"
 
 [tool.portray]
+
 modules = ["app"]
 extra_dirs = ["app/static"]
+include_reference_documentation = false
 
-# [tool.portray.mkdocs]
-# markdown_extensions = ["pymdownx.magiclink"]
+[tool.portray.mkdocs]
+
+site_name = "memegen.link"
+markdown_extensions = ["pymdownx.magiclink"]
 
 [tool.portray.mkdocs.theme]
+
 name = "material"
 logo = "app/static/favicon.ico"
 favicon = "app/static/favicon.ico"
-palette = {primary = "blue grey", accent = "pink"}
+palette = { primary = "black" }
 
 [build-system]
 
