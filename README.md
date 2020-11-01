@@ -70,8 +70,8 @@ If your client is going to show live previews of a custom meme, please use the `
 
 Both template keys and URLs are supported:
 
-- <https://api.memegen.link/images/preview.jpg?template=fry&line[]=first&line[]=second>
-- <https://api.memegen.link/images/preview.jpg?template=https://api.memegen.link/images/fry.png&line[]=first&line[]=second>
+- <https://api.memegen.link/images/preview.jpg?template=fry&lines[]=first&lines[]=second>
+- <https://api.memegen.link/images/preview.jpg?template=https://api.memegen.link/images/fry.png&lines[]=first&lines[]=second>
 
 ## API Documentation
 

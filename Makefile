@@ -28,7 +28,7 @@ $(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
 
 ifndef CI
 poetry.lock: pyproject.toml
-	poetry lock
+	poetry lock --no-update
 	@ touch $@
 runtime.txt: .python-version
 	echo "python-$(shell cat $<)" > $@
@@ -110,18 +110,32 @@ docs: install
 run-production: install .env
 	poetry run heroku local --showenvs
 
-.env:
-	echo WEB_CONCURRENCY=2 >> $@
-	echo MAX_REQUESTS=0 >> $@
-	echo MAX_REQUESTS_JITTER=0 >> $@
-
 .PHONY: promote
-promote: install
+promote: install .env .envrc
 	@ echo
-	SITE=https://staging-api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+	curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
+     	-H "Authorization: Bearer ${CF_API_KEY}" \
+     	-H "Content-Type: application/json" \
+     	--data '{"purge_everything":true}'
+	@ sleep 30
+	@ echo
+	SITE=https://staging.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 	@ echo
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 # 	Update the documentation
 	poetry run portray on_github_pages
+
+.env:
+	echo WEB_CONCURRENCY=2 >> $@
+	echo MAX_REQUESTS=0 >> $@
+	echo MAX_REQUESTS_JITTER=0 >> $@
+
+.envrc:
+	echo dotenv >> $@
+	echo >> $@
+	echo "export CF_API_KEY=???" >> $@
+	echo >> $@
+	echo "# export SITE=http://localhost:5000" >> $@
+

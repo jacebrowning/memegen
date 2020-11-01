@@ -4,7 +4,7 @@ import pytest
 import requests
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def url():
     return os.getenv("SITE", "http://localhost:5000")
 

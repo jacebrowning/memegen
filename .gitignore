@@ -1,22 +1,24 @@
-# files
+# Files
 /images/
 /templates/_custom*
 
-# dependencies
+# Dependencies
 .venv/
 setup.py
 *.egg-info
 
-# cache
+# Cache
 __pycache__/
 .cache/
 
-# testing
+# Development
+.idea/
+
+# Testing
 .coverage
 /htmlcov/
 /results/
 
-# server
+# Server
 .env
-
-.idea/
+.envrc

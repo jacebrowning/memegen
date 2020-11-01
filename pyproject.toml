@@ -23,17 +23,16 @@ markdown = "~3.2.2"
 pygments = "^2.7.0"
 
 # Images
-pillow = "^8.0"
+pillow = "^8.0.1"
 spongemock = "~0.3.4"
 
 # Utilities
 aiohttp = "^3.6.2"
-cachetools = "^4.1.1"
 datafiles = "~0.12b1"
 minilog = "^2.0"
 
 # Production
-bugsnag = "*"
+bugsnag = "^4.0"
 gunicorn = "~20.0.4"
 uvicorn = "~0.11.8"
 
@@ -60,13 +59,13 @@ locust = "^1.2.3"
 # Coverage
 coveragespace = "^3.1.1"
 
+# Documentation
+portray = "^1.4.0"
+
 # Utilities
 ipdb = "*"
 rope = "^0.14.0"
 watchdog = { version = "*", extras = ["watchmedo"] }
-
-# Documentation
-portray = "^1.4.0"
 
 [tool.black]
 
@@ -77,12 +76,14 @@ quiet = true
 testpaths = "app"
 
 addopts = """
---no-header --disable-warnings \
+--no-header \
 --random \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html --no-cov-on-fail
 """
 
 cache_dir = ".cache"
+
+markers = "slow"
 
 [tool.portray]
 modules = ["app"]
