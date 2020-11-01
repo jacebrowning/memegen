@@ -99,7 +99,7 @@ def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) ->
         elements.append(
             f"""
             <a href="{href}">
-                <img src="{src}" loading="lazy" {size}>
+                <img src="{src}" {size}>
             </a>
             """
         )
