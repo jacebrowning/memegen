@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+<!-- Head -->
+
+{% block extrahead %}
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid #555;
+        background: white;
+    }
+
+    th,
+    tr,
+    td {
+        border-top: 1px solid #555 !important;
+        border-bottom: 1px solid #555 !important;
+        padding: 10px !important;
+    }
+
+    code {
+        padding: 2px 4px;
+        font-size: 90%;
+        color: #e83e8c;
+        background-color: #f9f2f4;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
+
+<!-- Navigation -->
+
+{% block repo %}
+
+<li class="nav-item">
+    <a href="/docs/" class="nav-link"> <i class="fa fa-book"></i> Swagger</a>
+</li>
+
+{{ super() }} {% endblock %}
+
+<!-- Content -->
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8" role="main">
+        {% include "content.html" %}
+    </div>
+</div>
+{% endblock %}
+
+<!-- Footer -->
+
+{% block footer %} {% endblock %}

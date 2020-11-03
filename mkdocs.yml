@@ -1,2 +1,20 @@
 site_name: Memegen API
+site_description: The open source meme generator.
+site_author: Jace Browning
+
+repo_url: https://github.com/jacebrowning/memegen
+edit_uri: ""
+
+markdown_extensions:
+  - toc:
+      permalink: true
+
+theme:
+  name: mkdocs
+  custom_dir: docs/theme
+
+plugins: []
+
+google_analytics: ["UA-91304960-4", "site.memegen.link"]
+
 remote_branch: site

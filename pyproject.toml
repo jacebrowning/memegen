@@ -61,7 +61,7 @@ locust = "^1.2.3"
 coveragespace = "^3.1.1"
 
 # Documentation
-mkdocs = "^1.0"
+mkdocs = "^1.1"
 
 # Utilities
 ipdb = "*"
