@@ -516,7 +516,7 @@ testing = ["Django (<3.1)", "colorama", "docopt", "pytest (>=3.9.0,<5.0.0)"]
 name = "jinja2"
 version = "2.11.2"
 description = "A very fast and expressive template engine."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
@@ -597,7 +597,7 @@ testing = ["coverage", "pyyaml"]
 name = "markupsafe"
 version = "1.1.1"
 description = "Safely add untrusted strings to HTML/XML markup."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
 
@@ -1073,18 +1073,6 @@ sanic = ">=18.12.0"
 sanic-plugins-framework = ">=0.9.0"
 
 [[package]]
-name = "sanic-jinja2"
-version = "0.8.0"
-description = "Jinja2 support for sanic"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-jinja2 = "*"
-sanic = "*"
-
-[[package]]
 name = "sanic-openapi"
 version = "0.6.2"
 description = "Easily document your Sanic API with a UI."
@@ -1346,7 +1334,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "78c940c7c4ca22a11978f255e19314af5ed3cba0443508ce5b80641fda605b81"
+content-hash = "6dfc481630d09d9116bc7c05bffa7d4d69b26b800af91f1a0fbb5705b648a21c"
 
 [metadata.files]
 aiofiles = [
@@ -2077,9 +2065,6 @@ sanic = [
 sanic-cors = [
     {file = "Sanic-Cors-0.10.0.post3.tar.gz", hash = "sha256:abb0f8b17d2ecb12d62ecac42ca62bfed9b07fd00ffd83219ad23b99d4df3f23"},
     {file = "Sanic_Cors-0.10.0.post3-py2.py3-none-any.whl", hash = "sha256:b919d65643de810ed1ed15657b8bc75c310fa1ac8eb491d59deaa9404756b745"},
-]
-sanic-jinja2 = [
-    {file = "sanic_jinja2-0.8.0-py3-none-any.whl", hash = "sha256:21b138db1c6546ca869b128464424007a8892399b253b46d116e9697e831e5ba"},
 ]
 sanic-openapi = [
     {file = "sanic-openapi-0.6.2.tar.gz", hash = "sha256:0ddd11983443d4136ef3e93146cbf89a7196533eb198d72f7489b840cf4016c4"},

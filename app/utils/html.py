@@ -109,7 +109,7 @@ def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) ->
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 
-    head = "<title>Samples</title>\n" + STYLE
+    head = "<title>memegen.link | Samples</title>\n" + STYLE
     body = f'<section id="images">\n{images}\n</section>'
 
     return HTML.format(head=head, body=body)
