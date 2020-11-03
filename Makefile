@@ -101,11 +101,13 @@ watch: install
 site: install
 ifdef CI
 	poetry run mkdocs build --strict
+	@ echo
+	echo memegen.link > site/CNAME
+	mkdir -p site/.circleci
+	touch site/.circleci/config.yml
 ifeq ($(CIRCLE_BRANCH),main)
 	@ echo
 	git config --global user.name CircleCI
-	echo memegen.link > site/CNAME
-	touch site/.circleci/config.yml
 	poetry run mkdocs gh-deploy --dirty
 endif
 else
