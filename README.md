@@ -12,6 +12,23 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 ![Sample Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&width=600)
 
+## Available Formats
+
+Clients can request `.jpg` instead of `.png` for smaller files:
+
+| Format | Example                                                          |
+| :----- | :--------------------------------------------------------------- |
+| PNG    | <https://api.memegen.link/images/ds/small_file/high_quality.png> |
+| JPEG   | <https://api.memegen.link/images/ds/high_quality/small_file.jpg> |
+
+## Custom Dimensions
+
+Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
+
+For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
+
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600)
+
 ## Special Characters
 
 In URLs, spaces can be inserted using underscores or dashes:
@@ -34,23 +51,6 @@ For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/unders
 
 ![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&width=600)
 
-## Custom Dimensions
-
-Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
-
-For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
-
-![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600)
-
-## Available Formats
-
-Clients can also request `.jpg` instead of `.png` for smaller files:
-
-| Format | Example                                                          |
-| :----- | :--------------------------------------------------------------- |
-| PNG    | <https://api.memegen.link/images/ds/small_file/high_quality.png> |
-| JPEG   | <https://api.memegen.link/images/ds/high_quality/small_file.jpg> |
-
 # Templates
 
 The list of predefined meme templates is available here: <https://api.memegen.link/templates>
@@ -59,7 +59,7 @@ The list of predefined meme templates is available here: <https://api.memegen.li
 
 Some memes come in multiple forms, which can be selected via `?style=<style>`.
 
-For example, these are two styles provided by the <https://api.memegen.link/templates/ds>:
+For example, the <https://api.memegen.link/templates/ds> template provides these styles:
 
 |                   `/images/ds.png`                    |                   `/images/ds.png?style=maga`                    |
 | :---------------------------------------------------: | :--------------------------------------------------------------: |
