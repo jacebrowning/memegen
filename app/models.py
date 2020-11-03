@@ -70,6 +70,9 @@ class Template:
     def __str__(self):
         return str(self.directory)
 
+    def __lt__(self, other):
+        return self.key < other.key
+
     @property
     def valid(self) -> bool:
         if not settings.DEPLOYED:

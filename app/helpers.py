@@ -39,13 +39,14 @@ def configure(app):
 
 def get_valid_templates(request) -> List[Dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
-    return [t.jsonify(request.app) for t in templates]
+    return [t.jsonify(request.app) for t in sorted(templates)]
 
 
 def get_sample_images(request) -> List[Tuple[str, str]]:
+    templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [
         (template.build_sample_url(request.app), template.build_self_url(request.app))
-        for template in Template.objects.filter(valid=True, _exclude="_custom")
+        for template in sorted(templates)
     ]
 
 
