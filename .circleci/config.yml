@@ -11,14 +11,14 @@ jobs:
       - checkout
 
       - run:
-          name: Checking System Dependencies
+          name: Checking system dependencies
           command: make doctor
 
       - type: cache-restore
         key: poetry-{{ checksum "poetry.lock" }}
 
       - run:
-          name: Installing Project Dependencies
+          name: Installing project dependencies
           command: make install
 
       - type: cache-save
@@ -27,11 +27,11 @@ jobs:
           - .venv
 
       - run:
-          name: Checking Code
+          name: Checking code
           command: make check
 
       - run:
-          name: Running Tests
+          name: Running tests
           command: make test && sudo pip install coveralls && coveralls
 
       - store_test_results:
@@ -39,3 +39,7 @@ jobs:
 
       - store_artifacts:
           path: htmlcov
+
+      - run:
+          name: Building site
+          command: make site

@@ -60,6 +60,9 @@ locust = "^1.2.3"
 # Coverage
 coveragespace = "^3.1.1"
 
+# Documentation
+mkdocs = "^1.0"
+
 # Utilities
 ipdb = "*"
 rope = "^0.14.0"
