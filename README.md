@@ -1,4 +1,4 @@
-`memegen.link` is an API to programmatically generate memes based solely on requested URLs.
+An API to programmatically generate memes based solely on requested URLs.
 
 [![Build Status](https://img.shields.io/circleci/build/github/jacebrowning/memegen)](https://circleci.com/gh/jacebrowning/memegen)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/main.svg)](https://coveralls.io/r/jacebrowning/memegen)

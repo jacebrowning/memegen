@@ -1,4 +1,4 @@
-site_name: Memegen API
+site_name: memegen.link
 site_description: The open source meme generator.
 site_author: Jace Browning
 
@@ -12,6 +12,7 @@ markdown_extensions:
 theme:
   name: mkdocs
   custom_dir: docs/theme
+  nav_style: dark
 
 plugins: []
 
