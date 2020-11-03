@@ -93,13 +93,13 @@ include_reference_documentation = false
 
 [tool.portray.mkdocs]
 
-site_name = "memegen.link"
+site_name = "Memegen API"
 markdown_extensions = ["pymdownx.magiclink"]
 
 [tool.portray.mkdocs.theme]
 
 name = "material"
-logo = "app/static/favicon.ico"
+logo = "app/static/logo.png"
 favicon = "app/static/favicon.ico"
 palette = { primary = "black" }
 

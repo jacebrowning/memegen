@@ -144,4 +144,3 @@ promote: install .env .envrc
 	echo "export CF_API_KEY=???" >> $@
 	echo >> $@
 	echo "# export SITE=http://localhost:5000" >> $@
-
