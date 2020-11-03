@@ -8,7 +8,7 @@
         <meta name="author" content="Jace Browning">
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Memegen API</title>
+        <title>memegen.link</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -55,9 +55,9 @@
     </head>
 
     <body class="homepage">
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href=".">Memegen API</a>
+                <a class="navbar-brand" href=".">memegen.link</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -66,19 +66,26 @@
                 <!-- Expanded navigation -->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
 
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav ml-auto"> 
+                            <li class="nav-item">
+                                <a href="https://github.com/jacebrowning/memegen" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
+                            </li>
 
-<li class="nav-item">
+<li class="nav-item mr-2">
     <a href="https://api.memegen.link/docs/" class="nav-link">
         <i class="fa fa-book"></i>
         Swagger
     </a>
 </li>
 
+<form class="form-inline my-2 my-lg-0">
+    <a href="https://memecomplete.com" class="btn btn-sm btn-secondary">
+        <i class="fa fa-search"></i>
+        Meme Complete
+    </a>
+</form>
 
-                            <li class="nav-item">
-                                <a href="https://github.com/jacebrowning/memegen" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
-                            </li> 
+
                     </ul>
                 </div>
             </div>
@@ -90,7 +97,7 @@
     <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
         
 
-<p><code>memegen.link</code> is an API to programmatically generate memes based solely on requested URLs.</p>
+<p>An API to programmatically generate memes based solely on requested URLs.</p>
 <p><a href="https://circleci.com/gh/jacebrowning/memegen"><img alt="Build Status" src="https://img.shields.io/circleci/build/github/jacebrowning/memegen" /></a>
 <a href="https://coveralls.io/r/jacebrowning/memegen"><img alt="Coverage Status" src="http://img.shields.io/coveralls/jacebrowning/memegen/main.svg" /></a>
 <a href="https://api.memegen.link/docs/"><img alt="Swagger Validator" src="https://img.shields.io/swagger/valid/3.0?label=docs&amp;specUrl=https%3A%2F%2Fapi.memegen.link%2Fdocs%2Fswagger.json" /></a> <!--content-->
@@ -260,5 +267,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-11-03 05:19:25.547426+00:00
+Build Date UTC : 2020-11-03 06:12:05.038286+00:00
 -->

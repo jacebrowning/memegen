@@ -31,16 +31,23 @@
 
 <!-- Navigation -->
 
-{% block repo %}
+{% block repo %} {{ super() }}
 
-<li class="nav-item">
+<li class="nav-item mr-2">
     <a href="https://api.memegen.link/docs/" class="nav-link">
         <i class="fa fa-book"></i>
         Swagger
     </a>
 </li>
 
-{{ super() }} {% endblock %}
+<form class="form-inline my-2 my-lg-0">
+    <a href="https://memecomplete.com" class="btn btn-sm btn-secondary">
+        <i class="fa fa-search"></i>
+        Meme Complete
+    </a>
+</form>
+
+{% endblock %}
 
 <!-- Content -->
 
