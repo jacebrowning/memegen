@@ -97,9 +97,19 @@ watch: install
 	@ sleep 2 && touch */__init__.py &
 	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.yml" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
 
-.PHONY: docs
-docs: install
+.PHONY: site
+site: install
+ifdef CI
+	poetry run portray as_html
+ifeq ($(CIRCLE_BRANCH),main)
+	@ echo
+	git config --global user.name CircleCI
+	echo site.memegen.link > site/CNAME
+	poetry run portray on_github_pages
+endif
+else
 	poetry run portray server
+endif
 
 ###############################################################################
 # Delivery Tasks
