@@ -4,10 +4,10 @@ from .. import settings
 
 
 def describe_index():
-    def it_contains_the_readme(expect, client):
+    def it_contains_the_api_root(expect, client):
         request, response = client.get("/")
         expect(response.status) == 200
-        expect(response.text).contains("Swagger UI")
+        expect(response.json).contains("docs")
 
 
 def describe_samples():

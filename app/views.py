@@ -13,7 +13,13 @@ helpers.configure(app)
 @app.get("/")
 @doc.exclude(True)
 def index(request):
-    return response.redirect("/docs")
+    return response.json(
+        {
+            "templates": request.app.url_for("templates.index", _external=True),
+            "images": request.app.url_for("images.index", _external=True),
+            "docs": request.app.url_for("swagger.index", _external=True),
+        }
+    )
 
 
 @app.get("/samples")
