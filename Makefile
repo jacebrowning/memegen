@@ -105,6 +105,7 @@ ifeq ($(CIRCLE_BRANCH),main)
 	@ echo
 	git config --global user.name CircleCI
 	echo memegen.link > site/CNAME
+	touch site/.circleci/config.yml
 	poetry run mkdocs gh-deploy --dirty
 endif
 else
