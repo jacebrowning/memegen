@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>memegen.link</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">memegen.link</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#memegenlink" class="nav-link">memegen.link</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#generating-images" class="nav-link">Generating Images</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#special-characters" class="nav-link">Special Characters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#alternate-styles" class="nav-link">Alternate Styles</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom-backgrounds" class="nav-link">Custom Backgrounds</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#image-sizing" class="nav-link">Image Sizing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#live-previews" class="nav-link">Live Previews</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#api-documentation" class="nav-link">API Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="memegenlink">memegen.link</h1>
+<p>An API to programatically generate memes based solely on requested URLs.</p>
+<p><a href="https://circleci.com/gh/jacebrowning/memegen"><img alt="Build Status" src="https://img.shields.io/circleci/build/github/jacebrowning/memegen" /></a>
+<a href="https://coveralls.io/r/jacebrowning/memegen"><img alt="Coverage Status" src="http://img.shields.io/coveralls/jacebrowning/memegen/main.svg" /></a>
+<a href="https://api.memegen.link/docs/"><img alt="Swagger Validator" src="https://img.shields.io/swagger/valid/3.0?label=docs&amp;specUrl=https%3A%2F%2Fapi.memegen.link%2Fdocs%2Fswagger.json" /></a> <!--content-->
+<a href="https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"><img alt="License" src="https://img.shields.io/badge/license-mit-blue" /></a>
+<a href="https://github.com/sponsors/jacebrowning"><img alt="GitHub Sponsora" src="https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red" /></a></p>
+<h1 id="generating-images">Generating Images</h1>
+<p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, https://api.memegen.link/images/buzz/memes/memes_everywhere.png produces:</p>
+<p><img alt="Sample Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&amp;width=600" /></p>
+<h2 id="special-characters">Special Characters</h2>
+<p>In URLs, spaces can be inserted using underscores or dashes:</p>
+<ul>
+<li>underscore (<code>_</code>) → space (<code></code>)</li>
+<li>dash (<code>-</code>) → space (<code></code>)</li>
+<li>2 underscores (<code>__</code>) → underscore (<code>_</code>)</li>
+<li>2 dashes (<code>--</code>) → dash (<code>-</code>)</li>
+</ul>
+<p>Reserved URL characters can be include using escape patterns:</p>
+<ul>
+<li>tilde + Q (<code>~q</code>) → question mark (<code>?</code>)</li>
+<li>tilde + P (<code>~p</code>) → percentage (<code>%</code>)</li>
+<li>tilde + H (<code>~h</code>) → hashtag/pound (<code>#</code>)</li>
+<li>tilde + S (<code>~s</code>) → slash (<code>/</code>)</li>
+<li>tilde + B (<code>~b</code>) → backslash (<code>\</code>)</li>
+<li>2 single quotes (<code>''</code>) → double quote (<code>"</code>)</li>
+</ul>
+<p>For example, https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png produces:</p>
+<p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&amp;width=600" /></p>
+<h2 id="alternate-styles">Alternate Styles</h2>
+<p>Some memes come in multiple forms, which can be selected via <code>?style=&lt;style&gt;</code>.</p>
+<p>For example, these are two styles provided by the https://api.memegen.link/templates/ds template:</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>/images/ds.png</code></th>
+<th align="center"><code>/images/ds.png?style=maga</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><img alt="" src="https://api.memegen.link/images/ds.png?width=280" /></td>
+<td align="center"><img alt="" src="https://api.memegen.link/images/ds.png?style=maga&amp;width=280" /></td>
+</tr>
+</tbody>
+</table>
+<h2 id="custom-backgrounds">Custom Backgrounds</h2>
+<p>You can also use your own image URL as the background. For example, https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png produces:</p>
+<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;width=600" /></p>
+<h2 id="image-sizing">Image Sizing</h2>
+<p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
+<p>For example, https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600 produces:</p>
+<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600" /></p>
+<p>Clients can also request <code>.jpg</code> instead of <code>.png</code> for smaller files.</p>
+<h2 id="live-previews">Live Previews</h2>
+<p>If your client is going to show live previews of a custom meme, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth.</p>
+<p>Both template keys and URLs are supported:</p>
+<ul>
+<li>https://api.memegen.link/images/preview.jpg?template=fry&amp;lines[]=first&amp;lines[]=second</li>
+<li>https://api.memegen.link/images/preview.jpg?template=https://api.memegen.link/images/fry.png&amp;lines[]=first&amp;lines[]=second</li>
+</ul>
+<h1 id="api-documentation">API Documentation</h1>
+<p>The full interactive documentation is available here: https://api.memegen.link/docs/</p>
+<p>Here are some sample clients to explore:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Platforms</th>
+<th align="left">Link</th>
+<th align="left">Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Slack</td>
+<td align="left">---</td>
+<td align="left">Python: <a href="https://github.com/nicolewhite/slack-meme">nicolewhite/slack-meme</a></td>
+</tr>
+<tr>
+<td align="center">Slack</td>
+<td align="left">---</td>
+<td align="left">Go: <a href="https://github.com/CptSpaceToaster/slackbot">CptSpaceToaster/slackbot</a></td>
+</tr>
+<tr>
+<td align="center">Slack</td>
+<td align="left">http://www.memetizer.com</td>
+<td align="left">---</td>
+</tr>
+<tr>
+<td align="center">Hain</td>
+<td align="left">---</td>
+<td align="left">JavaScript: <a href="https://github.com/Metrakit/hain-plugin-meme">Metrakit/hain-plugin-meme</a></td>
+</tr>
+<tr>
+<td align="center">Web</td>
+<td align="left">---</td>
+<td align="left">Clojure: <a href="https://github.com/jasich/mighty-fine-memes">jasich/mighty-fine-memes</a></td>
+</tr>
+<tr>
+<td align="center">Web, Slack</td>
+<td align="left">https://memecomplete.com</td>
+<td align="left">---</td>
+</tr>
+<tr>
+<td align="center">Discord</td>
+<td align="left">---</td>
+<td align="left">JavaScript: https://github.com/parshsee/discordbot</td>
+</tr>
+</tbody>
+</table>
+<p>Additional clients can be found by searching for <a href="https://github.com/search?o=desc&amp;q=%22memegen.link%22+&amp;ref=searchresults&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93">code examples on GitHub</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2020-11-03 01:49:02.388462+00:00
+-->
