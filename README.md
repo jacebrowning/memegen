@@ -6,7 +6,7 @@ An API to programmatically generate memes based solely on requested URLs.
 [![License](https://img.shields.io/badge/license-mit-blue)](https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt)
 [![GitHub Sponsors](https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red)](https://github.com/sponsors/jacebrowning)
 
-# Generating Images
+# Images
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.png> produces:
 
@@ -34,6 +34,27 @@ For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/unders
 
 ![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&width=600)
 
+## Custom Dimensions
+
+Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
+
+For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
+
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600)
+
+## Available Formats
+
+Clients can also request `.jpg` instead of `.png` for smaller files:
+
+| Format | Example                                                          |
+| :----- | :--------------------------------------------------------------- |
+| PNG    | <https://api.memegen.link/images/ds/small_file/high_quality.png> |
+| JPEG   | <https://api.memegen.link/images/ds/high_quality/small_file.jpg> |
+
+# Templates
+
+The list of predefined meme templates is available here: <https://api.memegen.link/templates>
+
 ## Alternate Styles
 
 Some memes come in multiple forms, which can be selected via `?style=<style>`.
@@ -50,39 +71,43 @@ You can also use your own image URL as the background. For example, <https://api
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=600)
 
-## Image Sizing
+# Previews
 
-Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
+If your client is going to show live previews of a custom meme, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:
 
-For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
+```javascript
+var key = encodeURIComponent($("#template").val())
+var line_1 = encodeURIComponent($("#line_1").val()) || " "
+var line_2 = encodeURIComponent($("#line_2").val()) || " "
 
-![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600)
+var api = "https://api.memegen.link/images/preview.jpg"
+var url = `${api}?template=${key}&lines[]=${line_1}&lines[]=${line_2}`
 
-Clients can also request `.jpg` instead of `.png` for smaller files.
+$("#preview").attr("src", url)
+```
 
-## Live Previews
+The `template` parameter can be a template key or URL:
 
-If your client is going to show live previews of a custom meme, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth.
+| Mode              | Example                                                                                                                                 |
+| :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| Template Key      | <https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry>                                       |
+| Template URL      | <https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png>   |
+| Custom Background | <https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png> |
 
-Both template keys and URLs are supported:
-
-- <https://api.memegen.link/images/preview.jpg?template=fry&lines[]=first&lines[]=second>
-- <https://api.memegen.link/images/preview.jpg?template=https://api.memegen.link/images/fry.png&lines[]=first&lines[]=second>
-
-# API Documentation
+# Documentation
 
 The full interactive documentation is available here: <https://api.memegen.link/docs/>
 
 Here are some sample clients to explore:
 
-| Platforms  | Link                       | Source                                                                                |
-| :--------: | :------------------------- | :------------------------------------------------------------------------------------ |
-|   Slack    | ---                        | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)           |
-|   Slack    | ---                        | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)           |
-|   Slack    | <http://www.memetizer.com> | ---                                                                                   |
-|    Hain    | ---                        | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
-|    Web     | ---                        | Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes)      |
-| Web, Slack | <https://memecomplete.com> | ---                                                                                   |
-|  Discord   | ---                        | JavaScript: [parshsee/discordbot](https://github.com/parshsee/discordbot)             |
+| Platforms   | Link                       | Source                                                                                |
+| :---------- | :------------------------- | :------------------------------------------------------------------------------------ |
+| Slack       | ---                        | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)           |
+| Slack       | ---                        | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)           |
+| Slack       | <http://www.memetizer.com> | ---                                                                                   |
+| Hain        | ---                        | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
+| Web         | ---                        | Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes)      |
+| Web & Slack | <https://memecomplete.com> | ---                                                                                   |
+| Discord     | ---                        | JavaScript: [parshsee/discordbot](https://github.com/parshsee/discordbot)             |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
