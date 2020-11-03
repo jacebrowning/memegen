@@ -104,7 +104,7 @@ ifdef CI
 ifeq ($(CIRCLE_BRANCH),main)
 	@ echo
 	git config --global user.name CircleCI
-	echo site.memegen.link > site/CNAME
+	echo memegen.link > site/CNAME
 	poetry run mkdocs gh-deploy --dirty
 endif
 else
