@@ -59,7 +59,7 @@ The list of predefined meme templates is available here: <https://api.memegen.li
 
 Some memes come in multiple forms, which can be selected via `?style=<style>`.
 
-For example, these are two styles provided by the <https://api.memegen.link/templates/ds template>:
+For example, these are two styles provided by the <https://api.memegen.link/templates/ds>:
 
 |                   `/images/ds.png`                    |                   `/images/ds.png?style=maga`                    |
 | :---------------------------------------------------: | :--------------------------------------------------------------: |
