@@ -106,6 +106,30 @@
 <h1 id="images">Images<a class="headerlink" href="#images" title="Permanent link">&para;</a></h1>
 <p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, <a href="https://api.memegen.link/images/buzz/memes/memes_everywhere.png">https://api.memegen.link/images/buzz/memes/memes_everywhere.png</a> produces:</p>
 <p><img alt="Sample Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&amp;width=600" /></p>
+<h2 id="available-formats">Available Formats<a class="headerlink" href="#available-formats" title="Permanent link">&para;</a></h2>
+<p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Format</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">PNG</td>
+<td align="left"><a href="https://api.memegen.link/images/ds/small_file/high_quality.png">https://api.memegen.link/images/ds/small_file/high_quality.png</a></td>
+</tr>
+<tr>
+<td align="left">JPEG</td>
+<td align="left"><a href="https://api.memegen.link/images/ds/high_quality/small_file.jpg">https://api.memegen.link/images/ds/high_quality/small_file.jpg</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="custom-dimensions">Custom Dimensions<a class="headerlink" href="#custom-dimensions" title="Permanent link">&para;</a></h2>
+<p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
+<p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
+<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600" /></p>
 <h2 id="special-characters">Special Characters<a class="headerlink" href="#special-characters" title="Permanent link">&para;</a></h2>
 <p>In URLs, spaces can be inserted using underscores or dashes:</p>
 <ul>
@@ -125,35 +149,11 @@
 </ul>
 <p>For example, <a href="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png">https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png</a> produces:</p>
 <p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&amp;width=600" /></p>
-<h2 id="custom-dimensions">Custom Dimensions<a class="headerlink" href="#custom-dimensions" title="Permanent link">&para;</a></h2>
-<p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
-<p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
-<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600" /></p>
-<h2 id="available-formats">Available Formats<a class="headerlink" href="#available-formats" title="Permanent link">&para;</a></h2>
-<p>Clients can also request <code>.jpg</code> instead of <code>.png</code> for smaller files:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Format</th>
-<th align="left">Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">PNG</td>
-<td align="left"><a href="https://api.memegen.link/images/ds/small_file/high_quality.png">https://api.memegen.link/images/ds/small_file/high_quality.png</a></td>
-</tr>
-<tr>
-<td align="left">JPEG</td>
-<td align="left"><a href="https://api.memegen.link/images/ds/high_quality/small_file.jpg">https://api.memegen.link/images/ds/high_quality/small_file.jpg</a></td>
-</tr>
-</tbody>
-</table>
 <h1 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">&para;</a></h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates">https://api.memegen.link/templates</a></p>
 <h2 id="alternate-styles">Alternate Styles<a class="headerlink" href="#alternate-styles" title="Permanent link">&para;</a></h2>
 <p>Some memes come in multiple forms, which can be selected via <code>?style=&lt;style&gt;</code>.</p>
-<p>For example, these are two styles provided by the <a href="https://api.memegen.link/templates/ds">https://api.memegen.link/templates/ds</a>:</p>
+<p>For example, the <a href="https://api.memegen.link/templates/ds">https://api.memegen.link/templates/ds</a> template provides these styles:</p>
 <table>
 <thead>
 <tr>
@@ -316,5 +316,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-11-03 22:21:29.165633+00:00
+Build Date UTC : 2020-11-03 22:35:28.757981+00:00
 -->
