@@ -7,7 +7,7 @@ def describe_index():
     def it_contains_the_readme(expect, client):
         request, response = client.get("/")
         expect(response.status) == 200
-        expect(response.text).contains("documentation is available here")
+        expect(response.text).contains("Swagger UI")
 
 
 def describe_samples():
