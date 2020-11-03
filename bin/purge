@@ -9,6 +9,6 @@ fi
 curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
 	-H "Authorization: Bearer ${CF_API_KEY}" \
 	-H "Content-Type: application/json" \
-	--data '{"purge_everything":true}'
+	--data "{\"files\":[ \"http://memegen.link\" , \"http://${DOMAIN}\" , \"http://${DOMAIN}/docs\" , \"http://${DOMAIN}/images\" , \"http://${DOMAIN}/samples\" , \"http://${DOMAIN}/templates\" ]}"
 
 sleep 30
