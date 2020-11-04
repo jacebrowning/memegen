@@ -367,6 +367,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "honcho"
+version = "1.0.1"
+description = "Honcho: a Python clone of Foreman. For managing Procfile-based applications."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
+
+[package.extras]
+export = ["jinja2 (>=2.7,<2.8)"]
+
+[[package]]
 name = "httpcore"
 version = "0.11.1"
 description = "A minimal low-level HTTP client."
@@ -1334,7 +1348,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "6dfc481630d09d9116bc7c05bffa7d4d69b26b800af91f1a0fbb5705b648a21c"
+content-hash = "c2a68848d7149b27f0bc601698af6f29f612ac4be571176297a2910844268205"
 
 [metadata.files]
 aiofiles = [
@@ -1640,6 +1654,10 @@ gunicorn = [
 h11 = [
     {file = "h11-0.9.0-py2.py3-none-any.whl", hash = "sha256:4bc6d6a1238b7615b266ada57e0618568066f57dd6fa967d1290ec9309b2f2f1"},
     {file = "h11-0.9.0.tar.gz", hash = "sha256:33d4bca7be0fa039f4e84d50ab00531047e53d6ee8ffbc83501ea602c169cae1"},
+]
+honcho = [
+    {file = "honcho-1.0.1-py2.py3-none-any.whl", hash = "sha256:af5806bf13e3b20acdcb9ff8c0beb91eee6fe07393c3448dfad89667e6ac7576"},
+    {file = "honcho-1.0.1.tar.gz", hash = "sha256:c189402ad2e337777283c6a12d0f4f61dc6dd20c254c9a3a4af5087fc66cea6e"},
 ]
 httpcore = [
     {file = "httpcore-0.11.1-py3-none-any.whl", hash = "sha256:72cfaa461dbdc262943ff4c9abf5b195391a03cdcc152e636adb4239b15e77e1"},

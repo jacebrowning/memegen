@@ -36,9 +36,18 @@ requirements.txt: poetry.lock
 	poetry export --format requirements.txt --output $@ --without-hashes
 endif
 
+site: install
+	poetry run mkdocs build --strict
+	echo memegen.link > site/CNAME
+ifeq ($(CIRCLE_BRANCH),main)
+	@ echo
+	git config --global user.name CircleCI
+	poetry run mkdocs gh-deploy --dirty
+endif
+
 .PHONY: clean
 clean:
-	rm -rf images templates-legacy templates/_custom-* tests/images
+	rm -rf images site templates-legacy templates/_custom-* tests/images
 
 .PHONY: clean-all
 clean-all: clean
@@ -51,7 +60,7 @@ PACKAGES := app scripts
 
 .PHONY: run
 run: install
-	DEBUG=true poetry run python app/views.py
+	poetry run honcho start --procfile Procfile.dev
 
 .PHONY: format
 format: install
@@ -96,20 +105,6 @@ test-slow: install
 watch: install
 	@ sleep 2 && touch */__init__.py &
 	@ poetry run watchmedo shell-command --recursive --pattern="*.py;*.yml" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
-
-.PHONY: site
-site: install
-ifdef CI
-	poetry run mkdocs build --strict
-ifeq ($(CIRCLE_BRANCH),main)
-	@ echo
-	echo memegen.link > site/CNAME
-	git config --global user.name CircleCI
-	poetry run mkdocs gh-deploy --dirty
-endif
-else
-	poetry run mkdocs serve
-endif
 
 ###############################################################################
 # Delivery Tasks

@@ -1,0 +1,2 @@
+api: DEBUG=true python app/views.py
+site: mkdocs serve

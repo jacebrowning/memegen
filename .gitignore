@@ -22,3 +22,6 @@ __pycache__/
 # Server
 .env
 .envrc
+
+# Site
+/site/
