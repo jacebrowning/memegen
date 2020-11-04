@@ -16,10 +16,10 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 Clients can request `.jpg` instead of `.png` for smaller files:
 
-| Format | Example                                                          |
-| :----- | :--------------------------------------------------------------- |
-| PNG    | <https://api.memegen.link/images/ds/small_file/high_quality.png> |
-| JPEG   | <https://api.memegen.link/images/ds/high_quality/small_file.jpg> |
+| Format | Example                                                                                                  |
+| :----- | :------------------------------------------------------------------------------------------------------- |
+| PNG    | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png) |
+| JPEG   | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg) |
 
 ## Custom Dimensions
 
@@ -88,11 +88,11 @@ $("#preview").attr("src", url)
 
 The `template` parameter can be a template key or URL:
 
-| Mode              | Example                                                                                                                                 |
-| :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| Template Key      | <https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry>                                       |
-| Template URL      | <https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png>   |
-| Custom Background | <https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png> |
+| Mode              | Example                                                                                                                                                                                                                                                 |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Template Key      | [/images/preview.jpg?lines[]=first+line&lines[]=second+line &template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
+| Template URL      | [/images/preview.jpg?lines[]=first+line&lines[]=second+line &template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
+| Custom Background | [/images/preview.jpg?lines[]=first+line&lines[]=second+line &template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
 
 # Documentation
 
