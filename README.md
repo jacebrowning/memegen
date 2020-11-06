@@ -53,13 +53,13 @@ For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/unders
 
 # Templates
 
-The list of predefined meme templates is available here: <https://api.memegen.link/templates>
+The list of predefined meme templates is available here: <https://api.memegen.link/templates/>
 
 ## Alternate Styles
 
 Some memes come in multiple forms, which can be selected via `?style=<style>`.
 
-For example, the <https://api.memegen.link/templates/ds> template provides these styles:
+For example, the <https://api.memegen.link/templates/ds/> template provides these styles:
 
 |                   `/images/ds.png`                    |                   `/images/ds.png?style=maga`                    |
 | :---------------------------------------------------: | :--------------------------------------------------------------: |
