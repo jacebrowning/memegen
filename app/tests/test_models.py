@@ -98,6 +98,12 @@ def describe_template():
             expect(template.key) == "fry"
 
         @pytest.mark.asyncio
+        async def it_handles_invalid_builtin_templates(expect):
+            url = "http://api.memegen.link/images/fry2.png"
+            template = await Template.create(url)
+            expect(template.key) == "_error"
+
+        @pytest.mark.asyncio
         async def it_handles_custom_image_urls(expect):
             url = "http://api.memegen.link/images/fry/test.png"
             template = await Template.create(url)

@@ -178,7 +178,7 @@ class Template:
         if "memegen.link" in parts.netloc:
             logger.debug(f"Handling builtin template: {url}")
             key = parts.path.split(".")[0].split("/")[2]
-            return cls.objects.get(key)
+            return cls.objects.get_or_none(key) or cls.objects.get("_error")
 
         key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
         template = cls.objects.get_or_create(key, url)
