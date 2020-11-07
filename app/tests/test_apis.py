@@ -19,6 +19,7 @@ def describe_template_detail():
             expect(response.json) == {
                 "name": "Insanity Wolf",
                 "key": "iw",
+                "lines": 2,
                 "styles": [],
                 "blank": "http://localhost:5000/images/iw.png",
                 "sample": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
