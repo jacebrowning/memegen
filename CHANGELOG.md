@@ -1,5 +1,9 @@
 # Revision History
 
+## 6.3
+
+- Added `lines` to `/templates/<key>/` responses to indicate the maximum number of supported lines of text.
+
 ## 6.2
 
 - Added `/images/preview.jpg` route for quicker responses when clients want to show live previews of a custom meme.

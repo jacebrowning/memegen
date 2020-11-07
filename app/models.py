@@ -112,6 +112,7 @@ class Template:
         return {
             "name": self.name,
             "key": self.key,
+            "lines": len(self.text),
             "styles": self.styles,
             "blank": app.url_for(
                 f"images.blank_{settings.DEFAULT_EXT}",
