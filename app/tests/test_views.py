@@ -16,6 +16,15 @@ def describe_examples():
         request, response = client.get("/examples")
         expect(response.status) == 200
         expect(response.text.count("img")) > 100
+        expect(response.text).excludes("setInterval")
+
+    @pytest.mark.slow
+    def it_can_enable_automatic_refresh(expect, client, monkeypatch):
+        monkeypatch.setattr(settings, "DEBUG", True)
+        request, response = client.get("/examples?debug=true")
+        expect(response.status) == 200
+        expect(response.text.count("img")) > 100
+        expect(response.text).includes("setInterval")
 
 
 def describe_test():

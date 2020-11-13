@@ -28,7 +28,7 @@ async def examples(request):
     examples = await asyncio.to_thread(helpers.get_example_images, request)
     urls = [example[0] for example in examples]
     refresh = "debug" in request.args and settings.DEBUG
-    content = utils.html.gallery(urls, refresh=refresh)
+    content = utils.html.gallery(urls, columns=True, refresh=refresh)
     return response.html(content)
 
 
@@ -38,7 +38,7 @@ async def test(request):
     if not settings.DEBUG:
         return response.redirect("/")
     urls = await asyncio.to_thread(helpers.get_test_images, request)
-    content = utils.html.gallery(urls, refresh=True)
+    content = utils.html.gallery(urls, columns=False, refresh=True)
     return response.html(content)
 
 
