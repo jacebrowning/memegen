@@ -13,7 +13,7 @@ def describe_template_list():
 
 def describe_template_detail():
     def describe_GET():
-        def it_returns_example_images(expect, client):
+        def it_includes_metadata(expect, client):
             request, response = client.get("/templates/iw")
             expect(response.status) == 200
             expect(response.json) == {
@@ -26,6 +26,11 @@ def describe_template_detail():
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",
                 "_self": "http://localhost:5000/templates/iw",
             }
+
+        def it_shortens_example_when_no_text(expect, client):
+            request, response = client.get("/templates/mmm")
+            expect(response.status) == 200
+            expect(response.json["example"]) == "http://localhost:5000/images/mmm.png"
 
         def it_returns_404_when_missing(expect, client):
             request, response = client.get("/templates/foobar")

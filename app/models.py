@@ -147,7 +147,8 @@ class Template:
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        return app.url_for(view_name, **kwargs)
+        url = app.url_for(view_name, **kwargs)
+        return url.replace("/_/_.", ".").replace("/_.", ".")
 
     def build_custom_url(
         self,
