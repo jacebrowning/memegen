@@ -24,7 +24,7 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-91304960-4', 'site.memegen.link');
+            ga('create', 'UA-91304960-4', 'memegen.link');
             ga('send', 'pageview');
         </script>
 <style>
@@ -64,8 +64,17 @@
 
                 <!-- Expanded navigation -->
                 <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem active">
+                                <a href="." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="examples/" class="nav-link">Examples</a>
+                            </li>
+                        </ul>
 
-                    <ul class="nav navbar-nav ml-auto"> 
+                    <ul class="nav navbar-nav ml-auto">  
                             <li class="nav-item">
                                 <a href="https://github.com/jacebrowning/memegen" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
                             </li>
@@ -91,9 +100,11 @@
 
         <div class="container">
             <div class="row">
-<div class="row justify-content-center">
-    <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
-        
+
+<div class="col-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
+            
 
 <p>An API to programmatically generate memes based solely on requested URLs.</p>
 <p><a href="https://circleci.com/gh/jacebrowning/memegen"><img alt="Build Status" src="https://img.shields.io/circleci/build/github/jacebrowning/memegen" /></a>
@@ -101,10 +112,10 @@
 <a href="https://api.memegen.link/docs/"><img alt="Swagger Validator" src="https://img.shields.io/swagger/valid/3.0?label=docs&amp;specUrl=https%3A%2F%2Fapi.memegen.link%2Fdocs%2Fswagger.json" /></a> <!--content-->
 <a href="https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"><img alt="License" src="https://img.shields.io/badge/license-mit-blue" /></a>
 <a href="https://github.com/sponsors/jacebrowning"><img alt="GitHub Sponsors" src="https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red" /></a></p>
-<h1 id="images">Images<a class="headerlink" href="#images" title="Permanent link">&para;</a></h1>
+<h1 id="images">Images</h1>
 <p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, <a href="https://api.memegen.link/images/buzz/memes/memes_everywhere.png">https://api.memegen.link/images/buzz/memes/memes_everywhere.png</a> produces:</p>
 <p><img alt="Sample Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&amp;width=600" /></p>
-<h2 id="available-formats">Available Formats<a class="headerlink" href="#available-formats" title="Permanent link">&para;</a></h2>
+<h2 id="available-formats">Available Formats</h2>
 <p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files:</p>
 <table>
 <thead>
@@ -124,11 +135,11 @@
 </tr>
 </tbody>
 </table>
-<h2 id="custom-dimensions">Custom Dimensions<a class="headerlink" href="#custom-dimensions" title="Permanent link">&para;</a></h2>
+<h2 id="custom-dimensions">Custom Dimensions</h2>
 <p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
 <p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
 <p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600" /></p>
-<h2 id="special-characters">Special Characters<a class="headerlink" href="#special-characters" title="Permanent link">&para;</a></h2>
+<h2 id="special-characters">Special Characters</h2>
 <p>In URLs, spaces can be inserted using underscores or dashes:</p>
 <ul>
 <li>underscore (<code>_</code>) → space (<code></code>)</li>
@@ -147,9 +158,9 @@
 </ul>
 <p>For example, <a href="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png">https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png</a> produces:</p>
 <p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&amp;width=600" /></p>
-<h1 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">&para;</a></h1>
+<h1 id="templates">Templates</h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates/">https://api.memegen.link/templates/</a></p>
-<h2 id="alternate-styles">Alternate Styles<a class="headerlink" href="#alternate-styles" title="Permanent link">&para;</a></h2>
+<h2 id="alternate-styles">Alternate Styles</h2>
 <p>Some memes come in multiple forms, which can be selected via <code>?style=&lt;style&gt;</code>.</p>
 <p>For example, the <a href="https://api.memegen.link/templates/ds/">https://api.memegen.link/templates/ds/</a> template provides these styles:</p>
 <table>
@@ -166,10 +177,10 @@
 </tr>
 </tbody>
 </table>
-<h2 id="custom-backgrounds">Custom Backgrounds<a class="headerlink" href="#custom-backgrounds" title="Permanent link">&para;</a></h2>
+<h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background. For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
 <p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;width=600" /></p>
-<h1 id="previews">Previews<a class="headerlink" href="#previews" title="Permanent link">&para;</a></h1>
+<h1 id="previews">Previews</h1>
 <p>If your client is going to show live previews of a custom meme, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
 <pre><code class="javascript">var key = encodeURIComponent($(&quot;#template&quot;).val())
 var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val()) || &quot; &quot;
@@ -204,7 +215,7 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 </tr>
 </tbody>
 </table>
-<h1 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h1>
+<h1 id="documentation">Documentation</h1>
 <p>The full interactive documentation is available here: <a href="https://api.memegen.link/docs/">https://api.memegen.link/docs/</a></p>
 <p>Here are some sample clients to explore:</p>
 <table>
@@ -254,19 +265,33 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 </tbody>
 </table>
 <p>Additional clients can be found by searching for <a href="https://github.com/search?o=desc&amp;q=%22memegen.link%22+&amp;ref=searchresults&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93">code examples on GitHub</a>.</p>
+        </div>
     </div>
 </div>
+
 
             </div>
         </div>
 
         <footer class="col-md-12"> 
-        </footer>
+        </footer> 
         <script>
             var base_url = ".",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="js/base.js" defer></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.min.js"
+    integrity="sha512-HY1lApSG7xxx8mYzs/lxRs+c5AaDThRaa3pvQB6puiswvf2lWqMJVf+8qSGiL4ZXfHQoPIqbd1TlpqfycPo3cQ=="
+    crossorigin="anonymous"
+></script>
+
+<script>
+    iFrameResize({ checkOrigin: false })
+</script>
+
+
 
         <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -314,5 +339,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-11-13 02:06:28.183940+00:00
+Build Date UTC : 2020-11-13 02:13:43.534413+00:00
 -->

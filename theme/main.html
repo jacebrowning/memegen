@@ -30,7 +30,7 @@
 
 <!-- Navigation -->
 
-{% block repo %} {{ super() }}
+{% block next_prev %} {% endblock %} {% block repo %} {{ super() }}
 
 <li class="nav-item mr-2">
     <a href="https://api.memegen.link/docs/" class="nav-link">
@@ -50,11 +50,31 @@
 <!-- Content -->
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
-        {% include "content.html" %}
+
+<div class="col-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
+            {% include "content.html" %}
+        </div>
     </div>
 </div>
+
+{% endblock %}
+
+<!-- Scripts -->
+
+{% block scripts %} {{ super() }}
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.min.js"
+    integrity="sha512-HY1lApSG7xxx8mYzs/lxRs+c5AaDThRaa3pvQB6puiswvf2lWqMJVf+8qSGiL4ZXfHQoPIqbd1TlpqfycPo3cQ=="
+    crossorigin="anonymous"
+></script>
+
+<script>
+    iFrameResize({ checkOrigin: false })
+</script>
+
 {% endblock %}
 
 <!-- Footer -->

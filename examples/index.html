@@ -7,15 +7,15 @@
         
         <meta name="author" content="Jace Browning">
         
-        <link rel="shortcut icon" href="/img/favicon.ico">
-        <title>memegen.link</title>
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/font-awesome.min.css" rel="stylesheet">
-        <link href="/css/base.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Examples - memegen.link</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 
-        <script src="/js/jquery-1.10.2.min.js" defer></script>
-        <script src="/js/bootstrap.min.js" defer></script>
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
         <script>
@@ -26,13 +26,37 @@
 
             ga('create', 'UA-91304960-4', 'memegen.link');
             ga('send', 'pageview');
-        </script> 
+        </script>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid #555;
+        background: white;
+    }
+
+    th,
+    tr,
+    td {
+        border-top: 1px solid #555 !important;
+        border-bottom: 1px solid #555 !important;
+    }
+
+    code {
+        padding: 2px 4px;
+        font-size: 90%;
+        color: #e83e8c;
+        background-color: #f9f2f4;
+        border-radius: 4px;
+    }
+</style>
+
     </head>
 
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="/.">memegen.link</a>
+                <a class="navbar-brand" href="..">memegen.link</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -43,17 +67,32 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="/." class="nav-link">Home</a>
+                                <a href=".." class="nav-link">Home</a>
                             </li>
-                            <li class="navitem">
-                                <a href="/examples/" class="nav-link">Examples</a>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Examples</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav ml-auto">  
                             <li class="nav-item">
                                 <a href="https://github.com/jacebrowning/memegen" class="nav-link"><i class="fa fa-github"></i> GitHub</a>
                             </li>
+
+<li class="nav-item mr-2">
+    <a href="https://api.memegen.link/docs/" class="nav-link">
+        <i class="fa fa-book"></i>
+        Swagger
+    </a>
+</li>
+
+<form class="form-inline my-2 my-lg-0">
+    <a href="https://memecomplete.com/custom/" class="btn btn-sm btn-secondary">
+        Create a Meme
+    </a>
+</form>
+
+
                     </ul>
                 </div>
             </div>
@@ -62,26 +101,44 @@
         <div class="container">
             <div class="row">
 
-    <div class="row-fluid">
-      <div id="main-content" class="span12">
-        <h1 id="404-page-not-found" style="text-align: center">404</h1>
-        <p style="text-align: center"><strong>Page not found</strong></p>
-      </div>
+<div class="col-12">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
+            
+
+<p><iframe
+    src="https://api.memegen.link/samples"
+    width="100%"
+    frameBorder="0"
+    scrolling="no">
+</iframe></p>
+        </div>
     </div>
+</div>
 
 
             </div>
         </div>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
+        <footer class="col-md-12"> 
+        </footer> 
         <script>
-            var base_url = "/",
+            var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="/js/base.js" defer></script>
+        <script src="../js/base.js" defer></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.min.js"
+    integrity="sha512-HY1lApSG7xxx8mYzs/lxRs+c5AaDThRaa3pvQB6puiswvf2lWqMJVf+8qSGiL4ZXfHQoPIqbd1TlpqfycPo3cQ=="
+    crossorigin="anonymous"
+></script>
+
+<script>
+    iFrameResize({ checkOrigin: false })
+</script>
+
+
 
         <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
     <div class="modal-dialog">
