@@ -5,9 +5,9 @@ site_author: Jace Browning
 repo_url: https://github.com/jacebrowning/memegen
 edit_uri: ""
 
-markdown_extensions:
-  - toc:
-      permalink: true
+nav:
+  - Home: index.md
+  - Examples: examples.md
 
 theme:
   name: mkdocs
@@ -16,6 +16,6 @@ theme:
 
 plugins: []
 
-google_analytics: ["UA-91304960-4", "site.memegen.link"]
+google_analytics: ["UA-91304960-4", "memegen.link"]
 
 remote_branch: site
