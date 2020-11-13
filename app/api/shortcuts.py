@@ -26,9 +26,12 @@ async def example(request, template_key):
         return response.redirect(url)
 
     if settings.DEBUG:
-        message = f"Template not fully implemented: {template}"
-        logger.warn(message)
-        template.datafile.save()
+        if "<" in template_key:
+            message = f"Replace {template_key!r} in the URL"
+        else:
+            message = f"Template not fully implemented: {template}"
+            logger.warn(message)
+            template.datafile.save()
         abort(501, message)
 
     abort(404, f"Template not found: {template_key}")

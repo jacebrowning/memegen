@@ -64,7 +64,7 @@ class Template:
     text: List[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
     )
-    styles: List[str] = field(default_factory=lambda: [settings.DEFAULT_STYLE])
+    styles: List[str] = field(default_factory=lambda: [])
     example: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
 
     def __str__(self):

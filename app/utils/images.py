@@ -37,7 +37,7 @@ def save(
     size = fit_image(*size)
 
     slug = encode(lines)
-    variant = str(style) + str(size)
+    variant = str(template.text) + str(style) + str(size)
     fingerprint = hashlib.sha1(variant.encode()).hexdigest()
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
