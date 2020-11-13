@@ -7,7 +7,7 @@ def describe_index():
     def it_contains_the_api_root(expect, client):
         request, response = client.get("/")
         expect(response.status) == 200
-        expect(response.json).contains("docs")
+        expect(response.json).contains("_docs")
 
 
 def describe_examples():

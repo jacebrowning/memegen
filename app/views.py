@@ -17,7 +17,8 @@ def index(request):
         {
             "templates": request.app.url_for("templates.index", _external=True),
             "images": request.app.url_for("images.index", _external=True),
-            "docs": request.app.url_for("swagger.index", _external=True),
+            "_docs": request.app.url_for("swagger.index", _external=True),
+            "_examples": request.app.url_for("examples", _external=True),
         }
     )
 
