@@ -59,7 +59,7 @@ text:
     scale_y: 0.05
 styles:
   -
-sample:
+example:
   - Cast it
   - Cast it
   - into

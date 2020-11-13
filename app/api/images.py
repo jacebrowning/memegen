@@ -12,17 +12,17 @@ blueprint = Blueprint("images", url_prefix="/images")
 
 
 @blueprint.get("/")
-@doc.summary("List sample memes")
+@doc.summary("List example memes")
 @doc.operation("images.list")
 @doc.produces(
     doc.List({"url": str, "template": str}),
-    description="Successfully returned a list of sample memes",
+    description="Successfully returned a list of example memes",
     content_type="application/json",
 )
 async def index(request):
-    samples = await asyncio.to_thread(helpers.get_sample_images, request)
+    examples = await asyncio.to_thread(helpers.get_example_images, request)
     return response.json(
-        [{"url": url, "template": template} for url, template in samples]
+        [{"url": url, "template": template} for url, template in examples]
     )
 
 

@@ -31,7 +31,7 @@ text:
     scale_y: 0.255
 styles:
   -
-sample:
+example:
   - Who
   - Whom
   - Whom'st

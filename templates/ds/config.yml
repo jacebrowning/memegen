@@ -24,6 +24,6 @@ text:
     scale_y: 0.15
 styles:
   - maga
-sample:
+example:
   - The dress is black and blue.
   - The dress is gold and white.

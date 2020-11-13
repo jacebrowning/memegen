@@ -10,10 +10,10 @@ def describe_index():
         expect(response.json).contains("docs")
 
 
-def describe_samples():
+def describe_examples():
     @pytest.mark.slow
     def it_displays_images(expect, client):
-        request, response = client.get("/samples")
+        request, response = client.get("/examples")
         expect(response.status) == 200
         expect(response.text.count("img")) > 100
 

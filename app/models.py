@@ -65,7 +65,7 @@ class Template:
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
     )
     styles: List[str] = field(default_factory=lambda: [settings.DEFAULT_STYLE])
-    sample: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
+    example: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
 
     def __str__(self):
         return str(self.directory)
@@ -120,7 +120,7 @@ class Template:
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
-            "sample": self.build_sample_url(app),
+            "example": self.build_example_url(app),
             "source": self.source,
             "_self": self.build_self_url(app),
         }
@@ -133,7 +133,7 @@ class Template:
             _scheme=settings.SCHEME,
         )
 
-    def build_sample_url(
+    def build_example_url(
         self,
         app: Sanic,
         view_name: str = f"images.text_{settings.DEFAULT_EXT}",
@@ -142,7 +142,7 @@ class Template:
     ) -> str:
         kwargs = {
             "template_key": self.key,
-            "text_paths": utils.text.encode(self.sample),
+            "text_paths": utils.text.encode(self.example),
             "_external": external,
         }
         if external:

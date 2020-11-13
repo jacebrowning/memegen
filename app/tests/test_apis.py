@@ -13,7 +13,7 @@ def describe_template_list():
 
 def describe_template_detail():
     def describe_GET():
-        def it_returns_sample_images(expect, client):
+        def it_returns_example_images(expect, client):
             request, response = client.get("/templates/iw")
             expect(response.status) == 200
             expect(response.json) == {
@@ -22,7 +22,7 @@ def describe_template_detail():
                 "lines": 2,
                 "styles": [],
                 "blank": "http://localhost:5000/images/iw.png",
-                "sample": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
+                "example": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",
                 "_self": "http://localhost:5000/templates/iw",
             }
@@ -65,7 +65,7 @@ def describe_template_detail():
 def describe_image_list():
     def describe_GET():
         @pytest.mark.slow
-        def it_returns_sample_image_urls(expect, client):
+        def it_returns_example_image_urls(expect, client):
             request, response = client.get("/images")
             expect(response.status) == 200
             expect(response.json).contains(
@@ -227,7 +227,7 @@ def describe_image_detail():
             expect(response.headers["Location"]) == redirect
 
     def describe_shortcuts():
-        def it_redirects_to_sample_image_when_no_extension(expect, client):
+        def it_redirects_to_example_image_when_no_extension(expect, client):
             request, response = client.get("/images/fry", allow_redirects=False)
             redirect = "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID"
             expect(response.status) == 302
@@ -259,7 +259,7 @@ def describe_image_detail():
             expect(len(response.content)) == len(response2.content)
 
         @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_redirects_to_sample_image(expect, client, ext):
+        def it_redirects_to_example_image(expect, client, ext):
             request, response = client.get(f"/fry.{ext}", allow_redirects=False)
             redirect = f"/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID.{ext}"
             expect(response.status) == 302

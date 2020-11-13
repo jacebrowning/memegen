@@ -21,7 +21,7 @@ blueprint = Blueprint("templates", url_prefix="/templates")
             "key": str,
             "styles": doc.List(str),
             "blank": str,
-            "sample": str,
+            "example": str,
             "source": str,
             "_self": str,
         }
@@ -43,7 +43,7 @@ async def index(request):
         "key": str,
         "styles": doc.List(str),
         "blank": str,
-        "sample": str,
+        "example": str,
         "source": str,
         "_self": str,
     },

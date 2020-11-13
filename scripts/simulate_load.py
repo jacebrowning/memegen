@@ -19,8 +19,8 @@ class Client(HttpUser):
         self.client.get("/docs")
 
     @task
-    def samples(self):
-        self.client.get("/samples")
+    def examples(self):
+        self.client.get("/examples")
 
     @task
     def templates(self):
