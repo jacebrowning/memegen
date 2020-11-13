@@ -21,8 +21,8 @@ def test_post_images(expect, url):
     expect(response.json()["url"]).endswith("/images/iw/test/deployment.png")
 
 
-def test_get_samples(expect, url):
-    response = requests.get(f"{url}/samples")
+def test_get_examples(expect, url):
+    response = requests.get(f"{url}/examples")
     expect(response.status_code) == 200
 
 

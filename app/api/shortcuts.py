@@ -9,18 +9,20 @@ blueprint = Blueprint("shortcuts", url_prefix="/")
 
 
 @blueprint.get("/images/<template_key>")
-@doc.summary("Redirect to a sample image")
-@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
+@doc.summary("Redirect to a example image")
+@doc.response(302, doc.File(), description="Successfully redirected to a example image")
 @doc.response(404, str, description="Template not found")
 @doc.response(501, str, description="Template not fully implemented")
-async def sample(request, template_key):
+async def example(request, template_key):
     if settings.DEBUG:
         template = models.Template.objects.get_or_create(template_key)
     else:
         template = models.Template.objects.get_or_none(template_key)
 
     if template and template.valid:
-        url = template.build_sample_url(request.app, "shortcuts.custom", external=False)
+        url = template.build_example_url(
+            request.app, "shortcuts.custom", external=False
+        )
         return response.redirect(url)
 
     if settings.DEBUG:
@@ -33,36 +35,36 @@ async def sample(request, template_key):
 
 
 @blueprint.get("/<template_key>.png")
-@doc.summary("Redirect to a sample image")
+@doc.summary("Redirect to a example image")
 @doc.exclude(settings.DEPLOYED)
-@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
+@doc.response(302, doc.File(), description="Successfully redirected to a example image")
 @doc.response(404, str, description="Template not found")
-async def sample_png(request, template_key):
+async def example_png(request, template_key):
     template = models.Template.objects.get_or_none(template_key)
     if template:
-        url = template.build_sample_url(request.app, external=False)
+        url = template.build_example_url(request.app, external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_key}")
 
 
 @blueprint.get("/<template_key>.jpg")
-@doc.summary("Redirect to a sample image")
+@doc.summary("Redirect to a example image")
 @doc.exclude(settings.DEPLOYED)
-@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
+@doc.response(302, doc.File(), description="Successfully redirected to a example image")
 @doc.response(404, str, description="Template not found")
-async def sample_jpg(request, template_key):
+async def example_jpg(request, template_key):
     template = models.Template.objects.get_or_none(template_key)
     if template:
-        url = template.build_sample_url(request.app, "images.text_jpg", external=False)
+        url = template.build_example_url(request.app, "images.text_jpg", external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_key}")
 
 
 @blueprint.get("/<template_key>")
-@doc.summary("Redirect to a sample image")
+@doc.summary("Redirect to a example image")
 @doc.exclude(settings.DEPLOYED)
-@doc.response(302, doc.File(), description="Successfully redirected to a sample image")
-async def sample_legacy(request, template_key):
+@doc.response(302, doc.File(), description="Successfully redirected to a example image")
+async def example_legacy(request, template_key):
     return response.redirect(f"/images/{template_key}")
 
 

@@ -17,6 +17,6 @@ text:
     scale_y: 0.3
 styles:
   -
-sample:
+example:
   - Trying a thing.
   - Trying a thing again.

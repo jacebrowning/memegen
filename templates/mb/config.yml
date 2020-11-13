@@ -18,6 +18,6 @@ text:
 styles:
   - box
   - flood
-sample:
+example:
   - "'MEMBER"
   - STAR WARS?

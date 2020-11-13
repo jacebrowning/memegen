@@ -22,11 +22,11 @@ def index(request):
     )
 
 
-@app.get("/samples")
+@app.get("/examples")
 @doc.exclude(True)
-async def samples(request):
-    samples = await asyncio.to_thread(helpers.get_sample_images, request)
-    urls = [sample[0] for sample in samples]
+async def examples(request):
+    examples = await asyncio.to_thread(helpers.get_example_images, request)
+    urls = [example[0] for example in examples]
     refresh = "debug" in request.args and settings.DEBUG
     content = utils.html.gallery(urls, refresh=refresh)
     return response.html(content)

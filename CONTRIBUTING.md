@@ -2,12 +2,12 @@
 
 ## Requirements
 
-* Make:
-    * macOS: `$ xcode-select --install`
-    * Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
-    * Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
-* Python: `$ pyenv install`
-* Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
+- Make:
+  - macOS: `$ xcode-select --install`
+  - Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
+  - Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
+- Python: `$ pyenv install`
+- Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
 
 To confirm these system dependencies are configured correctly:
 
@@ -36,7 +36,7 @@ To add a new meme template:
 1. Visit `/images/<my_new_template_key>`
 2. Add a `default.png` (or JPG) background image in `templates` directory
 3. Update `config.yml` in the `templates` directory
-4. Refresh `/images/<my_new_template_key>` to see the sample meme
+4. Refresh `/images/<my_new_template_key>` to see the example meme
 
 # Continuous Integration
 

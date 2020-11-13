@@ -1,5 +1,9 @@
 # Revision History
 
+## 7.0
+
+- Renamed `sample` to `example` in template API responses.
+
 ## 6.3
 
 - Added `lines` to `/templates/<key>/` responses to indicate the maximum number of supported lines of text.
