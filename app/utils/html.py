@@ -41,30 +41,15 @@ STYLE = """
   column-count:         3;
   }
 }
-@media (max-width: 800px) {
-  #images {
-  -moz-column-count:    2;
-  -webkit-column-count: 2;
-  column-count:         2;
-  }
-}
-@media (max-width: 400px) {
-  #images {
-  -moz-column-count:    1;
-  -webkit-column-count: 1;
-  column-count:         1;
-  }
-}
 
 body {
   margin: 0;
   padding: 0;
-  background: black;
 }
 </style>
 """.strip()
 
-SCRIPT = r"""
+REFRESH_SCRIPT = r"""
 <script>
     setInterval(function() {
         var images = document.images;
@@ -74,6 +59,14 @@ SCRIPT = r"""
             );
         }
     }, {interval});
+</script>
+"""
+
+RESIZE_SCRIPT = """
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.contentWindow.js"
+    integrity="sha512-RMBWitJB1ymY4l6xeYsFwoEgVCAnOWX/zL1gNwXjlUj78nZ8SVbJsZxbH/w0p2jDNraHkOW8rzQgcJ0LNSXWBA=="
+    crossorigin="anonymous">
 </script>
 """
 
@@ -105,11 +98,13 @@ def gallery(urls: Iterable[str], *, refresh: bool = False, rate: float = 3.0) ->
         )
 
     if refresh:
-        elements.append(SCRIPT.replace("{interval}", str(int(rate * 3000))))
+        elements.append(REFRESH_SCRIPT.replace("{interval}", str(int(rate * 3000))))
+    else:
+        elements.append(RESIZE_SCRIPT)
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 
-    head = "<title>memegen.link | Samples</title>\n" + STYLE
+    head = "<title>memegen.link</title>\n" + STYLE
     body = f'<section id="images">\n{images}\n</section>'
 
     return HTML.format(head=head, body=body)
