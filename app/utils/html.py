@@ -20,21 +20,21 @@ COLUMNS_STYLE = """
   height: auto !important;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 960px) {
   #images {
   -moz-column-count:    5;
   -webkit-column-count: 5;
   column-count:         5;
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 720px) {
   #images {
   -moz-column-count:    4;
   -webkit-column-count: 4;
   column-count:         4;
   }
 }
-@media (max-width: 1000px) {
+@media (max-width: 540px) {
   #images {
   -moz-column-count:    3;
   -webkit-column-count: 3;
