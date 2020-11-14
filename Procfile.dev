@@ -1,2 +1,2 @@
 api: DEBUG=true python app/views.py
-site: mkdocs serve
+site: mkdocs serve --dev-addr localhost:5001

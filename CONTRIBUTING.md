@@ -25,7 +25,7 @@ $ make install
 
 # Local Development
 
-To start the API server:
+To start the API server and static site:
 
 ```text
 $ make run
