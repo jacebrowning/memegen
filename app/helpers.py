@@ -39,7 +39,7 @@ def configure(app):
 
 def get_valid_templates(request) -> List[Dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
-    return [t.jsonify(request.app) for t in sorted(templates)]
+    return [template.jsonify(request.app) for template in sorted(templates)]
 
 
 def get_example_images(request) -> List[Tuple[str, str]]:

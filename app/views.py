@@ -1,4 +1,5 @@
 import asyncio
+import random
 
 import log
 from sanic import Sanic, response
@@ -28,7 +29,11 @@ def index(request):
 async def examples(request):
     examples = await asyncio.to_thread(helpers.get_example_images, request)
     urls = [example[0] for example in examples]
-    refresh = "debug" in request.args and settings.DEBUG
+    if "debug" in request.args and settings.DEBUG:
+        refresh = True
+    else:
+        refresh = False
+        random.shuffle(urls)
     content = utils.html.gallery(urls, columns=True, refresh=refresh)
     return response.html(content)
 
