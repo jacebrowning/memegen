@@ -53,7 +53,9 @@
 
 <div class="col-12">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
+        <div
+            class="col-12 {% if page.is_homepage %}col-md-11 col-lg-8 col-xl-7{% endif %}"
+        >
             {% include "content.html" %}
         </div>
     </div>

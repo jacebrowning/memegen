@@ -103,7 +103,9 @@
 
 <div class="col-12">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-11 col-lg-8 col-xl-7" role="main">
+        <div
+            class="col-12 col-md-11 col-lg-8 col-xl-7"
+        >
             
 
 <p>An API to programmatically generate memes based solely on requested URLs.</p>
@@ -114,7 +116,7 @@
 <a href="https://github.com/sponsors/jacebrowning"><img alt="GitHub Sponsors" src="https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red" /></a></p>
 <h1 id="images">Images</h1>
 <p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, <a href="https://api.memegen.link/images/buzz/memes/memes_everywhere.png">https://api.memegen.link/images/buzz/memes/memes_everywhere.png</a> produces:</p>
-<p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?&amp;width=600" /></p>
+<p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png" width="100%"></p>
 <h2 id="available-formats">Available Formats</h2>
 <p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files:</p>
 <table>
@@ -138,7 +140,7 @@
 <h2 id="custom-dimensions">Custom Dimensions</h2>
 <p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
 <p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
-<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600" /></p>
+<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600" width="100%"></p>
 <h2 id="special-characters">Special Characters</h2>
 <p>In URLs, spaces can be inserted using underscores or dashes:</p>
 <ul>
@@ -157,7 +159,7 @@
 <li>2 single quotes (<code>''</code>) → double quote (<code>"</code>)</li>
 </ul>
 <p>For example, <a href="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png">https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png</a> produces:</p>
-<p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?&amp;width=600" /></p>
+<p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png" width="100%"></p>
 <h1 id="templates">Templates</h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates/">https://api.memegen.link/templates/</a></p>
 <h2 id="alternate-styles">Alternate Styles</h2>
@@ -172,14 +174,14 @@
 </thead>
 <tbody>
 <tr>
-<td align="center"><img alt="" src="https://api.memegen.link/images/ds.png?width=280" /></td>
-<td align="center"><img alt="" src="https://api.memegen.link/images/ds.png?style=maga&amp;width=280" /></td>
+<td align="center"><img alt="Default Style" src="https://api.memegen.link/images/ds.png" width="100%"></td>
+<td align="center"><img alt="Alternate Style" src="https://api.memegen.link/images/ds.png?style=maga" width="100%"></td>
 </tr>
 </tbody>
 </table>
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background. For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
-<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;width=600" /></p>
+<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png" width="100%"></p>
 <h1 id="previews">Previews</h1>
 <p>If your client is going to show live previews of a custom meme, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
 <pre><code class="javascript">var key = encodeURIComponent($(&quot;#template&quot;).val())
@@ -339,5 +341,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-11-14 20:38:56.584452+00:00
+Build Date UTC : 2020-11-14 21:28:06.302084+00:00
 -->
