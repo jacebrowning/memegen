@@ -37,10 +37,12 @@ In URLs, spaces can be inserted using underscores or dashes:
 - dash (`-`) → space (` `)
 - 2 underscores (`__`) → underscore (`_`)
 - 2 dashes (`--`) → dash (`-`)
+- tilde + N (`~n`) → newline character
 
 Reserved URL characters can be included using escape patterns:
 
 - tilde + Q (`~q`) → question mark (`?`)
+- tilde + A (`~a`) → ampersand (`&`)
 - tilde + P (`~p`) → percentage (`%`)
 - tilde + H (`~h`) → hashtag/pound (`#`)
 - tilde + S (`~s`) → slash (`/`)
