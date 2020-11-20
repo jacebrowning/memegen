@@ -109,7 +109,13 @@ def describe_image_list():
             data = {"template_key": "iw"}
             request, response = client.post("/images", data=json.dumps(data))
             expect(response.status) == 201
-            expect(response.json) == {"url": "http://localhost:5000/images/iw/_.png"}
+            expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
+
+        def it_drops_trailing_blank_lines(expect, client):
+            data = {"template_key": "iw", "text_lines": ["", "", "", ""]}
+            request, response = client.post("/images", data=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
 
         def it_redirects_if_requested(expect, client):
             data = {"template_key": "iw", "text_lines": ["abc"], "redirect": True}

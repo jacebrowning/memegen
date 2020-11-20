@@ -148,7 +148,8 @@ class Template:
         if external:
             kwargs["_scheme"] = settings.SCHEME
         url = app.url_for(view_name, **kwargs)
-        return url.replace("/_/_.", ".").replace("/_.", ".")
+        url = self._drop_trailing_spaces(url)
+        return url
 
     def build_custom_url(
         self,
@@ -170,8 +171,15 @@ class Template:
             _external=True,
             _scheme=settings.SCHEME,
         )
+        url = self._drop_trailing_spaces(url)
         if background:
             url += "?background=" + background
+        return url
+
+    @staticmethod
+    def _drop_trailing_spaces(url: str) -> str:
+        while "/_." in url:
+            url = url.replace("/_.", ".")
         return url
 
     @classmethod
