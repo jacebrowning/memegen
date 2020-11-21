@@ -1,0 +1,38 @@
+name: Gru's Plan
+source: https://knowyourmeme.com/memes/grus-plan
+text:
+  - color: black
+    style: default
+    anchor_x: 0.29
+    anchor_y: 0.2
+    angle: 0.0
+    scale_x: 0.18
+    scale_y: 0.2
+  - color: black
+    style: default
+    anchor_x: 0.79
+    anchor_y: 0.2
+    angle: 0.0
+    scale_x: 0.18
+    scale_y: 0.2
+  - color: black
+    style: default
+    anchor_x: 0.29
+    anchor_y: 0.7
+    angle: 0.0
+    scale_x: 0.18
+    scale_y: 0.2
+  - color: black
+    style: default
+    anchor_x: 0.79
+    anchor_y: 0.7
+    angle: 0.0
+    scale_x: 0.18
+    scale_y: 0.2
+styles:
+  -
+example:
+  - Learn how to make memes
+  - Make a meme
+  - No one likes it
+  - No one likes it
