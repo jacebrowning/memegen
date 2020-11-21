@@ -40,6 +40,9 @@ async def index(request):
 @doc.response(
     400, {"error": str}, description='Required "template_key" missing in request body'
 )
+@doc.response(
+    404, {"error": str}, description='Specified "template_key" does not exist'
+)
 async def create(request):
     if request.form:
         payload = dict(request.form)
@@ -55,7 +58,12 @@ async def create(request):
     except KeyError:
         return response.json({"error": '"template_key" is required'}, status=400)
 
-    template = models.Template.objects.get(template_key)
+    template = models.Template.objects.get_or_none(template_key)
+    if not template:
+        return response.json(
+            {"error": f"Template not found: {template_key}"}, status=404
+        )
+
     url = template.build_custom_url(
         request.app,
         payload.get("text_lines") or [],
