@@ -58,12 +58,7 @@ async def create(request):
     except KeyError:
         return response.json({"error": '"template_key" is required'}, status=400)
 
-    template = models.Template.objects.get_or_none(template_key)
-    if not template:
-        return response.json(
-            {"error": f"Template not found: {template_key}"}, status=404
-        )
-
+    template = models.Template.objects.get_or_create(template_key)
     url = template.build_custom_url(
         request.app,
         payload.get("text_lines") or [],
@@ -73,7 +68,13 @@ async def create(request):
     if payload.get("redirect", False):
         return response.redirect(url)
 
-    return response.json({"url": url}, status=201)
+    if template.valid:
+        status = 201
+    else:
+        status = 404
+        template.delete()
+
+    return response.json({"url": url}, status=status)
 
 
 @blueprint.get("/preview.jpg")

@@ -105,11 +105,13 @@ def describe_image_list():
             expect(response.status) == 400
             expect(response.json) == {"error": '"template_key" is required'}
 
-        def it_rejects_unknown_template_key(expect, client):
+        def it_handles_unknown_template_key(expect, client):
             data = {"template_key": "foobar", "text_lines": ["one", "two"]}
             request, response = client.post("/images", data=data)
             expect(response.status) == 404
-            expect(response.json) == {"error": "Template not found: foobar"}
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/foobar/one/two.png"
+            }
 
         def it_handles_missing_text_lines(expect, client):
             data = {"template_key": "iw"}

@@ -1,4 +1,5 @@
 import hashlib
+import shutil
 from pathlib import Path
 from typing import Dict, List, Optional
 from urllib.parse import urlparse
@@ -221,3 +222,6 @@ class Template:
                 template.image.unlink()
 
         return template
+
+    def delete(self):
+        shutil.rmtree(self.directory)
