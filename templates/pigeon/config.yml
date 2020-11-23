@@ -16,7 +16,7 @@ text:
     scale_x: 0.175
     scale_y: 0.1
   - color: white
-    style: default
+    style: upper
     anchor_x: 0.0
     anchor_y: 0.8
     angle: 0.0

@@ -1,0 +1,30 @@
+name: Who Killed Hannibal?
+source: https://knowyourmeme.com/memes/who-killed-hannibal
+text:
+  - color: white
+    style: default
+    anchor_x: 0.1
+    anchor_y: 0.3
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.1
+  - color: white
+    style: default
+    anchor_x: 0.53
+    anchor_y: 0.35
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.1
+  - color: white
+    style: upper
+    anchor_x: 0.0
+    anchor_y: 0.875
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.125
+styles:
+  -
+example:
+  - Twin Towers
+  - George Bush
+  - Why would Al-Qaeda do this?
