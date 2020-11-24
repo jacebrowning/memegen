@@ -90,11 +90,11 @@ $("#preview").attr("src", url)
 
 The `template` parameter can be a template key or URL:
 
-| Mode              | Example                                                                                                                                                                                                                                                 |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Template Key      | [/images/preview.jpg?lines[]=first+line&lines[]=second+line &template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
-| Template URL      | [/images/preview.jpg?lines[]=first+line&lines[]=second+line &template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
-| Custom Background | [/images/preview.jpg?lines[]=first+line&lines[]=second+line &template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
+| Mode              | Example                                                                                                                                                                                                                                                          |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Template Key      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
+| Template URL      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
+| Custom Background | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
 
 # Documentation
 
@@ -102,14 +102,14 @@ The full interactive documentation is available here: <https://api.memegen.link/
 
 Here are some sample clients to explore:
 
-| Platforms   | Link                       | Source                                                                                |
-| :---------- | :------------------------- | :------------------------------------------------------------------------------------ |
-| Slack       | ---                        | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)           |
-| Slack       | ---                        | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)           |
-| Slack       | <http://www.memetizer.com> | ---                                                                                   |
-| Hain        | ---                        | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
-| Web         | ---                        | Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes)      |
-| Web & Slack | <https://memecomplete.com> | ---                                                                                   |
-| Discord     | ---                        | JavaScript: [parshsee/discordbot](https://github.com/parshsee/discordbot)             |
+| Platforms   | Link                                                                                  |
+| :---------- | :------------------------------------------------------------------------------------ |
+| Slack       | Python: [nicolewhite/slack-meme](https://github.com/nicolewhite/slack-meme)           |
+| Slack       | Go: [CptSpaceToaster/slackbot](https://github.com/CptSpaceToaster/slackbot)           |
+| Slack       | <http://www.memetizer.com>                                                            |
+| Hain        | JavaScript: [Metrakit/hain-plugin-meme](https://github.com/Metrakit/hain-plugin-meme) |
+| Web         | Clojure: [jasich/mighty-fine-memes](https://github.com/jasich/mighty-fine-memes)      |
+| Web & Slack | <https://memecomplete.com>                                                            |
+| Discord     | JavaScript: [parshsee/discordbot](https://github.com/parshsee/discordbot)             |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
