@@ -75,7 +75,7 @@ def describe_image_list():
             expect(response.status) == 200
             expect(response.json).contains(
                 {
-                    "url": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
+                    "url": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.jpg",
                     "template": "http://localhost:5000/templates/iw",
                 }
             )

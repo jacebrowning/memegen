@@ -45,7 +45,10 @@ def get_valid_templates(request) -> List[Dict]:
 def get_example_images(request) -> List[Tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [
-        (template.build_example_url(request.app), template.build_self_url(request.app))
+        (
+            template.build_example_url(request.app, "images.text_jpg"),
+            template.build_self_url(request.app),
+        )
         for template in sorted(templates)
     ]
 
