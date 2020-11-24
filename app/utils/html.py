@@ -20,25 +20,32 @@ COLUMNS_STYLE = """
   height: auto !important;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1140px) {
   #images {
   -moz-column-count:    5;
   -webkit-column-count: 5;
   column-count:         5;
   }
 }
-@media (max-width: 720px) {
+@media (max-width: 960px) {
   #images {
   -moz-column-count:    4;
   -webkit-column-count: 4;
   column-count:         4;
   }
 }
-@media (max-width: 540px) {
+@media (max-width: 720px) {
   #images {
   -moz-column-count:    3;
   -webkit-column-count: 3;
   column-count:         3;
+  }
+}
+@media (max-width: 540px) {
+  #images {
+  -moz-column-count:    2;
+  -webkit-column-count: 2;
+  column-count:         2;
   }
 }
 
