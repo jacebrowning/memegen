@@ -190,7 +190,7 @@ async def preview_image(request, key: str, lines: List[str], style: str):
         template = models.Template.objects.get(key)
 
     data, content_type = await asyncio.to_thread(
-        utils.images.preview, template, lines, style
+        utils.images.preview, template, lines, style=style
     )
     return response.raw(data, content_type=content_type)
 
@@ -237,5 +237,7 @@ async def render_image(
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
 
     await helpers.track(request, lines)
-    path = await asyncio.to_thread(utils.images.save, template, lines, ext, style, size)
+    path = await asyncio.to_thread(
+        utils.images.save, template, lines, ext=ext, style=style, size=size
+    )
     return await response.file(path, status)

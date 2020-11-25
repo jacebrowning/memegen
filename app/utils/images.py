@@ -17,7 +17,10 @@ if TYPE_CHECKING:
 
 
 def preview(
-    template: Template, lines: List[str], style: str = settings.DEFAULT_STYLE
+    template: Template,
+    lines: List[str],
+    *,
+    style: str = settings.DEFAULT_STYLE,
 ) -> Tuple[bytes, str]:
     image = render_image(template, style, lines, settings.PREVIEW_SIZE, pad=False)
     stream = io.BytesIO()
@@ -28,16 +31,17 @@ def preview(
 def save(
     template: Template,
     lines: List[str],
+    watermark: str = "",
+    *,
     ext: str = settings.DEFAULT_EXT,
     style: str = settings.DEFAULT_STYLE,
     size: Dimensions = (0, 0),
-    *,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
     size = fit_image(*size)
 
     slug = encode(lines)
-    variant = str(template.text) + str(style) + str(size)
+    variant = str(template.text) + str(style) + str(size) + watermark
     fingerprint = hashlib.sha1(variant.encode()).hexdigest()
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
@@ -49,7 +53,7 @@ def save(
         logger.info(f"Saving meme to {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
 
-    image = render_image(template, style, lines, size)
+    image = render_image(template, style, lines, size, watermark=watermark)
     image.save(path, quality=95)
 
     return path
@@ -68,6 +72,7 @@ def render_image(
     size: Dimensions,
     *,
     pad: Optional[bool] = None,
+    watermark: str = "",
 ) -> Image:
     background = load(template.get_image(style))
 
@@ -114,6 +119,9 @@ def render_image(
 
     if pad:
         image = add_blurred_background(image, background, *size)
+
+    if watermark:
+        image = add_watermark(image, watermark)
 
     return image
 
@@ -175,6 +183,24 @@ def add_blurred_background(
     return blurred
 
 
+def add_watermark(image: Image, text: str) -> Image:
+    size = (image.size[0], 14)
+    font = get_font(text, 0.0, size, 99, thin=True)
+    offset = get_text_offset(text, font, size)
+
+    draw = ImageDraw.Draw(image)
+    draw.text(
+        (1, image.size[1] - size[1] - offset[1]),
+        text,
+        "white",
+        font,
+        stroke_width=get_stroke_width(font),
+        stroke_fill="black",
+    )
+
+    return image
+
+
 def get_image_elements(
     template: Template, lines: List[str], image_size: Dimensions
 ) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
@@ -230,14 +256,19 @@ def split(line: str) -> str:
 
 
 def get_font(
-    text: str, angle: float, max_text_size: Dimensions, max_font_size: int
+    text: str,
+    angle: float,
+    max_text_size: Dimensions,
+    max_font_size: int,
+    *,
+    thin: bool = False,
 ) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
     for size in range(max(7, max_font_size), 6, -1):
 
-        if angle:
+        if angle or thin:
             font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
         else:
             font = ImageFont.truetype(str(settings.FONT_THICK), size=size)

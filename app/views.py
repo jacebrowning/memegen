@@ -14,14 +14,15 @@ helpers.configure(app)
 @app.get("/")
 @doc.exclude(True)
 def index(request):
-    return response.json(
-        {
-            "templates": request.app.url_for("templates.index", _external=True),
-            "images": request.app.url_for("images.index", _external=True),
-            "_docs": request.app.url_for("swagger.index", _external=True),
-            "_examples": request.app.url_for("examples", _external=True),
-        }
-    )
+    data = {
+        "templates": request.app.url_for("templates.index", _external=True),
+        "images": request.app.url_for("images.index", _external=True),
+        "_docs": request.app.url_for("swagger.index", _external=True),
+        "_examples": request.app.url_for("examples", _external=True),
+    }
+    if settings.DEBUG:
+        data["_test"] = request.app.url_for("test", _external=True)
+    return response.json(data)
 
 
 @app.get("/examples")
@@ -43,6 +44,7 @@ async def examples(request):
 async def test(request):
     if not settings.DEBUG:
         return response.redirect("/")
+
     urls = await asyncio.to_thread(helpers.get_test_images, request)
     content = utils.html.gallery(urls, columns=False, refresh=True)
     return response.html(content)
