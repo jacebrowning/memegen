@@ -8,6 +8,13 @@ def describe_index():
         request, response = client.get("/")
         expect(response.status) == 200
         expect(response.json).contains("_docs")
+        expect(response.json).excludes("_test")
+
+    def it_includes_test_route_when_debug(expect, client, monkeypatch):
+        monkeypatch.setattr(settings, "DEBUG", True)
+        request, response = client.get("/")
+        expect(response.status) == 200
+        expect(response.json).contains("_test")
 
 
 def describe_examples():

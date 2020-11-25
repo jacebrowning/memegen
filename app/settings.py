@@ -84,4 +84,7 @@ TEST_IMAGES = [
 
 # Analytics
 
+DEFAULT_WATERMARK = ""
+ALLOWED_WATERMARKS = os.getenv("ALLOWED_WATERMARKS", "").split(",")
+
 REMOTE_TRACKING_URL = os.getenv("REMOTE_TRACKING_URL")

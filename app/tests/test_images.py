@@ -35,13 +35,13 @@ def template():
 @pytest.mark.parametrize(("key", "lines"), settings.TEST_IMAGES)
 def test_png_images(images, key, lines):
     template = models.Template.objects.get(key)
-    utils.images.save(template, lines, "png", directory=images)
+    utils.images.save(template, lines, ext="png", directory=images)
 
 
 def test_jpg_images(images):
     key, lines = settings.TEST_IMAGES[0]
     template = models.Template.objects.get(key)
-    utils.images.save(template, lines, "jpg", directory=images)
+    utils.images.save(template, lines, ext="jpg", directory=images)
 
 
 # Size
@@ -152,6 +152,19 @@ def test_descender_vertical_alignment(images):
         "Stop testing!",
     ]
     utils.images.save(template, lines, directory=images)
+
+
+# Watermark
+
+
+def test_watermark(images, template):
+    lines = ["nominal image", "with watermark"]
+    utils.images.save(template, lines, "example.com", directory=images)
+
+
+def test_watermark_with_padding(images, template):
+    lines = ["paddded image", "with watermark"]
+    utils.images.save(template, lines, "example.com", size=(500, 500), directory=images)
 
 
 # Debug

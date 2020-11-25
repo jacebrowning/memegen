@@ -177,6 +177,25 @@ def describe_image_detail():
         expect(response.status) == 414
         expect(response.headers["content-type"]) == "image/jpeg"
 
+    def describe_watermarks():
+        def it_returns_a_unique_image(expect, client):
+            request, response = client.get("/images/fry/test.png")
+            expect(response.status) == 200
+
+            request, response2 = client.get("/images/fry/test.png?watermark=test")
+            expect(response.status) == 200
+
+            expect(len(response.content)) != len(response2.content)
+
+        def it_allows_disabling(expect, client):
+            request, response = client.get("/images/fry/test.png")
+            expect(response.status) == 200
+
+            request, response2 = client.get("/images/fry/test.png?watermark=none")
+            expect(response.status) == 200
+
+            expect(len(response.content)) == len(response2.content)
+
     def describe_styles():
         def it_supports_alternate_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=maga")
