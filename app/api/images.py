@@ -152,7 +152,20 @@ async def text_png(request, template_key, text_paths):
             **request.args,
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
-    return await render_image(request, template_key, slug)
+
+    watermark, updated = utils.meta.get_watermark(
+        request, request.args.get("watermark")
+    )
+    if updated:
+        url = request.app.url_for(
+            "images.text_png",
+            template_key=template_key,
+            text_paths=slug,
+            **{k: v for k, v in request.args.items() if k != "watermark"},
+        ).replace("%3A%2F%2F", "://")
+        return response.redirect(url, status=301)
+
+    return await render_image(request, template_key, slug, watermark)
 
 
 @blueprint.get("/<template_key>/<text_paths:[\s\S]+>.jpg")
@@ -180,7 +193,20 @@ async def text_jpg(request, template_key, text_paths):
             **request.args,
         ).replace("%3A%2F%2F", "://")
         return response.redirect(url, status=301)
-    return await render_image(request, template_key, slug, ext="jpg")
+
+    watermark, updated = utils.meta.get_watermark(
+        request, request.args.get("watermark")
+    )
+    if updated:
+        url = request.app.url_for(
+            "images.text_jpg",
+            template_key=template_key,
+            text_paths=slug,
+            **{k: v for k, v in request.args.items() if k != "watermark"},
+        ).replace("%3A%2F%2F", "://")
+        return response.redirect(url, status=301)
+
+    return await render_image(request, template_key, slug, watermark, ext="jpg")
 
 
 async def preview_image(request, key: str, lines: List[str], style: str):
@@ -196,7 +222,11 @@ async def preview_image(request, key: str, lines: List[str], style: str):
 
 
 async def render_image(
-    request, key: str, slug: str = "", ext: str = settings.DEFAULT_EXT
+    request,
+    key: str,
+    slug: str = "",
+    watermark: str = "",
+    ext: str = settings.DEFAULT_EXT,
 ):
     status = 200
 
@@ -234,7 +264,6 @@ async def render_image(
             status = 422
 
     lines = utils.text.decode(slug)
-    watermark = utils.meta.get_watermark(request, request.args.get("watermark"))
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
 
     await utils.meta.track_url(request, lines)

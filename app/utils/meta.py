@@ -1,3 +1,4 @@
+from typing import Tuple
 from urllib.parse import unquote
 
 import aiohttp
@@ -6,15 +7,23 @@ from sanic.log import logger
 from .. import settings
 
 
-def get_watermark(request, watermark: str) -> str:
+def get_watermark(request, watermark: str) -> Tuple[str, bool]:
+    updated = False
+
     if watermark == "none":
         watermark = ""
     elif watermark:
-        if watermark not in settings.ALLOWED_WATERMARKS:
+        if watermark == settings.DEFAULT_WATERMARK:
+            logger.warning(f"Redundant watermark: {watermark}")
+            updated = True
+        elif watermark not in settings.ALLOWED_WATERMARKS:
             logger.warning(f"Unknown watermark: {watermark}")
+            watermark = settings.DEFAULT_WATERMARK
+            updated = True
     else:
         watermark = settings.DEFAULT_WATERMARK
-    return watermark
+
+    return watermark, updated
 
 
 async def track_url(request, lines):

@@ -180,35 +180,42 @@ def describe_image_detail():
         expect(response.headers["content-type"]) == "image/jpeg"
 
     def describe_watermark():
-        def it_returns_a_unique_image(expect, client):
+        def it_returns_a_unique_image(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["test"])
             request, response = client.get("/images/fry/test.png")
-            expect(response.status) == 200
-
             request, response2 = client.get("/images/fry/test.png?watermark=test")
-            expect(response.status) == 200
-
             expect(len(response.content)) != len(response2.content)
 
         def it_can_be_disabled(expect, client, monkeypatch):
             monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "")
             request, response = client.get("/images/fry/test.png")
-            expect(response.status) == 200
-
             request, response2 = client.get("/images/fry/test.png?watermark=none")
-            expect(response.status) == 200
-
             expect(len(response.content)) == len(response2.content)
 
-        def it_is_disabled_automatically_for_small_images(expect, client):
+        def it_is_disabled_automatically_for_small_images(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["test"])
             request, response = client.get("/images/fry/test.png?width=300")
-            expect(response.status) == 200
-
             request, response2 = client.get(
                 "/images/fry/test.png?width=300&watermark=test"
             )
-            expect(response.status) == 200
-
             expect(len(response.content)) == len(response2.content)
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_rejects_unknown_values(expect, client, ext):
+            request, response = client.get(
+                f"/images/fry/test.{ext}?watermark=foobar", allow_redirects=False
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_removes_redundant_values(expect, client, monkeypatch, ext):
+            monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
+            request, response = client.get(
+                f"/images/fry/test.{ext}?watermark=memegen.link", allow_redirects=False
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
 
     def describe_styles():
         def it_supports_alternate_styles(expect, client):
