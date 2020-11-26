@@ -2,6 +2,8 @@ import json
 
 import pytest
 
+from .. import settings
+
 
 def describe_template_list():
     def describe_GET():
@@ -187,7 +189,8 @@ def describe_image_detail():
 
             expect(len(response.content)) != len(response2.content)
 
-        def it_allows_disabling(expect, client):
+        def it_allows_disabling(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "")
             request, response = client.get("/images/fry/test.png")
             expect(response.status) == 200
 
