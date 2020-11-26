@@ -1,7 +1,7 @@
 import hashlib
 import shutil
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Optional
 from urllib.parse import urlparse
 
 import aiofiles
@@ -62,11 +62,11 @@ class Template:
     key: str
     name: str = ""
     source: Optional[str] = None
-    text: List[Text] = field(
+    text: list[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
     )
-    styles: List[str] = field(default_factory=lambda: [])
-    example: List[str] = field(default_factory=lambda: ["your text", "goes here"])
+    styles: list[str] = field(default_factory=lambda: [])
+    example: list[str] = field(default_factory=lambda: ["your text", "goes here"])
 
     def __str__(self):
         return str(self.directory)
@@ -117,7 +117,7 @@ class Template:
             logger.warning(f"Style {style!r} not available for {self.key}")
             return self.get_image()
 
-    def jsonify(self, app: Sanic) -> Dict:
+    def jsonify(self, app: Sanic) -> dict:
         return {
             "name": self.name,
             "key": self.key,
@@ -163,7 +163,7 @@ class Template:
     def build_custom_url(
         self,
         app: Sanic,
-        text_lines: List[str],
+        text_lines: list[str],
         *,
         extension: str = "",
         background: str = "",

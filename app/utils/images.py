@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import io
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator, List, Optional, Tuple
+from typing import TYPE_CHECKING, Iterator, Optional
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from sanic.log import logger
@@ -18,10 +18,10 @@ if TYPE_CHECKING:
 
 def preview(
     template: Template,
-    lines: List[str],
+    lines: list[str],
     *,
     style: str = settings.DEFAULT_STYLE,
-) -> Tuple[bytes, str]:
+) -> tuple[bytes, str]:
     image = render_image(template, style, lines, settings.PREVIEW_SIZE, pad=False)
     stream = io.BytesIO()
     image.save(stream, format="JPEG", quality=50)
@@ -30,7 +30,7 @@ def preview(
 
 def save(
     template: Template,
-    lines: List[str],
+    lines: list[str],
     watermark: str = "",
     *,
     ext: str = settings.DEFAULT_EXT,
@@ -70,7 +70,7 @@ def load(path: Path) -> Image:
 def render_image(
     template: Template,
     style: str,
-    lines: List[str],
+    lines: list[str],
     size: Dimensions,
     *,
     pad: Optional[bool] = None,
@@ -152,7 +152,7 @@ def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
     return image
 
 
-def fit_image(width: float, height: float) -> Tuple[int, int]:
+def fit_image(width: float, height: float) -> tuple[int, int]:
     while width * height > settings.MAXIMUM_PIXELS:
         width *= 0.75
         height *= 0.75
@@ -206,8 +206,8 @@ def add_watermark(image: Image, text: str) -> Image:
 
 
 def get_image_elements(
-    template: Template, lines: List[str], image_size: Dimensions
-) -> Iterator[Tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
+    template: Template, lines: list[str], image_size: Dimensions
+) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
     for index, text in enumerate(template.text):
         point = text.get_anchor(image_size)
 

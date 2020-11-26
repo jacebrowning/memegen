@@ -1,7 +1,4 @@
-from typing import List, Tuple
-
-
-def encode(lines: List[str]) -> str:
+def encode(lines: list[str]) -> str:
     encoded_lines = []
 
     for line in lines:
@@ -30,7 +27,7 @@ def encode(lines: List[str]) -> str:
     return slug or "_"
 
 
-def decode(slug: str) -> List[str]:
+def decode(slug: str) -> list[str]:
     has_arrow = "_-->" in slug
 
     slug = slug.replace("_", " ").replace("  ", "_")
@@ -56,6 +53,6 @@ def decode(slug: str) -> List[str]:
     return lines
 
 
-def normalize(slug: str) -> Tuple[str, bool]:
+def normalize(slug: str) -> tuple[str, bool]:
     normalized_slug = encode(decode(slug))
     return normalized_slug, slug != normalized_slug
