@@ -46,9 +46,11 @@ def save(
 
     path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
     if path.exists():
-        logger.info(f"Found meme at {path}")
         if settings.DEPLOYED:
+            logger.info(f"Loading meme from {path}")
             return path
+        else:
+            logger.info(f"Reloading meme at {path}")
     else:
         logger.info(f"Saving meme to {path}")
         path.parent.mkdir(parents=True, exist_ok=True)

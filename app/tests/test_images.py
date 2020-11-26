@@ -177,7 +177,19 @@ def test_watermark_disabled_when_small(images, template):
 
 def test_debug_images(images, monkeypatch):
     monkeypatch.setattr(settings, "DEBUG", True)
+
     key, lines = settings.TEST_IMAGES[0]
     template = models.Template.objects.get(key)
     lines = [lines[0], lines[1] + " (debug)"]
+    utils.images.save(template, lines, directory=images)
+
+
+def test_deployed_images(images, monkeypatch):
+    monkeypatch.setattr(settings, "DEPLOYED", True)
+
+    key, lines = settings.TEST_IMAGES[0]
+    template = models.Template.objects.get(key)
+    utils.images.save(template, lines, directory=images)
+
+    monkeypatch.delattr(utils.images, "render_image")
     utils.images.save(template, lines, directory=images)

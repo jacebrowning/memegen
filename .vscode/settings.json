@@ -8,6 +8,7 @@
     "**/.venv/": true,
     "**/dist/": true,
     "**/node_modules/": true,
+    "**images/": true,
     "setup.py": true
   },
   "python.pythonPath": ".venv/bin",
