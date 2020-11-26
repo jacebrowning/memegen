@@ -1,6 +1,5 @@
 import asyncio
 from contextlib import suppress
-from typing import List
 
 from sanic import Blueprint, response
 from sanic.log import logger
@@ -209,7 +208,7 @@ async def text_jpg(request, template_key, text_paths):
     return await render_image(request, template_key, slug, watermark, ext="jpg")
 
 
-async def preview_image(request, key: str, lines: List[str], style: str):
+async def preview_image(request, key: str, lines: list[str], style: str):
     if "://" in key:
         template = await models.Template.create(key)
     else:

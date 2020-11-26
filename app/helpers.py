@@ -1,5 +1,3 @@
-from typing import Dict, List, Tuple
-
 from sanic_cors import CORS
 from sanic_openapi import swagger_blueprint
 
@@ -34,12 +32,12 @@ def configure(app):
     app.error_handler = errors.BugsnagErrorHandler()
 
 
-def get_valid_templates(request) -> List[Dict]:
+def get_valid_templates(request) -> list[dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [template.jsonify(request.app) for template in sorted(templates)]
 
 
-def get_example_images(request) -> List[Tuple[str, str]]:
+def get_example_images(request) -> list[tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [
         (
@@ -50,7 +48,7 @@ def get_example_images(request) -> List[Tuple[str, str]]:
     ]
 
 
-def get_test_images(request) -> List[str]:
+def get_test_images(request) -> list[str]:
     return [
         request.app.url_for(
             f"images.text_{settings.DEFAULT_EXT}",

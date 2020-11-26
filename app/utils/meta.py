@@ -1,4 +1,3 @@
-from typing import Tuple
 from urllib.parse import unquote
 
 import aiohttp
@@ -7,7 +6,7 @@ from sanic.log import logger
 from .. import settings
 
 
-def get_watermark(request, watermark: str) -> Tuple[str, bool]:
+def get_watermark(request, watermark: str) -> tuple[str, bool]:
     updated = False
 
     if watermark == "none":

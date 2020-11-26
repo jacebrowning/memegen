@@ -1,5 +1,3 @@
-from typing import Tuple
-
-Dimensions = Tuple[int, int]
-Point = Tuple[int, int]
-Offset = Tuple[int, int]
+Dimensions = tuple[int, int]
+Point = tuple[int, int]
+Offset = tuple[int, int]
