@@ -24,7 +24,7 @@ def describe_template_detail():
                 "lines": 2,
                 "styles": [],
                 "blank": "http://localhost:5000/images/iw.png",
-                "example": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.png",
+                "example": "http://localhost:5000/images/iw/does_testing/in_production.png",
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",
                 "_self": "http://localhost:5000/templates/iw",
             }
@@ -77,7 +77,7 @@ def describe_image_list():
             expect(response.status) == 200
             expect(response.json).contains(
                 {
-                    "url": "http://localhost:5000/images/iw/DOES_TESTING/IN_PRODUCTION.jpg",
+                    "url": "http://localhost:5000/images/iw/does_testing/in_production.jpg",
                     "template": "http://localhost:5000/templates/iw",
                 }
             )
@@ -270,7 +270,7 @@ def describe_image_detail():
     def describe_shortcuts():
         def it_redirects_to_example_image_when_no_extension(expect, client):
             request, response = client.get("/images/fry", allow_redirects=False)
-            redirect = "/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID"
+            redirect = "/images/fry/not_sure_if_trolling/or_just_stupid"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
@@ -302,7 +302,7 @@ def describe_image_detail():
         @pytest.mark.parametrize("ext", ["png", "jpg"])
         def it_redirects_to_example_image(expect, client, ext):
             request, response = client.get(f"/fry.{ext}", allow_redirects=False)
-            redirect = f"/images/fry/NOT_SURE_IF_TROLLING/OR_JUST_STUPID.{ext}"
+            redirect = f"/images/fry/not_sure_if_trolling/or_just_stupid.{ext}"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 

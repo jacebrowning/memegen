@@ -66,7 +66,7 @@ class Template:
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
     )
     styles: List[str] = field(default_factory=lambda: [])
-    example: List[str] = field(default_factory=lambda: ["YOUR TEXT", "GOES HERE"])
+    example: List[str] = field(default_factory=lambda: ["your text", "goes here"])
 
     def __str__(self):
         return str(self.directory)
@@ -77,14 +77,22 @@ class Template:
     @property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
-            styles = []
-            for path in self.directory.iterdir():
-                if path.stem not in {"config", settings.DEFAULT_STYLE}:
-                    styles.append(path.stem)
-            styles.sort()
-            if styles != self.styles:
-                self.styles = styles
+            self._update_styles()
+            self._update_example()
         return not self.key.startswith("_") and self.image.suffix != ".img"
+
+    def _update_styles(self):
+        styles = []
+        for path in self.directory.iterdir():
+            if path.stem not in {"config", settings.DEFAULT_STYLE}:
+                styles.append(path.stem)
+        styles.sort()
+        if styles != self.styles:
+            self.styles = styles
+
+    def _update_example(self):
+        if all(line.isupper() for line in self.example):
+            self.example = [line.lower() for line in self.example]
 
     @property
     def directory(self) -> Path:

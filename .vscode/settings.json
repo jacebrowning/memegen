@@ -24,6 +24,7 @@
     "Qaeda",
     "aiofiles",
     "aiohttp",
+    "isupper",
     "jsonify",
     "sanic"
   ]

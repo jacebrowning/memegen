@@ -21,10 +21,9 @@ else:  # localhost
     RELEASE_STAGE = "local"
     SCHEME = "http"
 
-
-DEPLOYED = RELEASE_STAGE != "local" or "WEB_CONCURRENCY" in os.environ
-BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")
 DEBUG = bool(os.environ.get("DEBUG", False))
+DEPLOYED = RELEASE_STAGE != "local" and not DEBUG
+BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")
 
 # Fonts
 
