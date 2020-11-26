@@ -78,6 +78,8 @@ def render_image(
 
     pad = all(size) if pad is None else pad
     image = resize_image(background, *size, pad)
+    if size[0] and size[0] <= settings.PREVIEW_SIZE[0]:
+        watermark = ""
 
     for (
         point,

@@ -1,5 +1,7 @@
 from typing import Iterable
 
+from .. import settings
+
 COLUMNS_STYLE = """
 <style>
 #images {
@@ -110,7 +112,7 @@ def _columns(urls: Iterable[str]) -> str:
         elements.append(
             f"""
             <a href="https://memecomplete.com/edit/{url}" target="_parent">
-                <img src="{url}?width=300">
+                <img src="{url}?width={settings.PREVIEW_SIZE[0]}">
             </a>
             """
         )
@@ -132,7 +134,7 @@ def _columns_refresh(urls: Iterable[str], rate: float) -> str:
         elements.append(
             f"""
             <a href="{url}">
-                <img src="{url}?width=300&time=0">
+                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&time=0">
             </a>
             """
         )

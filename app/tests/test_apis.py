@@ -179,7 +179,7 @@ def describe_image_detail():
         expect(response.status) == 414
         expect(response.headers["content-type"]) == "image/jpeg"
 
-    def describe_watermarks():
+    def describe_watermark():
         def it_returns_a_unique_image(expect, client):
             request, response = client.get("/images/fry/test.png")
             expect(response.status) == 200
@@ -189,12 +189,23 @@ def describe_image_detail():
 
             expect(len(response.content)) != len(response2.content)
 
-        def it_allows_disabling(expect, client, monkeypatch):
+        def it_can_be_disabled(expect, client, monkeypatch):
             monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "")
             request, response = client.get("/images/fry/test.png")
             expect(response.status) == 200
 
             request, response2 = client.get("/images/fry/test.png?watermark=none")
+            expect(response.status) == 200
+
+            expect(len(response.content)) == len(response2.content)
+
+        def it_is_disabled_automatically_for_small_images(expect, client):
+            request, response = client.get("/images/fry/test.png?width=300")
+            expect(response.status) == 200
+
+            request, response2 = client.get(
+                "/images/fry/test.png?width=300&watermark=test"
+            )
             expect(response.status) == 200
 
             expect(len(response.content)) == len(response2.content)

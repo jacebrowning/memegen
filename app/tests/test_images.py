@@ -167,6 +167,11 @@ def test_watermark_with_padding(images, template):
     utils.images.save(template, lines, "example.com", size=(500, 500), directory=images)
 
 
+def test_watermark_disabled_when_small(images, template):
+    lines = ["small image", "with watermark (disabled)"]
+    utils.images.save(template, lines, "example.com", size=(300, 0), directory=images)
+
+
 # Debug
 
 
