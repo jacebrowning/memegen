@@ -16,6 +16,10 @@ def describe_index():
         expect(response.status) == 200
         expect(response.json).contains("_test")
 
+    def it_includes_favicon(expect, client):
+        request, response = client.get("/favicon.ico")
+        expect(response.status) == 200
+
 
 def describe_examples():
     @pytest.mark.slow
