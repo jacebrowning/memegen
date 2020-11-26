@@ -136,9 +136,19 @@ def describe_image_list():
 
 
 def describe_preview():
-    def it_returns_an_image(expect, client):
-        path = "/images/preview.jpg"
+    @pytest.fixture
+    def path():
+        return "/images/preview.jpg"
+
+    def it_returns_an_image(expect, client, path):
         request, response = client.get(path)
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/jpeg"
+
+    def it_supports_custom_templates(expect, client, path):
+        request, response = client.get(
+            path + "?template=https://www.gstatic.com/webp/gallery/1.png"
+        )
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
 
