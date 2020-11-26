@@ -185,7 +185,7 @@ def add_blurred_background(
 
 def add_watermark(image: Image, text: str) -> Image:
     size = (image.size[0], 14)
-    font = get_font(text, 0.0, size, 99, thin=True)
+    font = get_font(text, 0.0, size, 99, tiny=True)
     offset = get_text_offset(text, font, size)
 
     draw = ImageDraw.Draw(image)
@@ -261,14 +261,16 @@ def get_font(
     max_text_size: Dimensions,
     max_font_size: int,
     *,
-    thin: bool = False,
+    tiny: bool = False,
 ) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
     for size in range(max(7, max_font_size), 6, -1):
 
-        if angle or thin:
+        if tiny:
+            font = ImageFont.truetype(str(settings.FONT_TINY), size=size)
+        elif angle:
             font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
         else:
             font = ImageFont.truetype(str(settings.FONT_THICK), size=size)
