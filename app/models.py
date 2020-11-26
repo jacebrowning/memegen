@@ -76,7 +76,7 @@ class Template:
 
     @property
     def valid(self) -> bool:
-        if not settings.DEPLOYED:
+        if not settings.DEPLOYED:  # pragma: no cover
             self._update_styles()
             self._update_example()
         return not self.key.startswith("_") and self.image.suffix != ".img"
@@ -87,11 +87,11 @@ class Template:
             if path.stem not in {"config", settings.DEFAULT_STYLE}:
                 styles.append(path.stem)
         styles.sort()
-        if styles != self.styles:
+        if styles != self.styles:  # pragma: no cover
             self.styles = styles
 
     def _update_example(self):
-        if all(line.isupper() for line in self.example):
+        if all(line.isupper() for line in self.example):  # pragma: no cover
             self.example = [line.lower() for line in self.example]
 
     @property
