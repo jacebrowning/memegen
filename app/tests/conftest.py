@@ -2,7 +2,8 @@ import os
 
 import pytest
 
-from app.views import app
+from ..models import Template
+from ..views import app
 
 
 def pytest_configure(config):
@@ -19,3 +20,10 @@ def pytest_runtest_setup(item):
 @pytest.fixture
 def client():
     return app.test_client
+
+
+@pytest.fixture
+def unknown_template():
+    template = Template.objects.get_or_create("unknown")
+    template.delete()
+    return template

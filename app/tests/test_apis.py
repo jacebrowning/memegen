@@ -178,8 +178,8 @@ def describe_image_detail():
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
-    def it_handles_unknown_templates(expect, client):
-        request, response = client.get("/images/foobar/test.png")
+    def it_handles_unknown_templates(expect, client, unknown_template):
+        request, response = client.get(f"/images/{unknown_template.key}/test.png")
         expect(response.status) == 404
         expect(response.headers["content-type"]) == "image/png"
 
@@ -307,6 +307,21 @@ def describe_image_detail():
             expect(response.status) == 302
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
+        def it_rejects_unknown_templates(expect, client, unknown_template):
+            request, response = client.get(
+                f"/images/{unknown_template.key}", allow_redirects=False
+            )
+            expect(response.status) == 404
+
+        def it_creates_new_templates_when_debug(
+            expect, client, unknown_template, monkeypatch
+        ):
+            monkeypatch.setattr(settings, "DEBUG", True)
+            request, response = client.get(
+                f"/images/{unknown_template.key}", allow_redirects=False
+            )
+            expect(response.status) == 501
+
     def describe_legacy():
         @pytest.mark.slow
         def it_accepts_alt_for_template(expect, client):
@@ -339,3 +354,15 @@ def describe_image_detail():
             request, response = client.get(f"/fry/test.{ext}", allow_redirects=False)
             expect(response.status) == 302
             expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+
+        @pytest.mark.parametrize("suffix", ["", ".png", ".jpg"])
+        def it_rejects_unknown_templates(expect, client, unknown_template, suffix):
+            request, response = client.get(f"/{unknown_template.key}{suffix}")
+            expect(response.status) == 404
+
+        @pytest.mark.parametrize("suffix", ["", ".png", ".jpg"])
+        def it_rejects_unknown_templates_with_text(
+            expect, client, unknown_template, suffix
+        ):
+            request, response = client.get(f"/{unknown_template.key}/test{suffix}")
+            expect(response.status) == 404

@@ -30,7 +30,7 @@ async def example(request, template_key):
             message = f"Replace {template_key!r} in the URL"
         else:
             message = f"Template not fully implemented: {template}"
-            logger.warn(message)
+            logger.warning(message)
             template.datafile.save()
         abort(501, message)
 
