@@ -71,7 +71,7 @@ async def example_legacy(request, template_key):
     return response.redirect(f"/images/{template_key}")
 
 
-@blueprint.get("/images/<template_key>/<text_paths:[\s\S]+>")
+@blueprint.get("/images/<template_key>/<text_paths:[\\s\\S]+>")
 @doc.summary("Redirect to a custom image")
 @doc.produces(
     str,
@@ -95,7 +95,7 @@ async def custom(request, template_key, text_paths):
     return response.html(content)
 
 
-@blueprint.get("/<template_key>/<text_paths:[\s\S]+>.png")
+@blueprint.get("/<template_key>/<text_paths:[\\s\\S]+>.png")
 @doc.summary("Redirect to a custom image")
 @doc.exclude(settings.DEPLOYED)
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
@@ -110,7 +110,7 @@ async def custom_png(request, template_key, text_paths):
     abort(404, f"Template not found: {template_key}")
 
 
-@blueprint.get("/<template_key>/<text_paths:[\s\S]+>.jpg")
+@blueprint.get("/<template_key>/<text_paths:[\\s\\S]+>.jpg")
 @doc.summary("Redirect to a custom image")
 @doc.exclude(settings.DEPLOYED)
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
@@ -125,7 +125,7 @@ async def custom_jpg(request, template_key, text_paths):
     abort(404, f"Template not found: {template_key}")
 
 
-@blueprint.get("/<template_key>/<text_paths:[\s\S]+>")
+@blueprint.get("/<template_key>/<text_paths:[\\s\\S]+>")
 @doc.summary("Redirect to a custom image")
 @doc.exclude(settings.DEPLOYED)
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
