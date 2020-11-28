@@ -329,6 +329,11 @@ def describe_image_detail():
             )
             expect(response.status) == 501
 
+        def it_handles_sample_templates(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "DEBUG", True)
+            request, response = client.get(f"/images/<sample>", allow_redirects=False)
+            expect(response.status) == 501
+
     def describe_legacy():
         @pytest.mark.slow
         def it_accepts_alt_for_template(expect, client):

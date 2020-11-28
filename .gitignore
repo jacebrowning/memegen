@@ -1,6 +1,7 @@
 # Files
 /images/
 /templates/_custom*
+/templates/<*
 
 # Dependencies
 .venv/
