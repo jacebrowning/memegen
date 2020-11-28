@@ -56,3 +56,7 @@ def decode(slug: str) -> list[str]:
 def normalize(slug: str) -> tuple[str, bool]:
     normalized_slug = encode(decode(slug))
     return normalized_slug, slug != normalized_slug
+
+
+def unquote(value: str) -> str:
+    return value.replace("%3A%2F%2F", "://")

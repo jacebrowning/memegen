@@ -153,8 +153,8 @@ async def text_png(request, template_key, text_paths):
             template_key=template_key,
             text_paths=slug,
             **request.args,
-        ).replace("%3A%2F%2F", "://")
-        return response.redirect(url, status=301)
+        )
+        return response.redirect(utils.text.unquote(url), status=301)
 
     watermark, updated = utils.meta.get_watermark(
         request, request.args.get("watermark")
@@ -165,8 +165,8 @@ async def text_png(request, template_key, text_paths):
             template_key=template_key,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
-        ).replace("%3A%2F%2F", "://")
-        return response.redirect(url, status=301)
+        )
+        return response.redirect(utils.text.unquote(url), status=301)
 
     return await render_image(request, template_key, slug, watermark)
 
@@ -194,8 +194,8 @@ async def text_jpg(request, template_key, text_paths):
             template_key=template_key,
             text_paths=slug,
             **request.args,
-        ).replace("%3A%2F%2F", "://")
-        return response.redirect(url, status=301)
+        )
+        return response.redirect(utils.text.unquote(url), status=301)
 
     watermark, updated = utils.meta.get_watermark(
         request, request.args.get("watermark")
@@ -206,17 +206,24 @@ async def text_jpg(request, template_key, text_paths):
             template_key=template_key,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
-        ).replace("%3A%2F%2F", "://")
-        return response.redirect(url, status=301)
+        )
+        return response.redirect(utils.text.unquote(url), status=301)
 
     return await render_image(request, template_key, slug, watermark, ext="jpg")
 
 
 async def preview_image(request, key: str, lines: list[str], style: str):
+    key = utils.text.unquote(key)
     if "://" in key:
         template = await models.Template.create(key)
+        if not template.image.exists():
+            logger.error(f"Unable to download image URL: {key}")
+            template = models.Template.objects.get("_error")
     else:
-        template = models.Template.objects.get(key)
+        template = models.Template.objects.get_or_none(key)
+        if not template:
+            logger.error(f"No such template: {key}")
+            template = models.Template.objects.get("_error")
 
     data, content_type = await asyncio.to_thread(
         utils.images.preview, template, lines, style=style

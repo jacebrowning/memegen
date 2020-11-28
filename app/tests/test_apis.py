@@ -149,6 +149,16 @@ def describe_preview():
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
 
+    def it_handles_invalid_urls(expect, client, path):
+        request, response = client.get(path + "?template=http://example.com/foobar.jpg")
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/jpeg"
+
+    def it_handles_invalid_keys(expect, client, path, unknown_template):
+        request, response = client.get(path + f"?template={unknown_template.key}")
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/jpeg"
+
 
 def describe_image_detail():
     @pytest.mark.parametrize(
