@@ -314,6 +314,11 @@ def describe_image_detail():
             expect(response.status) == 302
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
+        def it_returns_gallery_view_when_debug(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "DEBUG", True)
+            request, response = client.get("/images/fry/test")
+            expect(response.text).contains("/images/fry/test.png")
+
         def it_rejects_unknown_templates(expect, client, unknown_template):
             request, response = client.get(
                 f"/images/{unknown_template.key}", allow_redirects=False
