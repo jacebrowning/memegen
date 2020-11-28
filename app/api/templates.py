@@ -74,9 +74,15 @@ async def custom(request):
     if request.form:
         payload = dict(request.form)
         with suppress(KeyError):
-            payload["text_lines"] = payload.pop("text_lines[]")
+            payload["image_url"] = payload.pop("image_url")[0]
+        with suppress(KeyError):
+            payload["extension"] = payload.pop("extension")[0]
+        with suppress(KeyError):
+            payload["redirect"] = payload.pop("redirect")[0]
     else:
         payload = request.json
+    with suppress(KeyError):
+        payload["text_lines"] = payload.pop("text_lines[]")
 
     url = Template("_custom").build_custom_url(
         request.app,
@@ -106,9 +112,15 @@ async def build(request, key):
     if request.form:
         payload = dict(request.form)
         with suppress(KeyError):
-            payload["text_lines"] = payload.pop("text_lines[]")
+            payload["image_url"] = payload.pop("image_url")[0]
+        with suppress(KeyError):
+            payload["extension"] = payload.pop("extension")[0]
+        with suppress(KeyError):
+            payload["redirect"] = payload.pop("redirect")[0]
     else:
         payload = request.json
+    with suppress(KeyError):
+        payload["text_lines"] = payload.pop("text_lines[]")
 
     template = Template.objects.get(key)
     url = template.build_custom_url(

@@ -48,9 +48,13 @@ async def create(request):
         with suppress(KeyError):
             payload["template_key"] = payload.pop("template_key")[0]
         with suppress(KeyError):
-            payload["text_lines"] = payload.pop("text_lines[]")
+            payload["extension"] = payload.pop("extension")[0]
+        with suppress(KeyError):
+            payload["redirect"] = payload.pop("redirect")[0]
     else:
         payload = request.json
+    with suppress(KeyError):
+        payload["text_lines"] = payload.pop("text_lines[]")
 
     try:
         template_key = payload["template_key"]

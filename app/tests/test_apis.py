@@ -39,21 +39,27 @@ def describe_template_detail():
             expect(response.status) == 404
 
     def describe_POST():
-        def it_returns_an_image_url(expect, client):
-            data = {"text_lines": ["foo", "bar"], "extension": "jpg"}
-            request, response = client.post("/templates/iw", data=json.dumps(data))
+        @pytest.mark.parametrize("as_json", [True, False])
+        def it_returns_an_image_url(expect, client, as_json):
+            data = {"text_lines[]": ["foo", "bar"], "extension": "jpg"}
+            request, response = client.post(
+                "/templates/iw", data=json.dumps(data) if as_json else data
+            )
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/iw/foo/bar.jpg"
             }
 
-        def it_supports_custom_backgrounds(expect, client):
+        @pytest.mark.parametrize("as_json", [True, False])
+        def it_supports_custom_backgrounds(expect, client, as_json):
             data = {
                 "image_url": "https://www.gstatic.com/webp/gallery/3.png",
-                "text_lines": ["foo", "bar"],
+                "text_lines[]": ["foo", "bar"],
                 "extension": "jpg",
             }
-            request, response = client.post("/templates/custom", data=json.dumps(data))
+            request, response = client.post(
+                "/templates/custom", data=json.dumps(data) if as_json else data
+            )
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/custom/foo/bar.jpg"
@@ -64,7 +70,7 @@ def describe_template_detail():
         def it_redirects_if_requested(expect, client, key):
             data = {"text_lines": ["abc"], "redirect": True}
             request, response = client.post(
-                f"/templates/{key}", data=json.dumps(data), allow_redirects=False
+                f"/templates/{key}", data=data, allow_redirects=False
             )
             expect(response.status) == 302
 
@@ -83,19 +89,12 @@ def describe_image_list():
             )
 
     def describe_POST():
-        def it_returns_an_image_url(expect, client):
-            data = {"template_key": "iw", "text_lines": ["foo", "bar"]}
-            request, response = client.post("/images", data=json.dumps(data))
-            expect(response.status) == 201
-            expect(response.json) == {
-                "url": "http://localhost:5000/images/iw/foo/bar.png"
-            }
-
-        def it_accepts_form_data(expect, client):
+        @pytest.mark.parametrize("as_json", [True, False])
+        def it_returns_an_image_url(expect, client, as_json):
             data = {"template_key": "iw", "text_lines[]": ["foo", "bar"]}
-            request, response = client.post("/images", data=data)
-            print(response.json)
-            print(response.text)
+            request, response = client.post(
+                "/images", data=json.dumps(data) if as_json else data
+            )
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
@@ -103,7 +102,7 @@ def describe_image_list():
 
         def it_requires_template_key(expect, client):
             data = {"text_lines": ["foo", "bar"]}
-            request, response = client.post("/images", data=json.dumps(data))
+            request, response = client.post("/images", data=data)
             expect(response.status) == 400
             expect(response.json) == {"error": '"template_key" is required'}
 
@@ -117,21 +116,19 @@ def describe_image_list():
 
         def it_handles_missing_text_lines(expect, client):
             data = {"template_key": "iw"}
-            request, response = client.post("/images", data=json.dumps(data))
+            request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
 
         def it_drops_trailing_blank_lines(expect, client):
             data = {"template_key": "iw", "text_lines": ["", "", "", ""]}
-            request, response = client.post("/images", data=json.dumps(data))
+            request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
 
         def it_redirects_if_requested(expect, client):
             data = {"template_key": "iw", "text_lines": ["abc"], "redirect": True}
-            request, response = client.post(
-                "/images", data=json.dumps(data), allow_redirects=False
-            )
+            request, response = client.post("/images", data=data, allow_redirects=False)
             expect(response.status) == 302
 
 
