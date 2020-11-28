@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import datafiles
 import log
 import pytest
 
@@ -42,6 +43,22 @@ def describe_template():
     def describe_str():
         def it_includes_the_path(expect, template):
             expect(str(template)).endswith("/memegen/templates/_test")
+
+    def describe_valid():
+        def it_removes_invalid_styles(expect, template, monkeypatch):
+            monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
+            template.styles = ["default", "sample", "unknown"]
+            with (template.directory / "sample.jpg").open("w") as f:
+                f.write("")
+            log.info(f"{template} valid: {template.valid}")
+            expect(template.styles) == ["sample"]
+
+        def it_skips_cleanup_when_deployed(expect, template, monkeypatch):
+            monkeypatch.setattr(settings, "DEPLOYED", True)
+            monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
+            template.styles = ["anything"]
+            log.info(f"{template} valid: {template.valid}")
+            expect(template.styles) == ["anything"]
 
     def describe_text():
         def it_defaults_to_two_lines(expect, template):
