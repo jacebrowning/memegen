@@ -177,6 +177,13 @@ def test_watermark_disabled_when_small(images, template):
     utils.images.save(template, lines, "example.com", size=(300, 0), directory=images)
 
 
+@pytest.mark.slow
+def test_watermark_with_many_lines(images):
+    template = models.Template.objects.get("ptj")
+    lines = ["", "", "", "", "", "", "Has a watermark.", "Doesn't have a watermark!"]
+    utils.images.save(template, lines, "example.com", directory=images)
+
+
 # Debug
 
 
