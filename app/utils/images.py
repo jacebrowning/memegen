@@ -80,7 +80,7 @@ def render_image(
 
     pad = all(size) if pad is None else pad
     image = resize_image(background, *size, pad)
-    if size[0] and size[0] <= settings.PREVIEW_SIZE[0]:
+    if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
         watermark = ""
 
     for (
@@ -93,7 +93,7 @@ def render_image(
         stroke_width,
         stroke_fill,
         angle,
-    ) in get_image_elements(template, lines, image.size):
+    ) in get_image_elements(template, lines, watermark, image.size):
 
         box = Image.new("RGBA", max_text_size)
         draw = ImageDraw.Draw(box)
@@ -188,7 +188,7 @@ def add_blurred_background(
 
 
 def add_watermark(image: Image, text: str) -> Image:
-    size = (image.size[0], 14)
+    size = (image.size[0], settings.WATERMARK_HEIGHT)
     font = get_font(text, 0.0, size, 99, tiny=True)
     offset = get_text_offset(text, font, size)
 
@@ -206,10 +206,10 @@ def add_watermark(image: Image, text: str) -> Image:
 
 
 def get_image_elements(
-    template: Template, lines: list[str], image_size: Dimensions
+    template: Template, lines: list[str], watermark: str, image_size: Dimensions
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
     for index, text in enumerate(template.text):
-        point = text.get_anchor(image_size)
+        point = text.get_anchor(image_size, watermark)
 
         max_text_size = text.get_size(image_size)
         max_font_size = int(image_size[1] / 9)

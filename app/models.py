@@ -30,13 +30,17 @@ class Text:
     scale_x: float = 1.0
     scale_y: float = 0.2
 
-    def get_anchor(self, image_size: Dimensions) -> Point:
+    def get_anchor(self, image_size: Dimensions, watermark: str = "") -> Point:
         image_width, image_height = image_size
-        return int(image_width * self.anchor_x), int(image_height * self.anchor_y)
+        anchor = int(image_width * self.anchor_x), int(image_height * self.anchor_y)
+        if watermark and self.anchor_x <= 0.1 and self.anchor_y >= 0.8:
+            anchor = anchor[0], anchor[1] - settings.WATERMARK_HEIGHT // 2
+        return anchor
 
     def get_size(self, image_size: Dimensions) -> Dimensions:
         image_width, image_height = image_size
-        return int(image_width * self.scale_x), int(image_height * self.scale_y)
+        size = int(image_width * self.scale_x), int(image_height * self.scale_y)
+        return size
 
     def stylize(self, text: str) -> str:
         if self.style == "none":
