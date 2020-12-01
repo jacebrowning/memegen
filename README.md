@@ -10,7 +10,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.png> produces:
 
-<img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png" width="100%">
+<img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?watermark=none" width="100%">
 
 ## Available Formats
 
@@ -27,7 +27,7 @@ Images can be scaled to a specific width via `?width=<int>` or a specific height
 
 For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
 
-<img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600" width="100%">
+<img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&watermark=none" width="100%">
 
 ## Special Characters
 
@@ -51,7 +51,7 @@ Reserved URL characters can be included using escape patterns:
 
 For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png> produces:
 
-<img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png" width="100%">
+<img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?watermark=none" width="100%">
 
 # Templates
 
@@ -71,7 +71,7 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 
 You can also use your own image URL as the background. For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
-<img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png" width="100%">
+<img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" width="100%">
 
 # Previews
 
