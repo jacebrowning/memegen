@@ -200,7 +200,7 @@ class Template:
     @classmethod
     async def create(cls, url: str) -> "Template":
         parts = urlparse(url)
-        if "memegen.link" in parts.netloc:
+        if parts.netloc == "api.memegen.link":
             logger.debug(f"Handling template URL: {url}")
             key = parts.path.split(".")[0].split("/")[2]
             if key == "custom":
