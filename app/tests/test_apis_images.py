@@ -30,19 +30,37 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
             }
 
+        def it_redirects_if_requested(expect, client):
+            data = {"template_key": "iw", "text_lines": ["abc"], "redirect": True}
+            request, response = client.post("/images", data=data, allow_redirects=False)
+            redirect = "http://localhost:5000/images/iw/abc.png"
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == redirect
+
         def it_requires_template_key(expect, client):
             data = {"text_lines": ["foo", "bar"]}
             request, response = client.post("/images", data=data)
             expect(response.status) == 400
             expect(response.json) == {"error": '"template_key" is required'}
 
-        def it_handles_unknown_template_key(expect, client):
-            data = {"template_key": "foobar", "text_lines": ["one", "two"]}
+        def it_handles_unknown_template_key(expect, client, unknown_template):
+            data = {"template_key": unknown_template.key, "text_lines": ["one", "two"]}
             request, response = client.post("/images", data=data)
             expect(response.status) == 404
             expect(response.json) == {
-                "url": "http://localhost:5000/images/foobar/one/two.png"
+                "url": "http://localhost:5000/images/unknown/one/two.png"
             }
+
+        def it_handles_unknown_template_key_redirect(expect, client, unknown_template):
+            data = {
+                "template_key": unknown_template.key,
+                "text_lines": ["one", "two"],
+                "redirect": True,
+            }
+            request, response = client.post("/images", data=data, allow_redirects=False)
+            redirect = "http://localhost:5000/images/unknown/one/two.png"
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == redirect
 
         def it_handles_missing_text_lines(expect, client):
             data = {"template_key": "iw"}
@@ -55,11 +73,6 @@ def describe_list():
             request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
-
-        def it_redirects_if_requested(expect, client):
-            data = {"template_key": "iw", "text_lines": ["abc"], "redirect": True}
-            request, response = client.post("/images", data=data, allow_redirects=False)
-            expect(response.status) == 302
 
 
 def describe_detail():
