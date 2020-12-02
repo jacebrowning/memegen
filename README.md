@@ -112,4 +112,4 @@ Here are some sample clients to explore:
 | Web & Slack | <https://memecomplete.com>                                                            |
 | Discord     | JavaScript: [parshsee/discordbot](https://github.com/parshsee/discordbot)             |
 
-Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
+Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
