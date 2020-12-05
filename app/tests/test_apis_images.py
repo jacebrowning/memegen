@@ -62,34 +62,6 @@ def describe_list():
             expect(response.status) == 302
 
 
-def describe_preview():
-    @pytest.fixture
-    def path():
-        return "/images/preview.jpg"
-
-    def it_returns_an_image(expect, client, path):
-        request, response = client.get(path)
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == "image/jpeg"
-
-    def it_supports_custom_templates(expect, client, path):
-        request, response = client.get(
-            path + "?template=https://www.gstatic.com/webp/gallery/1.png"
-        )
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == "image/jpeg"
-
-    def it_handles_invalid_urls(expect, client, path):
-        request, response = client.get(path + "?template=http://example.com/foobar.jpg")
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == "image/jpeg"
-
-    def it_handles_invalid_keys(expect, client, path, unknown_template):
-        request, response = client.get(path + f"?template={unknown_template.key}")
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == "image/jpeg"
-
-
 def describe_detail():
     @pytest.mark.parametrize(
         ("path", "content_type"),
