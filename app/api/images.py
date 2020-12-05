@@ -263,7 +263,7 @@ async def render_image(
 
     else:
         template = models.Template.objects.get_or_none(key)
-        if not template:
+        if not template or not template.image.exists():
             logger.error(f"No such template: {key}")
             template = models.Template.objects.get("_error")
             status = 404

@@ -70,4 +70,6 @@ def describe_detail():
             request, response = client.post(
                 f"/templates/{key}", data=data, allow_redirects=False
             )
+            redirect = f"http://localhost:5000/images/{key}/abc.png"
             expect(response.status) == 302
+            expect(response.headers["Location"]) == redirect
