@@ -52,7 +52,7 @@ async def create(request):
         with suppress(KeyError):
             payload["redirect"] = payload.pop("redirect")[0]
     else:
-        payload = request.json
+        payload = request.json or {}
     with suppress(KeyError):
         payload["text_lines"] = payload.pop("text_lines[]")
 
