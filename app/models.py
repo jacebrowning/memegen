@@ -191,6 +191,20 @@ class Template:
             url += "?background=" + background
         return url
 
+    def build_path(
+        self,
+        text_lines: list[str],
+        style: str,
+        size: Dimensions,
+        watermark: str,
+        ext: str,
+    ) -> Path:
+        slug = utils.text.encode(text_lines)
+        variant = str(self.text) + str(style) + str(size) + watermark
+        fingerprint = hashlib.sha1(variant.encode()).hexdigest()
+        filename = f"{slug}.{fingerprint}.{ext}"
+        return Path(self.key) / filename
+
     @staticmethod
     def _drop_trailing_spaces(url: str) -> str:
         while "/_." in url:
