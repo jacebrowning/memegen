@@ -31,6 +31,7 @@ FONTS_DIRECTORY = ROOT / "fonts"
 FONT_THICK = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
 FONT_THIN = FONTS_DIRECTORY / "TitilliumWeb-SemiBold.ttf"
 FONT_TINY = FONTS_DIRECTORY / "MicroFLF-Bold.ttf"
+MINIMUM_FONT_SIZE = 7
 
 # Image rendering
 
