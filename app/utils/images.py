@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import io
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterator, Optional
@@ -10,7 +9,6 @@ from sanic.log import logger
 
 from .. import settings
 from ..types import Dimensions, Offset, Point
-from .text import encode
 
 if TYPE_CHECKING:
     from ..models import Template
@@ -22,6 +20,8 @@ def preview(
     *,
     style: str = settings.DEFAULT_STYLE,
 ) -> tuple[bytes, str]:
+    path = template.build_path(lines, style, settings.PREVIEW_SIZE, "", "jpg")
+    logger.info(f"Previewing meme for {path}")
     image = render_image(template, style, lines, settings.PREVIEW_SIZE, pad=False)
     stream = io.BytesIO()
     image.save(stream, format="JPEG", quality=50)
@@ -40,11 +40,7 @@ def save(
 ) -> Path:
     size = fit_image(*size)
 
-    slug = encode(lines)
-    variant = str(template.text) + str(style) + str(size) + watermark
-    fingerprint = hashlib.sha1(variant.encode()).hexdigest()
-
-    path = directory / template.key / f"{slug}.{fingerprint}.{ext}"
+    path = directory / template.build_path(lines, style, size, watermark, ext)
     if path.exists():
         if settings.DEPLOYED:
             logger.info(f"Loading meme from {path}")
@@ -239,6 +235,9 @@ def wrap(line: str, max_text_size: Dimensions, max_font_size: int) -> str:
     single = get_font(line, 0, max_text_size, max_font_size)
     double = get_font(lines, 0, max_text_size, max_font_size)
 
+    if single.size == double.size and double.size <= settings.MINIMUM_FONT_SIZE:
+        return lines
+
     if single.size >= double.size:
         return line
 
@@ -270,7 +269,7 @@ def get_font(
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
-    for size in range(max(7, max_font_size), 6, -1):
+    for size in range(max(settings.MINIMUM_FONT_SIZE, max_font_size), 6, -1):
 
         if tiny:
             font = ImageFont.truetype(str(settings.FONT_TINY), size=size)

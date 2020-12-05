@@ -143,6 +143,12 @@ def test_text_wrap_when_font_is_too_small(images):
     utils.images.save(template, lines, directory=images)
 
 
+def test_text_wrap_on_small_images(images):
+    template = models.Template.objects.get("pigeon")
+    lines = ["", "multiple words here"]
+    utils.images.save(template, lines, size=(0, 300), directory=images)
+
+
 @pytest.mark.slow
 def test_descender_vertical_alignment(images):
     template = models.Template.objects.get("ptj")
