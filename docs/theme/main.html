@@ -74,7 +74,10 @@
 ></script>
 
 <script>
-    iFrameResize({ checkOrigin: false })
+    iFrameResize({ checkOrigin: false, resizedCallback: onResized })
+    function onResized(iframe, height, width, type) {
+        $("#loading").hide()
+    }
 </script>
 
 {% endblock %}
