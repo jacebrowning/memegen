@@ -284,7 +284,10 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 ></script>
 
 <script>
-    iFrameResize({ checkOrigin: false })
+    iFrameResize({ checkOrigin: false, resizedCallback: onResized })
+    function onResized(iframe, height, width, type) {
+        $("#loading").hide()
+    }
 </script>
 
 
@@ -335,5 +338,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-12-05 17:35:09.288505+00:00
+Build Date UTC : 2020-12-06 16:41:15.298851+00:00
 -->

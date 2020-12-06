@@ -114,7 +114,10 @@
     width="100%"
     frameBorder="0"
     scrolling="no">
-</iframe></p>
+</iframe>
+<div class="text-center" width="100%" style="padding-top: 200px;">
+    <h2 id="loading" class="text-muted">Loading images...</h2>
+</div></p>
         </div>
     </div>
 </div>
@@ -138,7 +141,10 @@
 ></script>
 
 <script>
-    iFrameResize({ checkOrigin: false })
+    iFrameResize({ checkOrigin: false, resizedCallback: onResized })
+    function onResized(iframe, height, width, type) {
+        $("#loading").hide()
+    }
 </script>
 
 
