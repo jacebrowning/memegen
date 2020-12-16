@@ -79,8 +79,8 @@ If your client is going to show live previews of a custom meme, please use the `
 
 ```javascript
 var key = encodeURIComponent($("#template").val())
-var line_1 = encodeURIComponent($("#line_1").val())
-var line_2 = encodeURIComponent($("#line_2").val())
+var line_1 = encodeURIComponent($("#line_1").val()) || " "
+var line_2 = encodeURIComponent($("#line_2").val()) || " "
 
 var api = "https://api.memegen.link/images/preview.jpg"
 var url = `${api}?template=${key}&lines[]=${line_1}&lines[]=${line_2}`
