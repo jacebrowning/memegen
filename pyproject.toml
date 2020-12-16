@@ -43,7 +43,7 @@ isort = "=5.5.1"
 black = "=20.8b1"
 
 # Type Checking
-mypy = { git = "https://github.com/python/mypy", rev = "52225ab91703a7283c9e4bd129402a4e43abdb66" }
+mypy = { git = "https://github.com/python/mypy", rev = "05d9fb15dcec8bde4e7184ca387e7d8acea68792" }
 autoflake = "^1.3.1"
 
 # Testing
