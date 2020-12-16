@@ -187,8 +187,8 @@
 <h1 id="previews">Previews</h1>
 <p>If your client is going to show live previews of a custom meme, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
 <pre><code class="javascript">var key = encodeURIComponent($(&quot;#template&quot;).val())
-var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val())
-var line_2 = encodeURIComponent($(&quot;#line_2&quot;).val())
+var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val()) || &quot; &quot;
+var line_2 = encodeURIComponent($(&quot;#line_2&quot;).val()) || &quot; &quot;
 
 var api = &quot;https://api.memegen.link/images/preview.jpg&quot;
 var url = `${api}?template=${key}&amp;lines[]=${line_1}&amp;lines[]=${line_2}`
@@ -338,5 +338,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-12-16 01:03:40.463998+00:00
+Build Date UTC : 2020-12-16 02:34:57.185388+00:00
 -->
