@@ -658,7 +658,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "mypy"
-version = "0.800+dev.fe8fac16178447bb0abab3e759221294d4a70f3c"
+version = "0.800+dev.48312289155bb203ad12249a87692fa841e7478c"
 description = "Optional static typing for Python"
 category = "dev"
 optional = false
@@ -676,8 +676,8 @@ dmypy = ["psutil (>=4.0)"]
 [package.source]
 type = "git"
 url = "https://github.com/python/mypy"
-reference = "master"
-resolved_reference = "fe8fac16178447bb0abab3e759221294d4a70f3c"
+reference = "48312289155bb203ad12249a87692fa841e7478c"
+resolved_reference = "48312289155bb203ad12249a87692fa841e7478c"
 
 [[package]]
 name = "mypy-extensions"
@@ -1060,26 +1060,26 @@ jinja2 = ["ruamel.yaml.jinja2 (>=0.2)"]
 
 [[package]]
 name = "sanic"
-version = "20.9.1"
+version = "20.12.0"
 description = "A web server and web framework that's written to go fast. Build fast. Run fast."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-aiofiles = ">=0.3.0"
+aiofiles = ">=0.6.0"
 httptools = ">=0.0.10"
 httpx = "0.15.4"
-multidict = "5.0.0"
+multidict = ">=5.0,<6.0"
 ujson = {version = ">=1.35", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
 uvloop = {version = ">=0.5.3", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
 websockets = ">=8.1,<9.0"
 
 [package.extras]
-all = ["pytest (==5.2.1)", "multidict (==5.0.0)", "gunicorn", "pytest-cov", "httpcore (==0.3.0)", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "aiofiles", "tox", "black", "flake8", "bandit", "towncrier", "sphinx (>=2.1.2)", "sphinx-rtd-theme", "recommonmark (>=0.5.0)", "docutils", "pygments", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
-dev = ["pytest (==5.2.1)", "multidict (==5.0.0)", "gunicorn", "pytest-cov", "httpcore (==0.3.0)", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "aiofiles", "tox", "black", "flake8", "bandit", "towncrier", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
+all = ["pytest (==5.2.1)", "multidict (>=5.0,<6.0)", "gunicorn (==20.0.4)", "pytest-cov", "httpcore (>=0.11.0,<0.12.0)", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "pytest-dependency", "aiofiles", "tox", "black", "flake8", "bandit", "towncrier", "sphinx (>=2.1.2)", "sphinx-rtd-theme", "recommonmark (>=0.5.0)", "docutils", "pygments", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
+dev = ["pytest (==5.2.1)", "multidict (>=5.0,<6.0)", "gunicorn (==20.0.4)", "pytest-cov", "httpcore (>=0.11.0,<0.12.0)", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "pytest-dependency", "aiofiles", "tox", "black", "flake8", "bandit", "towncrier", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
 docs = ["sphinx (>=2.1.2)", "sphinx-rtd-theme", "recommonmark (>=0.5.0)", "docutils", "pygments"]
-test = ["pytest (==5.2.1)", "multidict (==5.0.0)", "gunicorn", "pytest-cov", "httpcore (==0.3.0)", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
+test = ["pytest (==5.2.1)", "multidict (>=5.0,<6.0)", "gunicorn (==20.0.4)", "pytest-cov", "httpcore (>=0.11.0,<0.12.0)", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "pytest-dependency", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
 
 [[package]]
 name = "sanic-cors"
@@ -1355,7 +1355,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "665fface206a0d33ad21e599434db43f8b06b74e01c2d0e988c22332a87e8895"
+content-hash = "d34ec69b76167ae9933ac573c5cdad00bdd21bf0c36ad84db532c9bb9e0d7d09"
 
 [metadata.files]
 aiofiles = [
@@ -2095,8 +2095,8 @@ rope = [
     {file = "ruamel.yaml-0.16.12.tar.gz", hash = "sha256:076cc0bc34f1966d920a49f18b52b6ad559fbe656a0748e3535cf7b3f29ebf9e"},
 ]
 sanic = [
-    {file = "sanic-20.9.1-py3-none-any.whl", hash = "sha256:0c6949fe55501d8648f1cab77efa71685f7dda48368c7e03e8342fd794dda8cf"},
-    {file = "sanic-20.9.1.tar.gz", hash = "sha256:8687db10f11942b3163e789af80951f5b85bde02f752acbc5073b985bba6e01a"},
+    {file = "sanic-20.12.0-py3-none-any.whl", hash = "sha256:606753cb18c80e6c2bda581abe398ddce5d0340d914c44e6c9c67ed3cf000dca"},
+    {file = "sanic-20.12.0.tar.gz", hash = "sha256:f86de790f9a154fd4f0ceef20d43ef32497751f53843c2bd41b41ad3c3c96fc9"},
 ]
 sanic-cors = [
     {file = "Sanic-Cors-0.10.0.post3.tar.gz", hash = "sha256:abb0f8b17d2ecb12d62ecac42ca62bfed9b07fd00ffd83219ad23b99d4df3f23"},

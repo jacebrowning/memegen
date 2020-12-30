@@ -13,8 +13,8 @@ packages = [ { include = "app" } ]
 python = "^3.9"
 
 # Sanic
-sanic = "~20.9.0"
-sanic-cors = "~0.10.0"
+sanic = "~20.12"
+sanic-cors = "~0.10"
 sanic-openapi = "~0.6.2"
 
 # Markdown
@@ -43,7 +43,7 @@ isort = "=5.5.1"
 black = "=20.8b1"
 
 # Type Checking
-mypy = { git = "https://github.com/python/mypy", rev = "master" }
+mypy = { git = "https://github.com/python/mypy", rev = "48312289155bb203ad12249a87692fa841e7478c" }
 autoflake = "^1.3.1"
 
 # Testing
