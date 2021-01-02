@@ -89,9 +89,9 @@ else
 	fi
 endif
 ifdef SKIP_SLOW
-	poetry run coveragespace jacebrowning/memegen unit
+	poetry run coveragespace update unit
 else
-	poetry run coveragespace jacebrowning/memegen overall
+	poetry run coveragespace update overall
 endif
 
 .PHONY: test-fast

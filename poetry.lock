@@ -187,11 +187,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "colorama"
-version = "0.3.9"
+version = "0.4.4"
 description = "Cross-platform colored terminal text."
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "configargparse"
@@ -217,17 +217,17 @@ toml = ["toml"]
 
 [[package]]
 name = "coveragespace"
-version = "3.1.1"
+version = "4.0"
 description = "A place to track your code coverage metrics."
 category = "dev"
 optional = false
-python-versions = ">=3.5,<4.0"
+python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
-colorama = ">=0.3,<0.4"
-coverage = "*"
-docopt = ">=0.6,<0.7"
-minilog = "*"
+colorama = ">=0.4"
+coverage = ">=4.0"
+docopt = ">=0.6"
+minilog = ">=2.0,<3.0"
 requests = ">=2.0,<3.0"
 
 [[package]]
@@ -658,7 +658,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "mypy"
-version = "0.800+dev.48312289155bb203ad12249a87692fa841e7478c"
+version = "0.800+dev.07a64450cec61fafc98838d9e32d6dae63568a93"
 description = "Optional static typing for Python"
 category = "dev"
 optional = false
@@ -676,8 +676,8 @@ dmypy = ["psutil (>=4.0)"]
 [package.source]
 type = "git"
 url = "https://github.com/python/mypy"
-reference = "48312289155bb203ad12249a87692fa841e7478c"
-resolved_reference = "48312289155bb203ad12249a87692fa841e7478c"
+reference = "master"
+resolved_reference = "07a64450cec61fafc98838d9e32d6dae63568a93"
 
 [[package]]
 name = "mypy-extensions"
@@ -1355,7 +1355,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d34ec69b76167ae9933ac573c5cdad00bdd21bf0c36ad84db532c9bb9e0d7d09"
+content-hash = "8e8c0eaa3f3f1cc3549e5484d4722d9ebc839718bd730be46c8dd56dcdec8749"
 
 [metadata.files]
 aiofiles = [
@@ -1493,8 +1493,8 @@ click = [
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
 ]
 colorama = [
-    {file = "colorama-0.3.9-py2.py3-none-any.whl", hash = "sha256:463f8483208e921368c9f306094eb6f725c6ca42b0f97e313cb5d5512459feda"},
-    {file = "colorama-0.3.9.tar.gz", hash = "sha256:48eb22f4f8461b1df5734a074b57042430fb06e1d61bd1e11b078c0fe6d7a1f1"},
+    {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
+    {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 configargparse = [
     {file = "ConfigArgParse-1.2.3.tar.gz", hash = "sha256:edd17be986d5c1ba2e307150b8e5f5107aba125f3574dddd02c85d5cdcfd37dc"},
@@ -1536,8 +1536,8 @@ coverage = [
     {file = "coverage-5.3.tar.gz", hash = "sha256:280baa8ec489c4f542f8940f9c4c2181f0306a8ee1a54eceba071a449fb870a0"},
 ]
 coveragespace = [
-    {file = "coveragespace-3.1.1-py3-none-any.whl", hash = "sha256:cc62bf4f2feb419032920270a0c16f1a379b80ac9fc6bd3cefce918bfc90ba27"},
-    {file = "coveragespace-3.1.1.tar.gz", hash = "sha256:c5862d04a91bec32fc7dd8487006922e144280dc05e75b26c38f4ffe4e760fb0"},
+    {file = "coveragespace-4.0-py3-none-any.whl", hash = "sha256:fef3c1f17685e72ff008b32248849a473ebf7be51c827eb786fa57dc33b3f366"},
+    {file = "coveragespace-4.0.tar.gz", hash = "sha256:659ec5c86ded8b505004bd7532835aaea6e790608abacc6c8ad807f4108ede3d"},
 ]
 datafiles = [
     {file = "datafiles-0.12b1-py3-none-any.whl", hash = "sha256:76121ebe019b4c2cf3a0d982ab4050e3cfb114a4fe4f89a3992f34ae311972ce"},
