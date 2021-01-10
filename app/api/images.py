@@ -276,7 +276,7 @@ async def render_image(
     lines = utils.text.decode(slug)
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
 
-    asyncio.create_task(utils.meta.track(request.url, lines))
+    asyncio.create_task(utils.meta.track(request, lines))
     path = await asyncio.to_thread(
         utils.images.save, template, lines, watermark, ext=ext, style=style, size=size
     )

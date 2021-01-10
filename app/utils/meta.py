@@ -25,14 +25,17 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
     return watermark, updated
 
 
-async def track(url: str, lines: list[str]):
+async def track(request, lines: list[str]):
     text = " ".join(lines).strip()
-    if text and settings.REMOTE_TRACKING_URL:  # pragma: no cover
+    trackable = not any(
+        name in request.args for name in ["height", "width", "watermark"]
+    )
+    if text and trackable and settings.REMOTE_TRACKING_URL:
         async with aiohttp.ClientSession() as session:
             params = dict(
                 text=text,
                 source="memegen.link",
-                context=unquote(url),
+                context=unquote(request.url),
             )
             logger.info(f"Tracking request: {params}")
             response = await session.get(settings.REMOTE_TRACKING_URL, params=params)

@@ -14,13 +14,13 @@ bugsnag.configure(
 )
 
 
-class BugsnagErrorHandler(ErrorHandler):  # pragma: no cover
+class BugsnagErrorHandler(ErrorHandler):
     def default(self, request, exception):
-        if self._should_report(exception):
+        if self._should_notify(exception):
             bugsnag.notify(exception, meta_data={"request": request.url})
         return super().default(request, exception)
 
-    def _should_report(self, exception) -> bool:
+    def _should_notify(self, exception) -> bool:
         if not settings.BUGSNAG_API_KEY:
             return False
         if isinstance(exception, IGNORED_EXCEPTIONS):
