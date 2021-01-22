@@ -10,6 +10,11 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
     updated = False
 
     if watermark == "none":
+        logger.info(
+            "Check referer:\n\n%s\n\n%s\n",
+            request.headers,
+            settings.ALLOWED_WATERMARKS,
+        )
         watermark = ""
     elif watermark:
         if watermark == settings.DEFAULT_WATERMARK:
