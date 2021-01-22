@@ -19,6 +19,7 @@ def index(request):
         "images": request.app.url_for("images.index", _external=True),
         "_docs": request.app.url_for("swagger.index", _external=True),
         "_examples": request.app.url_for("examples", _external=True),
+        "_funding": "https://www.buymeacoffee.com/jacebrowning",
     }
     if settings.DEBUG:
         data["_test"] = request.app.url_for("test", _external=True)
