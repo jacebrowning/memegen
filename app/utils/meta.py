@@ -10,7 +10,15 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
     updated = False
 
     if watermark == "none":
-        logger.info(request.headers)
+        from pprint import pprint
+
+        pprint(
+            {
+                name: getattr(request, name)
+                for name in dir(request)
+                if not name.startswith("_")
+            }
+        )
         referer = request.headers.get("referer")
         if referer:
             domain = urlparse(referer).netloc
