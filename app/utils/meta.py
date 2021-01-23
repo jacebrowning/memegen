@@ -10,7 +10,7 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
     updated = False
 
     if watermark == "none":
-        log.info(request.headers)
+        logger.info(request.headers)
         referer = request.headers.get("referer")
         if referer:
             domain = urlparse(referer).netloc
