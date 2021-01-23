@@ -15,7 +15,13 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
         if referer:
             domain = urlparse(referer).netloc
             logger.info(f"{referer=} {domain=}")
-        watermark = ""
+            if domain in settings.ALLOWED_WATERMARKS:
+                watermark = ""
+            else:
+                watermark = "bad request"
+        else:
+            watermark = "no referer"
+
     elif watermark:
         if watermark == settings.DEFAULT_WATERMARK:
             logger.warning(f"Redundant watermark: {watermark}")
@@ -24,6 +30,7 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
             logger.warning(f"Unknown watermark: {watermark}")
             watermark = settings.DEFAULT_WATERMARK
             updated = True
+
     else:
         watermark = settings.DEFAULT_WATERMARK
 
