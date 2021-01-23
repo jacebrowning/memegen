@@ -8,12 +8,13 @@ from .. import settings
 
 
 def get_watermark(request, watermark: str) -> tuple[str, bool]:
-    updated = False
+    if "alt=" in request.url:
+        return settings.DEFAULT_WATERMARK, False
 
     if watermark == "none":
         referer = request.headers.get("referer")
+        logger.info(f"Watermark removal referer: {referer}")
         if referer:
-            logger.info(f"Watermark removal referer: {referer}")
             domain = urlparse(referer).netloc
             if domain in settings.ALLOWED_WATERMARKS:
                 return "", False
