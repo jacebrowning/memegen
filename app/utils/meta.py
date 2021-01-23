@@ -1,4 +1,4 @@
-from urllib.parse import unquote
+from urllib.parse import unquote, urlparse
 
 import aiohttp
 from sanic.log import logger
@@ -10,11 +10,10 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
     updated = False
 
     if watermark == "none":
-        logger.info(
-            "Check referer:\n\n%s\n\n%s\n",
-            request.headers,
-            settings.ALLOWED_WATERMARKS,
-        )
+        referer = request.headers.get("referer")
+        if referer:
+            domain = urlparse(referer).netloc
+            logger.info(f"{referer=} {domain=}")
         watermark = ""
     elif watermark:
         if watermark == settings.DEFAULT_WATERMARK:
