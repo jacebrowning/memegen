@@ -1,3 +1,4 @@
+from pprint import pformat
 from urllib.parse import unquote, urlparse
 
 import aiohttp
@@ -10,39 +11,37 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
     updated = False
 
     if watermark == "none":
-        from pprint import pprint
+        referer = request.headers.get("referer")
+        logger.debug(f"Referer: {referer}")
+        if referer:
+            domain = urlparse(referer).netloc
+            if domain in settings.ALLOWED_WATERMARKS:
+                return "", False
+            return settings.DEFAULT_WATERMARK, True
 
-        pprint(
+        data = pformat(
             {
                 name: getattr(request, name)
                 for name in dir(request)
                 if not name.startswith("_")
             }
         )
-        referer = request.headers.get("referer")
-        if referer:
-            domain = urlparse(referer).netloc
-            logger.info(f"{referer=} {domain=}")
-            if domain in settings.ALLOWED_WATERMARKS:
-                watermark = ""
-            else:
-                watermark = "bad request"
-        else:
-            watermark = "no referer"
+        logger.warning(f"Watermark removal request: {data}")
+        return "", False
 
-    elif watermark:
+    if watermark:
+
         if watermark == settings.DEFAULT_WATERMARK:
             logger.warning(f"Redundant watermark: {watermark}")
-            updated = True
-        elif watermark not in settings.ALLOWED_WATERMARKS:
+            return watermark, True
+
+        if watermark not in settings.ALLOWED_WATERMARKS:
             logger.warning(f"Unknown watermark: {watermark}")
-            watermark = settings.DEFAULT_WATERMARK
-            updated = True
+            return settings.DEFAULT_WATERMARK, True
 
-    else:
-        watermark = settings.DEFAULT_WATERMARK
+        return watermark, False
 
-    return watermark, updated
+    return settings.DEFAULT_WATERMARK, False
 
 
 async def track(request, lines: list[str]):
