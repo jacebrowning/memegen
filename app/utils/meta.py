@@ -26,7 +26,7 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
                 if not name.startswith("_")
             }
         )
-        logger.warning(f"Watermark removal request: {data}")
+        logger.warning(f"Watermark removal request:\n{data}")
         return "", False
 
     if watermark:
