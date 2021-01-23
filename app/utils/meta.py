@@ -12,8 +12,8 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
 
     if watermark == "none":
         referer = request.headers.get("referer")
-        logger.debug(f"Referer: {referer}")
         if referer:
+            logger.info(f"Watermark removal referer: {referer}")
             domain = urlparse(referer).netloc
             if domain in settings.ALLOWED_WATERMARKS:
                 return "", False
