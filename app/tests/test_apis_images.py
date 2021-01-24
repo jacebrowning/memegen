@@ -112,14 +112,19 @@ def describe_detail():
         expect(response.headers["content-type"]) == "image/jpeg"
 
     def describe_watermark():
-        def it_returns_a_unique_image(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["test"])
+        @pytest.fixture(autouse=True)
+        def watermark_settings(monkeypatch):
+            monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+
+        def it_returns_a_unique_image(expect, client):
             request, response = client.get("/images/fry/test.png")
-            request, response2 = client.get("/images/fry/test.png?watermark=test")
+            request, response2 = client.get(
+                "/images/fry/test.png?watermark=example.com"
+            )
             expect(len(response.content)) != len(response2.content)
 
-        def it_can_be_disabled(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+        def it_can_be_disabled(expect, client):
             request, response = client.get("/images/fry/test.png")
             request, response2 = client.get(
                 "/images/fry/test.png?watermark=none",
@@ -127,14 +132,12 @@ def describe_detail():
             )
             expect(len(response.content)) != len(response2.content)
 
-        def it_checks_referer(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+        def it_checks_referer(expect, client):
             request, response = client.get("/images/fry/test.png")
             request, response2 = client.get("/images/fry/test.png?watermark=none")
             expect(len(response.content)) == len(response2.content)
 
-        def it_rejects_unknown_referer(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+        def it_rejects_unknown_referer(expect, client):
             request, response = client.get("/images/fry/test.png")
             request, response2 = client.get(
                 "/images/fry/test.png?watermark=none",
@@ -142,8 +145,7 @@ def describe_detail():
             )
             expect(len(response.content)) == len(response2.content)
 
-        def it_is_disabled_automatically_for_small_images(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+        def it_is_disabled_automatically_for_small_images(expect, client):
             request, response = client.get("/images/fry/test.png?width=300")
             request, response2 = client.get(
                 "/images/fry/test.png?width=300&watermark=example.com"
@@ -159,8 +161,7 @@ def describe_detail():
             expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
 
         @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_removes_redundant_values(expect, client, monkeypatch, ext):
-            monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
+        def it_removes_redundant_values(expect, client, ext):
             request, response = client.get(
                 f"/images/fry/test.{ext}?watermark=memegen.link", allow_redirects=False
             )
