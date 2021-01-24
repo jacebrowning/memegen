@@ -79,6 +79,7 @@ testpaths = "app"
 addopts = """
 --no-header \
 --random \
+--show-capture=log \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html --no-cov-on-fail
 """
 

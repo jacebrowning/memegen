@@ -658,7 +658,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "mypy"
-version = "0.800+dev.07a64450cec61fafc98838d9e32d6dae63568a93"
+version = "0.810+dev.91fd3445d20d6d83317a76541a252578f4ad7cb8"
 description = "Optional static typing for Python"
 category = "dev"
 optional = false
@@ -677,7 +677,7 @@ dmypy = ["psutil (>=4.0)"]
 type = "git"
 url = "https://github.com/python/mypy"
 reference = "master"
-resolved_reference = "07a64450cec61fafc98838d9e32d6dae63568a93"
+resolved_reference = "91fd3445d20d6d83317a76541a252578f4ad7cb8"
 
 [[package]]
 name = "mypy-extensions"

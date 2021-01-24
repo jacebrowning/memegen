@@ -1,4 +1,3 @@
-from pprint import pformat
 from urllib.parse import unquote, urlparse
 
 import aiohttp
@@ -8,27 +7,16 @@ from .. import settings
 
 
 def get_watermark(request, watermark: str) -> tuple[str, bool]:
-    if "alt=" in request.url:
-        return settings.DEFAULT_WATERMARK, False
-
     if watermark == "none":
-        referer = request.headers.get("referer")
+
+        referer = request.headers.get("referer") or request.args.get("referer")
         logger.info(f"Watermark removal referer: {referer}")
         if referer:
             domain = urlparse(referer).netloc
             if domain in settings.ALLOWED_WATERMARKS:
                 return "", False
-            return settings.DEFAULT_WATERMARK, True
 
-        data = pformat(
-            {
-                name: getattr(request, name)
-                for name in dir(request)
-                if not name.startswith("_")
-            }
-        )
-        logger.warning(f"Watermark removal request:\n{data}")
-        return "", False
+        return settings.DEFAULT_WATERMARK, True
 
     if watermark:
 

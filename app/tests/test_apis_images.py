@@ -119,16 +119,34 @@ def describe_detail():
             expect(len(response.content)) != len(response2.content)
 
         def it_can_be_disabled(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "")
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+            request, response = client.get("/images/fry/test.png")
+            request, response2 = client.get(
+                "/images/fry/test.png?watermark=none",
+                headers={"REFERER": "http://example.com"},
+            )
+            expect(len(response.content)) != len(response2.content)
+
+        def it_checks_referer(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
             request, response = client.get("/images/fry/test.png")
             request, response2 = client.get("/images/fry/test.png?watermark=none")
             expect(len(response.content)) == len(response2.content)
 
+        def it_rejects_unknown_referer(expect, client, monkeypatch):
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+            request, response = client.get("/images/fry/test.png")
+            request, response2 = client.get(
+                "/images/fry/test.png?watermark=none",
+                headers={"REFERER": "http://google.com"},
+            )
+            expect(len(response.content)) == len(response2.content)
+
         def it_is_disabled_automatically_for_small_images(expect, client, monkeypatch):
-            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["test"])
+            monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
             request, response = client.get("/images/fry/test.png?width=300")
             request, response2 = client.get(
-                "/images/fry/test.png?width=300&watermark=test"
+                "/images/fry/test.png?width=300&watermark=example.com"
             )
             expect(len(response.content)) == len(response2.content)
 
