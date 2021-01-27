@@ -26,4 +26,5 @@ def client():
 def unknown_template():
     template = Template.objects.get_or_create("unknown")
     template.delete()
-    return template
+    yield template
+    template.delete()

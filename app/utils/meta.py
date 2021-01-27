@@ -7,8 +7,14 @@ from .. import settings
 
 
 def get_watermark(request, watermark: str) -> tuple[str, bool]:
-    if watermark == "none":
+    api_key = request.headers.get("x-api-key")
+    if api_key:
+        api_mask = api_key[:2] + "***" + api_key[-2:]
+        logger.info(f"Authenticated with {api_mask}")
+        if api_key in settings.API_KEYS:
+            return watermark or "", False
 
+    if watermark == settings.DISABLED_WATERMARK:
         referer = request.headers.get("referer") or request.args.get("referer")
         logger.info(f"Watermark removal referer: {referer}")
         if referer:
@@ -19,7 +25,6 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
         return settings.DEFAULT_WATERMARK, True
 
     if watermark:
-
         if watermark == settings.DEFAULT_WATERMARK:
             logger.warning(f"Redundant watermark: {watermark}")
             return watermark, True

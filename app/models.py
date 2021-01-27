@@ -252,4 +252,5 @@ class Template:
         return template
 
     def delete(self):
-        shutil.rmtree(self.directory)
+        if self.directory.exists():
+            shutil.rmtree(self.directory)

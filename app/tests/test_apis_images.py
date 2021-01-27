@@ -114,6 +114,7 @@ def describe_detail():
     def describe_watermark():
         @pytest.fixture(autouse=True)
         def watermark_settings(monkeypatch):
+            monkeypatch.setattr(settings, "DISABLED_WATERMARK", "blank")
             monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
             monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
 
@@ -127,20 +128,20 @@ def describe_detail():
         def it_can_be_disabled(expect, client):
             request, response = client.get("/images/fry/test.png")
             request, response2 = client.get(
-                "/images/fry/test.png?watermark=none",
+                "/images/fry/test.png?watermark=blank",
                 headers={"REFERER": "http://example.com"},
             )
             expect(len(response.content)) != len(response2.content)
 
         def it_checks_referer(expect, client):
             request, response = client.get("/images/fry/test.png")
-            request, response2 = client.get("/images/fry/test.png?watermark=none")
+            request, response2 = client.get("/images/fry/test.png?watermark=blank")
             expect(len(response.content)) == len(response2.content)
 
         def it_rejects_unknown_referer(expect, client):
             request, response = client.get("/images/fry/test.png")
             request, response2 = client.get(
-                "/images/fry/test.png?watermark=none",
+                "/images/fry/test.png?watermark=blank",
                 headers={"REFERER": "http://google.com"},
             )
             expect(len(response.content)) == len(response2.content)
