@@ -113,61 +113,95 @@ def describe_detail():
 
     def describe_watermark():
         @pytest.fixture(autouse=True)
-        def watermark_settings(monkeypatch):
+        def watermark_settings(monkeypatch, client):
             monkeypatch.setattr(settings, "DISABLED_WATERMARK", "blank")
             monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
             monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
+            monkeypatch.setattr(settings, "API_KEYS", ["sample"])
 
-        def it_returns_a_unique_image(expect, client):
+        @pytest.fixture
+        def default_content(watermark_settings, client):
             request, response = client.get("/images/fry/test.png")
-            request, response2 = client.get(
-                "/images/fry/test.png?watermark=example.com"
+            return response.content
+
+        def it_returns_a_unique_image(expect, client, default_content):
+            request, response = client.get(
+                "/images/fry/test.png?watermark=example.com",
+                allow_redirects=False,
             )
-            expect(len(response.content)) != len(response2.content)
+            expect(response.status) == 200
+            expect(len(response.content)) != len(default_content)
 
-        def it_can_be_disabled(expect, client):
-            request, response = client.get("/images/fry/test.png")
-            request, response2 = client.get(
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_rejects_unknown_watermarks(expect, client, ext):
+            request, response = client.get(
+                f"/images/fry/test.{ext}?watermark=foobar",
+                allow_redirects=False,
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+
+        @pytest.mark.parametrize("ext", ["png", "jpg"])
+        def it_removes_redundant_watermarks(expect, client, ext):
+            request, response = client.get(
+                f"/images/fry/test.{ext}?watermark=memegen.link",
+                allow_redirects=False,
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+
+        def it_can_be_disabled_by_referer(expect, client, default_content):
+            request, response = client.get(
                 "/images/fry/test.png?watermark=blank",
                 headers={"REFERER": "http://example.com"},
+                allow_redirects=False,
             )
-            expect(len(response.content)) != len(response2.content)
+            expect(response.status) == 200
+            expect(len(response.content)) != len(default_content)
 
-        def it_checks_referer(expect, client):
-            request, response = client.get("/images/fry/test.png")
-            request, response2 = client.get("/images/fry/test.png?watermark=blank")
-            expect(len(response.content)) == len(response2.content)
+        def it_rejects_missing_referer(expect, client):
+            request, response = client.get(
+                "/images/fry/test.png?watermark=blank",
+                allow_redirects=False,
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == "/images/fry/test.png"
 
         def it_rejects_unknown_referer(expect, client):
-            request, response = client.get("/images/fry/test.png")
-            request, response2 = client.get(
+            request, response = client.get(
                 "/images/fry/test.png?watermark=blank",
                 headers={"REFERER": "http://google.com"},
+                allow_redirects=False,
             )
-            expect(len(response.content)) == len(response2.content)
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == "/images/fry/test.png"
+
+        def it_is_disabled_automatically_when_authenticated(expect, client):
+            request, response = client.get(
+                "/images/fry/test.png?watermark=ignored",
+                headers={"X-API-KEY": "sample"},
+                allow_redirects=False,
+            )
+            expect(response.status) == 200
+
+        def it_rejects_invalid_authentication(expect, client):
+            request, response = client.get(
+                "/images/fry/test.png?watermark=blank",
+                headers={"X-API-KEY": "foobar"},
+                allow_redirects=False,
+            )
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == "/images/fry/test.png"
 
         def it_is_disabled_automatically_for_small_images(expect, client):
-            request, response = client.get("/images/fry/test.png?width=300")
-            request, response2 = client.get(
-                "/images/fry/test.png?width=300&watermark=example.com"
-            )
-            expect(len(response.content)) == len(response2.content)
-
-        @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_rejects_unknown_values(expect, client, ext):
+            small_content = client.get("/images/fry/test.png?width=300")[1].content
             request, response = client.get(
-                f"/images/fry/test.{ext}?watermark=foobar", allow_redirects=False
+                "/images/fry/test.png?width=300&watermark=example.com",
+                headers={"REFERER": "http://example.com"},
+                allow_redirects=False,
             )
-            expect(response.status) == 301
-            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
-
-        @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_removes_redundant_values(expect, client, ext):
-            request, response = client.get(
-                f"/images/fry/test.{ext}?watermark=memegen.link", allow_redirects=False
-            )
-            expect(response.status) == 301
-            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+            expect(response.status) == 200
+            expect(len(response.content)) == len(small_content)
 
     def describe_styles():
         def it_supports_alternate_styles(expect, client):

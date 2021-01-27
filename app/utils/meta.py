@@ -12,7 +12,7 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
         api_mask = api_key[:2] + "***" + api_key[-2:]
         logger.info(f"Authenticated with {api_mask}")
         if api_key in settings.API_KEYS:
-            return watermark or "", False
+            return "", False
 
     if watermark == settings.DISABLED_WATERMARK:
         referer = request.headers.get("referer") or request.args.get("referer")
