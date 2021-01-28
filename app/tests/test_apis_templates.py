@@ -73,3 +73,13 @@ def describe_detail():
             redirect = f"http://localhost:5000/images/{key}/abc.png"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
+
+        def it_handles_unknown_template_key(expect, client, unknown_template):
+            data = {"text_lines": ["one", "two"]}
+            request, response = client.post(
+                f"/templates/{unknown_template.key}", data=data
+            )
+            expect(response.status) == 404
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/unknown/one/two.png"
+            }
