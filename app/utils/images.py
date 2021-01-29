@@ -190,7 +190,7 @@ def add_watermark(image: Image, text: str) -> Image:
 
     draw = ImageDraw.Draw(image)
     draw.text(
-        (1, image.size[1] - size[1] - offset[1]),
+        (2, image.size[1] - size[1] - offset[1]),
         text,
         "white",
         font,
