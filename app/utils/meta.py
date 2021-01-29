@@ -7,7 +7,7 @@ from .. import settings
 
 
 def get_watermark(request, watermark: str) -> tuple[str, bool]:
-    api_key = request.headers.get("x-api-key")
+    api_key = _get_api_key(request)
     if api_key:
         api_mask = api_key[:2] + "***" + api_key[-2:]
         logger.info(f"Authenticated with {api_mask}")
@@ -15,7 +15,7 @@ def get_watermark(request, watermark: str) -> tuple[str, bool]:
             return "", False
 
     if watermark == settings.DISABLED_WATERMARK:
-        referer = request.headers.get("referer") or request.args.get("referer")
+        referer = _get_referer(request)
         logger.info(f"Watermark removal referer: {referer}")
         if referer:
             domain = urlparse(referer).netloc
@@ -43,12 +43,18 @@ async def track(request, lines: list[str]):
     trackable = not any(
         name in request.args for name in ["height", "width", "watermark"]
     )
+    referer = _get_referer(request)
+    if referer:
+        source = urlparse(referer).netloc
+    else:
+        source = "memegen.link"
     if text and trackable and settings.REMOTE_TRACKING_URL:
         async with aiohttp.ClientSession() as session:
             params = dict(
                 text=text,
-                source="memegen.link",
+                source=source,
                 context=unquote(request.url),
+                api_key=_get_api_key(request),
             )
             logger.info(f"Tracking request: {params}")
             response = await session.get(settings.REMOTE_TRACKING_URL, params=params)
@@ -58,3 +64,11 @@ async def track(request, lines: list[str]):
                 except aiohttp.client_exceptions.ContentTypeError:
                     message = response.text
                 logger.error(f"Tracker response: {message}")
+
+
+def _get_referer(request):
+    return request.headers.get("referer") or request.args.get("referer")
+
+
+def _get_api_key(request):
+    return request.headers.get("x-api-key")
