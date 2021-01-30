@@ -57,6 +57,8 @@ For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/unders
 
 <img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?watermark=none" width="100%">
 
+All of the `POST` endpoints will return image URLs with speical characters replaced with these alternatives.
+
 # Templates
 
 The list of predefined meme templates is available here: <https://api.memegen.link/templates/>
