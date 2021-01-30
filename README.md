@@ -104,6 +104,12 @@ The `template` parameter can be a template key or URL:
 
 The full interactive documentation is available here: <https://api.memegen.link/docs/>
 
+## Authentication
+
+Unauthenticated API requests are watermarked and may be rate limited. To request an API key please reach out to <support@maketested.com> to inquire about pricing.
+
+## Sample Code
+
 Here are some sample clients to explore:
 
 | Platforms   | Link                                                                                  |
