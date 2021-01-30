@@ -52,7 +52,7 @@ async def track(request, lines: list[str]):
         async with aiohttp.ClientSession() as session:
             params = dict(text=text, source=source, context=unquote(request.url))
             logger.info(f"Tracking request: {params}")
-            headers = {"X-API-KEY": _get_api_key(request)}
+            headers = {"X-API-KEY": _get_api_key(request) or ""}
             response = await session.get(
                 settings.REMOTE_TRACKING_URL, params=params, headers=headers
             )
