@@ -50,14 +50,12 @@ async def track(request, lines: list[str]):
         source = "memegen.link"
     if text and trackable and settings.REMOTE_TRACKING_URL:
         async with aiohttp.ClientSession() as session:
-            params = dict(
-                text=text,
-                source=source,
-                context=unquote(request.url),
-                api_key=_get_api_key(request),
-            )
+            params = dict(text=text, source=source, context=unquote(request.url))
             logger.info(f"Tracking request: {params}")
-            response = await session.get(settings.REMOTE_TRACKING_URL, params=params)
+            headers = {"X-API-KEY": _get_api_key(request)}
+            response = await session.get(
+                settings.REMOTE_TRACKING_URL, params=params, headers=headers
+            )
             if response.status != 200:
                 try:
                     message = await response.json()
