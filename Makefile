@@ -121,6 +121,8 @@ promote: install .env .envrc
 	@ echo
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
+	sleep 30
+	@ echo
 	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 
 .env:
