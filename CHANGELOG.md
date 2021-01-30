@@ -1,5 +1,9 @@
 # Revision History
 
+## 7.1
+
+- Added support for the `X-API-KEY` header to disable watermarks.
+
 ## 7.0
 
 - Renamed `sample` to `example` in template API responses.
