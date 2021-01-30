@@ -108,7 +108,7 @@ The full interactive documentation is available here: <https://api.memegen.link/
 
 ## Authentication
 
-Unauthenticated API requests are watermarked and may be rate limited. To request an API key please reach out to <support@maketested.com> to inquire about pricing.
+Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.
 
 ## Sample Code
 
