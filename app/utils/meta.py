@@ -43,14 +43,13 @@ async def track(request, lines: list[str]):
     trackable = not any(
         name in request.args for name in ["height", "width", "watermark"]
     )
-    referer = _get_referer(request)
-    if referer:
-        source = urlparse(referer).netloc
-    else:
-        source = "memegen.link"
     if text and trackable and settings.REMOTE_TRACKING_URL:
         async with aiohttp.ClientSession() as session:
-            params = dict(text=text, source=source, context=unquote(request.url))
+            params = dict(
+                text=text,
+                client=_get_referer(request) or "https://memegen.link",
+                result=unquote(request.url),
+            )
             logger.info(f"Tracking request: {params}")
             headers = {"X-API-KEY": _get_api_key(request) or ""}
             response = await session.get(
