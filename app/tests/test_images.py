@@ -149,6 +149,12 @@ def test_text_wrap_on_small_images(images):
     utils.images.save(template, lines, size=(0, 300), directory=images)
 
 
+def test_text_wrap_on_smaller_images(images):
+    template = models.Template.objects.get("toohigh")
+    lines = ["", "the number of sample memes is too damn high!"]
+    utils.images.save(template, lines, size=(0, 200), directory=images)
+
+
 @pytest.mark.slow
 def test_descender_vertical_alignment(images):
     template = models.Template.objects.get("ptj")

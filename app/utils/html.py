@@ -98,11 +98,13 @@ def gallery(
     columns: bool,
     refresh: bool,
     rate: float = 3.0,
+    query_string: str = "",
 ) -> str:
+    extra = "&" + query_string if query_string else ""
     if columns:
-        return _columns_refresh(urls, rate) if refresh else _columns(urls)
+        return _columns_refresh(urls, rate, extra) if refresh else _columns(urls)
     assert refresh
-    return _grid_refresh(urls, rate)
+    return _grid_refresh(urls, rate, extra)
 
 
 def _columns(urls: Iterable[str]) -> str:
@@ -127,14 +129,14 @@ def _columns(urls: Iterable[str]) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _columns_refresh(urls: Iterable[str], rate: float) -> str:
+def _columns_refresh(urls: Iterable[str], rate: float, extra: str) -> str:
     elements = []
 
     for url in urls:
         elements.append(
             f"""
             <a href="{url}">
-                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&time=0">
+                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&time=0{extra}">
             </a>
             """
         )
@@ -149,14 +151,14 @@ def _columns_refresh(urls: Iterable[str], rate: float) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _grid_refresh(urls: Iterable[str], rate: float):
+def _grid_refresh(urls: Iterable[str], rate: float, extra: str):
     elements = []
 
     for url in urls:
         elements.append(
             f"""
             <a href="{url}">
-                <img src="{url}?time=0">
+                <img src="{url}?time=0{extra}">
             </a>
             """
         )

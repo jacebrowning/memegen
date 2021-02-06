@@ -241,7 +241,7 @@ def wrap(line: str, max_text_size: Dimensions, max_font_size: int) -> str:
     if single.size >= double.size:
         return line
 
-    if get_text_size(lines, double)[0] >= max_text_size[0] * 0.65:
+    if get_text_size(lines, double)[0] >= max_text_size[0] * 0.60:
         return lines
 
     return line

@@ -90,8 +90,13 @@ async def custom(request, template_key, text_paths):
 
     template = models.Template.objects.get_or_create(template_key)
     template.datafile.save()
-    url = f"/images/{template_key}/{text_paths}.png"
-    content = utils.html.gallery([url], columns=False, refresh=True, rate=1.0)
+    content = utils.html.gallery(
+        [f"/images/{template_key}/{text_paths}.png"],
+        columns=False,
+        refresh=True,
+        rate=1.0,
+        query_string=request.query_string,
+    )
     return response.html(content)
 
 
