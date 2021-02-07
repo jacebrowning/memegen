@@ -26,7 +26,7 @@ def describe_spec():
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "template_key": {"type": "string"},
+                        "template_id": {"type": "string"},
                         "text_lines": {"type": "array", "items": {"type": "string"}},
                         "extension": {"type": "string"},
                         "redirect": {"type": "boolean"},
@@ -52,7 +52,7 @@ def describe_spec():
             }
             # Error response
             expect(response_spec["400"]["description"]) == (
-                'Required "template_key" missing in request body'
+                'Required "template_id" missing in request body'
             )
             expect(response_spec["400"]["schema"]) == {
                 "type": "object",

@@ -33,10 +33,10 @@ $ make run
 
 To add a new meme template:
 
-1. Visit http://localhost:5000/images/<my_new_template_key>
+1. Visit http://localhost:5000/images/<my_new_template_id>
 2. Add a `default.png` (or JPG) background image in `templates` directory
 3. Update `config.yml` in the `templates` directory
-4. Refresh http://localhost:5000/images/<my_new_template_key> to see the example meme
+4. Refresh http://localhost:5000/images/<my_new_template_id> to see the example meme
 
 # Continuous Integration
 

@@ -32,15 +32,15 @@ def template():
 # Formats
 
 
-@pytest.mark.parametrize(("key", "lines"), settings.TEST_IMAGES)
-def test_png_images(images, key, lines):
-    template = models.Template.objects.get(key)
+@pytest.mark.parametrize(("id", "lines"), settings.TEST_IMAGES)
+def test_png_images(images, id, lines):
+    template = models.Template.objects.get(id)
     utils.images.save(template, lines, ext="png", directory=images)
 
 
 def test_jpg_images(images):
-    key, lines = settings.TEST_IMAGES[0]
-    template = models.Template.objects.get(key)
+    id, lines = settings.TEST_IMAGES[0]
+    template = models.Template.objects.get(id)
     utils.images.save(template, lines, ext="jpg", directory=images)
 
 
@@ -202,8 +202,8 @@ def test_watermark_with_many_lines(images):
 def test_debug_images(images, monkeypatch):
     monkeypatch.setattr(settings, "DEBUG", True)
 
-    key, lines = settings.TEST_IMAGES[0]
-    template = models.Template.objects.get(key)
+    id, lines = settings.TEST_IMAGES[0]
+    template = models.Template.objects.get(id)
     lines = [lines[0], lines[1] + " (debug)"]
     utils.images.save(template, lines, directory=images)
 
@@ -211,8 +211,8 @@ def test_debug_images(images, monkeypatch):
 def test_deployed_images(images, monkeypatch):
     monkeypatch.setattr(settings, "DEPLOYED", True)
 
-    key, lines = settings.TEST_IMAGES[0]
-    template = models.Template.objects.get(key)
+    id, lines = settings.TEST_IMAGES[0]
+    template = models.Template.objects.get(id)
     utils.images.save(template, lines, directory=images)
 
     monkeypatch.delattr(utils.images, "render_image")

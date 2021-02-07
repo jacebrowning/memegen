@@ -21,7 +21,7 @@ def describe_list():
     def describe_POST():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_returns_an_image_url(expect, client, as_json):
-            data = {"template_key": "iw", "text_lines[]": ["foo", "bar"]}
+            data = {"template_id": "iw", "text_lines[]": ["foo", "bar"]}
             request, response = client.post(
                 "/images", data=json.dumps(data) if as_json else data
             )
@@ -31,29 +31,29 @@ def describe_list():
             }
 
         def it_redirects_if_requested(expect, client):
-            data = {"template_key": "iw", "text_lines": ["abc"], "redirect": True}
+            data = {"template_id": "iw", "text_lines": ["abc"], "redirect": True}
             request, response = client.post("/images", data=data, allow_redirects=False)
             redirect = "http://localhost:5000/images/iw/abc.png"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
-        def it_requires_template_key(expect, client):
+        def it_requires_template_id(expect, client):
             data = {"text_lines": ["foo", "bar"]}
             request, response = client.post("/images", data=data)
             expect(response.status) == 400
-            expect(response.json) == {"error": '"template_key" is required'}
+            expect(response.json) == {"error": '"template_id" is required'}
 
-        def it_handles_unknown_template_key(expect, client, unknown_template):
-            data = {"template_key": unknown_template.key, "text_lines": ["one", "two"]}
+        def it_handles_unknown_template_id(expect, client, unknown_template):
+            data = {"template_id": unknown_template.id, "text_lines": ["one", "two"]}
             request, response = client.post("/images", data=data)
             expect(response.status) == 404
             expect(response.json) == {
                 "url": "http://localhost:5000/images/unknown/one/two.png"
             }
 
-        def it_handles_unknown_template_key_redirect(expect, client, unknown_template):
+        def it_handles_unknown_template_id_redirect(expect, client, unknown_template):
             data = {
-                "template_key": unknown_template.key,
+                "template_id": unknown_template.id,
                 "text_lines": ["one", "two"],
                 "redirect": True,
             }
@@ -63,13 +63,13 @@ def describe_list():
             expect(response.headers["Location"]) == redirect
 
         def it_handles_missing_text_lines(expect, client):
-            data = {"template_key": "iw"}
+            data = {"template_id": "iw"}
             request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
 
         def it_drops_trailing_blank_lines(expect, client):
-            data = {"template_key": "iw", "text_lines": ["", "", "", ""]}
+            data = {"template_id": "iw", "text_lines": ["", "", "", ""]}
             request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
@@ -101,7 +101,7 @@ def describe_detail():
         expect(response.headers["content-type"]) == content_type
 
     def it_handles_unknown_templates(expect, client, unknown_template):
-        request, response = client.get(f"/images/{unknown_template.key}/test.png")
+        request, response = client.get(f"/images/{unknown_template.id}/test.png")
         expect(response.status) == 404
         expect(response.headers["content-type"]) == "image/png"
 

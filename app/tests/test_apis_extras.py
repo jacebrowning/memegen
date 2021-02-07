@@ -26,7 +26,7 @@ def describe_preview():
         expect(response.headers["content-type"]) == "image/jpeg"
 
     def it_handles_invalid_keys(expect, client, path, unknown_template):
-        request, response = client.get(path + f"?template={unknown_template.key}")
+        request, response = client.get(path + f"?template={unknown_template.id}")
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
 
@@ -76,7 +76,7 @@ def describe_shortcuts():
 
     def it_rejects_unknown_templates(expect, client, unknown_template):
         request, response = client.get(
-            f"/images/{unknown_template.key}", allow_redirects=False
+            f"/images/{unknown_template.id}", allow_redirects=False
         )
         expect(response.status) == 404
 
@@ -85,7 +85,7 @@ def describe_shortcuts():
     ):
         monkeypatch.setattr(settings, "DEBUG", True)
         request, response = client.get(
-            f"/images/{unknown_template.key}", allow_redirects=False
+            f"/images/{unknown_template.id}", allow_redirects=False
         )
         expect(response.status) == 501
 
@@ -129,12 +129,12 @@ def describe_legacy():
 
     @pytest.mark.parametrize("suffix", ["", ".png", ".jpg"])
     def it_rejects_unknown_templates(expect, client, unknown_template, suffix):
-        request, response = client.get(f"/{unknown_template.key}{suffix}")
+        request, response = client.get(f"/{unknown_template.id}{suffix}")
         expect(response.status) == 404
 
     @pytest.mark.parametrize("suffix", ["", ".png", ".jpg"])
     def it_rejects_unknown_templates_with_text(
         expect, client, unknown_template, suffix
     ):
-        request, response = client.get(f"/{unknown_template.key}/test{suffix}")
+        request, response = client.get(f"/{unknown_template.id}/test{suffix}")
         expect(response.status) == 404

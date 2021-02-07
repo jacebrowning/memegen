@@ -17,8 +17,8 @@ def describe_detail():
             request, response = client.get("/templates/iw")
             expect(response.status) == 200
             expect(response.json) == {
+                "id": "iw",
                 "name": "Insanity Wolf",
-                "key": "iw",
                 "lines": 2,
                 "styles": [],
                 "blank": "http://localhost:5000/images/iw.png",
@@ -64,20 +64,20 @@ def describe_detail():
                 "?background=https://www.gstatic.com/webp/gallery/3.png"
             }
 
-        @pytest.mark.parametrize("key", ["fry", "custom"])
-        def it_redirects_if_requested(expect, client, key):
+        @pytest.mark.parametrize("id", ["fry", "custom"])
+        def it_redirects_if_requested(expect, client, id):
             data = {"text_lines": ["abc"], "redirect": True}
             request, response = client.post(
-                f"/templates/{key}", data=data, allow_redirects=False
+                f"/templates/{id}", data=data, allow_redirects=False
             )
-            redirect = f"http://localhost:5000/images/{key}/abc.png"
+            redirect = f"http://localhost:5000/images/{id}/abc.png"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
-        def it_handles_unknown_template_key(expect, client, unknown_template):
+        def it_handles_unknown_template_id(expect, client, unknown_template):
             data = {"text_lines": ["one", "two"]}
             request, response = client.post(
-                f"/templates/{unknown_template.key}", data=data
+                f"/templates/{unknown_template.id}", data=data
             )
             expect(response.status) == 404
             expect(response.json) == {
