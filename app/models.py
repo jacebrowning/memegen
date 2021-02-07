@@ -130,7 +130,7 @@ class Template:
             "lines": len(self.text),
             "styles": self.styles,
             "blank": app.url_for(
-                f"images.blank_{settings.DEFAULT_EXT}",
+                f"Images.blank_{settings.DEFAULT_EXT}",
                 template_key=self.key,
                 _external=True,
                 _scheme=settings.SCHEME,
@@ -142,7 +142,7 @@ class Template:
 
     def build_self_url(self, app: Sanic) -> str:
         return app.url_for(
-            "templates.detail",
+            "Templates.detail",
             key=self.key,
             _external=True,
             _scheme=settings.SCHEME,
@@ -151,7 +151,7 @@ class Template:
     def build_example_url(
         self,
         app: Sanic,
-        view_name: str = f"images.text_{settings.DEFAULT_EXT}",
+        view_name: str = f"Images.text_{settings.DEFAULT_EXT}",
         *,
         external: bool = True,
     ) -> str:
@@ -176,9 +176,9 @@ class Template:
         external: bool = False,
     ):
         if extension in {"jpg", "png"}:
-            view_name = f"images.text_{extension}"
+            view_name = f"Images.text_{extension}"
         else:
-            view_name = f"images.text_{settings.DEFAULT_EXT}"
+            view_name = f"Images.text_{settings.DEFAULT_EXT}"
         url = app.url_for(
             view_name,
             template_key="custom" if self.key == "_custom" else self.key,

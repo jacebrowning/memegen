@@ -24,9 +24,10 @@ def configure(app):
     swagger_blueprint.url_prefix = "/docs"
     app.blueprint(swagger_blueprint)
 
+    app.blueprint(api.auth.blueprint)
     app.blueprint(api.images.blueprint)
     app.blueprint(api.templates.blueprint)
-    app.blueprint(api.shortcuts.blueprint)
+    app.blueprint(api.shortcuts.blueprint)  # registered last to avoid collisions
 
     CORS(app)
     app.error_handler = errors.BugsnagErrorHandler()
@@ -41,7 +42,7 @@ def get_example_images(request) -> list[tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     return [
         (
-            template.build_example_url(request.app, "images.text_jpg"),
+            template.build_example_url(request.app, "Images.text_jpg"),
             template.build_self_url(request.app),
         )
         for template in sorted(templates)
@@ -51,7 +52,7 @@ def get_example_images(request) -> list[tuple[str, str]]:
 def get_test_images(request) -> list[str]:
     return [
         request.app.url_for(
-            f"images.text_{settings.DEFAULT_EXT}",
+            f"Images.text_{settings.DEFAULT_EXT}",
             template_key=key,
             text_paths=utils.text.encode(lines),
         )

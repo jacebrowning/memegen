@@ -6,13 +6,19 @@ from sanic.log import logger
 from .. import settings
 
 
-def get_watermark(request, watermark: str) -> tuple[str, bool]:
+def authenticated(request) -> bool:
     api_key = _get_api_key(request)
     if api_key:
         api_mask = api_key[:2] + "***" + api_key[-2:]
         logger.info(f"Authenticated with {api_mask}")
         if api_key in settings.API_KEYS:
-            return "", False
+            return True
+    return False
+
+
+def get_watermark(request, watermark: str) -> tuple[str, bool]:
+    if authenticated(request):
+        return "", False
 
     if watermark == settings.DISABLED_WATERMARK:
         referer = _get_referer(request)

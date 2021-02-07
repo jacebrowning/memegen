@@ -9,7 +9,7 @@ def describe_list():
     def describe_GET():
         @pytest.mark.slow
         def it_returns_example_image_urls(expect, client):
-            request, response = client.get("/images")
+            request, response = client.get("/images", timeout=10)
             expect(response.status) == 200
             expect(response.json).contains(
                 {
