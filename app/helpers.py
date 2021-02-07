@@ -10,7 +10,7 @@ def configure(app):
     app.config.API_BASEPATH = "/"
     app.config.API_SCHEMES = [settings.SCHEME]
     app.config.API_VERSION = "7.1"
-    app.config.API_TITLE = "memegen.link"
+    app.config.API_TITLE = "Memegen.link"
     app.config.API_CONTACT_EMAIL = "support@maketested.com"
     app.config.API_LICENSE_NAME = "View the license"
     app.config.API_LICENSE_URL = (

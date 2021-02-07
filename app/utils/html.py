@@ -123,7 +123,7 @@ def _columns(urls: Iterable[str]) -> str:
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 
-    head = "<title>memegen.link | examples</title>\n" + COLUMNS_STYLE
+    head = "<title>Memegen.link | examples</title>\n" + COLUMNS_STYLE
     body = f'<section id="images">\n{images}\n</section>'
 
     return HTML.format(head=head, body=body)
@@ -145,7 +145,7 @@ def _columns_refresh(urls: Iterable[str], rate: float, extra: str) -> str:
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 
-    head = "<title>memegen.link | debug</title>\n" + COLUMNS_STYLE
+    head = "<title>Memegen.link | debug</title>\n" + COLUMNS_STYLE
     body = f'<section id="images">\n{images}\n</section>'
 
     return HTML.format(head=head, body=body)
@@ -167,7 +167,7 @@ def _grid_refresh(urls: Iterable[str], rate: float, extra: str):
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 
-    head = "<title>memegen.link | test</title>\n"
+    head = "<title>Memegen.link | test</title>\n"
     body = images
 
     return HTML.format(head=head, body=body)
