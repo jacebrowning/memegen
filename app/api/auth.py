@@ -11,4 +11,8 @@ blueprint = Blueprint("Authentication", url_prefix="/auth")
 @doc.response(200, str, description="Your API key is valid")
 @doc.response(401, str, description="Your API key is invalid")
 async def validate(request):
-    return response.empty(status=200 if utils.meta.authenticated(request) else 401)
+    return (
+        response.json({"message": "Your API key is valid"}, status=200)
+        if utils.meta.authenticated(request)
+        else response.json({"message": "Your API key is invalid."}, status=401)
+    )
