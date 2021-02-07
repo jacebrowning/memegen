@@ -7,7 +7,7 @@ def describe_list():
     def describe_GET():
         @pytest.mark.slow
         def it_returns_all_templates(expect, client):
-            request, response = client.get("/templates")
+            request, response = client.get("/templates", timeout=10)
             expect(response.status) == 200
 
 
