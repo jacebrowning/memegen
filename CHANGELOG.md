@@ -1,5 +1,9 @@
 # Revision History
 
+## 8.0
+
+- Renamed `template_key` to `template_id` in APIs.
+
 ## 7.1
 
 - Added support for the `X-API-KEY` header to disable watermarks.
@@ -10,7 +14,7 @@
 
 ## 6.3
 
-- Added `lines` to `/templates/<key>/` responses to indicate the maximum number of supported lines of text.
+- Added `lines` to `/templates/<key>` responses to indicate the maximum number of supported lines of text.
 
 ## 6.2
 

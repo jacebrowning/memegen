@@ -30,23 +30,21 @@ async def index(request):
 @doc.operation("images.create")
 @doc.consumes(
     doc.JsonBody(
-        {"template_key": str, "text_lines": [str], "extension": str, "redirect": bool}
+        {"template_id": str, "text_lines": [str], "extension": str, "redirect": bool}
     ),
     content_type="application/json",
     location="body",
 )
 @doc.response(201, {"url": str}, description="Successfully created a meme")
 @doc.response(
-    400, {"error": str}, description='Required "template_key" missing in request body'
+    400, {"error": str}, description='Required "template_id" missing in request body'
 )
-@doc.response(
-    404, {"error": str}, description='Specified "template_key" does not exist'
-)
+@doc.response(404, {"error": str}, description='Specified "template_id" does not exist')
 async def create(request):
     if request.form:
         payload = dict(request.form)
         with suppress(KeyError):
-            payload["template_key"] = payload.pop("template_key")[0]
+            payload["template_id"] = payload.pop("template_id")[0]
         with suppress(KeyError):
             payload["extension"] = payload.pop("extension")[0]
         with suppress(KeyError):
@@ -57,11 +55,11 @@ async def create(request):
         payload["text_lines"] = payload.pop("text_lines[]")
 
     try:
-        template_key = payload["template_key"]
+        template_id = payload["template_id"]
     except KeyError:
-        return response.json({"error": '"template_key" is required'}, status=400)
+        return response.json({"error": '"template_id" is required'}, status=400)
 
-    template = models.Template.objects.get_or_create(template_key)
+    template = models.Template.objects.get_or_create(template_id)
     url = template.build_custom_url(
         request.app,
         payload.get("text_lines") or [],
@@ -88,13 +86,13 @@ async def create(request):
     content_type="image/jpeg",
 )
 async def preview(request):
-    key = request.args.get("template", "_error")
+    id = request.args.get("template", "_error")
     lines = request.args.getlist("lines[]", [])
     style = request.args.get("style")
-    return await preview_image(request, key, lines, style)
+    return await preview_image(request, id, lines, style)
 
 
-@blueprint.get("/<template_key>.png")
+@blueprint.get("/<template_id>.png")
 @doc.summary("Display a template background")
 @doc.produces(
     doc.File(),
@@ -108,11 +106,11 @@ async def preview(request):
     doc.File(),
     description="Invalid style for template or no image URL specified for custom template",
 )
-async def blank_png(request, template_key):
-    return await render_image(request, template_key, ext="png")
+async def blank_png(request, template_id):
+    return await render_image(request, template_id, ext="png")
 
 
-@blueprint.get("/<template_key>.jpg")
+@blueprint.get("/<template_id>.jpg")
 @doc.summary("Display a template background")
 @doc.produces(
     doc.File(),
@@ -126,11 +124,11 @@ async def blank_png(request, template_key):
     doc.File(),
     description="Invalid style for template or no image URL specified for custom template",
 )
-async def blank_jpg(request, template_key):
-    return await render_image(request, template_key, ext="jpg")
+async def blank_jpg(request, template_id):
+    return await render_image(request, template_id, ext="jpg")
 
 
-@blueprint.get("/<template_key>/<text_paths:[\\s\\S]+>.png")
+@blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.png")
 @doc.summary("Display a custom meme")
 @doc.produces(
     doc.File(),
@@ -145,12 +143,12 @@ async def blank_jpg(request, template_key):
     doc.File(),
     description="Invalid style for template or no image URL specified for custom template",
 )
-async def text_png(request, template_key, text_paths):
+async def text_png(request, template_id, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
             "Images.text_png",
-            template_key=template_key,
+            template_id=template_id,
             text_paths=slug,
             **request.args,
         )
@@ -162,16 +160,16 @@ async def text_png(request, template_key, text_paths):
     if updated:
         url = request.app.url_for(
             "Images.text_png",
-            template_key=template_key,
+            template_id=template_id,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
         )
         return response.redirect(utils.text.unquote(url), status=301)
 
-    return await render_image(request, template_key, slug, watermark)
+    return await render_image(request, template_id, slug, watermark)
 
 
-@blueprint.get("/<template_key>/<text_paths:[\\s\\S]+>.jpg")
+@blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.jpg")
 @doc.summary("Display a custom meme")
 @doc.produces(
     doc.File(),
@@ -186,12 +184,12 @@ async def text_png(request, template_key, text_paths):
     doc.File(),
     description="Invalid style for template or no image URL specified for custom template",
 )
-async def text_jpg(request, template_key, text_paths):
+async def text_jpg(request, template_id, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
             "Images.text_jpg",
-            template_key=template_key,
+            template_id=template_id,
             text_paths=slug,
             **request.args,
         )
@@ -203,26 +201,26 @@ async def text_jpg(request, template_key, text_paths):
     if updated:
         url = request.app.url_for(
             "Images.text_jpg",
-            template_key=template_key,
+            template_id=template_id,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
         )
         return response.redirect(utils.text.unquote(url), status=301)
 
-    return await render_image(request, template_key, slug, watermark, ext="jpg")
+    return await render_image(request, template_id, slug, watermark, ext="jpg")
 
 
-async def preview_image(request, key: str, lines: list[str], style: str):
-    key = utils.text.unquote(key)
-    if "://" in key:
-        template = await models.Template.create(key)
+async def preview_image(request, id: str, lines: list[str], style: str):
+    id = utils.text.unquote(id)
+    if "://" in id:
+        template = await models.Template.create(id)
         if not template.image.exists():
-            logger.error(f"Unable to download image URL: {key}")
+            logger.error(f"Unable to download image URL: {id}")
             template = models.Template.objects.get("_error")
     else:
-        template = models.Template.objects.get_or_none(key)
+        template = models.Template.objects.get_or_none(id)
         if not template:
-            logger.error(f"No such template: {key}")
+            logger.error(f"No such template: {id}")
             template = models.Template.objects.get("_error")
 
     data, content_type = await asyncio.to_thread(
@@ -233,7 +231,7 @@ async def preview_image(request, key: str, lines: list[str], style: str):
 
 async def render_image(
     request,
-    key: str,
+    id: str,
     slug: str = "",
     watermark: str = "",
     ext: str = settings.DEFAULT_EXT,
@@ -247,7 +245,7 @@ async def render_image(
         style = settings.DEFAULT_STYLE
         status = 414
 
-    elif key == "custom":
+    elif id == "custom":
         style = settings.DEFAULT_STYLE
         url = request.args.get("background") or request.args.get("alt")
         if url:
@@ -262,9 +260,9 @@ async def render_image(
             status = 422
 
     else:
-        template = models.Template.objects.get_or_none(key)
+        template = models.Template.objects.get_or_none(id)
         if not template or not template.image.exists():
-            logger.error(f"No such template: {key}")
+            logger.error(f"No such template: {id}")
             template = models.Template.objects.get("_error")
             status = 404
 

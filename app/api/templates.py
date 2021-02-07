@@ -17,8 +17,8 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
     # Can't use doc.List(Template) because the jsonify method is slightly different
     doc.List(
         {
+            "id": str,
             "name": str,
-            "key": str,
             "styles": doc.List(str),
             "blank": str,
             "example": str,
@@ -34,13 +34,13 @@ async def index(request):
     return response.json(data)
 
 
-@blueprint.get("/<key>")
+@blueprint.get("/<id>")
 @doc.summary("View a specific template")
 @doc.operation("Templates.detail")
 @doc.produces(
     {
+        "id": str,
         "name": str,
-        "key": str,
         "styles": doc.List(str),
         "blank": str,
         "example": str,
@@ -51,8 +51,8 @@ async def index(request):
     content_type="application/json",
 )
 @doc.response(404, str, description="Template not found")
-async def detail(request, key):
-    template = Template.objects.get_or_none(key)
+async def detail(request, id):
+    template = Template.objects.get_or_none(id)
     if template:
         return response.json(template.jsonify(request.app))
     abort(404)
@@ -97,7 +97,7 @@ async def custom(request):
     return response.json({"url": url}, status=201)
 
 
-@blueprint.post("/<key>")
+@blueprint.post("/<id>")
 @doc.summary("Create a meme from a template")
 @doc.operation("yemplates.create")
 @doc.consumes(
@@ -108,7 +108,7 @@ async def custom(request):
 @doc.response(
     201, {"url": str}, description="Successfully created a meme from a template"
 )
-async def build(request, key):
+async def build(request, id):
     if request.form:
         payload = dict(request.form)
         with suppress(KeyError):
@@ -122,7 +122,7 @@ async def build(request, key):
     with suppress(KeyError):
         payload["text_lines"] = payload.pop("text_lines[]")
 
-    template = Template.objects.get_or_create(key)
+    template = Template.objects.get_or_create(id)
     url = template.build_custom_url(
         request.app,
         payload.get("text_lines") or [],

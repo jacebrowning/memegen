@@ -84,21 +84,21 @@ You can also use your own image URL as the background. For example, <https://api
 If your client is going to show live previews of a custom meme, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:
 
 ```javascript
-var key = encodeURIComponent($("#template").val())
+var id = encodeURIComponent($("#template").val())
 var line_1 = encodeURIComponent($("#line_1").val()) || " "
 var line_2 = encodeURIComponent($("#line_2").val()) || " "
 
 var api = "https://api.memegen.link/images/preview.jpg"
-var url = `${api}?template=${key}&lines[]=${line_1}&lines[]=${line_2}`
+var url = `${api}?template=${id}&lines[]=${line_1}&lines[]=${line_2}`
 
 $("#preview").attr("src", url)
 ```
 
-The `template` parameter can be a template key or URL:
+The `template` parameter can be a template ID or URL:
 
 | Mode              | Example                                                                                                                                                                                                                                                          |
 | :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Template Key      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
+| Template ID      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
 | Template URL      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
 | Custom Background | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
 

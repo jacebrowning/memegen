@@ -9,7 +9,7 @@ def configure(app):
     app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.API_BASEPATH = "/"
     app.config.API_SCHEMES = [settings.SCHEME]
-    app.config.API_VERSION = "7.1"
+    app.config.API_VERSION = "8.0"
     app.config.API_TITLE = "Memegen.link"
     app.config.API_CONTACT_EMAIL = "support@maketested.com"
     app.config.API_LICENSE_NAME = "View the license"
@@ -53,8 +53,8 @@ def get_test_images(request) -> list[str]:
     return [
         request.app.url_for(
             f"Images.text_{settings.DEFAULT_EXT}",
-            template_key=key,
+            template_id=id,
             text_paths=utils.text.encode(lines),
         )
-        for key, lines in settings.TEST_IMAGES
+        for id, lines in settings.TEST_IMAGES
     ]

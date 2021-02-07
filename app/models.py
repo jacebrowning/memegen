@@ -60,10 +60,10 @@ class Text:
         return text
 
 
-@datafile("../templates/{self.key}/config.yml", defaults=True)
+@datafile("../templates/{self.id}/config.yml", defaults=True)
 class Template:
 
-    key: str
+    id: str
     name: str = ""
     source: Optional[str] = None
     text: list[Text] = field(
@@ -76,14 +76,14 @@ class Template:
         return str(self.directory)
 
     def __lt__(self, other):
-        return self.key < other.key
+        return self.id < other.id
 
     @property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
             self._update_styles()
             self._update_example()
-        return not self.key.startswith("_") and self.image.suffix != ".img"
+        return not self.id.startswith("_") and self.image.suffix != ".img"
 
     def _update_styles(self):
         styles = []
@@ -117,21 +117,21 @@ class Template:
                 return path
 
         if style == settings.DEFAULT_STYLE:
-            logger.debug(f"No default background image for template: {self.key}")
+            logger.debug(f"No default background image for template: {self.id}")
             return self.directory / f"{settings.DEFAULT_STYLE}.img"
         else:
-            logger.warning(f"Style {style!r} not available for {self.key}")
+            logger.warning(f"Style {style!r} not available for {self.id}")
             return self.get_image()
 
     def jsonify(self, app: Sanic) -> dict:
         return {
+            "id": self.id,
             "name": self.name,
-            "key": self.key,
             "lines": len(self.text),
             "styles": self.styles,
             "blank": app.url_for(
                 f"Images.blank_{settings.DEFAULT_EXT}",
-                template_key=self.key,
+                template_id=self.id,
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
@@ -143,7 +143,7 @@ class Template:
     def build_self_url(self, app: Sanic) -> str:
         return app.url_for(
             "Templates.detail",
-            key=self.key,
+            id=self.id,
             _external=True,
             _scheme=settings.SCHEME,
         )
@@ -156,7 +156,7 @@ class Template:
         external: bool = True,
     ) -> str:
         kwargs = {
-            "template_key": self.key,
+            "template_id": self.id,
             "text_paths": utils.text.encode(self.example),
             "_external": external,
         }
@@ -181,7 +181,7 @@ class Template:
             view_name = f"Images.text_{settings.DEFAULT_EXT}"
         url = app.url_for(
             view_name,
-            template_key="custom" if self.key == "_custom" else self.key,
+            template_id="custom" if self.id == "_custom" else self.id,
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
@@ -203,7 +203,7 @@ class Template:
         variant = str(self.text) + str(style) + str(size) + watermark
         fingerprint = hashlib.sha1(variant.encode()).hexdigest()
         filename = f"{slug}.{fingerprint}.{ext}"
-        return Path(self.key) / filename
+        return Path(self.id) / filename
 
     @staticmethod
     def _drop_trailing_spaces(url: str) -> str:
@@ -216,14 +216,14 @@ class Template:
         parts = urlparse(url)
         if parts.netloc == "api.memegen.link":
             logger.debug(f"Handling template URL: {url}")
-            key = parts.path.split(".")[0].split("/")[2]
-            if key == "custom":
+            id = parts.path.split(".")[0].split("/")[2]
+            if id == "custom":
                 url = parts.query.removeprefix("background=")
             else:
-                return cls.objects.get_or_none(key) or cls.objects.get("_error")
+                return cls.objects.get_or_none(id) or cls.objects.get("_error")
 
-        key = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
-        template = cls.objects.get_or_create(key, url)
+        id = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
+        template = cls.objects.get_or_create(id, url)
         if template.image.exists() and not settings.DEBUG:
             logger.info(f"Found background {url} at {template.image}")
 
