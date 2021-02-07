@@ -15,8 +15,8 @@ helpers.configure(app)
 @doc.exclude(True)
 def index(request):
     data = {
-        "templates": request.app.url_for("templates.index", _external=True),
-        "images": request.app.url_for("images.index", _external=True),
+        "templates": request.app.url_for("Templates.index", _external=True),
+        "images": request.app.url_for("Images.index", _external=True),
         "_docs": request.app.url_for("swagger.index", _external=True),
         "_examples": request.app.url_for("examples", _external=True),
         "_funding": "https://www.buymeacoffee.com/jacebrowning",

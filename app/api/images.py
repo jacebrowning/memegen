@@ -7,7 +7,7 @@ from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
 
-blueprint = Blueprint("images", url_prefix="/images")
+blueprint = Blueprint("Images", url_prefix="/images")
 
 
 @blueprint.get("/")
@@ -149,7 +149,7 @@ async def text_png(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.text_png",
+            "Images.text_png",
             template_key=template_key,
             text_paths=slug,
             **request.args,
@@ -161,7 +161,7 @@ async def text_png(request, template_key, text_paths):
     )
     if updated:
         url = request.app.url_for(
-            "images.text_png",
+            "Images.text_png",
             template_key=template_key,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
@@ -190,7 +190,7 @@ async def text_jpg(request, template_key, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.text_jpg",
+            "Images.text_jpg",
             template_key=template_key,
             text_paths=slug,
             **request.args,
@@ -202,7 +202,7 @@ async def text_jpg(request, template_key, text_paths):
     )
     if updated:
         url = request.app.url_for(
-            "images.text_jpg",
+            "Images.text_jpg",
             template_key=template_key,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},

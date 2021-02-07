@@ -8,7 +8,7 @@ from sanic_openapi import doc
 from .. import helpers
 from ..models import Template
 
-blueprint = Blueprint("templates", url_prefix="/templates")
+blueprint = Blueprint("Templates", url_prefix="/templates")
 
 
 @blueprint.get("/")
@@ -36,7 +36,7 @@ async def index(request):
 
 @blueprint.get("/<key>")
 @doc.summary("View a specific template")
-@doc.operation("templates.detail")
+@doc.operation("Templates.detail")
 @doc.produces(
     {
         "name": str,
@@ -99,7 +99,7 @@ async def custom(request):
 
 @blueprint.post("/<key>")
 @doc.summary("Create a meme from a template")
-@doc.operation("templates.create")
+@doc.operation("yemplates.create")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
     content_type="application/json",
