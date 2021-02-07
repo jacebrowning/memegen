@@ -189,17 +189,17 @@
 <p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" style="max-width: 100%;"></p>
 <h1 id="previews">Previews</h1>
 <p>If your client is going to show live previews of a custom meme, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
-<pre><code class="javascript">var key = encodeURIComponent($(&quot;#template&quot;).val())
+<pre><code class="javascript">var id = encodeURIComponent($(&quot;#template&quot;).val())
 var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val()) || &quot; &quot;
 var line_2 = encodeURIComponent($(&quot;#line_2&quot;).val()) || &quot; &quot;
 
 var api = &quot;https://api.memegen.link/images/preview.jpg&quot;
-var url = `${api}?template=${key}&amp;lines[]=${line_1}&amp;lines[]=${line_2}`
+var url = `${api}?template=${id}&amp;lines[]=${line_1}&amp;lines[]=${line_2}`
 
 $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 </code></pre>
 
-<p>The <code>template</code> parameter can be a template key or URL:</p>
+<p>The <code>template</code> parameter can be a template ID or URL:</p>
 <table>
 <thead>
 <tr>
@@ -209,7 +209,7 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 </thead>
 <tbody>
 <tr>
-<td align="left">Template Key</td>
+<td align="left">Template ID</td>
 <td align="left"><a href="https://api.memegen.link/images/preview.jpg?lines[]=first+line&amp;lines[]=second+line&amp;template=fry">/images/preview.jpg<wbr>?lines[]=first+line&amp;lines[]=second+line<wbr>&amp;template=fry</a></td>
 </tr>
 <tr>
@@ -344,5 +344,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-07 21:33:43.577711+00:00
+Build Date UTC : 2021-02-07 22:09:40.822376+00:00
 -->
