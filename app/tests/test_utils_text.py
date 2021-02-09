@@ -26,3 +26,9 @@ def test_decode(expect, lines, slug):
 
 def test_decode_dashes(expect):
     expect(utils.text.decode("hello-world")) == ["hello world"]
+
+
+def test_encode_quotes(expect):
+    expect(
+        utils.text.encode(["it’ll be great “they” said"])
+    ) == 'it\'ll_be_great_"they"_said'

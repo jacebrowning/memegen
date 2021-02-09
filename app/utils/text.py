@@ -16,6 +16,10 @@ def encode(lines: list[str]) -> str:
                 ("\\", "~b"),
                 ("\n", "~n"),
                 ("&", "~a"),
+                ("‘", "'"),
+                ("’", "'"),
+                ("“", '"'),
+                ("”", '"'),
             ]:
                 encoded = encoded.replace(before, after)
             encoded_lines.append(encoded)
