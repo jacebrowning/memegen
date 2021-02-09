@@ -1,5 +1,5 @@
 site_name: Memegen.link
-site_description: The free and open source meme generator.
+site_description: The free and open source API to generate memes.
 site_author: Jace Browning
 
 repo_url: https://github.com/jacebrowning/memegen
