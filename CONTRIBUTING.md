@@ -31,7 +31,15 @@ To start the API server and static site:
 $ make run
 ```
 
-To add a new meme template:
+## Preview image rendering
+
+View all examples: http://localhost:5000/examples
+
+View test images with automatic reload: http://localhost:5000/test
+
+To view a specific image with automatic reload, simply drop the file extension.
+
+## Add a new meme template
 
 1. Visit http://localhost:5000/images/<my_new_template_id>
 2. Add a `default.png` (or JPG) background image in `templates` directory
