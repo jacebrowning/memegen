@@ -9,8 +9,10 @@ blueprint = Blueprint("Shortcuts", url_prefix="/")
 
 
 @blueprint.get("/images/<template_id>")
-@doc.summary("Redirect to a example image")
-@doc.response(302, doc.File(), description="Successfully redirected to a example image")
+@doc.summary("Redirect to an example image")
+@doc.response(
+    302, doc.File(), description="Successfully redirected to an example image"
+)
 @doc.response(404, str, description="Template not found")
 @doc.response(501, str, description="Template not fully implemented")
 async def example(request, template_id):
@@ -38,9 +40,11 @@ async def example(request, template_id):
 
 
 @blueprint.get("/<template_id>.png")
-@doc.summary("Redirect to a example image")
+@doc.summary("Redirect to an example image")
 @doc.exclude(settings.DEPLOYED)
-@doc.response(302, doc.File(), description="Successfully redirected to a example image")
+@doc.response(
+    302, doc.File(), description="Successfully redirected to an example image"
+)
 @doc.response(404, str, description="Template not found")
 async def example_png(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
@@ -51,9 +55,11 @@ async def example_png(request, template_id):
 
 
 @blueprint.get("/<template_id>.jpg")
-@doc.summary("Redirect to a example image")
+@doc.summary("Redirect to an example image")
 @doc.exclude(settings.DEPLOYED)
-@doc.response(302, doc.File(), description="Successfully redirected to a example image")
+@doc.response(
+    302, doc.File(), description="Successfully redirected to an example image"
+)
 @doc.response(404, str, description="Template not found")
 async def example_jpg(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
@@ -64,9 +70,11 @@ async def example_jpg(request, template_id):
 
 
 @blueprint.get("/<template_id>")
-@doc.summary("Redirect to a example image")
+@doc.summary("Redirect to an example image")
 @doc.exclude(settings.DEPLOYED)
-@doc.response(302, doc.File(), description="Successfully redirected to a example image")
+@doc.response(
+    302, doc.File(), description="Successfully redirected to an example image"
+)
 async def example_legacy(request, template_id):
     return response.redirect(f"/images/{template_id}")
 
