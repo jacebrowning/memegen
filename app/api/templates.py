@@ -58,7 +58,9 @@ async def detail(request, id):
     abort(404)
 
 
+# TODO: Deprecate this in favor of a new `POST /images/custom` route
 @blueprint.post("/custom")
+@doc.tag("Memes")
 @doc.summary("Create a meme from any image")
 @doc.consumes(
     doc.JsonBody(
@@ -97,7 +99,9 @@ async def custom(request):
     return response.json({"url": url}, status=201)
 
 
+# TODO: Deprecate this in favor of the `POST /images` route
 @blueprint.post("/<id>")
+@doc.tag("Memes")
 @doc.summary("Create a meme from a template")
 @doc.operation("yemplates.create")
 @doc.consumes(

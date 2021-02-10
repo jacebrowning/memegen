@@ -130,7 +130,7 @@ class Template:
             "lines": len(self.text),
             "styles": self.styles,
             "blank": app.url_for(
-                f"Images.blank_{settings.DEFAULT_EXT}",
+                f"Memes.blank_{settings.DEFAULT_EXT}",
                 template_id=self.id,
                 _external=True,
                 _scheme=settings.SCHEME,
@@ -151,7 +151,7 @@ class Template:
     def build_example_url(
         self,
         app: Sanic,
-        view_name: str = f"Images.text_{settings.DEFAULT_EXT}",
+        view_name: str = f"Memes.text_{settings.DEFAULT_EXT}",
         *,
         external: bool = True,
     ) -> str:
@@ -176,9 +176,9 @@ class Template:
         external: bool = False,
     ):
         if extension in {"jpg", "png"}:
-            view_name = f"Images.text_{extension}"
+            view_name = f"Memes.text_{extension}"
         else:
-            view_name = f"Images.text_{settings.DEFAULT_EXT}"
+            view_name = f"Memes.text_{settings.DEFAULT_EXT}"
         url = app.url_for(
             view_name,
             template_id="custom" if self.id == "_custom" else self.id,
