@@ -7,7 +7,7 @@ from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
 
-blueprint = Blueprint("Images", url_prefix="/images")
+blueprint = Blueprint("Memes", url_prefix="/images")
 
 
 @blueprint.get("/")
@@ -79,6 +79,7 @@ async def create(request):
 
 
 @blueprint.get("/preview.jpg")
+@doc.tag("Clients")
 @doc.summary("Display a preview of a custom meme")
 @doc.produces(
     doc.File(),
@@ -93,6 +94,7 @@ async def preview(request):
 
 
 @blueprint.get("/<template_id>.png")
+@doc.tag("Templates")
 @doc.summary("Display a template background")
 @doc.produces(
     doc.File(),
@@ -111,6 +113,7 @@ async def blank_png(request, template_id):
 
 
 @blueprint.get("/<template_id>.jpg")
+@doc.tag("Templates")
 @doc.summary("Display a template background")
 @doc.produces(
     doc.File(),
@@ -147,7 +150,7 @@ async def text_png(request, template_id, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "Images.text_png",
+            "Memes.text_png",
             template_id=template_id,
             text_paths=slug,
             **request.args,
@@ -159,7 +162,7 @@ async def text_png(request, template_id, text_paths):
     )
     if updated:
         url = request.app.url_for(
-            "Images.text_png",
+            "Memes.text_png",
             template_id=template_id,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
@@ -188,7 +191,7 @@ async def text_jpg(request, template_id, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "Images.text_jpg",
+            "Memes.text_jpg",
             template_id=template_id,
             text_paths=slug,
             **request.args,
@@ -200,7 +203,7 @@ async def text_jpg(request, template_id, text_paths):
     )
     if updated:
         url = request.app.url_for(
-            "Images.text_jpg",
+            "Memes.text_jpg",
             template_id=template_id,
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},

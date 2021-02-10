@@ -58,7 +58,7 @@ async def example_png(request, template_id):
 async def example_jpg(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
     if template:
-        url = template.build_example_url(request.app, "Images.text_jpg", external=False)
+        url = template.build_example_url(request.app, "Memes.text_jpg", external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_id}")
 
@@ -82,7 +82,7 @@ async def example_legacy(request, template_id):
 async def custom(request, template_id, text_paths):
     if not settings.DEBUG:
         url = request.app.url_for(
-            f"Images.text_{settings.DEFAULT_EXT}",
+            f"Memes.text_{settings.DEFAULT_EXT}",
             template_id=template_id,
             text_paths=text_paths,
         )
@@ -109,7 +109,7 @@ async def custom_png(request, template_id, text_paths):
     template = models.Template.objects.get_or_none(template_id)
     if template:
         url = request.app.url_for(
-            "Images.text_png", template_id=template_id, text_paths=text_paths
+            "Memes.text_png", template_id=template_id, text_paths=text_paths
         )
         return response.redirect(url)
     abort(404, f"Template not found: {template_id}")
@@ -124,7 +124,7 @@ async def custom_jpg(request, template_id, text_paths):
     template = models.Template.objects.get_or_none(template_id)
     if template:
         url = request.app.url_for(
-            "Images.text_jpg", template_id=template_id, text_paths=text_paths
+            "Memes.text_jpg", template_id=template_id, text_paths=text_paths
         )
         return response.redirect(url)
     abort(404, f"Template not found: {template_id}")
