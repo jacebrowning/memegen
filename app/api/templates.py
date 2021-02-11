@@ -60,6 +60,7 @@ async def detail(request, id):
 # TODO: Deprecate this in favor of the `POST /images` route
 @blueprint.post("/<id>")
 @doc.tag("Memes")
+@doc.operation("Memes.create_from_template")
 @doc.summary("Create a meme from a template")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
