@@ -9,14 +9,10 @@ def describe_spec():
         expect(response.json["info"]["version"]) == version
 
     def describe_image_list():
-        # Only spot checking the POST /images route, not sure
-        # how valuable it would be to check the rest exhaustively?
         def it_contains_the_operation_id(expect, client):
             request, response = client.get("/docs/swagger.json")
-            # This is our custom operationId, the default was images.index
-            expect(
-                response.json["paths"]["/images"]["post"]["operationId"]
-            ) == "images.create"
+            operation = response.json["paths"]["/images"]["post"]["operationId"]
+            expect(operation) == "Memes.create"
 
         def it_contains_the_request_spec(expect, client):
             request, response = client.get("/docs/swagger.json")

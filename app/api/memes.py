@@ -1,5 +1,6 @@
 import asyncio
 from contextlib import suppress
+from urllib.parse import parse_qs, urlparse
 
 from sanic import Blueprint, response
 from sanic.log import logger
@@ -12,7 +13,7 @@ blueprint = Blueprint("Memes", url_prefix="/images")
 
 @blueprint.get("/")
 @doc.summary("List example memes")
-@doc.operation("images.list")
+@doc.operation("Memes.list")
 @doc.produces(
     doc.List({"url": str, "template": str}),
     description="Successfully returned a list of example memes",
@@ -27,7 +28,7 @@ async def index(request):
 
 @blueprint.post("/")
 @doc.summary("Create a meme from a template")
-@doc.operation("images.create")
+@doc.operation("Memes.create")
 @doc.consumes(
     doc.JsonBody(
         {"template_id": str, "text_lines": [str], "extension": str, "redirect": bool}
@@ -78,19 +79,41 @@ async def create(request):
     return response.json({"url": url}, status=status)
 
 
-@blueprint.get("/preview.jpg")
-@doc.tag("Clients")
-@doc.summary("Display a preview of a custom meme")
-@doc.produces(
-    doc.File(),
-    description="Successfully displayed a custom meme",
-    content_type="image/jpeg",
+@blueprint.post("/automatic")
+@doc.exclude(settings.DEPLOYED)
+@doc.summary("Create a meme from word or phrase")
+@doc.consumes(
+    doc.JsonBody({"text": str, "redirect": bool}),
+    content_type="application/json",
+    location="body",
 )
-async def preview(request):
-    id = request.args.get("template", "_error")
-    lines = request.args.getlist("lines[]", [])
-    style = request.args.get("style")
-    return await preview_image(request, id, lines, style)
+@doc.response(201, {"url": str}, description="Successfully created a meme")
+@doc.response(
+    400, {"error": str}, description='Required "text" missing in request body'
+)
+async def auto(request):
+    if request.form:
+        payload = dict(request.form)
+    else:
+        payload = request.json or {}
+
+    results = await utils.meta.search(request, payload["text"])
+    logger.info(f"Found {len(results)} result(s)")
+    if not results:
+        return response.json(
+            {"message": f'No results matched: {payload["text"]}'}, status=404
+        )
+
+    parts = urlparse(results[0]["image_url"])
+    url = f"{settings.SCHEME}://{settings.SERVER_NAME}{parts.path}"
+    if "background" in parts.query:
+        url += "?background=" + parse_qs(parts.query)["background"][0]
+    logger.info(f"Top result: {url}")
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
+
+    return response.json({"url": url}, status=201)
 
 
 @blueprint.get("/<template_id>.png")
@@ -211,25 +234,6 @@ async def text_jpg(request, template_id, text_paths):
         return response.redirect(utils.text.unquote(url), status=301)
 
     return await render_image(request, template_id, slug, watermark, ext="jpg")
-
-
-async def preview_image(request, id: str, lines: list[str], style: str):
-    id = utils.text.unquote(id)
-    if "://" in id:
-        template = await models.Template.create(id)
-        if not template.image.exists():
-            logger.error(f"Unable to download image URL: {id}")
-            template = models.Template.objects.get("_error")
-    else:
-        template = models.Template.objects.get_or_none(id)
-        if not template:
-            logger.error(f"No such template: {id}")
-            template = models.Template.objects.get("_error")
-
-    data, content_type = await asyncio.to_thread(
-        utils.images.preview, template, lines, style=style
-    )
-    return response.raw(data, content_type=content_type)
 
 
 async def render_image(

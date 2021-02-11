@@ -69,6 +69,23 @@ async def track(request, lines: list[str]):
                 logger.error(f"Tracker response: {message}")
 
 
+async def search(request, text: str) -> list[dict]:
+    if settings.REMOTE_TRACKING_URL:
+        async with aiohttp.ClientSession() as session:
+            params = dict(
+                text=text,
+                client=_get_referer(request) or "https://memegen.link",
+            )
+            logger.info(f"Searching for results: {text}")
+            headers = {"X-API-KEY": _get_api_key(request) or ""}
+            response = await session.get(
+                settings.REMOTE_TRACKING_URL, params=params, headers=headers
+            )
+            assert response.status == 200
+            return await response.json()
+    return []
+
+
 def _get_referer(request):
     return request.headers.get("referer") or request.args.get("referer")
 

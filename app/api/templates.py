@@ -36,7 +36,6 @@ async def index(request):
 
 @blueprint.get("/<id>")
 @doc.summary("View a specific template")
-@doc.operation("Templates.detail")
 @doc.produces(
     {
         "id": str,
@@ -56,6 +55,51 @@ async def detail(request, id):
     if template:
         return response.json(template.jsonify(request.app))
     abort(404)
+
+
+# TODO: Deprecate this in favor of the `POST /images` route
+@blueprint.post("/<id>")
+@doc.tag("Memes")
+@doc.summary("Create a meme from a template")
+@doc.consumes(
+    doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
+    content_type="application/json",
+    location="body",
+)
+@doc.response(
+    201, {"url": str}, description="Successfully created a meme from a template"
+)
+async def build(request, id):
+    if request.form:
+        payload = dict(request.form)
+        with suppress(KeyError):
+            payload["image_url"] = payload.pop("image_url")[0]
+        with suppress(KeyError):
+            payload["extension"] = payload.pop("extension")[0]
+        with suppress(KeyError):
+            payload["redirect"] = payload.pop("redirect")[0]
+    else:
+        payload = request.json or {}
+    with suppress(KeyError):
+        payload["text_lines"] = payload.pop("text_lines[]")
+
+    template = Template.objects.get_or_create(id)
+    url = template.build_custom_url(
+        request.app,
+        payload.get("text_lines") or [],
+        extension=payload.get("extension"),
+    )
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
+
+    if template.valid:
+        status = 201
+    else:
+        status = 404
+        template.delete()
+
+    return response.json({"url": url}, status=status)
 
 
 # TODO: Deprecate this in favor of a new `POST /images/custom` route
@@ -97,49 +141,3 @@ async def custom(request):
         return response.redirect(url)
 
     return response.json({"url": url}, status=201)
-
-
-# TODO: Deprecate this in favor of the `POST /images` route
-@blueprint.post("/<id>")
-@doc.tag("Memes")
-@doc.summary("Create a meme from a template")
-@doc.operation("yemplates.create")
-@doc.consumes(
-    doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
-    content_type="application/json",
-    location="body",
-)
-@doc.response(
-    201, {"url": str}, description="Successfully created a meme from a template"
-)
-async def build(request, id):
-    if request.form:
-        payload = dict(request.form)
-        with suppress(KeyError):
-            payload["image_url"] = payload.pop("image_url")[0]
-        with suppress(KeyError):
-            payload["extension"] = payload.pop("extension")[0]
-        with suppress(KeyError):
-            payload["redirect"] = payload.pop("redirect")[0]
-    else:
-        payload = request.json or {}
-    with suppress(KeyError):
-        payload["text_lines"] = payload.pop("text_lines[]")
-
-    template = Template.objects.get_or_create(id)
-    url = template.build_custom_url(
-        request.app,
-        payload.get("text_lines") or [],
-        extension=payload.get("extension"),
-    )
-
-    if payload.get("redirect", False):
-        return response.redirect(url)
-
-    if template.valid:
-        status = 201
-    else:
-        status = 404
-        template.delete()
-
-    return response.json({"url": url}, status=status)
