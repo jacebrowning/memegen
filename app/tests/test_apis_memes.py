@@ -243,3 +243,11 @@ def describe_detail():
             )
             expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
+
+
+def describe_automatic():
+    def describe_POST():
+        def it_requires_text(expect, client):
+            request, response = client.post("/images/automatic")
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"text" is required'}

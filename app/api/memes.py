@@ -97,12 +97,15 @@ async def auto(request):
     else:
         payload = request.json or {}
 
-    results = await utils.meta.search(request, payload["text"])
+    try:
+        text = payload["text"]
+    except KeyError:
+        return response.json({"error": '"text" is required'}, status=400)
+
+    results = await utils.meta.search(request, text)
     logger.info(f"Found {len(results)} result(s)")
     if not results:
-        return response.json(
-            {"message": f'No results matched: {payload["text"]}'}, status=404
-        )
+        return response.json({"message": f"No results matched: {text}"}, status=404)
 
     parts = urlparse(results[0]["image_url"])
     url = f"{settings.SCHEME}://{settings.SERVER_NAME}{parts.path}"
