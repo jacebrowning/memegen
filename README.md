@@ -104,7 +104,7 @@ The `template` parameter can be a template ID or URL:
 
 | Mode              | Example                                                                                                                                                                                                                                                          |
 | :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Template ID      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
+| Template ID       | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=fry](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=fry)                                                                             |
 | Template URL      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
 | Custom Background | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
 
@@ -114,7 +114,7 @@ Unauthenticated API requests are watermarked and may be rate limited. To request
 
 ## Zapier Integration
 
-Join the beta app [here](https://zapier.com/developer/public-invite/126854/140c726fada227dcf3cf6aac9ef9cae4/).
+The beta integration is available here: <https://zapier.com/apps/memegenlink>
 
 ## Sample Code
 
