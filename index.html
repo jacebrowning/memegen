@@ -187,7 +187,10 @@
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background. For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
 <p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" style="max-width: 100%;"></p>
-<h1 id="previews">Previews</h1>
+<h1 id="api-clients">API Clients</h1>
+<h2 id="documentation">Documentation</h2>
+<p>The full interactive documentation is available here: <a href="https://api.memegen.link/docs/">https://api.memegen.link/docs/</a></p>
+<h2 id="previews">Previews</h2>
 <p>If your client is going to show live previews of a custom meme, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
 <pre><code class="javascript">var id = encodeURIComponent($(&quot;#template&quot;).val())
 var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val()) || &quot; &quot;
@@ -222,10 +225,10 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 </tr>
 </tbody>
 </table>
-<h1 id="documentation">Documentation</h1>
-<p>The full interactive documentation is available here: <a href="https://api.memegen.link/docs/">https://api.memegen.link/docs/</a></p>
 <h2 id="authentication">Authentication</h2>
 <p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.</p>
+<h2 id="zapier-integration">Zapier Integration</h2>
+<p>Join the beta app <a href="https://zapier.com/developer/public-invite/126854/140c726fada227dcf3cf6aac9ef9cae4/">here</a>.</p>
 <h2 id="sample-code">Sample Code</h2>
 <p>Here are some sample clients to explore:</p>
 <table>
@@ -344,5 +347,5 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-11 23:41:39.582781+00:00
+Build Date UTC : 2021-02-12 01:23:52.532566+00:00
 -->
