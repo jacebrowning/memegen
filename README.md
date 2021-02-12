@@ -79,7 +79,13 @@ You can also use your own image URL as the background. For example, <https://api
 
 <img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" style="max-width: 100%;">
 
-# Previews
+# API Clients
+
+## Documentation
+
+The full interactive documentation is available here: <https://api.memegen.link/docs/>
+
+## Previews
 
 If your client is going to show live previews of a custom meme, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:
 
@@ -102,13 +108,13 @@ The `template` parameter can be a template ID or URL:
 | Template URL      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
 | Custom Background | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
 
-# Documentation
-
-The full interactive documentation is available here: <https://api.memegen.link/docs/>
-
 ## Authentication
 
 Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.
+
+## Zapier Integration
+
+Join the beta app [here](https://zapier.com/developer/public-invite/126854/140c726fada227dcf3cf6aac9ef9cae4/).
 
 ## Sample Code
 
