@@ -1,0 +1,30 @@
+name: Captain America Elevator Fight Dad Joke
+source: https://knowyourmeme.com/memes/captain-america-elevator-fight-dad-joke
+text:
+  - color: khaki
+    style: default
+    anchor_x: 0.0
+    anchor_y: 0.23
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.1
+  - color: white
+    style: default
+    anchor_x: 0.0
+    anchor_y: 0.57
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.08
+  - color: khaki
+    style: default
+    anchor_x: 0.5
+    anchor_y: 0.56
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+styles:
+  -
+example:
+  - Have you ever eaten a clock?
+  - No, why?
+  - It's time consuming.

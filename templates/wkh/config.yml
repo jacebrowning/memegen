@@ -15,8 +15,8 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
-  - color: white
-    style: upper
+  - color: khaki
+    style: default
     anchor_x: 0.0
     anchor_y: 0.875
     angle: 0.0
