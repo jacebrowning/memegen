@@ -1,3 +1,4 @@
+from email.utils import parseaddr
 from urllib.parse import unquote, urlparse
 
 import aiohttp
@@ -6,13 +7,17 @@ from sanic.log import logger
 from .. import settings
 
 
-def authenticated(request) -> bool:
+def authenticated(request, *, allow_email: bool = False) -> bool:
     api_key = _get_api_key(request)
     if api_key:
         api_mask = api_key[:2] + "***" + api_key[-2:]
         logger.info(f"Authenticated with {api_mask}")
         if api_key in settings.API_KEYS:
             return True
+        if allow_email:
+            name, email = parseaddr(api_key)
+            if "@" in email and "." in email:
+                return True
     return False
 
 
