@@ -33,7 +33,7 @@ $ make run
 
 ## Preview image rendering
 
-View all examples: http://localhost:5000/examples
+View all example images: http://localhost:5000/examples
 
 View test images with automatic reload: http://localhost:5000/test
 
