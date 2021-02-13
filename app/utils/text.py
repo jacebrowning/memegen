@@ -2,7 +2,9 @@ def encode(lines: list[str]) -> str:
     encoded_lines = []
 
     for line in lines:
-        if line:
+        if line == "/":
+            encoded_lines.append("_")
+        elif line:
             encoded = line
             for before, after in [
                 ("_", "__"),

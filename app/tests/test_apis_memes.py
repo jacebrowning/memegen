@@ -74,6 +74,12 @@ def describe_list():
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw.png"}
 
+        def it_supports_slashes_to_indicate_blank_lines(expect, client):
+            data = {"template_id": "iw", "text_lines": ["/", "2", "/", ""]}
+            request, response = client.post("/images", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {"url": "http://localhost:5000/images/iw/_/2.png"}
+
 
 def describe_detail():
     @pytest.mark.parametrize(

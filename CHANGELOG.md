@@ -1,5 +1,9 @@
 # Revision History
 
+## 8.1
+
+- Updated APIs that accept `text_lines[]` to support `/` as a placeholder for blank lines.
+
 ## 8.0
 
 - Renamed `template_key` to `template_id` in APIs.
