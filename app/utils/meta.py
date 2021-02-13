@@ -53,7 +53,7 @@ async def track(request, lines: list[str]):
         async with aiohttp.ClientSession() as session:
             params = dict(
                 text=text,
-                client=_get_referer(request) or "https://memegen.link",
+                client=_get_referer(request) or settings.BASE_URL,
                 result=unquote(request.url),
             )
             logger.info(f"Tracking request: {params}")
@@ -74,7 +74,7 @@ async def search(request, text: str) -> list[dict]:
         async with aiohttp.ClientSession() as session:
             params = dict(
                 text=text,
-                client=_get_referer(request) or "https://memegen.link",
+                client=_get_referer(request) or settings.BASE_URL,
             )
             logger.info(f"Searching for results: {text}")
             headers = {"X-API-KEY": _get_api_key(request) or ""}
@@ -87,7 +87,10 @@ async def search(request, text: str) -> list[dict]:
 
 
 def _get_referer(request):
-    return request.headers.get("referer") or request.args.get("referer")
+    referer = request.headers.get("referer") or request.args.get("referer")
+    if referer and referer.startswith(settings.BASE_URL) and "/docs/" not in referer:
+        referer = None
+    return referer
 
 
 def _get_api_key(request):

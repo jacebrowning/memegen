@@ -7,6 +7,7 @@ ROOT = Path(__file__).parent.parent.resolve()
 
 PORT = int(os.environ.get("PORT", 5000))
 WORKERS = int(os.environ.get("WEB_CONCURRENCY", 1))
+DEBUG = bool(os.environ.get("DEBUG", False))
 
 if "DOMAIN" in os.environ:  # staging / production
     SERVER_NAME = os.environ["DOMAIN"]
@@ -21,9 +22,8 @@ else:  # localhost
     RELEASE_STAGE = "local"
     SCHEME = "http"
 
-DEBUG = bool(os.environ.get("DEBUG", False))
+BASE_URL = f"{SCHEME}://{SERVER_NAME}"
 DEPLOYED = RELEASE_STAGE != "local" and not DEBUG
-BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")
 
 # Fonts
 
@@ -93,3 +93,5 @@ DISABLED_WATERMARK = ALLOWED_WATERMARKS.pop(0)
 DEFAULT_WATERMARK = ALLOWED_WATERMARKS[0]
 
 REMOTE_TRACKING_URL = os.getenv("REMOTE_TRACKING_URL")
+
+BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")

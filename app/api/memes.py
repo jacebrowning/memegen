@@ -108,7 +108,7 @@ async def auto(request):
         return response.json({"message": f"No results matched: {text}"}, status=404)
 
     parts = urlparse(results[0]["image_url"])
-    url = f"{settings.SCHEME}://{settings.SERVER_NAME}{parts.path}"
+    url = f"{settings.BASE_URL}{parts.path}"
     if "background" in parts.query:
         url += "?background=" + parse_qs(parts.query)["background"][0]
     logger.info(f"Top result: {url}")
