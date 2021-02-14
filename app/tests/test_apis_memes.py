@@ -18,6 +18,12 @@ def describe_list():
                 }
             )
 
+        @pytest.mark.slow
+        def it_can_filter_examples(expect, client):
+            request, response = client.get("/images?filter=awesome", timeout=10)
+            expect(response.status) == 200
+            expect(len(response.json)) == 3
+
     def describe_POST():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_returns_an_image_url(expect, client, as_json):
@@ -221,7 +227,6 @@ def describe_detail():
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_custom():
-        @pytest.mark.slow
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
                 "/images/custom/test.png"

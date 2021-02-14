@@ -68,7 +68,6 @@ def describe_shortcuts():
 
 
 def describe_legacy():
-    @pytest.mark.slow
     def it_accepts_alt_for_template(expect, client):
         request, response = client.get(
             "/images/custom/test.png" "?alt=https://www.gstatic.com/webp/gallery/3.jpg"

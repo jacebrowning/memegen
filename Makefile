@@ -48,7 +48,7 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf images site templates-legacy templates/_custom-* tests/images
+	rm -rf app/tests/images images site templates-legacy templates/_custom-*
 
 .PHONY: clean-all
 clean-all: clean
@@ -100,7 +100,7 @@ test-fast: install
 
 .PHONY: test-slow
 test-slow: install
-	poetry run pytest -m slow --durations=0
+	poetry run pytest -m slow --durations=0 --durations-min=0.05
 
 .PHONY: watch
 watch: install

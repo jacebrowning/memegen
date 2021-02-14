@@ -254,3 +254,7 @@ class Template:
     def delete(self):
         if self.directory.exists():
             shutil.rmtree(self.directory)
+
+    def matches(self, query: str) -> bool:
+        example = " ".join(line.lower() for line in self.example)
+        return any((query in self.id, query in self.name.lower(), query in example))
