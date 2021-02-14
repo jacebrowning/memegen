@@ -14,12 +14,13 @@ blueprint = Blueprint("Memes", url_prefix="/images")
 @blueprint.get("/")
 @doc.summary("List example memes")
 @doc.operation("Memes.list")
-@doc.consumes(
-    doc.String(
-        name="filter", description="Part of the template name or example to match"
-    ),
-    location="query",
-)
+# TODO: https://github.com/jacebrowning/memegen/issues/580
+# @doc.consumes(
+#     doc.String(
+#         name="filter", description="Part of the template name or example to match"
+#     ),
+#     location="query",
+# )
 @doc.produces(
     doc.List({"url": str, "template": str}),
     description="Successfully returned a list of example memes",
