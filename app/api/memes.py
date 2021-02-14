@@ -81,7 +81,7 @@ async def create(request):
 
 @blueprint.post("/automatic")
 @doc.exclude(settings.DEPLOYED)
-@doc.summary("Create a meme from word or phrase")
+@doc.summary(settings.PREFIX + "Create a meme from word or phrase")
 @doc.consumes(
     doc.JsonBody({"text": str, "redirect": bool}),
     content_type="application/json",

@@ -24,6 +24,7 @@ else:  # localhost
 
 BASE_URL = f"{SCHEME}://{SERVER_NAME}"
 DEPLOYED = RELEASE_STAGE != "local" and not DEBUG
+PREFIX = "[DEBUG] " if not DEPLOYED else ""
 
 # Fonts
 
