@@ -119,6 +119,45 @@ async def auto(request):
     return response.json({"url": url}, status=201)
 
 
+@blueprint.post("/custom")
+@doc.summary("Create a meme from any image")
+@doc.consumes(
+    doc.JsonBody(
+        {"image_url": str, "text_lines": [str], "extension": str, "redirect": bool}
+    ),
+    content_type="application/json",
+    location="body",
+)
+@doc.response(
+    201, {"url": str}, description="Successfully created a meme from a custom image"
+)
+async def custom(request):
+    if request.form:
+        payload = dict(request.form)
+        with suppress(KeyError):
+            payload["image_url"] = payload.pop("image_url")[0]
+        with suppress(KeyError):
+            payload["extension"] = payload.pop("extension")[0]
+        with suppress(KeyError):
+            payload["redirect"] = payload.pop("redirect")[0]
+    else:
+        payload = request.json or {}
+    with suppress(KeyError):
+        payload["text_lines"] = payload.pop("text_lines[]")
+
+    url = models.Template("_custom").build_custom_url(
+        request.app,
+        payload.get("text_lines") or [],
+        background=payload.get("image_url", ""),
+        extension=payload.get("extension", ""),
+    )
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
+
+    return response.json({"url": url}, status=201)
+
+
 @blueprint.get("/<template_id>.png")
 @doc.tag("Templates")
 @doc.summary("Display a template background")

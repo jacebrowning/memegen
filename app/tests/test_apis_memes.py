@@ -257,3 +257,35 @@ def describe_automatic():
             request, response = client.post("/images/automatic")
             expect(response.status) == 400
             expect(response.json) == {"error": '"text" is required'}
+
+
+def describe_custom():
+    def describe_POST():
+        @pytest.mark.parametrize("as_json", [True, False])
+        def it_supports_custom_backgrounds(expect, client, as_json):
+            data = {
+                "image_url": "https://www.gstatic.com/webp/gallery/3.png",
+                "text_lines[]": ["foo", "bar"],
+                "extension": "jpg",
+            }
+            request, response = client.post(
+                "/images/custom", data=json.dumps(data) if as_json else data
+            )
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/custom/foo/bar.jpg"
+                "?background=https://www.gstatic.com/webp/gallery/3.png"
+            }
+
+        def it_redirects_if_requested(expect, client):
+            data = {
+                "image_url": "https://www.gstatic.com/webp/gallery/4.png",
+                "text_lines": ["abc"],
+                "redirect": True,
+            }
+            request, response = client.post(
+                "/images/custom", data=data, allow_redirects=False
+            )
+            redirect = "http://localhost:5000/images/custom/abc.png?background=https://www.gstatic.com/webp/gallery/4.png"
+            expect(response.status) == 302
+            expect(response.headers["Location"]) == redirect

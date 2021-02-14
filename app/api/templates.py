@@ -5,7 +5,7 @@ from sanic import Blueprint, response
 from sanic.exceptions import abort
 from sanic_openapi import doc
 
-from .. import helpers
+from .. import helpers, settings
 from ..models import Template
 
 blueprint = Blueprint("Templates", url_prefix="/templates")
@@ -57,11 +57,11 @@ async def detail(request, id):
     abort(404)
 
 
-# TODO: Deprecate this in favor of the `POST /images` route
 @blueprint.post("/<id>")
 @doc.tag("Memes")
 @doc.operation("Memes.create_from_template")
-@doc.summary("Create a meme from a template")
+@doc.exclude(settings.DEPLOYED)
+@doc.summary(settings.PREFIX + "Create a meme from a template")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
     content_type="application/json",
@@ -103,10 +103,10 @@ async def build(request, id):
     return response.json({"url": url}, status=status)
 
 
-# TODO: Deprecate this in favor of a new `POST /images/custom` route
 @blueprint.post("/custom")
 @doc.tag("Memes")
-@doc.summary("Create a meme from any image")
+@doc.exclude(settings.DEPLOYED)
+@doc.summary(settings.PREFIX + "Create a meme from any image")
 @doc.consumes(
     doc.JsonBody(
         {"image_url": str, "text_lines": [str], "extension": str, "redirect": bool}
