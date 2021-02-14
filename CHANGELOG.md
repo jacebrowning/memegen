@@ -1,5 +1,9 @@
 # Revision History
 
+## 8.3
+
+- Added `filter` parameter to `/images` and `/templates` to query for matching names and examples.
+
 ## 8.2
 
 - Added `/images/custom` as an alias for `/templates/custom`.

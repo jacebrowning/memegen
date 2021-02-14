@@ -14,13 +14,20 @@ blueprint = Blueprint("Memes", url_prefix="/images")
 @blueprint.get("/")
 @doc.summary("List example memes")
 @doc.operation("Memes.list")
+@doc.consumes(
+    doc.String(
+        name="filter", description="Part of the template name or example to match"
+    ),
+    location="query",
+)
 @doc.produces(
     doc.List({"url": str, "template": str}),
     description="Successfully returned a list of example memes",
     content_type="application/json",
 )
 async def index(request):
-    examples = await asyncio.to_thread(helpers.get_example_images, request)
+    query = request.args.get("filter", "").lower()
+    examples = await asyncio.to_thread(helpers.get_example_images, request, query)
     return response.json(
         [{"url": url, "template": template} for url, template in examples]
     )

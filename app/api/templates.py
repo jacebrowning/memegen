@@ -13,6 +13,10 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
 
 @blueprint.get("/")
 @doc.summary("List all templates")
+@doc.consumes(
+    doc.String(name="filter", description="Part of the name or example to match"),
+    location="query",
+)
 @doc.produces(
     # Can't use doc.List(Template) because the jsonify method is slightly different
     doc.List(
@@ -30,7 +34,8 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
     content_type="application/json",
 )
 async def index(request):
-    data = await asyncio.to_thread(helpers.get_valid_templates, request)
+    query = request.args.get("filter", "").lower()
+    data = await asyncio.to_thread(helpers.get_valid_templates, request, query)
     return response.json(data)
 
 

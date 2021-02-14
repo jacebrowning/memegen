@@ -9,7 +9,7 @@ def configure(app):
     app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.API_BASEPATH = "/"
     app.config.API_SCHEMES = [settings.SCHEME]
-    app.config.API_VERSION = "8.2"
+    app.config.API_VERSION = utils.meta.version()
     app.config.API_TITLE = "Memegen.link"
     app.config.API_CONTACT_EMAIL = "support@maketested.com"
     app.config.API_LICENSE_NAME = "View the license"
@@ -33,19 +33,27 @@ def configure(app):
     app.error_handler = errors.BugsnagErrorHandler()
 
 
-def get_valid_templates(request) -> list[dict]:
+def get_valid_templates(request, query: str = "") -> list[dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
-    return [template.jsonify(request.app) for template in sorted(templates)]
+    if query:
+        templates = [t for t in templates if t.matches(query)]
+    else:
+        templates = sorted(templates)
+    return [template.jsonify(request.app) for template in templates]
 
 
-def get_example_images(request) -> list[tuple[str, str]]:
+def get_example_images(request, query: str = "") -> list[tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
+    if query:
+        templates = [t for t in templates if t.matches(query)]
+    else:
+        templates = sorted(templates)
     return [
         (
             template.build_example_url(request.app, "Memes.text_jpg"),
             template.build_self_url(request.app),
         )
-        for template in sorted(templates)
+        for template in templates
     ]
 
 

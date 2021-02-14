@@ -9,6 +9,13 @@ def describe_list():
         def it_returns_all_templates(expect, client):
             request, response = client.get("/templates", timeout=10)
             expect(response.status) == 200
+            expect(len(response.json)) >= 140
+
+        @pytest.mark.slow
+        def it_can_filter_templates(expect, client):
+            request, response = client.get("/templates?filter=awesome", timeout=10)
+            expect(response.status) == 200
+            expect(len(response.json)) == 3
 
 
 def describe_detail():

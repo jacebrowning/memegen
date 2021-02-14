@@ -1,10 +1,17 @@
 from email.utils import parseaddr
+from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import aiohttp
 from sanic.log import logger
 
 from .. import settings
+
+
+def version() -> str:
+    changelog_lines = Path("CHANGELOG.md").read_text().splitlines()
+    version_heading = changelog_lines[2]
+    return version_heading.split(" ")[-1]
 
 
 def authenticated(request, *, allow_email: bool = False) -> bool:
