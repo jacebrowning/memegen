@@ -1,5 +1,10 @@
 # Revision History
 
+## 8.2
+
+- Added `/images/custom` as an alias for `/templates/custom`.
+- Removed `POST /templates/*` from the documentation to clarify routes.
+
 ## 8.1
 
 - Updated APIs that accept `text_lines[]` to support `/` as a placeholder for blank lines.
