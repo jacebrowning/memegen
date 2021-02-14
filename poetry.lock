@@ -373,12 +373,19 @@ description = "Honcho: a Python clone of Foreman. For managing Procfile-based ap
 category = "dev"
 optional = false
 python-versions = "*"
+develop = false
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 
 [package.extras]
 export = ["jinja2 (>=2.7,<2.8)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/nickstenning/honcho"
+reference = "b4de1aa0504d41c0f05efbb04f63c624fccded81"
+resolved_reference = "b4de1aa0504d41c0f05efbb04f63c624fccded81"
 
 [[package]]
 name = "httpcore"
@@ -1351,7 +1358,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8eee4adabc0749600e65798869cc3a8eb4789f68ba103c50330da88bccff6a42"
+content-hash = "13816444365f7fb762a2182f8c9ee5f783a58e85671f61a5d1c5f0196f602df2"
 
 [metadata.files]
 aiofiles = [
@@ -1661,10 +1668,7 @@ h11 = [
     {file = "h11-0.9.0-py2.py3-none-any.whl", hash = "sha256:4bc6d6a1238b7615b266ada57e0618568066f57dd6fa967d1290ec9309b2f2f1"},
     {file = "h11-0.9.0.tar.gz", hash = "sha256:33d4bca7be0fa039f4e84d50ab00531047e53d6ee8ffbc83501ea602c169cae1"},
 ]
-honcho = [
-    {file = "honcho-1.0.1-py2.py3-none-any.whl", hash = "sha256:af5806bf13e3b20acdcb9ff8c0beb91eee6fe07393c3448dfad89667e6ac7576"},
-    {file = "honcho-1.0.1.tar.gz", hash = "sha256:c189402ad2e337777283c6a12d0f4f61dc6dd20c254c9a3a4af5087fc66cea6e"},
-]
+honcho = []
 httpcore = [
     {file = "httpcore-0.11.1-py3-none-any.whl", hash = "sha256:72cfaa461dbdc262943ff4c9abf5b195391a03cdcc152e636adb4239b15e77e1"},
     {file = "httpcore-0.11.1.tar.gz", hash = "sha256:a35dddd1f4cc34ff37788337ef507c0ad0276241ece6daf663ac9e77c0b87232"},
