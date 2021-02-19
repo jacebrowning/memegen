@@ -14,11 +14,11 @@ blueprint = Blueprint("Clients", url_prefix="/")
 @doc.response(200, str, description="Your API key is valid")
 @doc.response(401, str, description="Your API key is invalid")
 async def validate(request):
-    valid = utils.meta.authenticated(request, allow_email=True)
-    status = 200 if valid else 401
-    state = "valid" if valid else "invalid"
-    message = f"Your API key is {state}."
-    return response.json({"message": message}, status=status)
+    info = await utils.meta.authenticate(request, allow_email=True)
+    return response.json(
+        info or {"error": "API key missing or invalid."},
+        status=200 if info else 401,
+    )
 
 
 @blueprint.get("/images/preview.jpg")

@@ -14,22 +14,33 @@ def version() -> str:
     return version_heading.split(" ")[-1]
 
 
-def authenticated(request, *, allow_email: bool = False) -> bool:
+async def authenticate(request, *, allow_email: bool = False) -> dict:
+    info = {}
+
     api_key = _get_api_key(request)
     if api_key:
         api_mask = api_key[:2] + "***" + api_key[-2:]
-        logger.info(f"Authenticated with {api_mask}")
-        if api_key in settings.API_KEYS:
-            return True
-        if allow_email:
+        logger.info(f"Authenticating with {api_mask}")
+
+        if settings.REMOTE_TRACKING_URL:
+            url = settings.REMOTE_TRACKING_URL + "auth"
+            async with aiohttp.ClientSession() as session:
+                response = await session.get(url, headers={"X-API-KEY": api_key})
+                info = await response.json()
+
+        if not info:
             name, email = parseaddr(api_key)
             if "@" in email and "." in email:
-                return True
-    return False
+                info = {"email": email}
+
+        if not info and api_key in settings.API_KEYS:
+            info = {"email": "user@example.com"}
+
+    return info
 
 
-def get_watermark(request, watermark: str) -> tuple[str, bool]:
-    if authenticated(request):
+async def get_watermark(request, watermark: str) -> tuple[str, bool]:
+    if await authenticate(request):
         return "", False
 
     if watermark == settings.DISABLED_WATERMARK:
@@ -62,6 +73,7 @@ async def track(request, lines: list[str]):
         name in request.args for name in ["height", "width", "watermark"]
     )
     if text and trackable and settings.REMOTE_TRACKING_URL:
+        url = settings.REMOTE_TRACKING_URL
         async with aiohttp.ClientSession() as session:
             params = dict(
                 text=text,
@@ -70,9 +82,7 @@ async def track(request, lines: list[str]):
             )
             logger.info(f"Tracking request: {params}")
             headers = {"X-API-KEY": _get_api_key(request) or ""}
-            response = await session.get(
-                settings.REMOTE_TRACKING_URL, params=params, headers=headers
-            )
+            response = await session.get(url, params=params, headers=headers)
             if response.status != 200:
                 try:
                     message = await response.json()
@@ -83,6 +93,7 @@ async def track(request, lines: list[str]):
 
 async def search(request, text: str) -> list[dict]:
     if settings.REMOTE_TRACKING_URL:
+        url = settings.REMOTE_TRACKING_URL
         async with aiohttp.ClientSession() as session:
             params = dict(
                 text=text,
@@ -90,9 +101,7 @@ async def search(request, text: str) -> list[dict]:
             )
             logger.info(f"Searching for results: {text}")
             headers = {"X-API-KEY": _get_api_key(request) or ""}
-            response = await session.get(
-                settings.REMOTE_TRACKING_URL, params=params, headers=headers
-            )
+            response = await session.get(url, params=params, headers=headers)
             assert response.status == 200
             return await response.json()
     return []
