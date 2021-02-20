@@ -2,6 +2,12 @@ import pytest
 
 
 def describe_auth():
+    def describe_POST():
+        def it_returns_401_when_unauthenticated(expect, client):
+            request, response = client.post("/auth")
+            expect(response.status) == 401
+            expect(response.json) == {"error": "API key missing or invalid."}
+
     def describe_GET():
         def it_returns_401_when_unauthenticated(expect, client):
             request, response = client.get("/auth")

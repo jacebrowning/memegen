@@ -4,16 +4,28 @@ from sanic import Blueprint, response
 from sanic.log import logger
 from sanic_openapi import doc
 
-from .. import models, utils
+from .. import models, settings, utils
 
 blueprint = Blueprint("Clients", url_prefix="/")
 
 
-@blueprint.get("/auth")
+@blueprint.post("/auth")
+@doc.exclude(not settings.REMOTE_TRACKING_URL)
 @doc.summary("Validate your API key")
 @doc.response(200, str, description="Your API key is valid")
 @doc.response(401, str, description="Your API key is invalid")
 async def validate(request):
+    info = await utils.meta.authenticate(request)
+    return response.json(
+        info or {"error": "API key missing or invalid."},
+        status=200 if info else 401,
+    )
+
+
+@blueprint.get("/auth")
+@doc.exclude(settings.DEPLOYED)
+@doc.summary(settings.PREFIX + "Validate your API key (legacy)")
+async def validate_legacy(request):
     info = await utils.meta.authenticate(request)
     return response.json(
         info or {"error": "API key missing or invalid."},
