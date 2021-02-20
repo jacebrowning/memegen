@@ -92,7 +92,7 @@ async def custom(request, template_id, text_paths):
         url = request.app.url_for(
             f"Memes.text_{settings.DEFAULT_EXT}",
             template_id=template_id,
-            text_paths=utils.text.encode([text_paths]),
+            text_paths=utils.text.encode(text_paths.split("/")),
         )
         return response.redirect(url)
 

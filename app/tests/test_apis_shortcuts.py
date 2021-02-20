@@ -37,9 +37,9 @@ def describe_path_redirects():
         expect(response.headers["Location"]) == redirect
 
     def it_redirects_to_custom_image_when_no_extension(expect, client):
-        request, response = client.get("/images/fry/test%3F", allow_redirects=False)
+        request, response = client.get("/images/fry/one%3F/two", allow_redirects=False)
         expect(response.status) == 302
-        expect(response.headers["Location"]) == "/images/fry/test~q.png"
+        expect(response.headers["Location"]) == "/images/fry/one~q/two.png"
 
     def it_returns_gallery_view_when_debug(expect, client, monkeypatch):
         monkeypatch.setattr(settings, "DEBUG", True)
