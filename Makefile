@@ -129,7 +129,7 @@ promote: install .env .envrc
 	echo WEB_CONCURRENCY=2 >> $@
 	echo MAX_REQUESTS=0 >> $@
 	echo MAX_REQUESTS_JITTER=0 >> $@
-	echo WATERMARK_OPTIONS=blank,memegen.link >> $@
+	echo WATERMARK_OPTIONS=blank,Memegen.link >> $@
 
 .envrc:
 	echo dotenv >> $@
