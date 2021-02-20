@@ -9,4 +9,4 @@ fi
 curl -X POST "https://api.cloudflare.com/client/v4/zones/72a69ae7acada4beb0d16053a00560bf/purge_cache" \
 	-H "Authorization: Bearer ${CF_API_KEY}" \
 	-H "Content-Type: application/json" \
-	--data "{\"files\":[ \"https://memegen.link\" , \"https://memegen.link/examples\" , \"https://${DOMAIN}\" , \"https://${DOMAIN}/docs/swagger.json\" , \"https://${DOMAIN}/images\" , \"https://${DOMAIN}/examples\" , \"https://${DOMAIN}/templates\" ]}"
+	--data "{\"files\":[ \"https://memegen.link\" , \"https://memegen.link/examples\" , \"https://${DOMAIN}\" , \"https://${DOMAIN}/auth\" , \"https://${DOMAIN}/docs/swagger.json\" , \"https://${DOMAIN}/docs/swagger.json\" , \"https://${DOMAIN}/images\" , \"https://${DOMAIN}/examples\" , \"https://${DOMAIN}/templates\" ]}"
