@@ -8,6 +8,7 @@ edit_uri: ""
 nav:
   - Home: index.md
   - Examples: examples.md
+  - Clients: clients.md
 
 theme:
   name: mkdocs
