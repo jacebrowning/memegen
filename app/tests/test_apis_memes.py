@@ -1,4 +1,5 @@
 import json
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -129,7 +130,6 @@ def describe_detail():
             monkeypatch.setattr(settings, "DISABLED_WATERMARK", "blank")
             monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
             monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
-            monkeypatch.setattr(settings, "API_KEYS", ["sample"])
 
         @pytest.fixture
         def default_content(watermark_settings, client):
@@ -188,10 +188,13 @@ def describe_detail():
             expect(response.status) == 301
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
+        @patch(
+            "app.utils.meta.authenticate",
+            AsyncMock(return_value={"email": "user@example.com"}),
+        )
         def it_is_disabled_automatically_when_authenticated(expect, client):
             request, response = client.get(
                 "/images/fry/test.png?watermark=ignored",
-                headers={"X-API-KEY": "sample"},
                 allow_redirects=False,
             )
             expect(response.status) == 200

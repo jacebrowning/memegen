@@ -27,9 +27,6 @@ async def authenticate(request) -> dict:
                 response = await session.get(url, headers={"X-API-KEY": api_key})
                 info = await response.json()
 
-        if not info and api_key in settings.API_KEYS:
-            info = {"email": "user@example.com"}
-
     return info
 
 
