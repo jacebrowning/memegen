@@ -10,7 +10,6 @@ blueprint = Blueprint("Clients", url_prefix="/")
 
 
 @blueprint.post("/auth")
-@doc.exclude(not settings.REMOTE_TRACKING_URL)
 @doc.summary("Validate your API key")
 @doc.response(200, str, description="Your API key is valid")
 @doc.response(401, str, description="Your API key is invalid")
