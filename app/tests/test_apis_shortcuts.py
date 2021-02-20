@@ -3,7 +3,7 @@ import pytest
 from .. import settings
 
 
-def describe_redirects():
+def describe_image_redirects():
     @pytest.mark.parametrize("ext", ["png", "jpg"])
     def it_redirects_to_normalized_slug(expect, client, ext):
         request, response = client.get(
@@ -29,7 +29,7 @@ def describe_redirects():
         expect(response.headers["Location"]) == redirect
 
 
-def describe_shortcuts():
+def describe_path_redirects():
     def it_redirects_to_example_image_when_no_extension(expect, client):
         request, response = client.get("/images/fry", allow_redirects=False)
         redirect = "/images/fry/not_sure_if_trolling/or_just_stupid"
@@ -37,9 +37,9 @@ def describe_shortcuts():
         expect(response.headers["Location"]) == redirect
 
     def it_redirects_to_custom_image_when_no_extension(expect, client):
-        request, response = client.get("/images/fry/test", allow_redirects=False)
+        request, response = client.get("/images/fry/test%3F", allow_redirects=False)
         expect(response.status) == 302
-        expect(response.headers["Location"]) == "/images/fry/test.png"
+        expect(response.headers["Location"]) == "/images/fry/test~q.png"
 
     def it_returns_gallery_view_when_debug(expect, client, monkeypatch):
         monkeypatch.setattr(settings, "DEBUG", True)
@@ -67,24 +67,7 @@ def describe_shortcuts():
         expect(response.status) == 501
 
 
-def describe_legacy():
-    def it_accepts_alt_for_template(expect, client):
-        request, response = client.get(
-            "/images/custom/test.png" "?alt=https://www.gstatic.com/webp/gallery/3.jpg"
-        )
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == "image/png"
-
-    @pytest.mark.slow
-    def it_accepts_alt_for_style(expect, client):
-        request, response = client.get("/images/sad-biden/test.png?style=scowl")
-        expect(response.status) == 200
-
-        request, response2 = client.get("/images/sad-biden/test.png?alt=scowl")
-        expect(response.status) == 200
-
-        expect(len(response.content)) == len(response2.content)
-
+def describe_legacy_images():
     @pytest.mark.parametrize("ext", ["png", "jpg"])
     def it_redirects_to_example_image(expect, client, ext):
         request, response = client.get(f"/fry.{ext}", allow_redirects=False)
@@ -98,6 +81,8 @@ def describe_legacy():
         expect(response.status) == 302
         expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
 
+
+def describe_legacy_paths():
     @pytest.mark.parametrize("suffix", ["", ".png", ".jpg"])
     def it_rejects_unknown_templates(expect, client, unknown_template, suffix):
         request, response = client.get(f"/{unknown_template.id}{suffix}")
@@ -109,3 +94,22 @@ def describe_legacy():
     ):
         request, response = client.get(f"/{unknown_template.id}/test{suffix}")
         expect(response.status) == 404
+
+
+def describe_legacy_params():
+    def it_accepts_alt_for_template(expect, client):
+        request, response = client.get(
+            "/images/custom/test.png?alt=https://www.gstatic.com/webp/gallery/3.jpg"
+        )
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/png"
+
+    @pytest.mark.slow
+    def it_accepts_alt_for_style(expect, client):
+        request, response = client.get("/images/sad-biden/test.png?style=scowl")
+        expect(response.status) == 200
+
+        request, response2 = client.get("/images/sad-biden/test.png?alt=scowl")
+        expect(response.status) == 200
+
+        expect(len(response.content)) == len(response2.content)
