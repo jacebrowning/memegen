@@ -8,20 +8,6 @@ def describe_auth():
             expect(response.status) == 401
             expect(response.json) == {"error": "API key missing or invalid."}
 
-        def it_accepts_email_addresses(expect, client):
-            request, response = client.get(
-                "/auth", headers={"X-API-KEY": "user@example.com"}
-            )
-            expect(response.status) == 200
-            expect(response.json) == {"email": "user@example.com"}
-
-        def it_rejects_invalid_email_addresses(expect, client):
-            request, response = client.get(
-                "/auth", headers={"X-API-KEY": "user@example"}
-            )
-            expect(response.status) == 401
-            expect(response.json) == {"error": "API key missing or invalid."}
-
 
 def describe_image_preview():
     @pytest.fixture

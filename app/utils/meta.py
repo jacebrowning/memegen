@@ -1,4 +1,3 @@
-from email.utils import parseaddr
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
@@ -14,7 +13,7 @@ def version() -> str:
     return version_heading.split(" ")[-1]
 
 
-async def authenticate(request, *, allow_email: bool = False) -> dict:
+async def authenticate(request) -> dict:
     info = {}
 
     api_key = _get_api_key(request)
@@ -27,11 +26,6 @@ async def authenticate(request, *, allow_email: bool = False) -> dict:
             async with aiohttp.ClientSession() as session:
                 response = await session.get(url, headers={"X-API-KEY": api_key})
                 info = await response.json()
-
-        if not info:
-            name, email = parseaddr(api_key)
-            if "@" in email and "." in email:
-                info = {"email": email}
 
         if not info and api_key in settings.API_KEYS:
             info = {"email": "user@example.com"}
