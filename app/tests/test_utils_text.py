@@ -32,3 +32,7 @@ def test_encode_quotes(expect):
     expect(
         utils.text.encode(["it’ll be great “they” said"])
     ) == 'it\'ll_be_great_"they"_said'
+
+
+def test_encode_dashes(expect):
+    expect(utils.text.encode(["1–2 in. of snow"])) == "1-2_in._of_snow"

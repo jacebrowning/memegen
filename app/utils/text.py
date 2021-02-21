@@ -22,6 +22,7 @@ def encode(lines: list[str]) -> str:
                 ("’", "'"),
                 ("“", '"'),
                 ("”", '"'),
+                ("–", "-"),
             ]:
                 encoded = encoded.replace(before, after)
             encoded_lines.append(encoded)
