@@ -29,7 +29,7 @@ ruamel.yaml==0.16.12; python_version >= "3.7" and python_version < "4.0"
 sanic-cors==0.10.0.post3
 sanic-openapi==0.6.2
 sanic-plugins-framework==0.9.4.post1
-sanic==20.12.1; python_version >= "3.6"
+sanic==20.12.2; python_version >= "3.6"
 sniffio==1.2.0; python_version >= "3.6"
 spongemock==0.3.4
 tomlkit==0.5.11; python_version >= "3.7" and python_full_version < "3.0.0" and python_version < "4.0" or python_version >= "3.7" and python_version < "4.0" and python_full_version >= "3.4.0"
