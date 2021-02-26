@@ -1,6 +1,16 @@
 # Authentication
 
-Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.
+Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case. Authenticated requests can be made via HTTP header:
+
+```shell
+$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: ???" --output http_header_example.png
+```
+
+or query parameter:
+
+```shell
+$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???" --output query_parameter_example.png
+```
 
 # Image Previews
 
@@ -29,15 +39,15 @@ The `template` parameter can be a template ID or URL:
 
 Here are some sample clients to explore:
 
-| Platforms   | Language | Website                                                                                  |
-| :---------- | :-- | :------------------------------------------------------------------------------------ |
-| Slack       | Python | <https://github.com/nicolewhite/slack-meme>           |
-| Slack       | Go | <https://github.com/CptSpaceToaster/slackbot>           |
-| Slack       |  | <http://www.memetizer.com>                                                            |
+| Platforms   | Language   | Website                                        |
+| :---------- | :--------- | :--------------------------------------------- |
+| Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
+| Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
+| Slack       |            | <http://www.memetizer.com>                     |
 | Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
-| Web         | Clojure | <https://github.com/jasich/mighty-fine-memes>      |
-| Web & Slack |  |<https://memecomplete.com>                                                            |
-| Discord     | JavaScript | <https://github.com/parshsee/discordbot>             |
+| Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
+| Web & Slack |            | <https://memecomplete.com>                     |
+| Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
 

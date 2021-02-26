@@ -106,4 +106,4 @@ def _get_referer(request):
 
 
 def _get_api_key(request):
-    return request.headers.get("x-api-key")
+    return request.headers.get("x-api-key") or request.args.get("api_key")
