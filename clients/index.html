@@ -112,7 +112,14 @@
             
 
 <h1 id="authentication">Authentication</h1>
-<p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.</p>
+<p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case. Authenticated requests can be made via HTTP header:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: ???&quot; --output http_header_example.png
+</code></pre>
+
+<p>or query parameter:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???&quot; --output query_parameter_example.png
+</code></pre>
+
 <h1 id="image-previews">Image Previews</h1>
 <p>If your client is going to show image previews, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
 <pre><code class="javascript">var id = encodeURIComponent($(&quot;#template&quot;).val())
