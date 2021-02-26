@@ -27,7 +27,7 @@ pillow = "^8.0.1"
 spongemock = "~0.3.4"
 
 # Utilities
-aiohttp = "^3.6.2"
+aiohttp = "^3.7.4"
 datafiles = "~0.12b4"
 minilog = "^2.0"
 
