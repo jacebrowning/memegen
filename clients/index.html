@@ -112,17 +112,30 @@
             
 
 <h1 id="image-previews">Image Previews</h1>
-<p>If your client is going to show image previews, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
-<pre><code class="javascript">var id = encodeURIComponent($(&quot;#template&quot;).val())
-var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val()) || &quot; &quot;
-var line_2 = encodeURIComponent($(&quot;#line_2&quot;).val()) || &quot; &quot;
+<p>If your client is going to show typeahead image previews, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth:</p>
+<pre><code class="javascript">var typingTimer
 
-var api = &quot;https://api.memegen.link/images/preview.jpg&quot;
-var url = `${api}?template=${id}&amp;lines[]=${line_1}&amp;lines[]=${line_2}`
+$(&quot;#form&quot;).keyup(function () {
+  clearTimeout(typingTimer)
+  typingTimer = setTimeout(updatePreview, 500)
+})
 
-$(&quot;#preview&quot;).attr(&quot;src&quot;, url)
+function updatePreview() {
+  var template = encodeURIComponent($(&quot;#template&quot;).val())
+  var line_1 = encodeURIComponent($(&quot;#line_1&quot;).val() || &quot; &quot;)
+  var line_2 = encodeURIComponent($(&quot;#line_2&quot;).val() || &quot; &quot;)
+
+  var api = &quot;https://api.memegen.link/images/preview.jpg&quot;
+  var url = `${api}?template=${template}&amp;lines[]=${line_1}&amp;lines[]=${line_2}`
+
+  $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
+}
+
+$(document).ready(updatePreview)
 </code></pre>
 
+<p>For example, <a href="https://api.memegen.link/images/preview.jpg?template=iw&amp;lines[]=live+preview&amp;lines[]=while+typing">https://api.memegen.link/images/preview.jpg?template=iw&amp;lines[]=live+preview&amp;lines[]=while+typing</a> produces:</p>
+<p><img alt="Live Preview" src="https://api.memegen.link/images/preview.jpg?template=iw&amp;lines[]=live+preview&amp;lines[]=while+typing" /></p>
 <p>The <code>template</code> parameter can be a template ID or URL:</p>
 <table>
 <thead>
@@ -199,17 +212,17 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 <p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.</p>
 <h2 id="http-header">HTTP Header</h2>
 <p>Authenticated requests can be made using a header:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: ???&quot; --output http_header_example.png
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: myapikey&quot; --output http_header_example.png
 </code></pre>
 
 <h2 id="query-parameter">Query Parameter</h2>
-<p>If that's not an option, the API key can be added as a query parameter:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???&quot; --output query_parameter_example.png
+<p>If that's not an option, the API key can also be added as a query parameter:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey&quot; --output query_parameter_example.png
 </code></pre>
 
 <h2 id="custom-watermark">Custom Watermark</h2>
-<p>Authenticated requests can also add their own watermark to images using the <code>watermark</code> query parameter:</p>
-<p><code>/images/fry/custom_watermark/example.png?watermark=mydomain.com</code></p>
+<p>Authenticated requests can also add their own watermark to images using the <code>watermark</code> query parameter. For example, <a href="https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com">https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com</a></p>
+<p><img alt="" src="https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com" /></p>
 <h1 id="zapier-integration">Zapier Integration</h1>
 <p>The beta integration is available here: <a href="https://zapier.com/apps/memegenlink">https://zapier.com/apps/memegenlink</a></p>
         </div>
