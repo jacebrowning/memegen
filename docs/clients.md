@@ -1,17 +1,3 @@
-# Authentication
-
-Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case. Authenticated requests can be made via HTTP header:
-
-```shell
-$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: ???" --output http_header_example.png
-```
-
-or query parameter:
-
-```shell
-$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???" --output query_parameter_example.png
-```
-
 # Image Previews
 
 If your client is going to show image previews, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:
@@ -50,6 +36,32 @@ Here are some sample clients to explore:
 | Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
 
 Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
+
+# Authentication
+
+Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.
+
+## HTTP Header
+
+Authenticated requests can be made using a header:
+
+```shell
+$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: ???" --output http_header_example.png
+```
+
+## Query Parameter
+
+If that's not an option, the API key can be added as a query parameter:
+
+```shell
+$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???" --output query_parameter_example.png
+```
+
+## Custom Watermark
+
+Authenticated requests can also add their own watermark to images using the `watermark` query parameter:
+
+`/images/fry/custom_watermark/example.png?watermark=mydomain.com`
 
 # Zapier Integration
 
