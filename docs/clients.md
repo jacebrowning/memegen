@@ -1,17 +1,32 @@
 # Image Previews
 
-If your client is going to show image previews, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:
+If your client is going to show typeahead image previews, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth:
 
 ```javascript
-var id = encodeURIComponent($("#template").val())
-var line_1 = encodeURIComponent($("#line_1").val()) || " "
-var line_2 = encodeURIComponent($("#line_2").val()) || " "
+var typingTimer
 
-var api = "https://api.memegen.link/images/preview.jpg"
-var url = `${api}?template=${id}&lines[]=${line_1}&lines[]=${line_2}`
+$("#form").keyup(function () {
+  clearTimeout(typingTimer)
+  typingTimer = setTimeout(updatePreview, 500)
+})
 
-$("#preview").attr("src", url)
+function updatePreview() {
+  var template = encodeURIComponent($("#template").val())
+  var line_1 = encodeURIComponent($("#line_1").val() || " ")
+  var line_2 = encodeURIComponent($("#line_2").val() || " ")
+
+  var api = "https://api.memegen.link/images/preview.jpg"
+  var url = `${api}?template=${template}&lines[]=${line_1}&lines[]=${line_2}`
+
+  $("#preview").attr("src", url)
+}
+
+$(document).ready(updatePreview)
 ```
+
+For example, <https://api.memegen.link/images/preview.jpg?template=iw&lines[]=live+preview&lines[]=while+typing> produces:
+
+![Live Preview](https://api.memegen.link/images/preview.jpg?template=iw&lines[]=live+preview&lines[]=while+typing)
 
 The `template` parameter can be a template ID or URL:
 
@@ -46,22 +61,22 @@ Unauthenticated API requests are watermarked and may be rate limited. To request
 Authenticated requests can be made using a header:
 
 ```shell
-$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: ???" --output http_header_example.png
+$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: myapikey" --output http_header_example.png
 ```
 
 ## Query Parameter
 
-If that's not an option, the API key can be added as a query parameter:
+If that's not an option, the API key can also be added as a query parameter:
 
 ```shell
-$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???" --output query_parameter_example.png
+$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" --output query_parameter_example.png
 ```
 
 ## Custom Watermark
 
-Authenticated requests can also add their own watermark to images using the `watermark` query parameter:
+Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&watermark=example.com>
 
-`/images/fry/custom_watermark/example.png?watermark=mydomain.com`
+![](https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&watermark=example.com)
 
 # Zapier Integration
 
