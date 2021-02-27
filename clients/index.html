@@ -111,15 +111,6 @@
         >
             
 
-<h1 id="authentication">Authentication</h1>
-<p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case. Authenticated requests can be made via HTTP header:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: ???&quot; --output http_header_example.png
-</code></pre>
-
-<p>or query parameter:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???&quot; --output query_parameter_example.png
-</code></pre>
-
 <h1 id="image-previews">Image Previews</h1>
 <p>If your client is going to show image previews, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth. For example:</p>
 <pre><code class="javascript">var id = encodeURIComponent($(&quot;#template&quot;).val())
@@ -204,6 +195,21 @@ $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 </tbody>
 </table>
 <p>Additional clients can be found by searching for <a href="https://github.com/search?o=desc&amp;q=%22api.memegen.link%22+&amp;ref=searchresults&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93">code examples on GitHub</a>.</p>
+<h1 id="authentication">Authentication</h1>
+<p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.</p>
+<h2 id="http-header">HTTP Header</h2>
+<p>Authenticated requests can be made using a header:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: ???&quot; --output http_header_example.png
+</code></pre>
+
+<h2 id="query-parameter">Query Parameter</h2>
+<p>If that's not an option, the API key can be added as a query parameter:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=???&quot; --output query_parameter_example.png
+</code></pre>
+
+<h2 id="custom-watermark">Custom Watermark</h2>
+<p>Authenticated requests can also add their own watermark to images using the <code>watermark</code> query parameter:</p>
+<p><code>/images/fry/custom_watermark/example.png?watermark=mydomain.com</code></p>
 <h1 id="zapier-integration">Zapier Integration</h1>
 <p>The beta integration is available here: <a href="https://zapier.com/apps/memegenlink">https://zapier.com/apps/memegenlink</a></p>
         </div>
