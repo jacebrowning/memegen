@@ -32,7 +32,7 @@ async def authenticate(request) -> dict:
 
 async def get_watermark(request, watermark: str) -> tuple[str, bool]:
     if await authenticate(request):
-        return "", False
+        return watermark or "", False
 
     if watermark == settings.DISABLED_WATERMARK:
         referer = _get_referer(request)

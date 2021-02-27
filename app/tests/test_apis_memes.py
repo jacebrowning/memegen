@@ -192,9 +192,9 @@ def describe_detail():
             "app.utils.meta.authenticate",
             AsyncMock(return_value={"email": "user@example.com"}),
         )
-        def it_is_disabled_automatically_when_authenticated(expect, client):
+        def it_accepts_custom_values_when_authenticated(expect, client):
             request, response = client.get(
-                "/images/fry/test.png?watermark=ignored",
+                "/images/fry/test.png?watermark=mydomain.com",
                 allow_redirects=False,
             )
             expect(response.status) == 200
