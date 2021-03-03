@@ -168,7 +168,7 @@ class Template:
 
     def build_custom_url(
         self,
-        app: Sanic,
+        request,
         text_lines: list[str],
         *,
         extension: str = "",
@@ -179,17 +179,16 @@ class Template:
             view_name = f"Memes.text_{extension}"
         else:
             view_name = f"Memes.text_{settings.DEFAULT_EXT}"
-        url = app.url_for(
+        url = request.app.url_for(
             view_name,
             template_id="custom" if self.id == "_custom" else self.id,
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
+            **utils.meta.params(request, background=background),
         )
-        url = self._drop_trailing_spaces(url)
-        if background:
-            url += "?background=" + background
-        return url
+        url = url.replace("%3A%2F%2F", "://").replace("%2F", "/")
+        return self._drop_trailing_spaces(url)
 
     def build_path(
         self,

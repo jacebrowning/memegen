@@ -92,7 +92,7 @@ async def build(request, id):
 
     template = Template.objects.get_or_create(id)
     url = template.build_custom_url(
-        request.app,
+        request,
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
@@ -138,7 +138,7 @@ async def custom(request):
         payload["text_lines"] = payload.pop("text_lines[]")
 
     url = Template("_custom").build_custom_url(
-        request.app,
+        request,
         payload.get("text_lines") or [],
         background=payload.get("image_url", ""),
         extension=payload.get("extension", ""),

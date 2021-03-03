@@ -13,6 +13,11 @@ def version() -> str:
     return version_heading.split(" ")[-1]
 
 
+def params(request, **kwargs) -> dict:
+    kwargs["api_key"] = _get_api_key(request)
+    return {k: v for k, v in kwargs.items() if v}
+
+
 async def authenticate(request) -> dict:
     info = {}
 
