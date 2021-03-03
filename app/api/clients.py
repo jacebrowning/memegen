@@ -36,7 +36,7 @@ async def preview(request):
 
 
 async def preview_image(request, id: str, lines: list[str], style: str):
-    id = utils.text.unquote(id)
+    id = utils.urls.clean(id)
     if "://" in id:
         template = await models.Template.create(id)
         if not template.image.exists():

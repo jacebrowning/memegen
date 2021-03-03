@@ -163,12 +163,11 @@ class Template:
         if external:
             kwargs["_scheme"] = settings.SCHEME
         url = app.url_for(view_name, **kwargs)
-        url = self._drop_trailing_spaces(url)
-        return url
+        return utils.urls.clean(url)
 
     def build_custom_url(
         self,
-        app: Sanic,
+        request,
         text_lines: list[str],
         *,
         extension: str = "",
@@ -179,17 +178,15 @@ class Template:
             view_name = f"Memes.text_{extension}"
         else:
             view_name = f"Memes.text_{settings.DEFAULT_EXT}"
-        url = app.url_for(
+        url = request.app.url_for(
             view_name,
             template_id="custom" if self.id == "_custom" else self.id,
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
+            **utils.urls.params(request, background=background),
         )
-        url = self._drop_trailing_spaces(url)
-        if background:
-            url += "?background=" + background
-        return url
+        return utils.urls.clean(url)
 
     def build_path(
         self,
@@ -204,12 +201,6 @@ class Template:
         fingerprint = hashlib.sha1(variant.encode()).hexdigest()
         filename = f"{slug}.{fingerprint}.{ext}"
         return Path(self.id) / filename
-
-    @staticmethod
-    def _drop_trailing_spaces(url: str) -> str:
-        while "/_." in url:
-            url = url.replace("/_.", ".")
-        return url
 
     @classmethod
     async def create(cls, url: str) -> "Template":

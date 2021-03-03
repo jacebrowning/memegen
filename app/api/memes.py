@@ -1,6 +1,5 @@
 import asyncio
 from contextlib import suppress
-from urllib.parse import parse_qs, urlparse
 
 from sanic import Blueprint, response
 from sanic.log import logger
@@ -70,7 +69,7 @@ async def create(request):
 
     template = models.Template.objects.get_or_create(template_id)
     url = template.build_custom_url(
-        request.app,
+        request,
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
@@ -115,10 +114,7 @@ async def auto(request):
     if not results:
         return response.json({"message": f"No results matched: {text}"}, status=404)
 
-    parts = urlparse(results[0]["image_url"])
-    url = f"{settings.BASE_URL}{parts.path}"
-    if "background" in parts.query:
-        url += "?background=" + parse_qs(parts.query)["background"][0]
+    url = utils.urls.normalize(request, results[0]["image_url"])
     logger.info(f"Top result: {url}")
 
     if payload.get("redirect", False):
@@ -154,7 +150,7 @@ async def custom(request):
         payload["text_lines"] = payload.pop("text_lines[]")
 
     url = models.Template("_custom").build_custom_url(
-        request.app,
+        request,
         payload.get("text_lines") or [],
         background=payload.get("image_url", ""),
         extension=payload.get("extension", ""),
@@ -228,7 +224,7 @@ async def text_png(request, template_id, text_paths):
             text_paths=slug,
             **request.args,
         )
-        return response.redirect(utils.text.unquote(url), status=301)
+        return response.redirect(utils.urls.clean(url), status=301)
 
     watermark, updated = await utils.meta.get_watermark(
         request, request.args.get("watermark")
@@ -240,7 +236,7 @@ async def text_png(request, template_id, text_paths):
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
         )
-        return response.redirect(utils.text.unquote(url), status=301)
+        return response.redirect(utils.urls.clean(url), status=301)
 
     return await render_image(request, template_id, slug, watermark)
 
@@ -269,7 +265,7 @@ async def text_jpg(request, template_id, text_paths):
             text_paths=slug,
             **request.args,
         )
-        return response.redirect(utils.text.unquote(url), status=301)
+        return response.redirect(utils.urls.clean(url), status=301)
 
     watermark, updated = await utils.meta.get_watermark(
         request, request.args.get("watermark")
@@ -281,7 +277,7 @@ async def text_jpg(request, template_id, text_paths):
             text_paths=slug,
             **{k: v for k, v in request.args.items() if k != "watermark"},
         )
-        return response.redirect(utils.text.unquote(url), status=301)
+        return response.redirect(utils.urls.clean(url), status=301)
 
     return await render_image(request, template_id, slug, watermark, ext="jpg")
 
