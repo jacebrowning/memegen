@@ -266,6 +266,26 @@ def describe_automatic():
             expect(response.status) == 400
             expect(response.json) == {"error": '"text" is required'}
 
+        @patch(
+            "app.utils.meta.search",
+            AsyncMock(
+                return_value=[
+                    {
+                        "image_url": "http://example.com/images/example.png"
+                        + "?background=https://www.gstatic.com/webp/gallery/3.png"
+                    }
+                ]
+            ),
+        )
+        def it_normalizes_the_url(expect, client):
+            request, response = client.post(
+                "/images/automatic", data={"text": "example"}
+            )
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/example.png"
+                + "?background=https://www.gstatic.com/webp/gallery/3.png"
+            }
+
 
 def describe_custom():
     def describe_POST():
