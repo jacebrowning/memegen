@@ -163,8 +163,7 @@ class Template:
         if external:
             kwargs["_scheme"] = settings.SCHEME
         url = app.url_for(view_name, **kwargs)
-        url = self._drop_trailing_spaces(url)
-        return url
+        return utils.urls.clean(url)
 
     def build_custom_url(
         self,
@@ -185,10 +184,9 @@ class Template:
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
-            **utils.meta.params(request, background=background),
+            **utils.urls.params(request, background=background),
         )
-        url = url.replace("%3A%2F%2F", "://").replace("%2F", "/")
-        return self._drop_trailing_spaces(url)
+        return utils.urls.clean(url)
 
     def build_path(
         self,
@@ -203,12 +201,6 @@ class Template:
         fingerprint = hashlib.sha1(variant.encode()).hexdigest()
         filename = f"{slug}.{fingerprint}.{ext}"
         return Path(self.id) / filename
-
-    @staticmethod
-    def _drop_trailing_spaces(url: str) -> str:
-        while "/_." in url:
-            url = url.replace("/_.", ".")
-        return url
 
     @classmethod
     async def create(cls, url: str) -> "Template":
