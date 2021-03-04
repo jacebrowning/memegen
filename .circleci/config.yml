@@ -32,7 +32,11 @@ jobs:
 
       - run:
           name: Running tests
-          command: make test && sudo pip install coveralls && coveralls
+          command: make test
+
+      - run:
+          name: Uploading coverage
+          command: sudo pip install coveralls && coveralls || true
 
       - store_test_results:
           path: results
