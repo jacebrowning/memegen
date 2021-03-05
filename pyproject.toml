@@ -28,7 +28,7 @@ spongemock = "~0.3.4"
 
 # Utilities
 aiohttp = "^3.7.4"
-datafiles = "~0.12b4"
+datafiles = "~0.12"
 minilog = "^2.0"
 
 # Production
