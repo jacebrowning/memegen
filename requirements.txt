@@ -19,7 +19,7 @@ markdown==3.2.2; python_version >= "3.5"
 minilog==2.0; python_version >= "3.6" and python_version < "4.0"
 multidict==5.0.0; python_version >= "3.6"
 parse==1.18.0; python_version >= "3.7" and python_version < "4.0"
-pillow==8.0.1; python_version >= "3.6"
+pillow==8.1.2; python_version >= "3.6"
 pygments==2.7.2; python_version >= "3.5"
 pymdown-extensions==8.0.1; python_version >= "3.5"
 pyperclip==1.8.1
