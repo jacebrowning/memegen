@@ -1,3 +1,25 @@
+# Authentication
+
+Unauthenticated API requests are watermarked and may be rate limited.
+Those providing sponsorship at [$10/month](https://github.com/sponsors/jacebrowning) or above are welcome to an API key.
+Please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to request one or inquire about pricing for your specific use case.
+
+## HTTP Header
+
+Authenticated requests can be made using a header:
+
+```shell
+$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: myapikey" --output http_header_example.png
+```
+
+## Query Parameter
+
+If that's not an option, the API key can also be added as a query parameter:
+
+```shell
+$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" --output query_parameter_example.png
+```
+
 # Image Previews
 
 If your client is going to show typeahead image previews, please use the `/images/preview.jpg` endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth:
@@ -36,48 +58,8 @@ The `template` parameter can be a template ID or URL:
 | Template URL      | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=https://api.memegen.link/images/fry.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=https://api.memegen.link/images/fry.png)     |
 | Custom Background | [/images/preview.jpg<wbr>?lines[]=first+line&lines[]=second+line<wbr>&template=http://www.gstatic.com/webp/gallery/1.png](https://api.memegen.link/images/preview.jpg?lines[]=first+line&lines[]=second+line&template=http://www.gstatic.com/webp/gallery/1.png) |
 
-# Sample Code
+# Custom Watermark
 
-Here are some sample clients to explore:
+Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&watermark=example.com> produces:
 
-| Platforms   | Language   | Website                                        |
-| :---------- | :--------- | :--------------------------------------------- |
-| Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
-| Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
-| Slack       |            | <http://www.memetizer.com>                     |
-| Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
-| Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
-| Web & Slack |            | <https://memecomplete.com>                     |
-| Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
-
-Additional clients can be found by searching for [code examples on GitHub](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93).
-
-# Authentication
-
-Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.
-
-## HTTP Header
-
-Authenticated requests can be made using a header:
-
-```shell
-$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: myapikey" --output http_header_example.png
-```
-
-## Query Parameter
-
-If that's not an option, the API key can also be added as a query parameter:
-
-```shell
-$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" --output query_parameter_example.png
-```
-
-## Custom Watermark
-
-Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&watermark=example.com>
-
-![](https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&watermark=example.com)
-
-# Zapier Integration
-
-The beta integration is available here: <https://zapier.com/apps/memegenlink>
+![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&watermark=example.com&height=400)

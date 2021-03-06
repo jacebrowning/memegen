@@ -4,7 +4,7 @@ An API to programmatically generate memes based solely on requested URLs.
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/main.svg)](https://coveralls.io/r/jacebrowning/memegen)
 [![Swagger Validator](https://img.shields.io/swagger/valid/3.0?label=docs&specUrl=https%3A%2F%2Fapi.memegen.link%2Fdocs%2Fswagger.json)](https://api.memegen.link/docs/)
 [![License](https://img.shields.io/badge/license-mit-blue)](https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt)
-[![GitHub Sponsors](https://img.shields.io/badge/server%20costs-%2412%2Fmonth-red)](https://github.com/sponsors/jacebrowning)
+[![GitHub Sponsors](https://img.shields.io/badge/requests-20M/month-red)](https://github.com/sponsors/jacebrowning)
 
 [Buy me a coffee to help keep this site running!](https://www.buymeacoffee.com/jacebrowning)
 
@@ -78,3 +78,26 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 You can also use your own image URL as the background. For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
 <img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" style="max-width: 100%;">
+
+# Zapier Integration
+
+Incorporate memes into your automation: <https://zapier.com/apps/memegenlink>
+
+# Sample Code
+
+Here are some popular apps and integrations to check out:
+
+| Platforms   | Language   | Website                                        |
+| :---------- | :--------- | :--------------------------------------------- |
+| Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
+| Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
+| Slack       |            | <http://www.memetizer.com>                     |
+| Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
+| Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
+| Web & Slack |            | <https://memecomplete.com>                     |
+| Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
+
+Additional clients can be found by searching for [code examples](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93) on GitHub.
+
+Ready to build your own? Check out the [client page](clients).
+
