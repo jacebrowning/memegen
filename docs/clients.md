@@ -1,8 +1,8 @@
 # Authentication
 
 Unauthenticated API requests are watermarked and may be rate limited.
-Those providing sponsorship at [$10/month](https://github.com/sponsors/jacebrowning) or above are welcome to an API key.
-Please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to request one or inquire about pricing for your specific use case.
+Those providing sponsorship at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or above are welcome to an API key.
+Please <a href="mailto:support@maketested.com?subject=memegen.link">contact support</a> to request one or inquire about pricing for your specific use case.
 
 ## HTTP Header
 
@@ -63,3 +63,9 @@ The `template` parameter can be a template ID or URL:
 Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&watermark=example.com> produces:
 
 ![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&watermark=example.com&height=400)
+
+# Zapier Integration
+
+Incorporate memes into your automation: <https://zapier.com/apps/memegenlink>
+
+![Sample Zaps](https://cdn.zappy.app/3f3e8213de870f268f27f2402aefc794.png)

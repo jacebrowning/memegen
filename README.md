@@ -14,7 +14,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.png> produces:
 
-<img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?watermark=none" style="max-width: 100%;">
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?watermark=none)
 
 ## Available Formats
 
@@ -31,7 +31,7 @@ Images can be scaled to a specific width via `?width=<int>` or a specific height
 
 For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
 
-<img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&watermark=none" style="max-width: 100%;">
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&watermark=none)
 
 ## Special Characters
 
@@ -55,7 +55,7 @@ Reserved URL characters can be included using escape patterns:
 
 For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png> produces:
 
-<img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?watermark=none" style="max-width: 100%;">
+![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?watermark=none)
 
 All of the `POST` endpoints will return image URLs with speical characters replaced with these alternatives.
 
@@ -69,19 +69,15 @@ Some memes come in multiple forms, which can be selected via `?style=<style>`.
 
 For example, the <https://api.memegen.link/templates/ds/> template provides these styles:
 
-|                                  `/images/ds.png`                                   |                                   `/images/ds.png?style=maga`                                    |
-| :---------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| <img alt="Default Style" src="https://api.memegen.link/images/ds.png" width="100%"> | <img alt="Alternate Style" src="https://api.memegen.link/images/ds.png?style=maga" width="100%"> |
+|                     `/images/ds.png`                     |                      `/images/ds.png?style=maga`                      |
+| :------------------------------------------------------: | :-------------------------------------------------------------------: |
+| ![Default Style](https://api.memegen.link/images/ds.png) | ![Alternate Style](https://api.memegen.link/images/ds.png?style=maga) |
 
 ## Custom Backgrounds
 
 You can also use your own image URL as the background. For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
-<img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" style="max-width: 100%;">
-
-# Zapier Integration
-
-Incorporate memes into your automation: <https://zapier.com/apps/memegenlink>
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none)
 
 # Sample Code
 
@@ -100,4 +96,3 @@ Here are some popular apps and integrations to check out:
 Additional clients can be found by searching for [code examples](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93) on GitHub.
 
 Ready to build your own? Check out the [client page](clients).
-
