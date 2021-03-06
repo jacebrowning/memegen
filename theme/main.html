@@ -49,19 +49,15 @@
 
 <!-- Content -->
 
-{% block content %}
+{% block content%} {% if page.title == "Examples" %}
 
 <div class="col-12">
     <div class="row justify-content-center">
-        <div
-            class="col-12 {% if page.is_homepage %}col-md-11 col-lg-8 col-xl-7{% endif %}"
-        >
-            {% include "content.html" %}
-        </div>
+        <div class="col-12">{% include "content.html" %}</div>
     </div>
 </div>
 
-{% endblock %}
+{% else %} {{ super() }} {% endif %} {% endblock%}
 
 <!-- Scripts -->
 
@@ -84,4 +80,13 @@
 
 <!-- Footer -->
 
-{% block footer %} {% endblock %}
+{% block footer %} {% if page.title != "Examples" %}
+
+<hr />
+
+<p>
+    Copyright © {{ build_date_utc.year }}
+    <a href="https://jacebrowning.info">{{ config.site_author }}</a>
+</p>
+
+{% endif %} {% endblock %}

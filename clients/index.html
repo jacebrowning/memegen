@@ -69,11 +69,11 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link">Home</a>
                             </li>
-                            <li class="navitem">
-                                <a href="../examples/" class="nav-link">Examples</a>
-                            </li>
                             <li class="navitem active">
                                 <a href="./" class="nav-link">Clients</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../examples/" class="nav-link">Examples</a>
                             </li>
                         </ul>
 
@@ -102,19 +102,54 @@
         </div>
 
         <div class="container">
-            <div class="row">
+            <div class="row">  
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
 
-<div class="col-12">
-    <div class="row justify-content-center">
-        <div
-            class="col-12 "
-        >
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#authentication" class="nav-link">Authentication</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#http-header" class="nav-link">HTTP Header</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#query-parameter" class="nav-link">Query Parameter</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#image-previews" class="nav-link">Image Previews</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#custom-watermark" class="nav-link">Custom Watermark</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#zapier-integration" class="nav-link">Zapier Integration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
 
 <h1 id="authentication">Authentication</h1>
 <p>Unauthenticated API requests are watermarked and may be rate limited.
-Those providing sponsorship at <a href="https://github.com/sponsors/jacebrowning">$10/month</a> or above are welcome to an API key.
-Please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to request one or inquire about pricing for your specific use case.</p>
+Those providing sponsorship at <a href="https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&amp;tier_id=55476&amp;preview=false">$10/month</a> or above are welcome to an API key.
+Please <a href="mailto:support@maketested.com?subject=memegen.link">contact support</a> to request one or inquire about pricing for your specific use case.</p>
 <h2 id="http-header">HTTP Header</h2>
 <p>Authenticated requests can be made using a header:</p>
 <pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: myapikey&quot; --output http_header_example.png
@@ -176,15 +211,22 @@ $(document).ready(updatePreview)
 <h1 id="custom-watermark">Custom Watermark</h1>
 <p>Authenticated requests can also add their own watermark to images using the <code>watermark</code> query parameter. For example, <a href="https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com">https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com</a> produces:</p>
 <p><img alt="" src="https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com&amp;height=400" /></p>
-        </div>
-    </div>
-</div>
-
-
+<h1 id="zapier-integration">Zapier Integration</h1>
+<p>Incorporate memes into your automation: <a href="https://zapier.com/apps/memegenlink">https://zapier.com/apps/memegenlink</a></p>
+<p><img alt="Sample Zaps" src="https://cdn.zappy.app/3f3e8213de870f268f27f2402aefc794.png" /></p></div>  
             </div>
         </div>
 
         <footer class="col-md-12"> 
+
+<hr />
+
+<p>
+    Copyright © 2021
+    <a href="https://jacebrowning.info">Jace Browning</a>
+</p>
+
+ 
         </footer> 
         <script>
             var base_url = "..",

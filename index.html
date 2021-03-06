@@ -70,10 +70,10 @@
                                 <a href="." class="nav-link">Home</a>
                             </li>
                             <li class="navitem">
-                                <a href="examples/" class="nav-link">Examples</a>
+                                <a href="clients/" class="nav-link">Clients</a>
                             </li>
                             <li class="navitem">
-                                <a href="clients/" class="nav-link">Clients</a>
+                                <a href="examples/" class="nav-link">Examples</a>
                             </li>
                         </ul>
 
@@ -102,14 +102,56 @@
         </div>
 
         <div class="container">
-            <div class="row">
+            <div class="row">  
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
 
-<div class="col-12">
-    <div class="row justify-content-center">
-        <div
-            class="col-12 col-md-11 col-lg-8 col-xl-7"
-        >
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#images" class="nav-link">Images</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#available-formats" class="nav-link">Available Formats</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom-dimensions" class="nav-link">Custom Dimensions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#special-characters" class="nav-link">Special Characters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#templates" class="nav-link">Templates</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#alternate-styles" class="nav-link">Alternate Styles</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#custom-backgrounds" class="nav-link">Custom Backgrounds</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#sample-code" class="nav-link">Sample Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
 
 <p>An API to programmatically generate memes based solely on requested URLs.</p>
 <p><a href="https://circleci.com/gh/jacebrowning/memegen"><img alt="Build Status" src="https://img.shields.io/circleci/build/github/jacebrowning/memegen" /></a>
@@ -121,7 +163,7 @@
 <hr />
 <h1 id="images">Images</h1>
 <p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, <a href="https://api.memegen.link/images/buzz/memes/memes_everywhere.png">https://api.memegen.link/images/buzz/memes/memes_everywhere.png</a> produces:</p>
-<p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?watermark=none" style="max-width: 100%;"></p>
+<p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.png?watermark=none" /></p>
 <h2 id="available-formats">Available Formats</h2>
 <p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files:</p>
 <table>
@@ -145,7 +187,7 @@
 <h2 id="custom-dimensions">Custom Dimensions</h2>
 <p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
 <p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
-<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&watermark=none" style="max-width: 100%;"></p>
+<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600&amp;watermark=none" /></p>
 <h2 id="special-characters">Special Characters</h2>
 <p>In URLs, spaces can be inserted using underscores or dashes:</p>
 <ul>
@@ -166,7 +208,7 @@
 <li>2 single quotes (<code>''</code>) → double quote (<code>"</code>)</li>
 </ul>
 <p>For example, <a href="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png">https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png</a> produces:</p>
-<p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?watermark=none" style="max-width: 100%;"></p>
+<p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png?watermark=none" /></p>
 <p>All of the <code>POST</code> endpoints will return image URLs with speical characters replaced with these alternatives.</p>
 <h1 id="templates">Templates</h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates/">https://api.memegen.link/templates/</a></p>
@@ -182,16 +224,14 @@
 </thead>
 <tbody>
 <tr>
-<td align="center"><img alt="Default Style" src="https://api.memegen.link/images/ds.png" width="100%"></td>
-<td align="center"><img alt="Alternate Style" src="https://api.memegen.link/images/ds.png?style=maga" width="100%"></td>
+<td align="center"><img alt="Default Style" src="https://api.memegen.link/images/ds.png" /></td>
+<td align="center"><img alt="Alternate Style" src="https://api.memegen.link/images/ds.png?style=maga" /></td>
 </tr>
 </tbody>
 </table>
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background. For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
-<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&watermark=none" style="max-width: 100%;"></p>
-<h1 id="zapier-integration">Zapier Integration</h1>
-<p>Incorporate memes into your automation: <a href="https://zapier.com/apps/memegenlink">https://zapier.com/apps/memegenlink</a></p>
+<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;watermark=none" /></p>
 <h1 id="sample-code">Sample Code</h1>
 <p>Here are some popular apps and integrations to check out:</p>
 <table>
@@ -241,16 +281,20 @@
 </tbody>
 </table>
 <p>Additional clients can be found by searching for <a href="https://github.com/search?o=desc&amp;q=%22api.memegen.link%22+&amp;ref=searchresults&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93">code examples</a> on GitHub.</p>
-<p>Ready to build your own? Check out the <a href="clients">client page</a>.</p>
-        </div>
-    </div>
-</div>
-
-
+<p>Ready to build your own? Check out the <a href="clients">client page</a>.</p></div>  
             </div>
         </div>
 
         <footer class="col-md-12"> 
+
+<hr />
+
+<p>
+    Copyright © 2021
+    <a href="https://jacebrowning.info">Jace Browning</a>
+</p>
+
+ 
         </footer> 
         <script>
             var base_url = ".",
@@ -319,5 +363,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-03-06 01:30:51.672531+00:00
+Build Date UTC : 2021-03-06 14:25:24.336687+00:00
 -->
