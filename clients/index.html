@@ -111,6 +111,20 @@
         >
             
 
+<h1 id="authentication">Authentication</h1>
+<p>Unauthenticated API requests are watermarked and may be rate limited.
+Those providing sponsorship at <a href="https://github.com/sponsors/jacebrowning">$10/month</a> or above are welcome to an API key.
+Please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to request one or inquire about pricing for your specific use case.</p>
+<h2 id="http-header">HTTP Header</h2>
+<p>Authenticated requests can be made using a header:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: myapikey&quot; --output http_header_example.png
+</code></pre>
+
+<h2 id="query-parameter">Query Parameter</h2>
+<p>If that's not an option, the API key can also be added as a query parameter:</p>
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey&quot; --output query_parameter_example.png
+</code></pre>
+
 <h1 id="image-previews">Image Previews</h1>
 <p>If your client is going to show typeahead image previews, please use the <code>/images/preview.jpg</code> endpoint, which accepts URL-encoded parameters and returns smaller images to minimize bandwidth:</p>
 <pre><code class="javascript">var typingTimer
@@ -159,72 +173,9 @@ $(document).ready(updatePreview)
 </tr>
 </tbody>
 </table>
-<h1 id="sample-code">Sample Code</h1>
-<p>Here are some sample clients to explore:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Platforms</th>
-<th align="left">Language</th>
-<th align="left">Website</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">Slack</td>
-<td align="left">Python</td>
-<td align="left"><a href="https://github.com/nicolewhite/slack-meme">https://github.com/nicolewhite/slack-meme</a></td>
-</tr>
-<tr>
-<td align="left">Slack</td>
-<td align="left">Go</td>
-<td align="left"><a href="https://github.com/CptSpaceToaster/slackbot">https://github.com/CptSpaceToaster/slackbot</a></td>
-</tr>
-<tr>
-<td align="left">Slack</td>
-<td align="left"></td>
-<td align="left"><a href="http://www.memetizer.com">http://www.memetizer.com</a></td>
-</tr>
-<tr>
-<td align="left">Hain</td>
-<td align="left">JavaScript</td>
-<td align="left"><a href="https://github.com/Metrakit/hain-plugin-meme">https://github.com/Metrakit/hain-plugin-meme</a></td>
-</tr>
-<tr>
-<td align="left">Web</td>
-<td align="left">Clojure</td>
-<td align="left"><a href="https://github.com/jasich/mighty-fine-memes">https://github.com/jasich/mighty-fine-memes</a></td>
-</tr>
-<tr>
-<td align="left">Web &amp; Slack</td>
-<td align="left"></td>
-<td align="left"><a href="https://memecomplete.com">https://memecomplete.com</a></td>
-</tr>
-<tr>
-<td align="left">Discord</td>
-<td align="left">JavaScript</td>
-<td align="left"><a href="https://github.com/parshsee/discordbot">https://github.com/parshsee/discordbot</a></td>
-</tr>
-</tbody>
-</table>
-<p>Additional clients can be found by searching for <a href="https://github.com/search?o=desc&amp;q=%22api.memegen.link%22+&amp;ref=searchresults&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93">code examples on GitHub</a>.</p>
-<h1 id="authentication">Authentication</h1>
-<p>Unauthenticated API requests are watermarked and may be rate limited. To request an API key please <a href="mailto:support@maketested.com?subject=memegen.link">contact us</a> to inquire about pricing for your specific use case.</p>
-<h2 id="http-header">HTTP Header</h2>
-<p>Authenticated requests can be made using a header:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: myapikey&quot; --output http_header_example.png
-</code></pre>
-
-<h2 id="query-parameter">Query Parameter</h2>
-<p>If that's not an option, the API key can also be added as a query parameter:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey&quot; --output query_parameter_example.png
-</code></pre>
-
-<h2 id="custom-watermark">Custom Watermark</h2>
-<p>Authenticated requests can also add their own watermark to images using the <code>watermark</code> query parameter. For example, <a href="https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com">https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com</a></p>
-<p><img alt="" src="https://api.memegen.link/images/awesome/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com" /></p>
-<h1 id="zapier-integration">Zapier Integration</h1>
-<p>The beta integration is available here: <a href="https://zapier.com/apps/memegenlink">https://zapier.com/apps/memegenlink</a></p>
+<h1 id="custom-watermark">Custom Watermark</h1>
+<p>Authenticated requests can also add their own watermark to images using the <code>watermark</code> query parameter. For example, <a href="https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com">https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com</a> produces:</p>
+<p><img alt="" src="https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&amp;watermark=example.com&amp;height=400" /></p>
         </div>
     </div>
 </div>
