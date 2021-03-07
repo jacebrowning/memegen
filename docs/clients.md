@@ -9,7 +9,8 @@ Please <a href="mailto:support@maketested.com?subject=memegen.link">contact supp
 Authenticated requests can be made using a header:
 
 ```shell
-$ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "X-API-KEY: myapikey" --output http_header_example.png
+$ curl "https://api.memegen.link/images/fry/http_header/example.png" \
+  --header  "X-API-KEY: myapikey" --output http_header_example.png
 ```
 
 ## Query Parameter
@@ -17,7 +18,8 @@ $ curl "https://api.memegen.link/images/fry/http_header/example.png" --header  "
 If that's not an option, the API key can also be added as a query parameter:
 
 ```shell
-$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" --output query_parameter_example.png
+$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" \
+  --output query_parameter_example.png
 ```
 
 # Image Previews
