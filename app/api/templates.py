@@ -5,7 +5,7 @@ from sanic import Blueprint, response
 from sanic.exceptions import abort
 from sanic_openapi import doc
 
-from .. import helpers, settings
+from .. import helpers, settings, utils
 from ..models import Template
 
 blueprint = Blueprint("Templates", url_prefix="/templates")
@@ -96,6 +96,7 @@ async def build(request, id):
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
+    url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
@@ -143,6 +144,7 @@ async def custom(request):
         background=payload.get("image_url", ""),
         extension=payload.get("extension", ""),
     )
+    url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
