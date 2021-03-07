@@ -33,12 +33,13 @@ async def authenticate(request) -> dict:
 async def tokenize(request, url: str) -> tuple[str, bool]:
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
+    default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
 
     if (api_key or token) and settings.REMOTE_TRACKING_URL:
         api = settings.REMOTE_TRACKING_URL + "tokenize"
         async with aiohttp.ClientSession() as session:
             response = await session.post(
-                api, data={"url": url}, headers={"X-API-KEY": api_key}
+                api, data={"url": default_url}, headers={"X-API-KEY": api_key}
             )
             data = await response.json()
             return data["url"], data["url"] != url
