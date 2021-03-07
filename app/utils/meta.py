@@ -46,19 +46,21 @@ async def tokenize(request, url: str) -> str:
     return url
 
 
-async def get_watermark(request, watermark: str) -> tuple[str, bool]:
+async def get_watermark(request, watermark: str) -> tuple[str, bool, dict]:
+    params = {k: v for k, v in request.args.items() if k not in {"token", "watermark"}}
+
     if await authenticate(request):
         if watermark == settings.DISABLED_WATERMARK:
-            return "", False
-        return watermark, False
+            return "", False, {}
+        return watermark, False, {}
 
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
         validated_url = await tokenize(request, request.url)
         if request.url == validated_url:
-            return watermark, False
-        return settings.DEFAULT_WATERMARK, True
+            return watermark, False, {}
+        return settings.DEFAULT_WATERMARK, True, params
 
     if watermark == settings.DISABLED_WATERMARK:
         referer = _get_referer(request)
@@ -66,22 +68,22 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool]:
         if referer:
             domain = urlparse(referer).netloc
             if domain in settings.ALLOWED_WATERMARKS:
-                return "", False
+                return "", False, {}
 
-        return settings.DEFAULT_WATERMARK, True
+        return settings.DEFAULT_WATERMARK, True, params
 
     if watermark:
         if watermark == settings.DEFAULT_WATERMARK:
             logger.warning(f"Redundant watermark: {watermark}")
-            return watermark, True
+            return watermark, True, params
 
         if watermark not in settings.ALLOWED_WATERMARKS:
             logger.warning(f"Unknown watermark: {watermark}")
-            return settings.DEFAULT_WATERMARK, True
+            return settings.DEFAULT_WATERMARK, True, params
 
-        return watermark, False
+        return watermark, False, {}
 
-    return settings.DEFAULT_WATERMARK, False
+    return settings.DEFAULT_WATERMARK, False, {}
 
 
 async def track(request, lines: list[str]):
