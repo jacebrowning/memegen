@@ -30,7 +30,7 @@ async def authenticate(request) -> dict:
     return info
 
 
-async def tokenize(request, url: str) -> str:
+async def tokenize(request, url: str) -> tuple[str, bool]:
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
 
@@ -41,26 +41,24 @@ async def tokenize(request, url: str) -> str:
                 api, data={"url": url}, headers={"X-API-KEY": api_key}
             )
             data = await response.json()
-            url = data["url"]
+            return data["url"], data["url"] != url
 
-    return url
+    return url, False
 
 
-async def get_watermark(request, watermark: str) -> tuple[str, bool, dict]:
-    params = {k: v for k, v in request.args.items() if k not in {"token", "watermark"}}
-
+async def get_watermark(request, watermark: str) -> tuple[str, bool]:
     if await authenticate(request):
         if watermark == settings.DISABLED_WATERMARK:
-            return "", False, {}
-        return watermark, False, {}
+            return "", False
+        return watermark, False
 
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
-        validated_url = await tokenize(request, request.url)
-        if request.url == validated_url:
-            return watermark, False, {}
-        return settings.DEFAULT_WATERMARK, True, params
+        url, updated = await tokenize(request, request.url)
+        if updated:
+            return settings.DEFAULT_WATERMARK, True
+        return watermark, False
 
     if watermark == settings.DISABLED_WATERMARK:
         referer = _get_referer(request)
@@ -68,22 +66,22 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool, dict]:
         if referer:
             domain = urlparse(referer).netloc
             if domain in settings.ALLOWED_WATERMARKS:
-                return "", False, {}
+                return "", False
 
-        return settings.DEFAULT_WATERMARK, True, params
+        return settings.DEFAULT_WATERMARK, True
 
     if watermark:
         if watermark == settings.DEFAULT_WATERMARK:
             logger.warning(f"Redundant watermark: {watermark}")
-            return watermark, True, params
+            return watermark, True
 
         if watermark not in settings.ALLOWED_WATERMARKS:
             logger.warning(f"Unknown watermark: {watermark}")
-            return settings.DEFAULT_WATERMARK, True, params
+            return settings.DEFAULT_WATERMARK, True
 
-        return watermark, False, {}
+        return watermark, False
 
-    return settings.DEFAULT_WATERMARK, False, {}
+    return settings.DEFAULT_WATERMARK, False
 
 
 async def track(request, lines: list[str]):

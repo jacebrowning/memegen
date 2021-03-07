@@ -73,7 +73,7 @@ async def create(request):
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
-    url = await utils.meta.tokenize(request, url)
+    url, updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
@@ -227,10 +227,15 @@ async def text_png(request, template_id, text_paths):
         )
         return response.redirect(utils.urls.clean(url), status=301)
 
-    watermark, updated, params = await utils.meta.get_watermark(
+    url, updated = await utils.meta.tokenize(request, request.url)
+    if updated:
+        return response.redirect(url, status=302)
+
+    watermark, updated = await utils.meta.get_watermark(
         request, request.args.get("watermark", "")
     )
     if updated:
+        params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
             "Memes.text_png",
             template_id=template_id,
@@ -268,10 +273,11 @@ async def text_jpg(request, template_id, text_paths):
         )
         return response.redirect(utils.urls.clean(url), status=301)
 
-    watermark, updated, params = await utils.meta.get_watermark(
+    watermark, updated = await utils.meta.get_watermark(
         request, request.args.get("watermark", "")
     )
     if updated:
+        params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
             "Memes.text_jpg",
             template_id=template_id,
