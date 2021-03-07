@@ -117,7 +117,6 @@ async def auto(request):
 
     url = utils.urls.normalize(request, results[0]["image_url"])
     logger.info(f"Top result: {url}")
-
     url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
@@ -158,6 +157,7 @@ async def custom(request):
         background=payload.get("image_url", ""),
         extension=payload.get("extension", ""),
     )
+    url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
@@ -274,6 +274,10 @@ async def text_jpg(request, template_id, text_paths):
             **request.args,
         )
         return response.redirect(utils.urls.clean(url), status=301)
+
+    url, updated = await utils.meta.tokenize(request, request.url)
+    if updated:
+        return response.redirect(url, status=302)
 
     watermark, updated = await utils.meta.get_watermark(
         request, request.args.get("watermark", "")
