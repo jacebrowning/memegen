@@ -237,7 +237,7 @@ async def text_png(request, template_id, text_paths):
             text_paths=slug,
             **params,
         )
-        return response.redirect(utils.urls.clean(url), status=301)
+        return response.redirect(utils.urls.clean(url), status=302)
 
     return await render_image(request, template_id, slug, watermark)
 
@@ -278,7 +278,7 @@ async def text_jpg(request, template_id, text_paths):
             text_paths=slug,
             **params,
         )
-        return response.redirect(utils.urls.clean(url), status=301)
+        return response.redirect(utils.urls.clean(url), status=302)
 
     return await render_image(request, template_id, slug, watermark, ext="jpg")
 
