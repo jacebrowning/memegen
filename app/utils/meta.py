@@ -56,7 +56,7 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool]:
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
-        url, updated = await tokenize(request, request.url)
+        _url, updated = await tokenize(request, request.url)
         if updated:
             return settings.DEFAULT_WATERMARK, True
         return watermark, False

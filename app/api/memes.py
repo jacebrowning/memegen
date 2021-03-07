@@ -73,7 +73,7 @@ async def create(request):
         payload.get("text_lines") or [],
         extension=payload.get("extension"),
     )
-    url, updated = await utils.meta.tokenize(request, url)
+    url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
@@ -117,6 +117,8 @@ async def auto(request):
 
     url = utils.urls.normalize(request, results[0]["image_url"])
     logger.info(f"Top result: {url}")
+
+    url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
