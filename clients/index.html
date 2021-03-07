@@ -152,12 +152,14 @@ Those providing sponsorship at <a href="https://github.com/sponsors/jacebrowning
 Please <a href="mailto:support@maketested.com?subject=memegen.link">contact support</a> to request one or inquire about pricing for your specific use case.</p>
 <h2 id="http-header">HTTP Header</h2>
 <p>Authenticated requests can be made using a header:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; --header  &quot;X-API-KEY: myapikey&quot; --output http_header_example.png
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/http_header/example.png&quot; \
+  --header  &quot;X-API-KEY: myapikey&quot; --output http_header_example.png
 </code></pre>
 
 <h2 id="query-parameter">Query Parameter</h2>
 <p>If that's not an option, the API key can also be added as a query parameter:</p>
-<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey&quot; --output query_parameter_example.png
+<pre><code class="shell">$ curl &quot;https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey&quot; \
+  --output query_parameter_example.png
 </code></pre>
 
 <h1 id="image-previews">Image Previews</h1>
