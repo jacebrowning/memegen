@@ -150,7 +150,7 @@ def describe_detail():
                 f"/images/fry/test.{ext}?watermark=foobar",
                 allow_redirects=False,
             )
-            expect(response.status) == 301
+            expect(response.status) == 302
             expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
 
         @pytest.mark.parametrize("ext", ["png", "jpg"])
@@ -159,7 +159,7 @@ def describe_detail():
                 f"/images/fry/test.{ext}?watermark=memegen.link",
                 allow_redirects=False,
             )
-            expect(response.status) == 301
+            expect(response.status) == 302
             expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
 
         def it_can_be_disabled_by_referer(expect, client, default_content):
@@ -176,7 +176,7 @@ def describe_detail():
                 "/images/fry/test.png?watermark=blank",
                 allow_redirects=False,
             )
-            expect(response.status) == 301
+            expect(response.status) == 302
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
         def it_rejects_unknown_referer(expect, client):
@@ -185,7 +185,7 @@ def describe_detail():
                 headers={"REFERER": "http://google.com"},
                 allow_redirects=False,
             )
-            expect(response.status) == 301
+            expect(response.status) == 302
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
         @patch(
@@ -205,7 +205,7 @@ def describe_detail():
                 headers={"X-API-KEY": "foobar"},
                 allow_redirects=False,
             )
-            expect(response.status) == 301
+            expect(response.status) == 302
             expect(response.headers["Location"]) == "/images/fry/test.png"
 
         def it_is_disabled_automatically_for_small_images(expect, client):

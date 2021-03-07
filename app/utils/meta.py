@@ -19,21 +19,46 @@ async def authenticate(request) -> dict:
     api_key = _get_api_key(request)
     if api_key:
         api_mask = api_key[:2] + "***" + api_key[-2:]
-        logger.info(f"Authenticating with {api_mask}")
+        logger.info(f"Authenticating with API key: {api_mask}")
 
         if settings.REMOTE_TRACKING_URL:
-            url = settings.REMOTE_TRACKING_URL + "auth"
+            api = settings.REMOTE_TRACKING_URL + "auth"
             async with aiohttp.ClientSession() as session:
-                response = await session.get(url, headers={"X-API-KEY": api_key})
+                response = await session.get(api, headers={"X-API-KEY": api_key})
                 info = await response.json()
 
     return info
+
+
+async def tokenize(request, url: str) -> tuple[str, bool]:
+    api_key = _get_api_key(request) or ""
+    token = request.args.get("token")
+    default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
+
+    if (api_key or token) and settings.REMOTE_TRACKING_URL:
+        api = settings.REMOTE_TRACKING_URL + "tokenize"
+        async with aiohttp.ClientSession() as session:
+            response = await session.post(
+                api, data={"url": default_url}, headers={"X-API-KEY": api_key}
+            )
+            data = await response.json()
+            return data["url"], data["url"] != url
+
+    return url, False
 
 
 async def get_watermark(request, watermark: str) -> tuple[str, bool]:
     if await authenticate(request):
         if watermark == settings.DISABLED_WATERMARK:
             return "", False
+        return watermark, False
+
+    token = request.args.get("token")
+    if token:
+        logger.info(f"Authenticating with token: {token}")
+        url, updated = await tokenize(request, request.url)
+        if updated:
+            return settings.DEFAULT_WATERMARK, True
         return watermark, False
 
     if watermark == settings.DISABLED_WATERMARK:
