@@ -10,7 +10,7 @@ Authenticated requests can be made using a header:
 
 ```shell
 $ curl "https://api.memegen.link/images/fry/http_header/example.png" \
-  --header  "X-API-KEY: myapikey" --output http_header_example.png
+  --header "X-API-KEY: myapikey" --output http_header_example.png --location
 ```
 
 ## Query Parameter
@@ -19,7 +19,7 @@ If that's not an option, the API key can also be added as a query parameter:
 
 ```shell
 $ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" \
-  --output query_parameter_example.png
+  --output query_parameter_example.png --location
 ```
 
 # Image Previews
