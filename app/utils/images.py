@@ -195,7 +195,7 @@ def add_watermark(image: Image, text: str) -> Image:
         "white",
         font,
         stroke_width=get_stroke_width(font),
-        stroke_fill="black",
+        stroke_fill="#333",
     )
 
     return image
