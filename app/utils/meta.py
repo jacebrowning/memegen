@@ -35,7 +35,7 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
     token = request.args.get("token")
     default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
 
-    if api_key == "myapikey" and "example.png" not in url:
+    if api_key == "myapikey42" and "example.png" not in url:
         logger.warning(f"Example API key used to tokenize: {url}")
         return default_url, True
 

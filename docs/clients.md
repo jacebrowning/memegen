@@ -10,7 +10,7 @@ Authenticated requests can be made using a header:
 
 ```shell
 $ curl "https://api.memegen.link/images/fry/http_header/example.png" \
-  --header "X-API-KEY: myapikey" --output http_header_example.png --location
+  --header "X-API-KEY: myapikey42" --output http_header_example.png --location
 ```
 
 ## Query Parameter
@@ -18,7 +18,7 @@ $ curl "https://api.memegen.link/images/fry/http_header/example.png" \
 If that's not an option, the API key can also be added as a query parameter:
 
 ```shell
-$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey" \
+$ curl "https://api.memegen.link/images/fry/query_parameter/example.png?api_key=myapikey42" \
   --output query_parameter_example.png --location
 ```
 
@@ -62,9 +62,9 @@ The `template` parameter can be a template ID or URL:
 
 # Custom Watermark
 
-Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&watermark=example.com> produces:
+Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com> produces:
 
-![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey&watermark=example.com&height=400)
+![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com&height=400)
 
 # Zapier Integration
 
