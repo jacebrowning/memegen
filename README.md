@@ -14,7 +14,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.png> produces:
 
-![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?token=aehh1r9mmat2iyfv476n)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?token=6c7ek23718r0gwdt254l)
 
 ## Available Formats
 
@@ -31,7 +31,7 @@ Images can be scaled to a specific width via `?width=<int>` or a specific height
 
 For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
 
-![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&token=o2mei8yy9zir7n4ktwvc)
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&token=e3ctlu471cv4k0hx698p)
 
 ## Special Characters
 
@@ -55,7 +55,7 @@ Reserved URL characters can be included using escape patterns:
 
 For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png> produces:
 
-![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore___dash--.png?token=go78kgo6edw5l1iy7a9q)
+![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore___dash--.png?token=y4w9t5ii3m5euar7gjiz)
 
 All of the `POST` endpoints will return image URLs with speical characters replaced with these alternatives.
 
@@ -77,7 +77,7 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 
 You can also use your own image URL as the background. For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
-![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&token=i175c2egaex6m2jz8bar)
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&token=ahby9x2nlsbk0gxdmpo5)
 
 # Sample Code
 
