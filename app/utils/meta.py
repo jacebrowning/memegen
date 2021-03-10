@@ -2,6 +2,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import aiohttp
+from aiocache import cached
 from sanic.log import logger
 
 from .. import settings
@@ -30,6 +31,7 @@ async def authenticate(request) -> dict:
     return info
 
 
+@cached(ttl=60 * 15 if settings.DEPLOYED else 0)
 async def tokenize(request, url: str) -> tuple[str, bool]:
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
@@ -93,8 +95,9 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool]:
 
 async def track(request, lines: list[str]):
     text = " ".join(lines).strip()
-    trackable = not any(
-        name in request.args for name in ["height", "width", "watermark"]
+    trackable = (
+        not any(name in request.args for name in ["height", "width", "watermark"])
+        and "localhost" not in request.host
     )
     if text and trackable and settings.REMOTE_TRACKING_URL:
         url = settings.REMOTE_TRACKING_URL

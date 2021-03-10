@@ -23,6 +23,7 @@
     "Kombucha",
     "Memegen",
     "Qaeda",
+    "aiocache",
     "aiofiles",
     "aiohttp",
     "isupper",
