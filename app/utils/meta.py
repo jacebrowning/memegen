@@ -63,6 +63,8 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool]:
         _url, updated = await tokenize(request, request.url)
         if updated:
             return settings.DEFAULT_WATERMARK, True
+        if watermark == settings.DISABLED_WATERMARK:
+            return "", False
         return watermark, False
 
     if watermark == settings.DISABLED_WATERMARK:
