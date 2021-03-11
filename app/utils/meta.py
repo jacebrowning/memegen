@@ -95,43 +95,48 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool]:
 
 async def track(request, lines: list[str]):
     text = " ".join(lines).strip()
-    trackable = (
-        not any(name in request.args for name in ["height", "width", "watermark"])
-        and "localhost" not in request.host
-    )
-    if text and trackable and settings.REMOTE_TRACKING_URL:
-        url = settings.REMOTE_TRACKING_URL
-        async with aiohttp.ClientSession() as session:
-            params = dict(
-                text=text,
-                client=_get_referer(request) or settings.BASE_URL,
-                result=unquote(request.url),
-            )
-            logger.info(f"Tracking request: {params}")
-            headers = {"X-API-KEY": _get_api_key(request) or ""}
-            response = await session.get(url, params=params, headers=headers)
-            if response.status != 200:
-                try:
-                    message = await response.json()
-                except aiohttp.client_exceptions.ContentTypeError:
-                    message = response.text
-                logger.error(f"Tracker response: {message}")
+    if not text:
+        return
+    if any(name in request.args for name in ["height", "width", "watermark"]):
+        return
+    if settings.DEPLOYED and "localost" in request.host:
+        return
+    if not settings.REMOTE_TRACKING_URL:
+        return
+
+    url = settings.REMOTE_TRACKING_URL
+    async with aiohttp.ClientSession() as session:
+        params = dict(
+            text=text,
+            client=_get_referer(request) or settings.BASE_URL,
+            result=unquote(request.url),
+        )
+        logger.info(f"Tracking request: {params}")
+        headers = {"X-API-KEY": _get_api_key(request) or ""}
+        response = await session.get(url, params=params, headers=headers)
+        if response.status != 200:
+            try:
+                message = await response.json()
+            except aiohttp.client_exceptions.ContentTypeError:
+                message = response.text
+            logger.error(f"Tracker response: {message}")
 
 
 async def search(request, text: str) -> list[dict]:
-    if settings.REMOTE_TRACKING_URL:
-        url = settings.REMOTE_TRACKING_URL
-        async with aiohttp.ClientSession() as session:
-            params = dict(
-                text=text,
-                client=_get_referer(request) or settings.BASE_URL,
-            )
-            logger.info(f"Searching for results: {text}")
-            headers = {"X-API-KEY": _get_api_key(request) or ""}
-            response = await session.get(url, params=params, headers=headers)
-            assert response.status == 200
-            return await response.json()
-    return []
+    if not settings.REMOTE_TRACKING_URL:
+        return []
+
+    url = settings.REMOTE_TRACKING_URL
+    async with aiohttp.ClientSession() as session:
+        params = dict(
+            text=text,
+            client=_get_referer(request) or settings.BASE_URL,
+        )
+        logger.info(f"Searching for results: {text}")
+        headers = {"X-API-KEY": _get_api_key(request) or ""}
+        response = await session.get(url, params=params, headers=headers)
+        assert response.status == 200
+        return await response.json()
 
 
 def _get_referer(request):
