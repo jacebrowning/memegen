@@ -2,6 +2,7 @@ import os
 
 import pytest
 
+from .. import settings
 from ..models import Template
 from ..views import app
 
@@ -18,7 +19,8 @@ def pytest_runtest_setup(item):
 
 
 @pytest.fixture
-def client():
+def client(monkeypatch):
+    monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", None)
     return app.test_client
 
 

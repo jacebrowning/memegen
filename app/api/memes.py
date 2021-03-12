@@ -233,9 +233,7 @@ async def text_png(request, template_id, text_paths):
     if updated:
         return response.redirect(url, status=302)
 
-    watermark, updated = await utils.meta.get_watermark(
-        request, request.args.get("watermark", "")
-    )
+    watermark, updated = await utils.meta.get_watermark(request)
     if updated:
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
@@ -279,9 +277,7 @@ async def text_jpg(request, template_id, text_paths):
     if updated:
         return response.redirect(url, status=302)
 
-    watermark, updated = await utils.meta.get_watermark(
-        request, request.args.get("watermark", "")
-    )
+    watermark, updated = await utils.meta.get_watermark(request)
     if updated:
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
