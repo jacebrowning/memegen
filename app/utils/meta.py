@@ -35,11 +35,6 @@ async def authenticate(request) -> dict:
 
 @cached(ttl=60 * 15 if settings.DEPLOYED else 0)
 async def tokenize(request, url: str) -> tuple[str, bool]:
-    if settings.REMOTE_TRACKING_URL:
-        api = settings.REMOTE_TRACKING_URL + "tokenize"
-    else:
-        return url, False
-
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
     default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
@@ -47,6 +42,11 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
     if api_key == "myapikey42" and "example.png" not in url:
         logger.warning(f"Example API key used to tokenize: {url}")
         return default_url, True
+
+    if settings.REMOTE_TRACKING_URL:
+        api = settings.REMOTE_TRACKING_URL + "tokenize"
+    else:
+        return url, False
 
     if api_key or token:
         async with aiohttp.ClientSession() as session:
