@@ -1,5 +1,5 @@
 from pathlib import Path
-from urllib.parse import unquote, urlparse
+from urllib.parse import unquote
 
 import aiohttp
 from aiocache import cached
@@ -14,25 +14,32 @@ def version() -> str:
     return version_heading.split(" ")[-1]
 
 
+@cached(ttl=60 * 15 if settings.DEPLOYED else 0)
 async def authenticate(request) -> dict:
-    info = {}
+    info: dict = {}
+    if settings.REMOTE_TRACKING_URL:
+        api = settings.REMOTE_TRACKING_URL + "auth"
+    else:
+        return info
 
     api_key = _get_api_key(request)
     if api_key:
         api_mask = api_key[:2] + "***" + api_key[-2:]
         logger.info(f"Authenticating with API key: {api_mask}")
-
-        if settings.REMOTE_TRACKING_URL:
-            api = settings.REMOTE_TRACKING_URL + "auth"
-            async with aiohttp.ClientSession() as session:
-                response = await session.get(api, headers={"X-API-KEY": api_key})
-                info = await response.json()
+        async with aiohttp.ClientSession() as session:
+            response = await session.get(api, headers={"X-API-KEY": api_key})
+            info = await response.json()
 
     return info
 
 
 @cached(ttl=60 * 15 if settings.DEPLOYED else 0)
 async def tokenize(request, url: str) -> tuple[str, bool]:
+    if settings.REMOTE_TRACKING_URL:
+        api = settings.REMOTE_TRACKING_URL + "tokenize"
+    else:
+        return url, False
+
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
     default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
@@ -41,8 +48,7 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
         logger.warning(f"Example API key used to tokenize: {url}")
         return default_url, True
 
-    if (api_key or token) and settings.REMOTE_TRACKING_URL:
-        api = settings.REMOTE_TRACKING_URL + "tokenize"
+    if api_key or token:
         async with aiohttp.ClientSession() as session:
             response = await session.post(
                 api, data={"url": default_url}, headers={"X-API-KEY": api_key}
@@ -53,31 +59,27 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
     return url, False
 
 
-async def get_watermark(request, watermark: str) -> tuple[str, bool]:
-    if await authenticate(request):
-        if watermark == settings.DISABLED_WATERMARK:
-            return "", False
-        return watermark, False
+async def custom_watermarks_allowed(request) -> bool:
+    info = await authenticate(request)
+    if info.get("image_access", False):
+        return True
 
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
         _url, updated = await tokenize(request, request.url)
-        if updated:
-            return settings.DEFAULT_WATERMARK, True
+        return not updated
+
+    return False
+
+
+async def get_watermark(request) -> tuple[str, bool]:
+    watermark = request.args.get("watermark", "")
+
+    if await custom_watermarks_allowed(request):
         if watermark == settings.DISABLED_WATERMARK:
             return "", False
         return watermark, False
-
-    if watermark == settings.DISABLED_WATERMARK:
-        referer = _get_referer(request)
-        logger.info(f"Watermark removal referer: {referer}")
-        if referer:
-            domain = urlparse(referer).netloc
-            if domain in settings.ALLOWED_WATERMARKS:
-                return "", False
-
-        return settings.DEFAULT_WATERMARK, True
 
     if watermark:
         if watermark == settings.DEFAULT_WATERMARK:
@@ -94,6 +96,11 @@ async def get_watermark(request, watermark: str) -> tuple[str, bool]:
 
 
 async def track(request, lines: list[str]):
+    if settings.REMOTE_TRACKING_URL:
+        api = settings.REMOTE_TRACKING_URL
+    else:
+        return
+
     text = " ".join(lines).strip()
     if not text:
         return
@@ -101,10 +108,7 @@ async def track(request, lines: list[str]):
         return
     if settings.DEPLOYED and "localost" in request.host:
         return
-    if not settings.REMOTE_TRACKING_URL:
-        return
 
-    url = settings.REMOTE_TRACKING_URL
     async with aiohttp.ClientSession() as session:
         params = dict(
             text=text,
@@ -113,7 +117,7 @@ async def track(request, lines: list[str]):
         )
         logger.info(f"Tracking request: {params}")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
-        response = await session.get(url, params=params, headers=headers)
+        response = await session.get(api, params=params, headers=headers)
         if response.status != 200:
             try:
                 message = await response.json()
@@ -123,10 +127,11 @@ async def track(request, lines: list[str]):
 
 
 async def search(request, text: str) -> list[dict]:
-    if not settings.REMOTE_TRACKING_URL:
+    if settings.REMOTE_TRACKING_URL:
+        api = settings.REMOTE_TRACKING_URL
+    else:
         return []
 
-    url = settings.REMOTE_TRACKING_URL
     async with aiohttp.ClientSession() as session:
         params = dict(
             text=text,
@@ -134,7 +139,7 @@ async def search(request, text: str) -> list[dict]:
         )
         logger.info(f"Searching for results: {text}")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
-        response = await session.get(url, params=params, headers=headers)
+        response = await session.get(api, params=params, headers=headers)
         assert response.status == 200
         return await response.json()
 

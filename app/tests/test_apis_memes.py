@@ -162,35 +162,9 @@ def describe_detail():
             expect(response.status) == 302
             expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
 
-        def it_can_be_disabled_by_referer(expect, client, default_content):
-            request, response = client.get(
-                "/images/fry/test.png?watermark=blank",
-                headers={"REFERER": "http://example.com"},
-                allow_redirects=False,
-            )
-            expect(response.status) == 200
-            expect(len(response.content)) != len(default_content)
-
-        def it_rejects_missing_referer(expect, client):
-            request, response = client.get(
-                "/images/fry/test.png?watermark=blank",
-                allow_redirects=False,
-            )
-            expect(response.status) == 302
-            expect(response.headers["Location"]) == "/images/fry/test.png"
-
-        def it_rejects_unknown_referer(expect, client):
-            request, response = client.get(
-                "/images/fry/test.png?watermark=blank",
-                headers={"REFERER": "http://google.com"},
-                allow_redirects=False,
-            )
-            expect(response.status) == 302
-            expect(response.headers["Location"]) == "/images/fry/test.png"
-
         @patch(
             "app.utils.meta.authenticate",
-            AsyncMock(return_value={"email": "user@example.com"}),
+            AsyncMock(return_value={"image_access": True}),
         )
         def it_accepts_custom_values_when_authenticated(expect, client):
             request, response = client.get(
@@ -212,7 +186,6 @@ def describe_detail():
             small_content = client.get("/images/fry/test.png?width=300")[1].content
             request, response = client.get(
                 "/images/fry/test.png?width=300&watermark=example.com",
-                headers={"REFERER": "http://example.com"},
                 allow_redirects=False,
             )
             expect(response.status) == 200
