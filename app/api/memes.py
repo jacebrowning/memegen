@@ -91,7 +91,7 @@ async def create(request):
 @doc.exclude(not settings.REMOTE_TRACKING_URL)
 @doc.summary("Create a meme from word or phrase")
 @doc.consumes(
-    doc.JsonBody({"text": str, "redirect": bool}),
+    doc.JsonBody({"text": str, "safe": bool, "redirect": bool}),
     content_type="application/json",
     location="body",
 )
@@ -110,7 +110,7 @@ async def auto(request):
     except KeyError:
         return response.json({"error": '"text" is required'}, status=400)
 
-    results = await utils.meta.search(request, text)
+    results = await utils.meta.search(request, text, payload.get("safe", True))
     logger.info(f"Found {len(results)} result(s)")
     if not results:
         return response.json({"message": f"No results matched: {text}"}, status=404)
@@ -163,6 +163,45 @@ async def custom(request):
         return response.redirect(url)
 
     return response.json({"url": url}, status=201)
+
+
+@blueprint.get("/custom")
+@doc.summary("List popular custom memes")
+@doc.operation("Memes.list_custom")
+# TODO: https://github.com/jacebrowning/memegen/issues/580
+# @doc.consumes(
+#     doc.String(
+#         name="filter", description="Part of the meme's text to match"
+#     ),
+#     location="query",
+# )
+# @doc.consumes(
+#     doc.Boolean(
+#         name="safe", description="Exclude NSFW results"
+#     ),
+#     location="query",
+# )
+@doc.produces(
+    doc.List({"url": str}),
+    description="Successfully returned a list of custom memes",
+    content_type="application/json",
+)
+async def results(request):
+    query = request.args.get("filter", "").lower()
+    safe = request.args.get("safe", "true").lower() not in {"false", "no"}
+
+    results = await utils.meta.search(request, query, safe, mode="results")
+    logger.info(f"Found {len(results)} result(s)")
+    if not results:
+        return response.json({"message": f"No results matched: {query}"}, status=404)
+
+    items = []
+    for result in results:
+        url = utils.urls.normalize(request, result["image_url"])
+        url, _updated = await utils.meta.tokenize(request, url)
+        items.append({"url": url})
+
+    return response.json(items, status=200)
 
 
 @blueprint.get("/<template_id>.png")

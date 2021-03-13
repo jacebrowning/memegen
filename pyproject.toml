@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "memegen"
-version = "8.3"
+version = "8.4"
 description = "The free and open source API to generate memes."
 authors = ["Jace Browning <support@maketested.com>"]
 license = "MIT"
