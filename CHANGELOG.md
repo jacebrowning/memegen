@@ -1,5 +1,9 @@
 # Revision History
 
+## 8.4
+
+- Updated `/images/custom` to return previous results with `GET` requests.
+
 ## 8.3
 
 - Added `filter` parameter to `/images` and `/templates` to query for matching names and examples.

@@ -290,3 +290,24 @@ def describe_custom():
             redirect = "http://localhost:5000/images/custom/abc.png?background=https://www.gstatic.com/webp/gallery/4.png"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
+
+    def describe_GET():
+        @patch(
+            "app.utils.meta.search",
+            AsyncMock(
+                return_value=[
+                    {
+                        "image_url": "http://example.com/images/example.png"
+                        + "?background=https://www.gstatic.com/webp/gallery/3.png"
+                    }
+                ]
+            ),
+        )
+        def it_normalizes_the_urls(expect, client):
+            request, response = client.get("/images/custom")
+            expect(response.json) == [
+                {
+                    "url": "http://localhost:5000/images/example.png"
+                    + "?background=https://www.gstatic.com/webp/gallery/3.png"
+                }
+            ]

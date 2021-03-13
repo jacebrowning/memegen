@@ -126,22 +126,29 @@ async def track(request, lines: list[str]):
             logger.error(f"Tracker response: {message}")
 
 
-async def search(request, text: str) -> list[dict]:
+async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
     if settings.REMOTE_TRACKING_URL:
-        api = settings.REMOTE_TRACKING_URL
+        api = settings.REMOTE_TRACKING_URL + mode
     else:
         return []
 
     async with aiohttp.ClientSession() as session:
         params = dict(
             text=text,
+            nsfw=0 if safe else 1,
             client=_get_referer(request) or settings.BASE_URL,
         )
-        logger.info(f"Searching for results: {text}")
+        logger.info(f"Searching for results: {text!r} (safe={safe})")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
         response = await session.get(api, params=params, headers=headers)
-        assert response.status == 200
-        return await response.json()
+        assert response.status < 500, f"Invalid response: {response}"
+
+        data = await response.json()
+        if response.status == 200:
+            return data
+
+        logger.error(f"Search response: {data}")
+        return []
 
 
 def _get_referer(request):
