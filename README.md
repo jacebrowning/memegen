@@ -1,14 +1,10 @@
-<br style="display: none;">
-
 An API to programmatically generate memes based solely on requested URLs.
 
-<span id="badges">
 [![Build Status](https://img.shields.io/circleci/build/github/jacebrowning/memegen)](https://circleci.com/gh/jacebrowning/memegen)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/memegen/main.svg)](https://coveralls.io/r/jacebrowning/memegen)
 [![Swagger Validator](https://img.shields.io/swagger/valid/3.0?label=docs&specUrl=https%3A%2F%2Fapi.memegen.link%2Fdocs%2Fswagger.json)](https://api.memegen.link/docs/)
 [![License](https://img.shields.io/badge/license-mit-blue)](https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt)
 [![GitHub Sponsors](https://img.shields.io/badge/requests-20M/month-red)](https://github.com/sponsors/jacebrowning)
-</span>
 
 [Buy me a coffee to help keep this site running!](https://www.buymeacoffee.com/jacebrowning)
 
