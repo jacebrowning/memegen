@@ -49,6 +49,12 @@
         background-color: #f9f2f4;
         border-radius: 4px;
     }
+
+    @media all and (max-width: 992px) {
+        .badges {
+            display: none;
+        }
+    }
 </style>
 
     </head>
@@ -102,8 +108,9 @@
         </div>
 
         <div class="container">
-            <div class="row">  
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+            <div class="row"> 
+
+<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
         <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
@@ -151,15 +158,17 @@
         </ul>
     </div>
 </div></div>
-                    <div class="col-md-9" role="main">
 
-<p><br style="display: none;"></p>
+<div class="col-md-9 pt-2" role="main">
+
 <p>An API to programmatically generate memes based solely on requested URLs.</p>
-<p><a href="https://circleci.com/gh/jacebrowning/memegen"><img alt="Build Status" src="https://img.shields.io/circleci/build/github/jacebrowning/memegen" /></a>
+<p><span class="badges"><!-- badges -->
+<a href="https://circleci.com/gh/jacebrowning/memegen"><img alt="Build Status" src="https://img.shields.io/circleci/build/github/jacebrowning/memegen" /></a>
 <a href="https://coveralls.io/r/jacebrowning/memegen"><img alt="Coverage Status" src="http://img.shields.io/coveralls/jacebrowning/memegen/main.svg" /></a>
 <a href="https://api.memegen.link/docs/"><img alt="Swagger Validator" src="https://img.shields.io/swagger/valid/3.0?label=docs&amp;specUrl=https%3A%2F%2Fapi.memegen.link%2Fdocs%2Fswagger.json" /></a>
 <a href="https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"><img alt="License" src="https://img.shields.io/badge/license-mit-blue" /></a>
-<a href="https://github.com/sponsors/jacebrowning"><img alt="GitHub Sponsors" src="https://img.shields.io/badge/requests-20M/month-red" /></a></p>
+<a href="https://github.com/sponsors/jacebrowning"><img alt="GitHub Sponsors" src="https://img.shields.io/badge/requests-20M/month-red" /></a>
+</span></p>
 <p><a href="https://www.buymeacoffee.com/jacebrowning">Buy me a coffee to help keep this site running!</a></p>
 <hr />
 <h1 id="images">Images</h1>
@@ -282,7 +291,9 @@
 </tbody>
 </table>
 <p>Additional clients can be found by searching for <a href="https://github.com/search?o=desc&amp;q=%22api.memegen.link%22+&amp;ref=searchresults&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93">code examples</a> on GitHub.</p>
-<p>Ready to build your own? Check out the <a href="clients">client page</a>.</p></div>  
+<p>Ready to build your own? Check out the <a href="clients">client page</a>.</p></div>
+
+ 
             </div>
         </div>
 
@@ -364,5 +375,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-03-13 03:04:51.517447+00:00
+Build Date UTC : 2021-03-13 14:55:57.211909+00:00
 -->

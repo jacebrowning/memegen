@@ -49,6 +49,12 @@
         background-color: #f9f2f4;
         border-radius: 4px;
     }
+
+    @media all and (max-width: 992px) {
+        .badges {
+            display: none;
+        }
+    }
 </style>
 
     </head>
@@ -102,8 +108,9 @@
         </div>
 
         <div class="container">
-            <div class="row">  
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+            <div class="row"> 
+
+<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
         <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
@@ -144,7 +151,8 @@
         </ul>
     </div>
 </div></div>
-                    <div class="col-md-9" role="main">
+
+<div class="col-md-9 pt-2" role="main">
 
 <h1 id="authentication">Authentication</h1>
 <p>Unauthenticated API requests are watermarked and may be rate limited.
@@ -215,7 +223,9 @@ $(document).ready(updatePreview)
 <p><img alt="" src="https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&amp;watermark=example.com&amp;height=400" /></p>
 <h1 id="zapier-integration">Zapier Integration</h1>
 <p>Incorporate memes into your automation: <a href="https://zapier.com/apps/memegenlink">https://zapier.com/apps/memegenlink</a></p>
-<p><img alt="Sample Zaps" src="https://cdn.zappy.app/3f3e8213de870f268f27f2402aefc794.png" /></p></div>  
+<p><img alt="Sample Zaps" src="https://cdn.zappy.app/3f3e8213de870f268f27f2402aefc794.png" /></p></div>
+
+ 
             </div>
         </div>
 
