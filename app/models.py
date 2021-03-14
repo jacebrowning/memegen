@@ -119,9 +119,8 @@ class Template:
         if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.id}")
             return self.directory / f"{settings.DEFAULT_STYLE}.img"
-        else:
-            logger.warning(f"Style {style!r} not available for {self.id}")
-            return self.get_image()
+        logger.warning(f"Style {style!r} not available for {self.id}")
+        return self.get_image()
 
     def jsonify(self, app: Sanic) -> dict:
         return {
