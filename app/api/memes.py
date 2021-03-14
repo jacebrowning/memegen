@@ -13,13 +13,12 @@ blueprint = Blueprint("Memes", url_prefix="/images")
 @blueprint.get("/")
 @doc.summary("List example memes")
 @doc.operation("Memes.list")
-# TODO: https://github.com/jacebrowning/memegen/issues/580
-# @doc.consumes(
-#     doc.String(
-#         name="filter", description="Part of the template name or example to match"
-#     ),
-#     location="query",
-# )
+@doc.consumes(
+    doc.String(
+        name="filter", description="Part of the template name or example to match"
+    ),
+    location="query",
+)
 @doc.produces(
     doc.List({"url": str, "template": str}),
     description="Successfully returned a list of example memes",
@@ -168,19 +167,14 @@ async def custom(request):
 @blueprint.get("/custom")
 @doc.summary("List popular custom memes")
 @doc.operation("Memes.list_custom")
-# TODO: https://github.com/jacebrowning/memegen/issues/580
-# @doc.consumes(
-#     doc.String(
-#         name="filter", description="Part of the meme's text to match"
-#     ),
-#     location="query",
-# )
-# @doc.consumes(
-#     doc.Boolean(
-#         name="safe", description="Exclude NSFW results"
-#     ),
-#     location="query",
-# )
+@doc.consumes(
+    doc.Boolean(name="safe", description="Exclude NSFW results"),
+    location="query",
+)
+@doc.consumes(
+    doc.String(name="filter", description="Part of the meme's text to match"),
+    location="query",
+)
 @doc.produces(
     doc.List({"url": str}),
     description="Successfully returned a list of custom memes",

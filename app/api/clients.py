@@ -23,6 +23,14 @@ async def validate(request):
 
 @blueprint.get("/images/preview.jpg")
 @doc.summary("Display a preview of a custom meme")
+@doc.consumes(
+    doc.String(name="lines[]", description="Lines of text to render"),
+    location="query",
+)
+@doc.consumes(
+    doc.String(name="template", description="Template ID, URL, or custom background"),
+    location="query",
+)
 @doc.produces(
     doc.File(),
     description="Successfully displayed a custom meme",

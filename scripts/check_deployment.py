@@ -41,6 +41,7 @@ def test_get_image_custom(expect, url):
     expect(response.headers["Content-Type"]) == "image/png"
 
 
+@pytest.mark.xfail(reason="https://github.com/jacebrowning/memegen/issues/580")
 def test_swagger(expect, url):
     response = requests.get(
         f"https://validator.swagger.io/validator/debug?url="
