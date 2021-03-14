@@ -98,7 +98,7 @@ async def create(request):
 @doc.response(
     400, {"error": str}, description='Required "text" missing in request body'
 )
-async def auto(request):
+async def automatic(request):
     if request.form:
         payload = dict(request.form)
     else:
@@ -180,7 +180,7 @@ async def custom(request):
     description="Successfully returned a list of custom memes",
     content_type="application/json",
 )
-async def results(request):
+async def list_custom(request):
     query = request.args.get("filter", "").lower()
     safe = request.args.get("safe", "true").lower() not in {"false", "no"}
 
