@@ -20,7 +20,8 @@ class BugsnagErrorHandler(ErrorHandler):
             bugsnag.notify(exception, meta_data={"request": request.url})
         return super().default(request, exception)
 
-    def _should_notify(self, exception) -> bool:
+    @staticmethod
+    def _should_notify(exception) -> bool:
         if not settings.BUGSNAG_API_KEY:
             return False
         if isinstance(exception, IGNORED_EXCEPTIONS):

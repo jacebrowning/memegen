@@ -63,7 +63,7 @@ def describe_path_redirects():
 
     def it_handles_sample_templates(expect, client, monkeypatch):
         monkeypatch.setattr(settings, "DEBUG", True)
-        request, response = client.get(f"/images/<sample>", allow_redirects=False)
+        request, response = client.get("/images/<sample>", allow_redirects=False)
         expect(response.status) == 501
 
 
