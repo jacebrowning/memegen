@@ -13,11 +13,11 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
 
 @blueprint.get("/")
 @doc.summary("List all templates")
-# TODO: https://github.com/jacebrowning/memegen/issues/580
-# @doc.consumes(
-#     doc.String(name="filter", description="Part of the name or example to match"),
-#     location="query",
-# )
+@doc.consumes(
+    doc.String(name="filter", description="Part of the name or example to match"),
+    content_type="text/plain",
+    location="query",
+)
 @doc.produces(
     # Can't use doc.List(Template) because the jsonify method is slightly different
     doc.List(
