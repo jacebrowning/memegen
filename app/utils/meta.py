@@ -84,13 +84,11 @@ async def get_watermark(request) -> tuple[str, bool]:
     if watermark:
         if watermark == settings.DEFAULT_WATERMARK:
             logger.warning(f"Redundant watermark: {watermark}")
-            return watermark, True
-
-        if watermark not in settings.ALLOWED_WATERMARKS:
-            logger.warning(f"Unknown watermark: {watermark}")
             return settings.DEFAULT_WATERMARK, True
-
-        return watermark, False
+        if watermark in settings.ALLOWED_WATERMARKS:
+            return watermark, False
+        logger.warning(f"Invalid watermark: {watermark}")
+        return settings.DEFAULT_WATERMARK, True
 
     return settings.DEFAULT_WATERMARK, False
 
