@@ -129,12 +129,9 @@ promote: install .env .envrc
 	echo WEB_CONCURRENCY=2 >> $@
 	echo MAX_REQUESTS=0 >> $@
 	echo MAX_REQUESTS_JITTER=0 >> $@
-	echo WATERMARK_OPTIONS=blank,Memegen.link >> $@
 
 .envrc:
 	echo dotenv >> $@
 	echo >> $@
 	echo "export CF_API_KEY=???" >> $@
 	echo "export REMOTE_TRACKING_URL=???" >> $@
-	echo >> $@
-	echo "# export SITE=http://localhost:5000" >> $@

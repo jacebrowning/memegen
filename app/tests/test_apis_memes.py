@@ -127,8 +127,6 @@ def describe_detail():
     def describe_watermark():
         @pytest.fixture(autouse=True)
         def watermark_settings(monkeypatch, client):
-            monkeypatch.setattr(settings, "DISABLED_WATERMARK", "blank")
-            monkeypatch.setattr(settings, "DEFAULT_WATERMARK", "memegen.link")
             monkeypatch.setattr(settings, "ALLOWED_WATERMARKS", ["example.com"])
 
         @pytest.fixture
