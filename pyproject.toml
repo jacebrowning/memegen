@@ -15,7 +15,8 @@ python = "^3.9"
 # Sanic
 sanic = "~20.12.2"
 sanic-cors = "~0.10"
-sanic-openapi = "~0.6.2"
+# sanic-openapi = "~0.6.2"
+sanic-openapi = { git = "https://github.com/sanic-org/sanic-openapi", rev = "4a1b29bb0dff9a6e78824ec88ed9a94c8e205afb" }
 
 # Markdown
 markdown = "~3.2.2"

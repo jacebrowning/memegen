@@ -2,22 +2,22 @@ aiocache==0.11.1
 aiofile==3.5.0; python_version >= "3.7" and python_version < "4"
 aiofiles==0.6.0; python_version >= "3.7"
 aiohttp==3.7.4.post0; python_version >= "3.6"
-aiopath==0.4.9; python_version >= "3.7"
+aiopath==0.4.10; python_version >= "3.7"
 async-timeout==3.0.1; python_full_version >= "3.5.3" and python_version >= "3.6"
 attrs==20.3.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
-bugsnag==4.0.2; python_version >= "3.5" and python_version < "4"
+bugsnag==4.0.3; python_version >= "3.5" and python_version < "4"
 cached-property==1.5.2; python_version >= "3.7" and python_version < "4.0"
 caio==0.8.0; python_version >= "3.7" and python_version < "4"
 certifi==2020.12.5; python_version >= "3.6"
 chardet==4.0.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.6"
 classproperties==0.2.0; python_version >= "3.7" and python_version < "4.0"
 click==7.1.2; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
-datafiles==0.13; python_version >= "3.7" and python_version < "4.0"
-furl==2.1.1
+datafiles==0.13.1; python_version >= "3.7" and python_version < "4.0"
+furl==2.1.2
 gunicorn==20.1.0; python_version >= "3.5"
 h11==0.9.0; python_version >= "3.6"
 httpcore==0.11.1; python_version >= "3.6"
-httptools==0.1.1; python_version >= "3.6"
+httptools==0.2.0; python_version >= "3.6"
 httpx==0.15.4; python_version >= "3.6"
 idna==2.10; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
 markdown==3.2.2; python_version >= "3.5"
@@ -25,7 +25,7 @@ minilog==2.0; python_version >= "3.6" and python_version < "4.0"
 multidict==5.1.0; python_version >= "3.6"
 orderedmultidict==1.0.1
 parse==1.19.0; python_version >= "3.7" and python_version < "4.0"
-pillow==8.1.2; python_version >= "3.6"
+pillow==8.2.0; python_version >= "3.6"
 pygments==2.8.1; python_version >= "3.5"
 pymdown-extensions==8.1.1; python_version >= "3.6"
 pyperclip==1.8.2
@@ -34,9 +34,9 @@ rfc3986==1.4.0; python_version >= "3.6"
 ruamel.yaml.clib==0.2.2; platform_python_implementation == "CPython" and python_version < "3.10" and python_version >= "3.7"
 ruamel.yaml==0.17.4; python_version >= "3.7" and python_version < "4.0"
 sanic-cors==0.10.0.post3
-sanic-openapi==0.6.2
+sanic-openapi @ git+https://github.com/sanic-org/sanic-openapi@4a1b29bb0dff9a6e78824ec88ed9a94c8e205afb
 sanic-plugins-framework==0.9.5
-sanic==20.12.2; python_version >= "3.6"
+sanic==20.12.3; python_version >= "3.6"
 six==1.15.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0"
 sniffio==1.2.0; python_version >= "3.6"
 spongemock==0.3.4
