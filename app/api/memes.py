@@ -17,7 +17,7 @@ blueprint = Blueprint("Memes", url_prefix="/images")
     doc.String(
         name="filter", description="Part of the template name or example to match"
     ),
-    content_type="text/plain",
+    content_type="application/json",
     location="query",
 )
 @doc.produces(
@@ -170,12 +170,12 @@ async def custom(request):
 @doc.operation("Memes.list_custom")
 @doc.consumes(
     doc.Boolean(name="safe", description="Exclude NSFW results"),
-    content_type="text/plain",
+    content_type="application/json",
     location="query",
 )
 @doc.consumes(
     doc.String(name="filter", description="Part of the meme's text to match"),
-    content_type="text/plain",
+    content_type="application/json",
     location="query",
 )
 @doc.produces(

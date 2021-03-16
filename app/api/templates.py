@@ -15,7 +15,7 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
 @doc.summary("List all templates")
 @doc.consumes(
     doc.String(name="filter", description="Part of the name or example to match"),
-    content_type="text/plain",
+    content_type="application/json",
     location="query",
 )
 @doc.produces(
