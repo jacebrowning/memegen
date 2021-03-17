@@ -5,7 +5,11 @@ from sanic.handlers import ErrorHandler
 
 from . import settings
 
-IGNORED_EXCEPTIONS = (NotFound, MethodNotSupported, ClientPayloadError)
+IGNORED_EXCEPTIONS = (
+    ClientPayloadError,
+    MethodNotSupported,
+    NotFound,
+)
 
 bugsnag.configure(
     api_key=settings.BUGSNAG_API_KEY,

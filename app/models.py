@@ -235,7 +235,7 @@ class Template:
         if template.image.exists():
             try:
                 utils.images.load(template.image)
-            except OSError as e:
+            except (OSError, SyntaxError) as e:
                 logger.error(e)
                 template.image.unlink()
 
