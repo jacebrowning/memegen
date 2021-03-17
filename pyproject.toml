@@ -6,7 +6,7 @@ description = "The free and open source API to generate memes."
 authors = ["Jace Browning <support@maketested.com>"]
 license = "MIT"
 
-packages = [ { include = "app" } ]
+packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 
@@ -90,5 +90,5 @@ markers = "slow"
 
 [build-system]
 
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
