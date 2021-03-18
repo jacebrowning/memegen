@@ -97,4 +97,4 @@ Here are some popular apps and integrations to check out:
 
 Additional clients can be found by searching for [code examples](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93) on GitHub.
 
-Ready to build your own? Check out the [client page](clients).
+Ready to build your own? Check out the [clients page](clients).
