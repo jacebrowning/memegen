@@ -2,21 +2,21 @@ name: Distracted Boyfriend
 source: https://knowyourmeme.com/memes/distracted-boyfriend
 text:
   - color: white
-    style: upper
+    style: default
     anchor_x: 0.12
     anchor_y: 0.7
     angle: 0.0
     scale_x: 0.325
     scale_y: 0.1
   - color: white
-    style: upper
+    style: default
     anchor_x: 0.55
     anchor_y: 0.45
     angle: 0.0
     scale_x: 0.175
     scale_y: 0.1
   - color: white
-    style: upper
+    style: default
     anchor_x: 0.74
     anchor_y: 0.66
     angle: 0.0

@@ -214,7 +214,7 @@ def get_image_elements(
         except IndexError:
             line = ""
         else:
-            line = text.stylize(wrap(line, max_text_size, max_font_size))
+            line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
 
         font = get_font(line, text.angle, max_text_size, max_font_size)
         offset = get_text_offset(line, font, max_text_size)
