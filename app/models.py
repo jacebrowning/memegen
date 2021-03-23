@@ -42,12 +42,14 @@ class Text:
         size = int(image_width * self.scale_x), int(image_height * self.scale_y)
         return size
 
-    def stylize(self, text: str) -> str:
+    def stylize(self, text: str, **kwargs) -> str:
+        lines = [line for line in kwargs.get("lines", [text]) if line]
+
         if self.style == "none":
             return text
 
         if self.style == "default":
-            return text.capitalize() if text.islower() else text
+            return text.capitalize() if all(line.islower() for line in lines) else text
 
         if self.style == "mock":
             return spongemock.mock(text, diversity_bias=0.75, random_seed=0)

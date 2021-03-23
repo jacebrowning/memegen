@@ -34,6 +34,10 @@ def describe_text():
             text.style = ""
             expect(text.stylize("Foobar")) == "FOOBAR"
 
+        def it_respects_case_when_set(expect):
+            text = Text(style="default")
+            expect(text.stylize("foo", lines=["foo", "Bar"])) == "foo"
+
 
 def describe_template():
     @pytest.fixture
