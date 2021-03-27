@@ -231,7 +231,7 @@ class Template:
                             await f.close()
                         else:
                             logger.error(f"{response.status} response from {url}")
-                except (InvalidURL, ClientConnectionError):
+                except (InvalidURL, ClientConnectionError, AssertionError):
                     logger.error(f"Invalid response from {url}")
 
         if template.image.exists():

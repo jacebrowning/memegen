@@ -95,14 +95,20 @@ def describe_template():
             expect(template.image.exists()) == True
 
         @pytest.mark.asyncio
-        async def it_handles_misssing_urls(expect):
+        async def it_handles_missing_urls(expect):
             url = "http://example.com/does_not_exist.png"
             template = await Template.create(url)
             expect(template.image.exists()) == False
 
         @pytest.mark.asyncio
-        async def it_handles_invalid_urls(expect):
+        async def it_handles_unreachable_urls(expect):
             url = "http://127.0.0.1/does_not_exist.png"
+            template = await Template.create(url)
+            expect(template.image.exists()) == False
+
+        @pytest.mark.asyncio
+        async def it_handles_invalid_urls(expect):
+            url = "httpshttps://cdn.pixabay.com/photo/2015/09/09/19/41/cat-932846_1280.jpg"
             template = await Template.create(url)
             expect(template.image.exists()) == False
 
