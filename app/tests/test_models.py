@@ -34,9 +34,10 @@ def describe_text():
             text.style = ""
             expect(text.stylize("Foobar")) == "FOOBAR"
 
-        def it_respects_case_when_set(expect):
+        def it_respects_case_when_set_in_any_line(expect):
             text = Text(style="default")
-            expect(text.stylize("foo", lines=["foo", "Bar"])) == "foo"
+            expect(text.stylize("foo", lines=["foo", " ", "bar"])) == "Foo"
+            expect(text.stylize("foo", lines=["foo", " ", "Bar"])) == "foo"
 
 
 def describe_template():

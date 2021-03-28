@@ -43,7 +43,7 @@ class Text:
         return size
 
     def stylize(self, text: str, **kwargs) -> str:
-        lines = [line for line in kwargs.get("lines", [text]) if line]
+        lines = [line for line in kwargs.get("lines", [text]) if line.strip()]
 
         if self.style == "none":
             return text
