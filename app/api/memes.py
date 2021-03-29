@@ -334,11 +334,15 @@ async def render_image(
     watermark: str = "",
     ext: str = settings.DEFAULT_EXT,
 ):
+    lines = utils.text.decode(slug)
+    asyncio.create_task(utils.meta.track(request, lines))
+
     status = 200
 
     if len(slug.encode()) > 200:
         logger.error(f"Slug too long: {slug}")
         slug = slug[:50] + "..."
+        lines = utils.text.decode(slug)
         template = models.Template.objects.get("_error")
         style = settings.DEFAULT_STYLE
         status = 414
@@ -369,10 +373,7 @@ async def render_image(
             logger.error(f"Invalid style for template: {style}")
             status = 422
 
-    lines = utils.text.decode(slug)
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
-
-    asyncio.create_task(utils.meta.track(request, lines))
     path = await asyncio.to_thread(
         utils.images.save, template, lines, watermark, ext=ext, style=style, size=size
     )
