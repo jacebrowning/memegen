@@ -113,7 +113,7 @@ def _columns(urls: Iterable[str]) -> str:
     for url in urls:
         elements.append(
             f"""
-            <a href="https://memecomplete.com/custom/?editing=true&key={url}" target="_parent">
+            <a href="https://memecomplete.com/edit/{url}" target="_parent">
                 <img src="{url}?width={settings.PREVIEW_SIZE[0]}">
             </a>
             """
