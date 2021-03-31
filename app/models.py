@@ -92,8 +92,11 @@ class Template:
     def _update_styles(self):
         styles = []
         for path in self.directory.iterdir():
-            if path.stem not in {"config", settings.DEFAULT_STYLE} and not path.stem.startswith("_"):
-                styles.append(path.stem)
+            style = path.stem
+            if style.startswith("_") or style in {"config", settings.DEFAULT_STYLE}:
+                continue
+            else:
+                styles.append(style)
         styles.sort()
         if styles != self.styles:
             self.styles = styles
@@ -135,6 +138,9 @@ class Template:
             return True
 
         if style in self.styles:
+            return True
+
+        if style == "string":  # Swagger UI placeholder value
             return True
 
         if "://" not in style:
@@ -221,6 +227,7 @@ class Template:
         *,
         extension: str = "",
         background: str = "",
+        style: str = "",
         external: bool = False,
     ):
         if extension in {"jpg", "png"}:
@@ -233,7 +240,7 @@ class Template:
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
-            **utils.urls.params(request, background=background),
+            **utils.urls.params(request, background=background, style=style),
         )
         return utils.urls.clean(url)
 

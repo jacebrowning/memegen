@@ -38,7 +38,13 @@ async def index(request):
 @doc.operation("Memes.create")
 @doc.consumes(
     doc.JsonBody(
-        {"template_id": str, "text_lines": [str], "extension": str, "redirect": bool}
+        {
+            "template_id": str,
+            "text_lines": [str],
+            "style": str,
+            "extension": str,
+            "redirect": bool,
+        }
     ),
     content_type="application/json",
     location="body",
@@ -71,18 +77,19 @@ async def create(request):
     url = template.build_custom_url(
         request,
         payload.get("text_lines") or [],
+        style=payload.get("style", ""),
         extension=payload.get("extension"),
     )
     url, _updated = await utils.meta.tokenize(request, url)
-
-    if payload.get("redirect", False):
-        return response.redirect(url)
 
     if template.valid:
         status = 201
     else:
         status = 404
         template.delete()
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
 
     return response.json({"url": url}, status=status)
 
@@ -129,7 +136,12 @@ async def automatic(request):
 @doc.summary("Create a meme from any image")
 @doc.consumes(
     doc.JsonBody(
-        {"image_url": str, "text_lines": [str], "extension": str, "redirect": bool}
+        {
+            "image_url": str,
+            "text_lines": [str],
+            "extension": str,
+            "redirect": bool,
+        }
     ),
     content_type="application/json",
     location="body",

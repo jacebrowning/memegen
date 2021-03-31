@@ -98,14 +98,14 @@ async def build(request, id):
     )
     url, _updated = await utils.meta.tokenize(request, url)
 
-    if payload.get("redirect", False):
-        return response.redirect(url)
-
     if template.valid:
         status = 201
     else:
         status = 404
         template.delete()
+
+    if payload.get("redirect", False):
+        return response.redirect(url)
 
     return response.json({"url": url}, status=status)
 

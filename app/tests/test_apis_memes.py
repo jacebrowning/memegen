@@ -200,6 +200,11 @@ def describe_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
+        def it_ignores_placeholder_styles(expect, client):
+            request, response = client.get("/images/ds/one/two.png?style=string")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
     def describe_custom():
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
