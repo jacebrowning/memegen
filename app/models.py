@@ -1,3 +1,4 @@
+import asyncio
 import hashlib
 import shutil
 from pathlib import Path
@@ -6,6 +7,7 @@ from urllib.parse import urlparse
 
 import aiofiles
 import aiohttp
+import aiopath
 from aiohttp.client_exceptions import ClientConnectionError, InvalidURL
 from datafiles import datafile, field
 from sanic import Sanic
@@ -90,7 +92,7 @@ class Template:
     def _update_styles(self):
         styles = []
         for path in self.directory.iterdir():
-            if path.stem not in {"config", settings.DEFAULT_STYLE}:
+            if path.stem not in {"config", settings.DEFAULT_STYLE} and not path.stem.startswith("_"):
                 styles.append(path.stem)
         styles.sort()
         if styles != self.styles:
@@ -113,6 +115,10 @@ class Template:
     def get_image(self, style: str = "") -> Path:
         style = style or settings.DEFAULT_STYLE
 
+        if "://" in style:
+            url = style
+            style = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
+
         self.directory.mkdir(exist_ok=True)
         for path in self.directory.iterdir():
             if path.stem == style:
@@ -123,6 +129,48 @@ class Template:
             return self.directory / f"{settings.DEFAULT_STYLE}.img"
         logger.warning(f"Style {style!r} not available for {self.id}")
         return self.get_image()
+
+    async def ensure_image(self, style: str) -> bool:
+        if not style:
+            return True
+
+        if style in self.styles:
+            return True
+
+        if "://" not in style:
+            return False
+
+        url = style
+        ext = url.split(".")[-1]
+        filename = "_custom-" + hashlib.sha1(url.encode()).hexdigest() + "." + ext
+        path = aiopath.AsyncPath(self.directory) / filename
+
+        if await path.exists() and not settings.DEBUG:
+            logger.info(f"Found overlay {url} at {path}")
+            return True
+
+        logger.info(f"Saving overlay {url} to {path}")
+        async with aiohttp.ClientSession() as session:
+            try:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        # template.directory.mkdir(exist_ok=True)
+                        f = await aiofiles.open(path, mode="wb")  # type: ignore
+                        await f.write(await response.read())
+                        await f.close()
+                    else:
+                        logger.error(f"{response.status} response from {url}")
+            except (InvalidURL, ClientConnectionError, AssertionError):
+                logger.error(f"Invalid response from {url}")
+
+        if await path.exists():
+            try:
+                await asyncio.to_thread(utils.images.embed, Path(path), self.image)
+            except (OSError, SyntaxError) as e:
+                logger.error(e)
+                await path.unlink()
+
+        return await path.exists()
 
     def jsonify(self, app: Sanic) -> dict:
         return {

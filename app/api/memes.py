@@ -369,7 +369,8 @@ async def render_image(
             status = 404
 
         style = request.args.get("style") or request.args.get("alt")
-        if style and style not in template.styles:
+        # TODO: use this method above?
+        if not await template.ensure_image(style):
             logger.error(f"Invalid style for template: {style}")
             status = 422
 
