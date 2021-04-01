@@ -142,3 +142,11 @@ def describe_template():
             url = "http://api.memegen.link/images/fry/test.png"
             template = await Template.create(url)
             expect(template.id) == "fry"
+
+    def describe_check():
+        @pytest.mark.asyncio
+        async def it_determines_overlay_file_extension(expect, monkeypatch):
+            monkeypatch.setattr(settings, "DEBUG", True)
+            url = "https://i.guim.co.uk/img/media/8a13052d4db7dcd508af948e5db7b04598e03190/0_294_5616_3370/master/5616.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=bcaa4eed2c1e6dab61c41a61e41433d9"
+            template = Template.objects.get("fine")
+            expect(await template.check(url)) == True

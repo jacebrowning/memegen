@@ -1,5 +1,4 @@
 import asyncio
-import hashlib
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -120,7 +119,7 @@ class Template:
 
         if "://" in style:
             url = style
-            style = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
+            style = utils.text.fingerprint(url)
 
         self.directory.mkdir(exist_ok=True)
         for path in self.directory.iterdir():
@@ -133,45 +132,6 @@ class Template:
 
         logger.warning(f"Style {style!r} not available for {self.id}")
         return self.get_image()
-
-    async def ensure_image(self, style: str) -> bool:
-        if not style:
-            return True
-        if style in self.styles:
-            return True
-        if "://" not in style:
-            return False
-
-        url = style
-        ext = url.split(".")[-1]
-        filename = "_custom-" + hashlib.sha1(url.encode()).hexdigest() + "." + ext
-        path = aiopath.AsyncPath(self.directory) / filename
-
-        if await path.exists() and not settings.DEBUG:
-            logger.info(f"Found overlay {url} at {path}")
-            return True
-
-        logger.info(f"Saving overlay {url} to {path}")
-        async with aiohttp.ClientSession() as session:
-            try:
-                async with session.get(url) as response:
-                    if response.status == 200:
-                        f = await aiofiles.open(path, mode="wb")  # type: ignore
-                        await f.write(await response.read())
-                        await f.close()
-                    else:
-                        logger.error(f"{response.status} response from {url}")
-            except (InvalidURL, ClientConnectionError, AssertionError):
-                logger.error(f"Invalid response from {url}")
-
-        if await path.exists():
-            try:
-                await asyncio.to_thread(utils.images.embed, Path(path), self.image)
-            except (OSError, SyntaxError) as e:
-                logger.error(e)
-                await path.unlink()
-
-        return await path.exists()
 
     def jsonify(self, app: Sanic) -> dict:
         return {
@@ -249,7 +209,7 @@ class Template:
     ) -> Path:
         slug = utils.text.encode(text_lines)
         variant = str(self.text) + str(style) + str(size) + watermark
-        fingerprint = hashlib.sha1(variant.encode()).hexdigest()
+        fingerprint = utils.text.fingerprint(variant, prefix="")
         filename = f"{slug}.{fingerprint}.{ext}"
         return Path(self.id) / filename
 
@@ -264,7 +224,7 @@ class Template:
             else:
                 return cls.objects.get_or_none(id) or cls.objects.get("_error")
 
-        id = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
+        id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
         if template.image.exists() and not settings.DEBUG:
             logger.info(f"Found background {url} at {template.image}")
@@ -292,6 +252,45 @@ class Template:
                 template.image.unlink()
 
         return template
+
+    async def check(self, style: str) -> bool:
+        if not style:
+            return True
+        if style in self.styles:
+            return True
+        if "://" not in style:
+            return False
+
+        url = style
+        ext = urlparse(url).path.split(".")[-1]
+        filename = utils.text.fingerprint(url, suffix="." + ext)
+        path = aiopath.AsyncPath(self.directory) / filename
+
+        if await path.exists() and not settings.DEBUG:
+            logger.info(f"Found overlay {url} at {path}")
+            return True
+
+        logger.info(f"Saving overlay {url} to {path}")
+        async with aiohttp.ClientSession() as session:
+            try:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        f = await aiofiles.open(path, mode="wb")  # type: ignore
+                        await f.write(await response.read())
+                        await f.close()
+                    else:
+                        logger.error(f"{response.status} response from {url}")
+            except (InvalidURL, ClientConnectionError, AssertionError):
+                logger.error(f"Invalid response from {url}")
+
+        if await path.exists():
+            try:
+                await asyncio.to_thread(utils.images.embed, Path(path), self.image)
+            except (OSError, SyntaxError) as e:
+                logger.error(e)
+                await path.unlink()
+
+        return await path.exists()
 
     def delete(self):
         if self.directory.exists():
