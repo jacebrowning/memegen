@@ -26,6 +26,7 @@
         "aiocache",
         "aiofiles",
         "aiohttp",
+        "aiopath",
         "isupper",
         "jsonify",
         "sanic"

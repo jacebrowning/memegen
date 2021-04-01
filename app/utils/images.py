@@ -24,7 +24,7 @@ def preview(
     logger.info(f"Previewing meme for {path}")
     image = render_image(template, style, lines, settings.PREVIEW_SIZE, pad=False)
     stream = io.BytesIO()
-    image.save(stream, format="JPEG", quality=50)
+    image.convert("RGB").save(stream, format="JPEG", quality=50)
     return stream.getvalue(), "image/jpeg"
 
 
@@ -51,15 +51,29 @@ def save(
         path.parent.mkdir(parents=True, exist_ok=True)
 
     image = render_image(template, style, lines, size, watermark=watermark)
-    image.save(path, quality=95)
+    image.convert("RGB").save(path, quality=95)
 
     return path
 
 
 def load(path: Path) -> Image:
-    image = Image.open(path).convert("RGB")
+    image = Image.open(path).convert("RGBA")
     image = ImageOps.exif_transpose(image)
     return image
+
+
+def embed(foreground_path: Path, background_path: Path) -> Image:
+    foreground = load(foreground_path)
+    background = load(background_path)
+    size = (background.size[0] // 4, background.size[1] // 4)
+    foreground.thumbnail(size)
+    offset = (
+        (background.size[0] - foreground.size[0]) // 2,
+        (background.size[1] - foreground.size[1]) // 2,
+    )
+    background.paste(foreground, offset, foreground.convert("RGBA"))
+    background.convert("RGB").save(foreground_path)
+    return foreground_path
 
 
 def render_image(

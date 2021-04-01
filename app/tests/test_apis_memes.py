@@ -200,6 +200,39 @@ def describe_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
+        def it_ignores_placeholder_values(expect, client):
+            request, response = client.get("/images/string/string.png?style=string")
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+    def describe_overlay():
+        def it_supports_custom_styles(expect, client):
+            request, response = client.get(
+                "/images/fine/one/two.png"
+                "?style=https://www.gstatic.com/webp/gallery/4.jpg"
+            )
+            expect(response.status) == 200
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_requires_image_urls(expect, client):
+            request, response = client.get(
+                "/images/fine/test.png?style=http://example.com"
+            )
+            expect(response.status) == 422
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_handles_invalid_urls(expect, client):
+            request, response = client.get("/images/fine/test.png?style=http://foobar")
+            expect(response.status) == 422
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_handles_missing_urls(expect, client):
+            request, response = client.get(
+                "/images/fine/test.png?style=http://example.com/does_not_exist.png"
+            )
+            expect(response.status) == 422
+            expect(response.headers["content-type"]) == "image/png"
+
     def describe_custom():
         def it_supports_custom_templates(expect, client):
             request, response = client.get(
@@ -215,9 +248,7 @@ def describe_detail():
             expect(response.headers["content-type"]) == "image/png"
 
         def it_handles_invalid_urls(expect, client):
-            request, response = client.get(
-                "/images/custom/test.png" "?background=foobar"
-            )
+            request, response = client.get("/images/custom/test.png?background=foobar")
             expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
 
@@ -227,6 +258,13 @@ def describe_detail():
                 "?background=http://example.com/does_not_exist.png"
             )
             expect(response.status) == 415
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_ignores_placeholder_values(expect, client):
+            request, response = client.get(
+                "/images/custom/string.png?background=string"
+            )
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
 

@@ -110,10 +110,19 @@ def test_unknown_template(images):
 # Styles
 
 
-def test_style(images):
+def test_alternate_style(images):
     template = models.Template.objects.get("ds")
     lines = ["one", "two", "three"]
     utils.images.save(template, lines, style="maga", directory=images)
+
+
+@pytest.mark.asyncio
+async def test_custom_style(images):
+    url = "https://sn56.scholastic.com/content/dam/classroom-magazines/sn56/issues/2019-20/031620/coronavirus/16-SN56-20200316-VirusOutbreak-PO-2.png"
+    template = models.Template.objects.get("fine")
+    await template.check(url)
+    lines = ["102 °F", "this is fine"]
+    utils.images.save(template, lines, style=url, directory=images)
 
 
 # Text

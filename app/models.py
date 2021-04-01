@@ -1,4 +1,4 @@
-import hashlib
+import asyncio
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 import aiofiles
 import aiohttp
+import aiopath
 from aiohttp.client_exceptions import ClientConnectionError, InvalidURL
 from datafiles import datafile, field
 from sanic import Sanic
@@ -90,7 +91,10 @@ class Template:
     def _update_styles(self):
         styles = []
         for path in self.directory.iterdir():
-            if path.stem not in {"config", settings.DEFAULT_STYLE}:
+            if not path.stem.startswith("_") and path.stem not in {
+                "config",
+                settings.DEFAULT_STYLE,
+            }:
                 styles.append(path.stem)
         styles.sort()
         if styles != self.styles:
@@ -113,6 +117,10 @@ class Template:
     def get_image(self, style: str = "") -> Path:
         style = style or settings.DEFAULT_STYLE
 
+        if "://" in style:
+            url = style
+            style = utils.text.fingerprint(url)
+
         self.directory.mkdir(exist_ok=True)
         for path in self.directory.iterdir():
             if path.stem == style:
@@ -121,6 +129,7 @@ class Template:
         if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.id}")
             return self.directory / f"{settings.DEFAULT_STYLE}.img"
+
         logger.warning(f"Style {style!r} not available for {self.id}")
         return self.get_image()
 
@@ -173,6 +182,7 @@ class Template:
         *,
         extension: str = "",
         background: str = "",
+        style: str = "",
         external: bool = False,
     ):
         if extension in {"jpg", "png"}:
@@ -185,7 +195,7 @@ class Template:
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
-            **utils.urls.params(request, background=background),
+            **utils.urls.params(request, background=background, style=style),
         )
         return utils.urls.clean(url)
 
@@ -199,7 +209,7 @@ class Template:
     ) -> Path:
         slug = utils.text.encode(text_lines)
         variant = str(self.text) + str(style) + str(size) + watermark
-        fingerprint = hashlib.sha1(variant.encode()).hexdigest()
+        fingerprint = utils.text.fingerprint(variant, prefix="")
         filename = f"{slug}.{fingerprint}.{ext}"
         return Path(self.id) / filename
 
@@ -214,7 +224,7 @@ class Template:
             else:
                 return cls.objects.get_or_none(id) or cls.objects.get("_error")
 
-        id = "_custom-" + hashlib.sha1(url.encode()).hexdigest()
+        id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
         if template.image.exists() and not settings.DEBUG:
             logger.info(f"Found background {url} at {template.image}")
@@ -242,6 +252,45 @@ class Template:
                 template.image.unlink()
 
         return template
+
+    async def check(self, style: str) -> bool:
+        if not style:
+            return True
+        if style in self.styles:
+            return True
+        if "://" not in style:
+            return False
+
+        url = style
+        ext = urlparse(url).path.split(".")[-1]
+        filename = utils.text.fingerprint(url, suffix="." + ext)
+        path = aiopath.AsyncPath(self.directory) / filename
+
+        if await path.exists() and not settings.DEBUG:
+            logger.info(f"Found overlay {url} at {path}")
+            return True
+
+        logger.info(f"Saving overlay {url} to {path}")
+        async with aiohttp.ClientSession() as session:
+            try:
+                async with session.get(url) as response:
+                    if response.status == 200:
+                        f = await aiofiles.open(path, mode="wb")  # type: ignore
+                        await f.write(await response.read())
+                        await f.close()
+                    else:
+                        logger.error(f"{response.status} response from {url}")
+            except (InvalidURL, ClientConnectionError, AssertionError):
+                logger.error(f"Invalid response from {url}")
+
+        if await path.exists():
+            try:
+                await asyncio.to_thread(utils.images.embed, Path(path), self.image)
+            except (OSError, SyntaxError) as e:
+                logger.error(e)
+                await path.unlink()
+
+        return await path.exists()
 
     def delete(self):
         if self.directory.exists():

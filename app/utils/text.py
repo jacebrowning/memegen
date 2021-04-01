@@ -1,3 +1,6 @@
+import hashlib
+
+
 def encode(lines: list[str]) -> str:
     encoded_lines = []
 
@@ -63,3 +66,7 @@ def decode(slug: str) -> list[str]:
 def normalize(slug: str) -> tuple[str, bool]:
     normalized_slug = encode(decode(slug))
     return normalized_slug, slug != normalized_slug
+
+
+def fingerprint(value: str, *, prefix="_custom-", suffix="") -> str:
+    return prefix + hashlib.sha1(value.encode()).hexdigest() + suffix
