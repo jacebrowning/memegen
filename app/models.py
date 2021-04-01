@@ -140,9 +140,6 @@ class Template:
         if style in self.styles:
             return True
 
-        if style == "string":  # Swagger UI placeholder value
-            return True
-
         if "://" not in style:
             return False
 

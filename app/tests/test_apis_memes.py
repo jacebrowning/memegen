@@ -200,8 +200,8 @@ def describe_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_ignores_placeholder_styles(expect, client):
-            request, response = client.get("/images/ds/one/two.png?style=string")
+        def it_ignores_placeholder_values(expect, client):
+            request, response = client.get("/images/string/string.png?style=string")
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
@@ -232,6 +232,13 @@ def describe_detail():
                 "?background=http://example.com/does_not_exist.png"
             )
             expect(response.status) == 415
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_ignores_placeholder_values(expect, client):
+            request, response = client.get(
+                "/images/custom/string.png?background=string"
+            )
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
 

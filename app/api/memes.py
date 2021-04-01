@@ -367,7 +367,8 @@ async def render_image(
             if not template.image.exists():
                 logger.error(f"Unable to download image URL: {url}")
                 template = models.Template.objects.get("_error")
-                status = 415
+                if url != settings.PLACEHOLDER:
+                    status = 415
         else:
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
@@ -378,13 +379,14 @@ async def render_image(
         if not template or not template.image.exists():
             logger.error(f"No such template: {id}")
             template = models.Template.objects.get("_error")
-            status = 404
+            if id != settings.PLACEHOLDER:
+                status = 404
 
         style = request.args.get("style") or request.args.get("alt")
-        # TODO: use this method above?
         if not await template.ensure_image(style):
             logger.error(f"Invalid style for template: {style}")
-            status = 422
+            if style != settings.PLACEHOLDER:
+                status = 422
 
     size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
     path = await asyncio.to_thread(
