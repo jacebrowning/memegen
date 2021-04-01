@@ -249,7 +249,12 @@ class Template:
             return False
 
         url = style
-        ext = urlparse(url).path.split(".")[-1]
+        try:
+            _stem, ext = urlparse(url).path.rsplit(".", 1)
+        except ValueError:
+            logger.error(f"Unable to determine image extension: {url}")
+            return False
+
         filename = utils.text.fingerprint(url, suffix="." + ext)
         path = aiopath.AsyncPath(self.directory) / filename
 
