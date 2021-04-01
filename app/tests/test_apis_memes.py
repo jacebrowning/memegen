@@ -221,11 +221,6 @@ def describe_detail():
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_handles_invalid_urls(expect, client):
-            request, response = client.get("/images/fine/test.png?style=http://foobar")
-            expect(response.status) == 422
-            expect(response.headers["content-type"]) == "image/png"
-
         def it_handles_missing_urls(expect, client):
             request, response = client.get(
                 "/images/fine/test.png?style=http://example.com/does_not_exist.png"

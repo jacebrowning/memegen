@@ -384,7 +384,6 @@ async def render_image(
 
         style = request.args.get("style") or request.args.get("alt")
         if not await template.check(style):
-            logger.error(f"Invalid style for template: {style}")
             if style != settings.PLACEHOLDER:
                 status = 422
 

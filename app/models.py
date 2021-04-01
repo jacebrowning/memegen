@@ -4,10 +4,7 @@ from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse
 
-import aiofiles
-import aiohttp
 import aiopath
-from aiohttp.client_exceptions import ClientConnectionError, InvalidURL
 from datafiles import datafile, field
 from sanic import Sanic
 from sanic.log import logger
@@ -130,7 +127,7 @@ class Template:
             logger.debug(f"No default background image for template: {self.id}")
             return self.directory / f"{settings.DEFAULT_STYLE}.img"
 
-        logger.warning(f"Style {style!r} not available for {self.id}")
+        logger.warning(f"Style {style!r} not available for template: {self.id}")
         return self.get_image()
 
     def jsonify(self, app: Sanic) -> dict:
@@ -228,28 +225,17 @@ class Template:
         template = cls.objects.get_or_create(id, url)
         if template.image.exists() and not settings.DEBUG:
             logger.info(f"Found background {url} at {template.image}")
+            return template
 
-        else:
-            logger.info(f"Saving background {url} to {template.image}")
-            async with aiohttp.ClientSession() as session:
-                try:
-                    async with session.get(url) as response:
-                        if response.status == 200:
-                            template.directory.mkdir(exist_ok=True)
-                            f = await aiofiles.open(template.image, mode="wb")  # type: ignore
-                            await f.write(await response.read())
-                            await f.close()
-                        else:
-                            logger.error(f"{response.status} response from {url}")
-                except (InvalidURL, ClientConnectionError, AssertionError):
-                    logger.error(f"Invalid response from {url}")
+        logger.info(f"Saving background {url} to {template.image}")
+        if not await utils.http.download(url, template.image):
+            return template
 
-        if template.image.exists():
-            try:
-                utils.images.load(template.image)
-            except (OSError, SyntaxError) as e:
-                logger.error(e)
-                template.image.unlink()
+        try:
+            utils.images.load(template.image)
+        except (OSError, SyntaxError) as e:
+            logger.error(e)
+            template.image.unlink()
 
         return template
 
@@ -259,6 +245,7 @@ class Template:
         if style in self.styles:
             return True
         if "://" not in style:
+            logger.error(f"Invalid style for {self.id} template: {style}")
             return False
 
         url = style
@@ -271,24 +258,14 @@ class Template:
             return True
 
         logger.info(f"Saving overlay {url} to {path}")
-        async with aiohttp.ClientSession() as session:
-            try:
-                async with session.get(url) as response:
-                    if response.status == 200:
-                        f = await aiofiles.open(path, mode="wb")  # type: ignore
-                        await f.write(await response.read())
-                        await f.close()
-                    else:
-                        logger.error(f"{response.status} response from {url}")
-            except (InvalidURL, ClientConnectionError, AssertionError):
-                logger.error(f"Invalid response from {url}")
+        if not await utils.http.download(url, path):
+            return False
 
-        if await path.exists():
-            try:
-                await asyncio.to_thread(utils.images.embed, Path(path), self.image)
-            except (OSError, SyntaxError) as e:
-                logger.error(e)
-                await path.unlink()
+        try:
+            await asyncio.to_thread(utils.images.embed, Path(path), self.image)
+        except (OSError, SyntaxError) as e:
+            logger.error(e)
+            await path.unlink()
 
         return await path.exists()
 
