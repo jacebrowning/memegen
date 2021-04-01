@@ -72,7 +72,7 @@ def embed(foreground_path: Path, background_path: Path) -> Image:
         (background.size[1] - foreground.size[1]) // 2,
     )
     background.paste(foreground, offset, foreground.convert("RGBA"))
-    background.save(foreground_path)
+    background.convert("RGB").save(foreground_path)
     return foreground_path
 
 

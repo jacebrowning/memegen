@@ -92,11 +92,11 @@ class Template:
     def _update_styles(self):
         styles = []
         for path in self.directory.iterdir():
-            style = path.stem
-            if style.startswith("_") or style in {"config", settings.DEFAULT_STYLE}:
-                continue
-            else:
-                styles.append(style)
+            if not path.stem.startswith("_") and path.stem not in {
+                "config",
+                settings.DEFAULT_STYLE,
+            }:
+                styles.append(path.stem)
         styles.sort()
         if styles != self.styles:
             self.styles = styles
@@ -130,16 +130,15 @@ class Template:
         if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.id}")
             return self.directory / f"{settings.DEFAULT_STYLE}.img"
+
         logger.warning(f"Style {style!r} not available for {self.id}")
         return self.get_image()
 
     async def ensure_image(self, style: str) -> bool:
         if not style:
             return True
-
         if style in self.styles:
             return True
-
         if "://" not in style:
             return False
 
@@ -157,7 +156,6 @@ class Template:
             try:
                 async with session.get(url) as response:
                     if response.status == 200:
-                        # template.directory.mkdir(exist_ok=True)
                         f = await aiofiles.open(path, mode="wb")  # type: ignore
                         await f.write(await response.read())
                         await f.close()
