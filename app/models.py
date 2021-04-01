@@ -60,17 +60,28 @@ class Text:
         return text
 
 
+@datafile
+class Overlay:
+
+    x: float = 0.5
+    y: float = 0.5
+    scale: float = 0.25
+
+
 @datafile("../templates/{self.id}/config.yml", defaults=True)
 class Template:
 
     id: str
     name: str = ""
     source: Optional[str] = None
+
     text: list[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
     )
-    styles: list[str] = field(default_factory=lambda: [])
     example: list[str] = field(default_factory=lambda: ["your text", "goes here"])
+
+    styles: list[str] = field(default_factory=lambda: [])
+    overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
 
     def __str__(self):
         return str(self.directory)
@@ -267,7 +278,7 @@ class Template:
             return False
 
         try:
-            await asyncio.to_thread(utils.images.embed, Path(path), self.image)
+            await asyncio.to_thread(utils.images.embed, self, Path(path), self.image)
         except (OSError, SyntaxError) as e:
             logger.error(e)
             await path.unlink()
