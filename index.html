@@ -144,6 +144,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#custom-overlays" class="nav-link">Custom Overlays</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#custom-backgrounds" class="nav-link">Custom Backgrounds</a>
               <ul class="nav flex-column">
               </ul>
@@ -195,7 +199,7 @@
 </tbody>
 </table>
 <h2 id="custom-dimensions">Custom Dimensions</h2>
-<p>Images can be scaled to a specific width via <code>?width=&lt;int&gt;</code> or a specific height via <code>?height=&lt;int&gt;</code>. If both parameters are provided (<code>?width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
+<p>Images can be scaled to a specific width or height using the <code>width=&lt;int&gt;</code> and <code>height=&lt;int&gt;</code> query parameters. If both are provided (<code>width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
 <p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
 <p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600&amp;token=e3ctlu471cv4k0hx698p" /></p>
 <h2 id="special-characters">Special Characters</h2>
@@ -223,7 +227,7 @@
 <h1 id="templates">Templates</h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates/">https://api.memegen.link/templates/</a></p>
 <h2 id="alternate-styles">Alternate Styles</h2>
-<p>Some memes come in multiple forms, which can be selected via <code>?style=&lt;style&gt;</code>.</p>
+<p>Some memes come in multiple forms, which can be selected using the <code>style=&lt;str&gt;</code> query parameter.</p>
 <p>For example, the <a href="https://api.memegen.link/templates/ds/">https://api.memegen.link/templates/ds/</a> template provides these styles:</p>
 <table>
 <thead>
@@ -239,8 +243,13 @@
 </tr>
 </tbody>
 </table>
+<h2 id="custom-overlays">Custom Overlays</h2>
+<p>The <code>style</code> query parameter can also be an image URL to overlay on the default background image.</p>
+<p>For example, <a href="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png">https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png</a> produces:</p>
+<p><img alt="Custom Overlay" src="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&amp;token=cy49tv234bu3jzgw587o" /></p>
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
-<p>You can also use your own image URL as the background. For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
+<p>You can also use your own image URL as the background.</p>
+<p>For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
 <p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;token=ahby9x2nlsbk0gxdmpo5" /></p>
 <h1 id="sample-code">Sample Code</h1>
 <p>Here are some popular apps and integrations to check out:</p>
@@ -375,5 +384,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-04-02 15:22:57.998250+00:00
+Build Date UTC : 2021-04-02 21:17:29.585564+00:00
 -->
