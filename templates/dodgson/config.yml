@@ -18,7 +18,7 @@ text:
 styles:
   -
 example:
-  - "we've got dodgson here!"
+  - we've got dodgson here!
   - see? nobody cares
 overlay:
   - center_x: 0.5
