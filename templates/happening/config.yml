@@ -15,8 +15,12 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
+example:
+  - ""
+  - it's happening
 styles:
   -
-example:
-  - ''
-  - it's happening
+overlay:
+  - x: 0.425
+    y: 0.3
+    scale: 0.45

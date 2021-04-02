@@ -15,8 +15,12 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - remember this meme?
   - pepperidge farm remembers
+styles:
+  -
+overlay:
+  - x: 0.41
+    y: 0.6
+    scale: 0.25

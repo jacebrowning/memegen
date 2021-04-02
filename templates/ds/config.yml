@@ -22,8 +22,12 @@ text:
     angle: 0.0
     scale_x: 0.92
     scale_y: 0.15
-styles:
-  - maga
 example:
   - The dress is black and blue.
   - The dress is gold and white.
+styles:
+  - maga
+overlay:
+  - x: 0.525
+    y: 0.55
+    scale: 0.4

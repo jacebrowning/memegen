@@ -22,9 +22,13 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - Engineer
   - PowerPoint
   - Is this Photoshop?
+overlay:
+  - x: 0.8
+    y: 0.2
+    scale: 0.4
+styles:
+  -
