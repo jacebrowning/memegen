@@ -263,8 +263,8 @@ class Template:
         try:
             _stem, ext = urlparse(url).path.rsplit(".", 1)
         except ValueError:
-            logger.error(f"Unable to determine image extension: {url}")
-            return False
+            logger.warning(f"Unable to determine image extension: {url}")
+            ext = "jpg"
 
         filename = utils.text.fingerprint(url, suffix="." + ext)
         path = aiopath.AsyncPath(self.directory) / filename
