@@ -1,5 +1,9 @@
 # Revision History
 
+## 8.5
+
+- Added support for custom overlays when `style` is an image URL.
+
 ## 8.4
 
 - Updated `/images/custom` to return previous results with `GET` requests.

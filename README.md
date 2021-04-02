@@ -29,7 +29,7 @@ Clients can request `.jpg` instead of `.png` for smaller files:
 
 ## Custom Dimensions
 
-Images can be scaled to a specific width via `?width=<int>` or a specific height via `?height=<int>`. If both parameters are provided (`?width=<int>&height=<int>`), the image will be padded to the exact dimensions.
+Images can be scaled to a specific width or height using the `width=<int>` and `height=<int>` query parameters. If both are provided (`width=<int>&height=<int>`), the image will be padded to the exact dimensions.
 
 For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
 
@@ -67,7 +67,7 @@ The list of predefined meme templates is available here: <https://api.memegen.li
 
 ## Alternate Styles
 
-Some memes come in multiple forms, which can be selected via `?style=<style>`.
+Some memes come in multiple forms, which can be selected using the `style=<str>` query parameter.
 
 For example, the <https://api.memegen.link/templates/ds/> template provides these styles:
 
@@ -75,9 +75,20 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 | :------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![Default Style](https://api.memegen.link/images/ds.png) | ![Alternate Style](https://api.memegen.link/images/ds.png?style=maga) |
 
+
+## Custom Overlays
+
+The `style` query parameter can also be an image URL to overlay on the default background image.
+
+For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png> produces:
+
+![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&token=cy49tv234bu3jzgw587o)
+
 ## Custom Backgrounds
 
-You can also use your own image URL as the background. For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
+You can also use your own image URL as the background.
+
+For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&token=ahby9x2nlsbk0gxdmpo5)
 
