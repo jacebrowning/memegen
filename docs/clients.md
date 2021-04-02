@@ -1,7 +1,7 @@
 # Authentication
 
 Unauthenticated API requests are watermarked and may be rate limited.
-Those providing sponsorship at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or above are welcome to an API key.
+Individuals sponsoring this project at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or more are welcome to an API key.
 Please <a href="mailto:support@maketested.com?subject=memegen.link">contact support</a> to request one or inquire about pricing for your specific use case.
 
 ## HTTP Header
@@ -52,7 +52,7 @@ For example, <https://api.memegen.link/images/preview.jpg?template=iw&lines[]=li
 
 ![Live Preview](https://api.memegen.link/images/preview.jpg?template=iw&lines[]=live+preview&lines[]=while+typing)
 
-The `template` parameter can be a template ID or URL:
+The `template=<str>` query parameter can be a template ID or URL:
 
 | Mode              | Example                                                                                                                                                                                                                                                          |
 | :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -62,7 +62,9 @@ The `template` parameter can be a template ID or URL:
 
 # Custom Watermark
 
-Authenticated requests can also add their own watermark to images using the `watermark` query parameter. For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com> produces:
+Authenticated requests can also add their own watermark to images using the `watermark=<str>` query parameter.
+
+For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com> produces:
 
 ![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com&height=400)
 
