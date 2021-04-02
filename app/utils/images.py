@@ -67,14 +67,11 @@ def embed(template: Template, foreground_path: Path, background_path: Path) -> I
     foreground = load(foreground_path)
     background = load(background_path)
 
-    size = background.size[0] * overlay.scale, background.size[1] * overlay.scale
+    size = overlay.get_size(background.size)
     foreground.thumbnail(size)
 
-    offset = (
-        int(background.size[0] * overlay.x - foreground.size[0] / 2),
-        int(background.size[1] * overlay.y - foreground.size[1] / 2),
-    )
-    background.paste(foreground, offset, foreground.convert("RGBA"))
+    box = overlay.get_box(background.size)
+    background.paste(foreground, box, foreground.convert("RGBA"))
 
     background.convert("RGB").save(foreground_path)
     return foreground_path
@@ -137,14 +134,8 @@ def render_image(
     if settings.DEBUG:
         draw = ImageDraw.Draw(image)
         for overlay in template.overlay:
-            size = image.size[0] * overlay.scale, image.size[1] * overlay.scale
-            xy = (
-                image.size[0] * overlay.x - size[0] // 2,
-                image.size[1] * overlay.y - size[1] // 2,
-                image.size[0] * overlay.x + size[0] // 2,
-                image.size[1] * overlay.y + size[1] // 2,
-            )
-            draw.rectangle(xy, outline="lime")
+            xy = overlay.get_box(image.size)
+            draw.rectangle(xy, outline="fuchsia")
 
     if pad:
         image = add_blurred_background(image, background, *size)

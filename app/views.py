@@ -22,10 +22,10 @@ def index(request):
 async def examples(request):
     examples = await asyncio.to_thread(helpers.get_example_images, request)
     urls = [example[0] for example in examples]
-    if "debug" in request.args and settings.DEBUG:
-        refresh = True
+    if settings.DEBUG:
+        refresh = int(request.args.get("refresh", 5 * 60))
     else:
-        refresh = False
+        refresh = 0
         random.shuffle(urls)
     content = utils.html.gallery(urls, columns=True, refresh=refresh)
     return response.html(content)
@@ -38,7 +38,7 @@ async def test(request):
         return response.redirect("/")
 
     urls = await asyncio.to_thread(helpers.get_test_images, request)
-    content = utils.html.gallery(urls, columns=False, refresh=True)
+    content = utils.html.gallery(urls, columns=False, refresh=3)
     return response.html(content)
 
 

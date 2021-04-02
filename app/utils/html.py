@@ -58,6 +58,7 @@ body {
 </style>
 """.strip()
 
+
 REFRESH_SCRIPT = r"""
 <script>
     setInterval(function() {
@@ -96,15 +97,16 @@ def gallery(
     urls: Iterable[str],
     *,
     columns: bool,
-    refresh: bool,
-    rate: float = 3.0,
+    refresh: int,
     query_string: str = "",
 ) -> str:
     extra = "&" + query_string if query_string else ""
     if columns:
-        return _columns_refresh(urls, rate, extra) if refresh else _columns(urls)
+        if refresh:
+            return _columns_debug(urls, refresh, extra)
+        return _columns(urls)
     assert refresh
-    return _grid_refresh(urls, rate, extra)
+    return _grid_debug(urls, refresh, extra)
 
 
 def _columns(urls: Iterable[str]) -> str:
@@ -129,7 +131,7 @@ def _columns(urls: Iterable[str]) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _columns_refresh(urls: Iterable[str], rate: float, extra: str) -> str:
+def _columns_debug(urls: Iterable[str], refresh: int, extra: str) -> str:
     elements = []
 
     for url in urls:
@@ -141,7 +143,8 @@ def _columns_refresh(urls: Iterable[str], rate: float, extra: str) -> str:
             """
         )
 
-    elements.append(REFRESH_SCRIPT.replace("{interval}", str(int(rate * 3000))))
+    if refresh:
+        elements.append(REFRESH_SCRIPT.replace("{interval}", str(refresh * 1000)))
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 
@@ -151,7 +154,7 @@ def _columns_refresh(urls: Iterable[str], rate: float, extra: str) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _grid_refresh(urls: Iterable[str], rate: float, extra: str):
+def _grid_debug(urls: Iterable[str], refresh: int, extra: str):
     elements = []
 
     for url in urls:
@@ -163,7 +166,7 @@ def _grid_refresh(urls: Iterable[str], rate: float, extra: str):
             """
         )
 
-    elements.append(REFRESH_SCRIPT.replace("{interval}", str(int(rate * 3000))))
+    elements.append(REFRESH_SCRIPT.replace("{interval}", str(refresh * 1000)))
 
     images = "\n".join(elements).replace("\n" + " " * 12, "\n")
 

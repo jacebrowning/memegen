@@ -11,7 +11,7 @@ from sanic.log import logger
 from spongemock import spongemock
 
 from . import settings, utils
-from .types import Dimensions, Point
+from .types import Box, Dimensions, Point
 
 
 @datafile
@@ -67,6 +67,22 @@ class Overlay:
     y: float = 0.5
     scale: float = 0.25
 
+    def get_size(self, image_size: Dimensions) -> Dimensions:
+        image_width, image_height = image_size
+        dimension = min(int(image_width * self.scale), int(image_height * self.scale))
+        return dimension, dimension
+
+    def get_box(self, image_size: Dimensions) -> Box:
+        image_width, image_height = image_size
+        overlay_width, overlay_height = self.get_size(image_size)
+        box = (
+            int(image_width * self.x - overlay_width / 2),
+            int(image_height * self.y - overlay_height / 2),
+            int(image_width * self.x + overlay_width / 2),
+            int(image_height * self.y + overlay_height / 2),
+        )
+        return box
+
 
 @datafile("../templates/{self.id}/config.yml", defaults=True)
 class Template:
@@ -80,8 +96,8 @@ class Template:
     )
     example: list[str] = field(default_factory=lambda: ["your text", "goes here"])
 
-    styles: list[str] = field(default_factory=lambda: [])
     overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
+    styles: list[str] = field(default_factory=lambda: [])
 
     def __str__(self):
         return str(self.directory)

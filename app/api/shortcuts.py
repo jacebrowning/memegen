@@ -101,8 +101,7 @@ async def custom(request, template_id, text_paths):
     content = utils.html.gallery(
         [f"/images/{template_id}/{text_paths}.png"],
         columns=False,
-        refresh=True,
-        rate=1.0,
+        refresh=3,
         query_string=request.query_string,
     )
     return response.html(content)
