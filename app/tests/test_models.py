@@ -75,7 +75,7 @@ def describe_template():
 
         def it_creates_template_directory_automatically(expect):
             template = Template.objects.get_or_create("_custom-empty")
-            template.datafile.path.unlink()
+            template.datafile.path.unlink(missing_ok=True)
             template.datafile.path.parent.rmdir()
             log.info(template.image)
             expect(template.datafile.path.parent.exists()) == True

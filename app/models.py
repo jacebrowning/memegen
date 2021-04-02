@@ -258,19 +258,21 @@ class Template:
 
         id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
-        if template.image.exists() and not settings.DEBUG and not force:
-            logger.info(f"Found background {url} at {template.image}")
+        path = aiopath.AsyncPath(template.image)
+
+        if await path.exists() and not settings.DEBUG and not force:
+            logger.info(f"Found background {url} at {path}")
             return template
 
-        logger.info(f"Saving background {url} to {template.image}")
-        if not await utils.http.download(url, template.image):
+        logger.info(f"Saving background {url} to {path}")
+        if not await utils.http.download(url, path):
             return template
 
         try:
-            utils.images.load(template.image)
+            await asyncio.to_thread(utils.images.load, Path(path))
         except (OSError, SyntaxError) as e:
             logger.error(e)
-            template.image.unlink()
+            await path.unlink(missing_ok=True)
 
         return template
 
@@ -305,7 +307,7 @@ class Template:
             await asyncio.to_thread(utils.images.embed, self, Path(path), self.image)
         except (OSError, SyntaxError) as e:
             logger.error(e)
-            await path.unlink()
+            await path.unlink(missing_ok=True)
 
         return await path.exists()
 
