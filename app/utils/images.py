@@ -70,7 +70,7 @@ def embed(template: Template, foreground_path: Path, background_path: Path) -> I
     size = overlay.get_size(background.size)
     foreground.thumbnail(size)
 
-    box = overlay.get_box(background.size)
+    box = overlay.get_box(background.size, foreground.size)
     background.paste(foreground, box, foreground.convert("RGBA"))
 
     background.convert("RGB").save(foreground_path)

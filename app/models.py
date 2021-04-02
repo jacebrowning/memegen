@@ -67,19 +67,26 @@ class Overlay:
     y: float = 0.5
     scale: float = 0.25
 
-    def get_size(self, image_size: Dimensions) -> Dimensions:
-        image_width, image_height = image_size
-        dimension = min(int(image_width * self.scale), int(image_height * self.scale))
+    def get_size(self, background_size: Dimensions) -> Dimensions:
+        background_width, background_height = background_size
+        dimension = min(
+            int(background_width * self.scale),
+            int(background_height * self.scale),
+        )
         return dimension, dimension
 
-    def get_box(self, image_size: Dimensions) -> Box:
-        image_width, image_height = image_size
-        overlay_width, overlay_height = self.get_size(image_size)
+    def get_box(
+        self, background_size: Dimensions, foreground_size: Optional[Dimensions] = None
+    ) -> Box:
+        background_width, background_height = background_size
+        if foreground_size is None:
+            foreground_size = self.get_size(background_size)
+        foreground_width, foreground_height = foreground_size
         box = (
-            int(image_width * self.x - overlay_width / 2),
-            int(image_height * self.y - overlay_height / 2),
-            int(image_width * self.x + overlay_width / 2),
-            int(image_height * self.y + overlay_height / 2),
+            int(background_width * self.x - foreground_width / 2),
+            int(background_height * self.y - foreground_height / 2),
+            int(background_width * self.x + foreground_width / 2),
+            int(background_height * self.y + foreground_height / 2),
         )
         return box
 
@@ -96,8 +103,8 @@ class Template:
     )
     example: list[str] = field(default_factory=lambda: ["your text", "goes here"])
 
-    overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
     styles: list[str] = field(default_factory=lambda: [])
+    overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
 
     def __str__(self):
         return str(self.directory)
@@ -280,7 +287,7 @@ class Template:
             _stem, ext = urlparse(url).path.rsplit(".", 1)
         except ValueError:
             logger.warning(f"Unable to determine image extension: {url}")
-            ext = "jpg"
+            ext = "png"
 
         filename = utils.text.fingerprint(url, suffix="." + ext)
         path = aiopath.AsyncPath(self.directory) / filename
