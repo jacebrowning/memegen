@@ -78,7 +78,7 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 
 ## Custom Overlays
 
-The `style` query parameter can also be an image URL to overlay on the default background image.
+The `style=<str>` query parameter can also be an image URL to overlay on the default background image.
 
 For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png> produces:
 
