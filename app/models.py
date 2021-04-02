@@ -222,7 +222,7 @@ class Template:
         return Path(self.id) / filename
 
     @classmethod
-    async def create(cls, url: str) -> "Template":
+    async def create(cls, url: str, *, force=False) -> "Template":
         parts = urlparse(url)
         if parts.netloc == "api.memegen.link":
             logger.debug(f"Handling template URL: {url}")
@@ -234,7 +234,7 @@ class Template:
 
         id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
-        if template.image.exists() and not settings.DEBUG:
+        if template.image.exists() and not settings.DEBUG and not force:
             logger.info(f"Found background {url} at {template.image}")
             return template
 
@@ -250,7 +250,7 @@ class Template:
 
         return template
 
-    async def check(self, style: str) -> bool:
+    async def check(self, style: str, *, force=False) -> bool:
         if not style:
             return True
         if style in self.styles:
@@ -269,7 +269,7 @@ class Template:
         filename = utils.text.fingerprint(url, suffix="." + ext)
         path = aiopath.AsyncPath(self.directory) / filename
 
-        if await path.exists() and not settings.DEBUG:
+        if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {url} at {path}")
             return True
 

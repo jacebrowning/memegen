@@ -82,8 +82,7 @@ def describe_template():
 
     def describe_create():
         @pytest.mark.asyncio
-        async def it_downloads_the_image(expect, monkeypatch):
-            monkeypatch.setattr(settings, "DEBUG", True)
+        async def it_downloads_the_image(expect):
             url = "https://www.gstatic.com/webp/gallery/1.jpg"
             path = (
                 Path.cwd()
@@ -91,7 +90,7 @@ def describe_template():
                 / "_custom-2d3c91e23b91d6387050e85efc1f3acb39b5a95d"
                 / "default.img"
             )
-            template = await Template.create(url)
+            template = await Template.create(url, force=True)
             expect(template.image) == path
             expect(template.image.exists()) == True
 
@@ -145,15 +144,13 @@ def describe_template():
 
     def describe_check():
         @pytest.mark.asyncio
-        async def it_determines_overlay_file_extension(expect, monkeypatch):
-            monkeypatch.setattr(settings, "DEBUG", True)
+        async def it_determines_overlay_file_extension(expect):
             url = "https://i.guim.co.uk/img/media/8a13052d4db7dcd508af948e5db7b04598e03190/0_294_5616_3370/master/5616.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=bcaa4eed2c1e6dab61c41a61e41433d9"
             template = Template.objects.get("fine")
-            expect(await template.check(url)) == True
+            expect(await template.check(url, force=True)) == True
 
         @pytest.mark.asyncio
-        async def it_rejects_images_lacking_file_extension(expect, monkeypatch):
-            monkeypatch.setattr(settings, "DEBUG", True)
+        async def it_rejects_images_lacking_file_extension(expect):
             url = "https://camo.githubusercontent.com/ce9c7a173f38722e129d5ae832a11c928ff72683fae74cbcb9fff41fd9957e63/68747470733a2f2f75706c6f61642e77696b696d656469612e6f72672f77696b6970656469612f636f6d6d6f6e732f7468756d622f332f33662f4769745f69636f6e2e7376672f3130323470782d4769745f69636f6e2e7376672e706e67"
             template = Template.objects.get("fine")
-            expect(await template.check(url)) == False
+            expect(await template.check(url, force=True)) == False
