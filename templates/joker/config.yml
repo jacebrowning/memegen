@@ -20,3 +20,7 @@ styles:
 example:
   - it's simple
   - kill the batman
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

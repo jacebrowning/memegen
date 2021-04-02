@@ -20,3 +20,7 @@ styles:
 example:
   - if i could use this meme
   - i would be so happy
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

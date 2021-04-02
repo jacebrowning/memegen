@@ -20,3 +20,7 @@ styles:
 example:
   - trip guy on the street
   - he was running with a stolen purse
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

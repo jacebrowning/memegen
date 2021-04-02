@@ -20,3 +20,7 @@ styles:
 example:
   - when you're watching a movie
   - and your parents walk in at the sex scene
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

@@ -20,3 +20,7 @@ styles:
 example:
   - i'm so sorry
   - i haven't memorized the internet
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

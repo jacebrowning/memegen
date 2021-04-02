@@ -20,3 +20,7 @@ styles:
 example:
   - you keep using that word
   - i do not think it means what you think it means
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

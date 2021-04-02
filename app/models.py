@@ -115,9 +115,16 @@ class Template:
     @property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
-            self._update_styles()
             self._update_example()
+            self._update_styles()
+            self.datafile.save()
         return not self.id.startswith("_") and self.image.suffix != ".img"
+
+    def _update_example(self):
+        for line in self.example:
+            if line and not line.isupper():
+                return
+        self.example = [line.lower() for line in self.example]
 
     def _update_styles(self):
         styles = []
@@ -130,12 +137,6 @@ class Template:
         styles.sort()
         if styles != self.styles:
             self.styles = styles
-
-    def _update_example(self):
-        for line in self.example:
-            if line and not line.isupper():
-                return
-        self.example = [line.lower() for line in self.example]
 
     @property
     def directory(self) -> Path:

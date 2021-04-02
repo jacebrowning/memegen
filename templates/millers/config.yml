@@ -32,7 +32,11 @@ text:
 styles:
   -
 example:
-  - ""
+  - ''
   - You are making 500 thousand dollars and you were only gonna pay me 30?
   - You're getting 30 grand? I'm getting a thousand!
   - You guys are getting paid?
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

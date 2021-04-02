@@ -20,3 +20,7 @@ styles:
 example:
   - you're gonna like the way you look
   - i guarantee it
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

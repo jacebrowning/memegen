@@ -20,3 +20,7 @@ styles:
 example:
   - you know what really grinds my gears?
   - when people post images of cogs that don't mesh
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

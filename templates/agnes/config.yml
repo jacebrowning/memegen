@@ -20,3 +20,7 @@ styles:
 example:
   - ''
   - i have read and agree to the terms and conditions
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

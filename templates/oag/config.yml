@@ -20,3 +20,7 @@ styles:
 example:
   - i know you received my email
   - because i checked your inbox
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

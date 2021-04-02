@@ -20,3 +20,7 @@ styles:
 example:
   - this meme is
   - so hot right now
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

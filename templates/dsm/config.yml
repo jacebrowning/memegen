@@ -20,3 +20,7 @@ styles:
 example:
   - they will never find your body
   - as attractive as i do
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

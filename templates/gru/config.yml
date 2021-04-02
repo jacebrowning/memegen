@@ -36,3 +36,7 @@ example:
   - Make a meme
   - No one likes it
   - No one likes it
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

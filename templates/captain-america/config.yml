@@ -28,3 +28,7 @@ example:
   - Have you ever eaten a clock?
   - No, why?
   - It's time consuming.
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

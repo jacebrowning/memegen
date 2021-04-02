@@ -25,3 +25,7 @@ styles:
 example:
   - such meme
   - very skill
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

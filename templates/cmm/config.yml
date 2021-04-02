@@ -5,10 +5,14 @@ text:
     style: upper
     anchor_x: 0.33
     anchor_y: 0.33
-    angle: 23
+    angle: 23.0
     scale_x: 0.46
     scale_y: 0.25
 styles:
   -
 example:
   - pineapples don't belong on pizza
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

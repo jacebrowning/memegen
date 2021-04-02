@@ -20,3 +20,7 @@ styles:
 example:
   - do you want ants?
   - because that's how you get ants
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

@@ -20,3 +20,7 @@ styles:
 example:
   - and then i said
   - the exam will only contain what we've covered in lectures
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

@@ -15,10 +15,14 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
+example:
+  - ""
 styles:
   - beat
-  - no
+  - "no"
   - padding
-  - yes
-example:
-  - ''
+  - "yes"
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

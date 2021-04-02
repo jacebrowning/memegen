@@ -20,3 +20,7 @@ styles:
 example:
   - can't get fired
   - if you don't have a job
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
