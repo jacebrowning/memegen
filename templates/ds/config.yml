@@ -28,6 +28,6 @@ example:
 styles:
   - maga
 overlay:
-  - x: 0.525
-    y: 0.55
+  - center_x: 0.525
+    center_y: 0.55
     scale: 0.4

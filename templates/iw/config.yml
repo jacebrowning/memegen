@@ -15,12 +15,12 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
-overlay:
-  - x: 0.505
-    y: 0.515
-    scale: 0.525
 example:
   - does testing
   - in production
+styles:
+  -
+overlay:
+  - center_x: 0.505
+    center_y: 0.515
+    scale: 0.525

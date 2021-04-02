@@ -21,6 +21,6 @@ example:
 styles:
   -
 overlay:
-  - x: 0.41
-    y: 0.6
+  - center_x: 0.41
+    center_y: 0.6
     scale: 0.25
