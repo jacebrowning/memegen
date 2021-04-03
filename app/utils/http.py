@@ -1,8 +1,16 @@
 import aiofiles
 import aiohttp
-from aiohttp.client_exceptions import ClientConnectionError, InvalidURL
+import aiohttp.client_exceptions
 from aiopath import AsyncPath
 from sanic.log import logger
+
+_EXCEPTIONS = (
+    aiohttp.client_exceptions.ClientConnectionError,
+    aiohttp.client_exceptions.InvalidURL,
+    aiohttp.client_exceptions.TooManyRedirects,
+    AssertionError,
+    UnicodeError,
+)
 
 
 async def download(url: str, path: AsyncPath) -> bool:
@@ -18,7 +26,7 @@ async def download(url: str, path: AsyncPath) -> bool:
 
                 logger.error(f"{response.status} response from {url}")
 
-        except (InvalidURL, ClientConnectionError, AssertionError) as e:
+        except _EXCEPTIONS as e:
             message = str(e).strip("() ")
             logger.error(f"Invalid response from {url}: {message}")
 
