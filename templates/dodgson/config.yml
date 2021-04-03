@@ -15,12 +15,12 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - we've got dodgson here!
   - see? nobody cares
+styles:
+  -
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
-    scale: 0.25
+  - center_x: 0.25
+    center_y: 0.2
+    scale: 0.2

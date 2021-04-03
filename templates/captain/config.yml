@@ -15,12 +15,12 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - look at me
   - i am the captain now
+styles:
+  -
 overlay:
-  - center_x: 0.5
+  - center_x: 0.675
     center_y: 0.5
-    scale: 0.25
+    scale: 0.35

@@ -63,15 +63,16 @@ def load(path: Path) -> Image:
 
 
 def embed(template: Template, foreground_path: Path, background_path: Path) -> Image:
-    overlay = template.overlay[0]
-    foreground = load(foreground_path)
     background = load(background_path)
 
-    size = overlay.get_size(background.size)
-    foreground.thumbnail(size)
+    for overlay in template.overlay:
+        foreground = load(foreground_path)
 
-    box = overlay.get_box(background.size, foreground.size)
-    background.paste(foreground, box, foreground.convert("RGBA"))
+        size = overlay.get_size(background.size)
+        foreground.thumbnail(size)
+
+        box = overlay.get_box(background.size, foreground.size)
+        background.paste(foreground, box, foreground.convert("RGBA"))
 
     background.convert("RGB").save(foreground_path)
     return foreground_path

@@ -15,12 +15,12 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - ''
   - ''
+styles:
+  -
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
-    scale: 0.25
+  - center_x: 0.56
+    center_y: 0.32
+    scale: 0.175
