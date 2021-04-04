@@ -165,6 +165,10 @@ class Template:
         logger.warning(f"Style {style!r} not available for template: {self.id}")
         return self.get_image()
 
+    @property
+    def preview(self) -> Text:
+        return Text(color="gray", anchor_x=-0.12, anchor_y=-0.12, angle=15, scale_y=1.0)
+
     def jsonify(self, app: Sanic) -> dict:
         return {
             "id": self.id,
