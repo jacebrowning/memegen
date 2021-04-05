@@ -237,10 +237,11 @@ def get_image_elements(
     image_size: Dimensions,
     is_preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
-    if is_preview:
-        yield get_image_element(["PREVIEW"], 0, Text.preview(), image_size, watermark)
+
     for index, text in enumerate(template.text):
         yield get_image_element(lines, index, text, image_size, watermark)
+    if is_preview:
+        yield get_image_element(["PREVIEW"], 0, Text.preview(), image_size, watermark)
 
 
 def get_image_element(

@@ -29,7 +29,7 @@ class Text:
     @classmethod
     def preview(cls) -> "Text":
         return cls(
-            color="#80808080",
+            color="#80808099",
             anchor_x=0.2,
             anchor_y=0.2,
             angle=10,
@@ -56,7 +56,7 @@ class Text:
             width = 1
 
         if "#" in self.color:
-            color = "#00000080"
+            color = "#000000" + self.color[-2:]
 
         return width, color
 
