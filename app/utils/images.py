@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from sanic.log import logger
 
 from .. import settings
-from ..types import Dimensions, Offset, Point
+from ..types import Dimensions, Offset, Point, Text
 
 if TYPE_CHECKING:
     from ..models import Template
@@ -22,7 +22,14 @@ def preview(
 ) -> tuple[bytes, str]:
     path = template.build_path(lines, style, settings.PREVIEW_SIZE, "", "jpg")
     logger.info(f"Previewing meme for {path}")
-    image = render_image(template, style, lines, settings.PREVIEW_SIZE, pad=False)
+    image = render_image(
+        template,
+        style,
+        lines,
+        settings.PREVIEW_SIZE,
+        pad=False,
+        is_preview=True,
+    )
     stream = io.BytesIO()
     image.convert("RGB").save(stream, format="JPEG", quality=50)
     return stream.getvalue(), "image/jpeg"
@@ -85,6 +92,7 @@ def render_image(
     size: Dimensions,
     *,
     pad: Optional[bool] = None,
+    is_preview: bool = False,
     watermark: str = "",
 ) -> Image:
     background = load(template.get_image(style))
@@ -104,7 +112,7 @@ def render_image(
         stroke_width,
         stroke_fill,
         angle,
-    ) in get_image_elements(template, lines, watermark, image.size):
+    ) in get_image_elements(template, lines, watermark, image.size, is_preview):
 
         box = Image.new("RGBA", max_text_size)
         draw = ImageDraw.Draw(box)
@@ -223,31 +231,52 @@ def add_watermark(image: Image, text: str) -> Image:
 
 
 def get_image_elements(
-    template: Template, lines: list[str], watermark: str, image_size: Dimensions
+    template: Template,
+    lines: list[str],
+    watermark: str,
+    image_size: Dimensions,
+    is_preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
+    if is_preview:
+        yield get_image_element(["PREVIEW"], 0, Text.preview(), image_size, watermark)
     for index, text in enumerate(template.text):
-        point = text.get_anchor(image_size, watermark)
+        yield get_image_element(lines, index, text, image_size, watermark)
 
-        max_text_size = text.get_size(image_size)
-        max_font_size = int(image_size[1] / 9)
 
-        try:
-            line = lines[index]
-        except IndexError:
-            line = ""
-        else:
-            line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
+def get_image_element(
+    lines: list[str], index: int, text: Text, image_size: Dimensions, watermark: str
+):
+    point = text.get_anchor(image_size, watermark)
 
-        font = get_font(line, text.angle, max_text_size, max_font_size)
-        offset = get_text_offset(line, font, max_text_size)
+    max_text_size = text.get_size(image_size)
+    max_font_size = int(image_size[1] / 9)
 
-        stroke_fill = "black"
-        if text.color == "black":
-            stroke_width = 0
-        else:
-            stroke_width = get_stroke_width(font)
+    try:
+        line = lines[index]
+    except IndexError:
+        line = ""
+    else:
+        line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
 
-        yield point, offset, line, max_text_size, text.color, font.size, stroke_width, stroke_fill, text.angle
+    max_text_size = text.get_size(image_size)
+    max_font_size = int(image_size[1] / 9)
+
+    font = get_font(line, text.angle, max_text_size, max_font_size)
+    offset = get_text_offset(line, font, max_text_size)
+
+    stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
+
+    return (
+        point,
+        offset,
+        line,
+        max_text_size,
+        text.color,
+        font.size,
+        stroke_width,
+        stroke_fill,
+        text.angle,
+    )
 
 
 def wrap(line: str, max_text_size: Dimensions, max_font_size: int) -> str:
