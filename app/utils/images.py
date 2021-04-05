@@ -8,10 +8,10 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from sanic.log import logger
 
 from .. import settings
-from ..types import Dimensions, Offset, Point
+from ..types import Dimensions, Offset, Point, Text
 
 if TYPE_CHECKING:
-    from ..models import Template, Text
+    from ..models import Template
 
 
 def preview(
@@ -23,7 +23,12 @@ def preview(
     path = template.build_path(lines, style, settings.PREVIEW_SIZE, "", "jpg")
     logger.info(f"Previewing meme for {path}")
     image = render_image(
-        template, style, lines, settings.PREVIEW_SIZE, pad=False, preview=True
+        template,
+        style,
+        lines,
+        settings.PREVIEW_SIZE,
+        pad=False,
+        is_preview=True,
     )
     stream = io.BytesIO()
     image.convert("RGB").save(stream, format="JPEG", quality=50)
@@ -87,7 +92,7 @@ def render_image(
     size: Dimensions,
     *,
     pad: Optional[bool] = None,
-    preview: bool = False,
+    is_preview: bool = False,
     watermark: str = "",
 ) -> Image:
     background = load(template.get_image(style))
@@ -107,7 +112,7 @@ def render_image(
         stroke_width,
         stroke_fill,
         angle,
-    ) in get_image_elements(template, lines, watermark, image.size, preview):
+    ) in get_image_elements(template, lines, watermark, image.size, is_preview):
 
         box = Image.new("RGBA", max_text_size)
         draw = ImageDraw.Draw(box)
@@ -230,10 +235,10 @@ def get_image_elements(
     lines: list[str],
     watermark: str,
     image_size: Dimensions,
-    preview: bool = False,
+    is_preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
-    if preview:
-        yield get_image_element(["PREVIEW"], 0, template.preview, image_size, watermark)
+    if is_preview:
+        yield get_image_element(["PREVIEW"], 0, Text.preview(), image_size, watermark)
     for index, text in enumerate(template.text):
         yield get_image_element(lines, index, text, image_size, watermark)
 
