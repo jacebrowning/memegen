@@ -226,3 +226,9 @@ def test_deployed_images(images, monkeypatch):
 
     monkeypatch.delattr(utils.images, "render_image")
     utils.images.save(template, lines, directory=images)
+
+
+def test_preview_images(images, template):
+    path = images / "preview.jpg"
+    data, _ext = utils.images.preview(template, ["nominal image", "while typing"])
+    path.write_bytes(data)

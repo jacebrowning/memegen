@@ -40,6 +40,17 @@ class Text:
         size = int(image_width * self.scale_x), int(image_height * self.scale_y)
         return size
 
+    def get_stroke(self, width: int, color: str = "black") -> tuple[int, str]:
+        if self.color == "black":
+            width = 0
+        elif "#" in self.color:
+            width = 1
+
+        if "#" in self.color:
+            color = "#00000080"
+
+        return width, color
+
     def stylize(self, text: str, **kwargs) -> str:
         lines = [line for line in kwargs.get("lines", [text]) if line.strip()]
 
@@ -167,7 +178,14 @@ class Template:
 
     @property
     def preview(self) -> Text:
-        return Text(color="gray", anchor_x=-0.12, anchor_y=-0.12, angle=15, scale_y=1.0)
+        return Text(
+            color="#80808080",
+            anchor_x=0.2,
+            anchor_y=0.2,
+            angle=10,
+            scale_x=0.5,
+            scale_y=0.5,
+        )
 
     def jsonify(self, app: Sanic) -> dict:
         return {

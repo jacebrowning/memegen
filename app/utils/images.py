@@ -232,26 +232,26 @@ def get_image_elements(
     image_size: Dimensions,
     preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
-
     if preview:
-        yield get_image_element("PREVIEW", template.preview, image_size, watermark)
-
+        yield get_image_element(["PREVIEW"], 0, template.preview, image_size, watermark)
     for index, text in enumerate(template.text):
-        max_text_size = text.get_size(image_size)
-        max_font_size = int(image_size[1] / 9)
-
-        try:
-            line = lines[index]
-        except IndexError:
-            line = ""
-        else:
-            line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
-
-        yield get_image_element(line, text, image_size, watermark)
+        yield get_image_element(lines, index, text, image_size, watermark)
 
 
-def get_image_element(line: str, text: Text, image_size: Dimensions, watermark: str):
+def get_image_element(
+    lines: list[str], index: int, text: Text, image_size: Dimensions, watermark: str
+):
     point = text.get_anchor(image_size, watermark)
+
+    max_text_size = text.get_size(image_size)
+    max_font_size = int(image_size[1] / 9)
+
+    try:
+        line = lines[index]
+    except IndexError:
+        line = ""
+    else:
+        line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
 
     max_text_size = text.get_size(image_size)
     max_font_size = int(image_size[1] / 9)
@@ -259,14 +259,7 @@ def get_image_element(line: str, text: Text, image_size: Dimensions, watermark: 
     font = get_font(line, text.angle, max_text_size, max_font_size)
     offset = get_text_offset(line, font, max_text_size)
 
-    # TODO: Make these Text properties
-    stroke_fill = "black"
-    if text.color == "black":
-        stroke_width = 0
-    elif text.color == "gray":
-        stroke_width = 1
-    else:
-        stroke_width = get_stroke_width(font)
+    stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
 
     return (
         point,
