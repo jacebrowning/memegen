@@ -326,6 +326,18 @@ def describe_custom():
         @patch(
             "app.utils.meta.search",
             AsyncMock(
+                return_value=[{"image_url": "http://example.com/images/example.png"}]
+            ),
+        )
+        def it_normalizes_the_url(expect, client):
+            request, response = client.get("/images/custom")
+            expect(response.json) == [
+                {"url": "http://localhost:5000/images/example.png"}
+            ]
+
+        @patch(
+            "app.utils.meta.search",
+            AsyncMock(
                 return_value=[
                     {
                         "image_url": "http://example.com/images/example.png"
@@ -334,7 +346,7 @@ def describe_custom():
                 ]
             ),
         )
-        def it_normalizes_the_urls(expect, client):
+        def it_normalizes_the_url_with_background(expect, client):
             request, response = client.get("/images/custom")
             expect(response.json) == [
                 {

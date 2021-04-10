@@ -122,7 +122,7 @@ async def automatic(request):
     if not results:
         return response.json({"message": f"No results matched: {text}"}, status=404)
 
-    url = utils.urls.normalize(request, results[0]["image_url"])
+    url = utils.urls.normalize(results[0]["image_url"])
     logger.info(f"Top result: {url}")
     url, _updated = await utils.meta.tokenize(request, url)
 
@@ -206,7 +206,7 @@ async def list_custom(request):
 
     items = []
     for result in results:
-        url = utils.urls.normalize(request, result["image_url"])
+        url = utils.urls.normalize(result["image_url"])
         url, _updated = await utils.meta.tokenize(request, url)
         items.append({"url": url})
 

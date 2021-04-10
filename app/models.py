@@ -2,10 +2,10 @@ import asyncio
 import shutil
 from pathlib import Path
 from typing import Optional
-from urllib.parse import urlparse
 
 import aiopath
 from datafiles import datafile, field
+from furl import furl
 from sanic import Sanic
 from sanic.log import logger
 
@@ -149,7 +149,7 @@ class Template:
             text_paths=utils.text.encode(text_lines),
             _external=True,
             _scheme=settings.SCHEME,
-            **utils.urls.params(request, background=background, style=style),
+            **utils.urls.params(background=background, style=style),
         )
         return utils.urls.clean(url)
 
@@ -169,12 +169,12 @@ class Template:
 
     @classmethod
     async def create(cls, url: str, *, force=False) -> "Template":
-        parts = urlparse(url)
-        if parts.netloc == "api.memegen.link":
+        parsed = furl(url)
+        if parsed.netloc == "api.memegen.link":
             logger.debug(f"Handling template URL: {url}")
-            id = parts.path.split(".")[0].split("/")[2]
+            id = Path(parsed.path.segments[1]).stem
             if id == "custom":
-                url = parts.query.removeprefix("background=")
+                url = parsed.args["background"]
             else:
                 return cls.objects.get_or_none(id) or cls.objects.get("_error")
 
@@ -208,13 +208,12 @@ class Template:
             return False
 
         url = style
-        try:
-            _stem, ext = urlparse(url).path.rsplit(".", 1)
-        except ValueError:
+        suffix = Path(str(furl(url).path)).suffix
+        if not suffix:
             logger.warning(f"Unable to determine image extension: {url}")
-            ext = "png"
+            suffix = ".png"
 
-        filename = utils.text.fingerprint(url, suffix="." + ext)
+        filename = utils.text.fingerprint(url, suffix=suffix)
         path = aiopath.AsyncPath(self.directory) / filename
 
         if await path.exists() and not settings.DEBUG and not force:

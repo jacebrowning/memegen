@@ -283,7 +283,7 @@ requests = ">=2.0,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "0.13b4"
+version = "0.13b5"
 description = "File-based ORM for dataclasses."
 category = "main"
 optional = false
@@ -344,6 +344,18 @@ python-versions = "*"
 
 [package.dependencies]
 Flask = "*"
+
+[[package]]
+name = "furl"
+version = "2.1.1"
+description = "URL manipulation made simple."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+orderedmultidict = ">=1.0.1"
+six = ">=1.8.0"
 
 [[package]]
 name = "future"
@@ -764,6 +776,17 @@ machine_learning = ["gensim", "numpy", "python-crfsuite", "scikit-learn", "scipy
 plot = ["matplotlib"]
 tgrep = ["pyparsing"]
 twitter = ["twython"]
+
+[[package]]
+name = "orderedmultidict"
+version = "1.0.1"
+description = "Ordered Multivalue Dictionary"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = ">=1.8.0"
 
 [[package]]
 name = "packaging"
@@ -1205,7 +1228,7 @@ sanic = ">=18.12.0,<21"
 name = "six"
 version = "1.15.0"
 description = "Python 2 and 3 compatibility utilities"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -1438,7 +1461,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "dd67d3224226befd0691fd7b181046dc541ec29d8f4e824967e89de4b2cac975"
+content-hash = "86f6e798debf64e27c58b513fc77d0ecfc0946366c388e5f245eeb86f5981033"
 
 [metadata.files]
 aiocache = [
@@ -1670,8 +1693,8 @@ coveragespace = [
     {file = "coveragespace-4.1.tar.gz", hash = "sha256:6dcdee802be5cdaa9820538203ad0e182a1ea56c679cdf65b36d4b85937d2e38"},
 ]
 datafiles = [
-    {file = "datafiles-0.13b4-py3-none-any.whl", hash = "sha256:e3639703bd25d9ee4894426c892560c4e710db6aeec9875673a815e4d622c05f"},
-    {file = "datafiles-0.13b4.tar.gz", hash = "sha256:d0641e4593015ed19f1ad09b894111263c2908677f51a9f5f240b3cd59ad089d"},
+    {file = "datafiles-0.13b5-py3-none-any.whl", hash = "sha256:c5d1c8296890e72004f8e9f82ab8ca2f2f36df5f2aaa0d065a948863881eb09a"},
+    {file = "datafiles-0.13b5.tar.gz", hash = "sha256:86c27553d041c67c6a1e36c6282fda1d32302e6375c07815c3000e284969f5eb"},
 ]
 decorator = [
     {file = "decorator-4.4.2-py2.py3-none-any.whl", hash = "sha256:41fa54c2a0cc4ba648be4fd43cff00aedf5b9465c9bf18d64325bc225f08f760"},
@@ -1686,6 +1709,10 @@ flask = [
 ]
 flask-basicauth = [
     {file = "Flask-BasicAuth-0.2.0.tar.gz", hash = "sha256:df5ebd489dc0914c224419da059d991eb72988a01cdd4b956d52932ce7d501ff"},
+]
+furl = [
+    {file = "furl-2.1.1-py2.py3-none-any.whl", hash = "sha256:58dffe3b4ccbca4ebde951dda75b7a4b6555b294a80b81037cb0c1b5440c5fff"},
+    {file = "furl-2.1.1.tar.gz", hash = "sha256:bcfeccace016a87e787d3a0c240e5978c87d9aa795b9eb8a7b7998cc39c448ab"},
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
@@ -2064,6 +2091,10 @@ mypy-extensions = [
 ]
 nltk = [
     {file = "nltk-3.5.zip", hash = "sha256:845365449cd8c5f9731f7cb9f8bd6fd0767553b9d53af9eb1b3abf7700936b35"},
+]
+orderedmultidict = [
+    {file = "orderedmultidict-1.0.1-py2.py3-none-any.whl", hash = "sha256:43c839a17ee3cdd62234c47deca1a8508a3f2ca1d0678a3bf791c87cf84adbf3"},
+    {file = "orderedmultidict-1.0.1.tar.gz", hash = "sha256:04070bbb5e87291cc9bfa51df413677faf2141c73c61d2a5f7b26bea3cd882ad"},
 ]
 packaging = [
     {file = "packaging-20.9-py2.py3-none-any.whl", hash = "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"},
