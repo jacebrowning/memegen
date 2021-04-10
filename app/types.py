@@ -27,7 +27,7 @@ class Text:
     scale_y: float = 0.2
 
     @classmethod
-    def preview(cls) -> "Text":
+    def get_preview(cls) -> "Text":
         return cls(
             color="#80808099",
             anchor_x=0.2,
@@ -36,6 +36,10 @@ class Text:
             scale_x=0.5,
             scale_y=0.5,
         )
+
+    @classmethod
+    def get_watermark(cls) -> "Text":
+        return cls(color="#FFFFFF80")
 
     def get_anchor(self, image_size: Dimensions, watermark: str = "") -> Point:
         image_width, image_height = image_size
