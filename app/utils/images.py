@@ -217,17 +217,21 @@ def add_watermark(image: Image, text: str) -> Image:
     font = get_font(text, 0.0, size, 99, tiny=True)
     offset = get_text_offset(text, font, size)
 
-    draw = ImageDraw.Draw(image)
+    watermark = Text.get_watermark()
+    stroke_width, stroke_fill = watermark.get_stroke(get_stroke_width(font))
+
+    box = Image.new("RGBA", image.size)
+    draw = ImageDraw.Draw(box)
     draw.text(
         (3, image.size[1] - size[1] - offset[1] - 1),
         text,
-        "white",
+        watermark.color,
         font,
-        stroke_width=get_stroke_width(font),
-        stroke_fill="#333",
+        stroke_width=stroke_width,
+        stroke_fill=stroke_fill,
     )
 
-    return image
+    return Image.alpha_composite(image, box)
 
 
 def get_image_elements(
@@ -241,7 +245,10 @@ def get_image_elements(
     for index, text in enumerate(template.text):
         yield get_image_element(lines, index, text, image_size, watermark)
     if is_preview:
-        yield get_image_element(["PREVIEW"], 0, Text.preview(), image_size, watermark)
+        lines = ["PREVIEW"]
+        index = 0
+        text = Text.get_preview()
+        yield get_image_element(lines, index, text, image_size, watermark)
 
 
 def get_image_element(
