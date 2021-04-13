@@ -94,7 +94,7 @@ async def get_watermark(request) -> tuple[str, bool]:
 
 
 async def track(request, lines: list[str]):
-    if settings.REMOTE_TRACKING_URL:
+    if settings.TRACK_REQUESTS and settings.REMOTE_TRACKING_URL:
         api = settings.REMOTE_TRACKING_URL
     else:
         return
@@ -120,8 +120,10 @@ async def track(request, lines: list[str]):
             try:
                 message = await response.json()
             except aiohttp.client_exceptions.ContentTypeError:
-                message = response.text
-            logger.error(f"Tracker response: {message}")
+                message = await response.text()
+            logger.error(f"Tracker response {response.status}: {message}")
+        if response.status >= 404:
+            settings.TRACK_REQUESTS = False
 
 
 async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
