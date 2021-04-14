@@ -387,7 +387,12 @@ async def render_image(
             if style != settings.PLACEHOLDER:
                 status = 422
 
-    size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
+    try:
+        size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
+    except ValueError:
+        size = 0, 0
+        status = 422
+
     path = await asyncio.to_thread(
         utils.images.save, template, lines, watermark, ext=ext, style=style, size=size
     )
