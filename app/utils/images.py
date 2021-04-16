@@ -257,7 +257,7 @@ def get_image_element(
     point = text.get_anchor(image_size, watermark)
 
     max_text_size = text.get_size(image_size)
-    max_font_size = int(image_size[1] / 9)
+    max_font_size = int(image_size[1] / (2 if text.angle else 9))
 
     try:
         line = lines[index]
@@ -265,9 +265,6 @@ def get_image_element(
         line = ""
     else:
         line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
-
-    max_text_size = text.get_size(image_size)
-    max_font_size = int(image_size[1] / 9)
 
     font = get_font(line, text.angle, max_text_size, max_font_size)
     offset = get_text_offset(line, font, max_text_size)

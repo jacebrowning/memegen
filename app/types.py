@@ -29,12 +29,12 @@ class Text:
     @classmethod
     def get_preview(cls) -> "Text":
         return cls(
-            color="#80808099",
-            anchor_x=0.2,
-            anchor_y=0.2,
+            color="#80808085",
+            anchor_x=0.075,
+            anchor_y=0.05,
             angle=10,
-            scale_x=0.5,
-            scale_y=0.5,
+            scale_x=0.75,
+            scale_y=0.75,
         )
 
     @classmethod
