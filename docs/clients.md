@@ -70,6 +70,6 @@ For example, <https://api.memegen.link/images/puffin/custom_watermark/example.pn
 
 # Zapier Integration
 
-Incorporate memes into your automation: <https://zapier.com/apps/memegenlink>
+Incorporate memes into your workflow automation: <https://zapier.com/apps/memegenlink>
 
 ![Sample Zaps](https://cdn.zappy.app/3f3e8213de870f268f27f2402aefc794.png)
