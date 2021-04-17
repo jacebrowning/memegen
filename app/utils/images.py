@@ -13,6 +13,8 @@ from ..types import Dimensions, Offset, Point, Text
 if TYPE_CHECKING:
     from ..models import Template
 
+EXCEPTIONS = (OSError, SyntaxError, Image.DecompressionBombError)
+
 
 def preview(
     template: Template,

@@ -192,7 +192,7 @@ class Template:
 
         try:
             await asyncio.to_thread(utils.images.load, Path(path))
-        except (OSError, SyntaxError) as e:
+        except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await path.unlink(missing_ok=True)
 
@@ -226,7 +226,7 @@ class Template:
 
         try:
             await asyncio.to_thread(utils.images.embed, self, Path(path), self.image)
-        except (OSError, SyntaxError) as e:
+        except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await path.unlink(missing_ok=True)
 
