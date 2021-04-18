@@ -43,8 +43,10 @@ MINIMUM_FONT_SIZE = 7
 # Image rendering
 
 IMAGES_DIRECTORY = ROOT / "images"
-DEFAULT_EXT = "png"
+
 DEFAULT_STYLE = "default"
+DEFAULT_EXT = "png"
+PLACEHOLDER_SUFFIX = ".img"
 
 PREVIEW_SIZE = (300, 300)
 DEFAULT_SIZE = (600, 600)

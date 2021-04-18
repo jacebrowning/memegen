@@ -40,7 +40,10 @@ class Template:
             self._update_example()
             self._update_styles()
             self.datafile.save()
-        return not self.id.startswith("_") and self.image.suffix != ".img"
+        return (
+            not self.id.startswith("_")
+            and self.image.suffix != settings.PLACEHOLDER_SUFFIX
+        )
 
     def _update_example(self):
         for line in self.example:
@@ -77,12 +80,14 @@ class Template:
 
         self.directory.mkdir(exist_ok=True)
         for path in self.directory.iterdir():
-            if path.stem == style:
+            if path.stem == style and path.suffix != settings.PLACEHOLDER_SUFFIX:
                 return path
 
         if style == settings.DEFAULT_STYLE:
             logger.debug(f"No default background image for template: {self.id}")
-            return self.directory / f"{settings.DEFAULT_STYLE}.img"
+            return self.directory / (
+                settings.DEFAULT_STYLE + settings.PLACEHOLDER_SUFFIX
+            )
 
         logger.warning(f"Style {style!r} not available for template: {self.id}")
         return self.get_image()
@@ -175,12 +180,21 @@ class Template:
             id = Path(parsed.path.segments[1]).stem
             if id == "custom":
                 url = parsed.args["background"]
+                parsed = furl(url)
             else:
                 return cls.objects.get_or_none(id) or cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
-        path = aiopath.AsyncPath(template.image)
+
+        suffix = Path(str(parsed.path)).suffix
+        if not suffix:
+            logger.warning(f"Unable to determine image extension: {url}")
+            suffix = settings.PLACEHOLDER_SUFFIX
+
+        filename = "default" + suffix
+        path = aiopath.AsyncPath(template.directory) / filename
+        logger.critical(path)
 
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found background {url} at {path}")
