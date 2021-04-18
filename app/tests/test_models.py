@@ -88,7 +88,7 @@ def describe_template():
                 Path.cwd()
                 / "templates"
                 / "_custom-2d3c91e23b91d6387050e85efc1f3acb39b5a95d"
-                / "default.img"
+                / "default.jpg"
             )
             template = await Template.create(url, force=True)
             expect(template.image) == path
