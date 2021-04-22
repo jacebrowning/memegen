@@ -2,6 +2,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 import aiohttp
+import bugsnag
 from aiocache import cached
 from sanic.log import logger
 
@@ -124,6 +125,10 @@ async def track(request, lines: list[str]):
             logger.error(f"Tracker response {response.status}: {message}")
         if response.status >= 404:
             settings.TRACK_REQUESTS = False
+            bugsnag.notify(
+                RuntimeError(f"Disabled request tracking: {message}"),
+                meta_data={"request": request.url},
+            )
 
 
 async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
