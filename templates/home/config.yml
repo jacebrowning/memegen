@@ -1,0 +1,34 @@
+name: We Have Food at Home
+source: https://knowyourmeme.com/memes/we-have-food-at-home
+text:
+  - color: black
+    style: thin
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.001
+    scale_x: 1.0
+    scale_y: 0.1
+  - color: black
+    style: thin
+    anchor_x: 0.0
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.1
+  - color: black
+    style: thin
+    anchor_x: 0.0
+    anchor_y: 0.2
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.1
+example:
+  - 'Me: Can we stop and get food?'
+  - 'Mom: We have food at home.'
+  - 'Food at home:'
+styles:
+  -
+overlay:
+  - center_x: 0.5
+    center_y: 0.65
+    scale: 0.7

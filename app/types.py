@@ -64,24 +64,25 @@ class Text:
 
         return width, color
 
-    def stylize(self, text: str, **kwargs) -> str:
+    def stylize(self, text: str, **kwargs) -> tuple[str, bool]:
         lines = [line for line in kwargs.get("lines", [text]) if line.strip()]
 
         if self.style == "none":
-            return text
+            return text, False
 
-        if self.style == "default":
-            return text.capitalize() if all(line.islower() for line in lines) else text
+        if self.style in {"default", "thin"}:
+            text = text.capitalize() if all(line.islower() for line in lines) else text
+            return text, self.style == "thin"
 
         if self.style == "mock":
-            return spongemock.mock(text, diversity_bias=0.75, random_seed=0)
+            return spongemock.mock(text, diversity_bias=0.75, random_seed=0), False
 
         method = getattr(text, self.style or self.__class__.style, None)
         if method:
-            return method()
+            return method(), False
 
         logger.warning(f"Unsupported text style: {self.style}")
-        return text
+        return text, False
 
 
 @dataclass
