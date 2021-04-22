@@ -110,7 +110,7 @@ def render_image(
         text,
         max_text_size,
         text_fill,
-        font_size,
+        font,
         stroke_width,
         stroke_fill,
         angle,
@@ -122,11 +122,6 @@ def render_image(
         if settings.DEBUG:
             xy = (0, 0, max_text_size[0] - 1, max_text_size[1] - 1)
             draw.rectangle(xy, outline="lime")
-
-        if angle:
-            font = ImageFont.truetype(str(settings.FONT_THIN), size=font_size)
-        else:
-            font = ImageFont.truetype(str(settings.FONT_THICK), size=font_size)
 
         draw.text(
             (-offset[0], -offset[1]),
@@ -242,7 +237,7 @@ def get_image_elements(
     watermark: str,
     image_size: Dimensions,
     is_preview: bool = False,
-) -> Iterator[tuple[Point, Offset, str, Dimensions, str, int, int, str, float]]:
+) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
 
     for index, text in enumerate(template.text):
         yield get_image_element(lines, index, text, image_size, watermark)
@@ -255,20 +250,21 @@ def get_image_elements(
 
 def get_image_element(
     lines: list[str], index: int, text: Text, image_size: Dimensions, watermark: str
-):
+) -> tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]:
     point = text.get_anchor(image_size, watermark)
 
     max_text_size = text.get_size(image_size)
     max_font_size = int(image_size[1] / (2 if text.angle else 9))
 
+    thin = False
     try:
         line = lines[index]
     except IndexError:
         line = ""
     else:
-        line = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
+        line, thin = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
 
-    font = get_font(line, text.angle, max_text_size, max_font_size)
+    font = get_font(line, text.angle, max_text_size, max_font_size, thin=thin)
     offset = get_text_offset(line, font, max_text_size)
 
     stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
@@ -279,7 +275,7 @@ def get_image_element(
         line,
         max_text_size,
         text.color,
-        font.size,
+        font,
         stroke_width,
         stroke_fill,
         text.angle,
@@ -322,6 +318,7 @@ def get_font(
     max_font_size: int,
     *,
     tiny: bool = False,
+    thin: bool = False,
 ) -> ImageFont:
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
@@ -330,7 +327,7 @@ def get_font(
 
         if tiny:
             font = ImageFont.truetype(str(settings.FONT_TINY), size=size)
-        elif angle:
+        elif angle or thin:
             font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
         else:
             font = ImageFont.truetype(str(settings.FONT_THICK), size=size)
