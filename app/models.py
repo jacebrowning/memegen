@@ -194,7 +194,6 @@ class Template:
 
         filename = "default" + suffix
         path = aiopath.AsyncPath(template.directory) / filename
-        logger.critical(path)
 
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found background {url} at {path}")
