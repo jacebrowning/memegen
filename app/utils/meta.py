@@ -126,8 +126,8 @@ async def track(request, lines: list[str]):
         if response.status >= 404:
             settings.TRACK_REQUESTS = False
             bugsnag.notify(
-                RuntimeError(f"Disabled request tracking: {message}"),
-                meta_data={"request": request.url},
+                RuntimeError(f"Disabled tracking after {response.status} response"),
+                meta_data={"request": request.url, "message": message},
             )
 
 
