@@ -55,13 +55,11 @@ class Text:
 
     def get_stroke(self, width: int, color: str = "black") -> tuple[int, str]:
         if self.color == "black":
-            width = 0
+            width = 1
+            color = "#FFFFFF85"
         elif "#" in self.color:
             width = 1
-
-        if "#" in self.color:
             color = "#000000" + self.color[-2:]
-
         return width, color
 
     def stylize(self, text: str, **kwargs) -> tuple[str, bool]:

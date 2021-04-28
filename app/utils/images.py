@@ -306,7 +306,7 @@ def split(line: str) -> str:
     for offset in range(0, len(line) // 4):
         for index in [midpoint - offset, midpoint + offset]:
             if line[index] == " ":
-                return line[:index] + "\n" + line[index:]
+                return line[:index].strip() + "\n" + line[index:].strip()
 
     return line
 

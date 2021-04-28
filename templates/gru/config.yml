@@ -3,31 +3,31 @@ source: https://knowyourmeme.com/memes/grus-plan
 text:
   - color: black
     style: default
-    anchor_x: 0.29
+    anchor_x: 0.275
     anchor_y: 0.2
     angle: 0.0
-    scale_x: 0.18
+    scale_x: 0.2075
     scale_y: 0.2
   - color: black
     style: default
-    anchor_x: 0.79
+    anchor_x: 0.78
     anchor_y: 0.2
     angle: 0.0
-    scale_x: 0.18
+    scale_x: 0.205
     scale_y: 0.2
   - color: black
     style: default
-    anchor_x: 0.29
+    anchor_x: 0.28
     anchor_y: 0.7
     angle: 0.0
-    scale_x: 0.18
+    scale_x: 0.205
     scale_y: 0.2
   - color: black
     style: default
-    anchor_x: 0.79
+    anchor_x: 0.78
     anchor_y: 0.7
     angle: 0.0
-    scale_x: 0.18
+    scale_x: 0.205
     scale_y: 0.2
 styles:
   -
