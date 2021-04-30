@@ -48,6 +48,12 @@ async def favicon(request):
     return await response.file("app/static/favicon.ico")
 
 
+@app.get("/robots.txt")
+@doc.exclude(True)
+def robots(request):
+    return response.text("User-agent: *\nDisallow: /\n")
+
+
 if __name__ == "__main__":
     log.reset()
     log.silence("datafiles", allow_warning=True)

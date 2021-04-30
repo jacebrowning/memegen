@@ -8,6 +8,14 @@ def describe_index():
         request, response = client.get("/")
         expect(response.text).contains("swagger.json")
 
+    def it_contains_favicon(expect, client):
+        request, response = client.get("/favicon.ico")
+        expect(response.status) == 200
+
+    def it_contains_robots(expect, client):
+        request, response = client.get("/robots.txt")
+        expect(response.status) == 200
+
 
 def describe_examples():
     @pytest.mark.slow
