@@ -27,17 +27,17 @@ def describe_text():
         def it_applies_style(expect, style, before, after):
             text = Text()
             text.style = style
-            expect(text.stylize(before)) == (after, False)
+            expect(text.stylize(before)) == after
 
         def it_defaults_to_upper(expect):
             text = Text()
             text.style = ""
-            expect(text.stylize("Foobar")) == ("FOOBAR", False)
+            expect(text.stylize("Foobar")) == "FOOBAR"
 
         def it_respects_case_when_set_in_any_line(expect):
             text = Text(style="default")
-            expect(text.stylize("foo", lines=["foo", " ", "bar"])) == ("Foo", False)
-            expect(text.stylize("foo", lines=["foo", " ", "Bar"])) == ("foo", False)
+            expect(text.stylize("foo", lines=["foo", " ", "bar"])) == "Foo"
+            expect(text.stylize("foo", lines=["foo", " ", "Bar"])) == "foo"
 
 
 def describe_template():

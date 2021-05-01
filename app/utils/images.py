@@ -211,7 +211,7 @@ def add_blurred_background(
 
 def add_watermark(image: Image, text: str) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
-    font = get_font(text, 0.0, size, 99, tiny=True)
+    font = get_font("tiny", text, 0.0, size, 99)
     offset = get_text_offset(text, font, size)
 
     watermark = Text.get_watermark()
@@ -256,15 +256,16 @@ def get_image_element(
     max_text_size = text.get_size(image_size)
     max_font_size = int(image_size[1] / (2 if text.angle else 9))
 
-    thin = False
     try:
         line = lines[index]
     except IndexError:
         line = ""
     else:
-        line, thin = text.stylize(wrap(line, max_text_size, max_font_size), lines=lines)
+        line = text.stylize(
+            wrap(text.font, line, max_text_size, max_font_size), lines=lines
+        )
 
-    font = get_font(line, text.angle, max_text_size, max_font_size, thin=thin)
+    font = get_font(text.font, line, text.angle, max_text_size, max_font_size)
     offset = get_text_offset(line, font, max_text_size)
 
     stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
@@ -282,11 +283,11 @@ def get_image_element(
     )
 
 
-def wrap(line: str, max_text_size: Dimensions, max_font_size: int) -> str:
+def wrap(font: str, line: str, max_text_size: Dimensions, max_font_size: int) -> str:
     lines = split(line)
 
-    single = get_font(line, 0, max_text_size, max_font_size)
-    double = get_font(lines, 0, max_text_size, max_font_size)
+    single = get_font(font, line, 0, max_text_size, max_font_size)
+    double = get_font(font, lines, 0, max_text_size, max_font_size)
 
     if single.size == double.size and double.size <= settings.MINIMUM_FONT_SIZE:
         return lines
@@ -312,26 +313,18 @@ def split(line: str) -> str:
 
 
 def get_font(
+    name: str,
     text: str,
     angle: float,
     max_text_size: Dimensions,
     max_font_size: int,
-    *,
-    tiny: bool = False,
-    thin: bool = False,
 ) -> ImageFont:
+    font_path = settings.FONT_PATHS[name or settings.DEFAULT_FONT]
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
     for size in range(max(settings.MINIMUM_FONT_SIZE, max_font_size), 6, -1):
-
-        if tiny:
-            font = ImageFont.truetype(str(settings.FONT_TINY), size=size)
-        elif angle or thin:
-            font = ImageFont.truetype(str(settings.FONT_THIN), size=size)
-        else:
-            font = ImageFont.truetype(str(settings.FONT_THICK), size=size)
-
+        font = ImageFont.truetype(str(font_path), size=size)
         text_width, text_height = get_text_size_minus_font_offset(text, font)
         if text_width <= max_text_width and text_height <= max_text_height:
             break

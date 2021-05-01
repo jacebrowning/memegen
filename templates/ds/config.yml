@@ -1,22 +1,25 @@
 name: Daily Struggle
 source: https://knowyourmeme.com/memes/daily-struggle
 text:
-  - color: black
-    style: default
+  - style: default
+    color: black
+    font: thin
     anchor_x: 0.085
     anchor_y: 0.085
     angle: 12.5
     scale_x: 0.32
     scale_y: 0.095
-  - color: black
-    style: default
+  - style: default
+    color: black
+    font: thin
     anchor_x: 0.455
     anchor_y: 0.055
     angle: 10.5
     scale_x: 0.23
     scale_y: 0.09
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.04
     anchor_y: 0.82
     angle: 0.0

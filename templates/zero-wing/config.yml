@@ -1,8 +1,9 @@
 name: All Your Base Are Belong to Us
 source: https://knowyourmeme.com/memes/all-your-base-are-belong-to-us
 text:
-  - color: palegoldenrod
-    style: upper
+  - style: upper
+    color: palegoldenrod
+    font: thick
     anchor_x: 0.025
     anchor_y: 0.7
     angle: 0.0
