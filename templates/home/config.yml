@@ -30,7 +30,7 @@ example:
   - 'Mom: We have food at home.'
   - 'Food at home:'
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.5
     center_y: 0.65

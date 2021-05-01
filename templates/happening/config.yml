@@ -21,7 +21,7 @@ example:
   - ''
   - it's happening
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.425
     center_y: 0.3

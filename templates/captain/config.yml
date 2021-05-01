@@ -21,7 +21,7 @@ example:
   - look at me
   - i am the captain now
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.675
     center_y: 0.5

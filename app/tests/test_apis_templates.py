@@ -27,7 +27,7 @@ def describe_detail():
                 "id": "iw",
                 "name": "Insanity Wolf",
                 "lines": 2,
-                "styles": [],
+                "styles": ["default"],
                 "blank": "http://localhost:5000/images/iw.png",
                 "example": "http://localhost:5000/images/iw/does_testing/in_production.png",
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",

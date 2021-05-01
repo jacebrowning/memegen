@@ -21,7 +21,7 @@ example:
   - what is this
   - a center for ants
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.325
     center_y: 0.425

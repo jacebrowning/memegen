@@ -59,6 +59,8 @@ class Template:
                 settings.DEFAULT_STYLE,
             }:
                 styles.append(path.stem)
+        if styles or self.overlay != [Overlay()]:
+            styles.append("default")
         styles.sort()
         if styles != self.styles:
             self.styles = styles
@@ -244,6 +246,11 @@ class Template:
             await path.unlink(missing_ok=True)
 
         return await path.exists()
+
+    def clean(self):
+        for path in self.directory.iterdir():
+            if path.stem not in {"config", "default"}:
+                path.unlink()
 
     def delete(self):
         if self.directory.exists():
