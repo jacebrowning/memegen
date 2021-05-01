@@ -21,7 +21,7 @@ example:
   - milk
   - was a bad choice
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.25
     center_y: 0.6

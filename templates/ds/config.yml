@@ -29,6 +29,7 @@ example:
   - The dress is black and blue.
   - The dress is gold and white.
 styles:
+  - default
   - maga
 overlay:
   - center_x: 0.525

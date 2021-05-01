@@ -21,7 +21,7 @@ example:
   - This is the worst day of my life.
   - This is the worst day of your life so far.
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.485
     center_y: 0.1

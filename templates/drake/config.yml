@@ -21,6 +21,7 @@ example:
   - ''
 styles:
   - beat
+  - default
   - no
   - padding
   - yes

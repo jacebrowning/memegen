@@ -21,7 +21,7 @@ example:
   - remember this meme?
   - pepperidge farm remembers
 styles:
-  -
+  - default
 overlay:
   - center_x: 0.41
     center_y: 0.6

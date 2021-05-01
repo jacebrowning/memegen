@@ -59,6 +59,8 @@ class Template:
                 settings.DEFAULT_STYLE,
             }:
                 styles.append(path.stem)
+        if styles or self.overlay != [Overlay()]:
+            styles.append("default")
         styles.sort()
         if styles != self.styles:
             self.styles = styles
@@ -148,6 +150,8 @@ class Template:
             view_name = f"Memes.text_{extension}"
         else:
             view_name = f"Memes.text_{settings.DEFAULT_EXT}"
+        if style == settings.DEFAULT_STYLE:
+            style = ""
         url = request.app.url_for(
             view_name,
             template_id="custom" if self.id == "_custom" else self.id,
@@ -244,6 +248,11 @@ class Template:
             await path.unlink(missing_ok=True)
 
         return await path.exists()
+
+    def clean(self):
+        for path in self.directory.iterdir():
+            if path.stem not in {"config", "default"}:
+                path.unlink()
 
     def delete(self):
         if self.directory.exists():

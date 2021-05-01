@@ -19,6 +19,7 @@ text:
     scale_y: 0.2
 styles:
   - alternate
+  - default
 example:
   - you just went and made a new dinosaur?
   - probably not a good idea
