@@ -150,6 +150,8 @@ class Template:
             view_name = f"Memes.text_{extension}"
         else:
             view_name = f"Memes.text_{settings.DEFAULT_EXT}"
+        if style == settings.DEFAULT_STYLE:
+            style = ""
         url = request.app.url_for(
             view_name,
             template_id="custom" if self.id == "_custom" else self.id,
