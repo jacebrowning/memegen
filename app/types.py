@@ -15,8 +15,9 @@ Offset = tuple[int, int]
 @dataclass
 class Text:
 
-    color: str = "white"
     style: str = "upper"
+    color: str = "white"
+    font: str = settings.DEFAULT_FONT
 
     anchor_x: float = 0.0
     anchor_y: float = 0.0
@@ -62,25 +63,25 @@ class Text:
             color = "#000000" + self.color[-2:]
         return width, color
 
-    def stylize(self, text: str, **kwargs) -> tuple[str, bool]:
+    def stylize(self, text: str, **kwargs) -> str:
         lines = [line for line in kwargs.get("lines", [text]) if line.strip()]
 
         if self.style == "none":
-            return text, False
+            return text
 
-        if self.style in {"default", "thin"}:
+        if self.style == "default":
             text = text.capitalize() if all(line.islower() for line in lines) else text
-            return text, self.style == "thin"
+            return text
 
         if self.style == "mock":
-            return spongemock.mock(text, diversity_bias=0.75, random_seed=0), False
+            return spongemock.mock(text, diversity_bias=0.75, random_seed=0)
 
         method = getattr(text, self.style or self.__class__.style, None)
         if method:
-            return method(), False
+            return method()
 
         logger.warning(f"Unsupported text style: {self.style}")
-        return text, False
+        return text
 
 
 @dataclass

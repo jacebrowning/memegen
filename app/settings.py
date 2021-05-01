@@ -33,10 +33,12 @@ PLACEHOLDER = "string"  # Swagger UI placeholder value
 
 # Fonts
 
-FONTS_DIRECTORY = ROOT / "fonts"
-FONT_THICK = FONTS_DIRECTORY / "TitilliumWeb-Black.ttf"
-FONT_THIN = FONTS_DIRECTORY / "TitilliumWeb-SemiBold.ttf"
-FONT_TINY = FONTS_DIRECTORY / "Segoe UI Bold.ttf"
+DEFAULT_FONT = "thick"
+FONT_PATHS = {
+    "thick": ROOT / "fonts" / "TitilliumWeb-Black.ttf",
+    "thin": ROOT / "fonts" / "TitilliumWeb-SemiBold.ttf",
+    "tiny": ROOT / "fonts" / "Segoe UI Bold.ttf",
+}
 
 MINIMUM_FONT_SIZE = 7
 

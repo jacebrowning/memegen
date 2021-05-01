@@ -1,22 +1,25 @@
 name: Who Killed Hannibal?
 source: https://knowyourmeme.com/memes/who-killed-hannibal
 text:
-  - color: white
-    style: default
+  - style: default
+    color: white
+    font: thick
     anchor_x: 0.1
     anchor_y: 0.3
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
-  - color: white
-    style: default
+  - style: default
+    color: white
+    font: thick
     anchor_x: 0.53
     anchor_y: 0.35
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
-  - color: khaki
-    style: default
+  - style: default
+    color: khaki
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.875
     angle: 0.0

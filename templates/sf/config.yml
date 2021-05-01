@@ -1,15 +1,17 @@
 name: Sealed Fate
 source: https://www.reddit.com/r/AdviceAnimals/comments/3fenos/i_like_the_idea_of_the_impending_doom_seal_i_hope/ctnxw3k
 text:
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.0
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.8
     angle: 0.0

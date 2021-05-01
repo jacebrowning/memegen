@@ -1,15 +1,17 @@
 name: The Worst Day Of Your Life So Far
 source: https://knowyourmeme.com/memes/the-worst-day-of-your-life-so-far
 text:
-  - color: white
-    style: default
+  - style: default
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.4
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.1
-  - color: white
-    style: default
+  - style: default
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.9
     angle: 0.0

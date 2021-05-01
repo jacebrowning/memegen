@@ -1,15 +1,17 @@
 name: Karate Kyle
 source: https://knowyourmeme.com/memes/karate-kyle
 text:
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.0
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.15
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.85
     angle: 0.0

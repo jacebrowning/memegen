@@ -1,15 +1,17 @@
 name: Agnes Harkness Winking
 source: https://knowyourmeme.com/memes/agnes-harkness-winking
 text:
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.0
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-  - color: white
-    style: upper
+  - style: upper
+    color: white
+    font: thick
     anchor_x: 0.0
     anchor_y: 0.8
     angle: 0.0
