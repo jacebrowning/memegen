@@ -35,7 +35,7 @@ furl = "^2.1.1"
 minilog = "^2.0"
 
 # Production
-bugsnag = "^4.0"
+bugsnag = "^4.0.3"
 gunicorn = "^20.1"
 uvicorn = "~0.13.4"
 

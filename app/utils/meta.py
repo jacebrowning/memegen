@@ -127,7 +127,7 @@ async def track(request, lines: list[str]):
             settings.TRACK_REQUESTS = False
             bugsnag.notify(
                 RuntimeError(f"Disabled tracking after {response.status} response"),
-                meta_data={"request": request.url, "message": message},
+                metadata={"request": request.url, "message": message},
             )
 
 

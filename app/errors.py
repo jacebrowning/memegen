@@ -21,7 +21,7 @@ bugsnag.configure(
 class BugsnagErrorHandler(ErrorHandler):
     def default(self, request, exception):
         if self._should_notify(exception):
-            bugsnag.notify(exception, meta_data={"request": request.url})
+            bugsnag.notify(exception, metadata={"request": request.url})
         return super().default(request, exception)
 
     @staticmethod
