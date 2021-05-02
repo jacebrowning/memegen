@@ -383,6 +383,8 @@ async def render_image(
                 status = 404
 
         style = request.args.get("style") or request.args.get("alt")
+        if style and "://" not in style:
+            style = style.lower()
         if not await template.check(style):
             if style != settings.PLACEHOLDER:
                 status = 422
