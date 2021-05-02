@@ -58,6 +58,9 @@ async def preview_image(request, id: str, lines: list[str], style: str):
             logger.error(f"No such template: {id}")
             template = models.Template.objects.get("_error")
 
+    if style and "://" not in style:
+        style = style.lower()
+
     data, content_type = await asyncio.to_thread(
         utils.images.preview, template, lines, style=style
     )
