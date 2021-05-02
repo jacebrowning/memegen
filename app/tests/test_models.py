@@ -14,25 +14,26 @@ def describe_template():
     def template():
         t = Template.objects.get("_test")
         t.clean()
-        return t
+        yield t
+        t.clean()
 
     def describe_str():
         def it_includes_the_path(expect, template):
             expect(str(template)).endswith("/memegen/templates/_test")
 
     def describe_valid():
-        @pytest.fixture(autouse=True)
-        def disable_hooks(monkeypatch):
+        def it_removes_invalid_styles(expect, template, monkeypatch):
             monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
-
-        def it_removes_invalid_styles(expect, template):
             template.styles = ["default", "sample", "unknown"]
             with (template.directory / "sample.jpg").open("w") as f:
                 f.write("")
             log.info(f"{template} valid: {template.valid}")
             expect(template.styles) == ["default", "sample"]
 
-        def it_only_includes_default_style_with_custom_overlay(expect, template):
+        def it_only_includes_default_style_with_custom_overlay(
+            expect, template, monkeypatch
+        ):
+            monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
             template.styles = []
             template.overlay = [Overlay()]
             log.info(f"{template} valid: {template.valid}")
@@ -43,6 +44,7 @@ def describe_template():
             expect(template.styles) == ["default"]
 
         def it_skips_cleanup_when_deployed(expect, template, monkeypatch):
+            monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
             monkeypatch.setattr(settings, "DEPLOYED", True)
             template.styles = ["anything"]
             log.info(f"{template} valid: {template.valid}")
