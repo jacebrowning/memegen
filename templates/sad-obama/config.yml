@@ -17,13 +17,6 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  - bow
-  - default
-  - down
-  - frown
-  - mad
-  - really
 example:
   - sad barack obama
   - doesn't think you'll vote

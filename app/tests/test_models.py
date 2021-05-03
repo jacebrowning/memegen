@@ -4,7 +4,6 @@ import datafiles
 import log
 import pytest
 
-from .. import settings
 from ..models import Template
 from ..types import Overlay, Text
 
@@ -22,33 +21,17 @@ def describe_template():
             expect(str(template)).endswith("/memegen/templates/_test")
 
     def describe_valid():
-        def it_removes_invalid_styles(expect, template, monkeypatch):
-            monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
-            template.styles = ["default", "sample", "unknown"]
-            with (template.directory / "sample.jpg").open("w") as f:
-                f.write("")
-            log.info(f"{template} valid: {template.valid}")
-            expect(template.styles) == ["default", "sample"]
-
         def it_only_includes_default_style_with_custom_overlay(
             expect, template, monkeypatch
         ):
             monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
-            template.styles = []
+
             template.overlay = [Overlay()]
-            log.info(f"{template} valid: {template.valid}")
             expect(template.styles) == []
 
+            del template.styles
             template.overlay[0].center_x = 0.123
-            log.info(f"{template} valid: {template.valid}")
             expect(template.styles) == ["default"]
-
-        def it_skips_cleanup_when_deployed(expect, template, monkeypatch):
-            monkeypatch.setattr(datafiles.settings, "HOOKS_ENABLED", False)
-            monkeypatch.setattr(settings, "DEPLOYED", True)
-            template.styles = ["anything"]
-            log.info(f"{template} valid: {template.valid}")
-            expect(template.styles) == ["anything"]
 
     def describe_text():
         def it_defaults_to_two_lines(expect, template):

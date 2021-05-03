@@ -33,8 +33,6 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.15
-styles:
-  -
 example:
   - ''
   - You are making 500 thousand dollars and you were only gonna pay me 30?

@@ -20,8 +20,6 @@ text:
 example:
   - ermahgerd
   - memes
-styles:
-  - default
 overlay:
   - center_x: 0.35
     center_y: 0.45

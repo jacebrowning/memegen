@@ -20,8 +20,6 @@ text:
 example:
   - why dont we take all the memes
   - and put them on memegen
-styles:
-  - default
 overlay:
   - center_x: 0.1
     center_y: 0.45

@@ -17,8 +17,6 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - oh, is that what we're going to do today?
   - we're going to fight?
