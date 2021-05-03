@@ -17,8 +17,6 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - i accidentally used a swear word
   - and i know my mom heard it from the other room

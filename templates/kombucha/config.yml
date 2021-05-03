@@ -17,8 +17,6 @@ text:
     angle: 0.0
     scale_x: 0.4875
     scale_y: 0.3
-styles:
-  -
 example:
   - Trying a thing.
   - Trying a thing again.

@@ -1,5 +1,6 @@
 import asyncio
 import shutil
+from functools import cached_property
 from pathlib import Path
 from typing import Optional
 
@@ -25,7 +26,6 @@ class Template:
     )
     example: list[str] = field(default_factory=lambda: ["your text", "goes here"])
 
-    styles: list[str] = field(default_factory=lambda: [])
     overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
 
     def __str__(self):
@@ -34,11 +34,10 @@ class Template:
     def __lt__(self, other):
         return self.id < other.id
 
-    @property
+    @cached_property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
             self._update_example()
-            self._update_styles()
             self.datafile.save()
         return (
             not self.id.startswith("_")
@@ -51,7 +50,8 @@ class Template:
                 return
         self.example = [line.lower() for line in self.example]
 
-    def _update_styles(self):
+    @cached_property
+    def styles(self):
         styles = []
         for path in self.directory.iterdir():
             if not path.stem.startswith("_") and path.stem not in {
@@ -62,14 +62,13 @@ class Template:
         if styles or self.overlay != [Overlay()]:
             styles.append("default")
         styles.sort()
-        if styles != self.styles:
-            self.styles = styles
+        return styles
 
-    @property
+    @cached_property
     def directory(self) -> Path:
         return self.datafile.path.parent
 
-    @property
+    @cached_property
     def image(self) -> Path:
         return self.get_image()
 

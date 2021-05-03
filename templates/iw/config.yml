@@ -20,8 +20,6 @@ text:
 example:
   - does testing
   - in production
-styles:
-  - default
 overlay:
   - center_x: 0.505
     center_y: 0.515

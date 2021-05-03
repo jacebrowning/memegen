@@ -17,8 +17,6 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-styles:
-  -
 example:
   - you keep using that word
   - i do not think it means what you think it means

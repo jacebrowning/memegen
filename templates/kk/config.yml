@@ -20,9 +20,6 @@ text:
 example:
   - they broke my pencils
   - i broke their neck
-styles:
-  - default
-  - luke
 overlay:
   - center_x: 0.5
     center_y: 0.5

@@ -20,8 +20,6 @@ text:
 example:
   - ''
   - worst thing ever!
-styles:
-  - default
 overlay:
   - center_x: 0.88
     center_y: 0.5

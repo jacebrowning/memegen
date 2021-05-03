@@ -33,8 +33,6 @@ text:
     angle: 0.0
     scale_x: 0.49
     scale_y: 0.255
-styles:
-  -
 example:
   - Who
   - Whom

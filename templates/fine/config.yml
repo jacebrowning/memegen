@@ -20,8 +20,6 @@ text:
 example:
   - ''
   - this is fine
-styles:
-  - default
 overlay:
   - center_x: 0.425
     center_y: 0.54

@@ -33,8 +33,6 @@ text:
     angle: 0.0
     scale_x: 0.205
     scale_y: 0.2
-styles:
-  -
 example:
   - Learn how to make memes.
   - Make a meme.

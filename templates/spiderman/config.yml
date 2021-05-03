@@ -17,8 +17,6 @@ text:
     angle: 0.0
     scale_x: 0.45
     scale_y: 0.15
-styles:
-  -
 example:
   - me pointing at you
   - you pointing at me
