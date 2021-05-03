@@ -25,12 +25,17 @@ async def validate(request):
 @doc.summary("Display a preview of a custom meme")
 @doc.consumes(
     doc.String(name="lines[]", description="Lines of text to render"),
-    content_type="text/plain",
+    content_type="application/json",
+    location="query",
+)
+@doc.consumes(
+    doc.String(name="style", description="Style name or custom overlay"),
+    content_type="application/json",
     location="query",
 )
 @doc.consumes(
     doc.String(name="template", description="Template ID, URL, or custom background"),
-    content_type="text/plain",
+    content_type="application/json",
     location="query",
 )
 @doc.produces(
@@ -60,6 +65,7 @@ async def preview_image(request, id: str, lines: list[str], style: str):
 
     if style and "://" not in style:
         style = style.lower()
+    await template.check(style)
 
     data, content_type = await asyncio.to_thread(
         utils.images.preview, template, lines, style=style
