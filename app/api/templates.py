@@ -63,6 +63,9 @@ async def detail(request, id):
     abort(404)
 
 
+# TODO: Remove these routes?
+
+
 @blueprint.post("/<id>")
 @doc.tag("Memes")
 @doc.operation("Memes.create_from_template")
@@ -116,7 +119,13 @@ async def build(request, id):
 @doc.summary(settings.PREFIX + "Create a meme from any image")
 @doc.consumes(
     doc.JsonBody(
-        {"image_url": str, "text_lines": [str], "extension": str, "redirect": bool}
+        {
+            "image_url": str,
+            "style": str,
+            "text_lines": [str],
+            "extension": str,
+            "redirect": bool,
+        }
     ),
     content_type="application/json",
     location="body",
@@ -130,6 +139,8 @@ async def custom(request):
         with suppress(KeyError):
             payload["image_url"] = payload.pop("image_url")[0]
         with suppress(KeyError):
+            payload["style"] = payload.pop("style")[0]
+        with suppress(KeyError):
             payload["extension"] = payload.pop("extension")[0]
         with suppress(KeyError):
             payload["redirect"] = payload.pop("redirect")[0]
@@ -142,6 +153,7 @@ async def custom(request):
         request,
         payload.get("text_lines") or [],
         background=payload.get("image_url", ""),
+        style=payload.get("style", ""),
         extension=payload.get("extension", ""),
     )
     url, _updated = await utils.meta.tokenize(request, url)

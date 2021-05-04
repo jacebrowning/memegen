@@ -138,6 +138,7 @@ async def automatic(request):
     doc.JsonBody(
         {
             "image_url": str,
+            "style": str,
             "text_lines": [str],
             "extension": str,
             "redirect": bool,
@@ -155,6 +156,8 @@ async def custom(request):
         with suppress(KeyError):
             payload["image_url"] = payload.pop("image_url")[0]
         with suppress(KeyError):
+            payload["style"] = payload.pop("style")[0]
+        with suppress(KeyError):
             payload["extension"] = payload.pop("extension")[0]
         with suppress(KeyError):
             payload["redirect"] = payload.pop("redirect")[0]
@@ -167,6 +170,7 @@ async def custom(request):
         request,
         payload.get("text_lines") or [],
         background=payload.get("image_url", ""),
+        style=payload.get("style", ""),
         extension=payload.get("extension", ""),
     )
     url, _updated = await utils.meta.tokenize(request, url)
@@ -360,7 +364,7 @@ async def render_image(
         status = 414
 
     elif id == "custom":
-        style = settings.DEFAULT_STYLE
+        style = request.args.get("style", settings.DEFAULT_STYLE)
         url = request.args.get("background") or request.args.get("alt")
         if url:
             template = await models.Template.create(url)
@@ -369,6 +373,12 @@ async def render_image(
                 template = models.Template.objects.get("_error")
                 if url != settings.PLACEHOLDER:
                     status = 415
+
+            # TODO: consolidate style checking for all cases
+            if "://" in style and not await template.check(style):
+                logger.error(f"Unable to download image URL: {style}")
+                status = 415
+
         else:
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")

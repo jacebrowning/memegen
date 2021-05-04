@@ -121,7 +121,8 @@ def render_image(
 
         if settings.DEBUG:
             xy = (0, 0, max_text_size[0] - 1, max_text_size[1] - 1)
-            draw.rectangle(xy, outline="lime")
+            outline = "orange" if text == settings.PREVIEW_TEXT else "lime"
+            draw.rectangle(xy, outline=outline)
 
         draw.text(
             (-offset[0], -offset[1]),
@@ -242,7 +243,7 @@ def get_image_elements(
     for index, text in enumerate(template.text):
         yield get_image_element(lines, index, text, image_size, watermark)
     if is_preview:
-        lines = ["PREVIEW"]
+        lines = [settings.PREVIEW_TEXT]
         index = 0
         text = Text.get_preview()
         yield get_image_element(lines, index, text, image_size, watermark)
