@@ -10,11 +10,13 @@ from furl import furl
 from sanic import Sanic
 from sanic.log import logger
 
-from . import settings, utils
-from .types import Dimensions, Overlay, Text
+from .. import settings, utils
+from ..types import Dimensions
+from .overlay import Overlay
+from .text import Text
 
 
-@datafile("../templates/{self.id}/config.yml", defaults=True)
+@datafile("../../templates/{self.id}/config.yml", defaults=True)
 class Template:
 
     id: str

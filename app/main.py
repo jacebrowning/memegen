@@ -5,10 +5,10 @@ import log
 from sanic import Sanic, response
 from sanic_openapi import doc
 
-from app import helpers, settings, utils
+from app import config, helpers, settings, utils
 
 app = Sanic(name="memegen")
-helpers.configure(app)
+config.init(app)
 
 
 @app.get("/")

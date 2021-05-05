@@ -3,8 +3,8 @@ import os
 import pytest
 
 from .. import settings
+from ..main import app
 from ..models import Template
-from ..views import app
 
 
 def pytest_configure(config):

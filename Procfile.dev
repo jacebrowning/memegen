@@ -1,2 +1,2 @@
-api: DEBUG=true PYTHONUNBUFFERED=true python app/views.py
+api: DEBUG=true PYTHONUNBUFFERED=true python app/main.py
 site: mkdocs serve --dev-addr localhost:5001

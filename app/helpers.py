@@ -1,36 +1,5 @@
-from sanic_cors import CORS
-from sanic_openapi import swagger_blueprint
-
-from . import api, errors, settings, utils
+from . import settings, utils
 from .models import Template
-
-
-def configure(app):
-    app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
-    app.config.API_BASEPATH = "/"
-    app.config.API_SCHEMES = [settings.SCHEME]
-    app.config.API_VERSION = utils.meta.version()
-    app.config.API_TITLE = "Memegen.link"
-    app.config.API_CONTACT_EMAIL = "support@maketested.com"
-    app.config.API_LICENSE_NAME = "View the license"
-    app.config.API_LICENSE_URL = (
-        "https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"
-    )
-    app.config.API_SECURITY = [{"ApiKeyAuth": []}]
-    app.config.API_SECURITY_DEFINITIONS = {
-        "ApiKeyAuth": {"type": "apiKey", "in": "header", "name": "X-API-KEY"}
-    }
-
-    swagger_blueprint.url_prefix = "/docs"
-    app.blueprint(swagger_blueprint)
-
-    app.blueprint(api.clients.blueprint)
-    app.blueprint(api.memes.blueprint)
-    app.blueprint(api.templates.blueprint)
-    app.blueprint(api.shortcuts.blueprint)  # registered last to avoid collisions
-
-    CORS(app)
-    app.error_handler = errors.BugsnagErrorHandler()
 
 
 def get_valid_templates(request, query: str = "") -> list[dict]:

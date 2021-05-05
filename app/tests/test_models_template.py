@@ -4,8 +4,7 @@ import datafiles
 import log
 import pytest
 
-from ..models import Template
-from ..types import Overlay, Text
+from ..models import Overlay, Template, Text
 
 
 def describe_template():
