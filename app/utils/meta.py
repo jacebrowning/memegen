@@ -123,7 +123,7 @@ async def track(request, lines: list[str]):
             except aiohttp.client_exceptions.ContentTypeError:
                 message = await response.text()
             logger.error(f"Tracker response {response.status}: {message}")
-        if response.status >= 404:
+        if response.status >= 404 and response.status not in {414, 520}:
             settings.TRACK_REQUESTS = False
             bugsnag.notify(
                 RuntimeError(f"Disabled tracking after {response.status} response"),
