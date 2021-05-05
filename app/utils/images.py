@@ -2,16 +2,14 @@ from __future__ import annotations
 
 import io
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator, Optional
+from typing import Iterator, Optional
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from sanic.log import logger
 
 from .. import settings
-from ..types import Dimensions, Offset, Point, Text
-
-if TYPE_CHECKING:
-    from ..models import Template
+from ..models import Template, Text
+from ..types import Dimensions, Offset, Point
 
 EXCEPTIONS = (OSError, SyntaxError, Image.DecompressionBombError)
 

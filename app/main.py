@@ -5,10 +5,10 @@ import log
 from sanic import Sanic, response
 from sanic_openapi import doc
 
-from app import helpers, settings, utils
+from app import config, helpers, settings, utils
 
 app = Sanic(name="memegen")
-helpers.configure(app)
+config.init(app)
 
 
 @app.get("/")
@@ -20,8 +20,8 @@ def index(request):
 @app.get("/examples")
 @doc.exclude(True)
 async def examples(request):
-    examples = await asyncio.to_thread(helpers.get_example_images, request)
-    urls = [example[0] for example in examples]
+    items = await asyncio.to_thread(helpers.get_example_images, request)
+    urls = [items[0] for items in items]
     if settings.DEBUG:
         refresh = int(request.args.get("refresh", 5 * 60))
     else:
