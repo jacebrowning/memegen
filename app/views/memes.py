@@ -1,11 +1,11 @@
 import asyncio
-from contextlib import suppress
 
 from sanic import Blueprint, response
 from sanic.log import logger
 from sanic_openapi import doc
 
 from .. import helpers, models, settings, utils
+from .templates import generate_url
 
 blueprint = Blueprint("Memes", url_prefix="/images")
 
@@ -55,43 +55,7 @@ async def index(request):
 )
 @doc.response(404, {"error": str}, description='Specified "template_id" does not exist')
 async def create(request):
-    if request.form:
-        payload = dict(request.form)
-        with suppress(KeyError):
-            payload["template_id"] = payload.pop("template_id")[0]
-        with suppress(KeyError):
-            payload["extension"] = payload.pop("extension")[0]
-        with suppress(KeyError):
-            payload["redirect"] = payload.pop("redirect")[0]
-    else:
-        payload = request.json or {}
-    with suppress(KeyError):
-        payload["text_lines"] = payload.pop("text_lines[]")
-
-    try:
-        template_id = payload["template_id"]
-    except KeyError:
-        return response.json({"error": '"template_id" is required'}, status=400)
-
-    template = models.Template.objects.get_or_create(template_id)
-    url = template.build_custom_url(
-        request,
-        payload.get("text_lines") or [],
-        style=payload.get("style", ""),
-        extension=payload.get("extension"),
-    )
-    url, _updated = await utils.meta.tokenize(request, url)
-
-    if template.valid:
-        status = 201
-    else:
-        status = 404
-        template.delete()
-
-    if payload.get("redirect", False):
-        return response.redirect(url)
-
-    return response.json({"url": url}, status=status)
+    return await generate_url(request, template_id_required=True)
 
 
 @blueprint.post("/automatic")
@@ -151,34 +115,7 @@ async def automatic(request):
     201, {"url": str}, description="Successfully created a meme from a custom image"
 )
 async def custom(request):
-    if request.form:
-        payload = dict(request.form)
-        with suppress(KeyError):
-            payload["image_url"] = payload.pop("image_url")[0]
-        with suppress(KeyError):
-            payload["style"] = payload.pop("style")[0]
-        with suppress(KeyError):
-            payload["extension"] = payload.pop("extension")[0]
-        with suppress(KeyError):
-            payload["redirect"] = payload.pop("redirect")[0]
-    else:
-        payload = request.json or {}
-    with suppress(KeyError):
-        payload["text_lines"] = payload.pop("text_lines[]")
-
-    url = models.Template("_custom").build_custom_url(
-        request,
-        payload.get("text_lines") or [],
-        background=payload.get("image_url", ""),
-        style=payload.get("style", ""),
-        extension=payload.get("extension", ""),
-    )
-    url, _updated = await utils.meta.tokenize(request, url)
-
-    if payload.get("redirect", False):
-        return response.redirect(url)
-
-    return response.json({"url": url}, status=201)
+    return await generate_url(request)
 
 
 @blueprint.get("/custom")

@@ -63,9 +63,6 @@ async def detail(request, id):
     abort(404)
 
 
-# TODO: Remove these routes?
-
-
 @blueprint.post("/<id>")
 @doc.tag("Memes")
 @doc.operation("Memes.create_from_template")
@@ -80,37 +77,7 @@ async def detail(request, id):
     201, {"url": str}, description="Successfully created a meme from a template"
 )
 async def build(request, id):
-    if request.form:
-        payload = dict(request.form)
-        with suppress(KeyError):
-            payload["image_url"] = payload.pop("image_url")[0]
-        with suppress(KeyError):
-            payload["extension"] = payload.pop("extension")[0]
-        with suppress(KeyError):
-            payload["redirect"] = payload.pop("redirect")[0]
-    else:
-        payload = request.json or {}
-    with suppress(KeyError):
-        payload["text_lines"] = payload.pop("text_lines[]")
-
-    template = Template.objects.get_or_create(id)
-    url = template.build_custom_url(
-        request,
-        payload.get("text_lines") or [],
-        extension=payload.get("extension"),
-    )
-    url, _updated = await utils.meta.tokenize(request, url)
-
-    if template.valid:
-        status = 201
-    else:
-        status = 404
-        template.delete()
-
-    if payload.get("redirect", False):
-        return response.redirect(url)
-
-    return response.json({"url": url}, status=status)
+    return await generate_url(request, id)
 
 
 @blueprint.post("/custom")
@@ -134,31 +101,53 @@ async def build(request, id):
     201, {"url": str}, description="Successfully created a meme from a custom image"
 )
 async def custom(request):
+    return await generate_url(request)
+
+
+async def generate_url(
+    request, template_id: str = "", *, template_id_required: bool = False
+):
     if request.form:
         payload = dict(request.form)
-        with suppress(KeyError):
-            payload["image_url"] = payload.pop("image_url")[0]
-        with suppress(KeyError):
-            payload["style"] = payload.pop("style")[0]
-        with suppress(KeyError):
-            payload["extension"] = payload.pop("extension")[0]
-        with suppress(KeyError):
-            payload["redirect"] = payload.pop("redirect")[0]
+        for key in list(payload.keys()):
+            if "lines" not in key:
+                payload[key] = payload.pop(key)[0]
     else:
         payload = request.json or {}
     with suppress(KeyError):
         payload["text_lines"] = payload.pop("text_lines[]")
 
-    url = Template("_custom").build_custom_url(
-        request,
-        payload.get("text_lines") or [],
-        background=payload.get("image_url", ""),
-        style=payload.get("style", ""),
-        extension=payload.get("extension", ""),
-    )
+    if template_id_required:
+        try:
+            template_id = payload["template_id"]
+        except KeyError:
+            return response.json({"error": '"template_id" is required'}, status=400)
+
+    status = 201
+
+    if template_id:
+        template = Template.objects.get_or_create(template_id)
+        url = template.build_custom_url(
+            request,
+            payload.get("text_lines") or [],
+            extension=payload.get("extension"),
+        )
+        if not template.valid:
+            status = 404
+            template.delete()
+    else:
+        template = Template("_custom")
+        url = template.build_custom_url(
+            request,
+            payload.get("text_lines") or [],
+            background=payload.get("image_url", ""),
+            style=payload.get("style", ""),
+            extension=payload.get("extension", ""),
+        )
+
     url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(url)
 
-    return response.json({"url": url}, status=201)
+    return response.json({"url": url}, status=status)
