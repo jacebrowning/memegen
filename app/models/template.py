@@ -145,7 +145,6 @@ class Template:
         extension: str = "",
         background: str = "",
         style: str = "",
-        external: bool = False,
     ):
         if extension in {"jpg", "png"}:
             view_name = f"Memes.text_{extension}"
