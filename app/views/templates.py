@@ -130,6 +130,7 @@ async def generate_url(
         url = template.build_custom_url(
             request,
             payload.get("text_lines") or [],
+            style=payload.get("style", ""),
             extension=payload.get("extension"),
         )
         if not template.valid:
