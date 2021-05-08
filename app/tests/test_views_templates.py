@@ -58,7 +58,7 @@ def describe_detail():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_supports_custom_backgrounds(expect, client, as_json):
             data = {
-                "image_url": "https://www.gstatic.com/webp/gallery/3.png",
+                "background": "https://www.gstatic.com/webp/gallery/3.png",
                 "text_lines[]": ["foo", "bar"],
                 "extension": "jpg",
             }

@@ -3,6 +3,18 @@ from furl import furl
 from .. import settings
 
 
+def schema(value) -> bool:
+    return value and "://" in value
+
+
+def arg(request, default, *names):
+    for name in names:
+        value = request.args.get(name)
+        if value is not None:
+            return value
+    return default
+
+
 def normalize(url: str) -> str:
     original = furl(url)
     normalized = furl(f"{settings.BASE_URL}{original.path}")

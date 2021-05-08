@@ -77,7 +77,7 @@ class Template:
     def get_image(self, style: str = "") -> Path:
         style = style or settings.DEFAULT_STYLE
 
-        if "://" in style:
+        if utils.urls.schema(style):
             url = style
             style = utils.text.fingerprint(url)
 
@@ -216,11 +216,11 @@ class Template:
         return template
 
     async def check(self, style: str, *, force=False) -> bool:
-        if not style:
+        if style in {"", None, settings.DEFAULT_STYLE}:
             return True
         if style in self.styles:
             return True
-        if "://" not in style:
+        if not utils.urls.schema(style):
             logger.error(f"Invalid style for {self.id} template: {style}")
             return False
 
