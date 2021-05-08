@@ -101,7 +101,7 @@ async def automatic(request):
 @doc.consumes(
     doc.JsonBody(
         {
-            "image_url": str,
+            "background": str,
             "style": str,
             "text_lines": [str],
             "extension": str,
@@ -301,8 +301,7 @@ async def render_image(
         status = 414
 
     elif id == "custom":
-        style = request.args.get("style", settings.DEFAULT_STYLE)
-        url = request.args.get("background") or request.args.get("alt")
+        url = utils.urls.arg(request, None, "background", "alt")
         if url:
             template = await models.Template.create(url)
             if not template.image.exists():
@@ -311,14 +310,19 @@ async def render_image(
                 if url != settings.PLACEHOLDER:
                     status = 415
 
-            # TODO: consolidate style checking for all cases
-            if "://" in style and not await template.check(style):
-                logger.error(f"Unable to download image URL: {style}")
-                status = 415
+            style = utils.urls.arg(request, settings.DEFAULT_STYLE, "style")
+            if not utils.urls.schema(style):
+                style = style.lower()
+            if not await template.check(style):
+                if utils.urls.schema(style):
+                    status = 415
+                elif style != settings.PLACEHOLDER:
+                    status = 422
 
         else:
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
+            style = settings.DEFAULT_STYLE
             status = 422
 
     else:
@@ -329,11 +333,11 @@ async def render_image(
             if id != settings.PLACEHOLDER:
                 status = 404
 
-        style = request.args.get("style") or request.args.get("alt")
-        if style and "://" not in style:
-            style = style.lower()
+        style = utils.urls.arg(request, settings.DEFAULT_STYLE, "style", "alt")
         if not await template.check(style):
-            if style != settings.PLACEHOLDER:
+            if utils.urls.schema(style):
+                status = 415
+            elif style != settings.PLACEHOLDER:
                 status = 422
 
     try:

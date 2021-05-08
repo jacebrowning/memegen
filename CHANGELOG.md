@@ -1,5 +1,9 @@
 # Revision History
 
+## 9.0
+
+- Renamed `image_url` body parameter to `background` to match the URL value.
+
 ## 8.5
 
 - Added support for custom overlays when `style` is an image URL.

@@ -32,6 +32,7 @@ def template():
 # Formats
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize(("id", "lines"), settings.TEST_IMAGES)
 def test_png_images(images, id, lines):
     template = models.Template.objects.get(id)
@@ -110,12 +111,14 @@ def test_unknown_template(images):
 # Styles
 
 
+@pytest.mark.slow
 def test_alternate_style(images):
     template = models.Template.objects.get("ds")
     lines = ["one", "two", "three"]
     utils.images.save(template, lines, style="maga", directory=images)
 
 
+@pytest.mark.slow
 @pytest.mark.asyncio
 async def test_custom_style(images):
     url = "https://sn56.scholastic.com/content/dam/classroom-magazines/sn56/issues/2019-20/031620/coronavirus/16-SN56-20200316-VirusOutbreak-PO-2.png"
@@ -146,6 +149,7 @@ def test_long_first_word(images):
     utils.images.save(template, lines, directory=images)
 
 
+@pytest.mark.slow
 def test_text_wrap_when_font_is_too_small(images):
     template = models.Template.objects.get("ds")
     lines = ["this button seems to be ok to push"]

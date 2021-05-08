@@ -4,7 +4,7 @@ from sanic import Blueprint, response
 from sanic.log import logger
 from sanic_openapi import doc
 
-from .. import models, utils
+from .. import models, settings, utils
 
 blueprint = Blueprint("Clients", url_prefix="/")
 
@@ -46,13 +46,13 @@ async def validate(request):
 async def preview(request):
     id = request.args.get("template", "_error")
     lines = request.args.getlist("lines[]", [])
-    style = request.args.get("style")
+    style = request.args.get("style") or settings.DEFAULT_STYLE
     return await preview_image(request, id, lines, style)
 
 
 async def preview_image(request, id: str, lines: list[str], style: str):
     id = utils.urls.clean(id)
-    if "://" in id:
+    if utils.urls.schema(id):
         template = await models.Template.create(id)
         if not template.image.exists():
             logger.error(f"Unable to download image URL: {id}")
@@ -63,7 +63,7 @@ async def preview_image(request, id: str, lines: list[str], style: str):
             logger.error(f"No such template: {id}")
             template = models.Template.objects.get("_error")
 
-    if style and "://" not in style:
+    if not utils.urls.schema(style):
         style = style.lower()
     await template.check(style)
 

@@ -113,6 +113,11 @@ def describe_detail():
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
+    def it_handles_placeholder_templates(expect, client):
+        request, response = client.get("/images/string/test.png")
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/png"
+
     def it_handles_unknown_templates(expect, client, unknown_template):
         request, response = client.get(f"/images/{unknown_template.id}/test.png")
         expect(response.status) == 404
@@ -195,42 +200,62 @@ def describe_detail():
             expect(len(response.content)) == len(small_content)
 
     def describe_styles():
+        @pytest.fixture(
+            params=[
+                "/images/ds/one/two.png?",
+                "/images/custom/test.png?background=https://www.gstatic.com/webp/gallery/3.jpg&",
+            ]
+        )
+        def base_url(request):
+            return request.param
+
+        @pytest.mark.slow
         def it_supports_alternate_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=maga")
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_rejects_invalid_styles(expect, client):
-            request, response = client.get("/images/ds/one/two.png?style=foobar")
+        @pytest.mark.slow
+        def it_rejects_invalid_styles(expect, client, base_url):
+            request, response = client.get(base_url + "style=foobar")
             expect(response.status) == 422
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_ignores_placeholder_values(expect, client):
-            request, response = client.get("/images/string/string.png?style=string")
+        @pytest.mark.slow
+        def it_ignores_placeholder_values(expect, client, base_url):
+            request, response = client.get(base_url + "style=string")
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_overlay():
-        def it_supports_custom_styles(expect, client):
+        @pytest.fixture(
+            params=[
+                "/images/fine/test.png?",
+                "/images/custom/test.png?background=https://www.gstatic.com/webp/gallery/3.jpg&",
+            ]
+        )
+        def base_url(request):
+            return request.param
+
+        def it_supports_custom_styles(expect, client, base_url):
             request, response = client.get(
-                "/images/fine/one/two.png"
-                "?style=https://www.gstatic.com/webp/gallery/4.jpg"
+                base_url + "style=https://www.gstatic.com/webp/gallery/4.jpg"
             )
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_requires_image_urls(expect, client):
-            request, response = client.get(
-                "/images/fine/test.png?style=http://example.com"
-            )
-            expect(response.status) == 422
+        @pytest.mark.slow
+        def it_requires_image_urls(expect, client, base_url):
+            request, response = client.get(base_url + "style=http://example.com")
+            expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_handles_missing_urls(expect, client):
+        @pytest.mark.slow
+        def it_handles_missing_urls(expect, client, base_url):
             request, response = client.get(
-                "/images/fine/test.png?style=http://example.com/does_not_exist.png"
+                base_url + "style=http://example.com/does_not_exist.png"
             )
-            expect(response.status) == 422
+            expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_custom():
@@ -301,7 +326,7 @@ def describe_custom():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_supports_custom_backgrounds(expect, client, as_json):
             data = {
-                "image_url": "https://www.gstatic.com/webp/gallery/3.png",
+                "background": "https://www.gstatic.com/webp/gallery/3.png",
                 "text_lines[]": ["foo", "bar"],
                 "extension": "jpg",
             }
@@ -316,7 +341,7 @@ def describe_custom():
 
         def it_redirects_if_requested(expect, client):
             data = {
-                "image_url": "https://www.gstatic.com/webp/gallery/4.png",
+                "background": "https://www.gstatic.com/webp/gallery/4.png",
                 "text_lines": ["abc"],
                 "redirect": True,
             }

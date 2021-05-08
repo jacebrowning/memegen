@@ -87,7 +87,7 @@ async def build(request, id):
 @doc.consumes(
     doc.JsonBody(
         {
-            "image_url": str,
+            "background": str,
             "style": str,
             "text_lines": [str],
             "extension": str,
@@ -123,15 +123,17 @@ async def generate_url(
         except KeyError:
             return response.json({"error": '"template_id" is required'}, status=400)
 
+    text_lines = payload.get("text_lines") or []
+    style = payload.get("style") or payload.get("alt")
+    background = payload.get("background") or payload.get("image_url")
+    extension = payload.get("extension")
+
     status = 201
 
     if template_id:
         template = Template.objects.get_or_create(template_id)
         url = template.build_custom_url(
-            request,
-            payload.get("text_lines") or [],
-            style=payload.get("style", ""),
-            extension=payload.get("extension"),
+            request, text_lines, style=style, extension=extension
         )
         if not template.valid:
             status = 404
@@ -139,11 +141,7 @@ async def generate_url(
     else:
         template = Template("_custom")
         url = template.build_custom_url(
-            request,
-            payload.get("text_lines") or [],
-            background=payload.get("image_url", ""),
-            style=payload.get("style", ""),
-            extension=payload.get("extension", ""),
+            request, text_lines, background=background, style=style, extension=extension
         )
 
     url, _updated = await utils.meta.tokenize(request, url)
