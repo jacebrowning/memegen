@@ -38,6 +38,7 @@ FONT_PATHS = {
     "thick": ROOT / "fonts" / "TitilliumWeb-Black.ttf",
     "thin": ROOT / "fonts" / "TitilliumWeb-SemiBold.ttf",
     "tiny": ROOT / "fonts" / "Segoe UI Bold.ttf",
+    "comic": ROOT / "fonts" / "Kalam-Regular.ttf",
 }
 
 MINIMUM_FONT_SIZE = 7
