@@ -283,7 +283,7 @@ requests = ">=2.0,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "0.14.post1"
+version = "0.15a4"
 description = "File-based ORM for dataclasses."
 category = "main"
 optional = false
@@ -294,7 +294,6 @@ cached_property = ">=1.5,<2.0"
 classproperties = ">=0.2,<0.3"
 minilog = ">=2.0,<3.0"
 parse = ">=1.12,<2.0"
-PyYAML = ">=5.4.1,<6.0.0"
 "ruamel.yaml" = ">=0.17.4,<0.18.0"
 tomlkit = ">=0.7,<0.8"
 typing-extensions = ">=3.7,<4.0"
@@ -1084,7 +1083,7 @@ python-versions = "*"
 name = "pyyaml"
 version = "5.4.1"
 description = "YAML parser and emitter for Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
@@ -1470,7 +1469,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "f8da00e03fa0831c07ae65aaaa4b940d11b4ae95dcacd2623c560e98e0a34824"
+content-hash = "0da8075e459d1febbba58bedc537f82faac77f107b920fcc8d9a8d8dd43b0033"
 
 [metadata.files]
 aiocache = [
@@ -1702,8 +1701,8 @@ coveragespace = [
     {file = "coveragespace-4.1.tar.gz", hash = "sha256:6dcdee802be5cdaa9820538203ad0e182a1ea56c679cdf65b36d4b85937d2e38"},
 ]
 datafiles = [
-    {file = "datafiles-0.14.post1-py3-none-any.whl", hash = "sha256:da44dd63dd1586f93da80e384b4a93d2eee01cea9f5f7be2d10e90d75ec8bf82"},
-    {file = "datafiles-0.14.post1.tar.gz", hash = "sha256:118980bca21529737207d381bf5f0aed1816e835270a8fce9f73d9f1c6e59847"},
+    {file = "datafiles-0.15a4-py3-none-any.whl", hash = "sha256:5dd2b4e51c0c680e6c290770b9f36be03828373338aab5da6296c9e839b0f95e"},
+    {file = "datafiles-0.15a4.tar.gz", hash = "sha256:f524c89da5636cdbcf3c62ba9cd4b4bd83e69cf92d5e1d0d75c1b778ad3eaddf"},
 ]
 decorator = [
     {file = "decorator-5.0.7-py3-none-any.whl", hash = "sha256:945d84890bb20cc4a2f4a31fc4311c0c473af65ea318617f13a7257c9a58bc98"},
@@ -1861,6 +1860,7 @@ greenlet = [
     {file = "greenlet-1.1.0.tar.gz", hash = "sha256:c87df8ae3f01ffb4483c796fe1b15232ce2b219f0b18126948616224d3f658ee"},
 ]
 gunicorn = [
+    {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
     {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
 ]
 h11 = [
