@@ -104,6 +104,12 @@ def describe_template():
             expect(template.id) == "_custom-2d3c91e23b91d6387050e85efc1f3acb39b5a95d"
 
         @pytest.mark.asyncio
+        async def it_handles_custom_templates_lacking_background(expect):
+            url = "http://api.memegen.link/images/custom.png"
+            template = await Template.create(url)
+            expect(template.id) == "_error"
+
+        @pytest.mark.asyncio
         async def it_handles_meme_urls(expect):
             url = "http://api.memegen.link/images/fry/test.png"
             template = await Template.create(url)

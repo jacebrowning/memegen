@@ -182,7 +182,7 @@ class Template:
         if parsed.netloc == "api.memegen.link":
             logger.debug(f"Handling template URL: {url}")
             id = Path(parsed.path.segments[1]).stem
-            if id == "custom":
+            if id == "custom" and "background" in parsed.args:
                 url = parsed.args["background"]
                 parsed = furl(url)
             else:
