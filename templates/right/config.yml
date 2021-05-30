@@ -1,0 +1,53 @@
+name: Anakin and Padme Change the World For the Better
+source: https://www.reddit.com/r/MemeTemplatesOfficial/comments/nia6wu/im_going_to_change_the_world_for_the_better_right/
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.1
+    anchor_y: 0.01
+    angle: 0.0
+    scale_x: 0.25
+    scale_y: 0.1
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.65
+    anchor_y: 0.01
+    angle: 0.0
+    scale_x: 0.25
+    scale_y: 0.1
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.4
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+  - style: deafult
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.4
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.9
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+example:
+  - Senior Developer
+  - Junior Developer
+  - Put it in the backlog.
+  - So we can fix it later, right?
+  - So we can fix it later, right?
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
