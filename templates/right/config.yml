@@ -4,7 +4,7 @@ text:
   - style: upper
     color: white
     font: thick
-    anchor_x: 0.1
+    anchor_x: 0.09
     anchor_y: 0.01
     angle: 0.0
     scale_x: 0.25
@@ -21,25 +21,25 @@ text:
     color: white
     font: thin
     anchor_x: 0.0
-    anchor_y: 0.4
+    anchor_y: 0.399
     angle: 0.0
-    scale_x: 0.5
+    scale_x: 0.499
     scale_y: 0.1
   - style: deafult
     color: khaki
     font: thin
-    anchor_x: 0.5
-    anchor_y: 0.4
+    anchor_x: 0.502
+    anchor_y: 0.399
     angle: 0.0
-    scale_x: 0.5
+    scale_x: 0.499
     scale_y: 0.1
   - style: default
     color: khaki
     font: thin
-    anchor_x: 0.5
+    anchor_x: 0.502
     anchor_y: 0.9
     angle: 0.0
-    scale_x: 0.5
+    scale_x: 0.499
     scale_y: 0.1
 example:
   - Senior Developer
