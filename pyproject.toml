@@ -32,7 +32,7 @@ aiohttp = "^3.7.4"
 aiopath = "~0.4.9"
 datafiles = "~0.15a4"
 furl = "^2.1.1"
-minilog = "^2.0"
+minilog = "^2.0.1"
 
 # Production
 bugsnag = "^4.0.3"

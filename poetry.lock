@@ -703,7 +703,7 @@ traitlets = "*"
 
 [[package]]
 name = "minilog"
-version = "2.0"
+version = "2.0.1"
 description = "Minimalistic wrapper for Python logging."
 category = "main"
 optional = false
@@ -1469,7 +1469,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "0da8075e459d1febbba58bedc537f82faac77f107b920fcc8d9a8d8dd43b0033"
+content-hash = "ac2bd310955d092ca02556b3fcb5dc911d57842a3414db452c921721ee36e50a"
 
 [metadata.files]
 aiocache = [
@@ -2006,8 +2006,8 @@ matplotlib-inline = [
     {file = "matplotlib_inline-0.1.2-py3-none-any.whl", hash = "sha256:5cf1176f554abb4fa98cb362aa2b55c500147e4bdbb07e3fda359143e1da0811"},
 ]
 minilog = [
-    {file = "minilog-2.0-py3-none-any.whl", hash = "sha256:891ad346bdd63aee4c210faa688497f7ba412cf52a54fb6cba6bf511a34a5138"},
-    {file = "minilog-2.0.tar.gz", hash = "sha256:58499302bca86cf507eb3c3dfa3853de9389bfde275ba5155bdc3b4551175918"},
+    {file = "minilog-2.0.1-py3-none-any.whl", hash = "sha256:9cd8b002043c7a6e5f312af96b06f562932312217d4fcb8c2752edc1ae91d3c7"},
+    {file = "minilog-2.0.1.tar.gz", hash = "sha256:52cbec563f266f1e931fd884edbb53a87ce24817365d84cc9dc628a96ea00b85"},
 ]
 mkdocs = [
     {file = "mkdocs-1.1.2-py3-none-any.whl", hash = "sha256:096f52ff52c02c7e90332d2e53da862fde5c062086e1b5356a6e392d5d60f5e9"},
