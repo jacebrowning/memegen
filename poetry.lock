@@ -283,7 +283,7 @@ requests = ">=2.0,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "0.15a4"
+version = "0.15"
 description = "File-based ORM for dataclasses."
 category = "main"
 optional = false
@@ -1469,7 +1469,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ac2bd310955d092ca02556b3fcb5dc911d57842a3414db452c921721ee36e50a"
+content-hash = "326d23cf923e55fd28ac09d9a20286a6324bcebce0a41983c2669409f37cc47b"
 
 [metadata.files]
 aiocache = [
@@ -1701,8 +1701,8 @@ coveragespace = [
     {file = "coveragespace-4.1.tar.gz", hash = "sha256:6dcdee802be5cdaa9820538203ad0e182a1ea56c679cdf65b36d4b85937d2e38"},
 ]
 datafiles = [
-    {file = "datafiles-0.15a4-py3-none-any.whl", hash = "sha256:5dd2b4e51c0c680e6c290770b9f36be03828373338aab5da6296c9e839b0f95e"},
-    {file = "datafiles-0.15a4.tar.gz", hash = "sha256:f524c89da5636cdbcf3c62ba9cd4b4bd83e69cf92d5e1d0d75c1b778ad3eaddf"},
+    {file = "datafiles-0.15-py3-none-any.whl", hash = "sha256:a86fe090fad2b6aab43850e0b11e97775e64446f078a243207a60c057d13cf99"},
+    {file = "datafiles-0.15.tar.gz", hash = "sha256:0fc52c9582cd26d314bce4a86532803d293601c398abba055fb4cad50fb39b86"},
 ]
 decorator = [
     {file = "decorator-5.0.7-py3-none-any.whl", hash = "sha256:945d84890bb20cc4a2f4a31fc4311c0c473af65ea318617f13a7257c9a58bc98"},
