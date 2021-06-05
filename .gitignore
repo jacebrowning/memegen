@@ -18,8 +18,7 @@ __pycache__/
 
 # Testing
 .coverage
-/htmlcov/
-/results/
+htmlcov/
 
 # Server
 .env
