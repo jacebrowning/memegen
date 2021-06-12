@@ -15,7 +15,7 @@ python = "^3.9"
 # Sanic
 sanic = "~20.12.2"
 sanic-cors = "~0.10"
-sanic-openapi = "~0.6.2"
+sanic-openapi = "~21.3.2"
 
 # Markdown
 markdown = "~3.2.2"
