@@ -25,17 +25,14 @@ async def validate(request):
 @doc.summary("Display a preview of a custom meme")
 @doc.consumes(
     doc.String(name="lines[]", description="Lines of text to render"),
-    content_type="application/json",
     location="query",
 )
 @doc.consumes(
     doc.String(name="style", description="Style name or custom overlay"),
-    content_type="application/json",
     location="query",
 )
 @doc.consumes(
     doc.String(name="template", description="Template ID, URL, or custom background"),
-    content_type="application/json",
     location="query",
 )
 @doc.produces(
