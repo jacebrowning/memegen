@@ -253,7 +253,7 @@ def get_image_element(
     point = text.get_anchor(image_size, watermark)
 
     max_text_size = text.get_size(image_size)
-    max_font_size = int(image_size[1] / (2 if text.angle else 9))
+    max_font_size = int(image_size[1] / (4 if text.angle else 9))
 
     try:
         line = lines[index]
