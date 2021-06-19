@@ -10,6 +10,7 @@ blueprint = Blueprint("Shortcuts", url_prefix="/")
 
 @blueprint.get("/images/<template_id>")
 @doc.summary("Redirect to an example image")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(
     302, doc.File(), description="Successfully redirected to an example image"
 )
@@ -42,6 +43,7 @@ async def example(request, template_id):
 @blueprint.get("/<template_id>.png")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to an example image")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(
     302, doc.File(), description="Successfully redirected to an example image"
 )
@@ -57,6 +59,7 @@ async def example_png(request, template_id):
 @blueprint.get("/<template_id>.jpg")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to an example image")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(
     302, doc.File(), description="Successfully redirected to an example image"
 )
@@ -72,6 +75,7 @@ async def example_jpg(request, template_id):
 @blueprint.get("/<template_id>")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to an example image")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(
     302, doc.File(), description="Successfully redirected to an example image"
 )
@@ -81,6 +85,8 @@ async def example_legacy(request, template_id):
 
 @blueprint.get("/images/<template_id>/<text_paths:[\\s\\S]+>")
 @doc.summary("Redirect to a custom image")
+@doc.consumes(doc.String(name="text_paths"), location="path")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     str,
     description="Successfully displayed a custom meme",
@@ -110,6 +116,8 @@ async def custom(request, template_id, text_paths):
 @blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.png")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to a custom image")
+@doc.consumes(doc.String(name="text_paths"), location="path")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 @doc.response(404, str, description="Template not found")
 async def custom_png(request, template_id, text_paths):
@@ -125,6 +133,8 @@ async def custom_png(request, template_id, text_paths):
 @blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.jpg")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to a custom image")
+@doc.consumes(doc.String(name="text_paths"), location="path")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 @doc.response(404, str, description="Template not found")
 async def custom_jpg(request, template_id, text_paths):
@@ -140,6 +150,8 @@ async def custom_jpg(request, template_id, text_paths):
 @blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to a custom image")
+@doc.consumes(doc.String(name="text_paths"), location="path")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 async def custom_legacy(request, template_id, text_paths):
     return response.redirect(f"/images/{template_id}/{text_paths}")

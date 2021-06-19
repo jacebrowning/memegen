@@ -41,6 +41,7 @@ async def index(request):
 
 @blueprint.get("/<id>")
 @doc.summary("View a specific template")
+@doc.consumes(doc.String(name="id"), location="path")
 @doc.produces(
     {
         "id": str,
@@ -67,6 +68,7 @@ async def detail(request, id):
 @doc.operation("Memes.create_from_template")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Create a meme from a template")
+@doc.consumes(doc.String(name="id"), location="path")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
     content_type="application/json",

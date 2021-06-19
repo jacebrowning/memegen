@@ -155,6 +155,7 @@ async def list_custom(request):
 @blueprint.get("/<template_id>.png")
 @doc.tag("Templates")
 @doc.summary("Display a template background")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a template background",
@@ -174,6 +175,7 @@ async def blank_png(request, template_id):
 @blueprint.get("/<template_id>.jpg")
 @doc.tag("Templates")
 @doc.summary("Display a template background")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a template background",
@@ -192,6 +194,8 @@ async def blank_jpg(request, template_id):
 
 @blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.png")
 @doc.summary("Display a custom meme")
+@doc.consumes(doc.String(name="text_paths"), location="path")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a custom meme",
@@ -236,6 +240,8 @@ async def text_png(request, template_id, text_paths):
 
 @blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.jpg")
 @doc.summary("Display a custom meme")
+@doc.consumes(doc.String(name="text_paths"), location="path")
+@doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a custom meme",
