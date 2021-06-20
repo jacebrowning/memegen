@@ -1,0 +1,35 @@
+name: Woman Holding Dog's Mouth
+source: https://knowyourmeme.com/memes/women-holding-dogs-mouth
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.15
+    angle: 0.0
+    scale_x: 0.4
+    scale_y: 0.2
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.6
+    anchor_y: 0.2
+    angle: 0.0
+    scale_x: 0.4
+    scale_y: 0.2
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.1
+    anchor_y: 0.6
+    angle: 0.0
+    scale_x: 0.4
+    scale_y: 0.2
+example:
+  - Sales Team presenting the solution
+  - Excited Customer
+  - Engineering Team knowing the solution won't work
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
