@@ -8,15 +8,15 @@ text:
     anchor_y: 0.0
     angle: 0.0
     scale_x: 1.0
-    scale_y: 0.2
+    scale_y: 0.15
   - style: upper
     color: white
     font: thick
     anchor_x: 0.0
-    anchor_y: 0.8
+    anchor_y: 0.85
     angle: 0.0
     scale_x: 1.0
-    scale_y: 0.2
+    scale_y: 0.15
 example:
   - why dont we take all the memes
   - and put them on memegen
