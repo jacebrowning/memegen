@@ -26,9 +26,9 @@ text:
     scale_x: 0.4
     scale_y: 0.2
 example:
-  - Sales Team presenting the solution
+  - Sales Team presenting the solution in PowerPoint
   - Excited Customer
-  - Engineering Team knowing the solution won't work
+  - Engineering Team knowing the solution is not technically possible
 overlay:
   - center_x: 0.5
     center_y: 0.5

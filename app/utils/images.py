@@ -283,24 +283,30 @@ def get_image_element(
 
 
 def wrap(font: str, line: str, max_text_size: Dimensions, max_font_size: int) -> str:
-    lines = split(line)
+    lines_1 = line
+    lines_2 = split_2(line)
+    lines_3 = split_3(line)
 
-    single = get_font(font, line, 0, max_text_size, max_font_size)
-    double = get_font(font, lines, 0, max_text_size, max_font_size)
+    font_1 = get_font(font, lines_1, 0, max_text_size, max_font_size)
+    font_2 = get_font(font, lines_2, 0, max_text_size, max_font_size)
+    font_3 = get_font(font, lines_3, 0, max_text_size, max_font_size)
 
-    if single.size == double.size and double.size <= settings.MINIMUM_FONT_SIZE:
-        return lines
+    if font_1.size == font_2.size and font_2.size <= settings.MINIMUM_FONT_SIZE:
+        return lines_2
 
-    if single.size >= double.size:
-        return line
+    if font_1.size >= font_2.size:
+        return lines_1
 
-    if get_text_size(lines, double)[0] >= max_text_size[0] * 0.60:
-        return lines
+    if get_text_size(lines_3, font_3)[0] >= max_text_size[0] * 0.60:
+        return lines_3
 
-    return line
+    if get_text_size(lines_2, font_2)[0] >= max_text_size[0] * 0.60:
+        return lines_2
+
+    return lines_1
 
 
-def split(line: str) -> str:
+def split_2(line: str) -> str:
     midpoint = len(line) // 2 - 1
 
     for offset in range(0, len(line) // 4):
@@ -309,6 +315,24 @@ def split(line: str) -> str:
                 return line[:index].strip() + "\n" + line[index:].strip()
 
     return line
+
+
+def split_3(line: str) -> str:
+    max_len = len(line) / 3
+    words = line.split(" ")
+    lines = ["", "", ""]
+    index = 0
+
+    for word in words:
+        current_len = len(lines[index])
+        next_len = current_len + len(word) * 0.7
+        if next_len > max_len:
+            if index < 2:
+                index += 1
+
+        lines[index] += word + " "
+
+    return "\n".join(lines).strip()
 
 
 def get_font(
@@ -346,8 +370,19 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
     x_offset -= stroke_width
     y_offset -= stroke_width
 
+    # TODO: Figure out a formula for this
+    lines = text.count("\n") + 1
+    if lines == 1:
+        y_adjust = 1.5
+    elif lines == 2:
+        y_adjust = 1.25
+    else:
+        assert lines == 3
+        # TODO: Adjust this size for the 'mouth' example
+        y_adjust = 1.125
+
     x_offset -= (max_text_size[0] - text_size[0]) / 2
-    y_offset -= (max_text_size[1] - text_size[1] / (1.25 if "\n" in text else 1.5)) // 2
+    y_offset -= (max_text_size[1] - text_size[1] / y_adjust) // 2
 
     return x_offset, y_offset
 
