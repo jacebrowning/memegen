@@ -122,12 +122,13 @@ def render_image(
             outline = "orange" if text == settings.PREVIEW_TEXT else "lime"
             draw.rectangle(xy, outline=outline)
 
+        rows = text.count("\n") + 1
         draw.text(
             (-offset[0], -offset[1]),
             text,
             text_fill,
             font,
-            spacing=-offset[1] / 2,
+            spacing=-offset[1] / (rows * 2),
             align="center",
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
@@ -370,19 +371,11 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
     x_offset -= stroke_width
     y_offset -= stroke_width
 
-    # TODO: Figure out a formula for this
-    lines = text.count("\n") + 1
-    if lines == 1:
-        y_adjust = 1.5
-    elif lines == 2:
-        y_adjust = 1.25
-    else:
-        assert lines == 3
-        # TODO: Adjust this size for the 'mouth' example
-        y_adjust = 1.125
+    rows = text.count("\n") + 1
+    y_adjust = 1 + (3 - rows) * 0.25
 
     x_offset -= (max_text_size[0] - text_size[0]) / 2
-    y_offset -= (max_text_size[1] - text_size[1] / y_adjust) // 2
+    y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2
 
     return x_offset, y_offset
 

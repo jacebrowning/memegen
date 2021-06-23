@@ -105,6 +105,10 @@ TEST_IMAGES = [
         "spongebob",
         ["You: Stop talking like that", "Me: Stop talking like that"],
     ),
+    (
+        "mouth",
+        ["Sales Team presenting solution that won't work", "Excited Customer", "Me"],
+    ),
 ]
 
 # Analytics
