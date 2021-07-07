@@ -1,3 +1,19 @@
+# Sample Code
+
+Here are some popular apps and integrations to check out:
+
+| Platforms   | Language   | Website                                        |
+| :---------- | :--------- | :--------------------------------------------- |
+| Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
+| Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
+| Slack       | --         | <http://www.memetizer.com>                     |
+| Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
+| Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
+| Web & Slack | --         | <https://memecomplete.com>                     |
+| Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
+
+Additional clients can be found by searching for [code examples](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93) on GitHub.
+
 # Authentication
 
 Unauthenticated API requests are watermarked and may be rate limited.

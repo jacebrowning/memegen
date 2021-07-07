@@ -75,7 +75,6 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 | :------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![Default Style](https://api.memegen.link/images/ds.png) | ![Alternate Style](https://api.memegen.link/images/ds.png?style=maga) |
 
-
 ## Custom Overlays
 
 The `style=<str>` query parameter can also be an image URL to overlay on the default background image.
@@ -91,21 +90,3 @@ You can also use your own image URL as the background.
 For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&token=ahby9x2nlsbk0gxdmpo5)
-
-# Sample Code
-
-Here are some popular apps and integrations to check out:
-
-| Platforms   | Language   | Website                                        |
-| :---------- | :--------- | :--------------------------------------------- |
-| Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
-| Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
-| Slack       | --         | <http://www.memetizer.com>                     |
-| Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
-| Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
-| Web & Slack | --         | <https://memecomplete.com>                     |
-| Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
-
-Additional clients can be found by searching for [code examples](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93) on GitHub.
-
-Ready to build your own? Check out the [clients page](https://memegen.link/clients/).
