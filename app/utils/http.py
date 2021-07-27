@@ -1,3 +1,5 @@
+import asyncio
+
 import aiofiles
 import aiohttp
 import aiohttp.client_exceptions
@@ -9,6 +11,7 @@ EXCEPTIONS = (
     aiohttp.client_exceptions.InvalidURL,
     aiohttp.client_exceptions.TooManyRedirects,
     AssertionError,
+    asyncio.TimeoutError,
     UnicodeError,
 )
 
@@ -16,7 +19,7 @@ EXCEPTIONS = (
 async def download(url: str, path: AsyncPath) -> bool:
     async with aiohttp.ClientSession() as session:
         try:
-            async with session.get(url) as response:
+            async with session.get(url, timeout=10) as response:
 
                 if response.status == 200:
                     f = await aiofiles.open(path, mode="wb")  # type: ignore
@@ -27,7 +30,7 @@ async def download(url: str, path: AsyncPath) -> bool:
                 logger.error(f"{response.status} response from {url}")
 
         except EXCEPTIONS as e:
-            message = str(e).strip("() ")
+            message = str(e).strip("() ") or e.__class__.__name__
             logger.error(f"Invalid response from {url}: {message}")
 
     return False
