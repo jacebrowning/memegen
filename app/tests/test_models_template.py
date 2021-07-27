@@ -105,7 +105,7 @@ def describe_template():
 
         @pytest.mark.asyncio
         async def it_handles_custom_templates_lacking_background(expect):
-            url = "http://api.memegen.link/images/custom.png"
+            url = "http://api.memegen.link/images/custom.png?background"
             template = await Template.create(url)
             expect(template.id) == "_error"
 

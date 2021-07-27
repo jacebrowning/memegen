@@ -180,16 +180,16 @@ class Template:
     async def create(cls, url: str, *, force=False) -> "Template":
         parsed = furl(url)
         if parsed.netloc == "api.memegen.link":
-            logger.debug(f"Handling template URL: {url}")
+            logger.info(f"Handling template URL: {url}")
             if len(parsed.path.segments) > 1:
                 id = Path(parsed.path.segments[1]).stem
-            else:
-                id = ""
-            if id == "custom" and "background" in parsed.args:
-                url = parsed.args["background"]
+                if id != "custom":
+                    return cls.objects.get_or_none(id) or cls.objects.get("_error")
+                background = parsed.args.get("background")
+                if not background:
+                    return cls.objects.get("_error")
+                url = background
                 parsed = furl(url)
-            else:
-                return cls.objects.get_or_none(id) or cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
