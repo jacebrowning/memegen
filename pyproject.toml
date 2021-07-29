@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "^3.9"
 
 # Sanic
-sanic = "~20.12.2"
+sanic = "~21.6.1"
 sanic-cors = "~0.10"
 sanic-openapi = "~21.3.2"
 
