@@ -109,6 +109,10 @@ TEST_IMAGES = [
         "mouth",
         ["Sales Team presenting solution that won't work", "Excited Customer", "Me"],
     ),
+    (
+        "cmm",
+        ["Many\nextra\nlines\nof\ntext"],
+    ),
 ]
 
 # Analytics

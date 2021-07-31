@@ -372,7 +372,10 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
     y_offset -= stroke_width
 
     rows = text.count("\n") + 1
-    y_adjust = 1 + (3 - rows) * 0.25
+    if rows > 3:
+        y_adjust = 1.1
+    else:
+        y_adjust = 1 + (3 - rows) * 0.25
 
     x_offset -= (max_text_size[0] - text_size[0]) / 2
     y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2
