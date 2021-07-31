@@ -21,10 +21,12 @@ def describe_track():
     @pytest.mark.asyncio
     async def it_is_disabled_automatically_after_error(expect, monkeypatch, request):
         monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/404")
+        monkeypatch.setattr(settings, "REMOTE_TRACKING_ERRORS_LIMIT", 1)
         request.args = {}
         request.headers = {}
         request.url = "http://example.com"
 
-        await utils.meta.track(request, ["foo", "bar"])
+        await utils.meta.track(request, ["foo"])
+        await utils.meta.track(request, ["bar"])
 
         expect(settings.TRACK_REQUESTS) == False

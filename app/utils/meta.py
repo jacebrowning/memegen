@@ -124,11 +124,14 @@ async def track(request, lines: list[str]):
                 message = await response.text()
             logger.error(f"Tracker response {response.status}: {message}")
         if response.status >= 404 and response.status not in {414, 421, 520}:
-            settings.TRACK_REQUESTS = False
-            bugsnag.notify(
-                RuntimeError(f"Disabled tracking after {response.status} response"),
-                metadata={"request": request.url, "message": message},
-            )
+            settings.REMOTE_TRACKING_ERRORS += 1
+            logger.info(f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}")
+            if settings.REMOTE_TRACKING_ERRORS >= settings.REMOTE_TRACKING_ERRORS_LIMIT:
+                settings.TRACK_REQUESTS = False
+                bugsnag.notify(
+                    RuntimeError(f"Disabled tracking after {response.status} response"),
+                    metadata={"request": request.url, "message": message},
+                )
 
 
 async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
