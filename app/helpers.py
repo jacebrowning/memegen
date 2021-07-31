@@ -31,7 +31,7 @@ def get_test_images(request) -> list[str]:
         request.app.url_for(
             f"Memes.text_{settings.DEFAULT_EXT}",
             template_id=id,
-            text_paths=utils.text.encode(lines),
+            text_paths=utils.text.encode(lines) + "." + settings.DEFAULT_EXT,
         )
         for id, lines in settings.TEST_IMAGES
     ]

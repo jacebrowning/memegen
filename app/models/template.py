@@ -103,7 +103,7 @@ class Template:
             "styles": self.styles,
             "blank": app.url_for(
                 f"Memes.blank_{settings.DEFAULT_EXT}",
-                template_id=self.id,
+                template_id=self.id + f".{settings.DEFAULT_EXT}",
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
@@ -127,9 +127,10 @@ class Template:
         *,
         external: bool = True,
     ) -> str:
+        ext = view_name.split("_")[-1]
         kwargs = {
             "template_id": self.id,
-            "text_paths": utils.text.encode(self.example),
+            "text_paths": utils.text.encode(self.example) + f".{ext}",
             "_external": external,
         }
         if external:
@@ -146,16 +147,14 @@ class Template:
         background: str = "",
         style: str = "",
     ):
-        if extension in {"jpg", "png"}:
-            view_name = f"Memes.text_{extension}"
-        else:
-            view_name = f"Memes.text_{settings.DEFAULT_EXT}"
+        if extension not in {"jpg", "png"}:
+            extension = settings.DEFAULT_EXT
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
-            view_name,
+            f"Memes.text_{extension}",
             template_id="custom" if self.id == "_custom" else self.id,
-            text_paths=utils.text.encode(text_lines),
+            text_paths=utils.text.encode(text_lines) + f".{extension}",
             _external=True,
             _scheme=settings.SCHEME,
             **utils.urls.params(background=background, style=style),
