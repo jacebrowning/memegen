@@ -14,7 +14,7 @@ python = "^3.9"
 
 # Sanic
 sanic = "~21.6.1"
-sanic-cors = "~0.10"
+sanic-cors = "^1.0"
 sanic-openapi = "~21.3.2"
 
 # Markdown
@@ -60,6 +60,7 @@ pytest-expecter = "^2.1"
 pytest-random = "*"
 pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
+sanic-testing = "*"
 locust = "^1.2.3"
 
 # Coverage
