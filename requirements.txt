@@ -33,7 +33,7 @@ ruamel.yaml==0.17.4; python_version >= "3.7" and python_version < "4.0"
 sanic-cors==1.0.0
 sanic-openapi==21.3.2
 sanic-plugin-toolkit==1.0.1; python_version >= "3.7" and python_version < "4.0"
-sanic-routing==0.7.1; python_version >= "3.7"
+sanic-routing @ git+https://github.com/sanic-org/sanic-routing@5501794506a8e8c730de904cd6dbd57d68e90757
 sanic==21.6.1; python_version >= "3.7"
 six==1.16.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0"
 spongemock==0.3.4

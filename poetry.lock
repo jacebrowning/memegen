@@ -1255,6 +1255,13 @@ description = "Core routing component for Sanic"
 category = "main"
 optional = false
 python-versions = "*"
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/sanic-org/sanic-routing"
+reference = "5501794506a8e8c730de904cd6dbd57d68e90757"
+resolved_reference = "5501794506a8e8c730de904cd6dbd57d68e90757"
 
 [[package]]
 name = "sanic-testing"
@@ -1527,7 +1534,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "9128e20de34504cddb77e0b693a3b8a5429a5534b6186f501382596b21a6d9db"
+content-hash = "28f923c2f364663eadf2c88f39faeca72c54bf57543793d45092a3fe2143c2e7"
 
 [metadata.files]
 aiocache = [
@@ -2531,10 +2538,7 @@ sanic-plugin-toolkit = [
     {file = "Sanic Plugin Toolkit-1.0.1.tar.gz", hash = "sha256:a7487d9079d09d05ed8f0128ce3fb80336365a415b00fe3061ccbd17e332a880"},
     {file = "Sanic_Plugin_Toolkit-1.0.1-py3-none-any.whl", hash = "sha256:a4a593a7280011e16eec7c7062415388646ae598fb633d5d30a07e26ba5759a8"},
 ]
-sanic-routing = [
-    {file = "sanic-routing-0.7.1.tar.gz", hash = "sha256:35b09a12aceecc4e295bddb0ed39cff90363dd1504f9831c6b0b01f6f026635d"},
-    {file = "sanic_routing-0.7.1-py3-none-any.whl", hash = "sha256:0c08f5f65a55fdca259d9149d89c39fd2377a651b408065fd643bdabdb6ba293"},
-]
+sanic-routing = []
 sanic-testing = [
     {file = "sanic-testing-0.6.0.tar.gz", hash = "sha256:c239b87ed3ea5fe1dc3b5139e6e1173fb4e37bcb05767750522771ca8778e32f"},
     {file = "sanic_testing-0.6.0-py3-none-any.whl", hash = "sha256:fc46b48253d0549a94ed18c455dddc766a9a29b7069ce849208ae867517ddf63"},

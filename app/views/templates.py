@@ -133,16 +133,14 @@ async def generate_url(
 
     if template_id:
         template = Template.objects.get_or_create(template_id)
-        url = template.build_custom_url(
-            request, text_lines, style=style, extension=extension
-        )
+        url = template.build_custom_url(request, text_lines, style=style, ext=extension)
         if not template.valid:
             status = 404
             template.delete()
     else:
         template = Template("_custom")
         url = template.build_custom_url(
-            request, text_lines, background=background, style=style, extension=extension
+            request, text_lines, background=background, style=style, ext=extension
         )
 
     url, _updated = await utils.meta.tokenize(request, url)

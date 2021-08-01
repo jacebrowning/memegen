@@ -16,6 +16,7 @@ python = "^3.9"
 sanic = "~21.6.1"
 sanic-cors = "^1.0"
 sanic-openapi = "~21.3.2"
+sanic-routing = { git = "https://github.com/sanic-org/sanic-routing", rev = "5501794506a8e8c730de904cd6dbd57d68e90757" }
 
 # Markdown
 markdown = "~3.2.2"
