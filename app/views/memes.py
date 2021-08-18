@@ -346,7 +346,10 @@ async def render_image(
 
     try:
         size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
-    except ValueError:
+        if 0 < size[0] < 10 or 0 < size[1] < 10:
+            raise ValueError(f"dimensions are too small: {size}")
+    except ValueError as e:
+        logger.error(f"Invalid size: {e}")
         size = 0, 0
         status = 422
 

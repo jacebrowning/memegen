@@ -123,6 +123,11 @@ def describe_detail():
         expect(response.status) == 404
         expect(response.headers["content-type"]) == "image/png"
 
+    def it_rejects_extremely_small_sizes(expect, client):
+        request, response = client.get("/images/fry/test.jpg?width=9")
+        expect(response.status) == 422
+        expect(response.headers["content-type"]) == "image/jpeg"
+
     def it_rejects_invalid_sizes(expect, client):
         request, response = client.get("/images/fry/test.jpg?width=abc")
         expect(response.status) == 422
