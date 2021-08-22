@@ -1,0 +1,26 @@
+name: Woman Yelling at a Cat
+source: https://knowyourmeme.com/memes/woman-yelling-at-a-cat
+text:
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.22
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.22
+example:
+  - Mom telling me how useless I am
+  - 12 year old me playing Minecraft
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
