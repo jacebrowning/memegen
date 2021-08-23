@@ -4,14 +4,26 @@ import io
 from pathlib import Path
 from typing import Iterator, Optional
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import (
+    Image,
+    ImageDraw,
+    ImageFilter,
+    ImageFont,
+    ImageOps,
+    UnidentifiedImageError,
+)
 from sanic.log import logger
 
 from .. import settings
 from ..models import Template, Text
 from ..types import Dimensions, Offset, Point
 
-EXCEPTIONS = (OSError, SyntaxError, Image.DecompressionBombError)
+EXCEPTIONS = (
+    OSError,
+    SyntaxError,
+    Image.DecompressionBombError,
+    UnidentifiedImageError,
+)
 
 
 def preview(
