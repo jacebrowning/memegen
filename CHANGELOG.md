@@ -1,5 +1,9 @@
 # Revision History
 
+## 9.1
+
+- Added escape characters for `<` and `>` as `~l` and `~g`, respectively.
+
 ## 9.0
 
 - Renamed `image_url` body parameter to `background` to match the URL value.
