@@ -69,6 +69,7 @@ def decode(slug: str) -> list[str]:
 
 
 def normalize(slug: str) -> tuple[str, bool]:
+    slug = unquote(slug)
     normalized_slug = encode(decode(slug))
     return normalized_slug, slug != normalized_slug
 
