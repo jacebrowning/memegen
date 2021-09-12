@@ -52,14 +52,14 @@ def save(
     lines: list[str],
     watermark: str = "",
     *,
-    ext: str = settings.DEFAULT_EXT,
+    extension: str = settings.DEFAULT_EXTENSION,
     style: str = settings.DEFAULT_STYLE,
     size: Dimensions = (0, 0),
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
     size = fit_image(*size)
 
-    path = directory / template.build_path(lines, style, size, watermark, ext)
+    path = directory / template.build_path(lines, style, size, watermark, extension)
     if path.exists():
         if settings.DEPLOYED:
             logger.info(f"Loading meme from {path}")

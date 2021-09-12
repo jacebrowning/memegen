@@ -169,7 +169,7 @@ async def list_custom(request):
     description="Invalid style for template or no image URL specified for custom template",
 )
 async def blank_png(request, template_id):
-    return await render_image(request, template_id, ext="png")
+    return await render_image(request, template_id, extension="png")
 
 
 @blueprint.get(r"/<template_id:(.+)\.jpg>")
@@ -189,7 +189,7 @@ async def blank_png(request, template_id):
     description="Invalid style for template or no image URL specified for custom template",
 )
 async def blank_jpg(request, template_id):
-    return await render_image(request, template_id, ext="jpg")
+    return await render_image(request, template_id, extension="jpg")
 
 
 @blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.png>")
@@ -281,7 +281,7 @@ async def text_jpg(request, template_id, text_paths):
         )
         return response.redirect(utils.urls.clean(url), status=302)
 
-    return await render_image(request, template_id, slug, watermark, ext="jpg")
+    return await render_image(request, template_id, slug, watermark, extension="jpg")
 
 
 async def render_image(
@@ -289,7 +289,7 @@ async def render_image(
     id: str,
     slug: str = "",
     watermark: str = "",
-    ext: str = settings.DEFAULT_EXT,
+    extension: str = settings.DEFAULT_EXTENSION,
 ):
     lines = utils.text.decode(slug)
     asyncio.create_task(utils.meta.track(request, lines))
@@ -354,6 +354,12 @@ async def render_image(
         status = 422
 
     path = await asyncio.to_thread(
-        utils.images.save, template, lines, watermark, ext=ext, style=style, size=size
+        utils.images.save,
+        template,
+        lines,
+        watermark,
+        extension=extension,
+        style=style,
+        size=size,
     )
     return await response.file(path, status)

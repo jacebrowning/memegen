@@ -29,9 +29,9 @@ def get_example_images(request, query: str = "") -> list[tuple[str, str]]:
 def get_test_images(request) -> list[str]:
     return [
         request.app.url_for(
-            f"Memes.text_{settings.DEFAULT_EXT}",
+            f"Memes.text_{settings.DEFAULT_EXTENSION}",
             template_id=id,
-            text_paths=utils.text.encode(lines) + "." + settings.DEFAULT_EXT,
+            text_paths=utils.text.encode(lines) + "." + settings.DEFAULT_EXTENSION,
         )
         for id, lines in settings.TEST_IMAGES
     ]

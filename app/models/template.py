@@ -102,8 +102,8 @@ class Template:
             "lines": len(self.text),
             "styles": self.styles,
             "blank": app.url_for(
-                f"Memes.blank_{settings.DEFAULT_EXT}",
-                template_id=self.id + f".{settings.DEFAULT_EXT}",
+                f"Memes.blank_{settings.DEFAULT_EXTENSION}",
+                template_id=self.id + "." + settings.DEFAULT_EXTENSION,
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
@@ -124,12 +124,12 @@ class Template:
         self,
         app: Sanic,
         *,
-        extension: str = settings.DEFAULT_EXT,
+        extension: str = settings.DEFAULT_EXTENSION,
         external: bool = True,
     ) -> str:
         kwargs = {
             "template_id": self.id,
-            "text_paths": utils.text.encode(self.example) + f".{extension}",
+            "text_paths": utils.text.encode(self.example) + "." + extension,
             "_external": external,
         }
         if external:
@@ -147,13 +147,13 @@ class Template:
         style: str = "",
     ):
         if extension not in {"jpg", "png"}:
-            extension = settings.DEFAULT_EXT
+            extension = settings.DEFAULT_EXTENSION
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
             f"Memes.text_{extension}",
             template_id="custom" if self.id == "_custom" else self.id,
-            text_paths=utils.text.encode(text_lines) + f".{extension}",
+            text_paths=utils.text.encode(text_lines) + "." + extension,
             _external=True,
             _scheme=settings.SCHEME,
             **utils.urls.params(background=background, style=style),
@@ -166,12 +166,12 @@ class Template:
         style: str,
         size: Dimensions,
         watermark: str,
-        ext: str,
+        extension: str,
     ) -> Path:
         slug = utils.text.encode(text_lines)
         variant = str(self.text) + str(style) + str(size) + watermark
         fingerprint = utils.text.fingerprint(variant, prefix="")
-        filename = f"{slug}.{fingerprint}.{ext}"
+        filename = f"{slug}.{fingerprint}.{extension}"
         return Path(self.id) / filename
 
     @classmethod

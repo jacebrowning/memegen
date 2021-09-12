@@ -96,9 +96,9 @@ async def example_legacy(request, template_id):
 async def custom(request, template_id, text_paths):
     if not settings.DEBUG:
         url = request.app.url_for(
-            f"Memes.text_{settings.DEFAULT_EXT}",
+            f"Memes.text_{settings.DEFAULT_EXTENSION}",
             template_id=template_id,
-            text_paths=utils.urls.clean(text_paths) + f".{settings.DEFAULT_EXT}",
+            text_paths=utils.urls.clean(text_paths) + "." + settings.DEFAULT_EXTENSION,
         )
         return response.redirect(url)
 

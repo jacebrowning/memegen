@@ -157,23 +157,23 @@ def describe_detail():
             expect(response.status) == 200
             expect(len(response.content)) != len(default_content)
 
-        @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_rejects_unknown_watermarks(expect, client, ext):
+        @pytest.mark.parametrize("extension", ["png", "jpg"])
+        def it_rejects_unknown_watermarks(expect, client, extension):
             request, response = client.get(
-                f"/images/fry/test.{ext}?watermark=foobar",
+                f"/images/fry/test.{extension}?watermark=foobar",
                 allow_redirects=False,
             )
             expect(response.status) == 302
-            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+            expect(response.headers["Location"]) == f"/images/fry/test.{extension}"
 
-        @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_removes_redundant_watermarks(expect, client, ext):
+        @pytest.mark.parametrize("extension", ["png", "jpg"])
+        def it_removes_redundant_watermarks(expect, client, extension):
             request, response = client.get(
-                f"/images/fry/test.{ext}?watermark=memegen.link",
+                f"/images/fry/test.{extension}?watermark=memegen.link",
                 allow_redirects=False,
             )
             expect(response.status) == 302
-            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+            expect(response.headers["Location"]) == f"/images/fry/test.{extension}"
 
         @patch(
             "app.utils.meta.authenticate",

@@ -36,13 +36,13 @@ def template():
 @pytest.mark.parametrize(("id", "lines"), settings.TEST_IMAGES)
 def test_png_images(images, id, lines):
     template = models.Template.objects.get(id)
-    utils.images.save(template, lines, ext="png", directory=images)
+    utils.images.save(template, lines, extension="png", directory=images)
 
 
 def test_jpg_images(images):
     id, lines = settings.TEST_IMAGES[0]
     template = models.Template.objects.get(id)
-    utils.images.save(template, lines, ext="jpg", directory=images)
+    utils.images.save(template, lines, extension="jpg", directory=images)
 
 
 # Size
