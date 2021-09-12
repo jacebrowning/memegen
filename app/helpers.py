@@ -19,7 +19,7 @@ def get_example_images(request, query: str = "") -> list[tuple[str, str]]:
         templates = sorted(templates)
     return [
         (
-            template.build_example_url(request.app, "Memes.text_jpg"),
+            template.build_example_url(request.app),
             template.build_self_url(request.app),
         )
         for template in templates

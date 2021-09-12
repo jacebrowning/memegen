@@ -123,19 +123,18 @@ class Template:
     def build_example_url(
         self,
         app: Sanic,
-        view_name: str = f"Memes.text_{settings.DEFAULT_EXT}",
         *,
+        extension: str = settings.DEFAULT_EXT,
         external: bool = True,
     ) -> str:
-        ext = view_name.split("_")[-1]
         kwargs = {
             "template_id": self.id,
-            "text_paths": utils.text.encode(self.example) + f".{ext}",
+            "text_paths": utils.text.encode(self.example) + f".{extension}",
             "_external": external,
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        url = app.url_for(view_name, **kwargs)
+        url = app.url_for(f"Memes.text_{extension}", **kwargs)
         return utils.urls.clean(url)
 
     def build_custom_url(

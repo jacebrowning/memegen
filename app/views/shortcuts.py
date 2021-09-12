@@ -23,9 +23,7 @@ async def example(request, template_id):
         template = models.Template.objects.get_or_none(template_id)
 
     if template and template.valid:
-        url = template.build_example_url(
-            request.app, "Shortcuts.custom", external=False
-        )
+        url = template.build_example_url(request.app, external=False)
         return response.redirect(url)
 
     if settings.DEBUG:
@@ -67,7 +65,7 @@ async def example_png(request, template_id):
 async def example_jpg(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
     if template:
-        url = template.build_example_url(request.app, "Memes.text_jpg", external=False)
+        url = template.build_example_url(request.app, external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_id}")
 
