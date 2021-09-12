@@ -22,6 +22,8 @@ def encode(lines: list[str]) -> str:
                 ("\\", "~b"),
                 ("\n", "~n"),
                 ("&", "~a"),
+                ("<", "~l"),
+                (">", "~g"),
                 ("‘", "'"),
                 ("’", "'"),
                 ("“", '"'),
@@ -39,14 +41,14 @@ def encode(lines: list[str]) -> str:
 
 
 def decode(slug: str) -> list[str]:
-    has_arrow = "_-->" in slug
+    has_arrow = "_--~g" in slug
 
     slug = slug.replace("_", " ").replace("  ", "_")
     slug = slug.replace("-", " ").replace("  ", "-")
     slug = slug.replace("''", '"')
 
     if has_arrow:
-        slug = slug.replace("- >", " ->")
+        slug = slug.replace("- ~g", " -~g")
 
     for before, after in [
         ("~q", "?"),
@@ -54,6 +56,8 @@ def decode(slug: str) -> list[str]:
         ("~h", "#"),
         ("~n", "\n"),
         ("~a", "&"),
+        ("~l", "<"),
+        ("~g", ">"),
         ("~b", "\\"),
     ]:
         slug = slug.replace(before, after)

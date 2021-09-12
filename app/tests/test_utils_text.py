@@ -4,12 +4,13 @@ from .. import utils
 
 LINES_SLUG = [
     (["hello world"], "hello_world"),
-    (["?%#/&\\"], "~q~p~h~s~a~b"),
+    (["?%#/&\\<>"], "~q~p~h~s~a~b~l~g"),
     (["a/b", "c"], "a~sb/c"),
     (["variable_name"], "variable__name"),
     (["variable-name"], "variable--name"),
     (["foo\nbar"], "foo~nbar"),
-    (["def data() -> Dict"], "def_data()_-->_Dict"),
+    (["def data() -> Dict"], "def_data()_--~g_Dict"),
+    (["finish <- start"], "finish_~l--_start"),
     (['That\'s not how "this" works'], "That's_not_how_''this''_works"),
 ]
 

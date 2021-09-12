@@ -109,10 +109,18 @@ TEST_IMAGES = [
         "mouth",
         ["Sales Team presenting solution that won't work", "Excited Customer", "Me"],
     ),
+    (
+        "cmm",
+        ["Many\nextra\nlines\nof\ntext"],
+    ),
 ]
 
 # Analytics
 
 TRACK_REQUESTS = True
 REMOTE_TRACKING_URL = os.getenv("REMOTE_TRACKING_URL")
+
+REMOTE_TRACKING_ERRORS = 0
+REMOTE_TRACKING_ERRORS_LIMIT = int(os.getenv("REMOTE_TRACKING_ERRORS_LIMIT", "10"))
+
 BUGSNAG_API_KEY = os.getenv("BUGSNAG_API_KEY")

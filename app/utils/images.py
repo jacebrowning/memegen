@@ -4,14 +4,26 @@ import io
 from pathlib import Path
 from typing import Iterator, Optional
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import (
+    Image,
+    ImageDraw,
+    ImageFilter,
+    ImageFont,
+    ImageOps,
+    UnidentifiedImageError,
+)
 from sanic.log import logger
 
 from .. import settings
 from ..models import Template, Text
 from ..types import Dimensions, Offset, Point
 
-EXCEPTIONS = (OSError, SyntaxError, Image.DecompressionBombError)
+EXCEPTIONS = (
+    OSError,
+    SyntaxError,
+    Image.DecompressionBombError,
+    UnidentifiedImageError,
+)
 
 
 def preview(
@@ -372,7 +384,10 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
     y_offset -= stroke_width
 
     rows = text.count("\n") + 1
-    y_adjust = 1 + (3 - rows) * 0.25
+    if rows > 3:
+        y_adjust = 1.1
+    else:
+        y_adjust = 1 + (3 - rows) * 0.25
 
     x_offset -= (max_text_size[0] - text_size[0]) / 2
     y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2
