@@ -1,8 +1,7 @@
 import asyncio
 from contextlib import suppress
 
-from sanic import Blueprint, response
-from sanic.exceptions import abort
+from sanic import Blueprint, exceptions, response
 from sanic_openapi import doc
 
 from .. import helpers, settings, utils
@@ -59,8 +58,8 @@ async def index(request):
 async def detail(request, id):
     template = Template.objects.get_or_none(id)
     if template:
-        return response.json(template.jsonify(request.app))
-    abort(404)
+        return response.json(template.jsonify(request))
+    raise exceptions.NotFound
 
 
 @blueprint.post("/<id>")

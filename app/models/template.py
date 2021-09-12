@@ -7,7 +7,7 @@ from typing import Optional
 import aiopath
 from datafiles import datafile, field
 from furl import furl
-from sanic import Sanic
+from sanic import Request
 from sanic.log import logger
 
 from .. import settings, utils
@@ -95,25 +95,25 @@ class Template:
         logger.warning(f"Style {style!r} not available for template: {self.id}")
         return self.get_image()
 
-    def jsonify(self, app: Sanic) -> dict:
+    def jsonify(self, request: Request) -> dict:
         return {
             "id": self.id,
             "name": self.name,
             "lines": len(self.text),
             "styles": self.styles,
-            "blank": app.url_for(
-                f"Memes.blank_{settings.DEFAULT_EXT}",
-                template_id=self.id + f".{settings.DEFAULT_EXT}",
+            "blank": request.app.url_for(
+                f"Memes.blank_{settings.DEFAULT_EXTENSION}",
+                template_id=self.id + "." + settings.DEFAULT_EXTENSION,
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
-            "example": self.build_example_url(app),
+            "example": self.build_example_url(request),
             "source": self.source,
-            "_self": self.build_self_url(app),
+            "_self": self.build_self_url(request),
         }
 
-    def build_self_url(self, app: Sanic) -> str:
-        return app.url_for(
+    def build_self_url(self, request: Request) -> str:
+        return request.app.url_for(
             "Templates.detail",
             id=self.id,
             _external=True,
@@ -122,24 +122,24 @@ class Template:
 
     def build_example_url(
         self,
-        app: Sanic,
+        request: Request,
         *,
-        extension: str = settings.DEFAULT_EXT,
+        extension: str = settings.DEFAULT_EXTENSION,
         external: bool = True,
     ) -> str:
         kwargs = {
             "template_id": self.id,
-            "text_paths": utils.text.encode(self.example) + f".{extension}",
+            "text_paths": utils.text.encode(self.example) + "." + extension,
             "_external": external,
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        url = app.url_for(f"Memes.text_{extension}", **kwargs)
+        url = request.app.url_for(f"Memes.text_{extension}", **kwargs)
         return utils.urls.clean(url)
 
     def build_custom_url(
         self,
-        request,
+        request: Request,
         text_lines: list[str],
         *,
         extension: str = "",
@@ -147,13 +147,13 @@ class Template:
         style: str = "",
     ):
         if extension not in {"jpg", "png"}:
-            extension = settings.DEFAULT_EXT
+            extension = settings.DEFAULT_EXTENSION
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
             f"Memes.text_{extension}",
             template_id="custom" if self.id == "_custom" else self.id,
-            text_paths=utils.text.encode(text_lines) + f".{extension}",
+            text_paths=utils.text.encode(text_lines) + "." + extension,
             _external=True,
             _scheme=settings.SCHEME,
             **utils.urls.params(background=background, style=style),
@@ -166,12 +166,12 @@ class Template:
         style: str,
         size: Dimensions,
         watermark: str,
-        ext: str,
+        extension: str,
     ) -> Path:
         slug = utils.text.encode(text_lines)
         variant = str(self.text) + str(style) + str(size) + watermark
         fingerprint = utils.text.fingerprint(variant, prefix="")
-        filename = f"{slug}.{fingerprint}.{ext}"
+        filename = f"{slug}.{fingerprint}.{extension}"
         return Path(self.id) / filename
 
     @classmethod

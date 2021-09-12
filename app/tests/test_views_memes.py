@@ -29,9 +29,8 @@ def describe_list():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_returns_an_image_url(expect, client, as_json):
             data = {"template_id": "iw", "text_lines[]": ["foo", "bar"]}
-            request, response = client.post(
-                "/images", data=json.dumps(data) if as_json else data
-            )
+            kwargs: dict = {"content": json.dumps(data)} if as_json else {"data": data}
+            request, response = client.post("/images", **kwargs)
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
@@ -157,23 +156,23 @@ def describe_detail():
             expect(response.status) == 200
             expect(len(response.content)) != len(default_content)
 
-        @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_rejects_unknown_watermarks(expect, client, ext):
+        @pytest.mark.parametrize("extension", ["png", "jpg"])
+        def it_rejects_unknown_watermarks(expect, client, extension):
             request, response = client.get(
-                f"/images/fry/test.{ext}?watermark=foobar",
+                f"/images/fry/test.{extension}?watermark=foobar",
                 allow_redirects=False,
             )
             expect(response.status) == 302
-            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+            expect(response.headers["Location"]) == f"/images/fry/test.{extension}"
 
-        @pytest.mark.parametrize("ext", ["png", "jpg"])
-        def it_removes_redundant_watermarks(expect, client, ext):
+        @pytest.mark.parametrize("extension", ["png", "jpg"])
+        def it_removes_redundant_watermarks(expect, client, extension):
             request, response = client.get(
-                f"/images/fry/test.{ext}?watermark=memegen.link",
+                f"/images/fry/test.{extension}?watermark=memegen.link",
                 allow_redirects=False,
             )
             expect(response.status) == 302
-            expect(response.headers["Location"]) == f"/images/fry/test.{ext}"
+            expect(response.headers["Location"]) == f"/images/fry/test.{extension}"
 
         @patch(
             "app.utils.meta.authenticate",
@@ -335,9 +334,8 @@ def describe_custom():
                 "text_lines[]": ["foo", "bar"],
                 "extension": "jpg",
             }
-            request, response = client.post(
-                "/images/custom", data=json.dumps(data) if as_json else data
-            )
+            kwargs: dict = {"content": json.dumps(data)} if as_json else {"data": data}
+            request, response = client.post("/images/custom", **kwargs)
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/custom/foo/bar.jpg"

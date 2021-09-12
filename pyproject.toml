@@ -42,8 +42,8 @@ uvicorn = "~0.14"
 [tool.poetry.dev-dependencies]
 
 # Formatting
-isort = "=5.5.1"
-black = "=20.8b1"
+isort = "=5.9.3"
+black = "=21.8b0"
 
 # Type Checking
 mypy = "~0.900"
@@ -53,9 +53,9 @@ types-aiofiles = "*"
 types-requests = "*"
 
 # Testing
-pytest = "^6.0"
+pytest = "^6.2.5"
 pytest-asyncio = "*"
-pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "9014bf3ee564518aad3622b5f035f7ca6139e398" }
+pytest-describe = "^2.0"
 pytest-expecter = "^2.1"
 pytest-random = "*"
 pytest-rerunfailures = "^9.1"
@@ -74,6 +74,10 @@ honcho = { git = "https://github.com/nickstenning/honcho", rev = "b4de1aa0504d41
 ipdb = "*"
 rope = "^0.18.0"
 watchdog = { version = "=0.10.3", extras = ["watchmedo"] }
+
+[tool.isort]
+
+profile = "black"
 
 [tool.black]
 

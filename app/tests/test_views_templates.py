@@ -47,9 +47,9 @@ def describe_detail():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_returns_an_image_url(expect, client, as_json):
             data = {"text_lines[]": ["foo", "bar"], "extension": "jpg"}
-            request, response = client.post(
-                "/templates/iw", data=json.dumps(data) if as_json else data
-            )
+            kwargs: dict = {"content": json.dumps(data)} if as_json else {"data": data}
+            request, response = client.post("/templates/iw", **kwargs)
+
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/iw/foo/bar.jpg"
@@ -62,9 +62,8 @@ def describe_detail():
                 "text_lines[]": ["foo", "bar"],
                 "extension": "jpg",
             }
-            request, response = client.post(
-                "/templates/custom", data=json.dumps(data) if as_json else data
-            )
+            kwargs: dict = {"content": json.dumps(data)} if as_json else {"data": data}
+            request, response = client.post("/templates/custom", **kwargs)
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/custom/foo/bar.jpg"

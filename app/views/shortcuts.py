@@ -1,5 +1,4 @@
-from sanic import Blueprint, response
-from sanic.exceptions import abort
+from sanic import Blueprint, exceptions, response
 from sanic.log import logger
 from sanic_openapi import doc
 
@@ -25,7 +24,7 @@ async def example(request, template_id):
         template = models.Template.objects.get_or_none(template_id)
 
     if template and template.valid:
-        url = template.build_example_url(request.app, external=False)
+        url = template.build_example_url(request, external=False)
         return response.redirect(url)
 
     if settings.DEBUG:
@@ -35,9 +34,9 @@ async def example(request, template_id):
             message = f"Template not fully implemented: {template}"
             logger.warning(message)
             template.datafile.save()
-        abort(501, message)
+        raise exceptions.SanicException(message, 501)
 
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id:(.+)\.png>")
@@ -51,9 +50,9 @@ async def example(request, template_id):
 async def example_png(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
     if template:
-        url = template.build_example_url(request.app, extension="png", external=False)
+        url = template.build_example_url(request, extension="png", external=False)
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id:(.+)\.jpg>")
@@ -67,9 +66,9 @@ async def example_png(request, template_id):
 async def example_jpg(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
     if template:
-        url = template.build_example_url(request.app, extension="jpg", external=False)
+        url = template.build_example_url(request, extension="jpg", external=False)
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id:([^.]+)>")
@@ -96,9 +95,9 @@ async def example_legacy(request, template_id):
 async def custom(request, template_id, text_paths):
     if not settings.DEBUG:
         url = request.app.url_for(
-            f"Memes.text_{settings.DEFAULT_EXT}",
+            f"Memes.text_{settings.DEFAULT_EXTENSION}",
             template_id=template_id,
-            text_paths=utils.urls.clean(text_paths) + f".{settings.DEFAULT_EXT}",
+            text_paths=utils.urls.clean(text_paths) + "." + settings.DEFAULT_EXTENSION,
         )
         return response.redirect(url)
 
@@ -129,7 +128,7 @@ async def custom_png(request, template_id, text_paths):
             text_paths=text_paths + ".png",
         )
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.jpg>")
@@ -148,7 +147,7 @@ async def custom_jpg(request, template_id, text_paths):
             text_paths=text_paths + ".jpg",
         )
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id>/<text_paths:[^/].*>")
