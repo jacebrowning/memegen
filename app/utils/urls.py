@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from furl import furl
 
 from .. import settings
@@ -30,8 +32,11 @@ def params(**kwargs) -> dict:
 
 
 def clean(url: str) -> str:
-    # Unquote slashes
-    url = url.replace("%3A%2F%2F", "://").replace("%2F", "/")
+    # Replace percent-encoded characters
+    url = unquote(url)
+
+    # Replace invalid regex escape sequences
+    url = url.replace("\\", "~b")
 
     # Drop trailing spaces
     while "/_." in url:

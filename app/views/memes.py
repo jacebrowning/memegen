@@ -152,7 +152,7 @@ async def list_custom(request):
     return response.json(items, status=200)
 
 
-@blueprint.get("/<template_id>.png")
+@blueprint.get(r"/<template_id:(.+)\.png>")
 @doc.tag("Templates")
 @doc.summary("Display a template background")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -172,7 +172,7 @@ async def blank_png(request, template_id):
     return await render_image(request, template_id, ext="png")
 
 
-@blueprint.get("/<template_id>.jpg")
+@blueprint.get(r"/<template_id:(.+)\.jpg>")
 @doc.tag("Templates")
 @doc.summary("Display a template background")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -192,7 +192,7 @@ async def blank_jpg(request, template_id):
     return await render_image(request, template_id, ext="jpg")
 
 
-@blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.png")
+@blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.png>")
 @doc.summary("Display a custom meme")
 @doc.consumes(doc.String(name="text_paths"), location="path")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -215,7 +215,7 @@ async def text_png(request, template_id, text_paths):
         url = request.app.url_for(
             "Memes.text_png",
             template_id=template_id,
-            text_paths=slug,
+            text_paths=slug + ".png",
             **request.args,
         )
         return response.redirect(utils.urls.clean(url), status=301)
@@ -230,7 +230,7 @@ async def text_png(request, template_id, text_paths):
         url = request.app.url_for(
             "Memes.text_png",
             template_id=template_id,
-            text_paths=slug,
+            text_paths=slug + ".png",
             **params,
         )
         return response.redirect(utils.urls.clean(url), status=302)
@@ -238,7 +238,7 @@ async def text_png(request, template_id, text_paths):
     return await render_image(request, template_id, slug, watermark)
 
 
-@blueprint.get("/<template_id>/<text_paths:[\\s\\S]+>.jpg")
+@blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.jpg>")
 @doc.summary("Display a custom meme")
 @doc.consumes(doc.String(name="text_paths"), location="path")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -261,7 +261,7 @@ async def text_jpg(request, template_id, text_paths):
         url = request.app.url_for(
             "Memes.text_jpg",
             template_id=template_id,
-            text_paths=slug,
+            text_paths=slug + ".jpg",
             **request.args,
         )
         return response.redirect(utils.urls.clean(url), status=301)
@@ -276,7 +276,7 @@ async def text_jpg(request, template_id, text_paths):
         url = request.app.url_for(
             "Memes.text_jpg",
             template_id=template_id,
-            text_paths=slug,
+            text_paths=slug + ".jpg",
             **params,
         )
         return response.redirect(utils.urls.clean(url), status=302)

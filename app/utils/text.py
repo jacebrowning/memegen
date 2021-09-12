@@ -1,4 +1,5 @@
 import hashlib
+from urllib.parse import unquote
 
 
 def encode(lines: list[str]) -> str:
@@ -8,7 +9,7 @@ def encode(lines: list[str]) -> str:
         if line == "/":
             encoded_lines.append("_")
         elif line:
-            encoded = line
+            encoded = unquote(line)
             for before, after in [
                 ("_", "__"),
                 ("-", "--"),
