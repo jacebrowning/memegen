@@ -53,9 +53,9 @@ types-aiofiles = "*"
 types-requests = "*"
 
 # Testing
-pytest = "^6.0"
+pytest = "^6.2.5"
 pytest-asyncio = "*"
-pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "9014bf3ee564518aad3622b5f035f7ca6139e398" }
+pytest-describe = "^2.0"
 pytest-expecter = "^2.1"
 pytest-random = "*"
 pytest-rerunfailures = "^9.1"

@@ -1,5 +1,4 @@
-from sanic import Blueprint, response
-from sanic.exceptions import abort
+from sanic import Blueprint, exceptions, response
 from sanic.log import logger
 from sanic_openapi import doc
 
@@ -35,9 +34,9 @@ async def example(request, template_id):
             message = f"Template not fully implemented: {template}"
             logger.warning(message)
             template.datafile.save()
-        abort(501, message)
+        raise exceptions.SanicException(message, 501)
 
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id:(.+)\.png>")
@@ -53,7 +52,7 @@ async def example_png(request, template_id):
     if template:
         url = template.build_example_url(request, extension="png", external=False)
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id:(.+)\.jpg>")
@@ -69,7 +68,7 @@ async def example_jpg(request, template_id):
     if template:
         url = template.build_example_url(request, extension="jpg", external=False)
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id:([^.]+)>")
@@ -129,7 +128,7 @@ async def custom_png(request, template_id, text_paths):
             text_paths=text_paths + ".png",
         )
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.jpg>")
@@ -148,7 +147,7 @@ async def custom_jpg(request, template_id, text_paths):
             text_paths=text_paths + ".jpg",
         )
         return response.redirect(url)
-    abort(404, f"Template not found: {template_id}")
+    raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
 @blueprint.get(r"/<template_id>/<text_paths:[^/].*>")
