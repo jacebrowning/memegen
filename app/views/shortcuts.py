@@ -1,5 +1,3 @@
-from urllib.parse import unquote
-
 from sanic import Blueprint, response
 from sanic.exceptions import abort
 from sanic.log import logger
@@ -19,6 +17,8 @@ blueprint = Blueprint("Shortcuts", url_prefix="/")
 @doc.response(404, str, description="Template not found")
 @doc.response(501, str, description="Template not fully implemented")
 async def example(request, template_id):
+    template_id = utils.urls.clean(template_id)
+
     if settings.DEBUG:
         template = models.Template.objects.get_or_create(template_id)
     else:
@@ -98,9 +98,7 @@ async def custom(request, template_id, text_paths):
         url = request.app.url_for(
             f"Memes.text_{settings.DEFAULT_EXT}",
             template_id=template_id,
-            # TODO: Move text cleanup to a utils function
-            text_paths=unquote(text_paths).replace("\\", "~b")
-            + f".{settings.DEFAULT_EXT}",
+            text_paths=utils.urls.clean(text_paths) + f".{settings.DEFAULT_EXT}",
         )
         return response.redirect(url)
 

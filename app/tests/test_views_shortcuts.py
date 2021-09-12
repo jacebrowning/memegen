@@ -60,11 +60,13 @@ def describe_path_redirects():
             f"/images/{unknown_template.id}", allow_redirects=False
         )
         expect(response.status) == 501
+        expect(response.text).contains("Template not fully implemented")
 
     def it_handles_sample_templates(expect, client, monkeypatch):
         monkeypatch.setattr(settings, "DEBUG", True)
         request, response = client.get("/images/<sample>", allow_redirects=False)
         expect(response.status) == 501
+        expect(response.text).contains("Replace '&lt;sample>' in the URL")
 
 
 def describe_legacy_images():
