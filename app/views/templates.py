@@ -59,7 +59,7 @@ async def index(request):
 async def detail(request, id):
     template = Template.objects.get_or_none(id)
     if template:
-        return response.json(template.jsonify(request.app))
+        return response.json(template.jsonify(request))
     abort(404)
 
 
