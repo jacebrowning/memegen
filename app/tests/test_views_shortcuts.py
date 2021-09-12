@@ -32,11 +32,11 @@ def describe_image_redirects():
 def describe_path_redirects():
     def it_redirects_to_example_image_when_no_extension(expect, client):
         request, response = client.get("/images/fry", allow_redirects=False)
-        redirect = "/images/fry/not_sure_if_trolling/or_just_stupid"
+        redirect = "/images/fry/not_sure_if_trolling/or_just_stupid.png"
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
-    def it_redirects_to_custom_image_when_no_extension(expect, client):
+    def it_redirects_to_custom_image_when_text_but_no_extension(expect, client):
         request, response = client.get("/images/fry/_XD\\XD", allow_redirects=False)
         expect(response.status) == 302
         expect(response.headers["Location"]) == "/images/fry/_XD~bXD.png"

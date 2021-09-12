@@ -1,3 +1,5 @@
+from urllib.parse import unquote
+
 from sanic import Blueprint, response
 from sanic.exceptions import abort
 from sanic.log import logger
@@ -49,7 +51,7 @@ async def example(request, template_id):
 async def example_png(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
     if template:
-        url = template.build_example_url(request.app, external=False)
+        url = template.build_example_url(request.app, extension="png", external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_id}")
 
@@ -65,12 +67,12 @@ async def example_png(request, template_id):
 async def example_jpg(request, template_id):
     template = models.Template.objects.get_or_none(template_id)
     if template:
-        url = template.build_example_url(request.app, external=False)
+        url = template.build_example_url(request.app, extension="jpg", external=False)
         return response.redirect(url)
     abort(404, f"Template not found: {template_id}")
 
 
-@blueprint.get("/<template_id>")
+@blueprint.get(r"/<template_id:([^.]+)>")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to an example image")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -96,7 +98,9 @@ async def custom(request, template_id, text_paths):
         url = request.app.url_for(
             f"Memes.text_{settings.DEFAULT_EXT}",
             template_id=template_id,
-            text_paths=text_paths.replace("\\", "~b") + f".{settings.DEFAULT_EXT}",
+            # TODO: Move text cleanup to a utils function
+            text_paths=unquote(text_paths).replace("\\", "~b")
+            + f".{settings.DEFAULT_EXT}",
         )
         return response.redirect(url)
 
