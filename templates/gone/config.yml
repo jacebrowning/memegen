@@ -19,7 +19,7 @@ text:
     scale_y: 0.2
 example:
   - we'll just invest that money
-  - …aaaand it's gone
+  - ...aaaand it's gone
 overlay:
   - center_x: 0.5
     center_y: 0.5
