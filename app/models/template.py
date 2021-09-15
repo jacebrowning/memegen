@@ -193,7 +193,7 @@ class Template:
         template = cls.objects.get_or_create(id, url)
 
         suffix = Path(str(parsed.path)).suffix
-        if not suffix:
+        if not suffix or len(suffix) > 10:
             logger.warning(f"Unable to determine image extension: {url}")
             suffix = settings.PLACEHOLDER_SUFFIX
 
