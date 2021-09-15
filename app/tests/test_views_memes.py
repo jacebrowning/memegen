@@ -91,23 +91,13 @@ def describe_detail():
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
-            ("/images/fry/test.png", "image/png"),
+            ("/images/fry.jpg", "image/jpeg"),
+            ("/images/fry.png", "image/png"),
             ("/images/fry/test.jpg", "image/jpeg"),
+            ("/images/fry/test.png", "image/png"),
         ],
     )
     def it_returns_an_image(expect, client, path, content_type):
-        request, response = client.get(path)
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == content_type
-
-    @pytest.mark.parametrize(
-        ("path", "content_type"),
-        [
-            ("/images/fry.png", "image/png"),
-            ("/images/fry.jpg", "image/jpeg"),
-        ],
-    )
-    def it_returns_blank_templates_when_no_slug(expect, client, path, content_type):
         request, response = client.get(path)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
