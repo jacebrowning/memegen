@@ -146,7 +146,7 @@ class Template:
         background: str = "",
         style: str = "",
     ):
-        if extension in {"", None, settings.PLACEHOLDER}:
+        if extension not in settings.ALLOWED_EXTENSIONS:
             extension = settings.DEFAULT_EXTENSION
         if style == settings.DEFAULT_STYLE:
             style = ""
