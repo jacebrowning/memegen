@@ -146,6 +146,8 @@ class Template:
         background: str = "",
         style: str = "",
     ):
+        if extension in {"", None, settings.PLACEHOLDER}:
+            extension = settings.DEFAULT_EXTENSION
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
