@@ -10,6 +10,7 @@ from PIL import (
     ImageFilter,
     ImageFont,
     ImageOps,
+    ImageSequence,
     UnidentifiedImageError,
 )
 from sanic.log import logger
@@ -69,8 +70,12 @@ def save(
         logger.info(f"Saving meme to {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
 
-    image = render_image(template, style, lines, size, watermark=watermark)
-    image.convert("RGB").save(path, quality=95)
+    if extension == "gif":
+        frames, duration = render_animation(template, lines, watermark=watermark)
+        frames[0].save(path, save_all=True, append_images=frames[1:], duration=duration)
+    else:
+        image = render_image(template, style, lines, size, watermark=watermark)
+        image.convert("RGB").save(path, quality=95)
 
     return path
 
@@ -162,6 +167,68 @@ def render_image(
         image = add_watermark(image, watermark)
 
     return image
+
+
+def render_animation(
+    template: Template,
+    lines: list[str],
+    *,
+    is_preview: bool = False,
+    watermark: str = "",
+) -> tuple[list[Image], int]:
+    frames = []
+
+    background = Image.open(template.get_image())  # TODO: force GIF
+    duration = background.info.get("duration", 200) // 2  # TODO: why 2?
+
+    for index, frame in enumerate(ImageSequence.Iterator(background)):
+
+        stream = io.BytesIO()
+        frame.save(stream, format="GIF")
+        image = Image.open(stream).convert("RGBA")
+
+        for (
+            point,
+            offset,
+            text,
+            max_text_size,
+            text_fill,
+            font,
+            stroke_width,
+            stroke_fill,
+            angle,
+        ) in get_image_elements(
+            template, lines, watermark, background.size, is_preview
+        ):
+            box = Image.new("RGBA", max_text_size)
+            draw = ImageDraw.Draw(box)
+
+            if settings.DEBUG:
+                xy = (0, 0, max_text_size[0] - 1, max_text_size[1] - 1)
+                outline = "orange" if text == settings.PREVIEW_TEXT else "lime"
+                draw.rectangle(xy, outline=outline)
+
+            rows = text.count("\n") + 1
+            draw.text(
+                (-offset[0], -offset[1]),
+                text,
+                text_fill,
+                font,
+                spacing=-offset[1] / (rows * 2),
+                align="center",
+                stroke_width=stroke_width,
+                stroke_fill=stroke_fill,
+            )
+
+            box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
+            image.paste(box, point, box)
+
+            if settings.DEBUG:
+                image = add_watermark(image, f"{index:02}")
+
+            frames.append(image)
+
+    return frames, duration
 
 
 def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
