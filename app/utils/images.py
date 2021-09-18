@@ -178,7 +178,7 @@ def render_animation(
 ) -> tuple[list[Image], int]:
     frames = []
 
-    background = Image.open(template.get_image())  # TODO: force GIF
+    background = Image.open(template.get_image(style="animated"))
     duration = background.info.get("duration", 100)
 
     for index, frame in enumerate(ImageSequence.Iterator(background)):
