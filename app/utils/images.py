@@ -223,8 +223,10 @@ def render_animation(
             box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
             image.paste(box, point, box)
 
+            if watermark:
+                image = add_watermark(image, watermark)
             if settings.DEBUG:
-                image = add_watermark(image, f"{index:02}")
+                image = add_counter(image, index)
 
             frames.append(image)
 
@@ -306,6 +308,18 @@ def add_watermark(image: Image, text: str) -> Image:
         stroke_width=stroke_width,
         stroke_fill=stroke_fill,
     )
+
+    return Image.alpha_composite(image, box)
+
+
+def add_counter(image: Image, index: int) -> Image:
+    size = (image.size[0], settings.WATERMARK_HEIGHT)
+    text = f"{index:02}"
+    font = get_font("tiny", text, 0.0, size, 99)
+
+    box = Image.new("RGBA", image.size)
+    draw = ImageDraw.Draw(box)
+    draw.text((3, -3), text, "lime", font, stroke_width=1, stroke_fill="black")
 
     return Image.alpha_composite(image, box)
 
