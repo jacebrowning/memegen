@@ -102,7 +102,7 @@ class Template:
             "lines": len(self.text),
             "styles": self.styles,
             "blank": request.app.url_for(
-                f"Memes.blank_{settings.DEFAULT_EXTENSION}",
+                "Memes.blank",
                 template_id=self.id + "." + settings.DEFAULT_EXTENSION,
                 _external=True,
                 _scheme=settings.SCHEME,
@@ -134,7 +134,7 @@ class Template:
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        url = request.app.url_for(f"Memes.text_{extension}", **kwargs)
+        url = request.app.url_for("Memes.text", **kwargs)
         return utils.urls.clean(url)
 
     def build_custom_url(
@@ -142,16 +142,14 @@ class Template:
         request: Request,
         text_lines: list[str],
         *,
-        extension: str = "",
+        extension: str = settings.DEFAULT_EXTENSION,
         background: str = "",
         style: str = "",
     ):
-        if extension not in {"jpg", "png"}:
-            extension = settings.DEFAULT_EXTENSION
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
-            f"Memes.text_{extension}",
+            "Memes.text",
             template_id="custom" if self.id == "_custom" else self.id,
             text_paths=utils.text.encode(text_lines) + "." + extension,
             _external=True,

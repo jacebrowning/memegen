@@ -152,14 +152,14 @@ async def list_custom(request):
     return response.json(items, status=200)
 
 
-@blueprint.get(r"/<template_id:(.+)\.png>")
+@blueprint.get(r"/<template_id:.+\.\w+>")
 @doc.tag("Templates")
 @doc.summary("Display a template background")
 @doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a template background",
-    content_type="image/png",
+    content_type="image/*",
 )
 @doc.response(404, doc.File(), description="Template not found")
 @doc.response(415, doc.File(), description="Unable to download image URL")
@@ -168,38 +168,19 @@ async def list_custom(request):
     doc.File(),
     description="Invalid style for template or no image URL specified for custom template",
 )
-async def blank_png(request, template_id):
-    return await render_image(request, template_id, extension="png")
+async def blank(request, template_id):
+    template_id, extension = template_id.rsplit(".", 1)
+    return await render_image(request, template_id, extension=extension)
 
 
-@blueprint.get(r"/<template_id:(.+)\.jpg>")
-@doc.tag("Templates")
-@doc.summary("Display a template background")
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.produces(
-    doc.File(),
-    description="Successfully displayed a template background",
-    content_type="image/jpeg",
-)
-@doc.response(404, doc.File(), description="Template not found")
-@doc.response(415, doc.File(), description="Unable to download image URL")
-@doc.response(
-    422,
-    doc.File(),
-    description="Invalid style for template or no image URL specified for custom template",
-)
-async def blank_jpg(request, template_id):
-    return await render_image(request, template_id, extension="jpg")
-
-
-@blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.png>")
+@blueprint.get(r"/<template_id>/<text_paths:[^/].*\.\w+>")
 @doc.summary("Display a custom meme")
 @doc.consumes(doc.String(name="text_paths"), location="path")
 @doc.consumes(doc.String(name="template_id"), location="path")
 @doc.produces(
     doc.File(),
     description="Successfully displayed a custom meme",
-    content_type="image/png",
+    content_type="image/*",
 )
 @doc.response(404, doc.File(), description="Template not found")
 @doc.response(414, doc.File(), description="Custom text too long (length >200)")
@@ -209,13 +190,14 @@ async def blank_jpg(request, template_id):
     doc.File(),
     description="Invalid style for template or no image URL specified for custom template",
 )
-async def text_png(request, template_id, text_paths):
+async def text(request, template_id, text_paths):
+    text_paths, extension = text_paths.rsplit(".", 1)
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "Memes.text_png",
+            "Memes.text",
             template_id=template_id,
-            text_paths=slug + ".png",
+            text_paths=slug + "." + extension,
             **request.args,
         )
         return response.redirect(utils.urls.clean(url), status=301)
@@ -228,60 +210,14 @@ async def text_png(request, template_id, text_paths):
     if updated:
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
-            "Memes.text_png",
+            "Memes.text",
             template_id=template_id,
-            text_paths=slug + ".png",
+            text_paths=slug + "." + extension,
             **params,
         )
         return response.redirect(utils.urls.clean(url), status=302)
 
-    return await render_image(request, template_id, slug, watermark)
-
-
-@blueprint.get(r"/<template_id>/<text_paths:([^/].*)\.jpg>")
-@doc.summary("Display a custom meme")
-@doc.consumes(doc.String(name="text_paths"), location="path")
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.produces(
-    doc.File(),
-    description="Successfully displayed a custom meme",
-    content_type="image/jpeg",
-)
-@doc.response(404, doc.File(), description="Template not found")
-@doc.response(414, doc.File(), description="Custom text too long (length >200)")
-@doc.response(415, doc.File(), description="Unable to download image URL")
-@doc.response(
-    422,
-    doc.File(),
-    description="Invalid style for template or no image URL specified for custom template",
-)
-async def text_jpg(request, template_id, text_paths):
-    slug, updated = utils.text.normalize(text_paths)
-    if updated:
-        url = request.app.url_for(
-            "Memes.text_jpg",
-            template_id=template_id,
-            text_paths=slug + ".jpg",
-            **request.args,
-        )
-        return response.redirect(utils.urls.clean(url), status=301)
-
-    url, updated = await utils.meta.tokenize(request, request.url)
-    if updated:
-        return response.redirect(url, status=302)
-
-    watermark, updated = await utils.meta.get_watermark(request)
-    if updated:
-        params = {k: v for k, v in request.args.items() if k != "watermark"}
-        url = request.app.url_for(
-            "Memes.text_jpg",
-            template_id=template_id,
-            text_paths=slug + ".jpg",
-            **params,
-        )
-        return response.redirect(utils.urls.clean(url), status=302)
-
-    return await render_image(request, template_id, slug, watermark, extension="jpg")
+    return await render_image(request, template_id, slug, watermark, extension)
 
 
 async def render_image(

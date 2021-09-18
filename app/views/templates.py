@@ -126,7 +126,7 @@ async def generate_url(
     text_lines = payload.get("text_lines") or []
     style = payload.get("style") or payload.get("alt")
     background = payload.get("background") or payload.get("image_url")
-    extension = payload.get("extension")
+    extension = payload.get("extension") or settings.DEFAULT_EXTENSION
 
     status = 201
 
