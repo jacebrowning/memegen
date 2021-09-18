@@ -179,7 +179,7 @@ def render_animation(
     frames = []
 
     background = Image.open(template.get_image())  # TODO: force GIF
-    duration = background.info.get("duration", 200) // 2  # TODO: why 2?
+    duration = background.info.get("duration", 100)
 
     for index, frame in enumerate(ImageSequence.Iterator(background)):
 
@@ -228,7 +228,7 @@ def render_animation(
             if settings.DEBUG:
                 image = add_counter(image, index)
 
-            frames.append(image)
+        frames.append(image)
 
     return frames, duration
 
