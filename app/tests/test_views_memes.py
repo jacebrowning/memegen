@@ -91,8 +91,10 @@ def describe_detail():
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
+            ("/images/fry.gif", "image/gif"),
             ("/images/fry.jpg", "image/jpeg"),
             ("/images/fry.png", "image/png"),
+            ("/images/fry/test.gif", "image/gif"),
             ("/images/fry/test.jpg", "image/jpeg"),
             ("/images/fry/test.png", "image/png"),
         ],

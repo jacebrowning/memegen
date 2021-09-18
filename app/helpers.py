@@ -31,7 +31,7 @@ def get_example_images(request: Request, query: str = "") -> list[tuple[str, str
 def get_test_images(request: Request) -> list[str]:
     return [
         request.app.url_for(
-            f"Memes.text_{settings.DEFAULT_EXTENSION}",
+            "Memes.text",
             template_id=id,
             text_paths=utils.text.encode(lines) + "." + settings.DEFAULT_EXTENSION,
         )
