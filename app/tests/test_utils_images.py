@@ -33,16 +33,10 @@ def template():
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize(("id", "lines"), settings.TEST_IMAGES)
-def test_png_images(images, id, lines):
+@pytest.mark.parametrize(("id", "lines", "extension"), settings.TEST_IMAGES)
+def test_images(images, id, lines, extension):
     template = models.Template.objects.get(id)
-    utils.images.save(template, lines, extension="png", directory=images)
-
-
-def test_jpg_images(images):
-    id, lines = settings.TEST_IMAGES[0]
-    template = models.Template.objects.get(id)
-    utils.images.save(template, lines, extension="jpg", directory=images)
+    utils.images.save(template, lines, extension=extension, directory=images)
 
 
 # Size
@@ -212,19 +206,21 @@ def test_watermark_with_many_lines(images):
 # Debug
 
 
-def test_debug_images(images, monkeypatch):
+@pytest.mark.parametrize(("extension"), ["png", "gif"])
+def test_debug_images(images, monkeypatch, extension):
     monkeypatch.setattr(settings, "DEBUG", True)
 
-    id, lines = settings.TEST_IMAGES[0]
+    id, lines, _extension = settings.TEST_IMAGES[0]
     template = models.Template.objects.get(id)
     lines = [lines[0], lines[1] + " (debug)"]
     utils.images.save(template, lines, directory=images)
+    utils.images.save(template, lines, directory=images, extension=extension)
 
 
 def test_deployed_images(images, monkeypatch):
     monkeypatch.setattr(settings, "DEPLOYED", True)
 
-    id, lines = settings.TEST_IMAGES[0]
+    id, lines, _extension = settings.TEST_IMAGES[0]
     template = models.Template.objects.get(id)
     utils.images.save(template, lines, directory=images)
 
@@ -234,5 +230,5 @@ def test_deployed_images(images, monkeypatch):
 
 def test_preview_images(images, template):
     path = images / "preview.jpg"
-    data, _ext = utils.images.preview(template, ["nominal image", "while typing"])
+    data, _extension = utils.images.preview(template, ["nominal image", "while typing"])
     path.write_bytes(data)
