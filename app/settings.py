@@ -74,22 +74,27 @@ TEST_IMAGES = [
     (
         "iw",
         ["tests code", "in production"],
+        "jpg",
     ),
     (
         "fry",
         ["a", "b"],
+        "png",
     ),
     (
         "fry",
         ["short line", "longer line of text than the short one"],
+        "png",
     ),
     (
         "fry",
         ["longer line of text than the short one", "short line"],
+        "png",
     ),
     (
         "sparta",
         ["", "this is a wide image!"],
+        "png",
     ),
     (
         "ski",
@@ -97,22 +102,32 @@ TEST_IMAGES = [
             "if you try to put a bunch more text than can possibly fit on a meme",
             "you're gonna have a bad time",
         ],
+        "png",
     ),
     (
         "ds",
         ["Push this button.", "Push that button.", "can't decide which is worse"],
+        "png",
     ),
     (
         "spongebob",
         ["You: Stop talking like that", "Me: Stop talking like that"],
+        "png",
     ),
     (
         "mouth",
         ["Sales Team presenting solution that won't work", "Excited Customer", "Me"],
+        "png",
     ),
     (
         "cmm",
         ["Many\nextra\nlines\nof\ntext"],
+        "png",
+    ),
+    (
+        "oprah",
+        ["you get animated text", "and you get animated text"],
+        "gif",
     ),
 ]
 

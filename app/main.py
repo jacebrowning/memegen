@@ -38,7 +38,7 @@ async def test(request):
         return response.redirect("/")
 
     urls = await asyncio.to_thread(helpers.get_test_images, request)
-    content = utils.html.gallery(urls, columns=False, refresh=3)
+    content = utils.html.gallery(urls, columns=False, refresh=20)
     return response.html(content)
 
 
