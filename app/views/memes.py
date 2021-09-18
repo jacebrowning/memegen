@@ -76,14 +76,14 @@ async def automatic(request):
         payload = request.json or {}
 
     try:
-        text = payload["text"]
+        query = payload["text"]
     except KeyError:
         return response.json({"error": '"text" is required'}, status=400)
 
-    results = await utils.meta.search(request, text, payload.get("safe", True))
+    results = await utils.meta.search(request, query, payload.get("safe", True))
     logger.info(f"Found {len(results)} result(s)")
     if not results:
-        return response.json({"message": f"No results matched: {text}"}, status=404)
+        return response.json({"message": f"No results matched: {query}"}, status=404)
 
     url = utils.urls.normalize(results[0]["image_url"])
     logger.info(f"Top result: {url}")
