@@ -192,6 +192,18 @@ async def blank(request, template_id):
 )
 async def text(request, template_id, text_paths):
     text_paths, extension = text_paths.rsplit(".", 1)
+
+    if request.args.get("style") == "animated" and extension != "gif":
+        # TODO: Move this pattern to utils
+        params = {k: v for k, v in request.args.items() if k != "style"}
+        url = request.app.url_for(
+            "Memes.text",
+            template_id=template_id,
+            text_paths=text_paths + ".gif",
+            **params,
+        )
+        return response.redirect(utils.urls.clean(url), status=301)
+
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
@@ -208,6 +220,7 @@ async def text(request, template_id, text_paths):
 
     watermark, updated = await utils.meta.get_watermark(request)
     if updated:
+        # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
             "Memes.text",

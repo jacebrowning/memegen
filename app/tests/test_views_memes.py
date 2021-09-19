@@ -211,6 +211,14 @@ def describe_detail():
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
+        def it_redirects_to_gif_when_animated(expect, client):
+            request, response = client.get(
+                "/images/ds/one/two.png?style=animated", allow_redirects=False
+            )
+            redirect = "/images/ds/one/two.gif"
+            expect(response.status) == 301
+            expect(response.headers["Location"]) == redirect
+
         @pytest.mark.slow
         def it_rejects_invalid_styles(expect, client, base_url):
             request, response = client.get(base_url + "style=foobar")
