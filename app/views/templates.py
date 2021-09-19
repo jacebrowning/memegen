@@ -128,6 +128,10 @@ async def generate_url(
     background = payload.get("background") or payload.get("image_url")
     extension = payload.get("extension")
 
+    if style == "animated":
+        extension = "gif"
+        style = None
+
     status = 201
 
     if template_id:

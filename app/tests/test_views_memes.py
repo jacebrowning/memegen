@@ -36,6 +36,18 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
             }
 
+        def it_returns_gif_when_animated(expect, client):
+            data = {
+                "template_id": "iw",
+                "text_lines[]": ["foo", "bar"],
+                "style": "animated",
+            }
+            request, response = client.post("/images", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/foo/bar.gif"
+            }
+
         def it_redirects_if_requested(expect, client):
             data = {"template_id": "iw", "text_lines": ["abc"], "redirect": True}
             request, response = client.post("/images", data=data, allow_redirects=False)
