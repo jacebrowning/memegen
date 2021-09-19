@@ -1,5 +1,10 @@
 # Revision History
 
+## 9.2
+
+- Added redirect to `.gif` format when `style=animated` parameter is present.
+- Added `animated` parameter to `/templates` to find templates supporting animation.
+
 ## 9.1
 
 - Added escape characters for `<` and `>` as `~l` and `~g`, respectively.
@@ -10,7 +15,7 @@
 
 ## 8.5
 
-- Added support for custom overlays when `style` is an image URL.
+- Added support for custom overlays when the `style` parameter is included in image URLs.
 
 ## 8.4
 

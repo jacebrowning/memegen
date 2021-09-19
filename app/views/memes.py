@@ -136,7 +136,7 @@ async def custom(request):
 )
 async def list_custom(request):
     query = request.args.get("filter", "").lower()
-    safe = request.args.get("safe", "true").lower() not in {"false", "no"}
+    safe = utils.urls.flag(request, "safe", True)
 
     results = await utils.meta.search(request, query, safe, mode="results")
     logger.info(f"Found {len(results)} result(s)")
