@@ -20,12 +20,13 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 ## Available Formats
 
-Clients can request `.jpg` instead of `.png` for smaller files:
+Clients can request `.jpg` instead of `.png` for smaller files or `.gif` if an animated background is available:
 
 | Format | Example                                                                                                  |
 | :----- | :------------------------------------------------------------------------------------------------------- |
 | PNG    | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png) |
 | JPEG   | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg) |
+| GIF    | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/oprah/you_get/animated_text.gif)      |
 
 ## Custom Dimensions
 
