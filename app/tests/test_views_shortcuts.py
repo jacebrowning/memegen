@@ -99,6 +99,7 @@ def describe_legacy_paths():
 
 
 def describe_legacy_params():
+    @pytest.mark.slow
     def it_accepts_alt_for_template(expect, client):
         request, response = client.get(
             "/images/custom/test.png?alt=https://www.gstatic.com/webp/gallery/3.jpg"

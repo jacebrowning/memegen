@@ -100,6 +100,7 @@ def describe_list():
 
 
 def describe_detail():
+    @pytest.mark.slow
     @pytest.mark.parametrize(
         ("path", "content_type"),
         [
@@ -112,7 +113,7 @@ def describe_detail():
         ],
     )
     def it_returns_an_image(expect, client, path, content_type):
-        request, response = client.get(path)
+        request, response = client.get(path, timeout=10)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
