@@ -105,7 +105,7 @@ async def track(request, lines: list[str]):
         return
     if any(name in request.args for name in ["height", "width", "watermark"]):
         return
-    if settings.DEPLOYED and "localost" in request.host:
+    if settings.DEPLOYED and "localhost" in request.host:
         return
 
     async with aiohttp.ClientSession() as session:
