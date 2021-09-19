@@ -4,6 +4,15 @@ from furl import furl
 
 from .. import settings
 
+FLAGS = {
+    "0": False,
+    "1": True,
+    "false": False,
+    "no": False,
+    "true": True,
+    "yes": True,
+}
+
 
 def schema(value) -> bool:
     return value and "://" in value
@@ -15,6 +24,11 @@ def arg(request, default, *names):
         if value is not None:
             return value
     return default
+
+
+def flag(request, name, default=None):
+    value = request.args.get(name, "").lower()
+    return FLAGS.get(value, default)
 
 
 def normalize(url: str) -> str:

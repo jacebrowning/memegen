@@ -20,7 +20,8 @@ def index(request):
 @app.get("/examples")
 @doc.exclude(True)
 async def examples(request):
-    items = await asyncio.to_thread(helpers.get_example_images, request)
+    animated = utils.urls.flag(request, "animated")
+    items = await asyncio.to_thread(helpers.get_example_images, request, "", animated)
     urls = [items[0] for items in items]
     if settings.DEBUG:
         refresh = int(request.args.get("refresh", 5 * 60))

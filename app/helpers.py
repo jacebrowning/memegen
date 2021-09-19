@@ -1,27 +1,42 @@
+from typing import Optional
+
 from sanic import Request
 
 from . import settings, utils
 from .models import Template
 
 
-def get_valid_templates(request: Request, query: str = "") -> list[dict]:
+def get_valid_templates(
+    request: Request, query: str = "", animated: Optional[bool] = None
+) -> list[dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
         templates = [t for t in templates if t.matches(query)]
     else:
         templates = sorted(templates)
+    if animated is True:
+        templates = [t for t in templates if "animated" in t.styles]
+    elif animated is False:
+        templates = [t for t in templates if "animated" not in t.styles]
     return [template.jsonify(request) for template in templates]
 
 
-def get_example_images(request: Request, query: str = "") -> list[tuple[str, str]]:
+def get_example_images(
+    request: Request, query: str = "", animated: Optional[bool] = None
+) -> list[tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
         templates = [t for t in templates if t.matches(query)]
     else:
         templates = sorted(templates)
+    if animated is True:
+        templates = [t for t in templates if "animated" in t.styles]
+        extension = "gif"
+    else:
+        extension = settings.DEFAULT_EXTENSION
     return [
         (
-            template.build_example_url(request),
+            template.build_example_url(request, extension=extension),
             template.build_self_url(request),
         )
         for template in templates

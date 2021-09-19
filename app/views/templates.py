@@ -13,6 +13,13 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
 @blueprint.get("/")
 @doc.summary("List all templates")
 @doc.consumes(
+    doc.Boolean(
+        name="animated", description="Limit results to templates supporting animation"
+    ),
+    content_type="application/json",
+    location="query",
+)
+@doc.consumes(
     doc.String(name="filter", description="Part of the name or example to match"),
     location="query",
 )
@@ -34,7 +41,10 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
 )
 async def index(request):
     query = request.args.get("filter", "").lower()
-    data = await asyncio.to_thread(helpers.get_valid_templates, request, query)
+    animated = utils.urls.flag(request, "animated")
+    data = await asyncio.to_thread(
+        helpers.get_valid_templates, request, query, animated
+    )
     return response.json(data)
 
 
