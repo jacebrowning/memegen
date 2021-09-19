@@ -71,7 +71,7 @@ def save(
         path.parent.mkdir(parents=True, exist_ok=True)
 
     if extension == "gif":
-        frames, duration = render_animation(template, lines, watermark=watermark)
+        frames, duration = render_animation(template, lines, size, watermark=watermark)
         frames[0].save(path, save_all=True, append_images=frames[1:], duration=duration)
     else:
         image = render_image(template, style, lines, size, watermark=watermark)
@@ -114,7 +114,7 @@ def render_image(
 ) -> Image:
     background = load(template.get_image(style))
 
-    pad = all(size) if pad is None else pad
+    pad = all(size) if pad is None else pad  # TODO: Is `pad` ever None?
     image = resize_image(background, *size, pad)
     if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
         watermark = ""
@@ -172,20 +172,26 @@ def render_image(
 def render_animation(
     template: Template,
     lines: list[str],
+    size: Dimensions,
     *,
+    pad: Optional[bool] = None,
     is_preview: bool = False,
     watermark: str = "",
 ) -> tuple[list[Image], int]:
     frames = []
 
-    background = Image.open(template.get_image(style="animated"))
-    duration = background.info.get("duration", 100)
+    pad = all(size) if pad is None else pad
+    source = Image.open(template.get_image(style="animated"))
+    duration = source.info.get("duration", 100)
+    if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
+        watermark = ""
 
-    for index, frame in enumerate(ImageSequence.Iterator(background)):
+    for index, frame in enumerate(ImageSequence.Iterator(source)):
 
         stream = io.BytesIO()
         frame.save(stream, format="GIF")
-        image = Image.open(stream).convert("RGBA")
+        background = Image.open(stream).convert("RGBA")
+        image = resize_image(background, *size, pad)
 
         for (
             point,
@@ -197,9 +203,7 @@ def render_animation(
             stroke_width,
             stroke_fill,
             angle,
-        ) in get_image_elements(
-            template, lines, watermark, background.size, is_preview
-        ):
+        ) in get_image_elements(template, lines, watermark, image.size, is_preview):
             box = Image.new("RGBA", max_text_size)
             draw = ImageDraw.Draw(box)
 
@@ -223,10 +227,19 @@ def render_animation(
             box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
             image.paste(box, point, box)
 
-            if watermark:
-                image = add_watermark(image, watermark)
-            if settings.DEBUG:
-                image = add_counter(image, index)
+        if settings.DEBUG:
+            draw = ImageDraw.Draw(image)
+            for overlay in template.overlay:
+                xy = overlay.get_box(image.size)
+                draw.rectangle(xy, outline="fuchsia")
+
+        if pad:
+            image = add_blurred_background(image, background, *size)
+
+        if watermark:
+            image = add_watermark(image, watermark)
+        if settings.DEBUG:
+            image = add_counter(image, index)
 
         frames.append(image)
 
@@ -331,7 +344,6 @@ def get_image_elements(
     image_size: Dimensions,
     is_preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
-
     for index, text in enumerate(template.text):
         yield get_image_element(lines, index, text, image_size, watermark)
     if is_preview:
