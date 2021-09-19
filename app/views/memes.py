@@ -302,6 +302,10 @@ async def render_image(
         size = 0, 0
         status = 422
 
+    if extension not in settings.ALLOWED_EXTENSIONS:
+        extension = settings.DEFAULT_EXTENSION
+        status = 422
+
     path = await asyncio.to_thread(
         utils.images.save,
         template,
