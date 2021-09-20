@@ -48,7 +48,7 @@ async def index(request):
     return response.json(data)
 
 
-@blueprint.get("/<id>")
+@blueprint.get("/<id:slug>")
 @doc.summary("View a specific template")
 @doc.consumes(doc.String(name="id"), location="path")
 @doc.produces(
@@ -69,10 +69,10 @@ async def detail(request, id):
     template = Template.objects.get_or_none(id)
     if template:
         return response.json(template.jsonify(request))
-    raise exceptions.NotFound
+    raise exceptions.NotFound(f"Template not found: {id}")
 
 
-@blueprint.post("/<id>")
+@blueprint.post("/<id:slug>")
 @doc.tag("Memes")
 @doc.operation("Memes.create_from_template")
 @doc.exclude(settings.DEPLOYED)
