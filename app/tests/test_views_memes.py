@@ -229,11 +229,12 @@ def describe_detail():
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
-        def it_redirects_to_gif_when_animated(expect, client):
+        @pytest.mark.parametrize("slug", ["ds", "ds/one/two"])
+        def it_redirects_to_gif_when_animated(expect, client, slug):
             request, response = client.get(
-                "/images/ds/one/two.png?style=animated", allow_redirects=False
+                f"/images/{slug}.png?style=animated", allow_redirects=False
             )
-            redirect = "/images/ds/one/two.gif"
+            redirect = f"/images/{slug}.gif"
             expect(response.status) == 301
             expect(response.headers["Location"]) == redirect
 

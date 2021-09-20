@@ -170,6 +170,17 @@ async def list_custom(request):
 )
 async def blank(request, template_id):
     template_id, extension = template_id.rsplit(".", 1)
+
+    if request.args.get("style") == "animated" and extension != "gif":
+        # TODO: Move this pattern to utils
+        params = {k: v for k, v in request.args.items() if k != "style"}
+        url = request.app.url_for(
+            "Memes.blank",
+            template_id=template_id + ".gif",
+            **params,
+        )
+        return response.redirect(utils.urls.clean(url), status=301)
+
     return await render_image(request, template_id, extension=extension)
 
 
