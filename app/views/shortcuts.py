@@ -56,7 +56,7 @@ async def legacy_example_image(request, template_id):
     raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
-@blueprint.get(r"/<template_id:[^.]+>")
+@blueprint.get(r"/<template_id:slug>")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to an example image")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -64,10 +64,11 @@ async def legacy_example_image(request, template_id):
     302, doc.File(), description="Successfully redirected to an example image"
 )
 async def legacy_example_path(request, template_id):
+    template_id = template_id.strip("/")
     return response.redirect(f"/images/{template_id}")
 
 
-@blueprint.get(r"/images/<template_id>/<text_paths:[^/].*>")
+@blueprint.get(r"/images/<template_id:slug>/<text_paths:[^/].*>")
 @doc.summary("Redirect to a custom image")
 @doc.consumes(doc.String(name="text_paths"), location="path")
 @doc.consumes(doc.String(name="template_id"), location="path")
@@ -97,7 +98,7 @@ async def custom_path(request, template_id, text_paths):
     return response.html(content)
 
 
-@blueprint.get(r"/<template_id>/<text_paths:[^/].*\.\w+>")
+@blueprint.get(r"/<template_id:(?!templates)[a-z-]+>/<text_paths:[^/].*\.\w+>")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to a custom image")
 @doc.consumes(doc.String(name="text_paths"), location="path")
@@ -117,7 +118,7 @@ async def legacy_custom_image(request, template_id, text_paths):
     raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
-@blueprint.get(r"/<template_id>/<text_paths:[^/].*>")
+@blueprint.get(r"/<template_id:(?!templates)[a-z-]+>/<text_paths:[^/].*>")
 @doc.exclude(settings.DEPLOYED)
 @doc.summary(settings.PREFIX + "Redirect to a custom image")
 @doc.consumes(doc.String(name="text_paths"), location="path")

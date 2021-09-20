@@ -173,7 +173,7 @@ async def blank(request, template_id):
     return await render_image(request, template_id, extension=extension)
 
 
-@blueprint.get(r"/<template_id>/<text_paths:[^/].*\.\w+>")
+@blueprint.get(r"/<template_id:slug>/<text_paths:[^/].*\.\w+>")
 @doc.summary("Display a custom meme")
 @doc.consumes(doc.String(name="text_paths"), location="path")
 @doc.consumes(doc.String(name="template_id"), location="path")

@@ -6,8 +6,9 @@ import pytest
 def describe_list():
     def describe_GET():
         @pytest.mark.slow
-        def it_returns_all_templates(expect, client):
-            request, response = client.get("/templates", timeout=10)
+        @pytest.mark.parametrize("slash", ["", "/"])
+        def it_returns_all_templates(expect, client, slash):
+            request, response = client.get("/templates" + slash, timeout=10)
             expect(response.status) == 200
             expect(len(response.json)) >= 140
 
@@ -20,8 +21,9 @@ def describe_list():
 
 def describe_detail():
     def describe_GET():
-        def it_includes_metadata(expect, client):
-            request, response = client.get("/templates/iw")
+        @pytest.mark.parametrize("slash", ["", "/"])
+        def it_includes_metadata(expect, client, slash):
+            request, response = client.get("/templates/iw" + slash)
             expect(response.status) == 200
             expect(response.json) == {
                 "id": "iw",
