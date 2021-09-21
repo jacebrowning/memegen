@@ -118,7 +118,11 @@ def render_image(
 
     pad = all(size) if pad is None else pad  # TODO: Is `pad` ever None?
     image = resize_image(background, *size, pad)
-    if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
+    if (
+        size[0]
+        and size[0] <= settings.PREVIEW_SIZE[0]
+        and not (is_preview or settings.DEBUG)
+    ):
         watermark = ""
 
     for (
