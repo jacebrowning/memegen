@@ -32,6 +32,7 @@ def preview(
     lines: list[str],
     *,
     style: str = settings.DEFAULT_STYLE,
+    watermark: str = "",
 ) -> tuple[bytes, str]:
     path = template.build_path(lines, style, settings.PREVIEW_SIZE, "", "jpg")
     logger.info(f"Previewing meme for {path}")
@@ -42,6 +43,7 @@ def preview(
         settings.PREVIEW_SIZE,
         pad=False,
         is_preview=True,
+        watermark=watermark,
     )
     stream = io.BytesIO()
     image.convert("RGB").save(stream, format="JPEG", quality=50)
@@ -164,7 +166,7 @@ def render_image(
         image = add_blurred_background(image, background, *size)
 
     if watermark:
-        image = add_watermark(image, watermark)
+        image = add_watermark(image, watermark, is_preview)
 
     return image
 
@@ -237,7 +239,7 @@ def render_animation(
             image = add_blurred_background(image, background, *size)
 
         if watermark:
-            image = add_watermark(image, watermark)
+            image = add_watermark(image, watermark, is_preview)
         if settings.DEBUG:
             image = add_counter(image, index)
 
@@ -303,13 +305,13 @@ def add_blurred_background(
     return blurred
 
 
-def add_watermark(image: Image, text: str) -> Image:
+def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
     font = get_font("tiny", text, 0.0, size, 99)
     offset = get_text_offset(text, font, size)
 
-    watermark = Text.get_watermark()
-    stroke_width, stroke_fill = watermark.get_stroke(get_stroke_width(font))
+    watermark = Text.get_watermark(is_preview)
+    stroke_width, stroke_fill = watermark.get_stroke(get_stroke_width(font), is_preview)
 
     box = Image.new("RGBA", image.size)
     draw = ImageDraw.Draw(box)
