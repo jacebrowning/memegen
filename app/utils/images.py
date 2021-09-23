@@ -318,8 +318,9 @@ def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
     font = get_font("tiny", text, 0.0, size, 99)
     offset = get_text_offset(text, font, size)
 
-    watermark = Text.get_watermark(is_preview)
-    stroke_width, stroke_fill = watermark.get_stroke(get_stroke_width(font), is_preview)
+    watermark = Text.get_error() if is_preview else Text.get_watermark()
+    stroke_width = get_stroke_width(font)
+    stroke_width, stroke_fill = watermark.get_stroke(stroke_width)
 
     box = Image.new("RGBA", image.size)
     draw = ImageDraw.Draw(box)

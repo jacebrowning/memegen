@@ -56,7 +56,7 @@ async def preview_image(request, id: str, lines: list[str], style: str):
         if not template.image.exists():
             logger.error(f"Unable to download image URL: {id}")
             template = models.Template.objects.get("_error")
-            error = "Invalid Background Image"
+            error = "Invalid Background"
     else:
         template = models.Template.objects.get_or_none(id)
         if not template:
@@ -67,7 +67,7 @@ async def preview_image(request, id: str, lines: list[str], style: str):
     if not utils.urls.schema(style):
         style = style.lower()
     if not await template.check(style):
-        error = "Invalid Overlay Image"
+        error = "Invalid Overlay"
 
     data, content_type = await asyncio.to_thread(
         utils.images.preview, template, lines, style=style, watermark=error.upper()

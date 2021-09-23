@@ -34,8 +34,12 @@ class Text:
         )
 
     @classmethod
-    def get_watermark(cls, is_preview: bool = False) -> "Text":
-        return cls(color="red" if is_preview else "#FFFFFF85")
+    def get_error(cls) -> "Text":
+        return cls(color="yellow", anchor_x=0.5)
+
+    @classmethod
+    def get_watermark(cls) -> "Text":
+        return cls(color="#FFFFFF85")
 
     def get_anchor(self, image_size: Dimensions, watermark: str = "") -> Point:
         image_width, image_height = image_size
@@ -49,7 +53,7 @@ class Text:
         size = int(image_width * self.scale_x), int(image_height * self.scale_y)
         return size
 
-    def get_stroke(self, width: int, is_preview: bool = False) -> tuple[int, str]:
+    def get_stroke(self, width: int) -> tuple[int, str]:
         if self.color == "black":
             width = 1
             color = "#FFFFFF85"
@@ -57,7 +61,6 @@ class Text:
             width = 1
             color = "#000000" + self.color[-2:]
         else:
-            width = 0 if is_preview else width
             color = "black"
         return width, color
 
