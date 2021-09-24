@@ -65,7 +65,7 @@ async def preview_image(request, id: str, lines: list[str], style: str):
             error = "Unknown Template"
 
     if not utils.urls.schema(style):
-        style = style.lower()
+        style = style.strip().lower()
     if not await template.check(style):
         error = "Invalid Overlay"
 
