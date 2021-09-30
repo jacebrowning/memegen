@@ -189,13 +189,13 @@ def render_animation(
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style="animated"))
     total = getattr(source, "n_frames", 1)
-    modulus = max(1, round(total / settings.MAXIMUM_FRAMES))
+    modulus = max(1, round(total / settings.MAXIMUM_FRAMES, 1))
     duration = source.info.get("duration", 100) * modulus
     if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
         watermark = ""
 
     for index, frame in enumerate(ImageSequence.Iterator(source)):
-        if index % modulus:
+        if (index % modulus) >= 1:
             continue
 
         stream = io.BytesIO()
@@ -249,7 +249,7 @@ def render_animation(
         if watermark:
             image = add_watermark(image, watermark, is_preview)
         if settings.DEBUG:
-            image = add_counter(image, index, total)
+            image = add_counter(image, index, total, modulus)
 
         frames.append(image)
 
@@ -336,9 +336,9 @@ def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
     return Image.alpha_composite(image, box)
 
 
-def add_counter(image: Image, index: int, total: int) -> Image:
+def add_counter(image: Image, index: int, total: int, modulus: int) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
-    text = f"{index:02} of {total - 1:02}"
+    text = f"{index:02} of {total - 1:02} / {modulus}"
     font = get_font("tiny", text, 0.0, size, 99)
 
     box = Image.new("RGBA", image.size)
