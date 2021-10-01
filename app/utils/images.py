@@ -74,7 +74,9 @@ def save(
 
     if extension == "gif":
         frames, duration = render_animation(template, lines, size, watermark=watermark)
-        frames[0].save(path, save_all=True, append_images=frames[1:], duration=duration)
+        frames[0].save(
+            path, save_all=True, append_images=frames[1:], duration=duration, loop=0
+        )
     else:
         image = render_image(template, style, lines, size, watermark=watermark)
         image.convert("RGB").save(path, quality=95)
