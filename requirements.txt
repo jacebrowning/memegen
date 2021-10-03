@@ -31,11 +31,11 @@ pyperclip==1.8.2
 pyyaml==5.4.1; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0"
 ruamel.yaml.clib==0.2.6; platform_python_implementation == "CPython" and python_version < "3.10" and python_version >= "3.7"
 ruamel.yaml==0.17.16; python_version >= "3.7" and python_version < "4.0"
-sanic-cors==1.0.0
+sanic-cors==1.0.1
 sanic-openapi==21.6.1
-sanic-plugin-toolkit==1.1.0.post1; python_version >= "3.7" and python_version < "4.0"
+sanic-plugin-toolkit==1.2.0; python_version >= "3.7" and python_version < "4.0"
 sanic-routing==0.7.1; python_version >= "3.7"
-sanic==21.6.2; python_version >= "3.7"
+sanic==21.9.1; python_version >= "3.7"
 six==1.16.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0"
 spongemock==0.3.4
 tomlkit==0.7.2; python_version >= "3.7" and python_full_version < "3.0.0" and python_version < "4.0" or python_version >= "3.7" and python_version < "4.0" and python_full_version >= "3.5.0"
