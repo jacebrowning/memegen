@@ -13,8 +13,8 @@ packages = [{ include = "app" }]
 python = "^3.9"
 
 # Sanic
-sanic = "~21.6.1"
-sanic-cors = "^1.0"
+sanic = "~21.9.1"
+sanic-cors = "^1.0.1"
 sanic-openapi = "~21.6.1"
 
 # Markdown
@@ -60,7 +60,7 @@ pytest-expecter = "^2.1"
 pytest-random = "*"
 pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
-sanic-testing = "*"
+sanic-testing = "^0.7"
 locust = "^1.2.3"
 
 # Coverage

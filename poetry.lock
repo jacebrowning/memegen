@@ -1247,7 +1247,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "sanic"
-version = "21.6.2"
+version = "21.9.1"
 description = "A web server and web framework that's written to go fast. Build fast. Run fast."
 category = "main"
 optional = false
@@ -1260,25 +1260,25 @@ multidict = ">=5.0,<6.0"
 sanic-routing = ">=0.7,<1.0"
 ujson = {version = ">=1.35", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
 uvloop = {version = ">=0.5.3", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
-websockets = ">=9.0"
+websockets = ">=10.0"
 
 [package.extras]
-all = ["sanic-testing (>=0.7.0b1)", "pytest (==5.2.1)", "multidict (>=5.0,<6.0)", "gunicorn (==20.0.4)", "pytest-cov", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "aiofiles", "tox", "black", "flake8", "bandit", "towncrier", "sphinx (>=2.1.2)", "sphinx-rtd-theme", "recommonmark (>=0.5.0)", "docutils", "pygments", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
-dev = ["sanic-testing (>=0.7.0b1)", "pytest (==5.2.1)", "multidict (>=5.0,<6.0)", "gunicorn (==20.0.4)", "pytest-cov", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "aiofiles", "tox", "black", "flake8", "bandit", "towncrier", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
-docs = ["sphinx (>=2.1.2)", "sphinx-rtd-theme", "recommonmark (>=0.5.0)", "docutils", "pygments"]
-test = ["sanic-testing (>=0.7.0b1)", "pytest (==5.2.1)", "multidict (>=5.0,<6.0)", "gunicorn (==20.0.4)", "pytest-cov", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "uvloop (>=0.5.3)", "ujson (>=1.35)"]
+all = ["beautifulsoup4", "docutils", "gunicorn (==20.0.4)", "sanic-testing (>=0.7.0)", "m2r2", "chardet (>=3.0.0,<4.0.0)", "black", "flake8", "coverage (==5.3)", "pygments", "pytest-cov", "sphinx-rtd-theme (>=0.4.3)", "uvicorn (<0.15.0)", "pytest-benchmark", "tox", "towncrier", "mypy (>=0.901)", "pytest-sanic", "pytest-sugar", "bandit", "isort (>=5.0.0)", "sphinx (>=2.1.2)", "pytest (==5.2.1)", "types-ujson"]
+dev = ["sanic-testing (>=0.7.0)", "pytest (==5.2.1)", "coverage (==5.3)", "gunicorn (==20.0.4)", "pytest-cov", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "chardet (>=3.0.0,<4.0.0)", "flake8", "black", "isort (>=5.0.0)", "bandit", "mypy (>=0.901)", "docutils", "pygments", "uvicorn (<0.15.0)", "tox", "towncrier", "types-ujson"]
+docs = ["sphinx (>=2.1.2)", "sphinx-rtd-theme (>=0.4.3)", "docutils", "pygments", "m2r2"]
+test = ["sanic-testing (>=0.7.0)", "pytest (==5.2.1)", "coverage (==5.3)", "gunicorn (==20.0.4)", "pytest-cov", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "chardet (>=3.0.0,<4.0.0)", "flake8", "black", "isort (>=5.0.0)", "bandit", "mypy (>=0.901)", "docutils", "pygments", "uvicorn (<0.15.0)", "types-ujson"]
 
 [[package]]
 name = "sanic-cors"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Sanic extension adding a decorator for CORS support. Based on flask-cors by Cory Dolphin."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-sanic = ">=21.3.1,<22"
-sanic-plugin-toolkit = ">=1.0.0,<2"
+sanic = ">=21.3.1,<21.6.0 || >21.6.0,<21.9.0 || >21.9.0,<22"
+sanic-plugin-toolkit = ">=1.2.0,<2"
 
 [[package]]
 name = "sanic-openapi"
@@ -1299,14 +1299,14 @@ test = ["coverage (==4.5.3)", "pytest (==4.6.2)", "pytest-cov (==2.7.1)", "pytes
 
 [[package]]
 name = "sanic-plugin-toolkit"
-version = "1.1.0.post1"
+version = "1.2.0"
 description = "The all-in-one toolkit for creating powerful Sanic Plugins"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-sanic = ">=21.3.1,<22"
+sanic = "*"
 
 [[package]]
 name = "sanic-routing"
@@ -1318,7 +1318,7 @@ python-versions = "*"
 
 [[package]]
 name = "sanic-testing"
-version = "0.6.0"
+version = "0.7.0"
 description = "Core testing clients for Sanic"
 category = "dev"
 optional = false
@@ -1591,7 +1591,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5993370e3483fd9021186ad9dbc7e059dcf8fa283d9f45b79266fb2854918858"
+content-hash = "57b5877ad37ee6bcc253bcdce1c14966077ad2899437bb59361272b2d2d99684"
 
 [metadata.files]
 aiocache = [
@@ -2645,28 +2645,28 @@ rope = [
     {file = "ruamel.yaml.clib-0.2.6.tar.gz", hash = "sha256:4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"},
 ]
 sanic = [
-    {file = "sanic-21.6.2-py3-none-any.whl", hash = "sha256:4e066581ea4f36fbc1c04461a497d010f7f83ef1dc91a03dbf40b14ae9c25839"},
-    {file = "sanic-21.6.2.tar.gz", hash = "sha256:c35513d7dd68266f90c247cf8be710dacd5bbf60c6a4ffdb5c70829dffe8b795"},
+    {file = "sanic-21.9.1-py3-none-any.whl", hash = "sha256:fe4ce0c4296f657ced545066bcff21f8bc24c5d1faa2c08167729f00cd0b42ed"},
+    {file = "sanic-21.9.1.tar.gz", hash = "sha256:7bdb553af2df95b4d07335ad4c545d810ce6c611fbc8e2f78c8afbc12f1739df"},
 ]
 sanic-cors = [
-    {file = "Sanic-Cors-1.0.0.tar.gz", hash = "sha256:d6109b342afcaa053db663d92d44f4f61e59cdb0d0a3c1857dcc9812a6595a61"},
-    {file = "Sanic_Cors-1.0.0-py2.py3-none-any.whl", hash = "sha256:00cea470376808a942ec70aa53002d0805505670bac28c507b272cf9515d81fa"},
+    {file = "Sanic-Cors-1.0.1.tar.gz", hash = "sha256:ac5d40bd45022d21296887d2238891d0ad67308ffba55be809df0151d36071b5"},
+    {file = "Sanic_Cors-1.0.1-py2.py3-none-any.whl", hash = "sha256:dc644b0608ebac1bb57586a955c15c53a8bf83e2d0ea248893480c3cd72efdf6"},
 ]
 sanic-openapi = [
     {file = "sanic-openapi-21.6.1.tar.gz", hash = "sha256:b509779480ba95910a61da7f5060482afcbbcbbe86ec0fcd4618ff604766cd3c"},
     {file = "sanic_openapi-21.6.1-py3-none-any.whl", hash = "sha256:76d4318f71991d23ad1355089db01a3c151b8c77800fddf00c03df1c9cd5dc6a"},
 ]
 sanic-plugin-toolkit = [
-    {file = "sanic-plugin-toolkit-1.1.0.post1.tar.gz", hash = "sha256:515099af2c0e3dc088453f36e713bd241b3ea86d3a0fe92c594cd466024afa68"},
-    {file = "sanic_plugin_toolkit-1.1.0.post1-py3-none-any.whl", hash = "sha256:51becbdeea48aad2d4cc2487eb7b705f9a38745515abf94def8afad86efbdf47"},
+    {file = "sanic-plugin-toolkit-1.2.0.tar.gz", hash = "sha256:5d477e6c1832968d43c7112e1a445afc98153fa05236c4db32b68e2cfff86001"},
+    {file = "sanic_plugin_toolkit-1.2.0-py3-none-any.whl", hash = "sha256:3ab62af7c2d3e73d37d217976ec11f3683bde588d647e883a42763a894058b50"},
 ]
 sanic-routing = [
     {file = "sanic-routing-0.7.1.tar.gz", hash = "sha256:35b09a12aceecc4e295bddb0ed39cff90363dd1504f9831c6b0b01f6f026635d"},
     {file = "sanic_routing-0.7.1-py3-none-any.whl", hash = "sha256:0c08f5f65a55fdca259d9149d89c39fd2377a651b408065fd643bdabdb6ba293"},
 ]
 sanic-testing = [
-    {file = "sanic-testing-0.6.0.tar.gz", hash = "sha256:c239b87ed3ea5fe1dc3b5139e6e1173fb4e37bcb05767750522771ca8778e32f"},
-    {file = "sanic_testing-0.6.0-py3-none-any.whl", hash = "sha256:fc46b48253d0549a94ed18c455dddc766a9a29b7069ce849208ae867517ddf63"},
+    {file = "sanic-testing-0.7.0.tar.gz", hash = "sha256:8396507cdcc030f0b43a1b2419c04034be28bc6c466596e122e7bb407bb515b3"},
+    {file = "sanic_testing-0.7.0-py3-none-any.whl", hash = "sha256:3e600981d830731c6108c9c2f12c577800c061c92787a1b1c9c8fa6a80960843"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
