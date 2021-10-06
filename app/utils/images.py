@@ -192,7 +192,6 @@ def render_animation(
     source = Image.open(template.get_image(style="animated"))
     total = getattr(source, "n_frames", 1)
     modulus = max(1, round(total / settings.MAXIMUM_FRAMES, 1))
-    duration = source.info.get("duration", 100) * modulus
     if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
         watermark = ""
 
@@ -254,6 +253,9 @@ def render_animation(
             image = add_counter(image, index, total, modulus)
 
         frames.append(image)
+
+    ratio = len(frames) / total
+    duration = source.info.get("duration", 100) / ratio
 
     return frames, duration
 
