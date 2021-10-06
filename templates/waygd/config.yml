@@ -1,0 +1,26 @@
+name: What Are Ya Gonna Do?
+source: https://www.youtube.com/watch?v=76URh0S7YIw
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.2
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.8
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.2
+example:
+  - yeah...
+  - what are ya gonna do?
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25

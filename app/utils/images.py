@@ -340,7 +340,7 @@ def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
 
 def add_counter(image: Image, index: int, total: int, modulus: int) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
-    text = f"{index:02} of {total - 1:02} / {modulus}"
+    text = f"{index+1:02} of {total:02} / {modulus}"
     font = get_font("tiny", text, 0.0, size, 99)
 
     box = Image.new("RGBA", image.size)
