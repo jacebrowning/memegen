@@ -14,9 +14,9 @@ theme:
   name: mkdocs
   custom_dir: docs/theme
   nav_style: dark
+  analytics:
+    gtag: G-B2XT39Z5FC
 
 plugins: []
-
-google_analytics: ["UA-91304960-4", "memegen.link"]
 
 remote_branch: site
