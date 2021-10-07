@@ -329,7 +329,8 @@ def describe_automatic():
                 return_value=[
                     {
                         "image_url": "http://example.com/images/example.png"
-                        + "?background=https://www.gstatic.com/webp/gallery/3.png"
+                        + "?background=https://www.gstatic.com/webp/gallery/3.png",
+                        "confidence": 0.5,
                     }
                 ]
             ),
@@ -340,7 +341,8 @@ def describe_automatic():
             )
             expect(response.json) == {
                 "url": "http://localhost:5000/images/example.png"
-                + "?background=https://www.gstatic.com/webp/gallery/3.png"
+                + "?background=https://www.gstatic.com/webp/gallery/3.png",
+                "confidence": 0.5,
             }
 
 
