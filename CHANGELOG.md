@@ -1,5 +1,9 @@
 # Revision History
 
+## 9.3
+
+- Added `confidence` ratio to results from `/images/automatic`.
+
 ## 9.2
 
 - Added redirect to `.gif` format when `style=animated` parameter is present.
