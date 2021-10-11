@@ -1,5 +1,3 @@
-from typing import Iterable
-
 from .. import settings
 
 COLUMNS_STYLE = """
@@ -94,7 +92,7 @@ HTML = """
 
 
 def gallery(
-    urls: Iterable[str],
+    urls: list[str],
     *,
     columns: bool,
     refresh: int,
@@ -109,7 +107,7 @@ def gallery(
     return _grid_debug(urls, refresh, extra)
 
 
-def _columns(urls: Iterable[str]) -> str:
+def _columns(urls: list[str]) -> str:
     elements = []
 
     for url in urls:
@@ -131,7 +129,7 @@ def _columns(urls: Iterable[str]) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _columns_debug(urls: Iterable[str], refresh: int, extra: str) -> str:
+def _columns_debug(urls: list[str], refresh: int, extra: str) -> str:
     elements = []
 
     for url in urls:
@@ -154,7 +152,7 @@ def _columns_debug(urls: Iterable[str], refresh: int, extra: str) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _grid_debug(urls: Iterable[str], refresh: int, extra: str):
+def _grid_debug(urls: list[str], refresh: int, extra: str):
     elements = []
 
     for url in urls:

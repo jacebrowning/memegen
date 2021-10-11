@@ -1,5 +1,3 @@
-from typing import Optional
-
 from sanic import Request
 
 from . import settings, utils
@@ -7,7 +5,7 @@ from .models import Template
 
 
 def get_valid_templates(
-    request: Request, query: str = "", animated: Optional[bool] = None
+    request: Request, query: str = "", animated: bool | None = None
 ) -> list[dict]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
@@ -22,7 +20,7 @@ def get_valid_templates(
 
 
 def get_example_images(
-    request: Request, query: str = "", animated: Optional[bool] = None
+    request: Request, query: str = "", animated: bool | None = None
 ) -> list[tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
