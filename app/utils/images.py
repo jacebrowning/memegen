@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import io
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
 
 from PIL import (
     Image,
@@ -112,7 +112,7 @@ def render_image(
     lines: list[str],
     size: Dimensions,
     *,
-    pad: Optional[bool] = None,
+    pad: bool | None = None,
     is_preview: bool = False,
     watermark: str = "",
 ) -> Image:
@@ -182,7 +182,7 @@ def render_animation(
     lines: list[str],
     size: Dimensions,
     *,
-    pad: Optional[bool] = None,
+    pad: bool | None = None,
     is_preview: bool = False,
     watermark: str = "",
 ) -> tuple[list[Image], int]:

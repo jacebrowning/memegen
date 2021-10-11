@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from ..types import Box, Dimensions
 
@@ -20,7 +19,7 @@ class Overlay:
         return dimension, dimension
 
     def get_box(
-        self, background_size: Dimensions, foreground_size: Optional[Dimensions] = None
+        self, background_size: Dimensions, foreground_size: Dimensions | None = None
     ) -> Box:
         background_width, background_height = background_size
         if foreground_size is None:

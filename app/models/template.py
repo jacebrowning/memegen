@@ -2,7 +2,6 @@ import asyncio
 import shutil
 from functools import cached_property
 from pathlib import Path
-from typing import Optional
 
 import aiopath
 from datafiles import datafile, field
@@ -21,7 +20,7 @@ class Template:
 
     id: str
     name: str = ""
-    source: Optional[str] = None
+    source: str | None = None
 
     text: list[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
