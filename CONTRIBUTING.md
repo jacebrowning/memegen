@@ -70,3 +70,31 @@ Keep all of the above tasks running on change:
 ```text
 $ make watch
 ```
+
+## Building and using your own container
+
+You can build this service as a container by running the following command:
+
+```bash
+# Using Podman:
+podman build -t memegen -f Containerfile .
+
+# Using Docker
+docker build -t memegen -f Containerfile .
+```
+
+You can then run the container by running:
+
+```bash
+# Run the container
+podman run -p 5000:5000 -e DOMAIN="set.your.domain" memegen
+
+# Validate functionality
+$ curl http://127.0.0.1:5000/docs/ -sI
+HTTP/1.1 200 OK
+date: Sun, 24 Oct 2021 19:16:07 GMT
+server: uvicorn
+last-modified: Sun, 24 Oct 2021 18:27:30 GMT
+content-type: text/html; charset=utf-8
+access-control-allow-origin: *
+```
