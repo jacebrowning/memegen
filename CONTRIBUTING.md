@@ -71,15 +71,21 @@ Keep all of the above tasks running on change:
 $ make watch
 ```
 
-## Building and using your own container
+# Deployment
 
-You can build this service as a container by running the following command:
+## Heroku
+
+This service is built to run on Heroku. Route traffic through a CDN to cache generated images.
+
+## Containerization
+
+You can also build this service as a container by running the following command:
 
 ```bash
 # Using Podman:
 podman build -t memegen -f Containerfile .
 
-# Using Docker
+# Using Docker:
 docker build -t memegen -f Containerfile .
 ```
 
