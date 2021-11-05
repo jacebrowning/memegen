@@ -86,8 +86,9 @@ def describe_template():
             expect(template.image.exists()) == False
 
         @pytest.mark.asyncio
-        async def it_handles_builtin_templates(expect):
-            url = "http://api.memegen.link/images/fry.png"
+        @pytest.mark.parametrize("subdomain", ["api", "staging"])
+        async def it_handles_builtin_templates(expect, subdomain):
+            url = f"http://{subdomain}.memegen.link/images/fry.png"
             template = await Template.create(url)
             expect(template.id) == "fry"
 

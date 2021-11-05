@@ -24,6 +24,7 @@
     "aiohttp",
     "aiopath",
     "CIRCLECI",
+    "Containerfile",
     "exif",
     "getenv",
     "Hain",
@@ -34,10 +35,12 @@
     "LANCZOS",
     "Memegen",
     "Minecraft",
+    "podman",
     "Qaeda",
     "RGBA",
     "sanic",
     "Titillium",
+    "uvicorn",
     "webp"
   ]
 }

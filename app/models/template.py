@@ -176,7 +176,7 @@ class Template:
     @classmethod
     async def create(cls, url: str, *, force=False) -> "Template":
         parsed = furl(url)
-        if parsed.netloc == "api.memegen.link":
+        if parsed.netloc and "memegen.link" in parsed.netloc:
             logger.info(f"Handling template URL: {url}")
             if len(parsed.path.segments) > 1:
                 id = Path(parsed.path.segments[1]).stem
