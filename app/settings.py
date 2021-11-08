@@ -27,7 +27,7 @@ DEPLOYED = RELEASE_STAGE != "local" and not DEBUG
 
 # API
 
-PREFIX = "[DEBUG] " if not DEPLOYED else ""
+SUFFIX = " [DEBUG ONLY]" if not DEPLOYED else ""
 PLACEHOLDER = "string"  # Swagger UI placeholder value
 
 # Fonts

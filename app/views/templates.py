@@ -76,7 +76,7 @@ async def detail(request, id):
 @doc.tag("Memes")
 @doc.operation("Memes.create_from_template")
 @doc.exclude(settings.DEPLOYED)
-@doc.summary(settings.PREFIX + "Create a meme from a template")
+@doc.summary("Create a meme from a template" + settings.SUFFIX)
 @doc.consumes(doc.String(name="id"), location="path")
 @doc.consumes(
     doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
@@ -93,7 +93,7 @@ async def build(request, id):
 @blueprint.post("/custom")
 @doc.tag("Memes")
 @doc.exclude(settings.DEPLOYED)
-@doc.summary(settings.PREFIX + "Create a meme from any image")
+@doc.summary("Create a meme from any image" + settings.SUFFIX)
 @doc.consumes(
     doc.JsonBody(
         {
