@@ -1,0 +1,26 @@
+name: Get Better Material
+source: https://knowyourmeme.com/memes/get-better-material
+text:
+  - style: upper
+    color: black
+    font: comic
+    anchor_x: 0.325
+    anchor_y: 0.01
+    angle: 0.0
+    scale_x: 0.15
+    scale_y: 0.15
+  - style: upper
+    color: black
+    font: comic
+    anchor_x: 0.615
+    anchor_y: 0.72
+    angle: 12.0
+    scale_x: 0.3
+    scale_y: 0.2
+example:
+  - Caw Caw Caw
+  - Caw Caw Caw Caw Caw Caw
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
