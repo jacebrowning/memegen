@@ -51,16 +51,8 @@ async def favicon(request):
 
 @app.get("/robots.txt")
 @doc.exclude(True)
-def robots(request):
-    return response.text(
-        "\n".join(
-            [
-                "User-agent: *",
-                "Disallow: /",
-            ]
-        )
-        + "\n"
-    )
+async def robots(request):
+    return await response.file("app/static/robots.txt")
 
 
 if __name__ == "__main__":
