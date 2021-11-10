@@ -6,6 +6,7 @@ from .. import settings
 def describe_index():
     def it_redirects_to_the_docs(expect, client):
         request, response = client.get("/")
+        expect(response.status) == 200
         expect(response.text).contains("swagger.json")
 
     def it_contains_favicon(expect, client):
@@ -15,6 +16,7 @@ def describe_index():
     def it_contains_robots(expect, client):
         request, response = client.get("/robots.txt")
         expect(response.status) == 200
+        expect(response.text).contains("Disallow: /\n")
 
 
 def describe_examples():
