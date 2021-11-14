@@ -16,7 +16,7 @@ def describe_index():
     def it_contains_robots(expect, client):
         request, response = client.get("/robots.txt")
         expect(response.status) == 200
-        expect(response.text).contains("Disallow: /\n")
+        expect(response.text).contains("Allow: /\n")
 
 
 def describe_examples():
