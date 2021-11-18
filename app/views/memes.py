@@ -257,7 +257,7 @@ async def render_image(
 
     status = 200
 
-    if len(slug.encode()) > 200:
+    if any(len(part.encode()) > 200 for part in slug.split("/")):
         logger.error(f"Slug too long: {slug}")
         slug = slug[:50] + "..."
         lines = utils.text.decode(slug)

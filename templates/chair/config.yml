@@ -1,0 +1,62 @@
+name: American Chopper Argument
+source: https://knowyourmeme.com/memes/american-chopper-argument
+text:
+  - style: default
+    color: khaki
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.2
+    angle: 0.0
+    scale_x: 0.495
+    scale_y: 0.13
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.495
+    anchor_y: 0.2
+    angle: 0.0
+    scale_x: 0.505
+    scale_y: 0.13
+  - style: default
+    color: khaki
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.535
+    angle: 0.0
+    scale_x: 0.495
+    scale_y: 0.13
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.495
+    anchor_y: 0.525
+    angle: 0.0
+    scale_x: 0.505
+    scale_y: 0.14
+  - style: upper
+    color: khaki
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.87
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.13
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.5
+    anchor_y: 0.87
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.13
+example:
+  - Let's expand safety nets
+  - Socialism never works!
+  - Scandinavia is socialist and they're doing great!
+  - They're not socialist. They're capitalist with strong welfare policies!
+  - Then let's adopt those!
+  - No that's socialism!!
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
