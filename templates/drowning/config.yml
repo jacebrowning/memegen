@@ -3,7 +3,7 @@ source: https://knowyourmeme.com/memes/drowning-high-five
 text:
   - style: default
     color: white
-    font: thin
+    font: thick
     anchor_x: 0.03
     anchor_y: 0.33
     angle: 0.0
@@ -11,23 +11,23 @@ text:
     scale_y: 0.15
   - style: default
     color: white
-    font: thin
+    font: thick
     anchor_x: 0.51
     anchor_y: 0.14
     angle: 0.0
-    scale_x: 0.19
+    scale_x: 0.2
     scale_y: 0.2
   - style: default
     color: khaki
-    font: thin
+    font: thick
     anchor_x: 0.03
     anchor_y: 0.82
     angle: 0.0
     scale_x: 0.46
     scale_y: 0.15
 example:
-  - Asking for Help
-  - Online Comment
+  - Me Asking for Help
+  - Online Commenter
   - I'm having that problem too.
 overlay:
   - center_x: 0.585
