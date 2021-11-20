@@ -68,6 +68,12 @@ def describe_path_redirects():
         expect(response.status) == 501
         expect(response.text).contains("Replace '&lt;sample>' in the URL")
 
+    def it_handles_trailing_slashes(expect, client):
+        request, response = client.get("/images/fry/", allow_redirects=False)
+        redirect = "/images/fry"
+        expect(response.status) == 302
+        expect(response.headers["Location"]) == redirect
+
 
 def describe_legacy_images():
     @pytest.mark.parametrize("extension", ["png", "jpg"])

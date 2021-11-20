@@ -24,6 +24,7 @@ def describe_track():
         monkeypatch.setattr(settings, "REMOTE_TRACKING_ERRORS_LIMIT", 1)
         request.args = {}
         request.headers = {}
+        request.host = "example.com"
         request.url = "http://example.com"
 
         await utils.meta.track(request, ["foo"])

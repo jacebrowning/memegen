@@ -1,0 +1,68 @@
+name: I Prefer the Real Raven / Perfection
+source: https://knowyourmeme.com/memes/perfection
+text:
+  - style: upper
+    color: black
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.333
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.225
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+  - style: upper
+    color: black
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.333
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.333
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.56
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+  - style: upper
+    color: black
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.666
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.333
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.895
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+example:
+  - Sebastian Shaw
+  - I prefer the real Darth Vader.
+  - Hayden Christensen
+  - I said, the real Darth Vader.
+  - Jake Lloyd
+  - Perfection.
+overlay:
+  - center_x: 0.25
+    center_y: 0.166
+    scale: 0.333
+  - center_x: 0.25
+    center_y: 0.5
+    scale: 0.333
+  - center_x: 0.25
+    center_y: 0.833
+    scale: 0.333

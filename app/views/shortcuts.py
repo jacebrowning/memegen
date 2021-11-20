@@ -25,6 +25,8 @@ async def example_path(request, template_id):
 
     if template and template.valid:
         url = template.build_example_url(request, external=False)
+        if settings.DEBUG:
+            url = url.removesuffix(".png")
         return response.redirect(url)
 
     if settings.DEBUG:
@@ -79,6 +81,9 @@ async def legacy_example_path(request, template_id):
 )
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 async def custom_path(request, template_id, text_paths):
+    if template_id == "images":
+        return response.redirect(f"/images/{text_paths}".removesuffix("/"))
+
     if not settings.DEBUG:
         url = request.app.url_for(
             "Memes.text",
@@ -125,4 +130,6 @@ async def legacy_custom_image(request, template_id, text_paths):
 @doc.consumes(doc.String(name="template_id"), location="path")
 @doc.response(302, doc.File(), description="Successfully redirected to a custom image")
 async def legacy_custom_path(request, template_id, text_paths):
+    if template_id == "images":
+        return response.redirect(f"/images/{text_paths}".removesuffix("/"))
     return response.redirect(f"/images/{template_id}/{text_paths}")

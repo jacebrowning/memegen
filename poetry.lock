@@ -323,7 +323,7 @@ requests = ">=2.0,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "1.1a1"
+version = "1.1b2"
 description = "File-based ORM for dataclasses."
 category = "main"
 optional = false
@@ -334,7 +334,7 @@ cached_property = ">=1.5,<2.0"
 classproperties = ">=0.2,<0.3"
 minilog = ">=2.0,<3.0"
 parse = ">=1.12,<2.0"
-"ruamel.yaml" = ">=0.17.16,<0.18.0"
+"ruamel.yaml" = ">=0.17.17,<0.18.0"
 tomlkit = ">=0.7.2,<0.8.0"
 typing-extensions = ">=3.7,<4.0"
 
@@ -1201,7 +1201,7 @@ dev = ["pytest"]
 
 [[package]]
 name = "ruamel.yaml"
-version = "0.17.16"
+version = "0.17.17"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
 category = "main"
 optional = false
@@ -1543,7 +1543,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "bca4e7619a08732e73f134e4e542243f683d3b4f513f51d6332ba15a8e864f5c"
+content-hash = "8781172c650d8d4a97c635fd2ecccfe6e56eeeada3c32e603308332872f88fed"
 
 [metadata.files]
 aiocache = [
@@ -1819,8 +1819,8 @@ coveragespace = [
     {file = "coveragespace-4.2.tar.gz", hash = "sha256:b23263b7b9689fd7ded975809b134453c0e0cdbf1dea6b60bf8ebed2c78f9270"},
 ]
 datafiles = [
-    {file = "datafiles-1.1a1-py3-none-any.whl", hash = "sha256:3d33c1520f3398dbc343894062ddcca01974c8d0a8513636e32424e878c235f4"},
-    {file = "datafiles-1.1a1.tar.gz", hash = "sha256:bec213d6858e46e9138f498fe92579892be5369932168043c8abdf7425f8b594"},
+    {file = "datafiles-1.1b2-py3-none-any.whl", hash = "sha256:3465d05fce6fe109ee8be27ba35e09bc5e683dd11c5c42542186d7a8dd2d85a9"},
+    {file = "datafiles-1.1b2.tar.gz", hash = "sha256:5ffa113b68ec044f79fa9569d6ef67d8428070d01a3eaa8af982e3334dee8393"},
 ]
 decorator = [
     {file = "decorator-5.1.0-py3-none-any.whl", hash = "sha256:7b12e7c3c6ab203a29e157335e9122cb03de9ab7264b137594103fd4a683b374"},
@@ -2590,8 +2590,8 @@ rope = [
     {file = "rope-0.18.0.tar.gz", hash = "sha256:786b5c38c530d4846aa68a42604f61b4e69a493390e3ca11b88df0fbfdc3ed04"},
 ]
 "ruamel.yaml" = [
-    {file = "ruamel.yaml-0.17.16-py3-none-any.whl", hash = "sha256:ea21da1198c4b41b8e7a259301cc9710d3b972bf8ba52f06218478e6802dd1f1"},
-    {file = "ruamel.yaml-0.17.16.tar.gz", hash = "sha256:1a771fc92d3823682b7f0893ad56cb5a5c87c48e62b5399d6f42c8759a583b33"},
+    {file = "ruamel.yaml-0.17.17-py3-none-any.whl", hash = "sha256:9af3ec5d7f8065582f3aa841305465025d0afd26c5fb54e15b964e11838fc74f"},
+    {file = "ruamel.yaml-0.17.17.tar.gz", hash = "sha256:9751de4cbb57d4bfbf8fc394e125ed4a2f170fbff3dc3d78abf50be85924f8be"},
 ]
 sanic = [
     {file = "sanic-21.9.1-py3-none-any.whl", hash = "sha256:fe4ce0c4296f657ced545066bcff21f8bc24c5d1faa2c08167729f00cd0b42ed"},
