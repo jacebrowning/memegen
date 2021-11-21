@@ -64,10 +64,15 @@ async def preview_image(request, id: str, lines: list[str], style: str):
             template = models.Template.objects.get("_error")
             error = "Unknown Template"
 
+    if not any(line.strip() for line in lines):
+        lines = template.example
+
     if not utils.urls.schema(style):
         style = style.strip().lower()
     if not await template.check(style):
         error = "Invalid Overlay"
+
+    print(lines)
 
     data, content_type = await asyncio.to_thread(
         utils.images.preview, template, lines, style=style, watermark=error.upper()
