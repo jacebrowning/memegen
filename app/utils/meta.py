@@ -2,7 +2,6 @@ from pathlib import Path
 from urllib.parse import unquote
 
 import aiohttp
-import bugsnag
 from aiocache import cached
 from sanic.log import logger
 
@@ -128,10 +127,7 @@ async def track(request, lines: list[str]):
             logger.info(f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}")
             if settings.REMOTE_TRACKING_ERRORS >= settings.REMOTE_TRACKING_ERRORS_LIMIT:
                 settings.TRACK_REQUESTS = False
-                bugsnag.notify(
-                    RuntimeError(f"Disabled tracking after {response.status} response"),
-                    metadata={"request": request.url, "message": message},
-                )
+                logger.warning(f"Disabled tracking after {response.status} response")
 
 
 async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
