@@ -31,7 +31,10 @@ def describe_detail():
                 "lines": 2,
                 "styles": ["default"],
                 "blank": "http://localhost:5000/images/iw.png",
-                "example": "http://localhost:5000/images/iw/does_testing/in_production.png",
+                "example": {
+                    "text": ["does testing", "in production"],
+                    "url": "http://localhost:5000/images/iw/does_testing/in_production.png",
+                },
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",
                 "_self": "http://localhost:5000/templates/iw",
             }
@@ -39,7 +42,9 @@ def describe_detail():
         def it_shortens_example_when_no_text(expect, client):
             request, response = client.get("/templates/mmm")
             expect(response.status) == 200
-            expect(response.json["example"]) == "http://localhost:5000/images/mmm.png"
+            expect(
+                response.json["example"]["url"]
+            ) == "http://localhost:5000/images/mmm.png"
 
         def it_returns_404_when_missing(expect, client):
             request, response = client.get("/templates/foobar")
