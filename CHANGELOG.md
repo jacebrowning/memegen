@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.0
+
+- Replaced `example` field in `/templates` responses with `{ "text": [str] , "url": str }`.
+
 ## 9.3
 
 - Added `confidence` ratio to results from `/images/automatic`.

@@ -9,6 +9,20 @@ from ..models import Template
 
 blueprint = Blueprint("Templates", url_prefix="/templates")
 
+TemplateResponse = {
+    "id": str,
+    "name": str,
+    "lines": int,
+    "styles": doc.List(str),
+    "blank": str,
+    "example": {
+        "text": doc.List(str),
+        "url": str,
+    },
+    "source": str,
+    "_self": str,
+}
+
 
 @blueprint.get("/")
 @doc.summary("List all templates")
@@ -24,18 +38,7 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
     location="query",
 )
 @doc.produces(
-    # Can't use doc.List(Template) because the jsonify method is slightly different
-    doc.List(
-        {
-            "id": str,
-            "name": str,
-            "styles": doc.List(str),
-            "blank": str,
-            "example": str,
-            "source": str,
-            "_self": str,
-        }
-    ),
+    doc.List(TemplateResponse),
     description="Successfully returned a list of all templates",
     content_type="application/json",
 )
@@ -52,15 +55,7 @@ async def index(request):
 @doc.summary("View a specific template")
 @doc.consumes(doc.String(name="id"), location="path")
 @doc.produces(
-    {
-        "id": str,
-        "name": str,
-        "styles": doc.List(str),
-        "blank": str,
-        "example": str,
-        "source": str,
-        "_self": str,
-    },
+    TemplateResponse,
     description="Successfully returned a specific templates",
     content_type="application/json",
 )

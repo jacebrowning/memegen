@@ -106,7 +106,10 @@ class Template:
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
-            "example": self.build_example_url(request),
+            "example": {
+                "text": self.example if any(self.example) else [],
+                "url": self.build_example_url(request),
+            },
             "source": self.source,
             "_self": self.build_self_url(request),
         }
