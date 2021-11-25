@@ -72,8 +72,6 @@ async def preview_image(request, id: str, lines: list[str], style: str):
     if not await template.check(style):
         error = "Invalid Overlay"
 
-    print(lines)
-
     data, content_type = await asyncio.to_thread(
         utils.images.preview, template, lines, style=style, watermark=error.upper()
     )

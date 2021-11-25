@@ -18,8 +18,8 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 example:
-  - your text
-  - goes here
+  - Top Line
+  - Bottom Line
 overlay:
   - center_x: 0.5
     center_y: 0.5

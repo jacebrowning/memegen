@@ -25,7 +25,7 @@ class Template:
     text: list[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
     )
-    example: list[str] = field(default_factory=lambda: ["your text", "goes here"])
+    example: list[str] = field(default_factory=lambda: ["Top Line", "Bottom Line"])
 
     overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
 
