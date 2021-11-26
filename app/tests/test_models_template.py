@@ -74,10 +74,16 @@ def describe_template():
             expect(template.image.exists()) == False
 
         @pytest.mark.asyncio
-        async def it_handles_invalid_urls(expect):
-            url = "httpshttps://cdn.pixabay.com/photo/2015/09/09/19/41/cat-932846_1280.jpg"
+        @pytest.mark.parametrize(
+            "url",
+            [
+                "httpshttps://cdn.pixabay.com/photo/2015/09/09/19/41/cat-932846_1280.jpg",
+                "https://https://i.imgur.com/bf995.gif&width=400",
+            ],
+        )
+        async def it_handles_invalid_urls(expect, url):
             template = await Template.create(url)
-            expect(template.image.exists()) == False
+            expect(template.valid) == False
 
         @pytest.mark.asyncio
         async def it_rejects_non_images(expect):

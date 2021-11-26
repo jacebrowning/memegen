@@ -178,7 +178,12 @@ class Template:
 
     @classmethod
     async def create(cls, url: str, *, force=False) -> "Template":
-        parsed = furl(url)
+        try:
+            parsed = furl(url)
+        except ValueError as e:
+            logger.error(e)
+            return cls.objects.get("_error")
+
         if parsed.netloc and "memegen.link" in parsed.netloc:
             logger.info(f"Handling template URL: {url}")
             if len(parsed.path.segments) > 1:
