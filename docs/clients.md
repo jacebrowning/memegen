@@ -11,6 +11,7 @@ Here are some popular apps and integrations to check out:
 | Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
 | Web & Slack | --         | <https://memecomplete.com>                     |
 | Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
+| Legobot     | Python     | <https://github.com/drewpearce/legos.memes>    |
 
 Additional clients can be found by searching for [code examples](https://github.com/search?o=desc&q=%22api.memegen.link%22+&ref=searchresults&s=indexed&type=Code&utf8=%E2%9C%93) on GitHub. Or create your own!
 
