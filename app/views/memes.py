@@ -40,7 +40,7 @@ async def index(request):
         {
             "template_id": str,
             "text_lines": [str],
-            "style": str,
+            "style": [str],
             "extension": str,
             "redirect": bool,
         }

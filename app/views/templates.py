@@ -129,18 +129,20 @@ async def generate_url(
             return response.json({"error": '"template_id" is required'}, status=400)
 
     text_lines = payload.get("text_lines") or []
-    style = payload.get("style") or payload.get("alt")
-    background = payload.get("background") or payload.get("image_url")
-    extension = payload.get("extension")
+    style: str = payload.get("style") or payload.get("alt") or ""
+    if isinstance(style, list):
+        style = ",".join(style)
+    background = payload.get("background") or payload.get("image_url") or ""
+    extension = payload.get("extension") or ""
 
     if style == "animated":
         extension = "gif"
-        style = None
+        style = ""
 
     status = 201
 
     if template_id:
-        template = Template.objects.get_or_create(template_id)
+        template: Template = Template.objects.get_or_create(template_id)
         url = template.build_custom_url(
             request, text_lines, style=style, extension=extension
         )
