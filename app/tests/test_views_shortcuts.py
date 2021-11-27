@@ -110,15 +110,15 @@ def describe_legacy_params():
         request, response = client.get(
             "/images/custom/test.png?alt=https://www.gstatic.com/webp/gallery/3.jpg"
         )
-        expect(response.status) == 200
+        expect(response.status) == 201
         expect(response.headers["content-type"]) == "image/png"
 
     @pytest.mark.slow
     def it_accepts_alt_for_style(expect, client):
         request, response = client.get("/images/sad-biden/test.png?style=scowl")
-        expect(response.status) == 200
+        expect(response.status) == 201
 
         request, response2 = client.get("/images/sad-biden/test.png?alt=scowl")
-        expect(response.status) == 200
+        expect(response.status) == 201
 
         expect(len(response.content)) == len(response2.content)
