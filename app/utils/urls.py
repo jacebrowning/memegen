@@ -1,4 +1,4 @@
-from urllib.parse import unquote
+from urllib.parse import unquote, urlencode
 
 from furl import furl
 
@@ -29,6 +29,11 @@ def arg(data: dict, default, *names: str):
 def flag(request, name, default=None):
     value = request.args.get(name, "").lower()
     return FLAGS.get(value, default)
+
+
+def add(url: str, **kwargs):
+    joiner = "&" if "?" in url else "?"
+    return url + joiner + urlencode(kwargs)
 
 
 def normalize(url: str) -> str:

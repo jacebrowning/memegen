@@ -91,7 +91,7 @@ async def automatic(request):
     url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
-        return response.redirect(url)
+        return response.redirect(utils.urls.add(url, status="201"))
 
     return response.json({"url": url, "confidence": confidence}, status=201)
 
@@ -255,7 +255,7 @@ async def render_image(
     lines = utils.text.decode(slug)
     asyncio.create_task(utils.meta.track(request, lines))
 
-    status = 200
+    status = int(utils.urls.arg(request.args, "200", "status"))
 
     if any(len(part.encode()) > 200 for part in slug.split("/")):
         logger.error(f"Slug too long: {slug}")

@@ -51,7 +51,7 @@ def describe_list():
         def it_redirects_if_requested(expect, client):
             data = {"template_id": "iw", "text_lines": ["abc"], "redirect": True}
             request, response = client.post("/images", data=data, allow_redirects=False)
-            redirect = "http://localhost:5000/images/iw/abc.png"
+            redirect = "http://localhost:5000/images/iw/abc.png?status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
@@ -76,7 +76,7 @@ def describe_list():
                 "redirect": True,
             }
             request, response = client.post("/images", data=data, allow_redirects=False)
-            redirect = "http://localhost:5000/images/unknown/one/two.png"
+            redirect = "http://localhost:5000/images/unknown/one/two.png?status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
@@ -372,7 +372,7 @@ def describe_custom():
             request, response = client.post(
                 "/images/custom", data=data, allow_redirects=False
             )
-            redirect = "http://localhost:5000/images/custom/abc.png?background=https://www.gstatic.com/webp/gallery/4.png"
+            redirect = "http://localhost:5000/images/custom/abc.png?background=https://www.gstatic.com/webp/gallery/4.png&status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
