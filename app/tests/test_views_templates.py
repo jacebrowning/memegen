@@ -41,11 +41,11 @@ def describe_detail():
             }
 
         def it_shortens_example_when_no_text(expect, client):
-            request, response = client.get("/templates/mmm")
+            request, response = client.get("/templates/persian")
             expect(response.status) == 200
             expect(
                 response.json["example"]["url"]
-            ) == "http://localhost:5000/images/mmm.png"
+            ) == "http://localhost:5000/images/persian.png"
 
         def it_returns_404_when_missing(expect, client):
             request, response = client.get("/templates/foobar")
@@ -84,7 +84,7 @@ def describe_detail():
             request, response = client.post(
                 f"/templates/{id}", data=data, allow_redirects=False
             )
-            redirect = f"http://localhost:5000/images/{id}/abc.png"
+            redirect = f"http://localhost:5000/images/{id}/abc.png?status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 

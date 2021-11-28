@@ -159,6 +159,6 @@ async def generate_url(
     url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
-        return response.redirect(url)
+        return response.redirect(utils.urls.add(url, status="201"))
 
     return response.json({"url": url}, status=status)

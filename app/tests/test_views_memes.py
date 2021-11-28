@@ -51,7 +51,7 @@ def describe_list():
         def it_redirects_if_requested(expect, client):
             data = {"template_id": "iw", "text_lines": ["abc"], "redirect": True}
             request, response = client.post("/images", data=data, allow_redirects=False)
-            redirect = "http://localhost:5000/images/iw/abc.png"
+            redirect = "http://localhost:5000/images/iw/abc.png?status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
@@ -76,7 +76,7 @@ def describe_list():
                 "redirect": True,
             }
             request, response = client.post("/images", data=data, allow_redirects=False)
-            redirect = "http://localhost:5000/images/unknown/one/two.png"
+            redirect = "http://localhost:5000/images/unknown/one/two.png?status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
@@ -114,12 +114,12 @@ def describe_detail():
     )
     def it_returns_an_image(expect, client, path, content_type):
         request, response = client.get(path, timeout=10)
-        expect(response.status) == 201
+        expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
     def it_handles_placeholder_templates(expect, client):
         request, response = client.get("/images/string/test.png")
-        expect(response.status) == 201
+        expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/png"
 
     def it_handles_unknown_templates(expect, client, unknown_template):
@@ -163,7 +163,7 @@ def describe_detail():
                 "/images/fry/test.png?watermark=example.com",
                 allow_redirects=False,
             )
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(len(response.content)) != len(default_content)
 
         @pytest.mark.parametrize("extension", ["png", "jpg"])
@@ -193,7 +193,7 @@ def describe_detail():
                 "/images/fry/test.png?watermark=mydomain.com",
                 allow_redirects=False,
             )
-            expect(response.status) == 201
+            expect(response.status) == 200
 
         def it_rejects_invalid_authentication(expect, client):
             request, response = client.get(
@@ -210,7 +210,7 @@ def describe_detail():
                 "/images/fry/test.png?width=300&watermark=example.com",
                 allow_redirects=False,
             )
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(len(response.content)) == len(small_content)
 
     def describe_styles():
@@ -226,7 +226,7 @@ def describe_detail():
         @pytest.mark.slow
         def it_supports_alternate_styles(expect, client):
             request, response = client.get("/images/ds/one/two.png?style=maga")
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
         @pytest.mark.parametrize("slug", ["ds", "ds/one/two"])
@@ -247,7 +247,7 @@ def describe_detail():
         @pytest.mark.slow
         def it_ignores_placeholder_values(expect, client, base_url):
             request, response = client.get(base_url + "style=string")
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_overlay():
@@ -264,7 +264,7 @@ def describe_detail():
             request, response = client.get(
                 base_url + "style=https://www.gstatic.com/webp/gallery/4.jpg"
             )
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
         @pytest.mark.slow
@@ -287,7 +287,7 @@ def describe_detail():
                 "/images/custom/test.png"
                 "?background=https://www.gstatic.com/webp/gallery/3.jpg"
             )
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
         def it_requires_an_image_with_custom_templates(expect, client):
@@ -312,7 +312,7 @@ def describe_detail():
             request, response = client.get(
                 "/images/custom/string.png?background=string"
             )
-            expect(response.status) == 201
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
 
@@ -372,7 +372,7 @@ def describe_custom():
             request, response = client.post(
                 "/images/custom", data=data, allow_redirects=False
             )
-            redirect = "http://localhost:5000/images/custom/abc.png?background=https://www.gstatic.com/webp/gallery/4.png"
+            redirect = "http://localhost:5000/images/custom/abc.png?background=https://www.gstatic.com/webp/gallery/4.png&status=201"
             expect(response.status) == 302
             expect(response.headers["Location"]) == redirect
 
