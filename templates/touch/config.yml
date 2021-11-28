@@ -1,0 +1,26 @@
+name: Principal Skinner / Am I Out Of Touch?
+source: https://knowyourmeme.com/memes/am-i-out-of-touch
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.3
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.2
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.8
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.2
+example:
+  - Am I out of touch?
+  - No, it's the children who are wrong.
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    scale: 0.25
