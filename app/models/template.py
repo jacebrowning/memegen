@@ -241,39 +241,47 @@ class Template:
             logger.info(f"Found overlay {style} at {path}")
             return True
 
-        background = self.image
-        for index, url in enumerate(style.split(",")):
-            success, background = await self._embed(index, url, background, path, force)
-            if not success:
-                return False
-        return True
+        urls = style.split(",")
+        logger.info(f"Embeding {len(urls)} overlay image(s) onto {path}")
+        await asyncio.to_thread(shutil.copy, self.image, path)
+
+        embedded = 0
+        for index, url in enumerate(urls):
+            success = await self._embed(index, url, path, force)
+            if success:
+                embedded += 1
+
+        if len(urls) == 1 and not embedded:
+            await path.unlink()
+
+        return embedded == len(urls)
 
     async def _embed(
-        self, index: int, url: str, background: Path, merged: Path, force: bool
-    ) -> tuple[bool, Path]:
+        self, index: int, url: str, background: aiopath.AsyncPath, force: bool
+    ) -> bool:
         suffix = Path(str(furl(url).path)).suffix
         if not suffix:
             logger.warning(f"Unable to determine image extension: {url}")
             suffix = ".png"
 
-        filename = utils.text.fingerprint(url, suffix=suffix)
-        path = aiopath.AsyncPath(self.directory) / filename
+        filename = utils.text.fingerprint(url, prefix="_embed-", suffix=suffix)
+        foreground = aiopath.AsyncPath(self.directory) / filename
 
-        if await path.exists() and not settings.DEBUG and not force:
-            logger.info(f"Found overlay {url} at {path}")
+        if await foreground.exists() and not settings.DEBUG and not force:
+            logger.info(f"Found overlay {url} at {foreground}")
         else:
-            logger.info(f"Saving overlay {url} to {path}")
-            await utils.http.download(url, path)
+            logger.info(f"Saving overlay {url} to {foreground}")
+            await utils.http.download(url, foreground)
 
         try:
             await asyncio.to_thread(
-                utils.images.embed, self, index, Path(path), background, merged
+                utils.images.embed, self, index, Path(foreground), Path(background)
             )
         except utils.images.EXCEPTIONS as e:
             logger.error(e)
-            await path.unlink(missing_ok=True)
+            await foreground.unlink(missing_ok=True)
 
-        return await path.exists(), Path(merged)
+        return await foreground.exists()
 
     def clean(self):
         for path in self.directory.iterdir():

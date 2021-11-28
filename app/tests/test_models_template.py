@@ -139,9 +139,10 @@ def describe_template():
         async def it_accepts_multiple_urls(expect):
             style = ",".join(
                 [
-                    "https://www.gstatic.com/webp/gallery/1.jpg",
-                    "https://www.gstatic.com/webp/gallery/2.jpg",
+                    "https://user-images.githubusercontent.com/674621/71187801-14e60a80-2280-11ea-94c9-e56576f76baf.png",
+                    "https://i.stack.imgur.com/PvgbL.png",
+                    "https://www.nicepng.com/png/detail/13-139107_notepad-icon-icon-anotacoes-png.png",
                 ]
             )
-            template = Template.objects.get("fine")
-            expect(await template.check(style, force=True)) == True
+            template = Template.objects.get("perfection")
+            expect(await template.check(style)) == True
