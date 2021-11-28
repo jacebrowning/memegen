@@ -97,7 +97,13 @@ def embed(
     background_path: Path,
     merged_path: Path,
 ) -> Image:
-    overlay = template.overlay[index]
+    try:
+        overlay = template.overlay[index]
+    except IndexError:
+        count = len(template.overlay)
+        logger.error(f"Template {template.id!r} only supports {count} overlay(s)")
+        overlay = template.overlay[count - 1]
+
     background = load(background_path)
     foreground = load(foreground_path)
 

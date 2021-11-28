@@ -249,7 +249,7 @@ class Template:
 
     async def _embed(
         self, index: int, url: str, background: Path, merged: Path, force: bool
-    ):
+    ) -> tuple[bool, Path]:
         suffix = Path(str(furl(url).path)).suffix
         if not suffix:
             logger.warning(f"Unable to determine image extension: {url}")
