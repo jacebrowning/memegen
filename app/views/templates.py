@@ -129,12 +129,12 @@ async def generate_url(
         except KeyError:
             return response.json({"error": '"template_id" is required'}, status=400)
 
-    text_lines = payload.get("text_lines") or []
-    style: str = payload.get("style") or payload.get("alt") or ""
+    text_lines = utils.urls.arg(payload, [], "text_lines")
+    style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")
     if isinstance(style, list):
         style = ",".join(style)
-    background = payload.get("background") or payload.get("image_url") or ""
-    extension = payload.get("extension") or ""
+    background = utils.urls.arg(payload, "", "background", "image_url")
+    extension = utils.urls.arg(payload, "", "extension")
 
     if style == "animated":
         extension = "gif"

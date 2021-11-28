@@ -18,9 +18,9 @@ def schema(value) -> bool:
     return value and "://" in value
 
 
-def arg(request, default, *names):
+def arg(data: dict, default, *names: str):
     for name in names:
-        value = request.args.get(name)
+        value = data.get(name)
         if value is not None:
             return value
     return default
