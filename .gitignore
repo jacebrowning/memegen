@@ -2,7 +2,7 @@
 /images/
 /templates/_custom*
 /templates/<*
-/templates/*/_custom*
+/templates/*/_*
 
 # Dependencies
 .venv/

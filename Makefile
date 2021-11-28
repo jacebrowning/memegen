@@ -48,7 +48,7 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf app/tests/images images site templates-legacy templates/_custom-*
+	rm -rf app/tests/images images site templates/_custom-* templates/*/_*
 
 .PHONY: clean-all
 clean-all: clean

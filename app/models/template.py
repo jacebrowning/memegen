@@ -250,6 +250,10 @@ class Template:
             success = await self._embed(index, url, path, force)
             if success:
                 embedded += 1
+
+        if len(urls) == 1 and not embedded:
+            await path.unlink()
+
         return embedded == len(urls)
 
     async def _embed(
@@ -260,7 +264,7 @@ class Template:
             logger.warning(f"Unable to determine image extension: {url}")
             suffix = ".png"
 
-        filename = utils.text.fingerprint(url, suffix=suffix)
+        filename = utils.text.fingerprint(url, prefix="_embed-", suffix=suffix)
         foreground = aiopath.AsyncPath(self.directory) / filename
 
         if await foreground.exists() and not settings.DEBUG and not force:
