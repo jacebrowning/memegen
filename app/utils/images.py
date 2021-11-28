@@ -90,13 +90,7 @@ def load(path: Path) -> Image:
     return image
 
 
-def embed(
-    template: Template,
-    index: int,
-    foreground_path: Path,
-    background_path: Path,
-    merged_path: Path,
-) -> Image:
+def embed(template: Template, index: int, foreground_path: Path, background_path: Path):
     try:
         overlay = template.overlay[index]
     except IndexError:
@@ -110,11 +104,10 @@ def embed(
     size = overlay.get_size(background.size)
     foreground.thumbnail(size)
 
-    box = overlay.get_box(background.size, foreground.size)
-    background.paste(foreground, box, foreground.convert("RGBA"))
+    x, y, _, _ = overlay.get_box(background.size, foreground.size)
+    background.paste(foreground, (x, y), mask=foreground.convert("RGBA"))
 
-    background.convert("RGB").save(merged_path)
-    return merged_path
+    background.convert("RGB").save(background_path)
 
 
 def render_image(
