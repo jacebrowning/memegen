@@ -255,7 +255,7 @@ async def render_image(
     lines = utils.text.decode(slug)
     asyncio.create_task(utils.meta.track(request, lines))
 
-    status = 201
+    status = 200
 
     if any(len(part.encode()) > 200 for part in slug.split("/")):
         logger.error(f"Slug too long: {slug}")
