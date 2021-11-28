@@ -29,6 +29,7 @@ def describe_detail():
                 "id": "iw",
                 "name": "Insanity Wolf",
                 "lines": 2,
+                "overlays": 1,
                 "styles": ["default"],
                 "blank": "http://localhost:5000/images/iw.png",
                 "example": {

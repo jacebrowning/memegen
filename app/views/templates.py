@@ -13,6 +13,7 @@ TemplateResponse = {
     "id": str,
     "name": str,
     "lines": int,
+    "overlays": int,
     "styles": doc.List(str),
     "blank": str,
     "example": {
@@ -61,7 +62,7 @@ async def index(request):
 )
 @doc.response(404, str, description="Template not found")
 async def detail(request, id):
-    template = Template.objects.get_or_none(id)
+    template: Template = Template.objects.get_or_none(id)
     if template:
         return response.json(template.jsonify(request))
     raise exceptions.NotFound(f"Template not found: {id}")
@@ -128,19 +129,21 @@ async def generate_url(
         except KeyError:
             return response.json({"error": '"template_id" is required'}, status=400)
 
-    text_lines = payload.get("text_lines") or []
-    style = payload.get("style") or payload.get("alt")
-    background = payload.get("background") or payload.get("image_url")
-    extension = payload.get("extension")
+    text_lines = utils.urls.arg(payload, [], "text_lines")
+    style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")
+    if isinstance(style, list):
+        style = ",".join(style)
+    background = utils.urls.arg(payload, "", "background", "image_url")
+    extension = utils.urls.arg(payload, "", "extension")
 
     if style == "animated":
         extension = "gif"
-        style = None
+        style = ""
 
     status = 201
 
     if template_id:
-        template = Template.objects.get_or_create(template_id)
+        template: Template = Template.objects.get_or_create(template_id)
         url = template.build_custom_url(
             request, text_lines, style=style, extension=extension
         )

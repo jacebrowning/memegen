@@ -90,20 +90,31 @@ def load(path: Path) -> Image:
     return image
 
 
-def embed(template: Template, foreground_path: Path, background_path: Path) -> Image:
+def embed(
+    template: Template,
+    index: int,
+    foreground_path: Path,
+    background_path: Path,
+    merged_path: Path,
+) -> Image:
+    try:
+        overlay = template.overlay[index]
+    except IndexError:
+        count = len(template.overlay)
+        logger.error(f"Template {template.id!r} only supports {count} overlay(s)")
+        overlay = template.overlay[count - 1]
+
     background = load(background_path)
+    foreground = load(foreground_path)
 
-    for overlay in template.overlay:
-        foreground = load(foreground_path)
+    size = overlay.get_size(background.size)
+    foreground.thumbnail(size)
 
-        size = overlay.get_size(background.size)
-        foreground.thumbnail(size)
+    box = overlay.get_box(background.size, foreground.size)
+    background.paste(foreground, box, foreground.convert("RGBA"))
 
-        box = overlay.get_box(background.size, foreground.size)
-        background.paste(foreground, box, foreground.convert("RGBA"))
-
-    background.convert("RGB").save(foreground_path)
-    return foreground_path
+    background.convert("RGB").save(merged_path)
+    return merged_path
 
 
 def render_image(

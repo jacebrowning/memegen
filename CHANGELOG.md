@@ -1,5 +1,10 @@
 # Revision History
 
+## 10.1
+
+- Added support for multiple overlays via comma-separated URLs in the `style` parameter.
+- Added `overlays` count in `/templates` responses.
+
 ## 10.0
 
 - Replaced `example` field in `/templates` responses with `{ "text": [str] , "url": str }`.

@@ -99,6 +99,7 @@ class Template:
             "id": self.id,
             "name": self.name,
             "lines": len(self.text),
+            "overlays": 0 if self.overlay == [Overlay()] else len(self.overlay),
             "styles": self.styles,
             "blank": request.app.url_for(
                 "Memes.blank",
@@ -226,13 +227,30 @@ class Template:
     async def check(self, style: str, *, force=False) -> bool:
         if style in {"", None, settings.DEFAULT_STYLE}:
             return True
+
         if style in self.styles:
             return True
+
         if not utils.urls.schema(style):
             logger.error(f"Invalid style for {self.id} template: {style}")
             return False
 
-        url = style
+        filename = utils.text.fingerprint(style, suffix=self.image.suffix)
+        path = aiopath.AsyncPath(self.directory) / filename
+        if await path.exists() and not settings.DEBUG and not force:
+            logger.info(f"Found overlay {style} at {path}")
+            return True
+
+        background = self.image
+        for index, url in enumerate(style.split(",")):
+            success, background = await self._embed(index, url, background, path, force)
+            if not success:
+                return False
+        return True
+
+    async def _embed(
+        self, index: int, url: str, background: Path, merged: Path, force: bool
+    ) -> tuple[bool, Path]:
         suffix = Path(str(furl(url).path)).suffix
         if not suffix:
             logger.warning(f"Unable to determine image extension: {url}")
@@ -243,19 +261,19 @@ class Template:
 
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {url} at {path}")
-            return True
-
-        logger.info(f"Saving overlay {url} to {path}")
-        if not await utils.http.download(url, path):
-            return False
+        else:
+            logger.info(f"Saving overlay {url} to {path}")
+            await utils.http.download(url, path)
 
         try:
-            await asyncio.to_thread(utils.images.embed, self, Path(path), self.image)
+            await asyncio.to_thread(
+                utils.images.embed, self, index, Path(path), background, merged
+            )
         except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await path.unlink(missing_ok=True)
 
-        return await path.exists()
+        return await path.exists(), Path(merged)
 
     def clean(self):
         for path in self.directory.iterdir():
