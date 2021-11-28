@@ -99,6 +99,7 @@ class Template:
             "id": self.id,
             "name": self.name,
             "lines": len(self.text),
+            "overlays": 0 if self.overlay == [Overlay()] else len(self.overlay),
             "styles": self.styles,
             "blank": request.app.url_for(
                 "Memes.blank",

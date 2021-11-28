@@ -13,6 +13,7 @@ TemplateResponse = {
     "id": str,
     "name": str,
     "lines": int,
+    "overlays": int,
     "styles": doc.List(str),
     "blank": str,
     "example": {
@@ -61,7 +62,7 @@ async def index(request):
 )
 @doc.response(404, str, description="Template not found")
 async def detail(request, id):
-    template = Template.objects.get_or_none(id)
+    template: Template = Template.objects.get_or_none(id)
     if template:
         return response.json(template.jsonify(request))
     raise exceptions.NotFound(f"Template not found: {id}")
