@@ -259,6 +259,9 @@ class Template:
     async def _embed(
         self, index: int, url: str, background: aiopath.AsyncPath, force: bool
     ) -> bool:
+        if url.strip() in {"", settings.DEFAULT_STYLE}:
+            return True
+
         suffix = Path(str(furl(url).path)).suffix
         if not suffix:
             logger.warning(f"Unable to determine image extension: {url}")

@@ -4,7 +4,7 @@ from sanic import Blueprint, response
 from sanic.log import logger
 from sanic_openapi import doc
 
-from .. import models, settings, utils
+from .. import models, utils
 
 blueprint = Blueprint("Clients", url_prefix="/")
 
@@ -43,7 +43,9 @@ async def validate(request):
 async def preview(request):
     id = request.args.get("template", "_error")
     lines = request.args.getlist("lines[]", [])
-    style = request.args.get("style") or settings.DEFAULT_STYLE
+    style = request.args.get("style") or ",".join(request.args.getlist("styles[]", []))
+    while style.endswith(",default"):
+        style = style.removesuffix(",default")
     return await preview_image(request, id, lines, style)
 
 

@@ -146,3 +146,9 @@ def describe_template():
             )
             template = Template.objects.get("perfection")
             expect(await template.check(style)) == True
+
+        @pytest.mark.asyncio
+        async def it_accepts_default_style_as_placeholder(expect):
+            style = "default,https://i.stack.imgur.com/PvgbL.png"
+            template = Template.objects.get("perfection")
+            expect(await template.check(style)) == True
