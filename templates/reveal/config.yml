@@ -36,9 +36,12 @@ text:
 example:
   - Villain
   - Let's see who you really are...
-  - Protaganist
+  - Protagonist
   - I knew it!
 overlay:
+  - center_x: 0.21
+    center_y: 0.215
+    scale: 0.27
   - center_x: 0.23
     center_y: 0.69
     scale: 0.27

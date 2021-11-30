@@ -55,7 +55,7 @@ class Template:
     def styles(self):
         styles = []
         for path in self.directory.iterdir():
-            if not path.stem.startswith("_") and path.stem not in {
+            if not path.stem[0] in {".", "_"} and path.stem not in {
                 "config",
                 settings.DEFAULT_STYLE,
             }:
@@ -99,7 +99,7 @@ class Template:
             "id": self.id,
             "name": self.name,
             "lines": len(self.text),
-            "overlays": 0 if self.overlay == [Overlay()] else len(self.overlay),
+            "overlays": len(self.overlay) if self.styles else 0,
             "styles": self.styles,
             "blank": request.app.url_for(
                 "Memes.blank",
