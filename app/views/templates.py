@@ -116,12 +116,14 @@ async def generate_url(
     if request.form:
         payload = dict(request.form)
         for key in list(payload.keys()):
-            if "lines" not in key:
+            if "lines" not in key and "style" not in key:
                 payload[key] = payload.pop(key)[0]
     else:
         payload = request.json or {}
     with suppress(KeyError):
         payload["text_lines"] = payload.pop("text_lines[]")
+    with suppress(KeyError):
+        payload["style"] = payload.pop("style[]")
 
     if template_id_required:
         try:
@@ -129,10 +131,16 @@ async def generate_url(
         except KeyError:
             return response.json({"error": '"template_id" is required'}, status=400)
 
+    from sanic.log import logger
+
+    logger.critical(payload)
+
     text_lines = utils.urls.arg(payload, [], "text_lines")
     style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")
     if isinstance(style, list):
-        style = ",".join(style)
+        style = ",".join([(s.strip() or "default") for s in style])
+    while style.endswith(",default"):
+        style = style.removesuffix(",default")
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
 
