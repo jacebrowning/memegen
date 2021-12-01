@@ -1,4 +1,5 @@
 import hashlib
+import re
 from urllib.parse import unquote
 
 
@@ -41,12 +42,15 @@ def encode(lines: list[str]) -> str:
 
 
 def decode(slug: str) -> list[str]:
+    has_dash = "_----" in slug
     has_arrow = "_--~g" in slug
 
     slug = slug.replace("_", " ").replace("  ", "_")
     slug = slug.replace("-", " ").replace("  ", "-")
     slug = slug.replace("''", '"')
 
+    if has_dash:
+        slug = slug.replace("-- ", " --")
     if has_arrow:
         slug = slug.replace("- ~g", " -~g")
 
@@ -76,3 +80,7 @@ def normalize(slug: str) -> tuple[str, bool]:
 
 def fingerprint(value: str, *, prefix="_custom-", suffix="") -> str:
     return prefix + hashlib.sha1(value.encode()).hexdigest() + suffix
+
+
+def slugify(value: str) -> str:
+    return re.sub(r"[^a-z0-9-]", "", value).strip("-")

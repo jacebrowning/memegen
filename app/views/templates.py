@@ -130,10 +130,8 @@ async def generate_url(
             template_id = payload["template_id"]
         except KeyError:
             return response.json({"error": '"template_id" is required'}, status=400)
-
-    from sanic.log import logger
-
-    logger.critical(payload)
+        else:
+            template_id = utils.text.slugify(template_id)
 
     text_lines = utils.urls.arg(payload, [], "text_lines")
     style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")

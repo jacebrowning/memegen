@@ -12,6 +12,7 @@ LINES_SLUG = [
     (["def data() -> Dict"], "def_data()_--~g_Dict"),
     (["finish <- start"], "finish_~l--_start"),
     (['That\'s not how "this" works'], "That's_not_how_''this''_works"),
+    (["git commit --no-verify"], "git_commit_----no--verify"),
 ]
 
 
