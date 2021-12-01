@@ -18,7 +18,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 example:
-  - Am I out of touch?
+  - Am I so out of touch?
   - No, it's the children who are wrong.
 overlay:
   - center_x: 0.5
