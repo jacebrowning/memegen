@@ -8,6 +8,9 @@ class Overlay:
 
     center_x: float = 0.5
     center_y: float = 0.5
+
+    angle: float = 0.0
+
     scale: float = 0.25
 
     def get_size(self, background_size: Dimensions) -> Dimensions:

@@ -122,6 +122,15 @@ async def test_custom_style(images):
     utils.images.save(template, lines, style=url, directory=images)
 
 
+@pytest.mark.slow
+@pytest.mark.asyncio
+async def test_custom_style_rotated(images):
+    style = "https://i.imgur.com/6hwAxmO.jpg,https://i.imgur.com/6hwAxmO.jpg"
+    template = models.Template.objects.get("same")
+    await template.check(style, force=True)
+    utils.images.save(template, [], style=style, directory=images)
+
+
 # Text
 
 

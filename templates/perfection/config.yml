@@ -59,10 +59,13 @@ example:
 overlay:
   - center_x: 0.25
     center_y: 0.166
+    angle: 0.0
     scale: 0.333
   - center_x: 0.25
     center_y: 0.5
+    angle: 0.0
     scale: 0.333
   - center_x: 0.25
     center_y: 0.833
+    angle: 0.0
     scale: 0.333

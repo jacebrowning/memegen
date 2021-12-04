@@ -23,4 +23,5 @@ example:
 overlay:
   - center_x: 0.25
     center_y: 0.6
+    angle: 0.0
     scale: 0.25
