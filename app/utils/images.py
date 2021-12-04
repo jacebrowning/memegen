@@ -103,9 +103,10 @@ def embed(template: Template, index: int, foreground_path: Path, background_path
 
     size = overlay.get_size(background.size)
     foreground.thumbnail(size)
+    foreground = foreground.rotate(overlay.angle, expand=True)
 
-    x, y, _, _ = overlay.get_box(background.size, foreground.size)
-    background.paste(foreground, (x, y), mask=foreground.convert("RGBA"))
+    x1, y1, _x2, _y2 = overlay.get_box(background.size, foreground.size)
+    background.paste(foreground, (x1, y1), mask=foreground.convert("RGBA"))
 
     background.convert("RGB").save(background_path)
 
@@ -167,10 +168,26 @@ def render_image(
         image.paste(box, point, box)
 
     if settings.DEBUG:
-        draw = ImageDraw.Draw(image)
         for overlay in template.overlay:
-            xy = overlay.get_box(image.size)
-            draw.rectangle(xy, outline="fuchsia")
+            box = Image.new("RGBA", overlay.get_size(image.size))
+            draw = ImageDraw.Draw(box)
+            draw.rectangle((0, 0, box.width - 1, box.height - 1), outline="fuchsia")
+
+            # This offset math is inexact, but works well enough to see
+            # approximately where rotated overlay images will be placed.
+            # TODO: implement a proper solution using trigonometry.
+            angle = abs(overlay.angle)
+            if angle > 45:
+                angle = 90 - angle
+            offset = (
+                int(angle + (22.5 - angle) / 22.5 - 1),
+                int(angle + (22.5 - angle) / 22.5 - 1),
+            )
+            x1, y1, _x2, _y2 = overlay.get_box(image.size)
+            point = (x1 - offset[0], y1 - offset[1])
+
+            box = box.rotate(overlay.angle, expand=True)
+            image.paste(box, point, mask=box)
 
     if pad:
         image = add_blurred_background(image, background, *size)

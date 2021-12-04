@@ -30,6 +30,15 @@ example:
   - '3'
   - The Bible
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
-    scale: 0.25
+  - center_x: 0.275
+    center_y: 0.19
+    angle: -12.0
+    scale: 0.3
+  - center_x: 0.8
+    center_y: 0.25
+    angle: -12.0
+    scale: 0.32
+  - center_x: 0.665
+    center_y: 0.65
+    angle: 0.0
+    scale: 0.3

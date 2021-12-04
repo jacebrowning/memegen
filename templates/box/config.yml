@@ -18,9 +18,10 @@ text:
     scale_x: 1.0
     scale_y: 0.2
 example:
-  - ""
+  - ''
   - What's in the box!?
 overlay:
   - center_x: 0.83
     center_y: 0.5
+    angle: 0.0
     scale: 0.6

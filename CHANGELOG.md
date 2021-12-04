@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.2
+
+- Added support for rotated overlay images.
+
 ## 10.1
 
 - Added support for multiple overlays via comma-separated URLs in the `style` parameter.
