@@ -21,7 +21,11 @@ example:
   - Mom telling me how useless I am
   - 12 year old me playing Minecraft
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
+  - center_x: 0.25
+    center_y: 0.61
     angle: 0.0
-    scale: 0.25
+    scale: 0.78
+  - center_x: 0.75
+    center_y: 0.61
+    angle: 0.0
+    scale: 0.78
