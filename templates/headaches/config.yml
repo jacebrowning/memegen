@@ -1,0 +1,18 @@
+name: Types of Headaches
+source: https://knowyourmeme.com/memes/types-of-headaches
+text:
+  - style: default
+    color: black
+    font: thick
+    anchor_x: 0.5
+    anchor_y: 0.64
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.08
+example:
+  - Breaking Production
+overlay:
+  - center_x: 0.74
+    center_y: 0.82
+    angle: 0.0
+    scale: 0.15
