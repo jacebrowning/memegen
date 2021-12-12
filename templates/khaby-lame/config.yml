@@ -1,4 +1,4 @@
-name: Khaby Lame Shrug
+name: Khaby Lame Shrug / It's That Sample
 source: https://knowyourmeme.com/photos/2132291-khaby-lame-shrug-its-that-simple
 text:
   - style: default
@@ -22,6 +22,10 @@ example:
   - Laugh at memes
 overlay:
   - center_x: 0.25
-    center_y: 0.75
+    center_y: 0.255
     angle: 0.0
-    scale: 0.4
+    scale: 0.48
+  - center_x: 0.25
+    center_y: 0.745
+    angle: 0.0
+    scale: 0.48
