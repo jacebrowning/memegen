@@ -1,0 +1,36 @@
+name: Panik Kalm Panik
+source: https://knowyourmeme.com/photos/1798947-panik-kalm
+text:
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.02
+    anchor_y: 0.02
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.3
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.02
+    anchor_y: 0.35
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.3
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.02
+    anchor_y: 0.69
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.3
+example:
+  - You hear a sound downstairs
+  - It's just a cat
+  - You don't have a cat
+overlay:
+  - center_x: 0.75
+    center_y: 0.8
+    angle: 0.0
+    scale: 0.25
