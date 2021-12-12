@@ -1,0 +1,27 @@
+name: Khaby Lame Shrug
+source: https://knowyourmeme.com/photos/2132291-khaby-lame-shrug-its-that-simple
+text:
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.02
+    anchor_y: 0.02
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.47
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.02
+    anchor_y: 0.51
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.47
+example:
+  - Bad mood?
+  - Laugh at memes
+overlay:
+  - center_x: 0.25
+    center_y: 0.75
+    angle: 0.0
+    scale: 0.4
