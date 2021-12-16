@@ -1,5 +1,6 @@
 import bugsnag
 from aiohttp.client_exceptions import ClientPayloadError
+from PIL import UnidentifiedImageError
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
 from sanic_cors import CORS
@@ -7,7 +8,12 @@ from sanic_openapi import swagger_blueprint
 
 from . import settings, utils, views
 
-EXCEPTIONS = (ClientPayloadError, MethodNotSupported, NotFound)
+IGNORED_EXCEPTIONS = (
+    ClientPayloadError,
+    MethodNotSupported,
+    NotFound,
+    UnidentifiedImageError,
+)
 
 
 class BugsnagErrorHandler(ErrorHandler):
@@ -20,7 +26,7 @@ class BugsnagErrorHandler(ErrorHandler):
     def _should_notify(exception) -> bool:
         if not settings.BUGSNAG_API_KEY:
             return False
-        if isinstance(exception, EXCEPTIONS):
+        if isinstance(exception, IGNORED_EXCEPTIONS):
             return False
         return True
 
