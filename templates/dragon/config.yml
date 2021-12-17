@@ -5,10 +5,10 @@ text:
     color: black
     font: comic
     anchor_x: 0.22
-    anchor_y: 0.51
+    anchor_y: 0.505
     angle: 0.0
     scale_x: 0.25
-    scale_y: 0.115
+    scale_y: 0.119
 example:
   - OK I want a boyfriend
 overlay:
