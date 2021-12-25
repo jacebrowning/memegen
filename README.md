@@ -93,3 +93,7 @@ You can also use your own image URL as the background.
 For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&token=ahby9x2nlsbk0gxdmpo5)
+
+---
+
+Explore the full API here: <https://api.memegen.link/docs/>
