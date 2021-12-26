@@ -35,7 +35,7 @@ sanic-cors==1.0.1
 sanic-openapi==21.6.1
 sanic-plugin-toolkit==1.2.0; python_version >= "3.7" and python_version < "4.0"
 sanic-routing==0.7.1; python_version >= "3.7"
-sanic==21.9.3; python_version >= "3.7"
+sanic==21.12.0; python_version >= "3.7"
 six==1.16.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0"
 sniffio==1.2.0; python_full_version >= "3.6.2" and python_version >= "3.10"
 spongemock==0.3.4
