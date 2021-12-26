@@ -1,0 +1,63 @@
+name: Stop It Patrick You're Scaring Him
+source: https://knowyourmeme.com/memes/stop-it-patrick-youre-scaring-him
+text:
+  - style: default
+    color: '#b1e0d0'
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.06
+  - style: default
+    color: '#ffb6a6'
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.075
+  - style: default
+    color: '#fff05c'
+    font: thin
+    anchor_x: 0.18
+    anchor_y: 0.335
+    angle: 0.0
+    scale_x: 0.32
+    scale_y: 0.18
+  - style: default
+    color: '#b1e0d0'
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.335
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.07
+  - style: default
+    color: '#ffb6a6'
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.67
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.075
+  - style: default
+    color: '#fff05c'
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.67
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.075
+example:
+  - I'm claustrophobic.
+  - What does "claustrophobic" mean?
+  - It means he's afraid of Santa Claus.
+  - No, it doesn't.
+  - HO-HO-HO
+  - Stop it, Patrick, you're scaring him!
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
