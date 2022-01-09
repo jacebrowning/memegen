@@ -16,14 +16,14 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.gif> produces:
 
-![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&height=350)
 
 ## Available Formats
 
 Clients can request `.jpg` instead of `.png` for smaller files or `.gif` if an animated background is available:
 
 | Format | Example                                                                                                  |
-|:-------|:---------------------------------------------------------------------------------------------------------|
+| :----- | :------------------------------------------------------------------------------------------------------- |
 | PNG    | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png) |
 | JPEG   | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg) |
 | GIF    | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/oprah/you_get/animated_text.gif)      |
@@ -75,7 +75,7 @@ Some memes come in multiple forms, which can be selected using the `style=<str>`
 For example, the <https://api.memegen.link/templates/ds/> template provides these styles:
 
 |                     `/images/ds.png`                     |                      `/images/ds.png?style=maga`                      |
-|:--------------------------------------------------------:|:---------------------------------------------------------------------:|
+| :------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![Default Style](https://api.memegen.link/images/ds.png) | ![Alternate Style](https://api.memegen.link/images/ds.png?style=maga) |
 
 ## Custom Overlays
