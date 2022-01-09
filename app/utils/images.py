@@ -212,7 +212,8 @@ def render_animation(
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style="animated"))
     total = getattr(source, "n_frames", 1)
-    modulus = max(1, round(total / settings.MAXIMUM_FRAMES, 1))
+    scale = min(2.0, settings.DEFAULT_SIZE[1] / size[1] if size[1] else 1.0)
+    modulus = max(1.0, round(total / (settings.MAXIMUM_FRAMES * scale), 1))
     if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
         watermark = ""
 
