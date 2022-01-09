@@ -384,7 +384,7 @@ def get_image_elements(
     is_preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
     for index, text in enumerate(template.text):
-        if text.start <= percent_rendered <= text.stop:
+        if not text.stop or (text.start <= percent_rendered <= text.stop):
             yield get_image_element(lines, index, text, image_size, watermark)
         else:
             yield get_image_element([], index, text, image_size, watermark)
