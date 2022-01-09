@@ -14,9 +14,9 @@ An API to programmatically generate memes based solely on requested URLs.
 
 # Images
 
-The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.png> produces:
+The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.gif> produces:
 
-![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.png?token=6c7ek23718r0gwdt254l)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr)
 
 ## Available Formats
 
