@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.22
+    start: 0.0
+    stop: 1.0
   - style: default
     color: black
     font: thin
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.22
+    start: 0.0
+    stop: 1.0
 example:
   - Mom telling me how useless I am
   - 12 year old me playing Minecraft

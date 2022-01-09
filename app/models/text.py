@@ -22,6 +22,9 @@ class Text:
     scale_x: float = 1.0
     scale_y: float = 0.2
 
+    start: float = 0.0
+    stop: float = 1.0
+
     @classmethod
     def get_preview(cls) -> "Text":
         return cls(

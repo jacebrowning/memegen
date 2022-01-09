@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: none
     color: white
     font: thick
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: none
     color: white
     font: thick
@@ -33,6 +39,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: none
     color: white
     font: thick
@@ -41,6 +49,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: none
     color: white
     font: thick
@@ -49,6 +59,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -57,6 +69,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -65,6 +79,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    start: 0.0
+    stop: 1.0
 example:
   - Cast it
   - Cast it

@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.3
+
+- Added support to `start`/`stop` text in GIFs.
+
 ## 10.2
 
 - Added support for rotated overlay images.

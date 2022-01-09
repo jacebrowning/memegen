@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.45
     scale_y: 0.47
+    start: 0.0
+    stop: 1.0
   - style: default
     color: black
     font: thin
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.45
     scale_y: 0.47
+    start: 0.0
+    stop: 1.0
 example:
   - Bad mood?
   - Laugh at memes

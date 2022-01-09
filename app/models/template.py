@@ -38,6 +38,8 @@ class Template:
     @cached_property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
+            for text in self.text:
+                text.stop = text.stop or 1.0
             self._update_example()
             self.datafile.save()
         return (

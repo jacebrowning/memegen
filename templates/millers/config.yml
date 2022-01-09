@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.15
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.15
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.15
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -33,6 +39,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.15
+    start: 0.0
+    stop: 1.0
 example:
   - ''
   - You are making 500 thousand dollars and you were only gonna pay me 30?
