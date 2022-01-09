@@ -48,7 +48,7 @@ class Text:
         image_width, image_height = image_size
         anchor = int(image_width * self.anchor_x), int(image_height * self.anchor_y)
         if watermark and self.anchor_x <= 0.1 and self.anchor_y >= 0.8:
-            anchor = anchor[0], anchor[1] - settings.WATERMARK_HEIGHT // 3
+            anchor = anchor[0], anchor[1] - settings.WATERMARK_HEIGHT // 2
         return anchor
 
     def get_size(self, image_size: Dimensions) -> Dimensions:

@@ -297,9 +297,9 @@ def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
     elif height:
         size = int(height * ratio), height
     elif ratio < 1.0:
-        size = default_width, int(default_height / ratio)
-    else:
         size = int(default_width * ratio), default_height
+    else:
+        size = default_width, int(default_height / ratio)
 
     image = image.resize(size, Image.LANCZOS)
     return image
