@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thick
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
   - style: default
     color: khaki
     font: thick
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.125
+    start: 0.0
+    stop: 1.0
 example:
   - Twin Towers
   - George Bush

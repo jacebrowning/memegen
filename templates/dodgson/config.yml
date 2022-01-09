@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
+    start: 0.2
+    stop: 0.55
   - style: upper
     color: white
     font: thick
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
+    start: 0.75
+    stop: 1.0
 example:
   - we've got dodgson here!
   - see? nobody cares

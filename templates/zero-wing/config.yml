@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.95
     scale_y: 0.265
+    start: 0.0
+    stop: 1.0
 example:
   - all your base are belong to us
 overlay:

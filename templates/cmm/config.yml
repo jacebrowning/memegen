@@ -9,6 +9,8 @@ text:
     angle: 23.0
     scale_x: 0.46
     scale_y: 0.25
+    start: 0.0
+    stop: 1.0
 example:
   - pineapples don't belong on pizza
 overlay:

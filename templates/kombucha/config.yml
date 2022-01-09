@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.3
+    start: 0.0
+    stop: 1.0
   - style: default
     color: black
     font: thick
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.4875
     scale_y: 0.3
+    start: 0.0
+    stop: 1.0
 example:
   - Trying a thing.
   - Trying a thing again.

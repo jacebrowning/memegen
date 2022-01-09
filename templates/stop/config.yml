@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.06
+    start: 0.0
+    stop: 1.0
   - style: default
     color: '#ffb6a6'
     font: thin
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.075
+    start: 0.0
+    stop: 1.0
   - style: default
     color: '#fff05c'
     font: thin
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 0.32
     scale_y: 0.18
+    start: 0.0
+    stop: 1.0
   - style: default
     color: '#b1e0d0'
     font: thin
@@ -33,6 +39,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.07
+    start: 0.0
+    stop: 1.0
   - style: default
     color: '#ffb6a6'
     font: thin
@@ -41,6 +49,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.075
+    start: 0.0
+    stop: 1.0
   - style: default
     color: '#fff05c'
     font: thin
@@ -49,6 +59,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.075
+    start: 0.0
+    stop: 1.0
 example:
   - I'm claustrophobic.
   - What does "claustrophobic" mean?

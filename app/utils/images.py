@@ -142,7 +142,7 @@ def render_image(
         stroke_width,
         stroke_fill,
         angle,
-    ) in get_image_elements(template, lines, watermark, image.size, is_preview):
+    ) in get_image_elements(template, lines, watermark, image.size, 1.0, is_preview):
 
         box = Image.new("RGBA", max_text_size)
         draw = ImageDraw.Draw(box)
@@ -235,7 +235,9 @@ def render_animation(
             stroke_width,
             stroke_fill,
             angle,
-        ) in get_image_elements(template, lines, watermark, image.size, is_preview):
+        ) in get_image_elements(
+            template, lines, watermark, image.size, index / total, is_preview
+        ):
             box = Image.new("RGBA", max_text_size)
             draw = ImageDraw.Draw(box)
 
@@ -378,10 +380,14 @@ def get_image_elements(
     lines: list[str],
     watermark: str,
     image_size: Dimensions,
+    percent_rendered: float,
     is_preview: bool = False,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
     for index, text in enumerate(template.text):
-        yield get_image_element(lines, index, text, image_size, watermark)
+        if not text.stop or (text.start <= percent_rendered <= text.stop):
+            yield get_image_element(lines, index, text, image_size, watermark)
+        else:
+            yield get_image_element([], index, text, image_size, watermark)
     if is_preview:
         lines = [settings.PREVIEW_TEXT]
         index = 0

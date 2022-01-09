@@ -9,6 +9,8 @@ text:
     angle: 12.5
     scale_x: 0.32
     scale_y: 0.095
+    start: 0.0
+    stop: 1.0
   - style: default
     color: black
     font: thin
@@ -17,6 +19,8 @@ text:
     angle: 10.5
     scale_x: 0.23
     scale_y: 0.09
+    start: 0.0
+    stop: 1.0
   - style: upper
     color: white
     font: thick
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 0.92
     scale_y: 0.15
+    start: 0.0
+    stop: 1.0
 example:
   - The dress is black and blue.
   - The dress is gold and white.

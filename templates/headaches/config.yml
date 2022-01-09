@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.08
+    start: 0.0
+    stop: 1.0
 example:
   - Breaking Production
 overlay:

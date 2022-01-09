@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.49
     scale_y: 0.245
+    start: 0.0
+    stop: 1.0
   - style: none
     color: black
     font: thin
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.49
     scale_y: 0.246
+    start: 0.0
+    stop: 1.0
   - style: none
     color: black
     font: thin
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 0.489
     scale_y: 0.224
+    start: 0.0
+    stop: 1.0
   - style: none
     color: black
     font: thin
@@ -33,6 +39,8 @@ text:
     angle: 0.0
     scale_x: 0.49
     scale_y: 0.255
+    start: 0.0
+    stop: 1.0
 example:
   - Who
   - Whom

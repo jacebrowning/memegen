@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.25
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
   - style: upper
     color: white
     font: thick
@@ -17,6 +19,8 @@ text:
     angle: 0.0
     scale_x: 0.25
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
   - style: default
     color: white
     font: thin
@@ -25,6 +29,8 @@ text:
     angle: 0.0
     scale_x: 0.499
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
   - style: deafult
     color: khaki
     font: thin
@@ -33,6 +39,8 @@ text:
     angle: 0.0
     scale_x: 0.499
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
   - style: default
     color: khaki
     font: thin
@@ -41,6 +49,8 @@ text:
     angle: 0.0
     scale_x: 0.499
     scale_y: 0.1
+    start: 0.0
+    stop: 1.0
 example:
   - Senior Developer
   - Junior Developer

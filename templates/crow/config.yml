@@ -9,6 +9,8 @@ text:
     angle: 0.0
     scale_x: 0.15
     scale_y: 0.15
+    start: 0.0
+    stop: 1.0
   - style: upper
     color: black
     font: comic
@@ -17,6 +19,8 @@ text:
     angle: 12.0
     scale_x: 0.3
     scale_y: 0.2
+    start: 0.0
+    stop: 1.0
 example:
   - Caw Caw Caw
   - Caw Caw Caw Caw Caw Caw
