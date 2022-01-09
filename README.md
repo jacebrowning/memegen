@@ -74,9 +74,9 @@ Some memes come in multiple forms, which can be selected using the `style=<str>`
 
 For example, the <https://api.memegen.link/templates/ds/> template provides these styles:
 
-|                     `/images/ds.png`                     |                      `/images/ds.png?style=maga`                      |
-| :------------------------------------------------------: | :-------------------------------------------------------------------: |
-| ![Default Style](https://api.memegen.link/images/ds.png) | ![Alternate Style](https://api.memegen.link/images/ds.png?style=maga) |
+|                          `/images/ds.png`                          |                           `/images/ds.png?style=maga`                           |
+| :----------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| ![Default Style](https://api.memegen.link/images/ds.png?width=300) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=300&style=maga) |
 
 ## Custom Overlays
 
