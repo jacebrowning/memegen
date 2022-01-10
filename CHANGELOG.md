@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.4
+
+- Added `frames` parameter to manually reduce GIF sizes.
+
 ## 10.3
 
 - Added support to `start`/`stop` text in GIFs.

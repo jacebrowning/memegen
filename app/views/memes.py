@@ -305,6 +305,10 @@ async def render_image(
             elif style != settings.PLACEHOLDER:
                 status = 422
 
+    if extension not in settings.ALLOWED_EXTENSIONS:
+        extension = settings.DEFAULT_EXTENSION
+        status = 422
+
     try:
         size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
         if 0 < size[0] < 10 or 0 < size[1] < 10:
@@ -314,9 +318,7 @@ async def render_image(
         size = 0, 0
         status = 422
 
-    if extension not in settings.ALLOWED_EXTENSIONS:
-        extension = settings.DEFAULT_EXTENSION
-        status = 422
+    frames = int(request.args.get("frames", 0))
 
     path = await asyncio.to_thread(
         utils.images.save,
@@ -326,5 +328,6 @@ async def render_image(
         extension=extension,
         style=style,
         size=size,
+        maximum_frames=frames,
     )
     return await response.file(path, status)

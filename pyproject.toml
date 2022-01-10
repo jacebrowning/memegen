@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "memegen"
-version = "10.3"
+version = "10.4"
 description = "The free and open source API to generate memes."
 authors = ["Jace Browning <support@maketested.com>"]
 license = "MIT"
@@ -56,7 +56,7 @@ types-requests = "*"
 pytest = "^6.2.5"
 pytest-asyncio = "*"
 pytest-describe = "^2.0"
-pytest-expecter = "^2.1"
+pytest-expecter = "^2.3"
 pytest-random = "*"
 pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
@@ -70,7 +70,7 @@ coveragespace = "^4.2"
 mkdocs = "^1.2.3"
 
 # Utilities
-honcho = { git = "https://github.com/nickstenning/honcho", rev = "b4de1aa0504d41c0f05efbb04f63c624fccded81" }
+honcho = "^1.1"
 ipdb = "*"
 rope = "^0.18.0"
 watchdog = { version = "^2.1.6", extras = ["watchmedo"] }

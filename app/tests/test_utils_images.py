@@ -222,8 +222,9 @@ def test_debug_images(images, monkeypatch, extension):
     id, lines, _extension = settings.TEST_IMAGES[0]
     template = models.Template.objects.get(id)
     lines = [lines[0], lines[1] + " (debug)"]
-    utils.images.save(template, lines, directory=images)
-    utils.images.save(template, lines, directory=images, extension=extension)
+    utils.images.save(
+        template, lines, directory=images, extension=extension, maximum_frames=5
+    )
 
 
 def test_deployed_images(images, monkeypatch):
