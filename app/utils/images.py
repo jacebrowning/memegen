@@ -58,6 +58,7 @@ def save(
     extension: str = settings.DEFAULT_EXTENSION,
     style: str = settings.DEFAULT_STYLE,
     size: Dimensions = (0, 0),
+    maximum_frames: int = 0,
     directory: Path = settings.IMAGES_DIRECTORY,
 ) -> Path:
     size = fit_image(*size)
@@ -73,7 +74,9 @@ def save(
         path.parent.mkdir(parents=True, exist_ok=True)
 
     if extension == "gif":
-        frames, duration = render_animation(template, lines, size, watermark=watermark)
+        frames, duration = render_animation(
+            template, lines, size, maximum_frames, watermark=watermark
+        )
         frames[0].save(
             path, save_all=True, append_images=frames[1:], duration=duration, loop=0
         )
@@ -202,6 +205,7 @@ def render_animation(
     template: Template,
     lines: list[str],
     size: Dimensions,
+    maximum_frames: int = 0,
     *,
     pad: bool | None = None,
     is_preview: bool = False,
@@ -212,8 +216,13 @@ def render_animation(
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style="animated"))
     total = getattr(source, "n_frames", 1)
-    scale = min(2.0, settings.DEFAULT_SIZE[1] / size[1] if size[1] else 1.0)
-    modulus = max(1.0, round(total / (settings.MAXIMUM_FRAMES * scale), 1))
+    if maximum_frames >= total:
+        modulus = 1.0
+    elif maximum_frames:
+        modulus = max(1.0, round(total / maximum_frames, 1))
+    else:
+        scale = min(2.0, settings.DEFAULT_SIZE[1] / size[1] if size[1] else 1.0)
+        modulus = max(1.0, round(total / (settings.MAXIMUM_FRAMES * scale), 1))
     if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
         watermark = ""
 
@@ -364,7 +373,7 @@ def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
     return Image.alpha_composite(image, box)
 
 
-def add_counter(image: Image, index: int, total: int, modulus: int) -> Image:
+def add_counter(image: Image, index: int, total: int, modulus: float) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
     text = f"{index+1:02} of {total:02} / {modulus}"
     font = get_font("tiny", text, 0.0, size, 99)
