@@ -80,7 +80,7 @@ This service is built to run on Heroku. Route traffic through a CDN to cache gen
 
 ## Containerization
 
-You can also build this service as a container by running the following command:
+You can also build this service as a container simply by running either of the following commands:
 
 ```bash
 # Using Podman:
@@ -105,3 +105,68 @@ last-modified: Sun, 24 Oct 2021 18:27:30 GMT
 content-type: text/html; charset=utf-8
 access-control-allow-origin: *
 ```
+
+### Multi-Architecture Container Builds
+
+If you want to build the image for multiple CPU architectures, you can either use `buildah` or `docker buildx`. Below are examples for both, and assume you're in the root of the memegen git repo.
+
+#### System Requirements
+
+On Debian/Ubuntu, you'll need to run: 
+
+```bash
+sudo apt install -y podman buildah qemu-user-static
+```
+
+On any RHEL flavor OS, you'll need to run: 
+
+```bash
+sudo yum install -y podman buildah qemu-user-static
+```
+
+On Arch or Manjaro Linux, you'll need to run: 
+
+```bash
+sudo pacman -Sy podman buildah qemu-arch-extra
+```
+
+#### `docker buildx` Instructions
+
+> This assumes you have [docker buildx](https://docs.docker.com/buildx/working-with-buildx/) already installed!
+
+```bash
+docker buildx build \
+    --platform linux/amd64,linux/arm64 \
+    --tag "ghcr.io/${GITHUB_USERNAME}/memegen:latest" \
+    --push .
+```
+
+#### `buildah` Instructions
+
+```bash
+# Create a multi-architecture manifest
+buildah manifest create memegen
+
+# Build your amd64 architecture container
+buildah bud \
+    --tag "ghcr.io/${GITHUB_USERNAME}/memegen:latest" \
+    --manifest memegen \
+    --arch amd64 .
+
+# Build your arm64 architecture container
+buildah bud \
+    --tag "ghcr.io/${GITHUB_USERNAME}/memegen:latest" \
+    --manifest memegen \
+    --arch arm64 .
+
+# Enter your GitHub Personal Access Token below
+read -s GITHUB_PERSONAL_ACCESS_TOKEN
+# Log into your GitHub Container Registry
+echo "${GITHUB_PERSONAL_ACCESS_TOKEN}" | buildah login --username danmanners --password-stdin ghcr.io
+
+# Push the full manifest, with both CPU Architectures
+buildah manifest push --all memegen \
+  "docker://ghcr.io/${GITHUB_USERNAME}/memegen:latest"
+```
+
+> Please note that building the `--arch arm` build on an `amd64` (Intel/AMD) system can take nearly an hour.
