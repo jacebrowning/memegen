@@ -170,9 +170,12 @@ class Template:
         size: Dimensions,
         watermark: str,
         extension: str,
+        frames: int = 0,
     ) -> Path:
         slug = utils.text.encode(text_lines)
         variant = str(self.text) + str(style) + str(size) + watermark
+        if frames:
+            variant += str(frames)
         fingerprint = utils.text.fingerprint(variant, prefix="")
         filename = f"{slug}.{fingerprint}.{extension}"
         return Path(self.id) / filename

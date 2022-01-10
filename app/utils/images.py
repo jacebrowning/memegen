@@ -63,7 +63,9 @@ def save(
 ) -> Path:
     size = fit_image(*size)
 
-    path = directory / template.build_path(lines, style, size, watermark, extension)
+    path = directory / template.build_path(
+        lines, style, size, watermark, extension, maximum_frames
+    )
     if path.exists():
         if settings.DEPLOYED:
             logger.info(f"Loading meme from {path}")
