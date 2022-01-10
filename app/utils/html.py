@@ -114,7 +114,7 @@ def _columns(urls: list[str]) -> str:
         elements.append(
             f"""
             <a href="https://memecomplete.com/edit/{url}" target="_parent">
-                <img src="{url}?width={settings.PREVIEW_SIZE[0]}">
+                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&frames=10">
             </a>
             """
         )
