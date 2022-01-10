@@ -2,9 +2,14 @@ ARG ARG_PORT=5000
 ARG ARG_MAX_REQUESTS=0
 ARG ARG_MAX_REQUESTS_JITTER=0
 
-FROM docker.io/python:3.10.0-slim-bullseye
+# Prep everything
+FROM docker.io/python:3.10-bullseye as build
 
-RUN mkdir -p /opt/memegen
+# Create the memegen user
+RUN useradd -md /opt/memegen -u 1000 memegen
+USER memegen
+
+# Set the Working Directory to /opt/memegen
 WORKDIR /opt/memegen
 
 # Copy Directories
@@ -22,9 +27,11 @@ COPY runtime.txt /opt/memegen/
 COPY CHANGELOG.md /opt/memegen/CHANGELOG.md
 
 # Install Python Requirements
-RUN pip install -U pip && pip install -r /opt/memegen/requirements.txt
+RUN pip install wheel && \
+    pip install -r /opt/memegen/requirements.txt
 
 # Set the environment variables
+ENV PATH="/opt/memegen/.local/bin:${PATH}"
 ENV PORT="${ARG_PORT:-5000}"
 ENV MAX_REQUESTS="${ARG_MAX_REQUESTS:-0}"
 ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER:-0}"
