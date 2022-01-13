@@ -76,7 +76,7 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 
 |                          `/images/ds.png`                          |                           `/images/ds.png?style=maga`                           |
 | :----------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
-| ![Default Style](https://api.memegen.link/images/ds.png?width=300) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=300&style=maga) |
+| ![Default Style](https://api.memegen.link/images/ds.png?width=350) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=350&style=maga) |
 
 ## Custom Overlays
 
