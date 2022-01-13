@@ -62,7 +62,7 @@ For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~
 
 ![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore___dash--.png?width=800&token=imyyyyk8qex6m2jz8bar)
 
-All of the `POST` endpoints will return image URLs with speical characters replaced with these alternatives.
+All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
 # Templates
 
@@ -76,7 +76,7 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 
 |                          `/images/ds.png`                          |                           `/images/ds.png?style=maga`                           |
 | :----------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
-| ![Default Style](https://api.memegen.link/images/ds.png?width=350) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=350&style=maga) |
+| ![Default Style](https://api.memegen.link/images/ds.png?width=375) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=375&style=maga) |
 
 ## Custom Overlays
 
