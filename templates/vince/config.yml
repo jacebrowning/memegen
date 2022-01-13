@@ -1,0 +1,50 @@
+name: Vince McMahon Reaction
+source: https://knowyourmeme.com/memes/vince-mcmahon-reaction
+text:
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.495
+    scale_y: 0.315
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.32
+    angle: 0.0
+    scale_x: 0.495
+    scale_y: 0.357
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.68
+    angle: 0.0
+    scale_x: 0.495
+    scale_y: 0.32
+    start: 0.0
+    stop: 1.0
+example:
+  - 2-Day Delivery
+  - Overnight Shipping
+  - Shopping at the Store
+overlay:
+  - center_x: 0.25
+    center_y: 0.155
+    angle: 0.0
+    scale: 0.3
+  - center_x: 0.25
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.3
+  - center_x: 0.25
+    center_y: 0.84
+    angle: 0.0
+    scale: 0.3
