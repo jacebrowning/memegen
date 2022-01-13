@@ -25,7 +25,7 @@ minilog==2.0.1; python_version >= "3.6" and python_version < "4.0"
 multidict==5.2.0; python_version >= "3.7"
 orderedmultidict==1.0.1
 parse==1.19.0; python_version >= "3.7" and python_version < "4.0"
-pillow==8.4.0; python_version >= "3.6"
+pillow==9.0.0; python_version >= "3.7"
 pygments==2.10.0; python_version >= "3.5"
 pymdown-extensions==8.2; python_version >= "3.6"
 pyperclip==1.8.2
