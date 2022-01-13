@@ -16,7 +16,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.gif> produces:
 
-![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&frames=50)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&width=800&frames=50)
 
 ## Available Formats
 
@@ -32,9 +32,9 @@ Clients can request `.jpg` instead of `.png` for smaller files or `.gif` if an a
 
 Images can be scaled to a specific width or height using the `width=<int>` and `height=<int>` query parameters. If both are provided (`width=<int>&height=<int>`), the image will be padded to the exact dimensions.
 
-For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600> produces:
+For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800> produces:
 
-![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&width=600&token=e3ctlu471cv4k0hx698p)
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800&token=e3ctlu471cv4k0hx698p)
 
 ## Special Characters
 
@@ -58,9 +58,9 @@ Reserved URL characters can be included using escape patterns:
 - tilde + G (`~g`) → greater-than sign (`>`)
 - 2 single quotes (`''`) → double quote (`"`)
 
-For example, <https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png> produces:
+For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png> produces:
 
-![Escaped Characters](https://api.memegen.link/images/doge/~hspecial_characters~q/underscore___dash--.png?token=y4w9t5ii3m5euar7gjiz)
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore___dash--.png?width=800&token=imyyyyk8qex6m2jz8bar)
 
 All of the `POST` endpoints will return image URLs with speical characters replaced with these alternatives.
 
@@ -84,7 +84,7 @@ The `style=<str>` query parameter can also be an image URL to overlay on the def
 
 For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png> produces:
 
-![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&token=cy49tv234bu3jzgw587o)
+![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=cy49tv234bu3jzgw587o)
 
 ## Custom Backgrounds
 
@@ -92,7 +92,7 @@ You can also use your own image URL as the background.
 
 For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
-![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&token=ahby9x2nlsbk0gxdmpo5)
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=ahby9x2nlsbk0gxdmpo5)
 
 ---
 
