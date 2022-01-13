@@ -128,8 +128,8 @@ def render_image(
 ) -> Image:
     background = load(template.get_image(style))
 
-    pad = all(size) if pad is None else pad  # TODO: Is `pad` ever None?
-    image = resize_image(background, *size, pad)
+    pad = all(size) if pad is None else pad
+    image = resize_image(background, *size, pad, expand=True)
     if (
         size[0]
         and size[0] <= settings.PREVIEW_SIZE[0]
@@ -235,7 +235,7 @@ def render_animation(
         stream = io.BytesIO()
         frame.save(stream, format="GIF")
         background = Image.open(stream).convert("RGBA")
-        image = resize_image(background, *size, pad)
+        image = resize_image(background, *size, pad, expand=False)
 
         for (
             point,
@@ -295,7 +295,9 @@ def render_animation(
     return frames, duration
 
 
-def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
+def resize_image(
+    image: Image, width: int, height: int, pad: bool, *, expand: bool
+) -> Image:
     ratio = image.width / image.height
     default_width, default_height = settings.DEFAULT_SIZE
 
@@ -309,9 +311,15 @@ def resize_image(image: Image, width: int, height: int, pad: bool) -> Image:
     elif height:
         size = int(height * ratio), height
     elif ratio < 1.0:
-        size = int(default_width * ratio), default_height
+        if expand:
+            size = default_width, int(default_height / ratio)
+        else:
+            size = int(default_width * ratio), default_height
     else:
-        size = default_width, int(default_height / ratio)
+        if expand:
+            size = int(default_width * ratio), default_height
+        else:
+            size = default_width, int(default_height / ratio)
 
     image = image.resize(size, Image.LANCZOS)
     return image
