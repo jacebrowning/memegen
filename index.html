@@ -188,7 +188,7 @@
 <hr />
 <h1 id="images">Images</h1>
 <p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, <a href="https://api.memegen.link/images/buzz/memes/memes_everywhere.gif">https://api.memegen.link/images/buzz/memes/memes_everywhere.gif</a> produces:</p>
-<p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&amp;frames=50" /></p>
+<p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&amp;width=800&amp;frames=50" /></p>
 <h2 id="available-formats">Available Formats</h2>
 <p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files or <code>.gif</code> if an animated background is available:</p>
 <table>
@@ -215,8 +215,8 @@
 </table>
 <h2 id="custom-dimensions">Custom Dimensions</h2>
 <p>Images can be scaled to a specific width or height using the <code>width=&lt;int&gt;</code> and <code>height=&lt;int&gt;</code> query parameters. If both are provided (<code>width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
-<p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600</a> produces:</p>
-<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=350&amp;width=600&amp;token=e3ctlu471cv4k0hx698p" /></p>
+<p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&amp;width=800">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&amp;width=800</a> produces:</p>
+<p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&amp;width=800&amp;token=e3ctlu471cv4k0hx698p" /></p>
 <h2 id="special-characters">Special Characters</h2>
 <p>In URLs, spaces can be inserted using underscores or dashes:</p>
 <ul>
@@ -238,8 +238,8 @@
 <li>tilde + G (<code>~g</code>) → greater-than sign (<code>&gt;</code>)</li>
 <li>2 single quotes (<code>''</code>) → double quote (<code>"</code>)</li>
 </ul>
-<p>For example, <a href="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png">https://api.memegen.link/images/doge/~hspecial_characters~q/underscore__-dash--.png</a> produces:</p>
-<p><img alt="Escaped Characters" src="https://api.memegen.link/images/doge/~hspecial_characters~q/underscore___dash--.png?token=y4w9t5ii3m5euar7gjiz" /></p>
+<p>For example, <a href="https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png">https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png</a> produces:</p>
+<p><img alt="Escaped Characters" src="https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore___dash--.png?width=800&amp;token=imyyyyk8qex6m2jz8bar" /></p>
 <p>All of the <code>POST</code> endpoints will return image URLs with speical characters replaced with these alternatives.</p>
 <h1 id="templates">Templates</h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates/">https://api.memegen.link/templates/</a></p>
@@ -263,11 +263,11 @@
 <h2 id="custom-overlays">Custom Overlays</h2>
 <p>The <code>style=&lt;str&gt;</code> query parameter can also be an image URL to overlay on the default background image.</p>
 <p>For example, <a href="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png">https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png</a> produces:</p>
-<p><img alt="Custom Overlay" src="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&amp;token=cy49tv234bu3jzgw587o" /></p>
+<p><img alt="Custom Overlay" src="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&amp;width=800&amp;token=cy49tv234bu3jzgw587o" /></p>
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background.</p>
 <p>For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
-<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;token=ahby9x2nlsbk0gxdmpo5" /></p>
+<p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;width=800&amp;token=ahby9x2nlsbk0gxdmpo5" /></p>
 <hr />
 <p>Explore the full API here: <a href="https://api.memegen.link/docs/">https://api.memegen.link/docs/</a></p></div>
 
@@ -353,5 +353,5 @@
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-01-13 22:35:02.190155+00:00
+Build Date UTC : 2022-01-13 23:04:53.813473+00:00
 -->
