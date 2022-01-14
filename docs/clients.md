@@ -83,7 +83,7 @@ Authenticated requests can also add their own watermark to images using the `wat
 
 For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com> produces:
 
-![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com&height=400)
+![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com&width=800)
 
 # Zapier Integration
 
