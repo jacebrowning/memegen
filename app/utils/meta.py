@@ -53,6 +53,11 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
             response = await session.post(
                 api, data={"url": default_url}, headers={"X-API-KEY": api_key}
             )
+            if response.status >= 500:
+                settings.REMOTE_TRACKING_ERRORS += 1
+                logger.info(f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}")
+                return default_url, False
+
             data = await response.json()
             return data["url"], data["url"] != url
 
