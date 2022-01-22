@@ -1,6 +1,6 @@
 import asyncio
 
-from sanic import Blueprint, response
+from sanic import Blueprint, exceptions, response
 from sanic.log import logger
 from sanic_openapi import doc
 
@@ -73,7 +73,10 @@ async def automatic(request):
     if request.form:
         payload = dict(request.form)
     else:
-        payload = request.json or {}
+        try:
+            payload = request.json or {}
+        except exceptions.InvalidUsage:
+            payload = {}
 
     try:
         query = payload["text"]

@@ -110,6 +110,11 @@ def describe_list():
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw/_/2.png"}
 
+        def it_handles_invalid_json(expect, client):
+            request, response = client.post("/images", content="???")
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"template_id" is required'}
+
 
 def describe_detail():
     @pytest.mark.slow
@@ -347,15 +352,21 @@ def describe_automatic():
                 ]
             ),
         )
-        def it_normalizes_the_url(expect, client):
-            request, response = client.post(
-                "/images/automatic", data={"text": "example"}
-            )
+        @pytest.mark.parametrize("as_json", [True, False])
+        def it_normalizes_the_url(expect, client, as_json):
+            data = {"text": "example"}
+            kwargs: dict = {"content": json.dumps(data)} if as_json else {"data": data}
+            request, response = client.post("/images/automatic", **kwargs)
             expect(response.json) == {
                 "url": "http://localhost:5000/images/example.png"
                 + "?background=https://www.gstatic.com/webp/gallery/3.png",
                 "confidence": 0.5,
             }
+
+        def it_handles_invalid_json(expect, client):
+            request, response = client.post("/images/automatic", content="???")
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"text" is required'}
 
 
 def describe_custom():

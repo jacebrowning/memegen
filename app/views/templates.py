@@ -119,7 +119,11 @@ async def generate_url(
             if "lines" not in key and "style" not in key:
                 payload[key] = payload.pop(key)[0]
     else:
-        payload = request.json or {}
+        try:
+            payload = request.json or {}
+        except exceptions.InvalidUsage:
+            payload = {}
+
     with suppress(KeyError):
         payload["text_lines"] = payload.pop("text_lines[]")
     with suppress(KeyError):
