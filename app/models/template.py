@@ -198,7 +198,11 @@ class Template:
                 if not background:
                     return cls.objects.get("_error")
                 url = background
-                parsed = furl(url)
+                try:
+                    parsed = furl(url)
+                except ValueError as e:
+                    logger.error(e)
+                    return cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
         template = cls.objects.get_or_create(id, url)
