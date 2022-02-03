@@ -12,7 +12,7 @@
     "setup.py": true,
     ".vscode/.ropeproject": true
   },
-  "python.pythonPath": ".venv/bin/python",
+  "python.defaultInterpreterPath": ".venv/bin/python",
   "python.formatting.provider": "black",
   "python.linting.enabled": true,
   "python.linting.lintOnSave": true,

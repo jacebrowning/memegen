@@ -42,8 +42,8 @@ uvicorn = "~0.14"
 [tool.poetry.dev-dependencies]
 
 # Formatting
-isort = "~5.10"
-black = "~22.1"
+isort = "^5.10"
+black = "^22.1"
 
 # Type Checking
 mypy = "~0.910"
@@ -75,13 +75,13 @@ ipdb = "*"
 rope = "^0.18.0"
 watchdog = { version = "^2.1.6", extras = ["watchmedo"] }
 
-[tool.isort]
-
-profile = "black"
-
 [tool.black]
 
 quiet = true
+
+[tool.isort]
+
+profile = "black"
 
 [tool.mypy]
 
