@@ -1,0 +1,31 @@
+name: Kramer, What's Going On In There?
+source: https://knowyourmeme.com/memes/kramer-whats-going-on-in-there
+text:
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.3
+    anchor_y: 0.12
+    angle: 0.0
+    scale_x: 0.7
+    scale_y: 0.2
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.8
+    angle: 0.0
+    scale_x: 0.6
+    scale_y: 0.2
+    start: 0.0
+    stop: 1.0
+example:
+  - Kramer, what's going on in there?
+  - It's a Chicken Roaster sign, right across from my window.
+overlay:
+  - center_x: 0.5
+    center_y: 0.505
+    angle: 0.0
+    scale: 0.4
