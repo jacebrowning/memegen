@@ -130,11 +130,12 @@ def render_image(
 
     pad = all(size) if pad is None else pad
     image = resize_image(background, *size, pad, expand=True)
-    if (
-        size[0]
-        and size[0] <= settings.PREVIEW_SIZE[0]
-        and not (is_preview or settings.DEBUG)
-    ):
+    if any(
+        (
+            size[0] and size[0] <= settings.PREVIEW_SIZE[0],
+            size[1] and size[1] <= settings.PREVIEW_SIZE[1],
+        )
+    ) and not (is_preview or settings.DEBUG):
         watermark = ""
 
     for (
