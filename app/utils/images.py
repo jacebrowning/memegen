@@ -226,7 +226,13 @@ def render_animation(
     else:
         scale = min(2.0, settings.DEFAULT_SIZE[1] / size[1] if size[1] else 1.0)
         modulus = max(1.0, round(total / (settings.MAXIMUM_FRAMES * scale), 1))
-    if size[0] and size[0] <= settings.PREVIEW_SIZE[0] and not settings.DEBUG:
+
+    if any(
+        (
+            size[0] and size[0] <= settings.PREVIEW_SIZE[0],
+            size[1] and size[1] <= settings.PREVIEW_SIZE[1],
+        )
+    ) and not (is_preview or settings.DEBUG):
         watermark = ""
 
     for index, frame in enumerate(ImageSequence.Iterator(source)):
