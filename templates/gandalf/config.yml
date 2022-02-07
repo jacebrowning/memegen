@@ -23,7 +23,7 @@ text:
     stop: 1.0
 example:
   - ''
-  - what did i just say?
+  - I have no memory of this place
 overlay:
   - center_x: 0.5
     center_y: 0.5

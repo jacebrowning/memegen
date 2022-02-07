@@ -22,7 +22,8 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
+  - when you wake up from a nap
+  - and your mom starts yelling at you
 overlay:
   - center_x: 0.5
     center_y: 0.5

@@ -22,8 +22,8 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - what did you say?
   - ''
+  - just as I planned...
 overlay:
   - center_x: 0.5
     center_y: 0.5

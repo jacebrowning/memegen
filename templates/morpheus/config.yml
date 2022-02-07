@@ -22,7 +22,8 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
+  - what if I told you that
+  - reality was an illusion?
 overlay:
   - center_x: 0.5
     center_y: 0.5

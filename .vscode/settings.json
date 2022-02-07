@@ -25,10 +25,13 @@
     "aiopath",
     "CIRCLECI",
     "Containerfile",
+    "Drakeposting",
     "exif",
     "getenv",
     "Googlebot",
+    "Groupon",
     "Hain",
+    "Hedberg",
     "icanhas",
     "isupper",
     "jsonify",
@@ -43,6 +46,7 @@
     "Minecraft",
     "myapikey",
     "Panik",
+    "Philosoraptor",
     "podman",
     "Qaeda",
     "RGBA",
@@ -51,6 +55,7 @@
     "Titillium",
     "typeahead",
     "uvicorn",
-    "webp"
+    "webp",
+    "Wonka"
   ]
 }

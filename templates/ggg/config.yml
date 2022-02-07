@@ -22,7 +22,8 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
+  - sleeps on your couch
+  - makes breakfast
 overlay:
   - center_x: 0.5
     center_y: 0.5
