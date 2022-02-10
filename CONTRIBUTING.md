@@ -69,7 +69,7 @@ $ make check
 Keep all of the above tasks running on change:
 
 ```text
-$ make watch
+$ make dev
 ```
 
 # Deployment
@@ -112,19 +112,19 @@ If you want to build the image for multiple CPU architectures, you can either us
 
 #### System Requirements
 
-On Debian/Ubuntu, you'll need to run: 
+On Debian/Ubuntu, you'll need to run:
 
 ```bash
 sudo apt install -y podman buildah qemu-user-static
 ```
 
-On any RHEL flavor OS, you'll need to run: 
+On any RHEL flavor OS, you'll need to run:
 
 ```bash
 sudo yum install -y podman buildah qemu-user-static
 ```
 
-On Arch or Manjaro Linux, you'll need to run: 
+On Arch or Manjaro Linux, you'll need to run:
 
 ```bash
 sudo pacman -Sy podman buildah qemu-arch-extra

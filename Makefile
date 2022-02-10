@@ -102,8 +102,8 @@ test-fast: install
 test-slow: install
 	poetry run pytest -m slow --durations=0 --durations-min=0.05
 
-.PHONY: watch
-watch: install
+.PHONY: dev
+dev: install
 	@ sleep 2 && touch */__init__.py &
 	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
 

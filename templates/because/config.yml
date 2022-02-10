@@ -1,0 +1,31 @@
+name: Men in Black / Will Smith
+source: https://www.youtube.com/watch?v=GNOZhAc26I8&t=75s
+text:
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.375
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.125
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.875
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.125
+    start: 0.0
+    stop: 1.0
+example:
+  - Just because you see a Black man driving in a nice car... does not mean it's stolen.
+  - "... I stole that one, but not 'cause I'm Black!"
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
