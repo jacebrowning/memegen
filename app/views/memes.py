@@ -312,6 +312,12 @@ async def render_image(
         extension = settings.DEFAULT_EXTENSION
         status = 422
 
+    # TODO: test this
+    font = utils.urls.arg(request.args, "", "font")
+    if font and font not in settings.FONT_PATHS:
+        font = ""
+        status = 422
+
     try:
         size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
         if 0 < size[0] < 10 or 0 < size[1] < 10:
@@ -328,6 +334,7 @@ async def render_image(
         template,
         lines,
         watermark,
+        font_name=font,
         extension=extension,
         style=style,
         size=size,

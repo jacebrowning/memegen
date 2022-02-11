@@ -34,6 +34,12 @@ PLACEHOLDER = "string"  # Swagger UI placeholder value
 
 DEFAULT_FONT = "thick"
 FONT_PATHS = {
+    # Names
+    "impact": ROOT / "fonts" / "Impact.ttf",
+    "kalam": ROOT / "fonts" / "Kalam-Regular.ttf",
+    "notosans": ROOT / "fonts" / "NotoSans-Bold.ttf",
+    "titilliumweb": ROOT / "fonts" / "TitilliumWeb-Black.ttf",
+    # Aliases
     "thick": ROOT / "fonts" / "TitilliumWeb-Black.ttf",
     "thin": ROOT / "fonts" / "TitilliumWeb-SemiBold.ttf",
     "tiny": ROOT / "fonts" / "Segoe UI Bold.ttf",
