@@ -174,8 +174,7 @@ class Template:
         frames: int = 0,
     ) -> Path:
         slug = utils.text.encode(text_lines)
-        # TODO: str() needed?
-        variant = str(self.text) + font_name + str(style) + str(size) + watermark
+        variant = str(self.text) + font_name + style + str(size) + watermark
         if frames:
             variant += str(frames)
         fingerprint = utils.text.fingerprint(variant, prefix="")

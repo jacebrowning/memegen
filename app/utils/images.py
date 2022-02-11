@@ -40,7 +40,6 @@ def preview(
         template,
         style,
         lines,
-        "",
         settings.PREVIEW_SIZE,
         pad=False,
         is_preview=True,
@@ -79,14 +78,14 @@ def save(
 
     if extension == "gif":
         frames, duration = render_animation(
-            template, lines, font_name, size, maximum_frames, watermark=watermark
+            template, lines, size, font_name, maximum_frames, watermark=watermark
         )
         frames[0].save(
             path, save_all=True, append_images=frames[1:], duration=duration, loop=0
         )
     else:
         image = render_image(
-            template, style, lines, font_name, size, watermark=watermark
+            template, style, lines, size, font_name, watermark=watermark
         )
         image.convert("RGB").save(path, quality=95)
 
@@ -124,8 +123,8 @@ def render_image(
     template: Template,
     style: str,
     lines: list[str],
-    font_name: str,
     size: Dimensions,
+    font_name: str = "",
     *,
     pad: bool | None = None,
     is_preview: bool = False,
@@ -214,8 +213,8 @@ def render_image(
 def render_animation(
     template: Template,
     lines: list[str],
-    font_name: str,
     size: Dimensions,
+    font_name: str = "",
     maximum_frames: int = 0,
     *,
     pad: bool | None = None,
@@ -413,7 +412,7 @@ def add_counter(image: Image, index: int, total: int, modulus: float) -> Image:
 def get_image_elements(
     template: Template,
     lines: list[str],
-    font: str,
+    font_name: str,
     watermark: str,
     image_size: Dimensions,
     is_preview: bool = False,
@@ -421,11 +420,15 @@ def get_image_elements(
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
     for index, text in enumerate(template.text):
         if percent_rendered is None:
-            yield get_image_element(lines, index, text, font, image_size, watermark)
+            yield get_image_element(
+                lines, index, text, font_name, image_size, watermark
+            )
         elif not text.stop or (text.start <= percent_rendered <= text.stop):
-            yield get_image_element(lines, index, text, font, image_size, watermark)
+            yield get_image_element(
+                lines, index, text, font_name, image_size, watermark
+            )
         else:
-            yield get_image_element([], index, text, font, image_size, watermark)
+            yield get_image_element([], index, text, font_name, image_size, watermark)
     if is_preview:
         lines = [settings.PREVIEW_TEXT]
         index = 0
