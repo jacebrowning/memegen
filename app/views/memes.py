@@ -312,7 +312,6 @@ async def render_image(
         extension = settings.DEFAULT_EXTENSION
         status = 422
 
-    # TODO: test this
     font = utils.urls.arg(request.args, "", "font")
     if font and font not in settings.FONT_PATHS:
         font = ""

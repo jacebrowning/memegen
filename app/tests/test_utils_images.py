@@ -187,6 +187,14 @@ def test_descender_vertical_alignment(images):
     utils.images.save(template, lines, directory=images)
 
 
+# Fonts
+
+
+def test_font_override(images, template):
+    lines = ["custom", "font"]
+    utils.images.save(template, lines, font_name="comic", directory=images)
+
+
 # Watermark
 
 
