@@ -165,6 +165,12 @@ def describe_detail():
         expect(response.status) == 414
         expect(response.headers["content-type"]) == "image/jpeg"
 
+    def describe_font():
+        def it_rejects_unknown_fonts(expect, client):
+            request, response = client.get("/images/fry/test.png?font=foobar")
+            expect(response.status) == 422
+            expect(response.headers["content-type"]) == "image/png"
+
     def describe_watermark():
         @pytest.fixture(autouse=True)
         def watermark_settings(monkeypatch, client):

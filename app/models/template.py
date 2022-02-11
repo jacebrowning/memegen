@@ -166,6 +166,7 @@ class Template:
     def build_path(
         self,
         text_lines: list[str],
+        font_name: str,
         style: str,
         size: Dimensions,
         watermark: str,
@@ -173,7 +174,7 @@ class Template:
         frames: int = 0,
     ) -> Path:
         slug = utils.text.encode(text_lines)
-        variant = str(self.text) + str(style) + str(size) + watermark
+        variant = str(self.text) + font_name + style + str(size) + watermark
         if frames:
             variant += str(frames)
         fingerprint = utils.text.fingerprint(variant, prefix="")

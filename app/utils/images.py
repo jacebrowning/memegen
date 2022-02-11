@@ -34,7 +34,7 @@ def preview(
     style: str = settings.DEFAULT_STYLE,
     watermark: str = "",
 ) -> tuple[bytes, str]:
-    path = template.build_path(lines, style, settings.PREVIEW_SIZE, "", "jpg")
+    path = template.build_path(lines, "", style, settings.PREVIEW_SIZE, "", "jpg")
     logger.info(f"Previewing meme for {path}")
     image = render_image(
         template,
@@ -55,6 +55,7 @@ def save(
     lines: list[str],
     watermark: str = "",
     *,
+    font_name: str = "",
     extension: str = settings.DEFAULT_EXTENSION,
     style: str = settings.DEFAULT_STYLE,
     size: Dimensions = (0, 0),
@@ -64,7 +65,7 @@ def save(
     size = fit_image(*size)
 
     path = directory / template.build_path(
-        lines, style, size, watermark, extension, maximum_frames
+        lines, font_name, style, size, watermark, extension, maximum_frames
     )
     if path.exists():
         if settings.DEPLOYED:
@@ -77,13 +78,15 @@ def save(
 
     if extension == "gif":
         frames, duration = render_animation(
-            template, lines, size, maximum_frames, watermark=watermark
+            template, lines, size, font_name, maximum_frames, watermark=watermark
         )
         frames[0].save(
             path, save_all=True, append_images=frames[1:], duration=duration, loop=0
         )
     else:
-        image = render_image(template, style, lines, size, watermark=watermark)
+        image = render_image(
+            template, style, lines, size, font_name, watermark=watermark
+        )
         image.convert("RGB").save(path, quality=95)
 
     return path
@@ -121,6 +124,7 @@ def render_image(
     style: str,
     lines: list[str],
     size: Dimensions,
+    font_name: str = "",
     *,
     pad: bool | None = None,
     is_preview: bool = False,
@@ -148,7 +152,9 @@ def render_image(
         stroke_width,
         stroke_fill,
         angle,
-    ) in get_image_elements(template, lines, watermark, image.size, is_preview):
+    ) in get_image_elements(
+        template, lines, font_name, watermark, image.size, is_preview
+    ):
 
         box = Image.new("RGBA", max_text_size)
         draw = ImageDraw.Draw(box)
@@ -208,6 +214,7 @@ def render_animation(
     template: Template,
     lines: list[str],
     size: Dimensions,
+    font_name: str = "",
     maximum_frames: int = 0,
     *,
     pad: bool | None = None,
@@ -255,7 +262,7 @@ def render_animation(
             stroke_fill,
             angle,
         ) in get_image_elements(
-            template, lines, watermark, image.size, is_preview, index / total
+            template, lines, font_name, watermark, image.size, is_preview, index / total
         ):
             box = Image.new("RGBA", max_text_size)
             draw = ImageDraw.Draw(box)
@@ -405,6 +412,7 @@ def add_counter(image: Image, index: int, total: int, modulus: float) -> Image:
 def get_image_elements(
     template: Template,
     lines: list[str],
+    font_name: str,
     watermark: str,
     image_size: Dimensions,
     is_preview: bool = False,
@@ -412,20 +420,29 @@ def get_image_elements(
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
     for index, text in enumerate(template.text):
         if percent_rendered is None:
-            yield get_image_element(lines, index, text, image_size, watermark)
+            yield get_image_element(
+                lines, index, text, font_name, image_size, watermark
+            )
         elif not text.stop or (text.start <= percent_rendered <= text.stop):
-            yield get_image_element(lines, index, text, image_size, watermark)
+            yield get_image_element(
+                lines, index, text, font_name, image_size, watermark
+            )
         else:
-            yield get_image_element([], index, text, image_size, watermark)
+            yield get_image_element([], index, text, font_name, image_size, watermark)
     if is_preview:
         lines = [settings.PREVIEW_TEXT]
         index = 0
         text = Text.get_preview()
-        yield get_image_element(lines, index, text, image_size, watermark)
+        yield get_image_element(lines, index, text, "", image_size, watermark)
 
 
 def get_image_element(
-    lines: list[str], index: int, text: Text, image_size: Dimensions, watermark: str
+    lines: list[str],
+    index: int,
+    text: Text,
+    font_name: str,
+    image_size: Dimensions,
+    watermark: str,
 ) -> tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]:
     point = text.get_anchor(image_size, watermark)
 
@@ -438,10 +455,13 @@ def get_image_element(
         line = ""
     else:
         line = text.stylize(
-            wrap(text.font, line, max_text_size, max_font_size), lines=lines
+            wrap(font_name or text.font, line, max_text_size, max_font_size),
+            lines=lines,
         )
 
-    font = get_font(text.font, line, text.angle, max_text_size, max_font_size)
+    font = get_font(
+        font_name or text.font, line, text.angle, max_text_size, max_font_size
+    )
     offset = get_text_offset(line, font, max_text_size)
 
     stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
