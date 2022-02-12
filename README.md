@@ -94,6 +94,17 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=ahby9x2nlsbk0gxdmpo5)
 
----
+# Fonts
+
+The `font=<str>` query parameter can be used to customize the look of your meme:
+
+| Name | Query Parameter | Alias |
+| --- | --- | --- |
+| Titillium Web Black | `font=titilliumweb` | `font=thick` |
+| Kalam Regular | `font=kalam` | `font=comic` |
+| Impact | `font=impact` | - |
+| Noto Sans Bold | `font=notosans` | - |
+
+<br>
 
 Explore the full API here: <https://api.memegen.link/docs/>

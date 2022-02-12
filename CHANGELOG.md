@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.5
+
+- Added `font` parameter to override the template's font.
+
 ## 10.4
 
 - Added `frames` parameter to manually reduce GIF sizes.
