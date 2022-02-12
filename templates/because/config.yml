@@ -1,5 +1,5 @@
 name: Men in Black / Will Smith
-source: https://www.youtube.com/watch?v=GNOZhAc26I8&t=75s
+source: https://www.youtube.com/watch?v=GNOZhAc26I8&t=76s
 text:
   - style: default
     color: khaki
@@ -23,7 +23,7 @@ text:
     stop: 1.0
 example:
   - Just because you see a Black man driving in a nice car... does not mean it's stolen.
-  - "... I stole that one, but not 'cause I'm Black!"
+  - "...I stole that one, but not 'cause I'm Black!"
 overlay:
   - center_x: 0.5
     center_y: 0.5
