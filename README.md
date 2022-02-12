@@ -96,9 +96,11 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 
 # Fonts
 
-The `font=<str>` query parameter can be used to customize the look of your meme:
+The full list of fonts is available here: <https://api.memegen.link/fonts/>
 
-| Name                                                                   | Query Parameter     | Alias        |
+Add the `font=<str>` query parameter to customize the look of your meme:
+
+| Name                                                                   | ID                  | Alias        |
 | ---------------------------------------------------------------------- | ------------------- | ------------ |
 | [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web) | `font=titilliumweb` | `font=thick` |
 | [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
