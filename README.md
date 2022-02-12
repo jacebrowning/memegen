@@ -98,12 +98,12 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 
 The `font=<str>` query parameter can be used to customize the look of your meme:
 
-| Name | Query Parameter | Alias |
-| --- | --- | --- |
-| Titillium Web Black | `font=titilliumweb` | `font=thick` |
-| Kalam Regular | `font=kalam` | `font=comic` |
-| Impact | `font=impact` | - |
-| Noto Sans Bold | `font=notosans` | - |
+| Name                                                                   | Query Parameter     | Alias        |
+| ---------------------------------------------------------------------- | ------------------- | ------------ |
+| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web) | `font=titilliumweb` | `font=thick` |
+| [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
+| [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
+| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
 
 <br>
 
