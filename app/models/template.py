@@ -148,6 +148,7 @@ class Template:
         extension: str = settings.DEFAULT_EXTENSION,
         background: str = "",
         style: str = "",
+        font: str = "",
     ):
         if extension not in settings.ALLOWED_EXTENSIONS:
             extension = settings.DEFAULT_EXTENSION
@@ -159,7 +160,7 @@ class Template:
             text_paths=utils.text.encode(text_lines) + "." + extension,
             _external=True,
             _scheme=settings.SCHEME,
-            **utils.urls.params(background=background, style=style),
+            **utils.urls.params(background=background, style=style, font=font),
         )
         return utils.urls.clean(url)
 

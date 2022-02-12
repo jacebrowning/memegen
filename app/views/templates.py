@@ -96,6 +96,7 @@ async def build(request, id):
             "background": str,
             "style": str,
             "text_lines": [str],
+            "font": str,
             "extension": str,
             "redirect": bool,
         }
@@ -125,9 +126,9 @@ async def generate_url(
             payload = {}
 
     with suppress(KeyError):
-        payload["text_lines"] = payload.pop("text_lines[]")
-    with suppress(KeyError):
         payload["style"] = payload.pop("style[]")
+    with suppress(KeyError):
+        payload["text_lines"] = payload.pop("text_lines[]")
 
     if template_id_required:
         try:
@@ -137,12 +138,13 @@ async def generate_url(
         else:
             template_id = utils.text.slugify(template_id)
 
-    text_lines = utils.urls.arg(payload, [], "text_lines")
     style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")
     if isinstance(style, list):
         style = ",".join([(s.strip() or "default") for s in style])
     while style.endswith(",default"):
         style = style.removesuffix(",default")
+    text_lines = utils.urls.arg(payload, [], "text_lines")
+    font = utils.urls.arg(payload, "", "font")
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
 
@@ -155,7 +157,11 @@ async def generate_url(
     if template_id:
         template: Template = Template.objects.get_or_create(template_id)
         url = template.build_custom_url(
-            request, text_lines, style=style, extension=extension
+            request,
+            text_lines,
+            style=style,
+            font=font,
+            extension=extension,
         )
         if not template.valid:
             status = 404
@@ -163,7 +169,12 @@ async def generate_url(
     else:
         template = Template("_custom")
         url = template.build_custom_url(
-            request, text_lines, background=background, style=style, extension=extension
+            request,
+            text_lines,
+            background=background,
+            style=style,
+            font=font,
+            extension=extension,
         )
 
     url, _updated = await utils.meta.tokenize(request, url)

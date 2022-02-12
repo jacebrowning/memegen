@@ -41,11 +41,12 @@ def describe_list():
                 "template_id": "iw",
                 "text_lines[]": ["foo", "bar"],
                 "style[]": [" ", "test", "default"],
+                "font": "impact",
             }
             request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {
-                "url": "http://localhost:5000/images/iw/foo/bar.png?style=default,test"
+                "url": "http://localhost:5000/images/iw/foo/bar.png?style=default,test&font=impact"
             }
 
         def it_returns_gif_when_animated(expect, client):
@@ -169,6 +170,11 @@ def describe_detail():
         def it_rejects_unknown_fonts(expect, client):
             request, response = client.get("/images/fry/test.png?font=foobar")
             expect(response.status) == 422
+            expect(response.headers["content-type"]) == "image/png"
+
+        def it_ignores_placeholder_values(expect, client):
+            request, response = client.get("/images/fry/test.png?font=string")
+            expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/png"
 
     def describe_watermark():

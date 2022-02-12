@@ -23,8 +23,9 @@ def describe_spec():
                     "type": "object",
                     "properties": {
                         "template_id": {"type": "string"},
-                        "text_lines": {"type": "array", "items": {"type": "string"}},
                         "style": {"type": "array", "items": {"type": "string"}},
+                        "text_lines": {"type": "array", "items": {"type": "string"}},
+                        "font": {"type": "string"},
                         "extension": {"type": "string"},
                         "redirect": {"type": "boolean"},
                     },

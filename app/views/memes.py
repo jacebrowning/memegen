@@ -39,8 +39,9 @@ async def index(request):
     doc.JsonBody(
         {
             "template_id": str,
-            "text_lines": [str],
             "style": [str],
+            "text_lines": [str],
+            "font": str,
             "extension": str,
             "redirect": bool,
         }
@@ -107,6 +108,7 @@ async def automatic(request):
             "background": str,
             "style": str,
             "text_lines": [str],
+            "font": str,
             "extension": str,
             "redirect": bool,
         }
@@ -313,11 +315,14 @@ async def render_image(
         status = 422
 
     font_name = utils.urls.arg(request.args, "", "font")
-    try:
-        models.Font.objects.get(font_name)
-    except ValueError:
+    if font_name == settings.PLACEHOLDER:
         font_name = ""
-        status = 422
+    else:
+        try:
+            models.Font.objects.get(font_name)
+        except ValueError:
+            font_name = ""
+            status = 422
 
     try:
         size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
