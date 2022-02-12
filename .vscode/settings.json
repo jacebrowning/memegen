@@ -31,6 +31,7 @@
     "getenv",
     "Googlebot",
     "Groupon",
+    "gunicorn",
     "Hain",
     "Hedberg",
     "icanhas",

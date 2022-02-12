@@ -64,4 +64,5 @@ if __name__ == "__main__":
         workers=settings.WORKERS,
         debug=settings.DEBUG,
         access_log=False,
+        motd=False,
     )
