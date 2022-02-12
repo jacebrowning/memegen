@@ -21,6 +21,12 @@ async def validate(request):
     )
 
 
+@blueprint.get("/fonts")
+@doc.summary("List available fonts")
+async def fonts(request):
+    return response.json([font.data for font in models.Font.objects.all()])
+
+
 @blueprint.get("/images/preview.jpg")
 @doc.summary("Display a preview of a custom meme")
 @doc.consumes(

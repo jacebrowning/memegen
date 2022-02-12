@@ -16,7 +16,7 @@ from PIL import (
 from sanic.log import logger
 
 from .. import settings
-from ..models import Template, Text
+from ..models import Font, Template, Text
 from ..types import Dimensions, Offset, Point
 
 EXCEPTIONS = (
@@ -539,7 +539,7 @@ def get_font(
     max_text_size: Dimensions,
     max_font_size: int,
 ) -> ImageFont:
-    font_path = settings.FONT_PATHS[name or settings.DEFAULT_FONT]
+    font_path = Font.objects.get(name or settings.DEFAULT_FONT).path
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 

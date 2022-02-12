@@ -23,6 +23,7 @@
     "aiofiles",
     "aiohttp",
     "aiopath",
+    "asdict",
     "CIRCLECI",
     "Containerfile",
     "Drakeposting",

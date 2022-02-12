@@ -312,9 +312,11 @@ async def render_image(
         extension = settings.DEFAULT_EXTENSION
         status = 422
 
-    font = utils.urls.arg(request.args, "", "font")
-    if font and font not in settings.FONT_PATHS:
-        font = ""
+    font_name = utils.urls.arg(request.args, "", "font")
+    try:
+        models.Font.objects.get(font_name)
+    except ValueError:
+        font_name = ""
         status = 422
 
     try:
@@ -333,7 +335,7 @@ async def render_image(
         template,
         lines,
         watermark,
-        font_name=font,
+        font_name=font_name,
         extension=extension,
         style=style,
         size=size,

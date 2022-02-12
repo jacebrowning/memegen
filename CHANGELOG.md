@@ -2,7 +2,8 @@
 
 ## 10.5
 
-- Added `font` parameter to override the template's font.
+- Added `font` parameter to override a template's font.
+- Added a `/fonts` API to list the available fonts.
 
 ## 10.4
 
