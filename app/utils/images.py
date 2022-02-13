@@ -303,7 +303,7 @@ def render_animation(
 
         frames.append(image)
 
-    ratio = len(frames) / total
+    ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
     duration = source.info.get("duration", 100) / ratio
 
     return frames, duration
