@@ -123,7 +123,6 @@ async def track(request, lines: list[str]):
     async with aiohttp.ClientSession() as session:
         params = dict(
             text=text,
-            client=_get_referer(request) or settings.BASE_URL,
             referer=_get_referer(request) or settings.BASE_URL,
             result=unquote(request.url),
         )
@@ -154,7 +153,6 @@ async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
         params = dict(
             text=text,
             nsfw=0 if safe else 1,
-            client=_get_referer(request) or settings.BASE_URL,
             referer=_get_referer(request) or settings.BASE_URL,
         )
         logger.info(f"Searching for results: {text!r} (safe={safe})")
