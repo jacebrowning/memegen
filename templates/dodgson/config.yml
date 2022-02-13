@@ -19,7 +19,7 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-    start: 0.75
+    start: 0.65
     stop: 1.0
 example:
   - we've got dodgson here!
