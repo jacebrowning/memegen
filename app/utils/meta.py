@@ -124,6 +124,7 @@ async def track(request, lines: list[str]):
         params = dict(
             text=text,
             client=_get_referer(request) or settings.BASE_URL,
+            referer=_get_referer(request) or settings.BASE_URL,
             result=unquote(request.url),
         )
         logger.info(f"Tracking request: {params}")
@@ -154,6 +155,7 @@ async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
             text=text,
             nsfw=0 if safe else 1,
             client=_get_referer(request) or settings.BASE_URL,
+            referer=_get_referer(request) or settings.BASE_URL,
         )
         logger.info(f"Searching for results: {text!r} (safe={safe})")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
@@ -172,10 +174,7 @@ async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
 
 
 def _get_referer(request):
-    referer = request.headers.get("referer") or request.args.get("referer")
-    if referer and referer.startswith(settings.BASE_URL) and "/docs/" not in referer:
-        referer = None
-    return referer
+    return request.headers.get("referer") or request.args.get("referer")
 
 
 def _get_api_key(request):
