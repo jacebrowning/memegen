@@ -7,7 +7,7 @@ def describe_index():
     def it_redirects_to_the_docs(expect, client):
         request, response = client.get("/")
         expect(response.status) == 200
-        expect(response.text).contains("swagger.json")
+        expect(response.text).contains("openapi.json")
 
     def it_contains_favicon(expect, client):
         request, response = client.get("/favicon.ico")

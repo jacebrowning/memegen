@@ -1,18 +1,34 @@
 import asyncio
+from dataclasses import dataclass
+from datetime import datetime
 
 from sanic import Blueprint, response
 from sanic.log import logger
-from sanic_openapi import doc
+from sanic_ext import openapi
 
 from .. import models, utils
 
 blueprint = Blueprint("Clients", url_prefix="/")
 
 
+@dataclass
+class AuthResponse:
+    email: str
+    image_access: bool
+    search_access: bool
+    created: datetime
+    modified: datetime
+
+
+@dataclass
+class ErrorResponse:
+    error: str
+
+
 @blueprint.post("/auth")
-@doc.summary("Validate your API key")
-@doc.response(200, str, description="Your API key is valid")
-@doc.response(401, str, description="Your API key is invalid")
+@openapi.summary("Validate your API key")
+@openapi.response(200, {"application/json": AuthResponse}, "Your API key is valid")
+@openapi.response(401, {"application/json": ErrorResponse}, "Your API key is invalid")
 async def validate(request):
     info = await utils.meta.authenticate(request)
     return response.json(
@@ -21,31 +37,32 @@ async def validate(request):
     )
 
 
+@dataclass
+class FontResponse:
+    filename: str
+    id: str
+    alias: str
+
+
 @blueprint.get("/fonts")
-@doc.summary("List available fonts")
+@openapi.summary("List available fonts")
+@openapi.response(
+    200,
+    {"application/json": list[FontResponse]},
+    "Successfully returned a list of fonts",
+)
 async def fonts(request):
     return response.json([font.data for font in models.Font.objects.all()])
 
 
 @blueprint.get("/images/preview.jpg")
-@doc.summary("Display a preview of a custom meme")
-@doc.consumes(
-    doc.String(name="lines[]", description="Lines of text to render"),
-    location="query",
+@openapi.summary("Display a preview of a custom meme")
+@openapi.parameter("lines[]", str, "query", description="Lines of text to render")
+@openapi.parameter("style", str, "query", description="Style name or custom overlay")
+@openapi.parameter(
+    "template", str, "query", description="Template ID, URL, or custom background"
 )
-@doc.consumes(
-    doc.String(name="style", description="Style name or custom overlay"),
-    location="query",
-)
-@doc.consumes(
-    doc.String(name="template", description="Template ID, URL, or custom background"),
-    location="query",
-)
-@doc.produces(
-    doc.File(),
-    description="Successfully displayed a custom meme",
-    content_type="image/jpeg",
-)
+@openapi.response(200, {"image/jpeg": bytes}, "Successfully displayed a custom meme")
 async def preview(request):
     id = request.args.get("template", "_error")
     lines = request.args.getlist("lines[]", [])

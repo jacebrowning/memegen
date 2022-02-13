@@ -1,47 +1,50 @@
 import asyncio
 from contextlib import suppress
+from dataclasses import dataclass
 
 from sanic import Blueprint, exceptions, response
-from sanic_openapi import doc
+from sanic_ext import openapi
 
 from .. import helpers, settings, utils
 from ..models import Template
 
 blueprint = Blueprint("Templates", url_prefix="/templates")
 
-TemplateResponse = {
-    "id": str,
-    "name": str,
-    "lines": int,
-    "overlays": int,
-    "styles": doc.List(str),
-    "blank": str,
-    "example": {
-        "text": doc.List(str),
-        "url": str,
-    },
-    "source": str,
-    "_self": str,
-}
+
+@dataclass
+class ExampleResponse:
+    text: list[str]
+    url: str
+
+
+@dataclass
+class TemplateResponse:
+    id: str
+    name: str
+    lines: int
+    overlays: int
+    styles: list[str]
+    blank: str
+    example: ExampleResponse
+    source: str
+    _self: str
 
 
 @blueprint.get("/")
-@doc.summary("List all templates")
-@doc.consumes(
-    doc.Boolean(
-        name="animated", description="Limit results to templates supporting animation"
-    ),
-    content_type="application/json",
-    location="query",
+@openapi.summary("List all templates")
+@openapi.parameter(
+    "animated",
+    bool,
+    "query",
+    description="Limit results to templates supporting animation",
 )
-@doc.consumes(
-    doc.String(name="filter", description="Part of the name or example to match"),
-    location="query",
+@openapi.parameter(
+    "filter", str, "query", description="Part of the name or example to match"
 )
-@doc.produces(
-    doc.List(TemplateResponse),
-    description="Successfully returned a list of all templates",
-    content_type="application/json",
+@openapi.response(
+    200,
+    {"application/json": list[TemplateResponse]},
+    "Successfully returned a list of all templates",
 )
 async def index(request):
     query = request.args.get("filter", "").lower()
@@ -53,14 +56,14 @@ async def index(request):
 
 
 @blueprint.get("/<id:slug>")
-@doc.summary("View a specific template")
-@doc.consumes(doc.String(name="id"), location="path")
-@doc.produces(
-    TemplateResponse,
-    description="Successfully returned a specific templates",
-    content_type="application/json",
+@openapi.summary("View a specific template")
+@openapi.parameter("id", str, "path")
+@openapi.response(
+    200,
+    {"application/json": TemplateResponse},
+    "Successfully returned a specific templates",
 )
-@doc.response(404, str, description="Template not found")
+@openapi.response(404, str, description="Template not found")
 async def detail(request, id):
     template: Template = Template.objects.get_or_none(id)
     if template:
@@ -68,44 +71,53 @@ async def detail(request, id):
     raise exceptions.NotFound(f"Template not found: {id}")
 
 
+@dataclass
+class MemeRequest:
+    text_lines: list[str]
+    extension: str
+    redirect: bool
+
+
+@dataclass
+class MemeResponse:
+    url: str
+
+
 @blueprint.post("/<id:slug>")
-@doc.tag("Memes")
-@doc.operation("Memes.create_from_template")
-@doc.exclude(settings.DEPLOYED)
-@doc.summary("Create a meme from a template" + settings.SUFFIX)
-@doc.consumes(doc.String(name="id"), location="path")
-@doc.consumes(
-    doc.JsonBody({"text_lines": [str], "extension": str, "redirect": bool}),
-    content_type="application/json",
-    location="body",
-)
-@doc.response(
-    201, {"url": str}, description="Successfully created a meme from a template"
+@openapi.tag("Memes")
+@openapi.operation("Memes.create_from_template")
+@openapi.exclude(settings.DEPLOYED)
+@openapi.summary("Create a meme from a template" + settings.SUFFIX)
+@openapi.parameter("id", str, "path")
+@openapi.body({"application/json": MemeRequest})
+@openapi.response(
+    201,
+    {"application/json": MemeResponse},
+    "Successfully created a meme from a template",
 )
 async def build(request, id):
     return await generate_url(request, id)
 
 
+@dataclass
+class CustomRequest:
+    background: str
+    style: str
+    text_lines: list[str]
+    font: str
+    extension: str
+    redirect: bool
+
+
 @blueprint.post("/custom")
-@doc.tag("Memes")
-@doc.exclude(settings.DEPLOYED)
-@doc.summary("Create a meme from any image" + settings.SUFFIX)
-@doc.consumes(
-    doc.JsonBody(
-        {
-            "background": str,
-            "style": str,
-            "text_lines": [str],
-            "font": str,
-            "extension": str,
-            "redirect": bool,
-        }
-    ),
-    content_type="application/json",
-    location="body",
-)
-@doc.response(
-    201, {"url": str}, description="Successfully created a meme from a custom image"
+@openapi.tag("Memes")
+@openapi.exclude(settings.DEPLOYED)
+@openapi.summary("Create a meme from any image" + settings.SUFFIX)
+@openapi.body({"application/json": CustomRequest})
+@openapi.response(
+    201,
+    {"application/json": MemeResponse},
+    "Successfully created a meme from a custom image",
 )
 async def custom(request):
     return await generate_url(request)

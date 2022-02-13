@@ -1,6 +1,6 @@
 from sanic import Blueprint, exceptions, response
 from sanic.log import logger
-from sanic_openapi import doc
+from sanic_ext import openapi
 
 from .. import models, settings, utils
 
@@ -8,13 +8,13 @@ blueprint = Blueprint("Shortcuts", url_prefix="/")
 
 
 @blueprint.get(r"/images/<template_id:[^.]+>")
-@doc.summary("Redirect to an example image")
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.response(
-    302, doc.File(), description="Successfully redirected to an example image"
+@openapi.summary("Redirect to an example image")
+@openapi.parameter("template_id", str, "path")
+@openapi.response(
+    302, {"image/*": bytes}, "Successfully redirected to an example image"
 )
-@doc.response(404, str, description="Template not found")
-@doc.response(501, str, description="Template not fully implemented")
+@openapi.response(404, {"text/html": str}, "Template not found")
+@openapi.response(501, {"text/html": str}, "Template not fully implemented")
 async def example_path(request, template_id):
     template_id = utils.urls.clean(template_id)
 
@@ -42,13 +42,13 @@ async def example_path(request, template_id):
 
 
 @blueprint.get(r"/<template_id:.+\.\w+>")
-@doc.exclude(settings.DEPLOYED)
-@doc.summary("Redirect to an example image" + settings.SUFFIX)
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.response(
-    302, doc.File(), description="Successfully redirected to an example image"
+@openapi.exclude(settings.DEPLOYED)
+@openapi.summary("Redirect to an example image" + settings.SUFFIX)
+@openapi.parameter("template_id", str, "path")
+@openapi.response(
+    302, {"image/*": bytes}, "Successfully redirected to an example image"
 )
-@doc.response(404, str, description="Template not found")
+@openapi.response(404, {"text/html": str}, "Template not found")
 async def legacy_example_image(request, template_id):
     template_id, extension = template_id.rsplit(".", 1)
     template = models.Template.objects.get_or_none(template_id)
@@ -59,11 +59,11 @@ async def legacy_example_image(request, template_id):
 
 
 @blueprint.get(r"/<template_id:slug>")
-@doc.exclude(settings.DEPLOYED)
-@doc.summary("Redirect to an example image" + settings.SUFFIX)
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.response(
-    302, doc.File(), description="Successfully redirected to an example image"
+@openapi.exclude(settings.DEPLOYED)
+@openapi.summary("Redirect to an example image" + settings.SUFFIX)
+@openapi.parameter("template_id", str, "path")
+@openapi.response(
+    302, {"image/*": bytes}, "Successfully redirected to an example image"
 )
 async def legacy_example_path(request, template_id):
     template_id = template_id.strip("/")
@@ -71,15 +71,10 @@ async def legacy_example_path(request, template_id):
 
 
 @blueprint.get(r"/images/<template_id:slug>/<text_paths:[^/].*>")
-@doc.summary("Redirect to a custom image")
-@doc.consumes(doc.String(name="text_paths"), location="path")
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.produces(
-    str,
-    description="Successfully displayed a custom meme",
-    content_type="text/html",
-)
-@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
+@openapi.summary("Redirect to a custom image")
+@openapi.parameter("text_paths", str, "path")
+@openapi.parameter("template_id", str, "path")
+@openapi.response(302, {"image/*": bytes}, "Successfully redirected to a custom image")
 async def custom_path(request, template_id, text_paths):
     if template_id == "images":
         return response.redirect(f"/images/{text_paths}".removesuffix("/"))
@@ -106,12 +101,12 @@ async def custom_path(request, template_id, text_paths):
 
 
 @blueprint.get(r"/<template_id:(?!templates)[a-z-]+>/<text_paths:[^/].*\.\w+>")
-@doc.exclude(settings.DEPLOYED)
-@doc.summary("Redirect to a custom image" + settings.SUFFIX)
-@doc.consumes(doc.String(name="text_paths"), location="path")
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
-@doc.response(404, str, description="Template not found")
+@openapi.exclude(settings.DEPLOYED)
+@openapi.summary("Redirect to a custom image" + settings.SUFFIX)
+@openapi.parameter("text_paths", str, "path")
+@openapi.parameter("template_id", str, "path")
+@openapi.response(302, {"image/*": bytes}, "Successfully redirected to a custom image")
+@openapi.response(404, {"text/html": str}, description="Template not found")
 async def legacy_custom_image(request, template_id, text_paths):
     text_paths, extension = text_paths.rsplit(".", 1)
     template = models.Template.objects.get_or_none(template_id)
@@ -126,11 +121,11 @@ async def legacy_custom_image(request, template_id, text_paths):
 
 
 @blueprint.get(r"/<template_id:(?!templates)[a-z-]+>/<text_paths:[^/].*>")
-@doc.exclude(settings.DEPLOYED)
-@doc.summary("Redirect to a custom image" + settings.SUFFIX)
-@doc.consumes(doc.String(name="text_paths"), location="path")
-@doc.consumes(doc.String(name="template_id"), location="path")
-@doc.response(302, doc.File(), description="Successfully redirected to a custom image")
+@openapi.exclude(settings.DEPLOYED)
+@openapi.summary("Redirect to a custom image" + settings.SUFFIX)
+@openapi.parameter("text_paths", str, "path")
+@openapi.parameter("template_id", str, "path")
+@openapi.response(302, {"image/*": bytes}, "Successfully redirected to a custom image")
 async def legacy_custom_path(request, template_id, text_paths):
     if template_id == "images":
         return response.redirect(f"/images/{text_paths}".removesuffix("/"))
