@@ -103,7 +103,7 @@ class Template:
             "styles": self.styles,
             "blank": request.app.url_for(
                 "memes.blank",
-                template_id=self.id + "." + settings.DEFAULT_EXTENSION,
+                template_filename=self.id + "." + settings.DEFAULT_EXTENSION,
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
@@ -132,7 +132,7 @@ class Template:
     ) -> str:
         kwargs = {
             "template_id": self.id,
-            "text_paths": utils.text.encode(self.example) + "." + extension,
+            "text_filepath": utils.text.encode(self.example) + "." + extension,
             "_external": external,
         }
         if external:
@@ -157,7 +157,7 @@ class Template:
         url = request.app.url_for(
             "memes.text",
             template_id="custom" if self.id == "_custom" else self.id,
-            text_paths=utils.text.encode(text_lines) + "." + extension,
+            text_filepath=utils.text.encode(text_lines) + "." + extension,
             _external=True,
             _scheme=settings.SCHEME,
             **utils.urls.params(background=background, style=style, font=font),

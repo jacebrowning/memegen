@@ -58,7 +58,7 @@ async def legacy_example_image(request, template_id):
     raise exceptions.NotFound(f"Template not found: {template_id}")
 
 
-@blueprint.get(r"/<template_id:slug>")
+@blueprint.get("/<template_id:slug>")
 @openapi.exclude(settings.DEPLOYED)
 @openapi.summary("Redirect to an example image" + settings.SUFFIX)
 @openapi.parameter("template_id", str, "path")
@@ -83,7 +83,9 @@ async def custom_path(request, template_id, text_paths):
         url = request.app.url_for(
             "memes.text",
             template_id=template_id,
-            text_paths=utils.urls.clean(text_paths) + "." + settings.DEFAULT_EXTENSION,
+            text_filepath=utils.urls.clean(text_paths)
+            + "."
+            + settings.DEFAULT_EXTENSION,
         )
         return response.redirect(url)
 
@@ -114,7 +116,7 @@ async def legacy_custom_image(request, template_id, text_paths):
         url = request.app.url_for(
             "memes.text",
             template_id=template_id,
-            text_paths=text_paths + "." + extension,
+            text_filepath=text_paths + "." + extension,
         )
         return response.redirect(url)
     raise exceptions.NotFound(f"Template not found: {template_id}")
