@@ -4,7 +4,7 @@ from sanic_ext import openapi
 
 from .. import models, settings, utils
 
-blueprint = Blueprint("Shortcuts", url_prefix="/")
+blueprint = Blueprint("shortcuts", url_prefix="/")
 
 
 @blueprint.get(r"/images/<template_id:[^.]+>")
@@ -81,7 +81,7 @@ async def custom_path(request, template_id, text_paths):
 
     if not settings.DEBUG:
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
             text_paths=utils.urls.clean(text_paths) + "." + settings.DEFAULT_EXTENSION,
         )
@@ -112,7 +112,7 @@ async def legacy_custom_image(request, template_id, text_paths):
     template = models.Template.objects.get_or_none(template_id)
     if template:
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
             text_paths=text_paths + "." + extension,
         )

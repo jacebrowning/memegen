@@ -49,7 +49,7 @@ def get_example_images(
 def get_test_images(request: Request) -> list[str]:
     return [
         request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=id,
             text_paths=utils.text.encode(lines) + "." + extension,
         )

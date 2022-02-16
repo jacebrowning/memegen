@@ -16,12 +16,11 @@ from .schemas import (
 )
 from .templates import generate_url
 
-blueprint = Blueprint("Memes", url_prefix="/images")
+blueprint = Blueprint("memes", url_prefix="/images")
 
 
 @blueprint.get("/")
 @openapi.summary("List example memes")
-@openapi.operation("Memes.list")
 @openapi.parameter(
     "filter", str, "query", description="Part of the template name or example to match"
 )
@@ -40,7 +39,6 @@ async def index(request):
 
 @blueprint.post("/")
 @openapi.summary("Create a meme from a template")
-@openapi.operation("Memes.create")
 @openapi.body({"application/json": MemeRequest})
 @openapi.response(
     201, {"application/json": MemeResponse}, "Successfully created a meme"
@@ -111,7 +109,6 @@ async def custom(request):
 
 @blueprint.get("/custom")
 @openapi.summary("List popular custom memes")
-@openapi.operation("Memes.list_custom")
 @openapi.parameter("safe", bool, "query", description="Exclude NSFW results")
 @openapi.parameter(
     "filter", str, "query", description="Part of the meme's text to match"
@@ -140,7 +137,7 @@ async def list_custom(request):
 
 
 @blueprint.get(r"/<template_id:.+\.\w+>")
-@openapi.tag("Templates")
+@openapi.tag("templates")
 @openapi.summary("Display a template background")
 @openapi.parameter("template_id", str, "path")
 @openapi.response(
@@ -160,7 +157,7 @@ async def blank(request, template_id):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "Memes.blank",
+            "memes.blank",
             template_id=template_id + ".gif",
             **params,
         )
@@ -189,7 +186,7 @@ async def text(request, template_id, text_paths):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
             text_paths=text_paths + ".gif",
             **params,
@@ -199,7 +196,7 @@ async def text(request, template_id, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
             text_paths=slug + "." + extension,
             **request.args,
@@ -215,7 +212,7 @@ async def text(request, template_id, text_paths):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
             text_paths=slug + "." + extension,
             **params,
