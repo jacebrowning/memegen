@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.6
+
+- Added `text[]` as as alias for `line[]` (preview) and `text_lines[]` (create).
+
 ## 10.5
 
 - Added `font` parameter to override a template's font.

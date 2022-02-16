@@ -84,7 +84,7 @@ def init(app: Sanic):
         Add text to create a meme:
 
         ```
-        $ http POST https://api.memegen.link/images template_id=aag "text_lines[]=foo" "text_lines[]=bar"
+        $ http POST https://api.memegen.link/images template_id=aag "text[]=foo" "text[]=bar"
 
         {
             "url": "https://api.memegen.link/images/aag/foo/bar.png"

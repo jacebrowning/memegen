@@ -143,7 +143,7 @@ async def list_custom(request):
     "template_filename",
     str,
     "path",
-    description="Image filename, i.e. `<template_id>.<extension>`",
+    description="Template ID and image format: `<template_id>.<extension>`",
 )
 @openapi.response(
     200, {"image/*": bytes}, "Successfully displayed a template background"
@@ -177,7 +177,7 @@ async def blank(request, template_filename):
     "text_filepath",
     str,
     "path",
-    description="Text paths and image filename, i.e. `<line>/<line>.<extension>`",
+    description="Lines of text and image format: `<line1>/<line2>.<extension>`",
 )
 @openapi.parameter("template_id", str, "path", description="ID of a meme template")
 @openapi.response(200, {"image/*": bytes}, "Successfully displayed a custom meme")

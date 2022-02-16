@@ -22,7 +22,7 @@ class FontResponse:
 class MemeRequest:
     template_id: str
     style: list[str]
-    text_lines: list[str]
+    text: list[str]
     font: str
     extension: str
     redirect: bool
@@ -32,7 +32,7 @@ class MemeRequest:
 class CustomRequest:
     background: str
     style: str
-    text_lines: list[str]
+    text: list[str]
     font: str
     extension: str
     redirect: bool
