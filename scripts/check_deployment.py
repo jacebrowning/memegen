@@ -44,7 +44,7 @@ def test_get_image_custom(expect, url):
 def test_swagger(expect, url):
     response = requests.get(
         f"https://validator.swagger.io/validator/debug?url="
-        f"{url}%2Fdocs%2Fswagger.json"
+        f"{url}%2Fdocs%2Fopenapi.json"
     )
     expect(response.status_code) == 200
     expect(response.json()) == {}
