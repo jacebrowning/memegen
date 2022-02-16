@@ -41,7 +41,6 @@ def init(app):
     )
 
     app.config.OAS_UI_DEFAULT = "swagger"
-    app.config.OAS_UI_REDOC = False
     app.config.SWAGGER_UI_CONFIGURATION = {
         "operationsSorter": "alpha",
         "docExpansion": "list",
