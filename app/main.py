@@ -3,7 +3,7 @@ import random
 
 import log
 from sanic import Sanic, response
-from sanic_openapi import doc
+from sanic_ext import openapi
 
 from app import config, helpers, settings, utils
 
@@ -12,13 +12,13 @@ config.init(app)
 
 
 @app.get("/")
-@doc.exclude(True)
+@openapi.exclude(True)
 def index(request):
-    return response.redirect(request.app.url_for("swagger.index"))
+    return response.redirect("/docs")
 
 
 @app.get("/examples")
-@doc.exclude(True)
+@openapi.exclude(True)
 async def examples(request):
     animated = utils.urls.flag(request, "animated")
     items = await asyncio.to_thread(helpers.get_example_images, request, "", animated)
@@ -33,7 +33,7 @@ async def examples(request):
 
 
 @app.get("/test")
-@doc.exclude(True)
+@openapi.exclude(True)
 async def test(request):
     if not settings.DEBUG:
         return response.redirect("/")
@@ -44,13 +44,13 @@ async def test(request):
 
 
 @app.get("/favicon.ico")
-@doc.exclude(True)
+@openapi.exclude(True)
 async def favicon(request):
     return await response.file("app/static/favicon.ico")
 
 
 @app.get("/robots.txt")
-@doc.exclude(True)
+@openapi.exclude(True)
 async def robots(request):
     return await response.file("app/static/robots.txt")
 

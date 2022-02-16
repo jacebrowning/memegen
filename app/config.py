@@ -3,8 +3,6 @@ from aiohttp.client_exceptions import ClientPayloadError
 from PIL import UnidentifiedImageError
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
-from sanic_cors import CORS
-from sanic_openapi import swagger_blueprint
 
 from . import settings, utils, views
 
@@ -33,7 +31,6 @@ class BugsnagErrorHandler(ErrorHandler):
 
 def init(app):
     app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
-    app.config.API_BASEPATH = "/"
     app.config.API_SCHEMES = [settings.SCHEME]
     app.config.API_VERSION = utils.meta.version()
     app.config.API_TITLE = "Memegen.link"
@@ -42,20 +39,21 @@ def init(app):
     app.config.API_LICENSE_URL = (
         "https://github.com/jacebrowning/memegen/blob/main/LICENSE.txt"
     )
-    app.config.API_SECURITY = [{"ApiKeyAuth": []}]
-    app.config.API_SECURITY_DEFINITIONS = {
-        "ApiKeyAuth": {"type": "apiKey", "in": "header", "name": "X-API-KEY"}
+
+    app.config.OAS_UI_DEFAULT = "swagger"
+    app.config.SWAGGER_UI_CONFIGURATION = {
+        "operationsSorter": "alpha",
+        "docExpansion": "list",
     }
 
-    swagger_blueprint.url_prefix = "/docs"
-    app.blueprint(swagger_blueprint)
+    app.ext.openapi.add_security_scheme("ApiKeyAuth", type="apiKey", name="X-API-KEY")
+    app.ext.openapi.secured("ApiKeyAuth")
 
     app.blueprint(views.clients.blueprint)
     app.blueprint(views.memes.blueprint)
     app.blueprint(views.templates.blueprint)
     app.blueprint(views.shortcuts.blueprint)  # registered last to avoid collisions
 
-    CORS(app)
     app.error_handler = BugsnagErrorHandler()
     bugsnag.configure(
         api_key=settings.BUGSNAG_API_KEY,

@@ -1235,32 +1235,19 @@ ext = ["sanic-ext"]
 test = ["sanic-testing (>=0.7.0)", "pytest (==6.2.5)", "coverage (==5.3)", "gunicorn (==20.0.4)", "pytest-cov", "beautifulsoup4", "pytest-sanic", "pytest-sugar", "pytest-benchmark", "chardet (>=3.0.0,<4.0.0)", "flake8", "black", "isort (>=5.0.0)", "bandit", "mypy (>=0.901,<0.910)", "docutils", "pygments", "uvicorn (<0.15.0)", "types-ujson"]
 
 [[package]]
-name = "sanic-cors"
-version = "2.0.1"
-description = "A Sanic extension adding a decorator for CORS support. Based on flask-cors by Cory Dolphin."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-sanic = ">=21.9.3"
-
-[[package]]
-name = "sanic-openapi"
-version = "21.12.0"
-description = "Easily document your Sanic API with a UI."
+name = "sanic-ext"
+version = "22.1.2"
+description = "Extend your Sanic installation with some core functionality."
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
 pyyaml = ">=3.0.0"
-sanic = ">=18.12.0"
 
 [package.extras]
-dev = ["black (==19.3b0)", "flake8 (==3.7.7)", "isort (==4.3.19)", "coverage (==4.5.3)", "pytest (==4.6.2)", "pytest-cov (==2.7.1)", "pytest-html (==1.20.0)", "pytest-runner (==5.1)", "tox (==3.12.1)", "recommonmark (==0.5.0)", "sphinx (==2.1.2)", "sphinx-rtd-theme (==0.4.3)"]
-doc = ["recommonmark (==0.5.0)", "sphinx (==2.1.2)", "sphinx-rtd-theme (==0.4.3)"]
-test = ["coverage (==4.5.3)", "pytest (==4.6.2)", "pytest-cov (==2.7.1)", "pytest-html (==1.20.0)", "pytest-runner (==5.1)", "tox (==3.12.1)"]
+dev = ["sanic-testing (>=0.8)", "coverage", "pytest", "pytest-cov", "pytest-asyncio", "tox", "black (>=21.4b2)", "flake8 (>=3.7.7)", "isort (>=5.0.0)"]
+test = ["sanic-testing (>=0.8)", "coverage", "pytest", "pytest-cov", "pytest-asyncio", "tox"]
 
 [[package]]
 name = "sanic-routing"
@@ -1530,7 +1517,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "1fe3a48a7f600e7704597917934ba91c834d3fdb36543c986f89419e18e5d450"
+content-hash = "984f1215a75534aed6e32db25f711827e99f24492b3224ae1a6135d0cca91cb4"
 
 [metadata.files]
 aiocache = [
@@ -2616,13 +2603,9 @@ sanic = [
     {file = "sanic-21.12.1-py3-none-any.whl", hash = "sha256:53230ba1a1081e6b075e58339a47c07d2bf618119fa40ba88c69fe57c99126f1"},
     {file = "sanic-21.12.1.tar.gz", hash = "sha256:6f15ecfef47d4288aac04d8741833a7701cd94f2d4a28fc5667ce2844363152d"},
 ]
-sanic-cors = [
-    {file = "Sanic-Cors-2.0.1.tar.gz", hash = "sha256:4d2f26333d49db428217814c66e89fc3df20fc62a5ab518a71fa22e2e249e19d"},
-    {file = "Sanic_Cors-2.0.1-py2.py3-none-any.whl", hash = "sha256:0c8132bed394ba86f93c03bef52787183652d96b70add4ea13c25eb98f344343"},
-]
-sanic-openapi = [
-    {file = "sanic-openapi-21.12.0.tar.gz", hash = "sha256:7cda62234d08c965f739eaac6b059e8f244d87061d97335c57287fd6ae16bf52"},
-    {file = "sanic_openapi-21.12.0-py3-none-any.whl", hash = "sha256:35412cf7c59777c0c6af60967890d30386be40395f69dc50ae88859e9143f484"},
+sanic-ext = [
+    {file = "sanic-ext-22.1.2.tar.gz", hash = "sha256:4645014137115706a21b9ef0c8f05f4d6332769dc419ee65563b70e0b4fcc86e"},
+    {file = "sanic_ext-22.1.2-py3-none-any.whl", hash = "sha256:880740b5961fcfbbe8caca735c4b93691f0fdf5e2f779480228548bddb110c98"},
 ]
 sanic-routing = [
     {file = "sanic-routing-0.7.1.tar.gz", hash = "sha256:35b09a12aceecc4e295bddb0ed39cff90363dd1504f9831c6b0b01f6f026635d"},
