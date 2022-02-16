@@ -8,7 +8,7 @@ from ..models import Template
 from .helpers import generate_url
 from .schemas import CustomRequest, MemeRequest, MemeResponse, TemplateResponse
 
-blueprint = Blueprint("Templates", url_prefix="/templates")
+blueprint = Blueprint("templates", url_prefix="/templates")
 
 
 @blueprint.get("/")
@@ -53,8 +53,7 @@ async def detail(request, id):
 
 
 @blueprint.post("/<id:slug>")
-@openapi.tag("Memes")
-@openapi.operation("Memes.create_from_template")
+@openapi.tag("memes")
 @openapi.exclude(settings.DEPLOYED)
 @openapi.summary("Create a meme from a template" + settings.SUFFIX)
 @openapi.parameter("id", str, "path")
@@ -69,7 +68,7 @@ async def build(request, id):
 
 
 @blueprint.post("/custom")
-@openapi.tag("Memes")
+@openapi.tag("memes")
 @openapi.exclude(settings.DEPLOYED)
 @openapi.summary("Create a meme from any image" + settings.SUFFIX)
 @openapi.body({"application/json": CustomRequest})

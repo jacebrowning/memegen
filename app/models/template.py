@@ -102,8 +102,8 @@ class Template:
             "overlays": len(self.overlay) if self.styles else 0,
             "styles": self.styles,
             "blank": request.app.url_for(
-                "Memes.blank",
-                template_id=self.id + "." + settings.DEFAULT_EXTENSION,
+                "memes.blank",
+                template_filename=self.id + "." + settings.DEFAULT_EXTENSION,
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
@@ -117,7 +117,7 @@ class Template:
 
     def build_self_url(self, request: Request) -> str:
         return request.app.url_for(
-            "Templates.detail",
+            "templates.detail",
             id=self.id,
             _external=True,
             _scheme=settings.SCHEME,
@@ -132,12 +132,12 @@ class Template:
     ) -> str:
         kwargs = {
             "template_id": self.id,
-            "text_paths": utils.text.encode(self.example) + "." + extension,
+            "text_filepath": utils.text.encode(self.example) + "." + extension,
             "_external": external,
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        url = request.app.url_for("Memes.text", **kwargs)
+        url = request.app.url_for("memes.text", **kwargs)
         return utils.urls.clean(url)
 
     def build_custom_url(
@@ -155,9 +155,9 @@ class Template:
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id="custom" if self.id == "_custom" else self.id,
-            text_paths=utils.text.encode(text_lines) + "." + extension,
+            text_filepath=utils.text.encode(text_lines) + "." + extension,
             _external=True,
             _scheme=settings.SCHEME,
             **utils.urls.params(background=background, style=style, font=font),

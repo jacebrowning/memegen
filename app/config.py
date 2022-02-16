@@ -52,7 +52,7 @@ def init(app):
     app.blueprint(views.clients.blueprint)
     app.blueprint(views.memes.blueprint)
     app.blueprint(views.templates.blueprint)
-    app.blueprint(views.shortcuts.blueprint)  # registered last to avoid collisions
+    app.blueprint(views.shortcuts.blueprint)
 
     app.error_handler = BugsnagErrorHandler()
     bugsnag.configure(

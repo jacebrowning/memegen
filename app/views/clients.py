@@ -5,7 +5,7 @@ from .. import models, utils
 from .helpers import preview_image
 from .schemas import AuthResponse, ErrorResponse, FontResponse
 
-blueprint = Blueprint("Clients", url_prefix="/")
+blueprint = Blueprint("clients", url_prefix="/")
 
 
 @blueprint.post("/auth")

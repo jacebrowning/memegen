@@ -16,12 +16,11 @@ from .schemas import (
 )
 from .templates import generate_url
 
-blueprint = Blueprint("Memes", url_prefix="/images")
+blueprint = Blueprint("memes", url_prefix="/images")
 
 
 @blueprint.get("/")
 @openapi.summary("List example memes")
-@openapi.operation("Memes.list")
 @openapi.parameter(
     "filter", str, "query", description="Part of the template name or example to match"
 )
@@ -40,7 +39,6 @@ async def index(request):
 
 @blueprint.post("/")
 @openapi.summary("Create a meme from a template")
-@openapi.operation("Memes.create")
 @openapi.body({"application/json": MemeRequest})
 @openapi.response(
     201, {"application/json": MemeResponse}, "Successfully created a meme"
@@ -111,7 +109,6 @@ async def custom(request):
 
 @blueprint.get("/custom")
 @openapi.summary("List popular custom memes")
-@openapi.operation("Memes.list_custom")
 @openapi.parameter("safe", bool, "query", description="Exclude NSFW results")
 @openapi.parameter(
     "filter", str, "query", description="Part of the meme's text to match"
@@ -139,10 +136,10 @@ async def list_custom(request):
     return response.json(items, status=200)
 
 
-@blueprint.get(r"/<template_id:.+\.\w+>")
-@openapi.tag("Templates")
+@blueprint.get(r"/<template_filename:.+\.\w+>")
+@openapi.tag("templates")
 @openapi.summary("Display a template background")
-@openapi.parameter("template_id", str, "path")
+@openapi.parameter("template_filename", str, "path")
 @openapi.response(
     200, {"image/*": bytes}, "Successfully displayed a template background"
 )
@@ -153,15 +150,15 @@ async def list_custom(request):
     {"image/*": bytes},
     "Invalid style for template or no image URL specified for custom template",
 )
-async def blank(request, template_id):
-    template_id, extension = template_id.rsplit(".", 1)
+async def blank(request, template_filename):
+    template_id, extension = template_filename.rsplit(".", 1)
 
     if request.args.get("style") == "animated" and extension != "gif":
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "Memes.blank",
-            template_id=template_id + ".gif",
+            "memes.blank",
+            template_filename=template_id + ".gif",
             **params,
         )
         return response.redirect(utils.urls.clean(url), status=301)
@@ -169,9 +166,9 @@ async def blank(request, template_id):
     return await render_image(request, template_id, extension=extension)
 
 
-@blueprint.get(r"/<template_id:slug>/<text_paths:[^/].*\.\w+>")
+@blueprint.get(r"/<template_id:slug>/<text_filepath:[^/].*\.\w+>")
 @openapi.summary("Display a custom meme")
-@openapi.parameter("text_paths", str, "path")
+@openapi.parameter("text_filepath", str, "path")
 @openapi.parameter("template_id", str, "path")
 @openapi.response(200, {"image/*": bytes}, "Successfully displayed a custom meme")
 @openapi.response(404, {"image/*": bytes}, "Template not found")
@@ -182,16 +179,16 @@ async def blank(request, template_id):
     {"image/*": bytes},
     "Invalid style for template or no image URL specified for custom template",
 )
-async def text(request, template_id, text_paths):
-    text_paths, extension = text_paths.rsplit(".", 1)
+async def text(request, template_id, text_filepath):
+    text_paths, extension = text_filepath.rsplit(".", 1)
 
     if request.args.get("style") == "animated" and extension != "gif":
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
-            text_paths=text_paths + ".gif",
+            text_filepath=text_paths + ".gif",
             **params,
         )
         return response.redirect(utils.urls.clean(url), status=301)
@@ -199,9 +196,9 @@ async def text(request, template_id, text_paths):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
-            text_paths=slug + "." + extension,
+            text_filepath=slug + "." + extension,
             **request.args,
         )
         return response.redirect(utils.urls.clean(url), status=301)
@@ -215,9 +212,9 @@ async def text(request, template_id, text_paths):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
-            "Memes.text",
+            "memes.text",
             template_id=template_id,
-            text_paths=slug + "." + extension,
+            text_filepath=slug + "." + extension,
             **params,
         )
         return response.redirect(utils.urls.clean(url), status=302)
