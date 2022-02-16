@@ -1,5 +1,4 @@
 import asyncio
-from dataclasses import dataclass
 
 from sanic import Blueprint, exceptions, response
 from sanic.log import logger
@@ -7,15 +6,17 @@ from sanic_ext import openapi
 
 from .. import helpers, settings, utils
 from .helpers import render_image
+from .schemas import (
+    AutomaticRequest,
+    CustomRequest,
+    ErrorResponse,
+    ExampleResponse,
+    MemeRequest,
+    MemeResponse,
+)
 from .templates import generate_url
 
 blueprint = Blueprint("Memes", url_prefix="/images")
-
-
-@dataclass
-class ExampleResponse:
-    url: str
-    template: str
 
 
 @blueprint.get("/")
@@ -37,26 +38,6 @@ async def index(request):
     )
 
 
-@dataclass
-class MemeRequest:
-    template_id: str
-    style: list[str]
-    text_lines: list[str]
-    font: str
-    extension: str
-    redirect: bool
-
-
-@dataclass
-class MemeResponse:
-    url: str
-
-
-@dataclass
-class ErrorResponse:
-    error: str
-
-
 @blueprint.post("/")
 @openapi.summary("Create a meme from a template")
 @openapi.operation("Memes.create")
@@ -74,13 +55,6 @@ class ErrorResponse:
 )
 async def create(request):
     return await generate_url(request, template_id_required=True)
-
-
-@dataclass
-class AutomaticRequest:
-    text: str
-    safe: bool
-    redirect: bool
 
 
 @blueprint.post("/automatic")
@@ -121,16 +95,6 @@ async def automatic(request):
         return response.redirect(utils.urls.add(url, status="201"))
 
     return response.json({"url": url, "confidence": confidence}, status=201)
-
-
-@dataclass
-class CustomRequest:
-    background: str
-    style: str
-    text_lines: list[str]
-    font: str
-    extension: str
-    redirect: bool
 
 
 @blueprint.post("/custom")

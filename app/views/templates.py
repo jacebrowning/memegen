@@ -1,5 +1,4 @@
 import asyncio
-from dataclasses import dataclass
 
 from sanic import Blueprint, exceptions, response
 from sanic_ext import openapi
@@ -7,27 +6,9 @@ from sanic_ext import openapi
 from .. import helpers, settings, utils
 from ..models import Template
 from .helpers import generate_url
+from .schemas import CustomRequest, MemeRequest, MemeResponse, TemplateResponse
 
 blueprint = Blueprint("Templates", url_prefix="/templates")
-
-
-@dataclass
-class ExampleResponse:
-    text: list[str]
-    url: str
-
-
-@dataclass
-class TemplateResponse:
-    id: str
-    name: str
-    lines: int
-    overlays: int
-    styles: list[str]
-    blank: str
-    example: ExampleResponse
-    source: str
-    _self: str
 
 
 @blueprint.get("/")
@@ -71,18 +52,6 @@ async def detail(request, id):
     raise exceptions.NotFound(f"Template not found: {id}")
 
 
-@dataclass
-class MemeRequest:
-    text_lines: list[str]
-    extension: str
-    redirect: bool
-
-
-@dataclass
-class MemeResponse:
-    url: str
-
-
 @blueprint.post("/<id:slug>")
 @openapi.tag("Memes")
 @openapi.operation("Memes.create_from_template")
@@ -97,16 +66,6 @@ class MemeResponse:
 )
 async def build(request, id):
     return await generate_url(request, id)
-
-
-@dataclass
-class CustomRequest:
-    background: str
-    style: str
-    text_lines: list[str]
-    font: str
-    extension: str
-    redirect: bool
 
 
 @blueprint.post("/custom")

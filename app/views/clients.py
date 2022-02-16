@@ -1,27 +1,11 @@
-from dataclasses import dataclass
-from datetime import datetime
-
 from sanic import Blueprint, response
 from sanic_ext import openapi
 
 from .. import models, utils
 from .helpers import preview_image
+from .schemas import AuthResponse, ErrorResponse, FontResponse
 
 blueprint = Blueprint("Clients", url_prefix="/")
-
-
-@dataclass
-class AuthResponse:
-    email: str
-    image_access: bool
-    search_access: bool
-    created: datetime
-    modified: datetime
-
-
-@dataclass
-class ErrorResponse:
-    error: str
 
 
 @blueprint.post("/auth")
@@ -34,13 +18,6 @@ async def validate(request):
         info or {"error": "API key missing or invalid."},
         status=200 if info else 401,
     )
-
-
-@dataclass
-class FontResponse:
-    filename: str
-    id: str
-    alias: str
 
 
 @blueprint.get("/fonts")
