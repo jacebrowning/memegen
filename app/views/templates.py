@@ -38,7 +38,7 @@ async def index(request):
 
 @blueprint.get("/<id:slug>")
 @openapi.summary("View a specific template")
-@openapi.parameter("id", str, "path")
+@openapi.parameter("id", str, "path", description="ID of a meme template")
 @openapi.response(
     200,
     {"application/json": TemplateResponse},
@@ -56,7 +56,7 @@ async def detail(request, id):
 @openapi.tag("memes")
 @openapi.exclude(settings.DEPLOYED)
 @openapi.summary("Create a meme from a template" + settings.SUFFIX)
-@openapi.parameter("id", str, "path")
+@openapi.parameter("id", str, "path", description="ID of a meme template")
 @openapi.body({"application/json": MemeRequest})
 @openapi.response(
     201,

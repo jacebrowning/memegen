@@ -139,7 +139,12 @@ async def list_custom(request):
 @blueprint.get(r"/<template_filename:.+\.\w+>")
 @openapi.tag("templates")
 @openapi.summary("Display a template background")
-@openapi.parameter("template_filename", str, "path")
+@openapi.parameter(
+    "template_filename",
+    str,
+    "path",
+    description="Image filename, i.e. `<template_id>.<extension>`",
+)
 @openapi.response(
     200, {"image/*": bytes}, "Successfully displayed a template background"
 )
@@ -168,8 +173,13 @@ async def blank(request, template_filename):
 
 @blueprint.get(r"/<template_id:slug>/<text_filepath:[^/].*\.\w+>")
 @openapi.summary("Display a custom meme")
-@openapi.parameter("text_filepath", str, "path")
-@openapi.parameter("template_id", str, "path")
+@openapi.parameter(
+    "text_filepath",
+    str,
+    "path",
+    description="Text paths and image filename, i.e. `<line>/<line>.<extension>`",
+)
+@openapi.parameter("template_id", str, "path", description="ID of a meme template")
 @openapi.response(200, {"image/*": bytes}, "Successfully displayed a custom meme")
 @openapi.response(404, {"image/*": bytes}, "Template not found")
 @openapi.response(414, {"image/*": bytes}, "Custom text too long (length >200)")
