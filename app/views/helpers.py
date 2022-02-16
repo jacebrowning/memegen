@@ -13,7 +13,7 @@ async def generate_url(
     if request.form:
         payload = dict(request.form)
         for key in list(payload.keys()):
-            if "lines" not in key and "style" not in key:
+            if "style" not in key and "text" not in key:
                 payload[key] = payload.pop(key)[0]
     else:
         try:
@@ -23,6 +23,8 @@ async def generate_url(
 
     with suppress(KeyError):
         payload["style"] = payload.pop("style[]")
+    with suppress(KeyError):
+        payload["text"] = payload.pop("text[]")
     with suppress(KeyError):
         payload["text_lines"] = payload.pop("text_lines[]")
 
@@ -39,7 +41,7 @@ async def generate_url(
         style = ",".join([(s.strip() or "default") for s in style])
     while style.endswith(",default"):
         style = style.removesuffix(",default")
-    text_lines = utils.urls.arg(payload, [], "text_lines")
+    text_lines = utils.urls.arg(payload, [], "text", "text_lines")
     font = utils.urls.arg(payload, "", "font")
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")

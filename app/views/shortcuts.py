@@ -71,7 +71,7 @@ async def legacy_example_path(request, template_id):
 @blueprint.get(r"/images/<template_id:slug>/<text_paths:[^/].*>")
 @openapi.summary("Redirect to a custom image")
 @openapi.parameter(
-    "text_paths", str, "path", description="Text paths, i.e. `<line>/<line>`"
+    "text_paths", str, "path", description="Lines of text: `<line1>/<line2>`"
 )
 @openapi.parameter("template_id", str, "path", description="ID of a meme template")
 @openapi.response(302, {"image/*": bytes}, "Successfully redirected to a custom image")
@@ -105,7 +105,7 @@ async def custom_path(request, template_id, text_paths):
 @blueprint.get(r"/<template_id:(?!templates)[a-z-]+>/<text_paths:[^/].*\.\w+>")
 @openapi.summary("Redirect to a custom image")
 @openapi.parameter(
-    "text_paths", str, "path", description="Text paths, i.e. `<line>/<line>`"
+    "text_paths", str, "path", description="Lines of text: `<line1>/<line2>`"
 )
 @openapi.parameter("template_id", str, "path", description="ID of a meme template")
 @openapi.response(302, {"image/*": bytes}, "Successfully redirected to a custom image")
@@ -126,7 +126,7 @@ async def legacy_custom_image(request, template_id, text_paths):
 @blueprint.get(r"/<template_id:(?!templates)[a-z-]+>/<text_paths:[^/].*>")
 @openapi.summary("Redirect to a custom image")
 @openapi.parameter(
-    "text_paths", str, "path", description="Text paths, i.e. `<line>/<line>`"
+    "text_paths", str, "path", description="Lines of text: `<line1>/<line2>`"
 )
 @openapi.parameter("template_id", str, "path", description="ID of a meme template")
 @openapi.response(302, {"image/*": bytes}, "Successfully redirected to a custom image")

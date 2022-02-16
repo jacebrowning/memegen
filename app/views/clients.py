@@ -33,7 +33,7 @@ async def fonts(request):
 
 @blueprint.get("/images/preview.jpg")
 @openapi.summary("Display a preview of a custom meme")
-@openapi.parameter("lines[]", str, "query", description="Lines of text to render")
+@openapi.parameter("text[]", str, "query", description="Lines of text to render")
 @openapi.parameter("style", str, "query", description="Style name or custom overlay")
 @openapi.parameter(
     "template", str, "query", description="Template ID, URL, or custom background"
@@ -41,7 +41,7 @@ async def fonts(request):
 @openapi.response(200, {"image/jpeg": bytes}, "Successfully displayed a custom meme")
 async def preview(request):
     id = request.args.get("template", "_error")
-    lines = request.args.getlist("lines[]", [])
+    lines = request.args.getlist("text[]") or request.args.getlist("lines[]") or []
     style = request.args.get("style") or ",".join(request.args.getlist("styles[]", []))
     while style.endswith(",default"):
         style = style.removesuffix(",default")

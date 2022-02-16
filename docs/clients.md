@@ -57,7 +57,7 @@ function updatePreview() {
   var line_2 = encodeURIComponent($("#line_2").val() || " ")
 
   var api = "https://api.memegen.link/images/preview.jpg"
-  var url = `${api}?template=${template}&lines[]=${line_1}&lines[]=${line_2}`
+  var url = `${api}?template=${template}&text[]=${line_1}&text[]=${line_2}`
 
   $("#preview").attr("src", url)
 }
