@@ -78,7 +78,7 @@ test: install
 ifdef CI
 	poetry run pytest --verbose --junit-xml=results/junit.xml
 else
-	@ if test -e .cache/v/cache/lastfailed; then \
+	@ if test -e .cache/pytest/v/cache/lastfailed; then \
 		echo "Running failed tests..." && \
 		poetry run pytest --last-failed --maxfail=1 --no-cov && \
 		echo "Running all tests..." && \

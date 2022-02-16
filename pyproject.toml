@@ -59,7 +59,7 @@ pytest-expecter = "^2.3"
 pytest-random = "*"
 pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
-sanic-testing = "^0.8.2"
+sanic-testing = "*"
 locust = "^2.5.1"
 
 # Coverage
@@ -103,9 +103,11 @@ addopts = """
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html:.cache/htmlcov --no-cov-on-fail
 """
 
-cache_dir = ".cache"
+cache_dir = ".cache/pytest/"
 
 markers = "slow"
+
+asyncio_mode = "strict"
 
 [build-system]
 
