@@ -3,10 +3,10 @@ import asyncio
 from sanic import Blueprint, exceptions, response
 from sanic_ext import openapi
 
-from .. import helpers, settings, utils
+from .. import helpers, utils
 from ..models import Template
 from .helpers import generate_url
-from .schemas import CustomRequest, MemeRequest, MemeResponse, TemplateResponse
+from .schemas import CustomRequest, MemeResponse, MemeTemplateRequest, TemplateResponse
 
 blueprint = Blueprint("templates", url_prefix="/templates")
 
@@ -53,11 +53,9 @@ async def detail(request, id):
 
 
 @blueprint.post("/<id:slug>")
-@openapi.tag("memes")
-@openapi.exclude(settings.DEPLOYED)
-@openapi.summary("Create a meme from a template" + settings.SUFFIX)
+@openapi.summary("Create a meme from a template")
 @openapi.parameter("id", str, "path", description="ID of a meme template")
-@openapi.body({"application/json": MemeRequest})
+@openapi.body({"application/json": MemeTemplateRequest})
 @openapi.response(
     201,
     {"application/json": MemeResponse},
@@ -68,9 +66,7 @@ async def build(request, id):
 
 
 @blueprint.post("/custom")
-@openapi.tag("memes")
-@openapi.exclude(settings.DEPLOYED)
-@openapi.summary("Create a meme from any image" + settings.SUFFIX)
+@openapi.summary("Create a meme from any image")
 @openapi.body({"application/json": CustomRequest})
 @openapi.response(
     201,

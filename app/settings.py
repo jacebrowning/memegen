@@ -3,6 +3,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent.resolve()
 
+PLACEHOLDER = "string"  # Swagger UI placeholder value
+
 # Server configuration
 
 PORT = int(os.environ.get("PORT", 5000))
@@ -24,11 +26,6 @@ else:  # localhost
 
 BASE_URL = f"{SCHEME}://{SERVER_NAME}"
 DEPLOYED = RELEASE_STAGE != "local" and not DEBUG
-
-# API
-
-SUFFIX = " [DEBUG ONLY]" if not DEPLOYED else ""
-PLACEHOLDER = "string"  # Swagger UI placeholder value
 
 # Fonts
 

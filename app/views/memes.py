@@ -137,7 +137,6 @@ async def list_custom(request):
 
 
 @blueprint.get(r"/<template_filename:.+\.\w+>")
-@openapi.tag("templates")
 @openapi.summary("Display a template background")
 @openapi.parameter(
     "template_filename",

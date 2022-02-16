@@ -39,6 +39,15 @@ class CustomRequest:
 
 
 @dataclass
+class MemeTemplateRequest:
+    style: list[str]
+    text: list[str]
+    font: str
+    extension: str
+    redirect: bool
+
+
+@dataclass
 class AutomaticRequest:
     text: str
     safe: bool
