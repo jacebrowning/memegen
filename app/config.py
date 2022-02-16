@@ -33,8 +33,7 @@ class BugsnagErrorHandler(ErrorHandler):
 
 
 def init(app: Sanic):
-    if not settings.DEPLOYED:
-        app.config.API_HOST = app.config.SERVER_NAME = settings.SERVER_NAME
+    app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.OAS_UI_DEFAULT = "swagger"
     app.config.SWAGGER_UI_CONFIGURATION = {
         "operationsSorter": "alpha",
