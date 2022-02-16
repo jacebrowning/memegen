@@ -5,7 +5,8 @@ from sanic import Blueprint, exceptions, response
 from sanic.log import logger
 from sanic_ext import openapi
 
-from .. import helpers, models, settings, utils
+from .. import helpers, settings, utils
+from .helpers import render_image
 from .templates import generate_url
 
 blueprint = Blueprint("Memes", url_prefix="/images")
@@ -258,102 +259,3 @@ async def text(request, template_id, text_paths):
         return response.redirect(utils.urls.clean(url), status=302)
 
     return await render_image(request, template_id, slug, watermark, extension)
-
-
-async def render_image(
-    request,
-    id: str,
-    slug: str = "",
-    watermark: str = "",
-    extension: str = settings.DEFAULT_EXTENSION,
-):
-    lines = utils.text.decode(slug)
-    asyncio.create_task(utils.meta.track(request, lines))
-
-    status = int(utils.urls.arg(request.args, "200", "status"))
-
-    if any(len(part.encode()) > 200 for part in slug.split("/")):
-        logger.error(f"Slug too long: {slug}")
-        slug = slug[:50] + "..."
-        lines = utils.text.decode(slug)
-        template = models.Template.objects.get("_error")
-        style = settings.DEFAULT_STYLE
-        status = 414
-
-    elif id == "custom":
-        url = utils.urls.arg(request.args, None, "background", "alt")
-        if url:
-            template = await models.Template.create(url)
-            if not template.image.exists():
-                logger.error(f"Unable to download image URL: {url}")
-                template = models.Template.objects.get("_error")
-                if url != settings.PLACEHOLDER:
-                    status = 415
-
-            style = utils.urls.arg(request.args, settings.DEFAULT_STYLE, "style")
-            if not utils.urls.schema(style):
-                style = style.lower()
-            if not await template.check(style):
-                if utils.urls.schema(style):
-                    status = 415
-                elif style != settings.PLACEHOLDER:
-                    status = 422
-
-        else:
-            logger.error("No image URL specified for custom template")
-            template = models.Template.objects.get("_error")
-            style = settings.DEFAULT_STYLE
-            status = 422
-
-    else:
-        template = models.Template.objects.get_or_none(id)
-        if not template or not template.image.exists():
-            logger.error(f"No such template: {id}")
-            template = models.Template.objects.get("_error")
-            if id != settings.PLACEHOLDER:
-                status = 404
-
-        style = utils.urls.arg(request.args, settings.DEFAULT_STYLE, "style", "alt")
-        if not await template.check(style):
-            if utils.urls.schema(style):
-                status = 415
-            elif style != settings.PLACEHOLDER:
-                status = 422
-
-    if extension not in settings.ALLOWED_EXTENSIONS:
-        extension = settings.DEFAULT_EXTENSION
-        status = 422
-
-    font_name = utils.urls.arg(request.args, "", "font")
-    if font_name == settings.PLACEHOLDER:
-        font_name = ""
-    else:
-        try:
-            models.Font.objects.get(font_name)
-        except ValueError:
-            font_name = ""
-            status = 422
-
-    try:
-        size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
-        if 0 < size[0] < 10 or 0 < size[1] < 10:
-            raise ValueError(f"dimensions are too small: {size}")
-    except ValueError as e:
-        logger.error(f"Invalid size: {e}")
-        size = 0, 0
-        status = 422
-
-    frames = int(request.args.get("frames", 0))
-
-    path = await asyncio.to_thread(
-        utils.images.save,
-        template,
-        lines,
-        watermark,
-        font_name=font_name,
-        extension=extension,
-        style=style,
-        size=size,
-        maximum_frames=frames,
-    )
-    return await response.file(path, status)

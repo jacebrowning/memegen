@@ -1,12 +1,11 @@
-import asyncio
 from dataclasses import dataclass
 from datetime import datetime
 
 from sanic import Blueprint, response
-from sanic.log import logger
 from sanic_ext import openapi
 
 from .. import models, utils
+from .helpers import preview_image
 
 blueprint = Blueprint("Clients", url_prefix="/")
 
@@ -70,34 +69,3 @@ async def preview(request):
     while style.endswith(",default"):
         style = style.removesuffix(",default")
     return await preview_image(request, id, lines, style)
-
-
-async def preview_image(request, id: str, lines: list[str], style: str):
-    error = ""
-
-    id = utils.urls.clean(id)
-    if utils.urls.schema(id):
-        template = await models.Template.create(id)
-        if not template.image.exists():
-            logger.error(f"Unable to download image URL: {id}")
-            template = models.Template.objects.get("_error")
-            error = "Invalid Background"
-    else:
-        template = models.Template.objects.get_or_none(id)
-        if not template:
-            logger.error(f"No such template: {id}")
-            template = models.Template.objects.get("_error")
-            error = "Unknown Template"
-
-    if not any(line.strip() for line in lines):
-        lines = template.example
-
-    if not utils.urls.schema(style):
-        style = style.strip().lower()
-    if not await template.check(style):
-        error = "Invalid Overlay"
-
-    data, content_type = await asyncio.to_thread(
-        utils.images.preview, template, lines, style=style, watermark=error.upper()
-    )
-    return response.raw(data, content_type=content_type)
