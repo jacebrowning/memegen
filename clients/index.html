@@ -260,7 +260,7 @@ function updatePreview() {
   var line_2 = encodeURIComponent($(&quot;#line_2&quot;).val() || &quot; &quot;)
 
   var api = &quot;https://api.memegen.link/images/preview.jpg&quot;
-  var url = `${api}?template=${template}&amp;lines[]=${line_1}&amp;lines[]=${line_2}`
+  var url = `${api}?template=${template}&amp;text[]=${line_1}&amp;text[]=${line_2}`
 
   $(&quot;#preview&quot;).attr(&quot;src&quot;, url)
 }
