@@ -7,7 +7,7 @@ from .models import Template
 def get_valid_templates(
     request: Request, query: str = "", animated: bool | None = None
 ) -> list[dict]:
-    templates = Template.objects.filter(valid=True, _exclude="_custom")
+    templates: list[Template] = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
         templates = [t for t in templates if t.matches(query)]
     else:
@@ -49,7 +49,7 @@ def get_example_images(
 def get_test_images(request: Request) -> list[str]:
     return [
         request.app.url_for(
-            "memes.text",
+            "images.text",
             template_id=id,
             text_filepath=utils.text.encode(lines) + "." + extension,
         )

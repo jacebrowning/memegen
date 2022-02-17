@@ -42,7 +42,7 @@ async def index(request):
 @openapi.response(
     200,
     {"application/json": TemplateResponse},
-    "Successfully returned a specific templates",
+    "Successfully returned a specific template",
 )
 @openapi.response(404, str, description="Template not found")
 async def detail(request, id):
