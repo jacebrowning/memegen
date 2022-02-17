@@ -35,6 +35,7 @@ class BugsnagErrorHandler(ErrorHandler):
 def init(app: Sanic):
     app.config.SERVER_NAME = settings.SERVER_NAME
     app.config.CORS_ORIGINS = "*"
+    app.config.CORS_SEND_WILDCARD = True
     app.config.CORS_AUTOMATIC_OPTIONS = False
     app.config.OAS_UI_DEFAULT = "swagger"
     app.config.SWAGGER_UI_CONFIGURATION = {
