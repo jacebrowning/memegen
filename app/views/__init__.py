@@ -1,1 +1,1 @@
-from . import clients, memes, shortcuts, templates
+from . import clients, fonts, images, shortcuts, templates

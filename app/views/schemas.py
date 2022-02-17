@@ -16,6 +16,7 @@ class FontResponse:
     filename: str
     id: str
     alias: str
+    _self: str
 
 
 @dataclass

@@ -9,13 +9,6 @@ def describe_auth():
             expect(response.json) == {"error": "API key missing or invalid."}
 
 
-def describe_fonts():
-    def describe_GET():
-        def it_returns_all_fonts(expect, client):
-            request, response = client.get("/fonts")
-            expect(len(response.json)) == 6
-
-
 def describe_image_preview():
     @pytest.fixture
     def path():

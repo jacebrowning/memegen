@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import KW_ONLY, asdict, dataclass
+from dataclasses import KW_ONLY, dataclass
 from pathlib import Path
+
+from sanic import Request
 
 from .. import settings
 
@@ -34,9 +36,21 @@ class Font:
     def path(self) -> Path:
         return settings.ROOT / "fonts" / self.filename
 
-    @property
-    def data(self) -> dict:
-        return asdict(self)
+    def jsonify(self, request: Request) -> dict:
+        return {
+            "id": self.id,
+            "alias": self.alias or None,
+            "filename": self.filename,
+            "_self": self.build_self_url(request),
+        }
+
+    def build_self_url(self, request: Request) -> str:
+        return request.app.url_for(
+            "fonts.detail",
+            id=self.id,
+            _external=True,
+            _scheme=settings.SCHEME,
+        )
 
 
 FONTS = [

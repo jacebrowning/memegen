@@ -1,9 +1,9 @@
 from sanic import Blueprint, response
 from sanic_ext import openapi
 
-from .. import models, utils
+from .. import utils
 from .helpers import preview_image
-from .schemas import AuthResponse, ErrorResponse, FontResponse
+from .schemas import AuthResponse, ErrorResponse
 
 blueprint = Blueprint("clients", url_prefix="/")
 
@@ -18,17 +18,6 @@ async def validate(request):
         info or {"error": "API key missing or invalid."},
         status=200 if info else 401,
     )
-
-
-@blueprint.get("/fonts")
-@openapi.summary("List available fonts")
-@openapi.response(
-    200,
-    {"application/json": list[FontResponse]},
-    "Successfully returned a list of fonts",
-)
-async def fonts(request):
-    return response.json([font.data for font in models.Font.objects.all()])
 
 
 @blueprint.get("/images/preview.jpg")

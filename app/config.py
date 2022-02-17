@@ -43,7 +43,8 @@ def init(app: Sanic):
     }
 
     app.blueprint(views.clients.blueprint)
-    app.blueprint(views.memes.blueprint)
+    app.blueprint(views.fonts.blueprint)
+    app.blueprint(views.images.blueprint)
     app.blueprint(views.templates.blueprint)
     app.blueprint(views.shortcuts.blueprint)
 
@@ -63,7 +64,11 @@ def init(app: Sanic):
 
         [
             {
-                "_self": "https://api.memegen.link/templates/aag",
+                "id": "aag",
+                "name": "Ancient Aliens Guy",
+                "lines": 2,
+                "overlays": 0,
+                "styles": [],
                 "blank": "https://api.memegen.link/images/aag.png",
                 "example": {
                     "text": [
@@ -72,12 +77,7 @@ def init(app: Sanic):
                     ],
                     "url": "https://api.memegen.link/images/aag/_/aliens.png"
                 },
-                "id": "aag",
-                "lines": 2,
-                "name": "Ancient Aliens Guy",
-                "overlays": 0,
                 "source": "http://knowyourmeme.com/memes/ancient-aliens",
-                "styles": []
             },
             ...
         ]
