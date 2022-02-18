@@ -11,7 +11,7 @@ from .. import settings
 def version() -> str:
     changelog_lines = Path("CHANGELOG.md").read_text().splitlines()
     version_heading = changelog_lines[2]
-    return version_heading.split(" ")[-1]
+    return version_heading.split(" ", maxsplit=1)[1]
 
 
 @cached(ttl=60 * 15 if settings.DEPLOYED else 0)
