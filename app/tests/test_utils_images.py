@@ -39,6 +39,13 @@ def test_images(images, id, lines, extension):
     utils.images.save(template, lines, extension=extension, directory=images)
 
 
+@pytest.mark.slow
+def test_animated_text_on_static_image(images):
+    template = models.Template.objects.get("sparta")
+    lines = ["this is", "animated"]
+    utils.images.save(template, lines, extension="gif", directory=images)
+
+
 # Size
 
 

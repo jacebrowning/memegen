@@ -1,5 +1,6 @@
 import asyncio
 import shutil
+from contextlib import suppress
 from functools import cached_property
 from pathlib import Path
 
@@ -91,7 +92,11 @@ class Template:
                 settings.DEFAULT_STYLE + settings.PLACEHOLDER_SUFFIX
             )
 
-        logger.warning(f"Style {style!r} not available for template: {self.id}")
+        if style == "animated":
+            logger.info(f"Using default image to animate static template: {self.id}")
+        else:
+            logger.warning(f"Style {style!r} not available for template: {self.id}")
+
         return self.get_image()
 
     def jsonify(self, request: Request) -> dict:
@@ -294,6 +299,24 @@ class Template:
             await foreground.unlink(missing_ok=True)
 
         return await foreground.exists()
+
+    def update(self, start: str, stop: str):
+        try:
+            starts = [float(value) for value in start.split(",") if value]
+            stops = [float(value) for value in stop.split(",") if value]
+        except ValueError:
+            logger.error(f"Invalid text animation: {start=} {stop=}")
+            return
+
+        with suppress(IndexError):
+            for index, value in enumerate(starts):
+                self.text[index].start = value
+
+        with suppress(IndexError):
+            for index, value in enumerate(stops):
+                self.text[index].stop = value
+
+        logger.info(f"Updated {self} with: {starts=} {stops=}")
 
     def clean(self):
         for path in self.directory.iterdir():

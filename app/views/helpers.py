@@ -174,6 +174,11 @@ async def render_image(
             elif style != settings.PLACEHOLDER:
                 status = 422
 
+    template.update(
+        utils.urls.arg(request.args, "", "start"),
+        utils.urls.arg(request.args, "", "stop"),
+    )
+
     if extension not in settings.ALLOWED_EXTENSIONS:
         extension = settings.DEFAULT_EXTENSION
         status = 422

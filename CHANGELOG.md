@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.7 (beta)
+
+- Added support for `start`/`stop` parameters to control text animation.
+
 ## 10.6
 
 - Added `text[]` as as alias for `line[]` (preview) and `text_lines[]` (create).
