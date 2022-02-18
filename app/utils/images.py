@@ -225,10 +225,12 @@ def render_animation(
 
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style="animated"))
+    duration = source.info.get("duration", 100)
     if total := getattr(source, "n_frames", 0):
         sources = ImageSequence.Iterator(source)
     elif any(text.animated for text in template.text):
         sources = [source] * settings.MAXIMUM_FRAMES
+        duration = 200
         total = settings.MAXIMUM_FRAMES
     else:
         sources = [source]
@@ -312,7 +314,7 @@ def render_animation(
         frames.append(image)
 
     ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
-    duration = source.info.get("duration", 100) / ratio
+    duration = duration / ratio
 
     return frames, duration
 
