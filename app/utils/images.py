@@ -233,8 +233,10 @@ def render_animation(
         duration = 200
         total = settings.MAXIMUM_FRAMES
     else:
-        sources = [source]
-        total = 1
+        template.update("0.0,0.5", "0.5,1.0")
+        sources = [source, source]
+        duration = 300
+        total = 2
 
     if maximum_frames >= total:
         modulus = 1.0
