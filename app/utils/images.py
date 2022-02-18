@@ -71,7 +71,7 @@ def save(
         if settings.DEPLOYED:
             logger.info(f"Loading meme from {path}")
             return path
-        logger.info(f"Reloading meme at {path}")
+        logger.info(f"Rebuilding meme at {path}")
     else:
         logger.info(f"Saving meme to {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -225,7 +225,15 @@ def render_animation(
 
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style="animated"))
-    total = getattr(source, "n_frames", 1)
+    if total := getattr(source, "n_frames", 0):
+        sources = ImageSequence.Iterator(source)
+    elif any(text.animated for text in template.text):
+        sources = [source] * settings.MAXIMUM_FRAMES
+        total = settings.MAXIMUM_FRAMES
+    else:
+        sources = [source]
+        total = 1
+
     if maximum_frames >= total:
         modulus = 1.0
     elif maximum_frames:
@@ -242,7 +250,7 @@ def render_animation(
     ) and not (is_preview or settings.DEBUG):
         watermark = ""
 
-    for index, frame in enumerate(ImageSequence.Iterator(source)):
+    for index, frame in enumerate(sources):
         if (index % modulus) >= 1:
             continue
 
@@ -423,7 +431,7 @@ def get_image_elements(
             yield get_image_element(
                 lines, index, text, font_name, image_size, watermark
             )
-        elif not text.stop or (text.start <= percent_rendered <= text.stop):
+        elif not text.stop or (text.start <= percent_rendered < text.stop):
             yield get_image_element(
                 lines, index, text, font_name, image_size, watermark
             )

@@ -8,7 +8,6 @@
     "**/.venv/": true,
     "**/dist/": true,
     "**/node_modules/": true,
-    "**images/": true,
     "setup.py": true,
     ".vscode/.ropeproject": true
   },
