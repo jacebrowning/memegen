@@ -44,10 +44,6 @@ class Text:
     def get_watermark(cls) -> "Text":
         return cls(color="#FFFFFF85")
 
-    @property
-    def animated(self) -> bool:
-        return not (self.start == 0.0 and self.stop == 1.0)
-
     def get_anchor(self, image_size: Dimensions, watermark: str = "") -> Point:
         image_width, image_height = image_size
         anchor = int(image_width * self.anchor_x), int(image_height * self.anchor_y)
