@@ -46,6 +46,13 @@ def test_animated_text_on_static_image(images):
     utils.images.save(template, lines, extension="gif", directory=images)
 
 
+@pytest.mark.slow
+def test_animated_text_on_single_lines(images):
+    template = models.Template.objects.get("cbg")
+    lines = [" ", "not. animated. ever"]
+    utils.images.save(template, lines, extension="gif", directory=images)
+
+
 # Size
 
 

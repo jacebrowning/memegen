@@ -232,11 +232,14 @@ def render_animation(
         sources = [source] * settings.MAXIMUM_FRAMES
         duration = 200
         total = settings.MAXIMUM_FRAMES
-    else:
+    elif all(line.strip() for line in lines):
         template.update("0.0,0.5", "0.5,1.0")
         sources = [source, source]
         duration = 300
         total = 2
+    else:
+        sources = [source]
+        total = 1
 
     if maximum_frames >= total:
         modulus = 1.0
