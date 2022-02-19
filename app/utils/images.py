@@ -235,7 +235,7 @@ def render_animation(
     elif all(line.strip() for line in lines):
         template.update("0.05,0.5", "0.95,0.95")
         sources = [source] * 20
-        duration = 200
+        duration = 250
         total = 20
     else:
         sources = [source]
