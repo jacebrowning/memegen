@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import datafiles
-import log
 import pytest
+from sanic.log import logger
 
 from ..models import Overlay, Template, Text
 
@@ -44,7 +44,7 @@ def describe_template():
             template = Template.objects.get_or_create("_custom-empty")
             template.datafile.path.unlink(missing_ok=True)
             template.datafile.path.parent.rmdir()
-            log.info(template.image)
+            logger.info(f"{template.image=}")
             expect(template.datafile.path.parent.exists()) == True
 
     def describe_create():

@@ -1,7 +1,6 @@
 import asyncio
 import random
 
-import log
 from sanic import Sanic, response
 from sanic_ext import openapi
 
@@ -56,8 +55,6 @@ async def robots(request):
 
 
 if __name__ == "__main__":
-    log.reset()
-    log.silence("datafiles", allow_warning=True)
     app.run(
         host="0.0.0.0",
         port=settings.PORT,

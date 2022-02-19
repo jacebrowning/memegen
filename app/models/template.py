@@ -316,7 +316,8 @@ class Template:
             for index, value in enumerate(stops):
                 self.text[index].stop = value
 
-        logger.info(f"Updated {self} with: {starts=} {stops=}")
+        if starts or stops:
+            logger.info(f"Updated {self} with: {starts=} {stops=}")
 
     def clean(self):
         for path in self.directory.iterdir():
