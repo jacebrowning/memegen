@@ -49,7 +49,9 @@ def init(app: Sanic):
     app.blueprint(views.templates.blueprint)
     app.blueprint(views.shortcuts.blueprint)
 
+    app.config.MOTD = False
     app.ext._display = lambda: None
+
     app.ext.openapi.add_security_scheme("ApiKeyAuth", type="apiKey", name="X-API-KEY")
     app.ext.openapi.secured("ApiKeyAuth")
     app.ext.openapi.describe(
