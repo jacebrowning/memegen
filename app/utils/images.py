@@ -233,10 +233,10 @@ def render_animation(
         duration = 200
         total = settings.MAXIMUM_FRAMES
     elif all(line.strip() for line in lines):
-        template.update("0.05,0.5", "0.95,0.95")
-        sources = [source] * 20
-        duration = 250
-        total = 20
+        template.update("0.2,0.6", "1.0,1.0")
+        sources = [source] * 10
+        duration = 300
+        total = 10
     else:
         sources = [source]
         total = 1
