@@ -316,7 +316,9 @@ def render_animation(
             image = add_blurred_background(image, background, *size)
 
         if watermark:
-            image = add_watermark(image, watermark, is_preview)
+            image = add_watermark(image, watermark, is_preview, percent_rendered)
+        elif 1 < total <= 5:
+            image = add_watermark(image, ".", is_preview, percent_rendered)
         if settings.DEBUG:
             image = add_counter(image, index, total, modulus)
 
@@ -393,19 +395,28 @@ def add_blurred_background(
     return blurred
 
 
-def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
+def add_watermark(
+    image: Image, text: str, is_preview: bool, percent_rendered: float = 1.0
+) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
-    font = get_font("tiny", text, 0.0, size, 99)
+    font = get_font("tiny", text, 0.0, size, 1 if len(text) == 1 else 99)
     offset = get_text_offset(text, font, size)
 
     watermark = Text.get_error() if is_preview else Text.get_watermark()
     stroke_width = get_stroke_width(font)
     stroke_width, stroke_fill = watermark.get_stroke(stroke_width)
 
+    if percent_rendered == 1.0:
+        fuzz = 0.0
+    elif percent_rendered < 0.5:
+        fuzz = percent_rendered * 5
+    else:
+        fuzz = (1.0 - percent_rendered) * 5 - 1
+
     box = Image.new("RGBA", image.size)
     draw = ImageDraw.Draw(box)
     draw.text(
-        (3, image.size[1] - size[1] - offset[1] - 1),
+        (3 + fuzz, image.size[1] - size[1] - offset[1] - 1),
         text,
         watermark.color,
         font,
