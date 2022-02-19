@@ -9,8 +9,8 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-    start: 0.0
-    stop: 0.5
+    start: 0.05
+    stop: 0.95
   - style: upper
     color: white
     font: thick
@@ -20,7 +20,7 @@ text:
     scale_x: 1.0
     scale_y: 0.2
     start: 0.5
-    stop: 1.0
+    stop: 0.95
 example:
   - this. is.
   - sparta!
