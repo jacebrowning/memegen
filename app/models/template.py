@@ -300,7 +300,19 @@ class Template:
 
         return await foreground.exists()
 
-    def update(self, start: str, stop: str):
+    @property
+    def animated(self):
+        if (
+            len(self.text) >= 2
+            and self.text[0].start == 0.2
+            and self.text[1].start == 0.6
+            and self.text[0].stop == 1.0
+            and self.text[1].stop == 1.0
+        ):
+            return False
+        return any(text.animated for text in self.text)
+
+    def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:
             starts = [float(value) for value in start.split(",") if value]
             stops = [float(value) for value in stop.split(",") if value]

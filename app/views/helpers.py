@@ -174,7 +174,7 @@ async def render_image(
             elif style != settings.PLACEHOLDER:
                 status = 422
 
-    template.update(
+    template.animate(
         utils.urls.arg(request.args, "", "start"),
         utils.urls.arg(request.args, "", "stop"),
     )
