@@ -229,15 +229,11 @@ def render_animation(
     total = getattr(source, "n_frames", 1)
     if total > 1:
         sources = ImageSequence.Iterator(source)
-    elif any(text.animated for text in template.text):
-        sources = [source] * settings.MAXIMUM_FRAMES
-        duration = 200
-        total = settings.MAXIMUM_FRAMES
     elif all(line.strip() for line in lines):
         template.update("0.2,0.6", "1.0,1.0")
-        sources = [source] * 10
+        sources = [source] * 5
         duration = 300
-        total = 10
+        total = 5
     else:
         sources = [source]
         total = 1
@@ -266,6 +262,7 @@ def render_animation(
         frame.save(stream, format="GIF")
         background = Image.open(stream).convert("RGBA")
         image = resize_image(background, *size, pad, expand=False)
+        percent_rendered = 1.0 if total == 1 else index / total
 
         for (
             point,
@@ -278,7 +275,13 @@ def render_animation(
             stroke_fill,
             angle,
         ) in get_image_elements(
-            template, lines, font_name, watermark, image.size, is_preview, index / total
+            template,
+            lines,
+            font_name,
+            watermark,
+            image.size,
+            is_preview,
+            percent_rendered,
         ):
             box = Image.new("RGBA", max_text_size)
             draw = ImageDraw.Draw(box)
@@ -313,7 +316,9 @@ def render_animation(
             image = add_blurred_background(image, background, *size)
 
         if watermark:
-            image = add_watermark(image, watermark, is_preview)
+            image = add_watermark(image, watermark, is_preview, percent_rendered)
+        elif 1 < total <= 5:
+            image = add_watermark(image, ".", is_preview, percent_rendered)
         if settings.DEBUG:
             image = add_counter(image, index, total, modulus)
 
@@ -390,19 +395,28 @@ def add_blurred_background(
     return blurred
 
 
-def add_watermark(image: Image, text: str, is_preview: bool) -> Image:
+def add_watermark(
+    image: Image, text: str, is_preview: bool, percent_rendered: float = 1.0
+) -> Image:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
-    font = get_font("tiny", text, 0.0, size, 99)
+    font = get_font("tiny", text, 0.0, size, 1 if len(text) == 1 else 99)
     offset = get_text_offset(text, font, size)
 
     watermark = Text.get_error() if is_preview else Text.get_watermark()
     stroke_width = get_stroke_width(font)
     stroke_width, stroke_fill = watermark.get_stroke(stroke_width)
 
+    if percent_rendered == 1.0:
+        fuzz = 0.0
+    elif percent_rendered < 0.5:
+        fuzz = percent_rendered * 5
+    else:
+        fuzz = (1.0 - percent_rendered) * 5 - 1
+
     box = Image.new("RGBA", image.size)
     draw = ImageDraw.Draw(box)
     draw.text(
-        (3, image.size[1] - size[1] - offset[1] - 1),
+        (3 + fuzz, image.size[1] - size[1] - offset[1] - 1),
         text,
         watermark.color,
         font,
@@ -432,14 +446,14 @@ def get_image_elements(
     watermark: str,
     image_size: Dimensions,
     is_preview: bool = False,
-    percent_rendered: float | None = None,
+    percent_rendered: float = 1.0,
 ) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
     for index, text in enumerate(template.text):
-        if percent_rendered is None:
+        if percent_rendered == 1.0:
             yield get_image_element(
                 lines, index, text, font_name, image_size, watermark
             )
-        elif not text.stop or (text.start <= percent_rendered < text.stop):
+        elif text.start <= percent_rendered < text.stop:
             yield get_image_element(
                 lines, index, text, font_name, image_size, watermark
             )
