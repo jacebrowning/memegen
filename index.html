@@ -195,7 +195,7 @@
 <p>The API is stateless so URLs contain all the information necessary to generate meme images. For example, <a href="https://api.memegen.link/images/buzz/memes/memes_everywhere.gif">https://api.memegen.link/images/buzz/memes/memes_everywhere.gif</a> produces:</p>
 <p><img alt="Example Image" src="https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&amp;width=800&amp;frames=50" /></p>
 <h2 id="available-formats">Available Formats</h2>
-<p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files or <code>.gif</code> if an animated background is available:</p>
+<p>Clients can request <code>.jpg</code> instead of <code>.png</code> for smaller files. The <code>.gif</code> extension can be used if an animated background is available or to animate text on static backgrounds:</p>
 <table>
 <thead>
 <tr>
@@ -215,6 +215,10 @@
 <tr>
 <td align="left">GIF</td>
 <td align="left"><a href="https://api.memegen.link/oprah/you_get/animated_text.gif">/images/oprah/you_get/animated_text.gif</a></td>
+</tr>
+<tr>
+<td align="left">GIF (static background)</td>
+<td align="left"><a href="https://api.memegen.link/iw/animate_text/in_production.gif">/images/iw/animate_text/in_production.gif</a></td>
 </tr>
 </tbody>
 </table>
@@ -392,5 +396,5 @@
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-02-18 23:04:49.771258+00:00
+Build Date UTC : 2022-02-19 01:19:46.149610+00:00
 -->
