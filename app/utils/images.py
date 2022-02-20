@@ -231,9 +231,9 @@ def render_animation(
     if total > 1:
         sources = ImageSequence.Iterator(source)
     elif template.animated:
-        sources = [source] * 10
+        sources = [source] * settings.MAXIMUM_FRAMES
         duration = 300
-        total = 10
+        total = settings.MAXIMUM_FRAMES
     elif all(line.strip() for line in lines):
         sources = [source] * 5
         duration = 300
@@ -321,7 +321,7 @@ def render_animation(
 
         if watermark:
             image = add_watermark(image, watermark, is_preview, index, total)
-        elif 1 < total <= 10:
+        elif 1 < total <= settings.MAXIMUM_FRAMES:
             image = add_watermark(image, ".", is_preview, index, total)
 
         if settings.DEBUG:
