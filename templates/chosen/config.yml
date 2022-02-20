@@ -9,7 +9,7 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-    start: 0.0
+    start: 0.2
     stop: 1.0
   - style: upper
     color: white
@@ -19,7 +19,7 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.2
-    start: 0.0
+    start: 0.6
     stop: 1.0
 example:
   - you were the chosen one!

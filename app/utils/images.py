@@ -235,7 +235,6 @@ def render_animation(
         duration = 300
         total = 10
     elif all(line.strip() for line in lines):
-        template.animate()
         sources = [source] * 5
         duration = 300
         total = 5
