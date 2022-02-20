@@ -1,8 +1,9 @@
 # Revision History
 
-## 10.7 (beta)
+## 10.7
 
-- Added support for `start`/`stop` parameters to control text animation.
+- Added support for `start=<int,int>`/`stop=<int,int>` query parameters to control text animation.
+- Added text animation to static backgrounds when `gif` is requested.
 
 ## 10.6
 
