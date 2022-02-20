@@ -7,8 +7,6 @@ PLACEHOLDER = "string"  # Swagger UI placeholder value
 
 # Server configuration
 
-PORT = int(os.environ.get("PORT", 5000))
-WORKERS = int(os.environ.get("WEB_CONCURRENCY", 1))
 DEBUG = bool(os.environ.get("DEBUG", False))
 
 if "DOMAIN" in os.environ:  # staging / production
@@ -20,7 +18,7 @@ elif "HEROKU_APP_NAME" in os.environ:  # review apps
     RELEASE_STAGE = "review"
     SCHEME = "https"
 else:  # localhost
-    SERVER_NAME = f"localhost:{PORT}"
+    SERVER_NAME = "localhost:5000"
     RELEASE_STAGE = "local"
     SCHEME = "http"
 
