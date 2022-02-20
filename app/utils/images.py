@@ -403,8 +403,8 @@ def add_blurred_background(
 def add_watermark(
     image: Image, text: str, is_preview: bool, index: int = 0, total: int = 1
 ) -> Image:
-    size = (image.size[0], settings.WATERMARK_HEIGHT)
-    font = get_font("tiny", text, 0.0, size, 1 if len(text) == 1 else 99)
+    size = (image.size[0], 1 if len(text) == 1 else settings.WATERMARK_HEIGHT)
+    font = get_font("tiny", text, 0.0, size, 99)
     offset = get_text_offset(text, font, size)
 
     watermark = Text.get_error() if is_preview else Text.get_watermark()
