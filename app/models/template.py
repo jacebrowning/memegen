@@ -15,6 +15,15 @@ from ..types import Dimensions
 from .overlay import Overlay
 from .text import Text
 
+DEFAULT_TEXT = [
+    Text(start=0.2, stop=1.0),
+    Text(start=0.6, stop=1.0, anchor_x=0.0, anchor_y=0.8),
+]
+DEFAULT_EXAMPLE = [
+    "Top Line",
+    "Bottom Line",
+]
+
 
 @datafile("../../templates/{self.id}/config.yml", defaults=True)
 class Template:
@@ -23,10 +32,8 @@ class Template:
     name: str = ""
     source: str | None = None
 
-    text: list[Text] = field(
-        default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
-    )
-    example: list[str] = field(default_factory=lambda: ["Top Line", "Bottom Line"])
+    text: list[Text] = field(default_factory=lambda: DEFAULT_TEXT)
+    example: list[str] = field(default_factory=lambda: DEFAULT_EXAMPLE)
 
     overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
 
@@ -304,17 +311,11 @@ class Template:
 
     @property
     def animated(self):
-        if (
-            len(self.text) >= 2
-            and self.text[0].start == 0.2
-            and self.text[1].start == 0.6
-            and self.text[0].stop == 1.0
-            and self.text[1].stop == 1.0
-        ):
+        if self.text == DEFAULT_TEXT:
             return False
         return any(text.animated for text in self.text)
 
-    def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
+    def animate(self, start: str, stop: str):
         try:
             starts = [float(value) for value in start.split(",") if value]
             stops = [float(value) for value in stop.split(",") if value]
