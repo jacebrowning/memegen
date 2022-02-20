@@ -78,7 +78,7 @@ def save(
 
     if extension == "gif":
         frames, duration = render_animation(
-            template, lines, size, font_name, maximum_frames, watermark=watermark
+            template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
         frames[0].save(
             path, save_all=True, append_images=frames[1:], duration=duration, loop=0
@@ -212,6 +212,7 @@ def render_image(
 
 def render_animation(
     template: Template,
+    style: str,
     lines: list[str],
     size: Dimensions,
     font_name: str = "",
@@ -224,7 +225,7 @@ def render_animation(
     frames = []
 
     pad = all(size) if pad is None else pad
-    source = Image.open(template.get_image(style="animated"))
+    source = Image.open(template.get_image(style, animated=True))
     duration = source.info.get("duration", 100)
     total = getattr(source, "n_frames", 1)
     if total > 1:

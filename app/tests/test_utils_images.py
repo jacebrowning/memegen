@@ -138,6 +138,16 @@ async def test_custom_style(images):
 
 @pytest.mark.slow
 @pytest.mark.asyncio
+async def test_custom_style_animated(images):
+    url = "https://sn56.scholastic.com/content/dam/classroom-magazines/sn56/issues/2019-20/031620/coronavirus/16-SN56-20200316-VirusOutbreak-PO-2.png"
+    template = models.Template.objects.get("fine")
+    await template.check(url, force=True)
+    lines = ["102 °F", "this is fine"]
+    utils.images.save(template, lines, style=url, extension="gif", directory=images)
+
+
+@pytest.mark.slow
+@pytest.mark.asyncio
 async def test_custom_style_rotated(images):
     style = "https://i.imgur.com/6hwAxmO.jpg,https://i.imgur.com/6hwAxmO.jpg"
     template = models.Template.objects.get("same")
@@ -237,6 +247,7 @@ def test_watermark_with_many_lines(images):
 # Debug
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize(("extension"), ["png", "gif"])
 def test_debug_images(images, monkeypatch, extension):
     monkeypatch.setattr(settings, "DEBUG", True)

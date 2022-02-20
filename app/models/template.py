@@ -74,8 +74,10 @@ class Template:
     def image(self) -> Path:
         return self.get_image()
 
-    def get_image(self, style: str = "") -> Path:
+    def get_image(self, style: str = "", *, animated: bool = False) -> Path:
         style = style or settings.DEFAULT_STYLE
+        if style == settings.DEFAULT_STYLE and animated:
+            style = "animated"
 
         if utils.urls.schema(style):
             url = style
