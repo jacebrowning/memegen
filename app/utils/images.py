@@ -234,7 +234,8 @@ def render_animation(
         sources = [source] * settings.MAXIMUM_FRAMES
         duration = 300
         total = settings.MAXIMUM_FRAMES
-    elif all(line.strip() for line in lines):
+    elif sum(1 for line in lines if line.strip()) >= 2:
+        template.animate()
         sources = [source] * 5
         duration = 300
         total = 5
@@ -458,7 +459,7 @@ def get_image_elements(
             yield get_image_element(
                 lines, index, text, font_name, image_size, watermark
             )
-        elif text.start <= percent_rendered < text.stop:
+        elif text.start <= percent_rendered < text.stop or not text.stop:
             yield get_image_element(
                 lines, index, text, font_name, image_size, watermark
             )

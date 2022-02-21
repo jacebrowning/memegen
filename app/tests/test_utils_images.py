@@ -40,14 +40,23 @@ def test_images(images, id, lines, extension):
 
 
 @pytest.mark.slow
-def test_animated_text_on_static_image(images):
+def test_animated_text_on_static_background(images):
     template = models.Template.objects.get("sparta")
     lines = ["this is", "animated"]
     utils.images.save(template, lines, extension="gif", directory=images)
 
 
 @pytest.mark.slow
-def test_animated_text_on_single_lines(images):
+@pytest.mark.asyncio
+async def test_animated_text_on_animated_background(images):
+    url = "https://media.giphy.com/media/WJjLyXCVvro2I/giphy.gif"
+    template = await models.Template.create(url)
+    lines = ["this is", "animated"]
+    utils.images.save(template, lines, extension="gif", directory=images)
+
+
+@pytest.mark.slow
+def test_single_line_is_never_animated(images):
     template = models.Template.objects.get("cbg")
     lines = [" ", "not. animated. ever"]
     utils.images.save(template, lines, extension="gif", directory=images)

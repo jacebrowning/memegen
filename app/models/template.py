@@ -16,9 +16,14 @@ from .overlay import Overlay
 from .text import Text
 
 DEFAULT_TEXT = [
+    Text(start=0.0, stop=1.0),
+    Text(start=0.0, stop=1.0, anchor_x=0.0, anchor_y=0.8),
+]
+ANIMATED_TEXT = [
     Text(start=0.2, stop=1.0),
     Text(start=0.6, stop=1.0, anchor_x=0.0, anchor_y=0.8),
 ]
+
 DEFAULT_EXAMPLE = [
     "Top Line",
     "Bottom Line",
@@ -311,11 +316,11 @@ class Template:
 
     @property
     def animated(self):
-        if self.text == DEFAULT_TEXT:
+        if self.text == DEFAULT_TEXT or self.text == ANIMATED_TEXT:
             return False
         return any(text.animated for text in self.text)
 
-    def animate(self, start: str, stop: str):
+    def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:
             starts = [float(value) for value in start.split(",") if value]
             stops = [float(value) for value in stop.split(",") if value]
