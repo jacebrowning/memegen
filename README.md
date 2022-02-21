@@ -8,7 +8,7 @@ An API to programmatically generate memes based solely on requested URLs.
 [![GitHub Sponsors](https://img.shields.io/endpoint?url=https://memecomplete.com/api/memes/badge.json)](https://github.com/sponsors/jacebrowning)
 </span>
 
-[Buy me a coffee to help keep this site running!](https://www.buymeacoffee.com/jacebrowning)
+[Buy me a coffee to help keep this service running!](https://www.buymeacoffee.com/jacebrowning)
 
 ---
 
