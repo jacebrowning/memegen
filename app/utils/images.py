@@ -321,7 +321,7 @@ def render_animation(
 
         if watermark:
             image = add_watermark(image, watermark, is_preview, index, total)
-        elif 1 < total <= settings.MAXIMUM_FRAMES:
+        elif 1 < total <= 5:
             image = add_watermark(image, ".", is_preview, index, total)
 
         if settings.DEBUG:
@@ -411,7 +411,7 @@ def add_watermark(
     stroke_width = get_stroke_width(font)
     stroke_width, stroke_fill = watermark.get_stroke(stroke_width)
 
-    if total == 1:
+    if total == 1 or total >= settings.MAXIMUM_FRAMES:
         fuzz = 0
     elif index / total < 0.5:
         fuzz = index
