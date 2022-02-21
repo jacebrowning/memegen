@@ -325,7 +325,7 @@ def describe_detail():
                 "/images/custom/test/test.gif"
                 "?background=https://www.gstatic.com/webp/gallery/4.jpg"
                 "&start=0.1&stop=0.5,0.9",
-                timeout=10,
+                timeout=15,
             )
             expect(response.status) == 200
             expect(response.headers["content-type"]) == "image/gif"
