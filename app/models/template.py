@@ -5,7 +5,7 @@ from functools import cached_property
 from pathlib import Path
 
 import aiopath
-from datafiles import datafile, field
+from datafiles import datafile, field, hooks
 from furl import furl
 from sanic import Request
 from sanic.log import logger
@@ -15,19 +15,8 @@ from ..types import Dimensions
 from .overlay import Overlay
 from .text import Text
 
-DEFAULT_TEXT = [
-    Text(start=0.0, stop=1.0),
-    Text(start=0.0, stop=1.0, anchor_x=0.0, anchor_y=0.8),
-]
-ANIMATED_TEXT = [
-    Text(start=0.2, stop=1.0),
-    Text(start=0.6, stop=1.0, anchor_x=0.0, anchor_y=0.8),
-]
-
-DEFAULT_EXAMPLE = [
-    "Top Line",
-    "Bottom Line",
-]
+DEFAULT_TEXT = [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
+DEFAULT_EXAMPLE = ["Top Line", "Bottom Line"]
 
 
 @datafile("../../templates/{self.id}/config.yml", defaults=True)
@@ -316,8 +305,6 @@ class Template:
 
     @property
     def animated(self):
-        if self.text == DEFAULT_TEXT or self.text == ANIMATED_TEXT:
-            return False
         return any(text.animated for text in self.text)
 
     def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
@@ -328,13 +315,13 @@ class Template:
             logger.error(f"Invalid text animation: {start=} {stop=}")
             return
 
-        with suppress(IndexError):
-            for index, value in enumerate(starts):
-                self.text[index].start = value
-
-        with suppress(IndexError):
-            for index, value in enumerate(stops):
-                self.text[index].stop = value
+        with hooks.disabled():
+            with suppress(IndexError):
+                for index, value in enumerate(starts):
+                    self.text[index].start = value
+            with suppress(IndexError):
+                for index, value in enumerate(stops):
+                    self.text[index].stop = value
 
         if starts or stops:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
