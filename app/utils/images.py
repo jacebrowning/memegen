@@ -81,7 +81,12 @@ def save(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
         frames[0].save(
-            path, save_all=True, append_images=frames[1:], duration=duration, loop=0
+            path,
+            format="PNG",
+            save_all=True,
+            append_images=frames[1:],
+            duration=duration,
+            loop=0,
         )
     else:
         image = render_image(
