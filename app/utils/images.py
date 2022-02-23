@@ -187,7 +187,7 @@ def render_image(
 
             # This offset math is inexact, but works well enough to see
             # approximately where rotated overlay images will be placed.
-            # TODO: implement a proper solution using trigonometry.
+            # TODO: Implement a proper solution using trigonometry
             angle = abs(overlay.angle)
             if angle > 45:
                 angle = 90 - angle
