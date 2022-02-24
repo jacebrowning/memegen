@@ -80,8 +80,21 @@ def save(
         frames, duration = render_animation(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
+
+        if len(frames) <= settings.MINIMUM_FRAMES:
+            format = "png"
+        elif len(frames) > settings.MAXIMUM_FRAMES:
+            format = "png"
+        else:
+            format = extension
+
         frames[0].save(
-            path, save_all=True, append_images=frames[1:], duration=duration, loop=0
+            path,
+            format=format,
+            save_all=True,
+            append_images=frames[1:],
+            duration=duration,
+            loop=0,
         )
     else:
         image = render_image(
@@ -236,9 +249,9 @@ def render_animation(
         total = settings.MAXIMUM_FRAMES
     elif sum(1 for line in lines if line.strip()) >= 2:
         template.animate()
-        sources = [source] * 5
+        sources = [source] * settings.MINIMUM_FRAMES
         duration = 300
-        total = 5
+        total = settings.MINIMUM_FRAMES
     else:
         sources = [source]
         total = 1
