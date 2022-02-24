@@ -5,7 +5,7 @@ from functools import cached_property
 from pathlib import Path
 
 import aiopath
-from datafiles import datafile, field, hooks
+from datafiles import datafile, field, frozen
 from furl import furl
 from sanic import Request
 from sanic.log import logger
@@ -315,7 +315,7 @@ class Template:
             logger.error(f"Invalid text animation: {start=} {stop=}")
             return
 
-        with hooks.disabled():
+        with frozen():
             with suppress(IndexError):
                 for index, value in enumerate(starts):
                     self.text[index].start = value
