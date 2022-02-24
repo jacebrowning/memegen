@@ -82,11 +82,11 @@ def save(
         )
 
         if len(frames) <= settings.MINIMUM_FRAMES:
-            format = "PNG"
+            format = "png"
         elif len(frames) > settings.MAXIMUM_FRAMES:
-            format = "PNG"
+            format = "png"
         else:
-            format = "GIF"
+            format = extension
 
         frames[0].save(
             path,
