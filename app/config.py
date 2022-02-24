@@ -38,7 +38,8 @@ def init(app: Sanic):
     app.config.CORS_SEND_WILDCARD = True
     app.config.OAS_UI_DEFAULT = "swagger"
     app.config.SWAGGER_UI_CONFIGURATION = {
-        "operationsSorter": "alpha",
+        "apisSorter": "-alpha",
+        "operationsSorter": "method",
         "docExpansion": "list",
     }
 

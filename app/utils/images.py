@@ -81,16 +81,14 @@ def save(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
 
-        if len(frames) <= settings.MINIMUM_FRAMES:
-            format = "png"
-        elif len(frames) > settings.MAXIMUM_FRAMES:
-            format = "png"
-        else:
-            format = extension
+        count = len(frames)
+        if (count <= settings.MINIMUM_FRAMES) or (count > settings.MAXIMUM_FRAMES):
+            logger.info(f"Saving {count} frame(s) as animated PNG")
+            extension = "png"
 
         frames[0].save(
             path,
-            format=format,
+            format=extension,
             save_all=True,
             append_images=frames[1:],
             duration=duration,
