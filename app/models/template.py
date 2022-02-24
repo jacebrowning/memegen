@@ -110,7 +110,7 @@ class Template:
             "overlays": len(self.overlay) if self.styles else 0,
             "styles": self.styles,
             "blank": request.app.url_for(
-                "images.blank",
+                "images.detail_blank",
                 template_filename=self.id + "." + settings.DEFAULT_EXTENSION,
                 _external=True,
                 _scheme=settings.SCHEME,
@@ -145,7 +145,7 @@ class Template:
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        url = request.app.url_for("images.text", **kwargs)
+        url = request.app.url_for("images.detail_text", **kwargs)
         return utils.urls.clean(url)
 
     def build_custom_url(
@@ -163,7 +163,7 @@ class Template:
         if style == settings.DEFAULT_STYLE:
             style = ""
         url = request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id="custom" if self.id == "_custom" else self.id,
             text_filepath=utils.text.encode(text_lines) + "." + extension,
             _external=True,

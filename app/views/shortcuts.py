@@ -81,7 +81,7 @@ async def custom_path(request, template_id, text_paths):
 
     if not settings.DEBUG:
         url = request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id=template_id,
             text_filepath=utils.urls.clean(text_paths)
             + "."
@@ -115,7 +115,7 @@ async def legacy_custom_image(request, template_id, text_paths):
     template = models.Template.objects.get_or_none(template_id)
     if template:
         url = request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id=template_id,
             text_filepath=text_paths + "." + extension,
         )

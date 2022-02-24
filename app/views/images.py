@@ -65,7 +65,7 @@ async def create(request):
 @openapi.response(
     400, {"application/json": ErrorResponse}, 'Required "text" missing in request body'
 )
-async def automatic(request):
+async def create_automatic(request):
     if request.form:
         payload = dict(request.form)
     else:
@@ -103,7 +103,7 @@ async def automatic(request):
     {"application/json": MemeResponse},
     description="Successfully created a meme from a custom image",
 )
-async def custom(request):
+async def create_custom(request):
     return await generate_url(request)
 
 
@@ -118,7 +118,7 @@ async def custom(request):
     {"application/json": list[MemeResponse]},
     "Successfully returned a list of custom memes",
 )
-async def list_custom(request):
+async def index_custom(request):
     query = request.args.get("filter", "").lower()
     safe = utils.urls.flag(request, "safe", True)
 
@@ -154,14 +154,14 @@ async def list_custom(request):
     {"image/*": bytes},
     "Invalid style for template or no image URL specified for custom template",
 )
-async def blank(request, template_filename):
+async def detail_blank(request, template_filename):
     template_id, extension = template_filename.rsplit(".", 1)
 
     if request.args.get("style") == "animated" and extension != "gif":
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "images.blank",
+            "images.detail_blank",
             template_filename=template_id + ".gif",
             **params,
         )
@@ -188,14 +188,14 @@ async def blank(request, template_filename):
     {"image/*": bytes},
     "Invalid style for template or no image URL specified for custom template",
 )
-async def text(request, template_id, text_filepath):
+async def detail_text(request, template_id, text_filepath):
     text_paths, extension = text_filepath.rsplit(".", 1)
 
     if request.args.get("style") == "animated" and extension != "gif":
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id=template_id,
             text_filepath=text_paths + ".gif",
             **params,
@@ -205,7 +205,7 @@ async def text(request, template_id, text_filepath):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id=template_id,
             text_filepath=slug + "." + extension,
             **request.args,
@@ -221,7 +221,7 @@ async def text(request, template_id, text_filepath):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id=template_id,
             text_filepath=slug + "." + extension,
             **params,

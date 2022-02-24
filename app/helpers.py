@@ -49,7 +49,7 @@ def get_example_images(
 def get_test_images(request: Request) -> list[str]:
     return [
         request.app.url_for(
-            "images.text",
+            "images.detail_text",
             template_id=id,
             text_filepath=utils.text.encode(lines) + "." + extension,
         )
