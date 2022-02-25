@@ -15,9 +15,6 @@ from ..types import Dimensions
 from .overlay import Overlay
 from .text import Text
 
-DEFAULT_TEXT = [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
-DEFAULT_EXAMPLE = ["Top Line", "Bottom Line"]
-
 
 @datafile("../../templates/{self.id}/config.yml", defaults=True)
 class Template:
@@ -26,8 +23,11 @@ class Template:
     name: str = ""
     source: str | None = None
 
-    text: list[Text] = field(default_factory=lambda: DEFAULT_TEXT)
-    example: list[str] = field(default_factory=lambda: DEFAULT_EXAMPLE)
+    text: list[Text] = field(
+        default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
+    )
+
+    example: list[str] = field(default_factory=lambda: ["Top Line", "Bottom Line"])
 
     overlay: list[Overlay] = field(default_factory=lambda: [Overlay()])
 
