@@ -17,7 +17,7 @@ from sanic.log import logger
 
 from .. import settings
 from ..models import Font, Template, Text
-from ..types import Dimensions, Offset, Point
+from ..types import Dimensions, FontType, ImageType, Offset, Point
 
 EXCEPTIONS = (
     OSError,
@@ -103,7 +103,7 @@ def save(
     return path
 
 
-def load(path: Path) -> Image:
+def load(path: Path) -> ImageType:
     image = Image.open(path).convert("RGBA")
     image = ImageOps.exif_transpose(image)
     return image
@@ -140,7 +140,7 @@ def render_image(
     pad: bool | None = None,
     is_preview: bool = False,
     watermark: str = "",
-) -> Image:
+) -> ImageType:
     background = load(template.get_image(style))
 
     pad = all(size) if pad is None else pad
@@ -232,7 +232,7 @@ def render_animation(
     pad: bool | None = None,
     is_preview: bool = False,
     watermark: str = "",
-) -> tuple[list[Image], int]:
+) -> tuple[list[ImageType], int]:
     frames = []
 
     pad = all(size) if pad is None else pad
@@ -242,16 +242,16 @@ def render_animation(
     if total > 1:
         sources = ImageSequence.Iterator(source)
     elif template.animated:
-        sources = [source] * settings.MAXIMUM_FRAMES
+        sources = [source] * settings.MAXIMUM_FRAMES  # type: ignore
         duration = 300
         total = settings.MAXIMUM_FRAMES
     elif sum(1 for line in lines if line.strip()) >= 2:
         template.animate()
-        sources = [source] * settings.MINIMUM_FRAMES
+        sources = [source] * settings.MINIMUM_FRAMES  # type: ignore
         duration = 300
         total = settings.MINIMUM_FRAMES
     else:
-        sources = [source]
+        sources = [source]  # type: ignore
         total = 1
 
     if maximum_frames >= total:
@@ -348,8 +348,8 @@ def render_animation(
 
 
 def resize_image(
-    image: Image, width: int, height: int, pad: bool, *, expand: bool
-) -> Image:
+    image: ImageType, width: int, height: int, pad: bool, *, expand: bool
+) -> ImageType:
     ratio = image.width / image.height
     default_width, default_height = settings.DEFAULT_SIZE
 
@@ -385,8 +385,8 @@ def fit_image(width: float, height: float) -> tuple[int, int]:
 
 
 def add_blurred_background(
-    foreground: Image, background: Image, width: int, height: int
-) -> Image:
+    foreground: ImageType, background: ImageType, width: int, height: int
+) -> ImageType:
     base_width, base_height = foreground.size
 
     border_width = min(width, base_width + 2)
@@ -413,10 +413,10 @@ def add_blurred_background(
 
 
 def add_watermark(
-    image: Image, text: str, is_preview: bool, index: int = 0, total: int = 1
-) -> Image:
+    image: ImageType, text: str, is_preview: bool, index: int = 0, total: int = 1
+) -> ImageType:
     size = (image.size[0], 1 if len(text) == 1 else settings.WATERMARK_HEIGHT)
-    font = get_font("tiny", text, 0.0, size, 99)
+    font = get_font("tiny", text, size, 99)
     offset = get_text_offset(text, font, size)
 
     watermark = Text.get_error() if is_preview else Text.get_watermark()
@@ -444,10 +444,10 @@ def add_watermark(
     return Image.alpha_composite(image, box)
 
 
-def add_counter(image: Image, index: int, total: int, modulus: float) -> Image:
+def add_counter(image: ImageType, index: int, total: int, modulus: float) -> ImageType:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
     text = f"{index+1:02} of {total:02} / {modulus}"
-    font = get_font("tiny", text, 0.0, size, 99)
+    font = get_font("tiny", text, size, 99)
 
     box = Image.new("RGBA", image.size)
     draw = ImageDraw.Draw(box)
@@ -464,7 +464,7 @@ def get_image_elements(
     image_size: Dimensions,
     is_preview: bool = False,
     percent_rendered: float = 1.0,
-) -> Iterator[tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]]:
+) -> Iterator[tuple[Point, Offset, str, Dimensions, str, FontType, int, str, float]]:
     for index, text in enumerate(template.text):
         if percent_rendered == 1.0:
             yield get_image_element(
@@ -490,7 +490,7 @@ def get_image_element(
     font_name: str,
     image_size: Dimensions,
     watermark: str,
-) -> tuple[Point, Offset, str, Dimensions, str, ImageFont, int, str, float]:
+) -> tuple[Point, Offset, str, Dimensions, str, FontType, int, str, float]:
     point = text.get_anchor(image_size, watermark)
 
     max_text_size = text.get_size(image_size)
@@ -506,9 +506,7 @@ def get_image_element(
             lines=lines,
         )
 
-    font = get_font(
-        font_name or text.font, line, text.angle, max_text_size, max_font_size
-    )
+    font = get_font(font_name or text.font, line, max_text_size, max_font_size)
     offset = get_text_offset(line, font, max_text_size)
 
     stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
@@ -531,9 +529,9 @@ def wrap(font: str, line: str, max_text_size: Dimensions, max_font_size: int) ->
     lines_2 = split_2(line)
     lines_3 = split_3(line)
 
-    font_1 = get_font(font, lines_1, 0, max_text_size, max_font_size)
-    font_2 = get_font(font, lines_2, 0, max_text_size, max_font_size)
-    font_3 = get_font(font, lines_3, 0, max_text_size, max_font_size)
+    font_1 = get_font(font, lines_1, max_text_size, max_font_size)
+    font_2 = get_font(font, lines_2, max_text_size, max_font_size)
+    font_3 = get_font(font, lines_3, max_text_size, max_font_size)
 
     if font_1.size == font_2.size and font_2.size <= settings.MINIMUM_FONT_SIZE:
         return lines_2
@@ -580,12 +578,8 @@ def split_3(line: str) -> str:
 
 
 def get_font(
-    name: str,
-    text: str,
-    angle: float,
-    max_text_size: Dimensions,
-    max_font_size: int,
-) -> ImageFont:
+    name: str, text: str, max_text_size: Dimensions, max_font_size: int
+) -> FontType:
     font_path = Font.objects.get(name or settings.DEFAULT_FONT).path
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
@@ -599,13 +593,13 @@ def get_font(
     return font
 
 
-def get_text_size_minus_font_offset(text: str, font: ImageFont) -> Dimensions:
+def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
     text_width, text_height = get_text_size(text, font)
     offset = font.getoffset(text)
     return text_width - offset[0], text_height - offset[1]
 
 
-def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Offset:
+def get_text_offset(text: str, font: FontType, max_text_size: Dimensions) -> Offset:
     text_size = get_text_size(text, font)
     stroke_width = get_stroke_width(font)
 
@@ -620,13 +614,13 @@ def get_text_offset(text: str, font: ImageFont, max_text_size: Dimensions) -> Of
     else:
         y_adjust = 1 + (3 - rows) * 0.25
 
-    x_offset -= (max_text_size[0] - text_size[0]) / 2
-    y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2
+    x_offset -= (max_text_size[0] - text_size[0]) / 2  # type: ignore
+    y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2  # type: ignore
 
     return x_offset, y_offset
 
 
-def get_text_size(text: str, font: ImageFont) -> Dimensions:
+def get_text_size(text: str, font: FontType) -> Dimensions:
     image = Image.new("RGB", (100, 100))
     draw = ImageDraw.Draw(image)
     text_size = draw.textsize(text, font)
@@ -634,5 +628,5 @@ def get_text_size(text: str, font: ImageFont) -> Dimensions:
     return text_size[0] + stroke_width, text_size[1] + stroke_width
 
 
-def get_stroke_width(font: ImageFont) -> int:
+def get_stroke_width(font: FontType) -> int:
     return min(3, max(1, font.size // 12))
