@@ -269,6 +269,17 @@ def test_debug_images(images, monkeypatch, extension):
     )
 
 
+@pytest.mark.slow
+@pytest.mark.asyncio
+async def test_debug_images_with_slow_background(images, monkeypatch):
+    monkeypatch.setattr(settings, "DEBUG", True)
+
+    url = "https://media.giphy.com/media/4560Nv2656Gv0Lvp9F/giphy.gif"
+    template = await models.Template.create(url)
+    lines = ["this isn't the GIF", "you're looking for"]
+    utils.images.save(template, lines, style=url, extension="gif", directory=images)
+
+
 def test_deployed_images(images, monkeypatch):
     monkeypatch.setattr(settings, "DEPLOYED", True)
 
