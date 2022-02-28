@@ -77,7 +77,7 @@ class Template:
 
     def get_image(self, style: str = "", *, animated: bool = False) -> Path:
         style = style or settings.DEFAULT_STYLE
-        if (style == settings.DEFAULT_STYLE or ".gif" in style) and animated:
+        if style == settings.DEFAULT_STYLE and animated:
             style = "animated"
 
         url = ""
@@ -225,7 +225,7 @@ class Template:
             logger.warning(f"Unable to determine image extension: {url}")
             suffix = settings.PLACEHOLDER_SUFFIX
 
-        filename = ("animated" if suffix == ".gif" else "default") + suffix
+        filename = "default" + suffix
         path = aiopath.AsyncPath(template.directory) / filename
 
         if await path.exists() and not settings.DEBUG and not force:
