@@ -247,12 +247,12 @@ def render_animation(
         sources = ImageSequence.Iterator(source)
     elif template.animated:
         sources = [source] * settings.MAXIMUM_FRAMES  # type: ignore
-        duration = 300
+        duration = 250
         total = settings.MAXIMUM_FRAMES
     elif sum(1 for line in lines if line.strip()) >= 2:
         template.animate()
         sources = [source] * settings.MINIMUM_FRAMES  # type: ignore
-        duration = 1200
+        duration = 1000
         total = settings.MINIMUM_FRAMES
     else:
         sources = [source]  # type: ignore
