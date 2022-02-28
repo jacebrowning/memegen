@@ -83,8 +83,12 @@ def save(
 
         count = len(frames)
         if (count <= settings.MINIMUM_FRAMES) or (count > settings.MAXIMUM_FRAMES):
-            logger.info(f"Saving {count} frame(s) as animated PNG")
+            logger.info(
+                f"Saving {count} frame(s) as animated PNG at {duration} duration"
+            )
             extension = "png"
+        else:
+            logger.info(f"Saving {count} frame(s) as GIF at {duration} duration")
 
         frames[0].save(
             path,
@@ -248,7 +252,7 @@ def render_animation(
     elif sum(1 for line in lines if line.strip()) >= 2:
         template.animate()
         sources = [source] * settings.MINIMUM_FRAMES  # type: ignore
-        duration = 300
+        duration = 1200
         total = settings.MINIMUM_FRAMES
     else:
         sources = [source]  # type: ignore
@@ -337,12 +341,16 @@ def render_animation(
             image = add_watermark(image, ".", is_preview, index, total)
 
         if settings.DEBUG:
-            image = add_counter(image, index, total, modulus)
+            image = add_counter(image, index, total, modulus, duration)
 
         frames.append(image)
 
-    ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
-    duration = duration / ratio
+    if len(frames) > settings.MINIMUM_FRAMES:
+        logger.info(
+            f"Adjusting initial duration of {duration} based on {total} initial frame(s)"
+        )
+        ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
+        duration = min(250, duration / ratio)
 
     return frames, duration
 
@@ -444,9 +452,11 @@ def add_watermark(
     return Image.alpha_composite(image, box)
 
 
-def add_counter(image: ImageType, index: int, total: int, modulus: float) -> ImageType:
+def add_counter(
+    image: ImageType, index: int, total: int, modulus: float, duration: int
+) -> ImageType:
     size = (image.size[0], settings.WATERMARK_HEIGHT)
-    text = f"{index+1:02} of {total:02} / {modulus}"
+    text = f"{index+1:02} of {total:02} / {modulus} @ {duration}"
     font = get_font("tiny", text, size, 99)
 
     box = Image.new("RGBA", image.size)
