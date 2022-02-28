@@ -43,6 +43,7 @@ def init(app: Sanic):
         "docExpansion": "list",
     }
 
+    app.blueprint(views.examples.blueprint)
     app.blueprint(views.clients.blueprint)
     app.blueprint(views.fonts.blueprint)
     app.blueprint(views.images.blueprint)
