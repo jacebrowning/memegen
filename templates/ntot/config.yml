@@ -9,7 +9,7 @@ text:
     angle: 12.0
     scale_x: 0.21
     scale_y: 0.15
-    start: 0.0
+    start: 0.1
     stop: 1.0
   - style: default
     color: black
@@ -19,7 +19,7 @@ text:
     angle: 0.0
     scale_x: 0.18
     scale_y: 0.15
-    start: 0.0
+    start: 0.4
     stop: 1.0
   - style: upper
     color: black
@@ -29,7 +29,7 @@ text:
     angle: 0.0
     scale_x: 0.25
     scale_y: 0.15
-    start: 0.0
+    start: 0.7
     stop: 1.0
 example:
   - Pls throw??

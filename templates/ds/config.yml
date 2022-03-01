@@ -10,7 +10,7 @@ text:
     scale_x: 0.32
     scale_y: 0.095
     start: 0.0
-    stop: 1.0
+    stop: 0.5
   - style: default
     color: black
     font: thin
@@ -19,7 +19,7 @@ text:
     angle: 10.5
     scale_x: 0.23
     scale_y: 0.09
-    start: 0.0
+    start: 0.5
     stop: 1.0
   - style: upper
     color: white

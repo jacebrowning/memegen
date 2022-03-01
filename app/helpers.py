@@ -20,7 +20,7 @@ def get_valid_templates(
 
 
 def get_example_images(
-    request: Request, query: str = "", animated: bool | None = None
+    request: Request, query: str = "", *, animated: bool | None = None
 ) -> list[tuple[str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
@@ -28,13 +28,23 @@ def get_example_images(
     else:
         templates = sorted(templates)
 
+    if animated is None:
+        animated = utils.urls.flag(request, "animated")
+        exact = True
+    else:
+        exact = False
+
     images = []
     for template in templates:
 
-        if animated is True and "animated" not in template.styles:
+        if exact and animated is True and "animated" not in template.styles:
+            continue
+        if exact and animated is False and "animated" in template.styles:
             continue
 
-        if "animated" in template.styles and animated is not False:
+        if animated is True:
+            extension = "gif"
+        elif "animated" in template.styles and animated is not False:
             extension = "gif"
         else:
             extension = settings.DEFAULT_EXTENSION

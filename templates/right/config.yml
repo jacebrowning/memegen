@@ -29,9 +29,9 @@ text:
     angle: 0.0
     scale_x: 0.499
     scale_y: 0.1
-    start: 0.0
+    start: 0.2
     stop: 1.0
-  - style: deafult
+  - style: default
     color: khaki
     font: thin
     anchor_x: 0.502
@@ -39,7 +39,7 @@ text:
     angle: 0.0
     scale_x: 0.499
     scale_y: 0.1
-    start: 0.0
+    start: 0.4
     stop: 1.0
   - style: default
     color: khaki
@@ -49,7 +49,7 @@ text:
     angle: 0.0
     scale_x: 0.499
     scale_y: 0.1
-    start: 0.0
+    start: 0.7
     stop: 1.0
 example:
   - Senior Developer

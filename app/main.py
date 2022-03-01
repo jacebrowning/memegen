@@ -1,5 +1,4 @@
 import asyncio
-import random
 
 from sanic import Sanic, response
 from sanic_ext import openapi
@@ -14,21 +13,6 @@ config.init(app)
 @openapi.exclude(True)
 def index(request):
     return response.redirect("/docs")
-
-
-@app.get("/examples")
-@openapi.exclude(True)
-async def examples(request):
-    animated = utils.urls.flag(request, "animated")
-    items = await asyncio.to_thread(helpers.get_example_images, request, "", animated)
-    urls = [items[0] for items in items]
-    if settings.DEBUG:
-        refresh = int(request.args.get("refresh", 5 * 60))
-    else:
-        refresh = 0
-        random.shuffle(urls)
-    content = utils.html.gallery(urls, columns=True, refresh=refresh)
-    return response.html(content)
 
 
 @app.get("/test")
@@ -61,4 +45,5 @@ if __name__ == "__main__":
         debug=settings.DEBUG,
         access_log=False,
         motd=False,
+        fast=True,
     )
