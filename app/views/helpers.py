@@ -131,7 +131,7 @@ async def render_image(
         slug = slug[:50] + "..."
         lines = utils.text.decode(slug)
         template = models.Template.objects.get("_error")
-        style = settings.DEFAULT_STYLE
+        style = "default"
         status = 414
 
     elif id == "custom":
@@ -144,7 +144,7 @@ async def render_image(
                 if url != settings.PLACEHOLDER:
                     status = 415
 
-            style = utils.urls.arg(request.args, settings.DEFAULT_STYLE, "style")
+            style = utils.urls.arg(request.args, "default", "style")
             if not utils.urls.schema(style):
                 style = style.lower()
             if not await template.check(style):
@@ -156,7 +156,7 @@ async def render_image(
         else:
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
-            style = settings.DEFAULT_STYLE
+            style = "default"
             status = 422
 
     else:
@@ -167,7 +167,7 @@ async def render_image(
             if id != settings.PLACEHOLDER:
                 status = 404
 
-        style = utils.urls.arg(request.args, settings.DEFAULT_STYLE, "style", "alt")
+        style = utils.urls.arg(request.args, "default", "style", "alt")
         if not await template.check(style):
             if utils.urls.schema(style):
                 status = 415

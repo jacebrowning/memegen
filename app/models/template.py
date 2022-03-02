@@ -1,7 +1,7 @@
 import asyncio
 import shutil
 from contextlib import suppress
-from functools import cache, cached_property
+from functools import cached_property
 from pathlib import Path
 
 import aiopath
@@ -60,10 +60,9 @@ class Template:
     def styles(self):
         styles = []
         for path in self.directory.iterdir():
-            if not path.stem[0] in {".", "_"} and path.stem not in {
-                "config",
-                settings.DEFAULT_STYLE,
-            }:
+            if path.stem[0] in {".", "_"}:
+                continue
+            if path.stem not in {"config", "default"}:
                 styles.append(path.stem)
             elif path.name == "default.gif":
                 styles.append("animated")
@@ -84,11 +83,12 @@ class Template:
     def image(self) -> Path:
         return self.get_image()
 
-    @cache
-    def get_image(self, style: str = "", *, animated: bool = False) -> Path:
-        logger.debug(f"Getting background image: {self.id=} {style=} {animated=}")
-        style = style or settings.DEFAULT_STYLE
-        assert style != "animated"
+    def get_image(self, style: str = "default", *, animated: bool = False) -> Path:
+        style = style or "default"
+        logger.info(f"Getting background image: {self.id=} {style=} {animated=}")
+        if style == "animated":
+            style = "default"
+            animated = True
 
         url = ""
         if utils.urls.schema(style):
@@ -103,14 +103,17 @@ class Template:
                 continue
             if path.suffix == ".gif" and not animated:
                 continue
-            logger.debug(f"Matched path: {path}")
+            logger.info(f"Matched path: {path}")
             return path
 
-        if style == settings.DEFAULT_STYLE and not animated:
+        path = self.directory / "default.gif"
+        if path.exists():
+            logger.info(f"Matched path: {path}")
+            return path
+
+        if style == "default" and not animated:
             logger.info(f"No default background image for template: {self.id}")
-            return self.directory / (
-                settings.DEFAULT_STYLE + settings.PLACEHOLDER_SUFFIX
-            )
+            return self.directory / ("default" + settings.PLACEHOLDER_SUFFIX)
 
         if animated:
             logger.info(f"Using static image to animate template: {self.id}")
@@ -179,7 +182,7 @@ class Template:
     ):
         if extension not in settings.ALLOWED_EXTENSIONS:
             extension = settings.DEFAULT_EXTENSION
-        if style == settings.DEFAULT_STYLE:
+        if style == "default":
             style = ""
         url = request.app.url_for(
             "images.detail_text",
@@ -261,7 +264,7 @@ class Template:
         return template
 
     async def check(self, style: str, *, force=False) -> bool:
-        if style in {"", None, settings.DEFAULT_STYLE}:
+        if style in {"", None, "default"}:
             return True
 
         if style in self.styles:
@@ -295,7 +298,7 @@ class Template:
     async def _embed(
         self, index: int, url: str, background: aiopath.AsyncPath, force: bool
     ) -> bool:
-        if url.strip() in {"", settings.DEFAULT_STYLE}:
+        if url.strip() in {"", "default"}:
             return True
 
         suffix = Path(str(furl(url).path)).suffix

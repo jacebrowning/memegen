@@ -31,7 +31,7 @@ def preview(
     template: Template,
     lines: list[str],
     *,
-    style: str = settings.DEFAULT_STYLE,
+    style: str = "default",
     watermark: str = "",
 ) -> tuple[bytes, str]:
     path = template.build_path(lines, "", style, settings.PREVIEW_SIZE, "", "jpg")
@@ -57,7 +57,7 @@ def save(
     *,
     font_name: str = "",
     extension: str = settings.DEFAULT_EXTENSION,
-    style: str = settings.DEFAULT_STYLE,
+    style: str = "default",
     size: Dimensions = (0, 0),
     maximum_frames: int = 0,
     directory: Path = settings.IMAGES_DIRECTORY,

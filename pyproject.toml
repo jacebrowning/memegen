@@ -52,7 +52,7 @@ types-pkg_resources = "*"
 types-requests = "*"
 
 # Testing
-pytest = "^6.2.5"
+pytest = "^7.0.1"
 pytest-asyncio = "*"
 pytest-describe = "^2.0"
 pytest-expecter = "^2.3"
