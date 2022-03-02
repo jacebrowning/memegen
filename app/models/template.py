@@ -37,6 +37,9 @@ class Template:
     def __lt__(self, other):
         return self.id < other.id
 
+    def __hash__(self):
+        return hash(self.id)
+
     @cached_property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
@@ -57,15 +60,20 @@ class Template:
     def styles(self):
         styles = []
         for path in self.directory.iterdir():
-            if not path.stem[0] in {".", "_"} and path.stem not in {
-                "config",
-                settings.DEFAULT_STYLE,
-            }:
+            if path.stem[0] in {".", "_"}:
+                continue
+            if path.stem not in {"config", "default"}:
                 styles.append(path.stem)
+            elif path.name == "default.gif":
+                styles.append("animated")
         if styles or self.overlay != [Overlay()]:
             styles.append("default")
         styles.sort()
         return styles
+
+    @cached_property
+    def animated(self):
+        return any(text.animated for text in self.text)
 
     @cached_property
     def directory(self) -> Path:
@@ -75,10 +83,12 @@ class Template:
     def image(self) -> Path:
         return self.get_image()
 
-    def get_image(self, style: str = "", *, animated: bool = False) -> Path:
-        style = style or settings.DEFAULT_STYLE
-        if style == settings.DEFAULT_STYLE and animated:
-            style = "animated"
+    def get_image(self, style: str = "default", *, animated: bool = False) -> Path:
+        style = style or "default"
+        logger.info(f"Getting background image: {self.id=} {style=} {animated=}")
+        if style == "animated":
+            style = "default"
+            animated = True
 
         url = ""
         if utils.urls.schema(style):
@@ -87,17 +97,26 @@ class Template:
 
         self.directory.mkdir(exist_ok=True)
         for path in self.directory.iterdir():
-            if path.stem == style and path.suffix != settings.PLACEHOLDER_SUFFIX:
-                return path
+            if path.stem != style:
+                continue
+            if path.suffix == settings.PLACEHOLDER_SUFFIX:
+                continue
+            if path.suffix == ".gif" and not animated:
+                continue
+            logger.info(f"Matched path: {path}")
+            return path
 
-        if style == settings.DEFAULT_STYLE:
+        path = self.directory / "default.gif"
+        if path.exists():
+            logger.info(f"Matched path: {path}")
+            return path
+
+        if style == "default" and not animated:
             logger.info(f"No default background image for template: {self.id}")
-            return self.directory / (
-                settings.DEFAULT_STYLE + settings.PLACEHOLDER_SUFFIX
-            )
+            return self.directory / ("default" + settings.PLACEHOLDER_SUFFIX)
 
-        if style == "animated":
-            logger.info(f"Using default image to animate static template: {self.id}")
+        if animated:
+            logger.info(f"Using static image to animate template: {self.id}")
         else:
             logger.warning(
                 f"Style {url or style!r} not available for template: {self.id}"
@@ -163,7 +182,7 @@ class Template:
     ):
         if extension not in settings.ALLOWED_EXTENSIONS:
             extension = settings.DEFAULT_EXTENSION
-        if style == settings.DEFAULT_STYLE:
+        if style == "default":
             style = ""
         url = request.app.url_for(
             "images.detail_text",
@@ -245,7 +264,7 @@ class Template:
         return template
 
     async def check(self, style: str, *, force=False) -> bool:
-        if style in {"", None, settings.DEFAULT_STYLE}:
+        if style in {"", None, "default"}:
             return True
 
         if style in self.styles:
@@ -279,7 +298,7 @@ class Template:
     async def _embed(
         self, index: int, url: str, background: aiopath.AsyncPath, force: bool
     ) -> bool:
-        if url.strip() in {"", settings.DEFAULT_STYLE}:
+        if url.strip() in {"", "default"}:
             return True
 
         suffix = Path(str(furl(url).path)).suffix
@@ -305,10 +324,6 @@ class Template:
             await foreground.unlink(missing_ok=True)
 
         return await foreground.exists()
-
-    @property
-    def animated(self):
-        return any(text.animated for text in self.text)
 
     def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:
