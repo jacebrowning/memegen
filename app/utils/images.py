@@ -348,7 +348,7 @@ def render_animation(
     if len(frames) > settings.MINIMUM_FRAMES:
         logger.info(f"Adjusting duration of {duration} from {total} base frame(s)")
         ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
-        duration = min(250, duration / ratio)
+        duration = min(250, duration // ratio)
 
     return frames, duration
 

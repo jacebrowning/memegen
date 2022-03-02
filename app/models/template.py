@@ -1,7 +1,7 @@
 import asyncio
 import shutil
 from contextlib import suppress
-from functools import cached_property
+from functools import cache, cached_property
 from pathlib import Path
 
 import aiopath
@@ -37,6 +37,9 @@ class Template:
     def __lt__(self, other):
         return self.id < other.id
 
+    def __hash__(self):
+        return hash(self.id)
+
     @cached_property
     def valid(self) -> bool:
         if not settings.DEPLOYED:
@@ -62,10 +65,16 @@ class Template:
                 settings.DEFAULT_STYLE,
             }:
                 styles.append(path.stem)
+            elif path.name == "default.gif":
+                styles.append("animated")
         if styles or self.overlay != [Overlay()]:
             styles.append("default")
         styles.sort()
         return styles
+
+    @cached_property
+    def animated(self):
+        return any(text.animated for text in self.text)
 
     @cached_property
     def directory(self) -> Path:
@@ -75,10 +84,11 @@ class Template:
     def image(self) -> Path:
         return self.get_image()
 
+    @cache
     def get_image(self, style: str = "", *, animated: bool = False) -> Path:
+        logger.debug(f"Getting background image: {self.id=} {style=} {animated=}")
         style = style or settings.DEFAULT_STYLE
-        if style == settings.DEFAULT_STYLE and animated:
-            style = "animated"
+        assert style != "animated"
 
         url = ""
         if utils.urls.schema(style):
@@ -87,17 +97,23 @@ class Template:
 
         self.directory.mkdir(exist_ok=True)
         for path in self.directory.iterdir():
-            if path.stem == style and path.suffix != settings.PLACEHOLDER_SUFFIX:
-                return path
+            if path.stem != style:
+                continue
+            if path.suffix == settings.PLACEHOLDER_SUFFIX:
+                continue
+            if path.suffix == ".gif" and not animated:
+                continue
+            logger.debug(f"Matched path: {path}")
+            return path
 
-        if style == settings.DEFAULT_STYLE:
+        if style == settings.DEFAULT_STYLE and not animated:
             logger.info(f"No default background image for template: {self.id}")
             return self.directory / (
                 settings.DEFAULT_STYLE + settings.PLACEHOLDER_SUFFIX
             )
 
-        if style == "animated":
-            logger.info(f"Using default image to animate static template: {self.id}")
+        if animated:
+            logger.info(f"Using static image to animate template: {self.id}")
         else:
             logger.warning(
                 f"Style {url or style!r} not available for template: {self.id}"
@@ -305,10 +321,6 @@ class Template:
             await foreground.unlink(missing_ok=True)
 
         return await foreground.exists()
-
-    @property
-    def animated(self):
-        return any(text.animated for text in self.text)
 
     def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:
