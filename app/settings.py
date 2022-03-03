@@ -36,7 +36,10 @@ MINIMUM_FONT_SIZE = 7
 IMAGES_DIRECTORY = ROOT / "images"
 
 DEFAULT_EXTENSION = "png"
-ALLOWED_EXTENSIONS = [DEFAULT_EXTENSION, "jpg", "jpeg", "gif"]
+ALLOWED_EXTENSIONS = [DEFAULT_EXTENSION, "jpg", "jpeg", "gif", "apng"]
+if "ENABLE_APNG_SUPPORT" not in os.environ:
+    ALLOWED_EXTENSIONS.remove("apng")
+
 PLACEHOLDER_SUFFIX = ".img"
 
 PREVIEW_SIZE = (300, 300)
