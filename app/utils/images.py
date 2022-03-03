@@ -82,11 +82,12 @@ def save(
         )
 
         count = len(frames)
-        if (count <= settings.MINIMUM_FRAMES) or (count > settings.MAXIMUM_FRAMES):
-            logger.info(
-                f"Saving {count} frame(s) as animated PNG at {duration} duration"
-            )
-            extension = "png"
+        if "apng" in settings.ALLOWED_EXTENSIONS:
+            if (count <= settings.MINIMUM_FRAMES) or (count > settings.MAXIMUM_FRAMES):
+                extension = "png"
+
+        if extension == "png":
+            logger.info(f"Saving {count} frame(s) as APNG at {duration} duration")
         else:
             logger.info(f"Saving {count} frame(s) as GIF at {duration} duration")
 
