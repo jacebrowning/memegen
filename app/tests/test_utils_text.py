@@ -13,6 +13,7 @@ LINES_SLUG = [
     (["finish <- start"], "finish_~l--_start"),
     (['That\'s not how "this" works'], "That's_not_how_''this''_works"),
     (["git commit --no-verify"], "git_commit_----no--verify"),
+    (["_username likes _charname"], "__username_likes___charname"),
 ]
 
 

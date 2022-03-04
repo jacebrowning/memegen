@@ -44,6 +44,7 @@ def encode(lines: list[str]) -> str:
 def decode(slug: str) -> list[str]:
     has_dash = "_----" in slug
     has_arrow = "_--~g" in slug
+    has_under = "___" in slug
 
     slug = slug.replace("_", " ").replace("  ", "_")
     slug = slug.replace("-", " ").replace("  ", "-")
@@ -53,6 +54,8 @@ def decode(slug: str) -> list[str]:
         slug = slug.replace("-- ", " --")
     if has_arrow:
         slug = slug.replace("- ~g", " -~g")
+    if has_under:
+        slug = slug.replace("_ ", " _")
 
     for before, after in [
         ("~q", "?"),
