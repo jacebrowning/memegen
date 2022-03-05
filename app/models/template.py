@@ -113,17 +113,16 @@ class Template:
                 if path.stem == style:
                     logger.log(level, f"Matched path by stem: {path}")
                     return path
-
-            path = self.directory / "default.gif"
-            if path.exists():
-                logger.log(level, f"Matched path by default: {path}")
-                return path
-
         else:
             for path in paths:
                 if path.suffix != ".gif":
                     logger.log(level, f"Matched path by suffix: {path}")
                     return path
+
+        path = self.directory / "default.gif"
+        if path.exists():
+            logger.log(level, f"Matched path by default: {path}")
+            return path
 
         if style == "default" and not animated:
             logger.info(f"No default background image for template: {self.id}")
