@@ -126,6 +126,7 @@ async def render_image(
 
     status = int(utils.urls.arg(request.args, "200", "status"))
 
+    template: models.Template
     if any(len(part.encode()) > 200 for part in slug.split("/")):
         logger.error(f"Slug too long: {slug}")
         slug = slug[:50] + "..."

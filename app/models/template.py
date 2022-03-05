@@ -83,9 +83,11 @@ class Template:
     def image(self) -> Path:
         return self.get_image()
 
-    def get_image(self, style: str = "default", *, animated: bool = False) -> Path:
+    def get_image(self, style: str = "default", *, animated=False) -> Path:
+        level = 20 if (style != "default" or animated is True) else 10
+
         style = style or "default"
-        logger.info(f"Getting background image: {self.id=} {style=} {animated=}")
+        logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
         if style == "animated":
             style = "default"
             animated = True
@@ -96,20 +98,32 @@ class Template:
             style = utils.text.fingerprint(url)
 
         self.directory.mkdir(exist_ok=True)
+        paths: list[Path] = []
         for path in self.directory.iterdir():
-            if path.stem != style:
-                continue
-            if path.suffix == settings.PLACEHOLDER_SUFFIX:
-                continue
-            if path.suffix == ".gif" and not animated:
-                continue
-            logger.info(f"Matched path: {path}")
-            return path
+            if path.stem == style and path.suffix != settings.PLACEHOLDER_SUFFIX:
+                paths.append(path)
 
-        path = self.directory / "default.gif"
-        if path.exists():
-            logger.info(f"Matched path: {path}")
-            return path
+        if animated:
+            for path in paths:
+                if path.suffix == ".gif":
+                    logger.log(level, f"Matched path by suffix: {path}")
+                    return path
+
+            for path in paths:
+                if path.stem == style:
+                    logger.log(level, f"Matched path by stem: {path}")
+                    return path
+
+            path = self.directory / "default.gif"
+            if path.exists():
+                logger.log(level, f"Matched path by default: {path}")
+                return path
+
+        else:
+            for path in paths:
+                if path.suffix != ".gif":
+                    logger.log(level, f"Matched path by suffix: {path}")
+                    return path
 
         if style == "default" and not animated:
             logger.info(f"No default background image for template: {self.id}")
