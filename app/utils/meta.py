@@ -113,17 +113,16 @@ async def track(request, lines: list[str]):
         return
 
     text = " ".join(lines).strip()
+    referer = _get_referer(request) or settings.BASE_URL
     if not text:
         return
-    if any(name in request.args for name in ["height", "width", "watermark"]):
+    if referer in settings.REMOTE_TRACKING_URL:
+        return
+    if any(name in request.args for name in ["height", "width", "watermark", "_token"]):
         return
 
     async with aiohttp.ClientSession() as session:
-        params = dict(
-            text=text,
-            referer=_get_referer(request) or settings.BASE_URL,
-            result=unquote(request.url),
-        )
+        params = dict(text=text, referer=referer, result=unquote(request.url))
         logger.info(f"Tracking request: {params}")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
         response = await session.get(api, params=params, headers=headers)
