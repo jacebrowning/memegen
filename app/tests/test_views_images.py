@@ -348,6 +348,13 @@ def describe_detail():
             expect(response.status) == 415
             expect(response.headers["content-type"]) == "image/png"
 
+        def it_handles_redirect_urls(expect, client):
+            request, response = client.get(
+                "/images/custom/test.png?background=https://i.imgur.com/zw1eny2.jpg"
+            )
+            expect(response.status) == 415
+            expect(response.headers["content-type"]) == "image/png"
+
         def it_ignores_placeholder_values(expect, client):
             request, response = client.get(
                 "/images/custom/string.png?background=string"
