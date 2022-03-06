@@ -118,7 +118,7 @@ async def track(request, lines: list[str]):
         return
     if referer in settings.REMOTE_TRACKING_URL:
         return
-    if any(name in request.args for name in ["height", "width", "watermark", "_token"]):
+    if any(name in request.args for name in ["height", "width", "watermark"]):
         return
 
     async with aiohttp.ClientSession() as session:
