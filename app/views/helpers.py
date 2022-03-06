@@ -122,9 +122,8 @@ async def render_image(
     extension: str = settings.DEFAULT_EXTENSION,
 ):
     lines = utils.text.decode(slug)
-    asyncio.create_task(utils.meta.track(request, lines))
-
     status = int(utils.urls.arg(request.args, "200", "status"))
+    frames = int(request.args.get("frames", 0))
 
     template: models.Template
     if any(len(part.encode()) > 200 for part in slug.split("/")):
@@ -203,7 +202,8 @@ async def render_image(
         size = 0, 0
         status = 422
 
-    frames = int(request.args.get("frames", 0))
+    if status < 400:
+        asyncio.create_task(utils.meta.track(request, lines))
 
     path = await asyncio.to_thread(
         utils.images.save,
