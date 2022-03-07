@@ -27,7 +27,7 @@ def describe_track():
         request.host = "example.com"
         request.url = "http://example.com"
 
-        await utils.meta.track(request, ["foo"])
-        await utils.meta.track(request, ["bar"])
+        await utils.meta.track(request, ["foobar"])
+        await utils.meta.track(request, ["foobar"])
 
         expect(settings.TRACK_REQUESTS) == False

@@ -113,9 +113,9 @@ async def track(request, lines: list[str]):
         return
 
     text = " ".join(lines).strip()
-    referer = _get_referer(request) or settings.BASE_URL
-    if not text:
+    if len(text) < 4:
         return
+    referer = _get_referer(request) or settings.BASE_URL
     if referer in settings.REMOTE_TRACKING_URL:
         return
     if any(name in request.args for name in ["height", "width", "watermark"]):
