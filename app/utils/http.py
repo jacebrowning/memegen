@@ -39,11 +39,12 @@ async def download(url: str, path: AsyncPath) -> bool:
         try:
             async with session.get(url, timeout=10) as response:
 
-                if response.history and response.history[0].status == 302:
-                    logger.error(f"302 response from {url}")
+                if response.history:
+                    logger.error(f"3xx response from {url}")
                     return False
 
                 if response.status == 200:
+                    logger.info(f"200 response from {url}")
                     f = await aiofiles.open(path, mode="wb")  # type: ignore
                     await f.write(await response.read())
                     await f.close()
@@ -53,6 +54,6 @@ async def download(url: str, path: AsyncPath) -> bool:
 
         except EXCEPTIONS as e:
             message = str(e).strip("() ") or e.__class__.__name__
-            logger.error(f"Invalid response from {url}: {message}")
+            logger.error(f"5xx response from {url}: {message}")
 
     return False
