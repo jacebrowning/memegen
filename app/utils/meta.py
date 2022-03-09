@@ -6,6 +6,7 @@ from aiocache import cached
 from sanic.log import logger
 
 from .. import settings
+from . import http
 
 
 def version() -> str:
@@ -119,14 +120,10 @@ async def track(request, lines: list[str]):
         params = dict(text=text, referer=referer, result=unquote(request.url))
         logger.info(f"Tracking request: {params}")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
-        response = await session.get(api, params=params, headers=headers)
-        if response.status != 200:
-            try:
-                message = await response.json()
-            except aiohttp.client_exceptions.ContentTypeError:
-                message = await response.text()
-            logger.error(f"Tracker response {response.status}: {message}")
-        if response.status >= 404 and response.status not in {414, 421, 520}:
+        status, message = await http.fetch(api, params=params, headers=headers)
+        if status != 200:
+            logger.error(f"Tracker response {status}: {message}")
+        if status >= 404 and status not in {414, 421, 520}:
             settings.REMOTE_TRACKING_ERRORS += 1
 
     if settings.REMOTE_TRACKING_ERRORS:
