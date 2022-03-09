@@ -86,7 +86,7 @@ async def create_automatic(request):
 
     url = utils.urls.normalize(results[0]["image_url"])
     confidence = results[0]["confidence"]
-    logger.info(f"Top result: {url} ({confidence})")
+    logger.info(f"Top result: {url} ({confidence=})")
     url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):

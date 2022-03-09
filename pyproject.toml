@@ -60,7 +60,7 @@ pytest-random = "*"
 pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
 sanic-testing = "*"
-locust = "^2.5.1"
+locust = "^2.8.3"
 
 # Coverage
 coveragespace = "^4.2"

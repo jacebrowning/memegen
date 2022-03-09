@@ -77,6 +77,8 @@ async def generate_url(
 
     url, _updated = await utils.meta.tokenize(request, url)
 
+    logger.info(f"Generated image: {payload} => {url}")
+
     if payload.get("redirect", False):
         return response.redirect(utils.urls.add(url, status="201"))
 
@@ -121,6 +123,8 @@ async def render_image(
     watermark: str = "",
     extension: str = settings.DEFAULT_EXTENSION,
 ):
+    logger.info(f"Rendering image: {request.url}")
+
     lines = utils.text.decode(slug)
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
