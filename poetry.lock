@@ -713,7 +713,7 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "locust"
-version = "2.8.2"
+version = "2.8.3"
 description = "Developer friendly load testing framework"
 category = "dev"
 optional = false
@@ -724,7 +724,7 @@ ConfigArgParse = ">=1.0"
 flask = ">=2.0.0"
 Flask-BasicAuth = ">=0.2.0"
 Flask-Cors = ">=3.0.10"
-gevent = ">=20.9.0"
+gevent = ">=20.12.1"
 geventhttpclient = ">=1.5.1"
 msgpack = ">=0.6.2"
 psutil = ">=5.6.7"
@@ -1607,7 +1607,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "65d798b312c13706946cd5f4d9166ac3d81dbec417b8d597763422d683390284"
+content-hash = "961fa9e9cb34319c5a199c296f22ab34fe23993afa22b3b73a47217d322f3ea1"
 
 [metadata.files]
 aiocache = [
@@ -2295,8 +2295,8 @@ jinja2 = [
     {file = "Jinja2-3.0.3.tar.gz", hash = "sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7"},
 ]
 locust = [
-    {file = "locust-2.8.2-py3-none-any.whl", hash = "sha256:a946e5fb7a0966435f4fed999651fad65ebe39ff782978c1452dbd94307da19b"},
-    {file = "locust-2.8.2.tar.gz", hash = "sha256:88fc93042410fe0ce85d7a0056156cfc8936238bc042a319ccb0cdc482f5e4c1"},
+    {file = "locust-2.8.3-py3-none-any.whl", hash = "sha256:f111db4de7871c8e591653b2c6f66526b463a19883948d0e43dd9fb482e7dbb6"},
+    {file = "locust-2.8.3.tar.gz", hash = "sha256:9c5110bdaf2d6ab72d68091e6685abf20bd138df711fde8dc88d81b8cb012b78"},
 ]
 markdown = [
     {file = "Markdown-3.2.2-py3-none-any.whl", hash = "sha256:c467cd6233885534bf0fe96e62e3cf46cfc1605112356c4f9981512b8174de59"},

@@ -30,9 +30,6 @@ async def authenticate(request) -> dict:
             response = await session.get(api, headers={"X-API-KEY": api_key})
             if response.status >= 500:
                 settings.REMOTE_TRACKING_ERRORS += 1
-                logger.warning(
-                    f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}"
-                )
             else:
                 info = await response.json()
 
@@ -61,9 +58,6 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
             )
             if response.status >= 500:
                 settings.REMOTE_TRACKING_ERRORS += 1
-                logger.warning(
-                    f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}"
-                )
                 return default_url, False
 
             data = await response.json()
@@ -134,10 +128,14 @@ async def track(request, lines: list[str]):
             logger.error(f"Tracker response {response.status}: {message}")
         if response.status >= 404 and response.status not in {414, 421, 520}:
             settings.REMOTE_TRACKING_ERRORS += 1
-            logger.warning(f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}")
-            if settings.REMOTE_TRACKING_ERRORS >= settings.REMOTE_TRACKING_ERRORS_LIMIT:
-                settings.TRACK_REQUESTS = False
-                logger.warning(f"Disabled tracking after {response.status} response")
+
+    if settings.REMOTE_TRACKING_ERRORS:
+        logger.info(f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}")
+        if settings.REMOTE_TRACKING_ERRORS >= settings.REMOTE_TRACKING_ERRORS_LIMIT:
+            settings.TRACK_REQUESTS = False
+            logger.warning(
+                f"Disabled tracking after {settings.REMOTE_TRACKING_ERRORS_LIMIT}+ errors"
+            )
 
 
 async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
@@ -157,7 +155,6 @@ async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
         response = await session.get(api, params=params, headers=headers)
         if response.status >= 500:
             settings.REMOTE_TRACKING_ERRORS += 1
-            logger.warning(f"Tracker error count: {settings.REMOTE_TRACKING_ERRORS}")
             return []
 
         data = await response.json()
