@@ -22,6 +22,22 @@ def describe_image_redirects():
         expect(response.status) == 301
         expect(response.headers["Location"]) == redirect
 
+    def it_fixes_misplaced_query_params_on_path(expect, client):
+        request, response = client.get(
+            "/images/fry/test&width=99&height=99", allow_redirects=False
+        )
+        redirect = "/images/fry/test.png?width=99&height=99"
+        expect(response.status) == 302
+        expect(response.headers["Location"]) == redirect
+
+    def it_fixes_misplaced_query_params_on_image(expect, client):
+        request, response = client.get(
+            "/images/fry/test.jpg&width=99&height=99", allow_redirects=False
+        )
+        redirect = "/images/fry/test.jpg?width=99&height=99"
+        expect(response.status) == 302
+        expect(response.headers["Location"]) == redirect
+
     def it_handles_encoded_newlines(expect, client):
         request, response = client.get("/images/fry/1 2%0A3.jpg", allow_redirects=False)
         redirect = "/images/fry/1_2~n3.jpg"

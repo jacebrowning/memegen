@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs
+
 from sanic import Blueprint, exceptions, response
 from sanic.log import logger
 from sanic_ext import openapi
@@ -79,13 +81,25 @@ async def custom_path(request, template_id, text_paths):
     if template_id == "images":
         return response.redirect(f"/images/{text_paths}".removesuffix("/"))
 
+    text_paths = utils.urls.clean(text_paths)
+    if "&" in text_paths:
+        logger.warning(f"Fixing query string: {text_paths}")
+        text_paths, query_string = text_paths.split("&", 1)
+        params = parse_qs(query_string)
+    else:
+        params = {}
+
+    if "." in text_paths:
+        text_filepath = text_paths
+    else:
+        text_filepath = text_paths + "." + settings.DEFAULT_EXTENSION
+
     if not settings.DEBUG:
         url = request.app.url_for(
             "images.detail_text",
             template_id=template_id,
-            text_filepath=utils.urls.clean(text_paths)
-            + "."
-            + settings.DEFAULT_EXTENSION,
+            text_filepath=text_filepath,
+            **params,
         )
         return response.redirect(url)
 
