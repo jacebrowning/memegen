@@ -7,6 +7,10 @@ from .. import settings
 from ..types import Dimensions, Point
 
 
+def alpha(value: float) -> str:
+    return hex(int(255 * value))[2:].upper()
+
+
 @dataclass
 class Text:
 
@@ -28,7 +32,7 @@ class Text:
     @classmethod
     def get_preview(cls) -> "Text":
         return cls(
-            color="#80808060",
+            color="#808080" + alpha(0.375),
             anchor_x=0.075,
             anchor_y=0.05,
             angle=10,
@@ -42,7 +46,7 @@ class Text:
 
     @classmethod
     def get_watermark(cls) -> "Text":
-        return cls(color="#FFFFFF85")
+        return cls(color="#FFFFFF" + alpha(0.75))
 
     @property
     def animated(self) -> bool:
@@ -63,7 +67,7 @@ class Text:
     def get_stroke(self, width: int) -> tuple[int, str]:
         if self.color == "black":
             width = 1
-            color = "#FFFFFF85"
+            color = "#FFFFFF" + alpha(0.5)
         elif "#" in self.color:
             width = 1
             color = "#000000" + self.color[-2:]
