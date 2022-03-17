@@ -61,7 +61,7 @@ Reserved URL characters can be included using escape patterns:
 
 For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png> produces:
 
-![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png?width=800&token=imyyyyk8qex6m2jz8bar)
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png?width=800&token=69q6jocby8r0gwdt254l)
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
