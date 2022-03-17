@@ -10,35 +10,46 @@ def encode(lines: list[str]) -> str:
         if line == "/":
             encoded_lines.append("_")
         elif line:
-            encoded = unquote(line)
-            for before, after in [
-                ("_", "__"),
-                ("-", "--"),
-                (" ", "_"),
-                ("?", "~q"),
-                ("%", "~p"),
-                ("#", "~h"),
-                ('"', "''"),
-                ("/", "~s"),
-                ("\\", "~b"),
-                ("\n", "~n"),
-                ("&", "~a"),
-                ("<", "~l"),
-                (">", "~g"),
-                ("‘", "'"),
-                ("’", "'"),
-                ("“", '"'),
-                ("”", '"'),
-                ("–", "-"),
-            ]:
-                encoded = encoded.replace(before, after)
-            encoded_lines.append(encoded)
+            encoded_lines.append(_encode(line))
         else:
             encoded_lines.append("_")
 
     slug = "/".join(encoded_lines)
 
     return slug or "_"
+
+
+def _encode(line):
+    has_trailing_under = "_ " in line
+
+    encoded = unquote(line)
+
+    for before, after in [
+        ("_", "__"),
+        ("-", "--"),
+        (" ", "_"),
+        ("?", "~q"),
+        ("%", "~p"),
+        ("#", "~h"),
+        ('"', "''"),
+        ("/", "~s"),
+        ("\\", "~b"),
+        ("\n", "~n"),
+        ("&", "~a"),
+        ("<", "~l"),
+        (">", "~g"),
+        ("‘", "'"),
+        ("’", "'"),
+        ("“", '"'),
+        ("”", '"'),
+        ("–", "-"),
+    ]:
+        encoded = encoded.replace(before, after)
+
+    if has_trailing_under:
+        encoded = encoded.replace("___", "__-")
+
+    return encoded
 
 
 def decode(slug: str) -> list[str]:
