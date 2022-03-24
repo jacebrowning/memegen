@@ -1,0 +1,42 @@
+name: Guy Hammering Nails Into Sand
+source: https://keepmeme.com/meme/when-the-boss-coming-and-you-need-to-pretend-doing-something-hammering-nails-into-the-sand-beach-meme
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.05
+    anchor_y: 0.19
+    angle: 42.0
+    scale_x: 0.35
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.4
+    anchor_y: 0.78
+    angle: -20.0
+    scale_x: 0.35
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.51
+    anchor_y: 0.24
+    angle: -10.0
+    scale_x: 0.45
+    scale_y: 0.2
+    start: 0.0
+    stop: 1.0
+example:
+  - Humanity
+  - Language
+  - The inherently indescribably nature of the universe
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
