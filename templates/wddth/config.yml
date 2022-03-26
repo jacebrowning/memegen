@@ -1,0 +1,31 @@
+name: We Don't Do That Here / Black Panther
+source: https://knowyourmeme.com/memes/we-dont-do-that-here
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.15
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.1
+    anchor_y: 0.85
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.15
+    start: 0.0
+    stop: 1.0
+example:
+  - when someone calls your phone without warning
+  - We don't do that here.
+overlay:
+  - center_x: 0.48
+    center_y: 0.23
+    angle: 0.0
+    scale: 0.33
