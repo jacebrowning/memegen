@@ -22,6 +22,7 @@
     "aiofiles",
     "aiohttp",
     "aiopath",
+    "aioresponses",
     "apng",
     "asdict",
     "CIRCLECI",
