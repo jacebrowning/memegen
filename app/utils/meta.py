@@ -15,7 +15,10 @@ def version() -> str:
     return version_heading.split(" ", maxsplit=1)[1]
 
 
-@cached(ttl=60 * 15 if settings.DEPLOYED else 0)
+@cached(
+    60 * 15 if settings.DEPLOYED else 5,
+    key_builder=lambda _func, request: f"{request.args=} {request.headers=}",
+)
 async def authenticate(request) -> dict:
     info: dict = {}
     if settings.REMOTE_TRACKING_URL:
@@ -29,6 +32,7 @@ async def authenticate(request) -> dict:
         logger.info(f"Authenticating with API key: {api_mask}")
         async with aiohttp.ClientSession() as session:
             response = await session.get(api, headers={"X-API-KEY": api_key})
+            logger.critical(response)
             if response.status >= 500:
                 settings.REMOTE_TRACKING_ERRORS += 1
             else:
@@ -37,7 +41,7 @@ async def authenticate(request) -> dict:
     return info
 
 
-@cached(ttl=60 * 15 if settings.DEPLOYED else 0)
+@cached(60 * 15 if settings.DEPLOYED else 5)
 async def tokenize(request, url: str) -> tuple[str, bool]:
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
