@@ -1,0 +1,50 @@
+name: Left Exit 12 Off Ramp
+source: https://knowyourmeme.com/memes/left-exit-12-off-ramp
+text:
+  - style: default
+    color: '#BBBBBB'
+    font: thin
+    anchor_x: 0.24
+    anchor_y: 0.15
+    angle: 0.0
+    scale_x: 0.15
+    scale_y: 0.22
+    start: 0.0
+    stop: 1.0
+  - style: thin
+    color: '#BBBBBB'
+    font: thin
+    anchor_x: 0.53
+    anchor_y: 0.15
+    angle: 0.0
+    scale_x: 0.22
+    scale_y: 0.22
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.42
+    anchor_y: 0.79
+    angle: 8.0
+    scale_x: 0.32
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+example:
+  - The Pins
+  - The Gutter
+  - Bowling Ball
+overlay:
+  - center_x: 0.31
+    center_y: 0.26
+    angle: 0.0
+    scale: 0.17
+  - center_x: 0.64
+    center_y: 0.26
+    angle: 0.0
+    scale: 0.17
+  - center_x: 0.52
+    center_y: 0.82
+    angle: 8.0
+    scale: 0.3
