@@ -1,0 +1,31 @@
+name: Will Smith Slapping Chris Rock
+source: https://knowyourmeme.com/memes/will-smith-slapping-chris-rock
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.18
+    anchor_y: 0.13
+    angle: 44.0
+    scale_x: 0.35
+    scale_y: 0.3
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.5
+    anchor_y: 0.7
+    angle: 0.0
+    scale_x: 0.35
+    scale_y: 0.3
+    start: 0.0
+    stop: 1.0
+example:
+  - Me Trying to Enjoy the Weekend
+  - Monday
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
