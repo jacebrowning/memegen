@@ -3,7 +3,7 @@ from textwrap import dedent
 import bugsnag
 from aiohttp.client_exceptions import ClientPayloadError
 from PIL import UnidentifiedImageError
-from sanic import Sanic, Request
+from sanic import Request, Sanic
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
 

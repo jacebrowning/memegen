@@ -75,7 +75,9 @@ class Text:
             color = "black"
         return width, color
 
-    def normalize(self, text: str) -> str:
+    def normalize(self, text: str | None) -> str:
+        if text is None:
+            return ""
         if self.style in {"upper", "lower"}:
             return text.lower()
         return text
