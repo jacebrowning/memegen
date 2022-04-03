@@ -1,7 +1,7 @@
 name: Will Smith Slapping Chris Rock
 source: https://knowyourmeme.com/memes/will-smith-slapping-chris-rock
 text:
-  - style: default
+  - style: upper
     color: white
     font: thick
     anchor_x: 0.18
@@ -11,7 +11,7 @@ text:
     scale_y: 0.3
     start: 0.0
     stop: 1.0
-  - style: default
+  - style: upper
     color: white
     font: thick
     anchor_x: 0.5
