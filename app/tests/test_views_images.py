@@ -427,6 +427,18 @@ def describe_custom():
                 "?background=https://www.gstatic.com/webp/gallery/3.png"
             }
 
+        def it_returns_gif_when_background_is_gif(expect, client):
+            data = {
+                "background": "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif",
+                "text_lines[]": ["foo", "bar"],
+            }
+            request, response = client.post("/images/custom", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/custom/foo/bar.gif"
+                "?background=https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
+            }
+
         def it_redirects_if_requested(expect, client):
             data = {
                 "background": "https://www.gstatic.com/webp/gallery/4.png",

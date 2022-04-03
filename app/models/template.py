@@ -196,9 +196,15 @@ class Template:
         with suppress(IndexError):
             for index, text in enumerate(self.text):
                 text_lines[index] = text.normalize(text_lines[index])
+        if not extension and background:
+            url = furl(background)
+            extension = url.path.segments[-1].split(".")[-1]
         if extension not in settings.ALLOWED_EXTENSIONS:
             extension = settings.DEFAULT_EXTENSION
         if style == "default":
+            style = ""
+        elif style == "animated":
+            extension = "gif"
             style = ""
         url = request.app.url_for(
             "images.detail_text",

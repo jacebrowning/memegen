@@ -46,12 +46,7 @@ async def generate_url(
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
 
-    if style == "animated":
-        extension = "gif"
-        style = ""
-
     status = 201
-
     if template_id:
         template: models.Template = models.Template.objects.get_or_create(template_id)
         url = template.build_custom_url(
