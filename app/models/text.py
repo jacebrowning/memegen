@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 
 from sanic.log import logger
@@ -78,7 +79,7 @@ class Text:
     def normalize(self, text: str | None) -> str:
         if text is None:
             return ""
-        if self.style in {"upper", "lower"}:
+        if self.style not in {"none", "default", "mock"}:
             return text.lower()
         return text
 
@@ -90,6 +91,7 @@ class Text:
 
         if self.style == "default":
             text = text.capitalize() if all(line.islower() for line in lines) else text
+            text = re.sub(r"\bi\b", "I", text)
             return text
 
         if self.style == "mock":
