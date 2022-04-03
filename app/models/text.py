@@ -75,6 +75,11 @@ class Text:
             color = "black"
         return width, color
 
+    def normalize(self, text: str) -> str:
+        if self.style in {"upper", "lower"}:
+            return text.lower()
+        return text
+
     def stylize(self, text: str, **kwargs) -> str:
         lines = [line for line in kwargs.get("lines", [text]) if line.strip()]
 

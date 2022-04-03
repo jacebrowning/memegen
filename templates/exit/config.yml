@@ -24,9 +24,9 @@ text:
   - style: default
     color: white
     font: thin
-    anchor_x: 0.42
-    anchor_y: 0.79
-    angle: 8.0
+    anchor_x: 0.46
+    anchor_y: 0.85
+    angle: 9.0
     scale_x: 0.32
     scale_y: 0.1
     start: 0.0

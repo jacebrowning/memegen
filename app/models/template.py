@@ -193,6 +193,9 @@ class Template:
         style: str = "",
         font: str = "",
     ):
+        with suppress(IndexError):
+            for index, text in enumerate(self.text):
+                text_lines[index] = text.normalize(text_lines[index])
         if extension not in settings.ALLOWED_EXTENSIONS:
             extension = settings.DEFAULT_EXTENSION
         if style == "default":

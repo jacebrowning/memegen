@@ -1,7 +1,7 @@
 name: Guy Hammering Nails Into Sand
 source: https://keepmeme.com/meme/when-the-boss-coming-and-you-need-to-pretend-doing-something-hammering-nails-into-the-sand-beach-meme
 text:
-  - style: default
+  - style: upper
     color: white
     font: thick
     anchor_x: 0.05
@@ -11,7 +11,7 @@ text:
     scale_y: 0.1
     start: 0.2
     stop: 1.0
-  - style: default
+  - style: upper
     color: white
     font: thick
     anchor_x: 0.4

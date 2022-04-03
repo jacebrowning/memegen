@@ -36,6 +36,17 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
             }
 
+        def it_lowercases_text_for_default_templates(expect, client):
+            data = {
+                "template_id": "iw",
+                "text_lines[]": ["foo", "Bar"],
+            }
+            request, response = client.post("/images", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/foo/bar.png"
+            }
+
         def it_removes_redundant_styles(expect, client):
             data = {
                 "template_id": "iw",
