@@ -3,7 +3,7 @@ from textwrap import dedent
 import bugsnag
 from aiohttp.client_exceptions import ClientPayloadError
 from PIL import UnidentifiedImageError
-from sanic import Sanic
+from sanic import Sanic, Request
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
 
@@ -18,9 +18,20 @@ IGNORED_EXCEPTIONS = (
 
 
 class BugsnagErrorHandler(ErrorHandler):
-    def default(self, request, exception):
+    def default(self, request: Request, exception):
         if self._should_notify(exception):
-            bugsnag.notify(exception, metadata={"request": request.url})
+            bugsnag.notify(
+                exception,
+                metadata={
+                    "request": {
+                        "method": request.method,
+                        "url": request.url,
+                        "json": request.json,
+                        "form": request.form,
+                        "headers": request.headers,
+                    }
+                },
+            )
         return super().default(request, exception)
 
     @staticmethod

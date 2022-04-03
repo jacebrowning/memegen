@@ -33,7 +33,7 @@ datafiles = "^1.2"
 furl = "^2.1.3"
 
 # Production
-bugsnag = "^4.0.3"
+bugsnag = "^4.2"
 gunicorn = "^20.1"
 uvicorn = "~0.17.5"
 
