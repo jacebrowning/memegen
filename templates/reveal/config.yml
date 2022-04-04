@@ -5,7 +5,7 @@ text:
     color: white
     font: thick
     anchor_x: 0.04
-    anchor_y: 0.3
+    anchor_y: 0.26
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
@@ -15,10 +15,10 @@ text:
     color: khaki
     font: thick
     anchor_x: 0.0
-    anchor_y: 0.4
+    anchor_y: 0.36
     angle: 0.0
     scale_x: 1.0
-    scale_y: 0.1
+    scale_y: 0.15
     start: 0.2
     stop: 1.0
   - style: default
