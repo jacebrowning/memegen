@@ -1,4 +1,5 @@
 # Files
+/app/tests/images/
 /images/
 /templates/_custom*
 /templates/<*
