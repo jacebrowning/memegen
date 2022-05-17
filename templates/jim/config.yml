@@ -1,0 +1,35 @@
+name: Jim Halpert Pointing to Whiteboard
+source: https://knowyourmeme.com/memes/jim-halpert-pointing-to-whiteboard
+text:
+  - style: upper
+    color: black
+    font: comic
+    anchor_x: 0.025
+    anchor_y: 0.045
+    angle: 1.0
+    scale_x: 0.61
+    scale_y: 0.22
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: black
+    font: comic
+    anchor_x: 0.02
+    anchor_y: 0.56
+    angle: 0.0
+    scale_x: 0.55
+    scale_y: 0.35
+    start: 0.0
+    stop: 1.0
+example:
+  - It's OK to like trashy shows and movies
+  - If it makes you happy then it's not a waste of time
+overlay:
+  - center_x: 0.77
+    center_y: 0.13
+    angle: 0.0
+    scale: 0.28
+  - center_x: 0.74
+    center_y: 0.67
+    angle: 0.0
+    scale: 0.25
