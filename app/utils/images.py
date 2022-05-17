@@ -253,7 +253,7 @@ def render_animation(
     elif sum(1 for line in lines if line.strip()) == 2:
         template.animate()
         sources = [source] * settings.MINIMUM_FRAMES  # type: ignore
-        duration = 1000
+        duration = 1200
         total = settings.MINIMUM_FRAMES
     else:
         sources = [source]  # type: ignore

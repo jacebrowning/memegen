@@ -115,13 +115,15 @@ run-production: install .env
 	poetry run heroku local web
 
 .PHONY: deploy
-deploy:
+deploy: .envrc
+	@ echo
 	git diff --exit-code
 	heroku git:remote -a memegen-staging
+	@ echo
 	git push heroku main
 
 .PHONY: promote
-promote: install .env .envrc
+promote: install .envrc
 	@ echo
 	SITE=https://staging.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
 	@ echo
