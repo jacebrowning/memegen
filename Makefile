@@ -114,6 +114,12 @@ dev: install
 run-production: install .env
 	poetry run heroku local web
 
+.PHONY: deploy
+deploy:
+	git diff --exit-code
+	heroku git:remote -a memegen-staging
+	git push heroku main
+
 .PHONY: promote
 promote: install .env .envrc
 	@ echo
