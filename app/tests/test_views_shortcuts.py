@@ -38,6 +38,14 @@ def describe_image_redirects():
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
+    def it_truncates_invalid_path_values(expect, client):
+        request, response = client.get(
+            "/images/fry/test//style=foobar", allow_redirects=False
+        )
+        redirect = "/images/fry/test.png"
+        expect(response.status) == 302
+        expect(response.headers["Location"]) == redirect
+
     def it_handles_encoded_newlines(expect, client):
         request, response = client.get("/images/fry/1 2%0A3.jpg", allow_redirects=False)
         redirect = "/images/fry/1_2~n3.jpg"

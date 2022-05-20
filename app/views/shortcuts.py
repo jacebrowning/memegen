@@ -86,6 +86,10 @@ async def custom_path(request, template_id, text_paths):
         logger.warning(f"Fixing query string: {text_paths}")
         text_paths, query_string = text_paths.split("&", 1)
         params = parse_qs(query_string)
+    elif "//" in text_paths:
+        logger.warning(f"Truncating path: {text_paths}")
+        text_paths = text_paths.split("//")[0]
+        params = {}
     else:
         params = {}
 
