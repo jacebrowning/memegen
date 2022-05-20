@@ -1,0 +1,35 @@
+name: Peter Parker's Glasses
+source: https://knowyourmeme.com/memes/peter-parkers-glasses
+text:
+  - style: default
+    color: black
+    font: comic
+    anchor_x: 0.5
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.49
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.51
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.49
+    start: 0.0
+    stop: 1.0
+example:
+  - Virginity is cool, stay pure
+  - I am utterly incapable of getting laid
+overlay:
+  - center_x: 0.75
+    center_y: 0.245
+    angle: 0.0
+    scale: 0.49
+  - center_x: 0.75
+    center_y: 0.755
+    angle: 0.0
+    scale: 0.49
