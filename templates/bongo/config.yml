@@ -1,0 +1,35 @@
+name: Bongo Cat
+source: https://knowyourmeme.com/memes/bongo-cat
+text:
+  - style: default
+    color: black
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.48
+    scale_y: 0.5
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.5
+    angle: 0.0
+    scale_x: 0.48
+    scale_y: 0.5
+    start: 0.0
+    stop: 1.0
+example:
+  - Any sound when you're trying to sleep
+  - Max volume alarm when you have to wake up
+overlay:
+  - center_x: 0.25
+    center_y: 0.25
+    angle: 0.0
+    scale: 0.5
+  - center_x: 0.25
+    center_y: 0.75
+    angle: 0.0
+    scale: 0.5
