@@ -124,6 +124,11 @@ async def render_image(
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
 
+    animated = extension == "gif"
+    if extension not in settings.ALLOWED_EXTENSIONS:
+        extension = settings.DEFAULT_EXTENSION
+        status = 422
+
     template: models.Template
     if any(len(part.encode()) > 200 for part in slug.split("/")):
         logger.error(f"Slug too long: {slug}")
@@ -146,7 +151,7 @@ async def render_image(
             style = utils.urls.arg(request.args, "default", "style")
             if not utils.urls.schema(style):
                 style = style.lower()
-            if not await template.check(style):
+            if not await template.check(style, animated=animated):
                 if utils.urls.schema(style):
                     status = 415
                 elif style != settings.PLACEHOLDER:
@@ -167,7 +172,7 @@ async def render_image(
                 status = 404
 
         style = utils.urls.arg(request.args, "default", "style", "alt")
-        if not await template.check(style):
+        if not await template.check(style, animated=animated):
             if utils.urls.schema(style):
                 status = 415
             elif style != settings.PLACEHOLDER:
@@ -177,10 +182,6 @@ async def render_image(
         utils.urls.arg(request.args, "", "start"),
         utils.urls.arg(request.args, "", "stop"),
     )
-
-    if extension not in settings.ALLOWED_EXTENSIONS:
-        extension = settings.DEFAULT_EXTENSION
-        status = 422
 
     font_name = utils.urls.arg(request.args, "", "font")
     if font_name == settings.PLACEHOLDER:
