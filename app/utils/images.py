@@ -161,7 +161,7 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
 
         frames.append(background)
 
-    logger.info(f"Saving {len(frames)} frame(s) as GIF")
+    logger.debug(f"Merging {len(frames)} frame(s) for custom GIF background")
     frames[0].save(background_path, save_all=True, append_images=frames[1:])
 
 

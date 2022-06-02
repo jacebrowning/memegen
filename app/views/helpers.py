@@ -124,6 +124,7 @@ async def render_image(
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
 
+    animated = extension == "gif"
     if extension not in settings.ALLOWED_EXTENSIONS:
         extension = settings.DEFAULT_EXTENSION
         status = 422
@@ -150,7 +151,7 @@ async def render_image(
             style = utils.urls.arg(request.args, "default", "style")
             if not utils.urls.schema(style):
                 style = style.lower()
-            if not await template.check(style, extension):
+            if not await template.check(style, animated=animated):
                 if utils.urls.schema(style):
                     status = 415
                 elif style != settings.PLACEHOLDER:
@@ -171,7 +172,7 @@ async def render_image(
                 status = 404
 
         style = utils.urls.arg(request.args, "default", "style", "alt")
-        if not await template.check(style, extension):
+        if not await template.check(style, animated=animated):
             if utils.urls.schema(style):
                 status = 415
             elif style != settings.PLACEHOLDER:

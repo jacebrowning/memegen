@@ -285,9 +285,7 @@ class Template:
 
         return template
 
-    async def check(
-        self, style: str, extension: str = settings.DEFAULT_EXTENSION, *, force=False
-    ) -> bool:
+    async def check(self, style: str, *, animated=False, force=False) -> bool:
         if style in {None, "", "default"}:
             return True
 
@@ -298,9 +296,8 @@ class Template:
             logger.error(f"Invalid style for {self.id} template: {style}")
             return False
 
-        image = self.get_image(animated=extension == "gif")
-
-        filename = utils.text.fingerprint(style, suffix=image.suffix)
+        image = self.get_image(animated=animated)
+        filename = utils.text.fingerprint(f"{style}", suffix=image.suffix)
         path = aiopath.AsyncPath(self.directory) / filename
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {style} at {path}")
