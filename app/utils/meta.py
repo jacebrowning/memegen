@@ -32,7 +32,6 @@ async def authenticate(request) -> dict:
         logger.info(f"Authenticating with API key: {api_mask}")
         async with aiohttp.ClientSession() as session:
             response = await session.get(api, headers={"X-API-KEY": api_key})
-            logger.critical(response)
             if response.status >= 500:
                 settings.REMOTE_TRACKING_ERRORS += 1
             else:
