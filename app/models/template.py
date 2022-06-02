@@ -285,8 +285,10 @@ class Template:
 
         return template
 
-    async def check(self, style: str, *, force=False) -> bool:
-        if style in {"", None, "default"}:
+    async def check(
+        self, style: str, extension: str = settings.DEFAULT_EXTENSION, *, force=False
+    ) -> bool:
+        if style in {None, "", "default"}:
             return True
 
         if style in self.styles:
@@ -296,15 +298,17 @@ class Template:
             logger.error(f"Invalid style for {self.id} template: {style}")
             return False
 
-        filename = utils.text.fingerprint(style, suffix=self.image.suffix)
+        image = self.get_image(animated=extension == "gif")
+
+        filename = utils.text.fingerprint(style, suffix=image.suffix)
         path = aiopath.AsyncPath(self.directory) / filename
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {style} at {path}")
             return True
 
         urls = style.split(",")
-        logger.info(f"Embeding {len(urls)} overlay image(s) onto {path}")
-        await asyncio.to_thread(shutil.copy, self.image, path)
+        logger.info(f"Embedding {len(urls)} overlay image(s) onto {path}")
+        await asyncio.to_thread(shutil.copy, image, path)
 
         embedded = 0
         for index, url in enumerate(urls):
@@ -338,9 +342,15 @@ class Template:
             await utils.http.download(url, foreground)
 
         try:
-            await asyncio.to_thread(
-                utils.images.embed, self, index, Path(foreground), Path(background)
-            )
+            # TODO: Can 'merge' and 'embed' be combined?
+            if background.suffix == ".gif":
+                await asyncio.to_thread(
+                    utils.images.merge, self, index, Path(foreground), Path(background)
+                )
+            else:
+                await asyncio.to_thread(
+                    utils.images.embed, self, index, Path(foreground), Path(background)
+                )
         except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await foreground.unlink(missing_ok=True)

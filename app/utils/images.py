@@ -135,6 +135,36 @@ def embed(template: Template, index: int, foreground_path: Path, background_path
     background.convert("RGB").save(background_path)
 
 
+def merge(template: Template, index: int, foreground_path: Path, background_path: Path):
+    try:
+        overlay = template.overlay[index]
+    except IndexError:
+        count = len(template.overlay)
+        logger.error(f"Template {template.id!r} only supports {count} overlay(s)")
+        overlay = template.overlay[count - 1]
+
+    background = Image.open(background_path)
+    foreground = load(foreground_path)
+
+    frames = []
+    for frame in ImageSequence.Iterator(background):
+        stream = io.BytesIO()
+        frame.save(stream, format="GIF")
+        background = Image.open(stream).convert("RGBA")
+
+        size = overlay.get_size(background.size)
+        foreground.thumbnail(size)
+        foreground = foreground.rotate(overlay.angle, expand=True)
+
+        x1, y1, _x2, _y2 = overlay.get_box(background.size, foreground.size)
+        background.paste(foreground, (x1, y1), mask=foreground.convert("RGBA"))
+
+        frames.append(background)
+
+    logger.info(f"Saving {len(frames)} frame(s) as GIF")
+    frames[0].save(background_path, save_all=True, append_images=frames[1:])
+
+
 def render_image(
     template: Template,
     style: str,
