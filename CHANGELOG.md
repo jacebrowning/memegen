@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.8
+
+- Added support for adding overlays on top of GIF backgrounds.
+
 ## 10.7
 
 - Added support for `start=<int,int>`/`stop=<int,int>` query parameters to control text animation.
