@@ -72,7 +72,11 @@ class Template:
         return styles
 
     @cached_property
-    def animated(self):
+    def animated_image(self):
+        return "animated" in self.styles
+
+    @cached_property
+    def animated_text(self):
         return any(text.animated for text in self.text)
 
     @cached_property
@@ -170,9 +174,10 @@ class Template:
         self,
         request: Request,
         *,
-        extension: str = settings.DEFAULT_EXTENSION,
+        extension: str = "",
         external: bool = True,
     ) -> str:
+        extension = extension or self._extension
         kwargs = {
             "template_id": self.id,
             "text_filepath": utils.text.encode(self.example) + "." + extension,
@@ -188,7 +193,7 @@ class Template:
         request: Request,
         text_lines: list[str],
         *,
-        extension: str = settings.DEFAULT_EXTENSION,
+        extension: str = "",
         background: str = "",
         style: str = "",
         font: str = "",
@@ -200,7 +205,7 @@ class Template:
             url = furl(background)
             extension = url.path.segments[-1].split(".")[-1]
         if extension not in settings.ALLOWED_EXTENSIONS:
-            extension = settings.DEFAULT_EXTENSION
+            extension = self._extension
         if style == "default":
             style = ""
         elif style == "animated":
@@ -215,6 +220,10 @@ class Template:
             **utils.urls.params(background=background, style=style, font=font),
         )
         return utils.urls.clean(url)
+
+    @property
+    def _extension(self) -> str:
+        return "gif" if self.animated_image else settings.DEFAULT_EXTENSION
 
     def build_path(
         self,

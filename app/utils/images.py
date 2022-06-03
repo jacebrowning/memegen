@@ -276,7 +276,7 @@ def render_animation(
     total = getattr(source, "n_frames", 1)
     if total > 1:
         sources = ImageSequence.Iterator(source)
-    elif template.animated:
+    elif template.animated_text:
         sources = [source] * settings.MAXIMUM_FRAMES  # type: ignore
         duration = 250
         total = settings.MAXIMUM_FRAMES

@@ -3,6 +3,7 @@
 ## 10.8
 
 - Added support for adding overlays on top of GIF backgrounds.
+- Updated APIs to default to `.gif` if available and `extension` not specified.
 
 ## 10.7
 
