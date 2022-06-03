@@ -99,7 +99,7 @@ class Template:
         url = ""
         if utils.urls.schema(style):
             url = style
-            style = utils.text.fingerprint(url)
+            style = utils.text.fingerprint(f"{url}{self.overlay}")
 
         self.directory.mkdir(exist_ok=True)
         paths: list[Path] = []
