@@ -273,10 +273,15 @@
 <p>The <code>style=&lt;str&gt;</code> query parameter can also be an image URL to overlay on the default background image.</p>
 <p>For example, <a href="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png">https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png</a> produces:</p>
 <p><img alt="Custom Overlay" src="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&amp;width=800&amp;token=cy49tv234bu3jzgw587o" /></p>
+<p>The overlay image can be customized with the following query parameters:</p>
+<ul>
+<li><code>scale=&lt;float&gt;</code> as a ratio of background image's dimensions</li>
+</ul>
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background.</p>
 <p>For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
 <p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;width=800&amp;token=ahby9x2nlsbk0gxdmpo5" /></p>
+<p>This can be combined with <a href="#custom-overlays">custom overlays</a> to augment the background image.</p>
 <h1 id="fonts">Fonts</h1>
 <p>The full list of fonts is available here: <a href="https://api.memegen.link/fonts/">https://api.memegen.link/fonts/</a></p>
 <p>Add the <code>font=&lt;str&gt;</code> query parameter to customize the look of your meme:</p>
@@ -396,5 +401,5 @@
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-06-03 13:33:31.115831+00:00
+Build Date UTC : 2022-06-03 19:05:57.737379+00:00
 -->
