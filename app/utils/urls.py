@@ -18,11 +18,11 @@ def schema(value) -> bool:
     return value and "://" in value
 
 
-def arg(data: dict, default, *names: str, to=None):
+def arg(data: dict, default, *names: str):
     for name in names:
         value = data.get(name)
         if value is not None:
-            return to(value) if to else value
+            return value
     return default
 
 

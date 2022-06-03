@@ -384,10 +384,22 @@ class Template:
         if starts or stops:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
 
-    def customize(self, scale: float | None):
+    def customize(self, *, center: str, scale: str | float):
         with frozen(self):
-            if scale is not None:
-                self.overlay[0].scale = scale
+            if center:
+                try:
+                    xy = [float(value) for value in center.split(",")]
+                except ValueError:
+                    logger.error(f"Invalid overlay: {center=}")
+                else:
+                    self.overlay[0].center_x, self.overlay[0].center_y = xy
+            if scale:
+                try:
+                    scale = float(scale)
+                except ValueError:
+                    logger.error(f"Invalid overlay: {scale=}")
+                else:
+                    self.overlay[0].scale = scale
 
     def clean(self):
         for path in self.directory.iterdir():

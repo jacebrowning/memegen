@@ -87,9 +87,12 @@ For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photosho
 
 ![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=cy49tv234bu3jzgw587o)
 
-The overlay image can be customized with the following query parameters:
+The overlay image can be customized with the following additional query parameters:
 
-- `scale=<float>` as a ratio of background image's dimensions
+| Name     | Type              | Description                                         |
+| -------- | ----------------- | --------------------------------------------------- |
+| `center` | `<float>,<float>` | Position of overlay relative to the top-left corner |
+| `scale`  | `<float>`         | Ratio of the background image's dimensions          |
 
 ## Custom Backgrounds
 
