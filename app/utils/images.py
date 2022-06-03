@@ -126,7 +126,7 @@ def embed(template: Template, index: int, foreground_path: Path, background_path
     foreground = load(foreground_path)
 
     size = overlay.get_size(background.size)
-    foreground.thumbnail(size)
+    foreground = foreground.resize(size, Image.LANCZOS)
     foreground = foreground.rotate(overlay.angle, expand=True)
 
     x1, y1, _x2, _y2 = overlay.get_box(background.size, foreground.size)

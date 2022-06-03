@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.9b1
+
+- Added support for `scale=<float>` query parameter to control the size of the overlay image.
+
 ## 10.8
 
 - Added support for adding overlays on top of GIF backgrounds.

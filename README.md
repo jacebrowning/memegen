@@ -87,6 +87,10 @@ For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photosho
 
 ![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=cy49tv234bu3jzgw587o)
 
+The overlay image can be customized with the following query parameters:
+
+- `scale=<float>` as a ratio of background image's dimensions
+
 ## Custom Backgrounds
 
 You can also use your own image URL as the background.
@@ -94,6 +98,8 @@ You can also use your own image URL as the background.
 For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=ahby9x2nlsbk0gxdmpo5)
+
+This can be combined with [custom overlays](#custom-overlays) to augment the background image.
 
 # Fonts
 

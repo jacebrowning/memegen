@@ -142,6 +142,8 @@ async def render_image(
         url = utils.urls.arg(request.args, None, "background", "alt")
         if url:
             template = await models.Template.create(url)
+            template.customize(scale=utils.urls.arg(request.args, None, "scale"))
+
             if not template.image.exists():
                 logger.error(f"Unable to download image URL: {url}")
                 template = models.Template.objects.get("_error")

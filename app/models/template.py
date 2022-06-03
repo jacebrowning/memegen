@@ -382,6 +382,10 @@ class Template:
         if starts or stops:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
 
+    def customize(self, scale: float | None):
+        if scale is not None:
+            self.overlay[0].scale = scale
+
     def clean(self):
         for path in self.directory.iterdir():
             if path.stem not in {"config", "default"}:
