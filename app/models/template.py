@@ -237,6 +237,8 @@ class Template:
     ) -> Path:
         slug = utils.text.encode(text_lines)
         variant = str(self.text) + font_name + style + str(size) + watermark
+        if self.overlay != [Overlay()]:
+            variant += str(self.overlay)
         if frames:
             variant += str(frames)
         fingerprint = utils.text.fingerprint(variant, prefix="")
