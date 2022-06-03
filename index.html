@@ -273,10 +273,28 @@
 <p>The <code>style=&lt;str&gt;</code> query parameter can also be an image URL to overlay on the default background image.</p>
 <p>For example, <a href="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png">https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png</a> produces:</p>
 <p><img alt="Custom Overlay" src="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&amp;width=800&amp;token=cy49tv234bu3jzgw587o" /></p>
-<p>The overlay image can be customized with the following query parameters:</p>
-<ul>
-<li><code>scale=&lt;float&gt;</code> as a ratio of background image's dimensions</li>
-</ul>
+<p>The overlay image can be customized with the following additional query parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>center</code></td>
+<td><code>&lt;float&gt;,&lt;float&gt;</code></td>
+<td>Position of overlay relative to the top-left corner</td>
+</tr>
+<tr>
+<td><code>scale</code></td>
+<td><code>&lt;float&gt;</code></td>
+<td>Ratio of the background image's dimensions</td>
+</tr>
+</tbody>
+</table>
 <h2 id="custom-backgrounds">Custom Backgrounds</h2>
 <p>You can also use your own image URL as the background.</p>
 <p>For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
@@ -401,5 +419,5 @@
 
 <!--
 MkDocs version : 1.2.3
-Build Date UTC : 2022-06-03 19:49:52.485548+00:00
+Build Date UTC : 2022-06-03 20:22:38.075302+00:00
 -->
