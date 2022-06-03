@@ -346,7 +346,7 @@ requests = ">=2.0,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "1.2"
+version = "1.4b3"
 description = "File-based ORM for dataclasses."
 category = "main"
 optional = false
@@ -355,10 +355,10 @@ python-versions = ">=3.7,<4.0"
 [package.dependencies]
 cached_property = ">=1.5,<2.0"
 classproperties = ">=0.2,<0.3"
-minilog = ">=2.0,<3.0"
+minilog = ">=2.1,<3.0"
 parse = ">=1.12,<2.0"
-"ruamel.yaml" = ">=0.17.20,<0.18.0"
-tomlkit = ">=0.7.2,<0.8.0"
+"ruamel.yaml" = ">=0.17.21,<0.18.0"
+tomlkit = ">=0.10.1,<0.11.0"
 typing-extensions = ">=3.7,<4.0"
 
 [[package]]
@@ -1395,11 +1395,11 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "tomlkit"
-version = "0.7.2"
+version = "0.10.2"
 description = "Style preserving TOML library"
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+python-versions = ">=3.6,<4.0"
 
 [[package]]
 name = "traitlets"
@@ -1618,7 +1618,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "46e21c8da60f47e7cf327467064b36112cc227c4cfd0097d1c8dd2c5c8ce67fa"
+content-hash = "36b94cfc2187072e0056d459a9c8fb0b60b796604462c4b00ca1ce828de8f7b1"
 
 [metadata.files]
 aiocache = [
@@ -1991,8 +1991,8 @@ coveragespace = [
     {file = "coveragespace-4.2.tar.gz", hash = "sha256:b23263b7b9689fd7ded975809b134453c0e0cdbf1dea6b60bf8ebed2c78f9270"},
 ]
 datafiles = [
-    {file = "datafiles-1.2-py3-none-any.whl", hash = "sha256:75f3f572884f045e101262f014a3c594b67df14a55da82d19394c0e9854be6e6"},
-    {file = "datafiles-1.2.tar.gz", hash = "sha256:209493cac9640e30d51de0c59708ddba1d57d317878b278a69532adad07f543a"},
+    {file = "datafiles-1.4b3-py3-none-any.whl", hash = "sha256:659e379e63dbca705dc9496cc64272388fdc46f76ac0d6a4fe15fdd36df17734"},
+    {file = "datafiles-1.4b3.tar.gz", hash = "sha256:e8e66200a687b52c308772f045df692122f7b636aa0ec9b44e2f89a9ad9f61b8"},
 ]
 decorator = [
     {file = "decorator-5.1.1-py3-none-any.whl", hash = "sha256:b8c3f85900b9dc423225913c5aace94729fe1fa9763b38939a95226f02d37186"},
@@ -2878,8 +2878,8 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 tomlkit = [
-    {file = "tomlkit-0.7.2-py2.py3-none-any.whl", hash = "sha256:173ad840fa5d2aac140528ca1933c29791b79a374a0861a80347f42ec9328117"},
-    {file = "tomlkit-0.7.2.tar.gz", hash = "sha256:d7a454f319a7e9bd2e249f239168729327e4dd2d27b17dc68be264ad1ce36754"},
+    {file = "tomlkit-0.10.2-py3-none-any.whl", hash = "sha256:905cf92c2111ef80d355708f47ac24ad1b6fc2adc5107455940088c9bbecaedb"},
+    {file = "tomlkit-0.10.2.tar.gz", hash = "sha256:30d54c0b914e595f3d10a87888599eab5321a2a69abc773bbefff51599b72db6"},
 ]
 traitlets = [
     {file = "traitlets-5.1.1-py3-none-any.whl", hash = "sha256:2d313cc50a42cd6c277e7d7dc8d4d7fedd06a2c215f78766ae7b1a66277e0033"},

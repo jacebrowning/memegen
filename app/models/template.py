@@ -306,7 +306,7 @@ class Template:
             return False
 
         image = self.get_image(animated=animated)
-        filename = utils.text.fingerprint(f"{style}", suffix=image.suffix)
+        filename = utils.text.fingerprint(f"{style}{self.overlay}", suffix=image.suffix)
         path = aiopath.AsyncPath(self.directory) / filename
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {style} at {path}")
@@ -383,8 +383,9 @@ class Template:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
 
     def customize(self, scale: float | None):
-        if scale is not None:
-            self.overlay[0].scale = scale
+        with frozen(self):
+            if scale is not None:
+                self.overlay[0].scale = scale
 
     def clean(self):
         for path in self.directory.iterdir():
