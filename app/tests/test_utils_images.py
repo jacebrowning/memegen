@@ -248,7 +248,7 @@ def test_watermark(images, template):
 
 
 def test_watermark_with_padding(images, template):
-    lines = ["paddded image", "with watermark"]
+    lines = ["padded image", "with watermark"]
     utils.images.save(template, lines, "Example.com", size=(500, 500), directory=images)
 
 
