@@ -470,7 +470,7 @@ def add_watermark(
     box = Image.new("RGBA", image.size)
     draw = ImageDraw.Draw(box)
     draw.text(
-        (3 + fuzz, image.size[1] - size[1] - offset[1] - 1),
+        (3 + fuzz, image.size[1] - size[1] - offset[1]),
         text,
         watermark.color,
         font,
@@ -647,7 +647,8 @@ def get_text_offset(text: str, font: FontType, max_text_size: Dimensions) -> Off
     x_offset -= stroke_width
     y_offset -= stroke_width
 
-    rows = text.count("\n") + 1
+    lines = text.split("\n")
+    rows = len(lines)
     if rows >= 3:
         y_adjust = 1.1
     else:
@@ -655,6 +656,11 @@ def get_text_offset(text: str, font: FontType, max_text_size: Dimensions) -> Off
 
     x_offset -= (max_text_size[0] - text_size[0]) / 2  # type: ignore
     y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2  # type: ignore
+
+    if any(letter in lines[-1] for letter in "gjpqy"):
+        descender_offset = text_size[1] // 20
+        logger.debug(f"Offsetting {lines[-1]!r} by {descender_offset} pixels")
+        y_offset += descender_offset
 
     return x_offset, y_offset
 

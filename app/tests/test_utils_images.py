@@ -1,3 +1,7 @@
+"""
+These tests all save images to disk for manual visual diff testing.
+"""
+
 import os
 import shutil
 import time
@@ -217,16 +221,13 @@ def test_text_wrap_on_smaller_images(images):
 
 @pytest.mark.slow
 def test_descender_vertical_alignment(images):
-    template = models.Template.objects.get("ptj")
+    template = models.Template.objects.get("right")
     lines = [
-        "Exit",
-        "Exit",
-        "the",
-        "the",
-        "monorepo",
-        "monorepo",
-        "Exit the monorepo.",
-        "Stop testing!",
+        "microsoft",
+        "developers",
+        "Internet Explorer 11 is no longer supported.",
+        "So people will stop using it, right?",
+        "So people will stop using it, right?",
     ]
     utils.images.save(template, lines, directory=images)
 
