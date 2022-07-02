@@ -93,8 +93,15 @@ async def custom_path(request, template_id, text_paths):
     else:
         params = {}
 
-    if "." in text_paths:
+    if "." in text_paths.strip("."):
         text_filepath = text_paths
+    elif text_paths.startswith("."):
+        return response.redirect(
+            request.app.url_for(
+                "images.detail_blank",
+                template_filename=f"{template_id}{text_paths}",
+            )
+        )
     else:
         text_filepath = text_paths + "." + settings.DEFAULT_EXTENSION
 

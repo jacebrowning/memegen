@@ -30,6 +30,12 @@ def describe_image_redirects():
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
+    def it_fixes_misplaced_file_extension(expect, client):
+        request, response = client.get("/images/fry/.jpg", allow_redirects=False)
+        redirect = "/images/fry.jpg"
+        expect(response.status) == 302
+        expect(response.headers["Location"]) == redirect
+
     def it_fixes_misplaced_query_params_on_image(expect, client):
         request, response = client.get(
             "/images/fry/test.jpg&width=99&height=99", allow_redirects=False
