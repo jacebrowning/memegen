@@ -1,0 +1,31 @@
+name: Inhaling Seagull
+source: https://knowyourmeme.com/memes/inhaling-seagull
+text:
+  - style: none
+    color: white
+    font: comic
+    anchor_x: 0.0
+    anchor_y: 0.24
+    angle: 0.0
+    scale_x: 0.25
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+  - style: none
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.75
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.25
+    start: 0.0
+    stop: 1.0
+example:
+  - some
+  - BODY ONCE TOLD ME THE THE WORLD WAS GONNA ROLL ME!!
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
