@@ -1,0 +1,75 @@
+name: Elmo Choosing Cocaine
+source: https://knowyourmeme.com/memes/elmo-choosing-cocaine
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.24
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.25
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.35
+    anchor_y: 0.21
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.17
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.59
+    anchor_y: 0.39
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.69
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.25
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.59
+    anchor_y: 0.87
+    angle: 0.0
+    scale_x: 0.3
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+example:
+  - Historical Accuracy
+  - History Channel
+  - Aliens
+  - Historical Accuracy
+overlay:
+  - center_x: 0.15
+    center_y: 0.34
+    angle: 0.0
+    scale: 0.3
+  - center_x: 0.73
+    center_y: 0.41
+    angle: 0.0
+    scale: 0.1
+  - center_x: 0.15
+    center_y: 0.8
+    angle: 0.0
+    scale: 0.3
+  - center_x: 0.73
+    center_y: 0.9
+    angle: 0.0
+    scale: 0.1
