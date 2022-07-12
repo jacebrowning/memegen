@@ -1,0 +1,31 @@
+name: Why Shouldn't I Keep It / Bilbo Baggins
+source: https://knowyourmeme.com/memes/after-all-why-not-why-shouldnt-i-keep-it
+text:
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.4
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.9
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.1
+    start: 0.0
+    stop: 1.0
+example:
+  - After all... why not?
+  - Why shouldn't I keep it?
+overlay:
+  - center_x: 0.8
+    center_y: 0.88
+    angle: 0.0
+    scale: 0.1
