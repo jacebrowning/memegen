@@ -36,6 +36,12 @@ def describe_image_redirects():
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
+    def it_fixes_extra_trailing_slash(expect, client):
+        request, response = client.get("/images/fry/test.jpg/", allow_redirects=False)
+        redirect = "/images/fry/test.jpg"
+        expect(response.status) == 302
+        expect(response.headers["Location"]) == redirect
+
     def it_fixes_misplaced_query_params_on_image(expect, client):
         request, response = client.get(
             "/images/fry/test.jpg&width=99&height=99", allow_redirects=False
