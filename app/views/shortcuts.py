@@ -81,6 +81,7 @@ async def custom_path(request, template_id, text_paths):
     if template_id == "images":
         return response.redirect(f"/images/{text_paths}".removesuffix("/"))
 
+    params = {}
     text_paths = utils.urls.clean(text_paths)
     if "&" in text_paths:
         logger.warning(f"Fixing query string: {text_paths}")
@@ -89,9 +90,9 @@ async def custom_path(request, template_id, text_paths):
     elif "//" in text_paths:
         logger.warning(f"Truncating path: {text_paths}")
         text_paths = text_paths.split("//")[0]
-        params = {}
-    else:
-        params = {}
+    elif text_paths.endswith("/"):
+        logger.warning(f"Fixing trailing slash: {text_paths}")
+        text_paths = text_paths.rstrip("/")
 
     if "." in text_paths.strip("."):
         text_filepath = text_paths
