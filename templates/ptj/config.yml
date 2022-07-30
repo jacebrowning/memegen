@@ -9,6 +9,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.1
     stop: 1.0
   - style: default
@@ -19,6 +20,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.3
     stop: 1.0
   - style: none
@@ -29,6 +31,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.1
     stop: 1.0
   - style: none
@@ -39,6 +42,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.3
     stop: 1.0
   - style: none
@@ -49,6 +53,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.1
     stop: 1.0
   - style: none
@@ -59,6 +64,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.3
     stop: 1.0
   - style: default
@@ -69,6 +75,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.5
     stop: 1.0
   - style: default
@@ -79,6 +86,7 @@ text:
     angle: 0.0
     scale_x: 0.5
     scale_y: 0.05
+    align: center
     start: 0.7
     stop: 1.0
 example:

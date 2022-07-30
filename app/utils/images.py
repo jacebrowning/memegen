@@ -217,6 +217,7 @@ def render_image(
             text_fill,
             font,
             spacing=-offset[1] / (rows * 2),
+            # TODO: Match to text align
             align="center",
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
@@ -349,6 +350,7 @@ def render_animation(
                 text_fill,
                 font,
                 spacing=-offset[1] / (rows * 2),
+                # TODO: Match to text align
                 align="center",
                 stroke_width=stroke_width,
                 stroke_fill=stroke_fill,
@@ -546,7 +548,7 @@ def get_image_element(
         )
 
     font = get_font(font_name or text.font, line, max_text_size, max_font_size)
-    offset = get_text_offset(line, font, max_text_size)
+    offset = get_text_offset(line, font, max_text_size, text.align)
 
     stroke_width, stroke_fill = text.get_stroke(get_stroke_width(font))
 
@@ -638,7 +640,9 @@ def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
     return text_width - offset[0], text_height - offset[1]
 
 
-def get_text_offset(text: str, font: FontType, max_text_size: Dimensions) -> Offset:
+def get_text_offset(
+    text: str, font: FontType, max_text_size: Dimensions, align: str = "center"
+) -> Offset:
     text_size = get_text_size(text, font)
     stroke_width = get_stroke_width(font)
 
@@ -654,7 +658,8 @@ def get_text_offset(text: str, font: FontType, max_text_size: Dimensions) -> Off
     else:
         y_adjust = 1 + (3 - rows) * 0.25
 
-    x_offset -= (max_text_size[0] - text_size[0]) / 2  # type: ignore
+    if align != "start":
+        x_offset -= (max_text_size[0] - text_size[0]) / 2  # type: ignore
     y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2  # type: ignore
 
     if any(letter in lines[-1] for letter in "gjpqy"):

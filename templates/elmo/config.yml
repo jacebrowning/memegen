@@ -9,6 +9,7 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.25
+    align: center
     start: 0.0
     stop: 1.0
   - style: default
@@ -19,6 +20,7 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.17
+    align: center
     start: 0.0
     stop: 1.0
   - style: default
@@ -29,6 +31,7 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
+    align: center
     start: 0.0
     stop: 1.0
   - style: default
@@ -39,6 +42,7 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.25
+    align: center
     start: 0.0
     stop: 1.0
   - style: default
@@ -49,6 +53,7 @@ text:
     angle: 0.0
     scale_x: 0.3
     scale_y: 0.1
+    align: center
     start: 0.0
     stop: 1.0
 example:
