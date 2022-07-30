@@ -246,7 +246,7 @@ class Template:
         return Path(self.id) / filename
 
     @classmethod
-    async def create(cls, url: str, *, force=False) -> "Template":
+    async def create(cls, url: str, *, layout: str = "", force=False) -> "Template":
         try:
             parsed = furl(url)
         except ValueError as e:
@@ -269,7 +269,7 @@ class Template:
                     logger.error(e)
                     return cls.objects.get("_error")
 
-        id = utils.text.fingerprint(url)
+        id = utils.text.fingerprint(url + layout)
         template = cls.objects.get_or_create(id, url)
 
         suffix = Path(str(parsed.path)).suffix
@@ -293,6 +293,21 @@ class Template:
         except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await path.unlink(missing_ok=True)
+
+        if layout == "top":
+            with frozen(template):
+                text: Text
+                for index, text in enumerate(template.text):
+                    text.style = "default"
+                    text.color = "black"
+                    text.font = "thin"
+                    text.anchor_x = 0
+                    text.anchor_y = index * 0.1
+                    text.scale_x = 1.0
+                    text.scale_y = 0.1
+                    text.align = "start"
+
+            await asyncio.to_thread(utils.images.add_top_padding, Path(path))
 
         return template
 

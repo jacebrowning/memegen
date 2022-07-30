@@ -232,9 +232,20 @@ def test_descender_vertical_alignment(images):
     utils.images.save(template, lines, directory=images)
 
 
+# Alignment
+
+
 def test_text_align_start(images):
     template = models.Template.objects.get("home")
     lines = ["One", "Two", "Three"]
+    utils.images.save(template, lines, directory=images)
+
+
+@pytest.mark.asyncio
+async def test_layout_top(images):
+    url = "https://www.gstatic.com/webp/gallery/2.jpg"
+    template = await models.Template.create(url, layout="top")
+    lines = ["One", "Two"]
     utils.images.save(template, lines, directory=images)
 
 

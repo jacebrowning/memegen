@@ -123,6 +123,7 @@ async def render_image(
     lines = utils.text.decode(slug)
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
+    layout = utils.urls.arg(request.args, "", "layout")
 
     animated = extension == "gif"
     if extension not in settings.ALLOWED_EXTENSIONS:
@@ -141,7 +142,7 @@ async def render_image(
     elif id == "custom":
         url = utils.urls.arg(request.args, None, "background", "alt")
         if url:
-            template = await models.Template.create(url)
+            template = await models.Template.create(url, layout=layout)
             template.customize(
                 center=utils.urls.arg(request.args, None, "center"),
                 scale=utils.urls.arg(request.args, None, "scale"),

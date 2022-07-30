@@ -165,6 +165,18 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
     frames[0].save(background_path, save_all=True, append_images=frames[1:])
 
 
+def add_top_padding(path: Path):
+    foreground = load(path)
+
+    base_width, base_height = foreground.size
+    extra = int(base_height * 0.25)
+    background_dimensions = base_width, base_height + extra
+
+    background = Image.new("RGB", background_dimensions, "white")
+    background.paste(foreground, (0, extra))
+    background.save(path)
+
+
 def render_image(
     template: Template,
     style: str,
