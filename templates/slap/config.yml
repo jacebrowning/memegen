@@ -9,6 +9,7 @@ text:
     angle: 44.0
     scale_x: 0.35
     scale_y: 0.3
+    align: center
     start: 0.0
     stop: 1.0
   - style: upper
@@ -19,6 +20,7 @@ text:
     angle: 0.0
     scale_x: 0.35
     scale_y: 0.3
+    align: center
     start: 0.0
     stop: 1.0
 example:

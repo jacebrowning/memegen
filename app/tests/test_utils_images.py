@@ -232,6 +232,13 @@ def test_descender_vertical_alignment(images):
     utils.images.save(template, lines, directory=images)
 
 
+@pytest.mark.skip
+def test_text_align_start(images):
+    template = models.Template.objects.get("home")
+    lines = ["One", "Two", "Three"]
+    utils.images.save(template, lines, directory=images)
+
+
 # Fonts
 
 

@@ -27,6 +27,8 @@ class Text:
     scale_x: float = 1.0
     scale_y: float = 0.2
 
+    align: str = "center"
+
     start: float = 0.0
     stop: float = 1.0
 
