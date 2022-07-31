@@ -246,7 +246,9 @@ class Template:
         return Path(self.id) / filename
 
     @classmethod
-    async def create(cls, url: str, *, layout: str = "", force=False) -> "Template":
+    async def create(
+        cls, url: str, *, layout: str = "default", lines: int = 2, force=False
+    ) -> "Template":
         try:
             parsed = furl(url)
         except ValueError as e:
@@ -269,7 +271,9 @@ class Template:
                     logger.error(e)
                     return cls.objects.get("_error")
 
-        id = utils.text.fingerprint(url + layout)
+        id = utils.text.fingerprint(url)
+        if layout != "default":
+            id += f"-{layout}{lines}"
         template = cls.objects.get_or_create(id, url)
 
         suffix = Path(str(parsed.path)).suffix
@@ -296,16 +300,19 @@ class Template:
 
         if layout == "top":
             with frozen(template):
-                text: Text
-                for index, text in enumerate(template.text):
-                    text.style = "default"
-                    text.color = "black"
-                    text.font = "thin"
-                    text.anchor_x = 0
-                    text.anchor_y = index * 0.1
-                    text.scale_x = 1.0
-                    text.scale_y = 0.1
-                    text.align = "start"
+                template.text = []
+                for index in range(lines):
+                    text = Text(
+                        style="none",
+                        color="black",
+                        font="thin",
+                        anchor_x=0,
+                        anchor_y=index * 0.1,
+                        scale_x=1.0,
+                        scale_y=0.2 / lines,
+                        align="left",
+                    )
+                    template.text.append(text)
 
             await asyncio.to_thread(utils.images.add_top_padding, Path(path))
 

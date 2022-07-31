@@ -9,7 +9,7 @@ text:
     angle: 0.001
     scale_x: 1.0
     scale_y: 0.1
-    align: start
+    align: left
     start: 0.0
     stop: 1.0
   - style: default
@@ -20,7 +20,7 @@ text:
     angle: 0.0
     scale_x: 1.0
     scale_y: 0.1
-    align: start
+    align: left
     start: 0.0
     stop: 1.0
   - style: default
