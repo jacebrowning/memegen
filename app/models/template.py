@@ -272,7 +272,7 @@ class Template:
                     return cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
-        if layout != "default":
+        if layout == "top":
             id += f"-{layout}{lines}"
         template = cls.objects.get_or_create(id, url)
 
@@ -297,24 +297,10 @@ class Template:
         except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await path.unlink(missing_ok=True)
-
-        if layout == "top":
-            with frozen(template):
-                template.text = []
-                for index in range(lines):
-                    text = Text(
-                        style="none",
-                        color="black",
-                        font="thin",
-                        anchor_x=0,
-                        anchor_y=index * 0.1,
-                        scale_x=1.0,
-                        scale_y=0.2 / lines,
-                        align="left",
-                    )
-                    template.text.append(text)
-
-            await asyncio.to_thread(utils.images.add_top_padding, Path(path))
+        else:
+            if layout == "top":
+                template.align(layout, lines)
+                await asyncio.to_thread(utils.images.add_top_padding, Path(path))
 
         return template
 
@@ -386,6 +372,23 @@ class Template:
             await foreground.unlink(missing_ok=True)
 
         return await foreground.exists()
+
+    def align(self, layout: str, lines: int):
+        assert layout == "top"
+        with frozen(self):
+            self.text = []
+            for index in range(lines):
+                text = Text(
+                    style="none",
+                    color="black",
+                    font="thin",
+                    anchor_x=0,
+                    anchor_y=index * 0.1,
+                    scale_x=1.0,
+                    scale_y=0.2 / lines,
+                    align="left",
+                )
+                self.text.append(text)
 
     def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:
