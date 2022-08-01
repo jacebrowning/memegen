@@ -183,6 +183,9 @@ async def render_image(
             elif style != settings.PLACEHOLDER:
                 status = 422
 
+    layout = utils.urls.arg(request.args, "default", "layout")
+    template = await template.clone(layout, len(lines), animated=animated)
+
     template.animate(
         utils.urls.arg(request.args, "", "start"),
         utils.urls.arg(request.args, "", "stop"),
@@ -201,7 +204,7 @@ async def render_image(
     try:
         size = int(request.args.get("width", 0)), int(request.args.get("height", 0))
         if 0 < size[0] < 10 or 0 < size[1] < 10:
-            raise ValueError(f"dimensions are too small: {size}")
+            raise ValueError(f"Dimensions are too small: {size}")
     except ValueError as e:
         logger.error(f"Invalid size: {e}")
         size = 0, 0

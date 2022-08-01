@@ -365,6 +365,33 @@ class Template:
 
         return await foreground.exists()
 
+    async def clone(self, layout: str, lines: int, *, animated: bool) -> "Template":
+        if layout != "top":
+            return self
+
+        id = utils.text.fingerprint(self.name) + f"-{layout}{lines}"
+        template = self.objects.get_or_create(id, self.name)
+        with frozen(template):
+            template.text = []
+            for index in range(lines):
+                text = Text(
+                    style="none",
+                    color="black",
+                    font="thin",
+                    anchor_x=0,
+                    anchor_y=index * 0.1,
+                    scale_x=1.0,
+                    scale_y=0.2 / lines,
+                    align="left",
+                )
+                template.text.append(text)
+
+        source = self.get_image(animated=animated)
+        destination = Path(template.directory) / source.name
+        await asyncio.to_thread(utils.images.pad_top, source, destination)
+
+        return template
+
     def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:
             starts = [float(value) for value in start.split(",") if value]

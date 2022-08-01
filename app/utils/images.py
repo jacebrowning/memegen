@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import io
+import shutil
 from pathlib import Path
-from typing import Iterator
+from typing import Iterator, cast
 
 from PIL import (
     Image,
@@ -17,7 +18,7 @@ from sanic.log import logger
 
 from .. import settings
 from ..models import Font, Template, Text
-from ..types import Dimensions, FontType, ImageType, Offset, Point
+from ..types import Align, Dimensions, FontType, ImageType, Offset, Point
 
 EXCEPTIONS = (
     OSError,
@@ -165,6 +166,33 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
     frames[0].save(background_path, save_all=True, append_images=frames[1:])
 
 
+def pad_top(source: Path, destination: Path):
+    original = source.parent / f"original{source.suffix}"
+    shutil.copy(source, original)
+    foreground = Image.open(original)
+
+    base_width, base_height = foreground.size
+    extra = int(base_height * 0.25)
+    background_dimensions = base_width, base_height + extra
+
+    if source.suffix == ".gif":
+        frames = []
+        for frame in ImageSequence.Iterator(foreground):
+            stream = io.BytesIO()
+            frame.save(stream, format="GIF")
+
+            background = Image.new("RGB", background_dimensions, "white")
+            background.paste(foreground, (0, extra))
+            frames.append(background)
+
+        logger.debug(f"Padding {len(frames)} frame(s) for custom background")
+        frames[0].save(destination, save_all=True, append_images=frames[1:])
+    else:
+        background = Image.new("RGB", background_dimensions, "white")
+        background.paste(foreground, (0, extra))
+        background.save(destination)
+
+
 def render_image(
     template: Template,
     style: str,
@@ -195,6 +223,7 @@ def render_image(
         max_text_size,
         text_fill,
         font,
+        align,
         stroke_width,
         stroke_fill,
         angle,
@@ -217,8 +246,7 @@ def render_image(
             text_fill,
             font,
             spacing=-offset[1] / (rows * 2),
-            # TODO: Match to text align
-            align="center",
+            align=align,
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
         )
@@ -323,6 +351,7 @@ def render_animation(
             max_text_size,
             text_fill,
             font,
+            align,
             stroke_width,
             stroke_fill,
             angle,
@@ -350,8 +379,7 @@ def render_animation(
                 text_fill,
                 font,
                 spacing=-offset[1] / (rows * 2),
-                # TODO: Match to text align
-                align="center",
+                align=align,
                 stroke_width=stroke_width,
                 stroke_fill=stroke_fill,
             )
@@ -505,7 +533,9 @@ def get_image_elements(
     image_size: Dimensions,
     is_preview: bool = False,
     percent_rendered: float = 1.0,
-) -> Iterator[tuple[Point, Offset, str, Dimensions, str, FontType, int, str, float]]:
+) -> Iterator[
+    tuple[Point, Offset, str, Dimensions, str, FontType, Align, int, str, float]
+]:
     for index, text in enumerate(template.text):
         if percent_rendered == 1.0:
             yield get_image_element(
@@ -531,7 +561,7 @@ def get_image_element(
     font_name: str,
     image_size: Dimensions,
     watermark: str,
-) -> tuple[Point, Offset, str, Dimensions, str, FontType, int, str, float]:
+) -> tuple[Point, Offset, str, Dimensions, str, FontType, Align, int, str, float]:
     point = text.get_anchor(image_size, watermark)
 
     max_text_size = text.get_size(image_size)
@@ -559,6 +589,7 @@ def get_image_element(
         max_text_size,
         text.color,
         font,
+        cast(Align, text.align),
         stroke_width,
         stroke_fill,
         text.angle,
@@ -658,7 +689,7 @@ def get_text_offset(
     else:
         y_adjust = 1 + (3 - rows) * 0.25
 
-    if align != "start":
+    if align != "left":
         x_offset -= (max_text_size[0] - text_size[0]) / 2  # type: ignore
     y_offset -= (max_text_size[1] - text_size[1] / y_adjust) / 2  # type: ignore
 
