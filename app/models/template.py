@@ -196,6 +196,7 @@ class Template:
         extension: str = "",
         background: str = "",
         style: str = "",
+        layout: str = "",
         font: str = "",
     ):
         with suppress(IndexError):
@@ -211,13 +212,17 @@ class Template:
         elif style == "animated":
             extension = "gif"
             style = ""
+        if layout == "default":
+            layout = ""
         url = request.app.url_for(
             "images.detail_text",
             template_id="custom" if self.id == "_custom" else self.id,
             text_filepath=utils.text.encode(text_lines) + "." + extension,
             _external=True,
             _scheme=settings.SCHEME,
-            **utils.urls.params(background=background, style=style, font=font),
+            **utils.urls.params(
+                background=background, style=style, layout=layout, font=font
+            ),
         )
         return utils.urls.clean(url)
 

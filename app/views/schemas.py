@@ -24,6 +24,7 @@ class MemeRequest:
     template_id: str
     style: list[str]
     text: list[str]
+    layout: str
     font: str
     extension: str
     redirect: bool
@@ -34,6 +35,7 @@ class CustomRequest:
     background: str
     style: str
     text: list[str]
+    layout: str
     font: str
     extension: str
     redirect: bool

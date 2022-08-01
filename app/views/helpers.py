@@ -42,6 +42,7 @@ async def generate_url(
     while style.endswith(",default"):
         style = style.removesuffix(",default")
     text_lines = utils.urls.arg(payload, [], "text", "text_lines")
+    layout = utils.urls.arg(payload, "default", "layout")
     font = utils.urls.arg(payload, "", "font")
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
@@ -53,6 +54,7 @@ async def generate_url(
             request,
             text_lines,
             style=style,
+            layout=layout,
             font=font,
             extension=extension,
         )
@@ -66,6 +68,7 @@ async def generate_url(
             text_lines,
             background=background,
             style=style,
+            layout=layout,
             font=font,
             extension=extension,
         )
