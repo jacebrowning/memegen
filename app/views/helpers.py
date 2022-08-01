@@ -184,7 +184,7 @@ async def render_image(
                 status = 422
 
     layout = utils.urls.arg(request.args, "default", "layout")
-    template = await template.clone(layout=layout, lines=len(lines))
+    template = await template.clone(layout, len(lines), animated=animated)
 
     template.animate(
         utils.urls.arg(request.args, "", "start"),

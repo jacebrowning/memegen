@@ -365,7 +365,7 @@ class Template:
 
         return await foreground.exists()
 
-    async def clone(self, layout: str, lines: int) -> "Template":
+    async def clone(self, layout: str, lines: int, *, animated: bool) -> "Template":
         if layout != "top":
             return self
 
@@ -386,8 +386,9 @@ class Template:
                 )
                 template.text.append(text)
 
-        path = Path(template.directory) / self.image.name
-        await asyncio.to_thread(utils.images.pad_top, self.image, path)
+        source = self.get_image(animated=animated)
+        destination = Path(template.directory) / source.name
+        await asyncio.to_thread(utils.images.pad_top, source, destination)
 
         return template
 
