@@ -246,9 +246,7 @@ class Template:
         return Path(self.id) / filename
 
     @classmethod
-    async def create(
-        cls, url: str, *, layout: str = "default", lines: int = 2, force=False
-    ) -> "Template":
+    async def create(cls, url: str, *, force=False) -> "Template":
         try:
             parsed = furl(url)
         except ValueError as e:
@@ -272,8 +270,6 @@ class Template:
                     return cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
-        if layout == "top":
-            id += f"-{layout}{lines}"
         template = cls.objects.get_or_create(id, url)
 
         suffix = Path(str(parsed.path)).suffix
@@ -297,10 +293,6 @@ class Template:
         except utils.images.EXCEPTIONS as e:
             logger.error(e)
             await path.unlink(missing_ok=True)
-        else:
-            if layout == "top":
-                template.align(layout, lines)
-                await asyncio.to_thread(utils.images.add_top_padding, Path(path))
 
         return template
 
@@ -373,10 +365,14 @@ class Template:
 
         return await foreground.exists()
 
-    def align(self, layout: str, lines: int):
-        assert layout == "top"
-        with frozen(self):
-            self.text = []
+    async def clone(self, layout: str, lines: int) -> "Template":
+        if layout != "top":
+            return self
+
+        id = utils.text.fingerprint(self.name) + f"-{layout}{lines}"
+        template = self.objects.get_or_create(id, self.name)
+        with frozen(template):
+            template.text = []
             for index in range(lines):
                 text = Text(
                     style="none",
@@ -388,7 +384,12 @@ class Template:
                     scale_y=0.2 / lines,
                     align="left",
                 )
-                self.text.append(text)
+                template.text.append(text)
+
+        path = Path(template.directory) / self.image.name
+        await asyncio.to_thread(utils.images.pad_top, self.image, path)
+
+        return template
 
     def animate(self, start: str = "0.2,0.6", stop: str = "1.0,1.0"):
         try:

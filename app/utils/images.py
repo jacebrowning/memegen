@@ -166,16 +166,16 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
     frames[0].save(background_path, save_all=True, append_images=frames[1:])
 
 
-def add_top_padding(path: Path):
-    original = path.parent / f"original{path.suffix}"
-    shutil.copy(path, original)
+def pad_top(foreground_path: Path, background_path: Path):
+    original = foreground_path.parent / f"original{foreground_path.suffix}"
+    shutil.copy(foreground_path, original)
     foreground = Image.open(original)
 
     base_width, base_height = foreground.size
     extra = int(base_height * 0.25)
     background_dimensions = base_width, base_height + extra
 
-    if path.suffix == ".gif":
+    if foreground_path.suffix == ".gif":
         frames = []
         for frame in ImageSequence.Iterator(foreground):
             stream = io.BytesIO()
@@ -186,11 +186,11 @@ def add_top_padding(path: Path):
             frames.append(background)
 
         logger.debug(f"Padding {len(frames)} frame(s) for custom background")
-        frames[0].save(path, save_all=True, append_images=frames[1:])
+        frames[0].save(background_path, save_all=True, append_images=frames[1:])
     else:
         background = Image.new("RGB", background_dimensions, "white")
         background.paste(foreground, (0, extra))
-        background.save(path)
+        background.save(background_path)
 
 
 def render_image(
