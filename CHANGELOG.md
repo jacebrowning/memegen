@@ -1,6 +1,10 @@
 # Revision History
 
-## 10.9b1
+## 10.10b1
+
+- Added support for `layout=<str>` to request text be positioned at the top of the image.
+
+## 10.9
 
 - Added support for `scale=<float>` query parameter to control the size of the overlay image.
 - Added support for `center=<float>,<float>` query parameter to control the position of the overlay image.

@@ -104,6 +104,14 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 
 This can be combined with [custom overlays](#custom-overlays) to augment the background image.
 
+# Layouts
+
+Add the `layout=<str>` query parameter to switch between the default and `top` text positioning.
+
+For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top> produces:
+
+![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&token=2mow56u2t6pyeubr032j)
+
 # Fonts
 
 The full list of fonts is available here: <https://api.memegen.link/fonts/>
