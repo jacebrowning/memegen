@@ -181,7 +181,7 @@ def pad_top(source: Path, destination: Path):
             stream = io.BytesIO()
             frame.save(stream, format="GIF")
 
-            background = Image.new("RGB", background_dimensions, "white")
+            background = Image.new("RGBA", background_dimensions, "white")
             background.paste(foreground, (0, extra))
             frames.append(background)
 

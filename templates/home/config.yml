@@ -35,9 +35,9 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - "Me: Can we stop and get food?"
-  - "Mom: We have food at home."
-  - "Food at home:"
+  - 'Me: Can we stop and get food?'
+  - 'Mom: We have food at home.'
+  - 'Food at home:'
 overlay:
   - center_x: 0.5
     center_y: 0.675
