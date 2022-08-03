@@ -48,10 +48,11 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf app/tests/images images site templates/_custom-* templates/*/_*
+	rm -rf images site templates/_custom-* templates/*/_*
 
 .PHONY: clean-all
 clean-all: clean
+	rm -rf app/tests/images
 	rm -rf *.egg-info .venv
 
 ###############################################################################
