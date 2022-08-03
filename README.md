@@ -110,7 +110,7 @@ Add the `layout=<str>` query parameter to switch between the default and `top` t
 
 For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top> produces:
 
-![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&token=2mow56u2t6pyeubr032j)
+![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&width=800&token=2mow56u2t6pyeubr032j)
 
 # Fonts
 
