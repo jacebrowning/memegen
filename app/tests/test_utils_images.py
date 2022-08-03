@@ -4,9 +4,9 @@ These tests all save images to disk for manual visual diff testing.
 
 import os
 import shutil
-import time
 from pathlib import Path
 
+import log
 import pytest
 
 from .. import models, settings, utils
@@ -15,16 +15,21 @@ from .. import models, settings, utils
 @pytest.fixture(scope="session")
 def images():
     path = settings.TEST_IMAGES_DIRECTORY
+    path.mkdir(exist_ok=True)
+
+    if "SKIP_SLOW" not in os.environ:
+        return path
 
     flag = path / ".flag"
     if flag.exists():
-        age = time.time() - flag.stat().st_mtime
-        if age > 60 * 60 * 6 and "SKIP_SLOW" not in os.environ:
+        age = Path(utils.images.__file__).stat().st_mtime - flag.stat().st_mtime
+        log.info(f"Test images are {age} seconds old")
+        if age > 5 * 60:
+            log.warn("Deleting stale test images")
             shutil.rmtree(path)
+            path.mkdir()
 
-    path.mkdir(exist_ok=True)
     flag.touch()
-
     return path
 
 
