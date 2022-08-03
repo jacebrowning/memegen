@@ -45,6 +45,7 @@ class CustomRequest:
 class MemeTemplateRequest:
     style: list[str]
     text: list[str]
+    layout: str
     font: str
     extension: str
     redirect: bool
