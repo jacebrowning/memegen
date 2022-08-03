@@ -27,6 +27,9 @@ async def validate(request):
 @openapi.parameter(
     "template", str, "query", description="Template ID, URL, or custom background"
 )
+@openapi.parameter(
+    "layout", str, "query", description="Text position: `default` or `top`"
+)
 @openapi.response(200, {"image/jpeg": bytes}, "Successfully displayed a custom meme")
 async def preview(request):
     id = request.args.get("template", "_error")
@@ -34,4 +37,5 @@ async def preview(request):
     style = request.args.get("style") or ",".join(request.args.getlist("styles[]", []))
     while style.endswith(",default"):
         style = style.removesuffix(",default")
-    return await preview_image(request, id, lines, style)
+    layout = utils.urls.arg(request.args, "default", "layout")
+    return await preview_image(id, style, lines, layout)

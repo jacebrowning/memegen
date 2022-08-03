@@ -83,7 +83,7 @@ async def generate_url(
     return response.json({"url": url}, status=status)
 
 
-async def preview_image(request, id: str, lines: list[str], style: str):
+async def preview_image(id: str, style: str, lines: list[str], layout: str):
     error = ""
 
     id = utils.urls.clean(id)
@@ -102,6 +102,8 @@ async def preview_image(request, id: str, lines: list[str], style: str):
 
     if not any(line.strip() for line in lines):
         lines = template.example
+
+    template = await template.clone(layout, len(lines), animated=False)
 
     if not utils.urls.schema(style):
         style = style.strip().lower()
