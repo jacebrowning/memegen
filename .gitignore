@@ -3,7 +3,6 @@
 /templates/_custom*
 /templates/<*
 /templates/*/_*
-original.*
 
 # Dependencies
 .venv/
