@@ -34,6 +34,8 @@ async def validate(request):
 async def preview(request):
     id = request.args.get("template", "_error")
     lines = request.args.getlist("text[]") or request.args.getlist("lines[]") or []
+    while lines and not lines[-1].strip():
+        lines.pop(-1)
     style = request.args.get("style") or ",".join(request.args.getlist("styles[]", []))
     while style.endswith(",default"):
         style = style.removesuffix(",default")
