@@ -339,3 +339,11 @@ def test_preview_images(images, template):
     path = images / "preview.jpg"
     data, _extension = utils.images.preview(template, ["nominal image", "while typing"])
     path.write_bytes(data)
+
+
+@pytest.mark.asyncio
+async def test_preview_images_top_layout(images, template: models.Template):
+    template = await template.clone("top", 2, animated=False)
+    path = images / "preview-top.jpg"
+    data, _extension = utils.images.preview(template, ["Nominal image", "while typing"])
+    path.write_bytes(data)
