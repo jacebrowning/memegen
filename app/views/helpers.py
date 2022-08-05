@@ -43,6 +43,7 @@ async def generate_url(
         style = style.removesuffix(",default")
     text_lines = utils.urls.arg(payload, [], "text", "text_lines")
     layout = utils.urls.arg(payload, "default", "layout")
+    normalize = layout == "default"
     font = utils.urls.arg(payload, "", "font")
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
@@ -53,6 +54,7 @@ async def generate_url(
         url = template.build_custom_url(
             request,
             text_lines,
+            normalize=normalize,
             style=style,
             layout=layout,
             font=font,
@@ -66,6 +68,7 @@ async def generate_url(
         url = template.build_custom_url(
             request,
             text_lines,
+            normalize=normalize,
             background=background,
             style=style,
             layout=layout,

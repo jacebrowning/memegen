@@ -193,15 +193,17 @@ class Template:
         request: Request,
         text_lines: list[str],
         *,
+        normalize: bool = True,
         extension: str = "",
         background: str = "",
         style: str = "",
         layout: str = "",
         font: str = "",
     ):
-        with suppress(IndexError):
-            for index, text in enumerate(self.text):
-                text_lines[index] = text.normalize(text_lines[index])
+        if normalize:
+            with suppress(IndexError):
+                for index, text in enumerate(self.text):
+                    text_lines[index] = text.normalize(text_lines[index])
         if not extension and background:
             url = furl(background)
             extension = url.path.segments[-1].split(".")[-1]

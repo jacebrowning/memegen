@@ -47,6 +47,18 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png"
             }
 
+        def it_preserves_text_case_for_top_layouts(expect, client):
+            data = {
+                "template_id": "iw",
+                "text_lines[]": ["foo", "Bar"],
+                "layout": "top",
+            }
+            request, response = client.post("/images", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/foo/Bar.png?layout=top"
+            }
+
         def it_removes_redundant_styles(expect, client):
             data = {
                 "template_id": "iw",
