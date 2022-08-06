@@ -126,7 +126,7 @@ def embed(template: Template, index: int, foreground_path: Path, background_path
     foreground = load(foreground_path)
 
     size = overlay.get_size(background.size)
-    foreground = foreground.resize(size, Image.LANCZOS)
+    foreground = foreground.resize(size, Image.Resampling.LANCZOS)
     foreground = foreground.rotate(overlay.angle, expand=True)
 
     x1, y1, _x2, _y2 = overlay.get_box(background.size, foreground.size)
@@ -253,7 +253,7 @@ def render_image(
             stroke_fill=stroke_fill,
         )
 
-        box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
+        box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
         image.paste(box, point, box)
 
     if settings.DEBUG:
@@ -386,7 +386,7 @@ def render_animation(
                 stroke_fill=stroke_fill,
             )
 
-            box = box.rotate(angle, resample=Image.BICUBIC, expand=True)
+            box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
             image.paste(box, point, box)
 
         if settings.DEBUG:
@@ -442,7 +442,7 @@ def resize_image(
         else:
             size = default_width, int(default_height / ratio)
 
-    image = image.resize(size, Image.LANCZOS)
+    image = image.resize(size, Image.Resampling.LANCZOS)
     return image
 
 
@@ -467,7 +467,7 @@ def add_blurred_background(
         ((border_width - base_width) // 2, (border_height - base_height) // 2),
     )
 
-    padded = background.resize((width, height), Image.LANCZOS)
+    padded = background.resize((width, height), Image.Resampling.LANCZOS)
     darkened = padded.point(lambda p: int(p * 0.4))
     blurred = darkened.filter(ImageFilter.GaussianBlur(5))
 
