@@ -93,6 +93,9 @@ async def custom_path(request, template_id, text_paths):
     elif text_paths.endswith("/"):
         logger.warning(f"Fixing trailing slash: {text_paths}")
         text_paths = text_paths.rstrip("/")
+    elif text_paths.endswith('"'):
+        logger.warning(f"Fixing trailing quote: {text_paths}")
+        text_paths = text_paths.rstrip('"')
 
     if "." in text_paths.strip("."):
         text_filepath = text_paths

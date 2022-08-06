@@ -36,8 +36,11 @@ def describe_image_redirects():
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
-    def it_fixes_extra_trailing_slash(expect, client):
-        request, response = client.get("/images/fry/test.jpg/", allow_redirects=False)
+    @pytest.mark.parametrize("extra", ["/", '"'])
+    def it_fixes_extra_trailing_characters(expect, client, extra):
+        request, response = client.get(
+            "/images/fry/test.jpg" + extra, allow_redirects=False
+        )
         redirect = "/images/fry/test.jpg"
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect

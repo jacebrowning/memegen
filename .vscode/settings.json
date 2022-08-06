@@ -25,6 +25,7 @@
     "aioresponses",
     "apng",
     "asdict",
+    "autouse",
     "Baggins",
     "BUGSNAG",
     "CIRCLECI",
