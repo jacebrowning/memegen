@@ -206,7 +206,8 @@ class Template:
                     text_lines[index] = text.normalize(text_lines[index])
         if not extension and background:
             url = furl(background)
-            extension = url.path.segments[-1].split(".")[-1]
+            if url.path.segments:
+                extension = url.path.segments[-1].split(".")[-1]
         if extension not in settings.ALLOWED_EXTENSIONS:
             extension = self._extension
         if style == "default":

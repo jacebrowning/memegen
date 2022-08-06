@@ -427,16 +427,15 @@ def describe_custom():
         @pytest.mark.parametrize("as_json", [True, False])
         def it_supports_custom_backgrounds(expect, client, as_json):
             data = {
-                "background": "https://www.gstatic.com/webp/gallery/3.png",
+                "background": "http://example.com",
                 "text_lines[]": ["foo", "bar"],
-                "extension": "jpg",
             }
             kwargs: dict = {"content": json.dumps(data)} if as_json else {"data": data}
             request, response = client.post("/images/custom", **kwargs)
             expect(response.status) == 201
             expect(response.json) == {
-                "url": "http://localhost:5000/images/custom/foo/bar.jpg"
-                "?background=https://www.gstatic.com/webp/gallery/3.png"
+                "url": "http://localhost:5000/images/custom/foo/bar.png"
+                "?background=http://example.com"
             }
 
         def it_returns_gif_when_background_is_gif(expect, client):
