@@ -1,6 +1,6 @@
 # Revision History
 
-## 10.10b1
+## 10.10
 
 - Added support for `layout=<str>` to request text be positioned at the top of the image.
 

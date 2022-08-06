@@ -36,7 +36,7 @@ ruamel.yaml.clib==0.2.6; platform_python_implementation == "CPython" and python_
 ruamel.yaml==0.17.21; python_version >= "3.7" and python_version < "4.0"
 sanic-ext==22.1.2
 sanic-routing==0.7.2; python_version >= "3.7"
-sanic==21.12.1; python_version >= "3.7"
+sanic==21.12.2; python_version >= "3.7"
 six==1.16.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.3.0"
 sniffio==1.2.0; python_full_version >= "3.6.2" and python_version >= "3.10"
 spongemock==0.3.4
