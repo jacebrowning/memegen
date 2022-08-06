@@ -97,7 +97,7 @@ async def custom_path(request, template_id, text_paths):
         logger.warning(f"Fixing trailing quote: {text_paths}")
         text_paths = text_paths.rstrip('"')
 
-    if "." in text_paths.strip("."):
+    if "." in text_paths.strip(".") and text_paths.split(".")[-1].isalnum():
         text_filepath = text_paths
     elif text_paths.startswith("."):
         return response.redirect(

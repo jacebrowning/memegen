@@ -77,10 +77,10 @@ def describe_path_redirects():
 
     def it_redirects_to_custom_image_when_text_but_no_extension(expect, client):
         request, response = client.get(
-            "/images/fry/foo bar/_XD\\XD", allow_redirects=False
+            "/images/fry/foo bar/._XD\\XD", allow_redirects=False
         )
         expect(response.status) == 302
-        expect(response.headers["Location"]) == "/images/fry/foo_bar/_XD~bXD.png"
+        expect(response.headers["Location"]) == "/images/fry/foo_bar/._XD~bXD.png"
 
     def it_returns_gallery_view_when_debug(expect, client, monkeypatch):
         monkeypatch.setattr(settings, "DEBUG", True)
