@@ -97,25 +97,34 @@ async def custom_path(request, template_id, text_paths):
         logger.warning(f"Fixing trailing quote: {text_paths}")
         text_paths = text_paths.rstrip('"')
 
-    if "." in text_paths.strip(".") and text_paths.split(".")[-1].isalnum():
-        text_filepath = text_paths
-    elif text_paths.startswith("."):
+    if text_paths.startswith("."):
         return response.redirect(
             request.app.url_for(
                 "images.detail_blank",
                 template_filename=f"{template_id}{text_paths}",
             )
         )
-    else:
-        text_filepath = text_paths + "." + settings.DEFAULT_EXTENSION
 
-    if not settings.DEBUG:
+    try:
         url = request.app.url_for(
             "images.detail_text",
             template_id=template_id,
-            text_filepath=text_filepath,
+            text_filepath=text_paths,
             **params,
         )
+    except exceptions.URLBuildError as e:
+        if "text_filepath" in str(e):
+            logger.warning(f"Handing missing extension: {e}")
+        else:
+            raise
+        url = request.app.url_for(
+            "images.detail_text",
+            template_id=template_id,
+            text_filepath=text_paths + "." + settings.DEFAULT_EXTENSION,
+            **params,
+        )
+
+    if not settings.DEBUG:
         return response.redirect(url)
 
     template = models.Template.objects.get_or_create(template_id)
