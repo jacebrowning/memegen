@@ -56,6 +56,7 @@ def clean(url: str) -> str:
 
     # Replace invalid regex escape sequences
     url = url.replace("\\", "~b")
+    url = url.replace("\n", "~n")
 
     # Replace spaces with underscores
     url = url.replace(" ", "_")
