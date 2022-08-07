@@ -669,7 +669,8 @@ def get_font(
 
 def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
     text_width, text_height = get_text_size(text, font)
-    offset = font.getoffset(text)
+    offset = font.getoffset(text)  # TODO: Remove deprecated call
+    # _, _, *offset = font.getbbox(text)
     return text_width - offset[0], text_height - offset[1]
 
 
@@ -679,7 +680,8 @@ def get_text_offset(
     text_size = get_text_size(text, font)
     stroke_width = get_stroke_width(font)
 
-    x_offset, y_offset = font.getoffset(text)
+    x_offset, y_offset = font.getoffset(text)  # TODO: Remove deprecated call
+    # _, _, x_offset, y_offset = font.getbbox(text)
 
     x_offset -= stroke_width
     y_offset -= stroke_width
@@ -706,7 +708,8 @@ def get_text_offset(
 def get_text_size(text: str, font: FontType) -> Dimensions:
     image = Image.new("RGB", (100, 100))
     draw = ImageDraw.Draw(image)
-    text_size = draw.textsize(text, font)
+    text_size = draw.textsize(text, font)  # TODO: Remove deprecated call
+    # _, _, *text_size = draw.textbbox((0, 0), text, font)
     stroke_width = get_stroke_width(font)
     return text_size[0] + stroke_width, text_size[1] + stroke_width
 

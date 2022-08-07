@@ -52,7 +52,7 @@ types-pkg_resources = "*"
 types-requests = "*"
 
 # Testing
-pytest = "^7.0.1"
+pytest = "^7.1.2"
 pytest-asyncio = "*"
 pytest-describe = "^2.0"
 pytest-expecter = "^2.3"
@@ -102,6 +102,8 @@ addopts = """
 --random \
 --show-capture=log \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html:.cache/htmlcov --no-cov-on-fail
+
+-W error::DeprecationWarning -W ignore::DeprecationWarning:sanic.server.loop
 """
 
 cache_dir = ".cache/pytest/"
