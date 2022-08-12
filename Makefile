@@ -77,7 +77,7 @@ check: install
 .PHONY: test
 test: install
 ifdef CI
-	poetry run pytest --verbose --junit-xml=results/junit.xml
+	poetry run pytest --verbose --junit-xml=results/junit.xml -W error::DeprecationWarning -W ignore::DeprecationWarning:sanic.server.loop
 else
 	@ if test -e .cache/pytest/v/cache/lastfailed; then \
 		echo "Running failed tests..." && \

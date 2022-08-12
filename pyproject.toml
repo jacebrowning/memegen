@@ -102,8 +102,6 @@ addopts = """
 --random \
 --show-capture=log \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html:.cache/htmlcov --no-cov-on-fail
-
--W error::DeprecationWarning -W ignore::DeprecationWarning:sanic.server.loop
 """
 
 cache_dir = ".cache/pytest/"
