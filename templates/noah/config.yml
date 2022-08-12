@@ -4,18 +4,7 @@ text:
   - style: default
     color: white
     font: thin
-    anchor_x: 0.06
-    anchor_y: 0.68
-    angle: 0.0
-    scale_x: 0.2
-    scale_y: 0.1
-    align: center
-    start: 0.0
-    stop: 1.0
-  - style: default
-    color: white
-    font: thin
-    anchor_x: 0.8
+    anchor_x: 0.79
     anchor_y: 0.3
     angle: 0.0
     scale_x: 0.2
@@ -35,6 +24,17 @@ text:
     start: 0.0
     stop: 1.0
   - style: default
+    color: white
+    font: thin
+    anchor_x: 0.06
+    anchor_y: 0.68
+    angle: 0.0
+    scale_x: 0.2
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
     color: khaki
     font: thin
     anchor_x: 0.0
@@ -46,9 +46,9 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
-  - ''
-  - ''
+  - Street
+  - Road
+  - Stroad
   - What the hell is this?
 overlay:
   - center_x: 0.15
