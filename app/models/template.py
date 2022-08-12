@@ -395,7 +395,11 @@ class Template:
                 template.text.append(text)
 
         source = self.get_image(animated=animated)
-        destination = Path(template.directory) / source.name
+        suffix = source.suffix
+        if suffix == settings.PLACEHOLDER_SUFFIX:
+            suffix = "." + settings.DEFAULT_EXTENSION
+
+        destination = Path(template.directory) / (source.stem + suffix)
         await asyncio.to_thread(utils.images.pad_top, source, destination)
 
         return template

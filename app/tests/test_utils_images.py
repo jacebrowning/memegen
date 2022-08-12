@@ -264,6 +264,16 @@ async def test_layout_top_single_line(images):
     utils.images.save(template, lines, directory=images)
 
 
+@pytest.mark.slow
+@pytest.mark.asyncio
+async def test_layout_top_unknown_format(images):
+    url = "https://pbs.twimg.com/media/E7obYTTXsAMerli?format=jpg"
+    template = await models.Template.create(url)
+    template = await template.clone(layout="top", lines=1, animated=False)
+    lines = ["When the image format is unknown"]
+    utils.images.save(template, lines, directory=images)
+
+
 # Fonts
 
 
