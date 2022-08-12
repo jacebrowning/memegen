@@ -6,7 +6,7 @@ from sanic_ext import openapi
 
 from .. import models, settings, utils
 
-blueprint = Blueprint("shortcuts", url_prefix="/")
+blueprint = Blueprint("Shortcuts", url_prefix="/")
 
 
 @blueprint.get(r"/images/<template_id:[^.]+>")
@@ -100,14 +100,14 @@ async def custom_path(request, template_id, text_paths):
     if text_paths.startswith("."):
         return response.redirect(
             request.app.url_for(
-                "images.detail_blank",
+                "Images.detail_blank",
                 template_filename=f"{template_id}{text_paths}",
             )
         )
 
     try:
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id=template_id,
             text_filepath=text_paths,
             **params,
@@ -118,9 +118,9 @@ async def custom_path(request, template_id, text_paths):
         else:
             raise
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id=template_id,
-            text_filepath=text_paths + "." + settings.DEFAULT_EXTENSION,
+            text_filepath=text_paths + settings.DEFAULT_SUFFIX,
             **params,
         )
 
@@ -153,7 +153,7 @@ async def legacy_custom_image(request, template_id, text_paths):
     template = models.Template.objects.get_or_none(template_id)
     if template:
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id=template_id,
             text_filepath=text_paths + "." + extension,
         )

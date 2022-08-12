@@ -46,7 +46,7 @@ class Font:
 
     def build_self_url(self, request: Request) -> str:
         return request.app.url_for(
-            "fonts.detail",
+            "Fonts.detail",
             id=self.id,
             _external=True,
             _scheme=settings.SCHEME,
