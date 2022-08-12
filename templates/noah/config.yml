@@ -1,0 +1,57 @@
+name: What the Hell is This? / Family Guy Noah
+source:
+text:
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.06
+    anchor_y: 0.68
+    angle: 0.0
+    scale_x: 0.2
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.8
+    anchor_y: 0.3
+    angle: 0.0
+    scale_x: 0.2
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.68
+    anchor_y: 0.7
+    angle: 0.0
+    scale_x: 0.2
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.9
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - ''
+  - ''
+  - ''
+  - What the hell is this?
+overlay:
+  - center_x: 0.15
+    center_y: 0.675
+    angle: 0.0
+    scale: 0.35
