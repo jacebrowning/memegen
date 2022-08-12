@@ -705,10 +705,9 @@ def get_text_offset(
 def get_text_size(text: str, font: FontType) -> Dimensions:
     image = Image.new("RGB", (100, 100))
     draw = ImageDraw.Draw(image)
-    text_size = draw.textsize(text, font)  # TODO: Remove deprecated call
-    # _, _, *text_size = draw.textbbox((0, 0), text, font)
+    _, _, text_width, text_height = draw.textbbox((0, 0), text, font)
     stroke_width = get_stroke_width(font)
-    return text_size[0] + stroke_width, text_size[1] + stroke_width
+    return text_width + stroke_width, text_height + stroke_width
 
 
 def get_stroke_width(font: FontType) -> int:
