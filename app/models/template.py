@@ -424,10 +424,9 @@ class Template:
             if center:
                 try:
                     xy = [float(value) for value in center.split(",")]
+                    self.overlay[0].center_x, self.overlay[0].center_y = xy
                 except ValueError:
                     logger.error(f"Invalid overlay: {center=}")
-                else:
-                    self.overlay[0].center_x, self.overlay[0].center_y = xy
             if scale:
                 try:
                     scale = float(scale)
