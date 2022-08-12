@@ -149,8 +149,8 @@ class Template:
             "overlays": len(self.overlay) if self.styles else 0,
             "styles": self.styles,
             "blank": request.app.url_for(
-                "images.detail_blank",
-                template_filename=self.id + "." + settings.DEFAULT_EXTENSION,
+                "Images.detail_blank",
+                template_filename=self.id + settings.DEFAULT_SUFFIX,
                 _external=True,
                 _scheme=settings.SCHEME,
             ),
@@ -164,7 +164,7 @@ class Template:
 
     def build_self_url(self, request: Request) -> str:
         return request.app.url_for(
-            "templates.detail",
+            "Templates.detail",
             id=self.id,
             _external=True,
             _scheme=settings.SCHEME,
@@ -185,7 +185,7 @@ class Template:
         }
         if external:
             kwargs["_scheme"] = settings.SCHEME
-        url = request.app.url_for("images.detail_text", **kwargs)
+        url = request.app.url_for("Images.detail_text", **kwargs)
         return utils.urls.clean(url)
 
     def build_custom_url(
@@ -218,7 +218,7 @@ class Template:
         if layout == "default":
             layout = ""
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id="custom" if self.id == "_custom" else self.id,
             text_filepath=utils.text.encode(text_lines) + "." + extension,
             _external=True,
@@ -397,7 +397,7 @@ class Template:
         source = self.get_image(animated=animated)
         suffix = source.suffix
         if suffix == settings.PLACEHOLDER_SUFFIX:
-            suffix = "." + settings.DEFAULT_EXTENSION
+            suffix = settings.DEFAULT_SUFFIX
 
         destination = Path(template.directory) / (source.stem + suffix)
         await asyncio.to_thread(utils.images.pad_top, source, destination)

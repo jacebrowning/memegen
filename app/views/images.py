@@ -16,7 +16,7 @@ from .schemas import (
 )
 from .templates import generate_url
 
-blueprint = Blueprint("images", url_prefix="/images")
+blueprint = Blueprint("Images", url_prefix="/images")
 
 
 @blueprint.get("/")
@@ -161,7 +161,7 @@ async def detail_blank(request, template_filename):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "images.detail_blank",
+            "Images.detail_blank",
             template_filename=template_id + ".gif",
             **params,
         )
@@ -195,7 +195,7 @@ async def detail_text(request, template_id, text_filepath):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id=template_id,
             text_filepath=text_paths + ".gif",
             **params,
@@ -205,7 +205,7 @@ async def detail_text(request, template_id, text_filepath):
     slug, updated = utils.text.normalize(text_paths)
     if updated:
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id=template_id,
             text_filepath=slug + "." + extension,
             **request.args,
@@ -221,7 +221,7 @@ async def detail_text(request, template_id, text_filepath):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "watermark"}
         url = request.app.url_for(
-            "images.detail_text",
+            "Images.detail_text",
             template_id=template_id,
             text_filepath=slug + "." + extension,
             **params,

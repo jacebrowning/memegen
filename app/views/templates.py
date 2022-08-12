@@ -8,7 +8,7 @@ from ..models import Template
 from .helpers import generate_url
 from .schemas import CustomRequest, MemeResponse, MemeTemplateRequest, TemplateResponse
 
-blueprint = Blueprint("templates", url_prefix="/templates")
+blueprint = Blueprint("Templates", url_prefix="/templates")
 
 
 @blueprint.get("/")

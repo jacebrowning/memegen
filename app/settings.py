@@ -40,6 +40,7 @@ ALLOWED_EXTENSIONS = [DEFAULT_EXTENSION, "jpg", "jpeg", "gif", "apng"]
 if "ENABLE_APNG_SUPPORT" not in os.environ:
     ALLOWED_EXTENSIONS.remove("apng")
 
+DEFAULT_SUFFIX = "." + DEFAULT_EXTENSION
 PLACEHOLDER_SUFFIX = ".img"
 
 PREVIEW_SIZE = (300, 300)

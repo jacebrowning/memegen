@@ -4,7 +4,7 @@ from sanic_ext import openapi
 from .. import models
 from .schemas import FontResponse
 
-blueprint = Blueprint("fonts", url_prefix="/fonts")
+blueprint = Blueprint("Fonts", url_prefix="/fonts")
 
 
 @blueprint.get("/")
