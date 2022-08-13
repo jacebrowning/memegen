@@ -11,6 +11,7 @@ def pytest_configure(config):
     terminal = config.pluginmanager.getplugin("terminal")
     terminal.TerminalReporter.showfspath = False
     settings.ALLOWED_EXTENSIONS.append("apng")
+    settings.DEBUG = False
 
 
 def pytest_runtest_setup(item):

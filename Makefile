@@ -144,3 +144,4 @@ promote: install .envrc
 	echo >> $@
 	echo "export CF_API_KEY=???" >> $@
 	echo "export REMOTE_TRACKING_URL=???" >> $@
+	echo "export DEBUG=true" >> $@
