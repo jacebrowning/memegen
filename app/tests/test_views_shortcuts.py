@@ -107,7 +107,7 @@ def describe_path_redirects():
         monkeypatch.setattr(settings, "DEBUG", True)
         request, response = client.get("/images/<sample>", allow_redirects=False)
         expect(response.status) == 501
-        expect(response.text).contains("Replace '&lt;sample>' in the URL")
+        expect(response.text).contains("Replace '<sample>' in the URL")
 
     def it_handles_trailing_slashes(expect, client):
         request, response = client.get("/images/fry/", allow_redirects=False)
