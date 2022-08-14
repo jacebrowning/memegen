@@ -28,6 +28,7 @@
     "autouse",
     "Baggins",
     "BUGSNAG",
+    "buildpacks",
     "CIRCLECI",
     "Containerfile",
     "Drakeposting",
