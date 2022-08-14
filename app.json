@@ -10,7 +10,7 @@
       "required": true
     },
     "MAX_REQUESTS": {
-      "requied": true
+      "required": true
     }
   },
   "formation": {
@@ -20,5 +20,5 @@
   },
   "name": "memegen",
   "scripts": {},
-  "stack": "heroku-18"
+  "stack": "heroku-22"
 }
