@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.11
+
+- Updated `/images/custom` and `/templates/custom` to accept template IDs as `background`.
+
 ## 10.10
 
 - Added support for `layout=<str>` to request text be positioned at the top of the image.
