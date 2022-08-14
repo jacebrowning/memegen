@@ -79,6 +79,18 @@ def describe_detail():
                 "?background=https://www.gstatic.com/webp/gallery/3.png"
             }
 
+        def it_accepts_template_id_as_custom_background(expect, client):
+            data = {
+                "background": "fry",
+                "text_lines[]": ["foo", "bar"],
+                "extension": "jpg",
+            }
+            request, response = client.post("/templates/custom", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/fry/foo/bar.jpg"
+            }
+
         @pytest.mark.parametrize("id", ["iw", "custom"])
         def it_redirects_if_requested(expect, client, id):
             data = {"text_lines": ["abc"], "redirect": True}

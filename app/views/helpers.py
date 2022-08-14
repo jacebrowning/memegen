@@ -48,6 +48,14 @@ async def generate_url(
     background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
 
+    if (
+        background
+        and background != settings.PLACEHOLDER
+        and not utils.urls.schema(background)
+    ):
+        logger.info(f"Handling template ID as custom background: {background}")
+        template_id = background
+
     status = 201
     if template_id:
         template: models.Template = models.Template.objects.get_or_create(template_id)
