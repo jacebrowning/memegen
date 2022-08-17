@@ -386,7 +386,7 @@ def render_animation(
                 stroke_fill=stroke_fill,
             )
 
-            box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
+            box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
             image.paste(box, point, box)
 
         if settings.DEBUG:
