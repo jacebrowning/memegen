@@ -1,0 +1,37 @@
+name: Tuxedo Winnie the Pooh
+source: https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh
+text:
+  - style: default
+    color: black
+    font: thick
+    anchor_x: 0.5
+    anchor_y: 0.0
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.5
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thick
+    anchor_x: 0.5
+    anchor_y: 0.5
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.5
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - Burger King
+  - The Monarch of Hamburg
+overlay:
+  - center_x: 0.75
+    center_y: 0.25
+    angle: 0.0
+    scale: 0.5
+  - center_x: 0.75
+    center_y: 0.75
+    angle: 0.0
+    scale: 0.5
