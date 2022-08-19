@@ -112,7 +112,9 @@ def init(app: Sanic):
         View the image: <https://api.memegen.link/images/aag/foo/bar.png>
 
         ## Links
-        """
+        """.replace(
+                "https://api.memegen.link", settings.BASE_URL
+            )
         ),
     )
     app.ext.openapi.contact(name="support", email="support@maketested.com")
