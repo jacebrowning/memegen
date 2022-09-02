@@ -1,0 +1,77 @@
+name: I Made This
+source: https://knowyourmeme.com/memes/i-made-this
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.01
+    anchor_y: 0.28
+    angle: 0.0
+    scale_x: 0.25
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.74
+    anchor_y: 0.28
+    angle: 0.0
+    scale_x: 0.25
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: comic
+    anchor_x: 0.27
+    anchor_y: 0.04
+    angle: 0.0
+    scale_x: 0.15
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: comic
+    anchor_x: 0.525
+    anchor_y: 0.03
+    angle: 0.0
+    scale_x: 0.15
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: comic
+    anchor_x: 0.345
+    anchor_y: 0.725
+    angle: 0.0
+    scale_x: 0.15
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - The Internet
+  - Everyone
+  - I made this.
+  - You made this?
+  - I made this.
+overlay:
+  - center_x: 0.485
+    center_y: 0.27
+    angle: 0.0
+    scale: 0.12
+  - center_x: 0.565
+    center_y: 0.57
+    angle: 0.0
+    scale: 0.12
+  - center_x: 0.59
+    center_y: 0.885
+    angle: 0.0
+    scale: 0.11
