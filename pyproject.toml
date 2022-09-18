@@ -48,23 +48,21 @@ mypy = "~0.931"
 autoflake = "^1.3.1"
 types-aiofiles = "*"
 types-pillow = "^9.2"
-types-pkg_resources = "*"
 types-requests = "*"
 
 # Testing
-pytest = "^7.1.2"
+pytest = "^7.1.3"
 pytest-asyncio = "*"
 pytest-describe = "^2.0"
-pytest-expecter = "^2.3"
+pytest-expecter = "^3.0"
 pytest-random = "*"
-pytest-rerunfailures = "^9.1"
 pytest-cov = "^2.7"
 sanic-testing = "*"
 aioresponses = "*"
 locust = "^2.8.3"
 
 # Coverage
-coveragespace = "^5.0"
+coveragespace = "^6.0"
 
 # Documentation
 mkdocs = "^1.2.3"

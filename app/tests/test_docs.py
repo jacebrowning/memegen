@@ -1,10 +1,11 @@
+from importlib.metadata import version as get_version
+
 import pytest
-from pkg_resources import get_distribution
 
 
 def describe_spec():
     def it_contains_the_version(expect, client):
-        version = get_distribution("memegen").version
+        version = get_version("memegen")
         request, response = client.get("/docs/openapi.json")
         expect(response.status) == 200
         if "b" not in version:

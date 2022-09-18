@@ -147,14 +147,6 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "atomicwrites"
-version = "1.4.1"
-description = "Atomic file writes."
-category = "dev"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-
-[[package]]
 name = "attrs"
 version = "22.1.0"
 description = "Classes Without Boilerplate"
@@ -331,11 +323,11 @@ toml = ["tomli"]
 
 [[package]]
 name = "coveragespace"
-version = "5.0"
+version = "6.0"
 description = "A place to track your code coverage metrics."
 category = "dev"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
 colorama = ">=0.4"
@@ -1071,14 +1063,13 @@ python-versions = "*"
 
 [[package]]
 name = "pytest"
-version = "7.1.2"
+version = "7.1.3"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.dependencies]
-atomicwrites = {version = ">=1.0", markers = "sys_platform == \"win32\""}
 attrs = ">=19.2.0"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 iniconfig = "*"
@@ -1133,11 +1124,11 @@ pytest = ">=4.0.0"
 
 [[package]]
 name = "pytest-expecter"
-version = "2.3"
+version = "3.0"
 description = "Better testing with expecter and pytest."
 category = "dev"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.8,<4.0"
 
 [[package]]
 name = "pytest-random"
@@ -1149,18 +1140,6 @@ python-versions = "*"
 
 [package.dependencies]
 pytest = ">=2.2.3"
-
-[[package]]
-name = "pytest-rerunfailures"
-version = "9.1.1"
-description = "pytest plugin to re-run tests to eliminate flaky failures"
-category = "dev"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-pytest = ">=5.0"
-setuptools = ">=40.0"
 
 [[package]]
 name = "python-dateutil"
@@ -1453,14 +1432,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "types-pkg-resources"
-version = "0.1.3"
-description = "Typing stubs for pkg_resources"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "types-requests"
 version = "2.28.8"
 description = "Typing stubs for requests"
@@ -1651,7 +1622,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ef01b1515e6f5e580de9941af98ea42f3bb0eb3e23e721add9f7bd5a347379fe"
+content-hash = "e5e953f635b4ee9b2486cdf0179cfe4c19bb4e7531a80f1a09c9086cc62ff89a"
 
 [metadata.files]
 aiocache = [
@@ -1770,9 +1741,6 @@ asttokens = [
 async-timeout = [
     {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},
     {file = "async_timeout-4.0.2-py3-none-any.whl", hash = "sha256:8ca1e4fcf50d07413d66d1a5e416e42cfdf5851c981d679a09851a6853383b3c"},
-]
-atomicwrites = [
-    {file = "atomicwrites-1.4.1.tar.gz", hash = "sha256:81b2c9071a49367a7f770170e5eec8cb66567cfbbc8c73d20ce5ca4a8d71cf11"},
 ]
 attrs = [
     {file = "attrs-22.1.0-py2.py3-none-any.whl", hash = "sha256:86efa402f67bf2df34f51a335487cf46b1ec130d02b8d39fd248abfd30da551c"},
@@ -2027,8 +1995,8 @@ coverage = [
     {file = "coverage-6.4.3.tar.gz", hash = "sha256:ec2ae1f398e5aca655b7084392d23e80efb31f7a660d2eecf569fb9f79b3fb94"},
 ]
 coveragespace = [
-    {file = "coveragespace-5.0-py3-none-any.whl", hash = "sha256:b1ffa5dc1e6b4f1e64c764a676c6ec3bd875448942d441c307c338086f2c8f4c"},
-    {file = "coveragespace-5.0.tar.gz", hash = "sha256:7cc03a8f380922d993f43e67009d35886702342ac08aabd6467a1b4e2e059ce9"},
+    {file = "coveragespace-6.0-py3-none-any.whl", hash = "sha256:362fb19fa760a35e6da799b31cd18bde709b93452cb753931ff63708915516b3"},
+    {file = "coveragespace-6.0.tar.gz", hash = "sha256:4ca158725b24f7344686b5c21d495837d932fd549a8c79d1b15cdb4f905e8713"},
 ]
 datafiles = [
     {file = "datafiles-2.0-py3-none-any.whl", hash = "sha256:88fdb13c200978d4d0f15c9c4401703acf6793250896d065d52b845a782e0a46"},
@@ -2753,8 +2721,8 @@ pyperclip = [
     {file = "pyperclip-1.8.2.tar.gz", hash = "sha256:105254a8b04934f0bc84e9c24eb360a591aaf6535c9def5f29d92af107a9bf57"},
 ]
 pytest = [
-    {file = "pytest-7.1.2-py3-none-any.whl", hash = "sha256:13d0e3ccfc2b6e26be000cb6568c832ba67ba32e719443bfe725814d3c42433c"},
-    {file = "pytest-7.1.2.tar.gz", hash = "sha256:a06a0425453864a270bc45e71f783330a7428defb4230fb5e6a731fde06ecd45"},
+    {file = "pytest-7.1.3-py3-none-any.whl", hash = "sha256:1377bda3466d70b55e3f5cecfa55bb7cfcf219c7964629b967c37cf0bda818b7"},
+    {file = "pytest-7.1.3.tar.gz", hash = "sha256:4f365fec2dff9c1162f834d9f18af1ba13062db0c708bf7b946f8a5c76180c39"},
 ]
 pytest-asyncio = [
     {file = "pytest-asyncio-0.19.0.tar.gz", hash = "sha256:ac4ebf3b6207259750bc32f4c1d8fcd7e79739edbc67ad0c58dd150b1d072fed"},
@@ -2769,15 +2737,11 @@ pytest-describe = [
     {file = "pytest_describe-2.0.1-py3-none-any.whl", hash = "sha256:ea347838bdf774b498ee7cb4a0b802a40be89e667a399fb63d860e3223bf4183"},
 ]
 pytest-expecter = [
-    {file = "pytest-expecter-2.3.tar.gz", hash = "sha256:8e6a3e565fbc524e5a4988b664d1b748e0a810b33233880aa5d3d78970351e06"},
-    {file = "pytest_expecter-2.3-py3-none-any.whl", hash = "sha256:6336d7f43221500e392014a949fd77ee2c2a84bcae2be7669acdd0d7c89b89e9"},
+    {file = "pytest-expecter-3.0.tar.gz", hash = "sha256:be8f3e9f823af6d6713e3f552ed47560061a2fd243a78952180f5df61a2b76a4"},
+    {file = "pytest_expecter-3.0-py3-none-any.whl", hash = "sha256:98fe65ecc1ddb7ca29084dc68ec07983dbbdb20b566fd14140b0b5f4b7c84cc8"},
 ]
 pytest-random = [
     {file = "pytest-random-0.02.tar.gz", hash = "sha256:92f25db8c5d9ffc20d90b51997b914372d6955cb9cf1f6ead45b90514fc0eddd"},
-]
-pytest-rerunfailures = [
-    {file = "pytest-rerunfailures-9.1.1.tar.gz", hash = "sha256:1cb11a17fc121b3918414eb5eaf314ee325f2e693ac7cb3f6abf7560790827f2"},
-    {file = "pytest_rerunfailures-9.1.1-py3-none-any.whl", hash = "sha256:2eb7d0ad651761fbe80e064b0fd415cf6730cdbc53c16a145fd84b66143e609f"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
@@ -3003,10 +2967,6 @@ types-aiofiles = [
 types-pillow = [
     {file = "types-Pillow-9.2.1.tar.gz", hash = "sha256:9781104ee2176f680576523fa2a2b83b134957aec6f4d62582cc9e74c93a60b4"},
     {file = "types_Pillow-9.2.1-py3-none-any.whl", hash = "sha256:d63743ef631e47f8d8669590ea976162321a9a7604588b424b6306533453fb63"},
-]
-types-pkg-resources = [
-    {file = "types-pkg_resources-0.1.3.tar.gz", hash = "sha256:834a9b8d3dbea343562fd99d5d3359a726f6bf9d3733bccd2b4f3096fbab9dae"},
-    {file = "types_pkg_resources-0.1.3-py2.py3-none-any.whl", hash = "sha256:0cb9972cee992249f93fff1a491bf2dc3ce674e5a1926e27d4f0866f7d9b6d9c"},
 ]
 types-requests = [
     {file = "types-requests-2.28.8.tar.gz", hash = "sha256:7a9f7b152d594a1c18dd4932cdd2596b8efbeedfd73caa4e4abb3755805b4685"},

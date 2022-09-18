@@ -23,6 +23,7 @@ install: $(BACKEND_DEPENDENCIES)
 
 $(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
 	@ poetry config virtualenvs.in-project true
+	poetry run python -m pip install --upgrade pip setuptools
 	poetry install
 	@ touch $@
 
@@ -126,13 +127,13 @@ deploy: .envrc
 .PHONY: promote
 promote: install .envrc
 	@ echo
-	SITE=https://staging.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+	SITE=https://staging.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov
 	@ echo
 	heroku pipelines:promote --app memegen-staging --to memegen-production
 	@ echo
 	sleep 30
 	@ echo
-	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov --reruns=2
+	SITE=https://api.memegen.link poetry run pytest scripts/check_deployment.py --verbose --no-cov
 
 .env:
 	echo WEB_CONCURRENCY=2 >> $@
