@@ -159,6 +159,7 @@ async def render_image(
         if url:
             template = await models.Template.create(url)
             template.customize(
+                color=utils.urls.arg(request.args, None, "color"),
                 center=utils.urls.arg(request.args, None, "center"),
                 scale=utils.urls.arg(request.args, None, "scale"),
             )

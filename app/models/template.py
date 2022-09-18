@@ -423,8 +423,18 @@ class Template:
         if starts or stops:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
 
-    def customize(self, *, center: str, scale: str | float):
+    def customize(self, *, color: str, center: str, scale: str | float):
         with frozen(self):
+            if color:
+                try:
+                    colors = [value for value in color.split(",") if value]
+                except ValueError:
+                    logger.error(f"Invalid color: {color=}")
+                else:
+                    logger.critical(colors)
+                    with suppress(IndexError):
+                        for index, value in enumerate(colors):
+                            self.text[index].color = value
             if center:
                 try:
                     xy = [float(value) for value in center.split(",")]
