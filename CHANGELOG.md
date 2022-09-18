@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.12
+
+- Added support for `color=<str>,<str>` query parameter to control the color of text.
+
 ## 10.11
 
 - Updated `/images/custom` and `/templates/custom` to accept template IDs as `background`.
