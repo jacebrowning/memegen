@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "^3.10"
 
 # Sanic
-sanic = "~22.6.2"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
+sanic = "~22.9"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
 sanic-ext = "*"
 
 # Markdown
