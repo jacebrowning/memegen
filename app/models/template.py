@@ -382,6 +382,7 @@ class Template:
         id = utils.text.fingerprint(self.name) + f"-{layout}{lines}"
         template = self.objects.get_or_create(id, self.name)
         with frozen(template):
+            template.overlay = self.overlay
             template.text = []
             for index in range(lines):
                 text = Text(
