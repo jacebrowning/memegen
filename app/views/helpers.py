@@ -114,7 +114,7 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
     if not any(line.strip() for line in lines):
         lines = template.example
 
-    template = await template.clone(layout, len(lines), animated=False)
+    template = await template.clone(layout, len(lines), style, animated=False)
 
     if not utils.urls.schema(style):
         style = style.strip().lower()
@@ -201,7 +201,7 @@ async def render_image(
                 status = 422
 
     layout = utils.urls.arg(request.args, "default", "layout")
-    template = await template.clone(layout, len(lines), animated=animated)
+    template = await template.clone(layout, len(lines), style, animated=animated)
 
     template.animate(
         utils.urls.arg(request.args, "", "start"),
