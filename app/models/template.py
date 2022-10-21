@@ -373,7 +373,9 @@ class Template:
 
         return await foreground.exists()
 
-    async def clone(self, layout: str, lines: int, *, animated: bool) -> "Template":
+    async def clone(
+        self, layout: str, lines: int = 1, style: str = "default", *, animated: bool
+    ) -> "Template":
         if layout != "top":
             return self
 
@@ -394,7 +396,7 @@ class Template:
                 )
                 template.text.append(text)
 
-        source = self.get_image(animated=animated)
+        source = self.get_image(style=style, animated=animated)
         suffix = source.suffix
         if suffix == settings.PLACEHOLDER_SUFFIX:
             suffix = settings.DEFAULT_SUFFIX

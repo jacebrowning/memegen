@@ -46,5 +46,5 @@ if __name__ == "__main__":
         auto_reload=True,
         access_log=False,
         motd=False,
-        fast=True,
+        fast=not settings.DEBUG,
     )
