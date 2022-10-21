@@ -118,7 +118,7 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
 
     if not utils.urls.schema(style):
         style = style.strip().lower()
-    if not await template.check(style):
+    if style != "animated" and not await template.check(style):
         error = "Invalid Overlay"
 
     data, content_type = await asyncio.to_thread(

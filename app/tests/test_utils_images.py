@@ -3,40 +3,11 @@ These tests all save images to disk for manual visual diff testing.
 """
 
 import os
-import shutil
 from pathlib import Path
 
-import log
 import pytest
 
 from .. import models, settings, utils
-
-
-@pytest.fixture(scope="session")
-def images():
-    path = settings.TEST_IMAGES_DIRECTORY
-    path.mkdir(exist_ok=True)
-
-    if "SKIP_SLOW" not in os.environ:
-        return path
-
-    flag = path / ".flag"
-    if flag.exists():
-        age = Path(utils.images.__file__).stat().st_mtime - flag.stat().st_mtime
-        log.info(f"Test images are {age} seconds old")
-        if age > 5 * 60:
-            log.warn("Deleting stale test images")
-            shutil.rmtree(path)
-            path.mkdir()
-
-    flag.touch()
-    return path
-
-
-@pytest.fixture(scope="session")
-def template():
-    return models.Template.objects.get("icanhas")
-
 
 # Formats
 
@@ -343,17 +314,3 @@ def test_deployed_images(images, monkeypatch):
 
     monkeypatch.delattr(utils.images, "render_image")
     utils.images.save(template, lines, directory=images)
-
-
-def test_preview_images(images, template):
-    path = images / "preview.jpg"
-    data, _extension = utils.images.preview(template, ["nominal image", "while typing"])
-    path.write_bytes(data)
-
-
-@pytest.mark.asyncio
-async def test_preview_images_top_layout(images, template: models.Template):
-    template = await template.clone(layout="top", lines=2, animated=False)
-    path = images / "preview-top.jpg"
-    data, _extension = utils.images.preview(template, ["Nominal image", "while typing"])
-    path.write_bytes(data)
