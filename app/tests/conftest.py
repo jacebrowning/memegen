@@ -36,10 +36,10 @@ def template():
 
 @pytest.fixture
 def unknown_template():
-    template = Template.objects.get_or_create("unknown")
-    template.delete()
-    yield template
-    template.delete()
+    t = Template.objects.get_or_create("unknown")
+    t.delete()
+    yield t
+    t.delete()
 
 
 @pytest.fixture(scope="session")
