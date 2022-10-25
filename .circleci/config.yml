@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/memegen
 
     docker:
-      - image: circleci/python:3.10
+      - image: circleci/python:3.11
 
     steps:
       - checkout

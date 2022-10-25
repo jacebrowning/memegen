@@ -32,7 +32,6 @@ pygments==2.12.0; python_version >= "3.6"
 pymdown-extensions==8.2; python_version >= "3.6"
 pyperclip==1.8.2
 pyyaml==6.0; python_version >= "3.6"
-ruamel.yaml.clib==0.2.6; platform_python_implementation == "CPython" and python_version < "3.11" and python_version >= "3.8"
 ruamel.yaml==0.17.21; python_version >= "3.8" and python_version < "4.0"
 sanic-ext==22.9.0
 sanic-routing==22.8.0; python_version >= "3.7"

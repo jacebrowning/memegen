@@ -10,7 +10,7 @@ packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 
-python = "^3.10"
+python = "^3.11"
 
 # Sanic
 sanic = "~22.9.1"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
@@ -60,7 +60,7 @@ pytest-random = "*"
 pytest-cov = "^2.7"
 sanic-testing = "*"
 aioresponses = "*"
-locust = "^2.8.3"
+locust = "^2.12"
 
 # Coverage
 coveragespace = "^6.0"

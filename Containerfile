@@ -3,7 +3,7 @@ ARG ARG_MAX_REQUESTS=0
 ARG ARG_MAX_REQUESTS_JITTER=0
 
 # Prep everything
-FROM docker.io/python:3.10-bullseye as build
+FROM docker.io/python:3.11-bullseye as build
 
 # Create the memegen user
 RUN useradd -md /opt/memegen -u 1000 memegen
