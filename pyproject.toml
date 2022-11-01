@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "^3.10"
 
 # Sanic
-sanic = "~22.9"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
+sanic = "~22.9.1"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
 sanic-ext = "*"
 
 # Markdown
@@ -49,6 +49,7 @@ autoflake = "^1.3.1"
 types-aiofiles = "*"
 types-pillow = "^9.2"
 types-requests = "*"
+types-setuptools = "*"
 
 # Testing
 pytest = "^7.1.3"

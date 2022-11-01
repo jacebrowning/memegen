@@ -52,7 +52,7 @@ multidict = ">=4.5,<7.0"
 yarl = ">=1.0,<2.0"
 
 [package.extras]
-speedups = ["aiodns", "brotli", "cchardet"]
+speedups = ["Brotli", "aiodns", "cchardet"]
 
 [[package]]
 name = "aiopath"
@@ -158,7 +158,7 @@ python-versions = ">=3.5"
 dev = ["cloudpickle", "coverage[toml] (>=5.0.2)", "furo", "hypothesis", "mypy (>=0.900,!=0.940)", "pre-commit", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "sphinx", "sphinx-notfound-page", "zope.interface"]
 docs = ["furo", "sphinx", "sphinx-notfound-page", "zope.interface"]
 tests = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "zope.interface"]
-tests_no_zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
+tests-no-zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
 
 [[package]]
 name = "autoflake"
@@ -269,7 +269,7 @@ optional = false
 python-versions = ">=3.6.0"
 
 [package.extras]
-unicode_backport = ["unicodedata2"]
+unicode-backport = ["unicodedata2"]
 
 [[package]]
 name = "classproperties"
@@ -307,8 +307,8 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [package.extras]
-test = ["mock", "pytest", "pyyaml"]
-yaml = ["pyyaml"]
+test = ["PyYAML", "mock", "pytest"]
+yaml = ["PyYAML"]
 
 [[package]]
 name = "coverage"
@@ -448,6 +448,7 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5"
 [package.dependencies]
 cffi = {version = ">=1.12.2", markers = "platform_python_implementation == \"CPython\" and sys_platform == \"win32\""}
 greenlet = {version = ">=1.1.0,<2.0", markers = "platform_python_implementation == \"CPython\""}
+setuptools = "*"
 "zope.event" = "*"
 "zope.interface" = "*"
 
@@ -495,7 +496,7 @@ optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
 
 [package.extras]
-docs = ["sphinx"]
+docs = ["Sphinx"]
 
 [[package]]
 name = "gunicorn"
@@ -504,6 +505,9 @@ description = "WSGI HTTP Server for UNIX"
 category = "main"
 optional = false
 python-versions = ">=3.5"
+
+[package.dependencies]
+setuptools = ">=3.0"
 
 [package.extras]
 eventlet = ["eventlet (>=0.24.1)"]
@@ -625,6 +629,7 @@ python-versions = ">=2.7"
 [package.dependencies]
 decorator = {version = "*", markers = "python_version > \"3.6\""}
 ipython = {version = ">=7.17.0", markers = "python_version > \"3.6\""}
+setuptools = "*"
 toml = {version = ">=0.10.2", markers = "python_version > \"3.6\""}
 
 [[package]]
@@ -646,6 +651,7 @@ pexpect = {version = ">4.3", markers = "sys_platform != \"win32\""}
 pickleshare = "*"
 prompt-toolkit = ">=2.0.0,<3.0.0 || >3.0.0,<3.0.1 || >3.0.1,<3.1.0"
 pygments = ">=2.4.0"
+setuptools = ">=18.5"
 stack-data = "*"
 traitlets = ">=5"
 
@@ -660,7 +666,7 @@ notebook = ["ipywidgets", "notebook"]
 parallel = ["ipyparallel"]
 qtconsole = ["qtconsole"]
 test = ["pytest (<7.1)", "pytest-asyncio", "testpath"]
-test_extra = ["curio", "matplotlib (!=3.2.0)", "nbformat", "numpy (>=1.19)", "pandas", "pytest (<7.1)", "pytest-asyncio", "testpath", "trio"]
+test-extra = ["curio", "matplotlib (!=3.2.0)", "nbformat", "numpy (>=1.19)", "pandas", "pytest (<7.1)", "pytest-asyncio", "testpath", "trio"]
 
 [[package]]
 name = "isort"
@@ -672,9 +678,9 @@ python-versions = ">=3.6.1,<4.0"
 
 [package.extras]
 colors = ["colorama (>=0.4.3,<0.5.0)"]
-pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
+pipfile-deprecated-finder = ["pipreqs", "requirementslib"]
 plugins = ["setuptools"]
-requirements_deprecated_finder = ["pip-api", "pipreqs"]
+requirements-deprecated-finder = ["pip-api", "pipreqs"]
 
 [[package]]
 name = "itsdangerous"
@@ -1201,7 +1207,7 @@ urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
-use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
+use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "rfc3986"
@@ -1261,7 +1267,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "sanic"
-version = "22.9.0"
+version = "22.9.1"
 description = "A web server and web framework that's written to go fast. Build fast. Run fast."
 category = "main"
 optional = false
@@ -1277,12 +1283,12 @@ uvloop = {version = ">=0.5.3", markers = "sys_platform != \"win32\" and implemen
 websockets = ">=10.0"
 
 [package.extras]
-all = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "coverage", "cryptography", "docutils", "enum-tools", "flake8", "isort (>=5.0.0)", "m2r2", "mistune (<2.0.0)", "mypy (>=0.901,<0.910)", "pygments", "pytest", "pytest-benchmark", "pytest-sanic", "sanic-testing (>=22.9.0b2)", "slotscheck (>=0.8.0,<1)", "sphinx (>=2.1.2)", "sphinx-rtd-theme (>=0.4.3)", "towncrier", "tox", "types-ujson", "uvicorn (<0.15.0)"]
-dev = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "coverage", "cryptography", "docutils", "flake8", "isort (>=5.0.0)", "mypy (>=0.901,<0.910)", "pygments", "pytest", "pytest-benchmark", "pytest-sanic", "sanic-testing (>=22.9.0b2)", "slotscheck (>=0.8.0,<1)", "towncrier", "tox", "types-ujson", "uvicorn (<0.15.0)"]
-docs = ["docutils", "enum-tools", "m2r2", "mistune (<2.0.0)", "pygments", "sphinx (>=2.1.2)", "sphinx-rtd-theme (>=0.4.3)"]
+all = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "coverage", "cryptography", "docutils", "enum-tools[sphinx]", "flake8", "isort (>=5.0.0)", "m2r2", "mistune (<2.0.0)", "mypy (>=0.901,<0.910)", "pygments", "pytest (>=7.1.0,<7.2.0)", "pytest-benchmark", "pytest-sanic", "sanic-testing (>=22.9.0)", "slotscheck (>=0.8.0,<1)", "sphinx (>=2.1.2)", "sphinx-rtd-theme (>=0.4.3)", "towncrier", "tox", "types-ujson", "uvicorn (<0.15.0)"]
+dev = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "coverage", "cryptography", "docutils", "flake8", "isort (>=5.0.0)", "mypy (>=0.901,<0.910)", "pygments", "pytest (>=7.1.0,<7.2.0)", "pytest-benchmark", "pytest-sanic", "sanic-testing (>=22.9.0)", "slotscheck (>=0.8.0,<1)", "towncrier", "tox", "types-ujson", "uvicorn (<0.15.0)"]
+docs = ["docutils", "enum-tools[sphinx]", "m2r2", "mistune (<2.0.0)", "pygments", "sphinx (>=2.1.2)", "sphinx-rtd-theme (>=0.4.3)"]
 ext = ["sanic-ext"]
 http3 = ["aioquic"]
-test = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "coverage", "docutils", "flake8", "isort (>=5.0.0)", "mypy (>=0.901,<0.910)", "pygments", "pytest", "pytest-benchmark", "pytest-sanic", "sanic-testing (>=22.9.0b2)", "slotscheck (>=0.8.0,<1)", "types-ujson", "uvicorn (<0.15.0)"]
+test = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "coverage", "docutils", "flake8", "isort (>=5.0.0)", "mypy (>=0.901,<0.910)", "pygments", "pytest (>=7.1.0,<7.2.0)", "pytest-benchmark", "pytest-sanic", "sanic-testing (>=22.9.0)", "slotscheck (>=0.8.0,<1)", "types-ujson", "uvicorn (<0.15.0)"]
 
 [[package]]
 name = "sanic-ext"
@@ -1296,8 +1302,8 @@ python-versions = "*"
 pyyaml = ">=3.0.0"
 
 [package.extras]
-dev = ["black (>=21.4b2)", "coverage", "flake8 (>=3.7.7)", "isort (>=5.0.0)", "jinja2", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=0.8)", "tox"]
-test = ["coverage", "jinja2", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=0.8)", "tox"]
+dev = ["Jinja2", "black (>=21.4b2)", "coverage", "flake8 (>=3.7.7)", "isort (>=5.0.0)", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=0.8)", "tox"]
+test = ["Jinja2", "coverage", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=0.8)", "tox"]
 
 [[package]]
 name = "sanic-routing"
@@ -1317,6 +1323,19 @@ python-versions = "*"
 
 [package.dependencies]
 httpx = ">=0.18,<0.24"
+
+[[package]]
+name = "setuptools"
+version = "65.5.0"
+description = "Easily download, build, install, upgrade, and uninstall Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-hoverxref (<2)", "sphinx-inline-tabs", "sphinx-notfound-page (==0.8.3)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
+testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8 (<5)", "flake8-2020", "ini2toml[lite] (>=0.9)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "mock", "pip (>=19.1)", "pip-run (>=8.8)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "pytest-perf", "pytest-xdist", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
+testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
 name = "six"
@@ -1422,6 +1441,14 @@ python-versions = "*"
 
 [package.dependencies]
 types-urllib3 = "<1.27"
+
+[[package]]
+name = "types-setuptools"
+version = "65.5.0.2"
+description = "Typing stubs for setuptools"
+category = "dev"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "types-urllib3"
@@ -1577,8 +1604,11 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.dependencies]
+setuptools = "*"
+
 [package.extras]
-docs = ["sphinx"]
+docs = ["Sphinx"]
 test = ["zope.testrunner"]
 
 [[package]]
@@ -1589,15 +1619,18 @@ category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
+[package.dependencies]
+setuptools = "*"
+
 [package.extras]
-docs = ["repoze.sphinx.autointerface", "sphinx"]
+docs = ["Sphinx", "repoze.sphinx.autointerface"]
 test = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "f1eeec2a67ba367f31fdedbff26ceb8bce0014050a34c38160a3632497f0e45b"
+content-hash = "ce4d495dbee047166838fbb9aed8dcc312e7381f6a0764bdc08f287fdd6a70a2"
 
 [metadata.files]
 aiocache = [
@@ -2884,8 +2917,8 @@ roundrobin = [
     {file = "ruamel.yaml.clib-0.2.6.tar.gz", hash = "sha256:4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"},
 ]
 sanic = [
-    {file = "sanic-22.9.0-py3-none-any.whl", hash = "sha256:01932dc4cbcd312caf509cb9ffcee8bea4f22b497a5b0c2d4dd5794c4408737a"},
-    {file = "sanic-22.9.0.tar.gz", hash = "sha256:ac29863e64377399ca5a99408d521409ba8a80f81013c0e2878fae88de5e9aa8"},
+    {file = "sanic-22.9.1-py3-none-any.whl", hash = "sha256:d8905ee1c72759c7b37b1638c3b2b6656573d38156a82a85fd020532749029c1"},
+    {file = "sanic-22.9.1.tar.gz", hash = "sha256:9793919827f3753fd16433c8750625472f1a08e2147d6870bb7ff94ab12caaea"},
 ]
 sanic-ext = [
     {file = "sanic-ext-22.6.3.tar.gz", hash = "sha256:cfd768251dd4573bdcda6490a656eb661ffc1a25449f0ee03bd1a5fd95e4e6f0"},
@@ -2898,6 +2931,10 @@ sanic-routing = [
 sanic-testing = [
     {file = "sanic-testing-22.9.0.tar.gz", hash = "sha256:465367ef93b901e04846654936600cb668257548fd0b1867ad00fb5dee7912c2"},
     {file = "sanic_testing-22.9.0-py3-none-any.whl", hash = "sha256:d62a98f37604b4232885574caa7e5f7e412caa57f8adb4ecab8225349838ef07"},
+]
+setuptools = [
+    {file = "setuptools-65.5.0-py3-none-any.whl", hash = "sha256:f62ea9da9ed6289bfe868cd6845968a2c854d1427f8548d52cae02a42b4f0356"},
+    {file = "setuptools-65.5.0.tar.gz", hash = "sha256:512e5536220e38146176efb833d4a62aa726b7bbff82cfbc8ba9eaa3996e0b17"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
@@ -2942,6 +2979,10 @@ types-pillow = [
 types-requests = [
     {file = "types-requests-2.28.8.tar.gz", hash = "sha256:7a9f7b152d594a1c18dd4932cdd2596b8efbeedfd73caa4e4abb3755805b4685"},
     {file = "types_requests-2.28.8-py3-none-any.whl", hash = "sha256:b0421f9f2d0dd0f8df2c75f974686517ca67473f05b466232d4c6384d765ad7a"},
+]
+types-setuptools = [
+    {file = "types-setuptools-65.5.0.2.tar.gz", hash = "sha256:9847de6d7087fb1dd4a88c2a21543d1b86a6179c36744f081974303fe2f30f50"},
+    {file = "types_setuptools-65.5.0.2-py3-none-any.whl", hash = "sha256:2d33e4ef0d35cd2da48a143eb02184f58398381ddb1f772eff20ccc4126fec13"},
 ]
 types-urllib3 = [
     {file = "types-urllib3-1.26.22.tar.gz", hash = "sha256:b05af90e73889e688094008a97ca95788db8bf3736e2776fd43fb6b171485d94"},
