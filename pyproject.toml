@@ -14,7 +14,7 @@ python = "^3.10"
 
 # Sanic
 sanic = "~22.9.1"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
-sanic-ext = "*"
+sanic-ext = "~22.9" # match to 'sanic'
 
 # Markdown
 markdown = "~3.2.2"
@@ -22,7 +22,7 @@ pymdown-extensions = "^8.0"
 pygments = "^2.7.0"
 
 # Images
-pillow = "^9.2"  # update types-pillow to match version
+pillow = "^9.2"  # update 'types-pillow' to match version
 spongemock = "~0.3.4"
 
 # Utilities

@@ -1292,7 +1292,7 @@ test = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "covera
 
 [[package]]
 name = "sanic-ext"
-version = "22.6.3"
+version = "22.9.0"
 description = "Extend your Sanic installation with some core functionality."
 category = "main"
 optional = false
@@ -1302,8 +1302,8 @@ python-versions = "*"
 pyyaml = ">=3.0.0"
 
 [package.extras]
-dev = ["Jinja2", "black (>=21.4b2)", "coverage", "flake8 (>=3.7.7)", "isort (>=5.0.0)", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=0.8)", "tox"]
-test = ["Jinja2", "coverage", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=0.8)", "tox"]
+dev = ["Jinja2", "black (>=21.4b2)", "coverage", "flake8 (>=3.7.7)", "isort (>=5.0.0)", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=22.9.0)", "tox"]
+test = ["Jinja2", "coverage", "pytest", "pytest-asyncio", "pytest-cov", "sanic-testing (>=22.9.0)", "tox"]
 
 [[package]]
 name = "sanic-routing"
@@ -1630,7 +1630,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ce4d495dbee047166838fbb9aed8dcc312e7381f6a0764bdc08f287fdd6a70a2"
+content-hash = "30ff5319ae2147e0433f072356c3a66a6e4b4c9e365a60bca29a6783bae19822"
 
 [metadata.files]
 aiocache = [
@@ -2921,8 +2921,8 @@ sanic = [
     {file = "sanic-22.9.1.tar.gz", hash = "sha256:9793919827f3753fd16433c8750625472f1a08e2147d6870bb7ff94ab12caaea"},
 ]
 sanic-ext = [
-    {file = "sanic-ext-22.6.3.tar.gz", hash = "sha256:cfd768251dd4573bdcda6490a656eb661ffc1a25449f0ee03bd1a5fd95e4e6f0"},
-    {file = "sanic_ext-22.6.3-py3-none-any.whl", hash = "sha256:47918c0ff4dee6f8370791acccf6a08bb46363c0f9033940035cedd9836ac4f0"},
+    {file = "sanic-ext-22.9.0.tar.gz", hash = "sha256:07fa77d122b8c024dcf40d180bafe4f32b0a473d429f0d9f7ee403490e690ea6"},
+    {file = "sanic_ext-22.9.0-py3-none-any.whl", hash = "sha256:915b40545101b928bb9b5258e443eb8f37ba403ff7a05565a7bec790a9b46654"},
 ]
 sanic-routing = [
     {file = "sanic-routing-22.8.0.tar.gz", hash = "sha256:305729b4e0bf01f074044a2a315ff401fa7eeffb009eec1d2c81d35e1038ddfc"},
