@@ -47,4 +47,4 @@ def test_swagger(expect, url):
         f"{url}%2Fdocs%2Fopenapi.json"
     )
     expect(response.status_code) == 200
-    expect(response.json()) == {}
+    expect(response.json()) == {"schemaValidationMessages": []}
