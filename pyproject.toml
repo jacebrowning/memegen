@@ -69,7 +69,7 @@ coveragespace = "^6.0"
 mkdocs = "^1.2.3"
 
 # Utilities
-honcho = "^1.1"
+honcho = { git = "https://github.com/jacebrowning/honcho", branch = "support-importlib" }
 ipdb = "*"
 rope = "^0.18.0"
 watchdog = { version = "^2.1.9", extras = ["watchmedo"] }
