@@ -5,7 +5,8 @@ jobs:
     working_directory: ~/memegen
 
     docker:
-      - image: circleci/python:3.11
+      # TODO: Use 3.11 when available, update `pyproject.toml` and `.verchew.ini `
+      - image: circleci/python:3.10
 
     steps:
       - checkout
