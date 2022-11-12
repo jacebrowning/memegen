@@ -13,20 +13,6 @@ msgpack = ["msgpack (>=0.5.5)"]
 redis = ["aioredis (>=0.3.3)", "aioredis (>=1.0.0)"]
 
 [[package]]
-name = "aiofile"
-version = "3.8.1"
-description = "Asynchronous file operations."
-category = "main"
-optional = false
-python-versions = ">=3.7, <4"
-
-[package.dependencies]
-caio = ">=0.9.0,<0.10.0"
-
-[package.extras]
-develop = ["aiomisc", "pytest", "pytest-cov"]
-
-[[package]]
 name = "aiofiles"
 version = "0.8.0"
 description = "File support for asyncio."
@@ -55,18 +41,6 @@ yarl = ">=1.0,<2.0"
 speedups = ["aiodns", "brotli", "cchardet"]
 
 [[package]]
-name = "aiopath"
-version = "0.6.10"
-description = "📁 Async pathlib for Python"
-category = "main"
-optional = false
-python-versions = ">=3.10"
-
-[package.dependencies]
-aiofile = ">=3.5.0,<4"
-anyio = ">=3.2.0,<4"
-
-[[package]]
 name = "aioresponses"
 version = "0.7.3"
 description = "Mock out requests made by ClientSession from aiohttp package"
@@ -90,7 +64,7 @@ frozenlist = ">=1.1.0"
 
 [[package]]
 name = "anyio"
-version = "3.6.1"
+version = "3.6.2"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
 category = "main"
 optional = false
@@ -103,7 +77,7 @@ sniffio = ">=1.1"
 [package.extras]
 doc = ["packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
 test = ["contextlib2", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=4)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (<0.15)", "uvloop (>=0.15)"]
-trio = ["trio (>=0.16)"]
+trio = ["trio (>=0.16,<0.22)"]
 
 [[package]]
 name = "appnope"
@@ -217,17 +191,6 @@ description = "A decorator for caching properties in classes."
 category = "main"
 optional = false
 python-versions = "*"
-
-[[package]]
-name = "caio"
-version = "0.9.7"
-description = "Asynchronous file IO for Linux MacOS or Windows."
-category = "main"
-optional = false
-python-versions = ">=3.5, <4"
-
-[package.extras]
-develop = ["aiomisc", "pytest", "pytest-cov"]
 
 [[package]]
 name = "certifi"
@@ -1592,15 +1555,12 @@ testing = ["locust"]
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.11"
-content-hash = "e788f237defcee16a02eb4181d6f4f7bf59dbbfee275d62fdb554e1934a7f828"
+content-hash = "f5648c26ea53e3957d65227260b9f678dc766fdd135e798fd26a26bb353aa514"
 
 [metadata.files]
 aiocache = [
     {file = "aiocache-0.11.1-py2.py3-none-any.whl", hash = "sha256:e55c7caaa5753794fd301c3a2e592737fa1d036db9f8d04ae154facdfb48a157"},
     {file = "aiocache-0.11.1.tar.gz", hash = "sha256:f2ebe0b05cec45782e7b5ea0bb74640f157dd4bb1028b4565364dda9fe33be7f"},
-]
-aiofile = [
-    {file = "aiofile-3.8.1.tar.gz", hash = "sha256:1623b98d88fbd16bbd2808d010de4e185a700e950ed3f17455dd851aa2455f40"},
 ]
 aiofiles = [
     {file = "aiofiles-0.8.0-py3-none-any.whl", hash = "sha256:7a973fc22b29e9962d0897805ace5856e6a566ab1f0c8e5c91ff6c866519c937"},
@@ -1695,10 +1655,6 @@ aiohttp = [
     {file = "aiohttp-3.8.3-cp39-cp39-win_amd64.whl", hash = "sha256:88e5be56c231981428f4f506c68b6a46fa25c4123a2e86d156c58a8369d31ab7"},
     {file = "aiohttp-3.8.3.tar.gz", hash = "sha256:3828fb41b7203176b82fe5d699e0d845435f2374750a44b480ea6b930f6be269"},
 ]
-aiopath = [
-    {file = "aiopath-0.6.10-py2.py3-none-any.whl", hash = "sha256:44a5376de098b4875eefa4b4599f5ac99fd9451b88c314f237716571e16ccce2"},
-    {file = "aiopath-0.6.10.tar.gz", hash = "sha256:6ca97a864fe32478d53af6c40e1951de64ab01d6b402d88524ce72d80362eb7a"},
-]
 aioresponses = [
     {file = "aioresponses-0.7.3-py2.py3-none-any.whl", hash = "sha256:7b1897169062c92fa87d6ecc503ac566ac87fbfacb2504f8ca81c8035a2eb068"},
     {file = "aioresponses-0.7.3.tar.gz", hash = "sha256:2c64ed5710ee8cb4e958c569184dad12f4c9cd5939135cb38f88c6a8261cceb3"},
@@ -1708,8 +1664,8 @@ aiosignal = [
     {file = "aiosignal-1.2.0.tar.gz", hash = "sha256:78ed67db6c7b7ced4f98e495e572106d5c432a93e1ddd1bf475e1dc05f5b7df2"},
 ]
 anyio = [
-    {file = "anyio-3.6.1-py3-none-any.whl", hash = "sha256:cb29b9c70620506a9a8f87a309591713446953302d7d995344d0d7c6c0c9a7be"},
-    {file = "anyio-3.6.1.tar.gz", hash = "sha256:413adf95f93886e442aea925f3ee43baa5a765a64a0f52c6081894f9992fdd0b"},
+    {file = "anyio-3.6.2-py3-none-any.whl", hash = "sha256:fbbe32bd270d2a2ef3ed1c5d45041250284e31fc0a4df4a5a6071842051a51e3"},
+    {file = "anyio-3.6.2.tar.gz", hash = "sha256:25ea0d673ae30af41a0c442f81cf3b38c7e79fdc7b60335a4c14e05eb0947421"},
 ]
 appnope = [
     {file = "appnope-0.1.3-py2.py3-none-any.whl", hash = "sha256:265a455292d0bd8a72453494fa24df5a11eb18373a60c7c0430889f22548605e"},
@@ -1830,18 +1786,6 @@ bugsnag = [
 cached-property = [
     {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
     {file = "cached_property-1.5.2-py2.py3-none-any.whl", hash = "sha256:df4f613cf7ad9a588cc381aaf4a512d26265ecebd5eb9e1ba12f1319eb85a6a0"},
-]
-caio = [
-    {file = "caio-0.9.7-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:e34186b9e32a8f25bf27c1ec7fd8a23fa711f0fc3542bdb6e8d6074fd3afcebe"},
-    {file = "caio-0.9.7-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:463e0b795699de78ea853899574eb1e62670522f0792ff5a7f435771f40566a9"},
-    {file = "caio-0.9.7-cp37-cp37m-macosx_10_15_x86_64.whl", hash = "sha256:a2b83f34a7902206c978b61340e412209fcf8b9cec8953c48ffda9b71cf247ea"},
-    {file = "caio-0.9.7-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:7508ddc6addd6c959577a66914d4de139bee0682316ebc63a1a5de9c91ca3176"},
-    {file = "caio-0.9.7-cp38-cp38-macosx_10_15_x86_64.whl", hash = "sha256:7833a76d75a5f63c705df00b8d3af1fd55ce0fe369939d1d754c617956ad20ab"},
-    {file = "caio-0.9.7-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:e72861f7f484d55acd52e169feba9efd7c3a82596a91e0c1ee34076492596e3d"},
-    {file = "caio-0.9.7-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:a7f3e1bde5fdcb3bdd9b1faa0dc9d7fec097901af0455f8df2af008a74fde033"},
-    {file = "caio-0.9.7-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:3d52c088f9948b976648bbd80725bc6f0c2fc6df2ed8e86a1e6795398b022525"},
-    {file = "caio-0.9.7-py3-none-any.whl", hash = "sha256:0e03c98e3fc8266a335dee4e59f5cd819ea40438978cb03a71f4d9123d2e42ea"},
-    {file = "caio-0.9.7.tar.gz", hash = "sha256:0e8e7e7a00a7fa14a9bf1ecdd59b9c598e957386ee73574533a96532aad7b721"},
 ]
 certifi = [
     {file = "certifi-2022.6.15-py3-none-any.whl", hash = "sha256:fe86415d55e84719d75f8b69414f6438ac3547d2078ab91b67e779ef69378412"},

@@ -23,6 +23,7 @@
     "aiohttp",
     "aiopath",
     "aioresponses",
+    "anyio",
     "apng",
     "asdict",
     "autouse",

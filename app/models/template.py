@@ -4,7 +4,7 @@ from contextlib import suppress
 from functools import cached_property
 from pathlib import Path
 
-import aiopath
+from anyio import Path as AsyncPath
 from datafiles import datafile, field, frozen
 from furl import furl
 from sanic import Request
@@ -286,7 +286,7 @@ class Template:
             suffix = settings.PLACEHOLDER_SUFFIX
 
         filename = "default" + suffix
-        path = aiopath.AsyncPath(template.directory) / filename
+        path = AsyncPath(template.directory) / filename
 
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found background {url} at {path}")
@@ -317,7 +317,7 @@ class Template:
 
         image = self.get_image(animated=animated)
         filename = utils.text.fingerprint(f"{style}{self.overlay}", suffix=image.suffix)
-        path = aiopath.AsyncPath(self.directory) / filename
+        path = AsyncPath(self.directory) / filename
         if await path.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {style} at {path}")
             return True
@@ -338,7 +338,7 @@ class Template:
         return embedded == len(urls)
 
     async def _embed(
-        self, index: int, url: str, background: aiopath.AsyncPath, force: bool
+        self, index: int, url: str, background: AsyncPath, force: bool
     ) -> bool:
         if url.strip() in {"", "default"}:
             return True
@@ -349,7 +349,7 @@ class Template:
             suffix = ".png"
 
         filename = utils.text.fingerprint(url, prefix="_embed-", suffix=suffix)
-        foreground = aiopath.AsyncPath(self.directory) / filename
+        foreground = AsyncPath(self.directory) / filename
 
         if await foreground.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {url} at {foreground}")
