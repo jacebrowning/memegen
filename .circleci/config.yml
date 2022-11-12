@@ -1,11 +1,11 @@
-version: 2
+version: 2.1
 
 jobs:
   build:
     working_directory: ~/memegen
 
     docker:
-      - image: circleci/python:3.10
+      - image: cimg/python:3.11
 
     steps:
       - checkout
@@ -14,17 +14,17 @@ jobs:
           name: Checking system dependencies
           command: make doctor
 
-      - type: cache-restore
-        key: poetry-{{ checksum "poetry.lock" }}
+      - restore_cache:
+          key: poetry-{{ checksum "poetry.lock" }}
 
       - run:
           name: Installing project dependencies
           command: make install
 
-      - type: cache-save
-        key: poetry-{{ checksum "poetry.lock" }}
-        paths:
-          - .venv
+      - save_cache:
+          key: poetry-{{ checksum "poetry.lock" }}
+          paths:
+            - .venv
 
       - run:
           name: Checking code

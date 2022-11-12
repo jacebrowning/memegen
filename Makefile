@@ -24,7 +24,11 @@ install: $(BACKEND_DEPENDENCIES)
 $(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
 	@ poetry config virtualenvs.in-project true
 	poetry run python -m pip install --upgrade pip setuptools
+ifdef CI
 	poetry install
+else
+	poetry install --extras testing
+endif
 	@ touch $@
 
 ifndef CI

@@ -3,7 +3,7 @@ import asyncio
 import aiofiles
 import aiohttp
 import aiohttp.client_exceptions
-from aiopath import AsyncPath
+from anyio import Path as AsyncPath
 from sanic.log import logger
 
 EXCEPTIONS = (
