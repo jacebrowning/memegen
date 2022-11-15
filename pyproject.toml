@@ -22,7 +22,7 @@ pymdown-extensions = "^8.0"
 pygments = "^2.7.0"
 
 # Images
-pillow = "^9.2"  # update 'types-pillow' to match version
+pillow = "^9.3"  # update 'types-pillow' to match version
 spongemock = "~0.3.4"
 
 # Utilities
