@@ -92,7 +92,10 @@ class Text:
             return text
 
         if self.style == "default":
-            text = text.capitalize() if all(line.islower() for line in lines) else text
+            all_lower = all(line.islower() for line in lines)
+            includes_sentence = any(line.endswith((".", "?", "!")) for line in lines)
+            if text.islower() and (all_lower or includes_sentence):
+                text = text.capitalize()
             text = re.sub(r"\bi\b", "I", text)
             return text
 
