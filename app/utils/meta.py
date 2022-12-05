@@ -149,6 +149,7 @@ async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
             text=text,
             nsfw=0 if safe else 1,
             referer=_get_referer(request) or settings.BASE_URL,
+            count=5 if mode else 1,
         )
         logger.info(f"Searching for results: {text!r} (safe={safe})")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
