@@ -1,6 +1,7 @@
 import asyncio
 
 from sanic import Sanic, response
+from sanic.request import Request
 from sanic_ext import openapi
 
 from app import config, helpers, settings, utils
@@ -11,13 +12,13 @@ config.init(app)
 
 @app.get("/")
 @openapi.exclude(True)
-def index(request):
+def index(request: Request):
     return response.redirect("/docs")
 
 
 @app.get("/test")
 @openapi.exclude(True)
-async def test(request):
+async def test(request: Request):
     if not settings.DEBUG:
         return response.redirect("/")
 
@@ -28,13 +29,13 @@ async def test(request):
 
 @app.get("/favicon.ico")
 @openapi.exclude(True)
-async def favicon(request):
+async def favicon(request: Request):
     return await response.file("app/static/favicon.ico")
 
 
 @app.get("/robots.txt")
 @openapi.exclude(True)
-async def robots(request):
+async def robots(request: Request):
     return await response.file("app/static/robots.txt")
 
 

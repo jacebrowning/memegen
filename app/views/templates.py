@@ -1,6 +1,7 @@
 import asyncio
 
 from sanic import Blueprint, exceptions, response
+from sanic.request import Request
 from sanic_ext import openapi
 
 from .. import helpers, utils
@@ -27,7 +28,7 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
     {"application/json": list[TemplateResponse]},
     "Successfully returned a list of all templates",
 )
-async def index(request):
+async def index(request: Request):
     query = request.args.get("filter", "").lower()
     animated = utils.urls.flag(request, "animated")
     data = await asyncio.to_thread(
@@ -73,5 +74,5 @@ async def build(request, id):
     {"application/json": MemeResponse},
     "Successfully created a meme from a custom image",
 )
-async def custom(request):
+async def custom(request: Request):
     return await generate_url(request)

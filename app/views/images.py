@@ -2,6 +2,7 @@ import asyncio
 
 from sanic import Blueprint, exceptions, response
 from sanic.log import logger
+from sanic.request import Request
 from sanic_ext import openapi
 
 from .. import helpers, settings, utils
@@ -29,7 +30,7 @@ blueprint = Blueprint("Images", url_prefix="/images")
     {"application/json": list[ExampleResponse]},
     "Successfully returned a list of example memes",
 )
-async def index(request):
+async def index(request: Request):
     query = request.args.get("filter", "").lower()
     examples = await asyncio.to_thread(helpers.get_example_images, request, query)
     return response.json(
@@ -51,7 +52,7 @@ async def index(request):
 @openapi.response(
     404, {"application/json": ErrorResponse}, 'Specified "template_id" does not exist'
 )
-async def create(request):
+async def create(request: Request):
     return await generate_url(request, template_id_required=True)
 
 
@@ -65,7 +66,7 @@ async def create(request):
 @openapi.response(
     400, {"application/json": ErrorResponse}, 'Required "text" missing in request body'
 )
-async def create_automatic(request):
+async def create_automatic(request: Request):
     if request.form:
         payload = dict(request.form)
     else:
@@ -103,7 +104,7 @@ async def create_automatic(request):
     {"application/json": MemeResponse},
     description="Successfully created a meme from a custom image",
 )
-async def create_custom(request):
+async def create_custom(request: Request):
     return await generate_url(request)
 
 
@@ -118,7 +119,7 @@ async def create_custom(request):
     {"application/json": list[MemeResponse]},
     "Successfully returned a list of custom memes",
 )
-async def index_custom(request):
+async def index_custom(request: Request):
     query = request.args.get("filter", "").lower()
     safe = utils.urls.flag(request, "safe", True)
 

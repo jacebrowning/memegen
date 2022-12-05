@@ -1,4 +1,5 @@
 from sanic import Blueprint, exceptions, response
+from sanic.request import Request
 from sanic_ext import openapi
 
 from .. import models
@@ -14,7 +15,7 @@ blueprint = Blueprint("Fonts", url_prefix="/fonts")
     {"application/json": list[FontResponse]},
     "Successfully returned a list of fonts",
 )
-async def index(request):
+async def index(request: Request):
     fonts = models.Font.objects.all()
     data = [font.jsonify(request) for font in fonts]
     return response.json(data)

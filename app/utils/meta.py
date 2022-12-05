@@ -4,6 +4,7 @@ from urllib.parse import unquote
 import aiohttp
 from aiocache import cached
 from sanic.log import logger
+from sanic.request import Request
 
 from .. import settings
 from . import http
@@ -19,7 +20,7 @@ def version() -> str:
     60 * 15 if settings.DEPLOYED else 5,
     key_builder=lambda _func, request: f"{request.args=} {request.headers=}",
 )
-async def authenticate(request) -> dict:
+async def authenticate(request: Request) -> dict:
     info: dict = {}
     if settings.REMOTE_TRACKING_URL:
         api = settings.REMOTE_TRACKING_URL + "auth"
@@ -41,7 +42,7 @@ async def authenticate(request) -> dict:
 
 
 @cached(60 * 15 if settings.DEPLOYED else 5)
-async def tokenize(request, url: str) -> tuple[str, bool]:
+async def tokenize(request: Request, url: str) -> tuple[str, bool]:
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
     default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
@@ -70,7 +71,7 @@ async def tokenize(request, url: str) -> tuple[str, bool]:
     return url, False
 
 
-async def custom_watermarks_allowed(request) -> bool:
+async def custom_watermarks_allowed(request: Request) -> bool:
     info = await authenticate(request)
     if info.get("image_access", False):
         return True
@@ -84,7 +85,7 @@ async def custom_watermarks_allowed(request) -> bool:
     return False
 
 
-async def get_watermark(request) -> tuple[str, bool]:
+async def get_watermark(request: Request) -> tuple[str, bool]:
     watermark = request.args.get("watermark", "")
 
     if await custom_watermarks_allowed(request):
@@ -104,7 +105,7 @@ async def get_watermark(request) -> tuple[str, bool]:
     return settings.DEFAULT_WATERMARK, False
 
 
-async def track(request, lines: list[str]):
+async def track(request: Request, lines: list[str]):
     if settings.TRACK_REQUESTS and settings.REMOTE_TRACKING_URL:
         api = settings.REMOTE_TRACKING_URL
     else:
@@ -138,7 +139,7 @@ async def track(request, lines: list[str]):
             )
 
 
-async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
+async def search(request: Request, text: str, safe: bool, *, mode="") -> list[dict]:
     if settings.REMOTE_TRACKING_URL:
         api = settings.REMOTE_TRACKING_URL + mode
     else:
@@ -166,9 +167,9 @@ async def search(request, text: str, safe: bool, *, mode="") -> list[dict]:
         return []
 
 
-def _get_referer(request):
+def _get_referer(request: Request):
     return request.headers.get("referer") or request.args.get("referer")
 
 
-def _get_api_key(request):
+def _get_api_key(request: Request):
     return request.headers.get("x-api-key") or request.args.get("api_key")

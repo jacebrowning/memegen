@@ -1,4 +1,5 @@
 from sanic import Blueprint, response
+from sanic.request import Request
 from sanic_ext import openapi
 
 from .. import utils
@@ -12,7 +13,7 @@ blueprint = Blueprint("Clients", url_prefix="/")
 @openapi.summary("Validate your API key")
 @openapi.response(200, {"application/json": AuthResponse}, "Your API key is valid")
 @openapi.response(401, {"application/json": ErrorResponse}, "Your API key is invalid")
-async def validate(request):
+async def validate(request: Request):
     info = await utils.meta.authenticate(request)
     return response.json(
         info or {"error": "API key missing or invalid."},
@@ -31,7 +32,7 @@ async def validate(request):
     "layout", str, "query", description="Text position: `default` or `top`"
 )
 @openapi.response(200, {"image/jpeg": bytes}, "Successfully displayed a custom meme")
-async def preview(request):
+async def preview(request: Request):
     id = request.args.get("template", "_error")
     lines = request.args.getlist("text[]") or request.args.getlist("lines[]") or []
     while lines and not lines[-1].strip():
