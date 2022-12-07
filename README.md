@@ -114,7 +114,7 @@ For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_go
 
 # Fonts
 
-The full list of fonts is available here: <https://api.memegen.link/fonts/>
+The list of fonts is available here: <https://api.memegen.link/fonts/>
 
 Add the `font=<str>` query parameter to customize the look of your meme:
 
