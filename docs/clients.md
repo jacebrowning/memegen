@@ -89,4 +89,16 @@ For example, <https://api.memegen.link/images/puffin/custom_watermark/example.pn
 
 Incorporate memes into your workflow automation: <https://zapier.com/apps/memegenlink>
 
-![Sample Zaps](https://cdn.zappy.app/3f3e8213de870f268f27f2402aefc794.png)
+<script type="module" src="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js"></script>
+<link rel="stylesheet" href="https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css"/>
+<div>
+  <zapier-full-experience
+    client-id="7T8bocHkmLpUuhGOLGQj9pSIxInNKEYWjkU9nypk"
+    theme="light"
+    intro-copy-display="hide"
+    app-search-bar-display="show"
+    app-exclusions="space-by-zapier,google-sheets"
+    zap-call-to-action-display="hide"
+    zap-create-from-scratch-display="show">
+  </zapier-full-experience>
+</div>
