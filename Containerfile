@@ -14,17 +14,17 @@ WORKDIR /opt/memegen
 
 # Copy Directories
 COPY --chown=memegen templates /opt/memegen/templates
-COPY -chown=memegen scripts /opt/memegen/scripts
-COPY -chown=memegen fonts /opt/memegen/fonts
-COPY -chown=memegen docs /opt/memegen/docs
-COPY -chown=memegen bin /opt/memegen/bin
-COPY -chown=memegen app /opt/memegen/app
+COPY --chown=memegen scripts /opt/memegen/scripts
+COPY --chown=memegen fonts /opt/memegen/fonts
+COPY --chown=memegen docs /opt/memegen/docs
+COPY --chown=memegen bin /opt/memegen/bin
+COPY --chown=memegen app /opt/memegen/app
 
 # Copy Specific Files
-COPY -chown=memegen requirements.txt /opt/memegen
-COPY -chown=memegen pyproject.toml /opt/memegen/
-COPY -chown=memegen runtime.txt /opt/memegen/
-COPY -chown=memegen CHANGELOG.md /opt/memegen/CHANGELOG.md
+COPY --chown=memegen requirements.txt /opt/memegen
+COPY --chown=memegen pyproject.toml /opt/memegen/
+COPY --chown=memegen runtime.txt /opt/memegen/
+COPY --chown=memegen CHANGELOG.md /opt/memegen/CHANGELOG.md
 
 # Install Python Requirements
 RUN pip install wheel && \
