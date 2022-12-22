@@ -121,8 +121,15 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
     if style != "animated" and not await template.check(style):
         error = "Invalid Overlay"
 
+    if error:
+        watermark = error
+    elif style == "animated" and not template.animated_image:
+        watermark = "GIF"
+    else:
+        watermark = ""
+
     data, content_type = await asyncio.to_thread(
-        utils.images.preview, template, lines, style=style, watermark=error.upper()
+        utils.images.preview, template, lines, style=style, watermark=watermark
     )
     return response.raw(data, content_type=content_type)
 

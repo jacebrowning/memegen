@@ -261,7 +261,7 @@ class Template:
             logger.error(e)
             return cls.objects.get("_error")
 
-        if parsed.netloc and "memegen.link" in parsed.netloc:
+        if utils.urls.self(parsed):
             logger.info(f"Handling template URL: {url}")
             if len(parsed.path.segments) > 1:
                 id = Path(parsed.path.segments[1]).stem
