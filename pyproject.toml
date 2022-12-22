@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "~3.11"
 
 # Sanic
-sanic = "~22.9.1"  # remove -W in pytest: https://github.com/sanic-org/sanic/issues/2388
+sanic = "~22.9.1"  # remove -W in pytest with 22.12: https://github.com/sanic-org/sanic/issues/2388
 sanic-ext = "~22.9" # match to 'sanic'
 
 # Markdown
@@ -41,12 +41,12 @@ locust = { version = "^2.12", optional = true }
 [tool.poetry.dev-dependencies]
 
 # Formatting
-isort = "^5.10"
-black = "^22.1"
+isort = "^5.11"
+black = "^22.12"
 
 # Type Checking
-mypy = "~0.931"
-autoflake = "^1.3.1"
+mypy = "~0.991"
+autoflake = "^2.0"
 types-aiofiles = "*"
 types-pillow = "^9.2"
 types-requests = "*"
@@ -72,7 +72,7 @@ mkdocs = "^1.2.3"
 honcho = { git = "https://github.com/jacebrowning/honcho", branch = "support-importlib" }
 ipdb = "*"
 rope = "^0.18.0"
-watchdog = { version = "^2.1.9", extras = ["watchmedo"] }
+watchdog = { version = "^2.2", extras = ["watchmedo"] }
 
 [tool.poetry.extras]
 
