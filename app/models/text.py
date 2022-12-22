@@ -44,8 +44,8 @@ class Text:
         )
 
     @classmethod
-    def get_error(cls) -> "Text":
-        return cls(color="yellow", anchor_x=0.5)
+    def get_remark(cls) -> "Text":
+        return cls(color="#FFC107" + alpha(1.0), anchor_x=0.5)
 
     @classmethod
     def get_watermark(cls) -> "Text":
@@ -67,12 +67,13 @@ class Text:
         size = int(image_width * self.scale_x), int(image_height * self.scale_y)
         return size
 
-    def get_stroke(self, width: int) -> tuple[int, str]:
+    def get_stroke(self, width: int, *, thick=False) -> tuple[int, str]:
         if self.color == "black":
             width = 1
             color = "#FFFFFF" + alpha(0.5)
         elif "#" in self.color:
-            width = 1
+            assert len(self.color) == 9
+            width = 2 if thick else 1
             color = "#000000" + self.color[-2:]
         else:
             color = "black"

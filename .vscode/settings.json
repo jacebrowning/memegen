@@ -9,7 +9,8 @@
     "**/dist/": true,
     "**/node_modules/": true,
     "setup.py": true,
-    ".vscode/.ropeproject": true
+    ".vscode/.ropeproject": true,
+    "bin/verchew": true
   },
   "python.defaultInterpreterPath": ".venv/bin/python",
   "python.formatting.provider": "black",

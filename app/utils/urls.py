@@ -14,6 +14,10 @@ FLAGS = {
 }
 
 
+def self(url: furl) -> bool:
+    return url.netloc and ("memegen.link" in url.netloc or "localhost" in url.netloc)
+
+
 def schema(value) -> bool:
     return value and "://" in value
 

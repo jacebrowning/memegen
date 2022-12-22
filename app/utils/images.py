@@ -488,9 +488,9 @@ def add_watermark(
     font = get_font("tiny", text, size, 99)
     offset = get_text_offset(text, font, size)
 
-    watermark = Text.get_error() if is_preview else Text.get_watermark()
+    watermark = Text.get_remark() if is_preview else Text.get_watermark()
     stroke_width = get_stroke_width(font)
-    stroke_width, stroke_fill = watermark.get_stroke(stroke_width)
+    stroke_width, stroke_fill = watermark.get_stroke(stroke_width, thick=is_preview)
 
     if total == 1 or total >= settings.MAXIMUM_FRAMES:
         fuzz = 0
