@@ -45,7 +45,7 @@ class Text:
 
     @classmethod
     def get_remark(cls) -> "Text":
-        return cls(color="#FFC107" + alpha(1.0), anchor_x=0.5)
+        return cls(color="#FFC107", anchor_x=0.5)
 
     @classmethod
     def get_watermark(cls) -> "Text":
@@ -74,7 +74,7 @@ class Text:
         elif "#" in self.color:
             width = 2 if thick else 1
             color = "#000000"
-            if len(self.color) >= 7 + 2:
+            if len(self.color) >= len(color) + 2:
                 color += self.color[-2:]
         else:
             color = "black"
