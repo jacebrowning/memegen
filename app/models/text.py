@@ -72,9 +72,10 @@ class Text:
             width = 1
             color = "#FFFFFF" + alpha(0.5)
         elif "#" in self.color:
-            assert len(self.color) == 9
             width = 2 if thick else 1
-            color = "#000000" + self.color[-2:]
+            color = "#000000"
+            if len(self.color) >= 7 + 2:
+                color += self.color[-2:]
         else:
             color = "black"
         return width, color
