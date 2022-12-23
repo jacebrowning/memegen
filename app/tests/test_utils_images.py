@@ -27,6 +27,13 @@ def test_animated_text_on_static_background(images):
 
 
 @pytest.mark.slow
+def test_angled_animated_text_on_static_background(images):
+    template = models.Template.objects.get("slap")
+    lines = ["this is", "animated"]
+    utils.images.save(template, lines, extension="gif", directory=images)
+
+
+@pytest.mark.slow
 @pytest.mark.asyncio
 async def test_animated_text_on_animated_background(images):
     url = "https://media.giphy.com/media/WJjLyXCVvro2I/giphy.gif"

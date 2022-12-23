@@ -386,7 +386,11 @@ def render_animation(
                 stroke_fill=stroke_fill,
             )
 
-            box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
+            try:
+                box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
+            except ValueError as e:
+                logger.warn(e)
+                box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
             image.paste(box, point, box)
 
         if settings.DEBUG:
