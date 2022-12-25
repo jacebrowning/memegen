@@ -389,7 +389,7 @@ def render_animation(
             try:
                 box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
             except ValueError as e:
-                logger.warn(e)
+                logger.warning(e)
                 box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
             image.paste(box, point, box)
 
