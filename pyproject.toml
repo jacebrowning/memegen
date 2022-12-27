@@ -13,8 +13,8 @@ packages = [{ include = "app" }]
 python = "~3.11"
 
 # Sanic
-sanic = "~22.9.1"  # remove -W in pytest with 22.12: https://github.com/sanic-org/sanic/issues/2388
-sanic-ext = "~22.9" # match to 'sanic'
+sanic = "~22.12"
+sanic-ext = "~22.12" # match to 'sanic'
 
 # Markdown
 markdown = "~3.2.2"
@@ -105,8 +105,6 @@ addopts = """
 --random \
 --show-capture=log \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html:.cache/htmlcov --no-cov-on-fail
-
--W ignore::DeprecationWarning:sanic.server.loop
 """
 
 cache_dir = ".cache/pytest/"

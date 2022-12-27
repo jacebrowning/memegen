@@ -2551,14 +2551,14 @@ jinja2 = ["ruamel.yaml.jinja2 (>=0.2)"]
 
 [[package]]
 name = "sanic"
-version = "22.9.1"
+version = "22.12.0"
 description = "A web server and web framework that's written to go fast. Build fast. Run fast."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "sanic-22.9.1-py3-none-any.whl", hash = "sha256:d8905ee1c72759c7b37b1638c3b2b6656573d38156a82a85fd020532749029c1"},
-    {file = "sanic-22.9.1.tar.gz", hash = "sha256:9793919827f3753fd16433c8750625472f1a08e2147d6870bb7ff94ab12caaea"},
+    {file = "sanic-22.12.0-py3-none-any.whl", hash = "sha256:84edf46cc17d13264ccec0ae6622e43087498f95644dc336ade74a2d5e6c88cb"},
+    {file = "sanic-22.12.0.tar.gz", hash = "sha256:e5f81115f838956957046b6c52e7a08c1bd6e8ff530ee1376471eaf1579bfffa"},
 ]
 
 [package.dependencies]
@@ -2567,7 +2567,7 @@ httptools = ">=0.0.10"
 multidict = ">=5.0,<7.0"
 sanic-routing = ">=22.8.0"
 ujson = {version = ">=1.35", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
-uvloop = {version = ">=0.5.3", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
+uvloop = {version = ">=0.15.0", markers = "sys_platform != \"win32\" and implementation_name == \"cpython\""}
 websockets = ">=10.0"
 
 [package.extras]
@@ -2580,14 +2580,14 @@ test = ["bandit", "beautifulsoup4", "black", "chardet (>=3.0.0,<4.0.0)", "covera
 
 [[package]]
 name = "sanic-ext"
-version = "22.9.0"
+version = "22.12.0"
 description = "Extend your Sanic installation with some core functionality."
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sanic-ext-22.9.0.tar.gz", hash = "sha256:07fa77d122b8c024dcf40d180bafe4f32b0a473d429f0d9f7ee403490e690ea6"},
-    {file = "sanic_ext-22.9.0-py3-none-any.whl", hash = "sha256:915b40545101b928bb9b5258e443eb8f37ba403ff7a05565a7bec790a9b46654"},
+    {file = "sanic-ext-22.12.0.tar.gz", hash = "sha256:f7e2d37d6d2656370ca321a66098fa3510ca523b3ece67862d8ef26ab44e70cc"},
+    {file = "sanic_ext-22.12.0-py3-none-any.whl", hash = "sha256:a090d2ae083fc81747beb3320dcac5cc796515a1be560ea7bc4c27aca378d490"},
 ]
 
 [package.dependencies]
@@ -3299,4 +3299,4 @@ testing = ["locust"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "b8b4fdcc2aae515b418bf97d1ce35cc207ec40899069fd33186a45e8128f6cfc"
+content-hash = "45f3ff0618131f99af8e78c72518196df2b84d1432ac1ab05bf1ba041c704fb8"
