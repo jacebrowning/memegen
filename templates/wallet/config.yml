@@ -99,7 +99,7 @@ example:
   - Then take it!
   - It's not my wallet.
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
+  - center_x: 0.22
+    center_y: 0.12
     angle: 0.0
-    scale: 0.25
+    scale: 0.21
