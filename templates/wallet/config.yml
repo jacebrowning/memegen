@@ -1,0 +1,105 @@
+name: Patrick Star's Wallet
+source: https://knowyourmeme.com/memes/patrick-stars-wallet
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.17
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.08
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.18
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.07
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.4
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.43
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.07
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.65
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.67
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.08
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.92
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.08
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: khaki
+    font: thin
+    anchor_x: 0.5
+    anchor_y: 0.92
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.08
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - Aren't you Patrick Star?
+  - Yup.
+  - And this is your ID?
+  - Yup.
+  - I found the ID in this wallet so it must be yours.
+  - That makes sense to me.
+  - Then take it!
+  - It's not my wallet.
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
