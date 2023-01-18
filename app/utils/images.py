@@ -76,7 +76,6 @@ def save(
     else:
         logger.info(f"Saving meme to {path}")
         path.parent.mkdir(parents=True, exist_ok=True)
-    logger.info(f"Extension: {extension}")
     if extension == "gif":
         frames, duration = render_animation(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
