@@ -5,7 +5,7 @@ ARG ARG_MAX_REQUESTS_JITTER=0
 # Prep everything
 FROM docker.io/python:3.11-bullseye as build
 
-# Install webp dependency
+# Install webp dependencies
 RUN apt update && apt install -y webp cmake
 
 # Create the memegen user
