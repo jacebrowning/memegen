@@ -147,8 +147,8 @@ async def render_image(
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
 
-    animated = extension not in ["gif", "webp"]
-    logger.info(extension not in ["gif", "webp"])
+    animated = extension in ["gif", "webp"]
+    logger.info(extension in ["gif", "webp"])
     logger.info(f"animated: {animated}")
     logger.info(f"extension: {extension}")
     logger.info(f"allowed: {settings.ALLOWED_EXTENSIONS}")
