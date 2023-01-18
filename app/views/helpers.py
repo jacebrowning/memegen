@@ -148,10 +148,6 @@ async def render_image(
     frames = int(request.args.get("frames", 0))
 
     animated = extension in ["gif", "webp"]
-    logger.info(extension in ["gif", "webp"])
-    logger.info(f"animated: {animated}")
-    logger.info(f"extension: {extension}")
-    logger.info(f"allowed: {settings.ALLOWED_EXTENSIONS}")
     if extension not in settings.ALLOWED_EXTENSIONS:
         extension = settings.DEFAULT_EXTENSION
         status = 422
