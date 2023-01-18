@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import webp
 from pathlib import Path
 from typing import Iterator, cast
 
@@ -99,6 +100,18 @@ def save(
             duration=duration,
             loop=0,
         )
+    elif extension == "webp":
+        frames, duration = render_animation(
+            template, style, lines, size, font_name, maximum_frames, watermark=watermark
+        )
+        webp_frames = []
+        for frame in frames:
+            # Save the frame as webp
+            f = io.BytesIO()
+            frame.save(f, "webp")
+            webp_frames.append(Image.open(f))
+        fps = (duration // len(frames)) // 1.5
+        webp.save_images(webp_frames, path, fps=fps, lossless=True)
     else:
         image = render_image(
             template, style, lines, size, font_name, watermark=watermark

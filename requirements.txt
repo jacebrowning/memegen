@@ -41,5 +41,6 @@ ujson==5.4.0 ; sys_platform != "win32" and implementation_name == "cpython" and 
 uvicorn==0.19.0 ; python_version >= "3.11" and python_version < "3.12"
 uvloop==0.17.0 ; sys_platform != "win32" and implementation_name == "cpython" and python_version >= "3.11" and python_version < "3.12"
 webob==1.8.7 ; python_version >= "3.11" and python_version < "3.12"
+webp==0.1.4 ; python_version >= "3.11" and python_version < "3.12"
 websockets==10.3 ; python_version >= "3.11" and python_version < "3.12"
 yarl==1.8.1 ; python_version >= "3.11" and python_version < "3.12"
