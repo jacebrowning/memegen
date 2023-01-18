@@ -148,9 +148,11 @@ def describe_detail():
             ("/images/fry.gif", "image/gif"),
             ("/images/fry.jpg", "image/jpeg"),
             ("/images/fry.png", "image/png"),
+            ("/images/fry.webp", "image/webp"),
             ("/images/fry/test.gif", "image/gif"),
             ("/images/fry/test.jpg", "image/jpeg"),
             ("/images/fry/test.png", "image/png"),
+            ("/images/fry/test.webp", "image/webp"),
         ],
     )
     def it_returns_an_image(expect, client, path, content_type):
