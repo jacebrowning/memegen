@@ -29,7 +29,7 @@ Clients can request `.jpg` instead of `.png` for smaller files. The `.gif` and `
 | GIF (animated background)  | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/oprah/you_get/animated_text.gif)         |
 | GIF (static background)    | [/images/iw/animates_text/in_production.gif](https://api.memegen.link/iw/animates_text/in_production.gif)   |
 | WebP (animated background) | [/images/oprah/you_get/animated_text.webp](https://api.memegen.link/oprah/you_get/animated_text.webp)       |
-| WebP (static background)   | [/images/iw/animates_text/in_production.webp](https://api.memegen.link/iw/animates_text/in_production.wepb) |
+| WebP (static background)   | [/images/iw/animates_text/in_production.webp](https://api.memegen.link/iw/animates_text/in_production.webp) |
 
 ## Custom Dimensions
 
