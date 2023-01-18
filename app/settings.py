@@ -122,6 +122,11 @@ TEST_IMAGES = [
         ["you get animated text", "and you get animated text"],
         "gif",
     ),
+    (
+        "oprah",
+        ["you get animated text", "and you get animated text"],
+        "webp",
+    ),
 ]
 
 # Analytics

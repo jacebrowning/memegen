@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.13b1
+
+- Added preliminary support for `.webp` animated images.
+
 ## 10.12
 
 - Added support for `color=<str>,<str>` query parameter to control the color of text.

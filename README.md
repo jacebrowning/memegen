@@ -20,14 +20,16 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 ## Available Formats
 
-Clients can request `.jpg` instead of `.png` for smaller files. The `.gif` extension can be used if an animated background is available or to animate text on static backgrounds:
+Clients can request `.jpg` instead of `.png` for smaller files. The `.gif` and `.webp` extensions can be used if an animated background is available or to animate text on static backgrounds:
 
-| Format                    | Example                                                                                                   |
-| :------------------------ | :-------------------------------------------------------------------------------------------------------- |
-| PNG                       | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png)  |
-| JPEG                      | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg)  |
-| GIF (animated background) | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/oprah/you_get/animated_text.gif)       |
-| GIF (static background)   | [/images/iw/animates_text/in_production.gif](https://api.memegen.link/iw/animates_text/in_production.gif) |
+| Format                     | Example                                                                                                     |
+| :------------------------- | :---------------------------------------------------------------------------------------------------------- |
+| PNG                        | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png)    |
+| JPEG                       | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg)    |
+| GIF (animated background)  | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/oprah/you_get/animated_text.gif)         |
+| GIF (static background)    | [/images/iw/animates_text/in_production.gif](https://api.memegen.link/iw/animates_text/in_production.gif)   |
+| WebP (animated background) | [/images/oprah/you_get/animated_text.webp](https://api.memegen.link/oprah/you_get/animated_text.webp)       |
+| WebP (static background)   | [/images/iw/animates_text/in_production.webp](https://api.memegen.link/iw/animates_text/in_production.wepb) |
 
 ## Custom Dimensions
 
