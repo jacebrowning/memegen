@@ -105,7 +105,7 @@ def save(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
         fps = (duration // len(frames)) // 1.5  # TODO: Match GIF framerate
-        webp.save_images(frames, path, fps=fps, lossless=True)
+        webp.save_images(frames, path, fps=fps, lossless=False)
     else:
         image = render_image(
             template, style, lines, size, font_name, watermark=watermark
