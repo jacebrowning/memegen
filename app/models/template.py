@@ -434,7 +434,6 @@ class Template:
                 except ValueError:
                     logger.error(f"Invalid color: {color=}")
                 else:
-                    logger.critical(colors)
                     with suppress(IndexError):
                         for index, value in enumerate(colors):
                             self.text[index].color = value

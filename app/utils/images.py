@@ -88,9 +88,9 @@ def save(
                 extension = "png"
 
         if extension == "png":
-            logger.info(f"Saving {count} frame(s) as APNG at {duration} duration")
+            logger.info(f"Saving {count} frame(s) as APNG at {duration} ms/frame")
         else:
-            logger.info(f"Saving {count} frame(s) as GIF at {duration} duration")
+            logger.info(f"Saving {count} frame(s) as GIF at {duration} ms/frame")
 
         frames[0].save(
             path,
@@ -105,8 +105,8 @@ def save(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
         count = len(frames)
-        fps = (duration // count) // 1.5  # TODO: Match GIF framerate
-        logger.info(f"Saving {count} frame(s) as WebP at {duration} duration")
+        fps = 1 / duration * 1000
+        logger.info(f"Saving {count} frame(s) as WebP at {fps} frame/s")
         webp.save_images(frames, path, fps=fps, lossless=False)
     else:
         image = render_image(
@@ -421,10 +421,13 @@ def render_animation(
 
         frames.append(image)
 
+    # TODO: Only adjust duration if greater than 250?
     if len(frames) > settings.MINIMUM_FRAMES:
-        logger.info(f"Adjusting duration of {duration} from {total} base frame(s)")
         ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
+        old_duration = duration
         duration = min(250, duration // ratio)
+        if duration != old_duration:
+            logger.debug(f"Adjusted duration of {old_duration} to {duration}")
 
     return frames, duration
 
