@@ -2829,18 +2829,6 @@ files = [
 types-urllib3 = "<1.27"
 
 [[package]]
-name = "types-setuptools"
-version = "65.5.0.2"
-description = "Typing stubs for setuptools"
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "types-setuptools-65.5.0.2.tar.gz", hash = "sha256:9847de6d7087fb1dd4a88c2a21543d1b86a6179c36744f081974303fe2f30f50"},
-    {file = "types_setuptools-65.5.0.2-py3-none-any.whl", hash = "sha256:2d33e4ef0d35cd2da48a143eb02184f58398381ddb1f772eff20ccc4126fec13"},
-]
-
-[[package]]
 name = "types-urllib3"
 version = "1.26.22"
 description = "Typing stubs for urllib3"
@@ -3363,4 +3351,4 @@ testing = ["locust"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "69cc914ef750153d4c2e09f9582cce55d876ec71bf3a030a8846546dbec27cf1"
+content-hash = "b6006c73ed4892c41ad27728cf86b97a6e08aa7f8b69fc21cff0af3f65955516"

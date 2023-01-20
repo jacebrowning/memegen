@@ -145,9 +145,8 @@ def describe_template():
         async def it_accepts_multiple_urls(expect):
             style = ",".join(
                 [
-                    "https://user-images.githubusercontent.com/674621/71187801-14e60a80-2280-11ea-94c9-e56576f76baf.png",
-                    "https://i.stack.imgur.com/PvgbL.png",
-                    "https://www.nicepng.com/png/detail/13-139107_notepad-icon-icon-anotacoes-png.png",
+                    "https://i.stack.imgur.com/PvgbL.jpeg",
+                    "https://i.imgur.com/AD3MbBi.jpeg",
                 ]
             )
             template = Template.objects.get("perfection")
@@ -155,6 +154,6 @@ def describe_template():
 
         @pytest.mark.asyncio
         async def it_accepts_default_style_as_placeholder(expect):
-            style = "default,https://i.stack.imgur.com/PvgbL.png"
+            style = "default,https://i.stack.imgur.com/PvgbL.jpeg"
             template = Template.objects.get("perfection")
             expect(await template.check(style)) == True
