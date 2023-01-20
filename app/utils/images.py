@@ -421,13 +421,12 @@ def render_animation(
 
         frames.append(image)
 
-    # TODO: Only adjust duration if greater than 250?
     if len(frames) > settings.MINIMUM_FRAMES:
         ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
         old_duration = duration
         duration = min(250, duration // ratio)
         if duration != old_duration:
-            logger.debug(f"Adjusted duration of {old_duration} to {duration}")
+            logger.info(f"Adjusted duration of {old_duration} to {duration}")
 
     return frames, duration
 
