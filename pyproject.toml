@@ -51,7 +51,6 @@ autoflake = "^2.0"
 types-aiofiles = "*"
 types-pillow = "^9.2"
 types-requests = "*"
-types-setuptools = "*"
 
 # Testing
 pytest = "^7.1.3"
