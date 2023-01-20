@@ -158,7 +158,10 @@ async def index_custom(request: Request):
 async def detail_blank(request, template_filename):
     template_id, extension = template_filename.rsplit(".", 1)
 
-    if request.args.get("style") == "animated" and extension != "gif":
+    if (
+        request.args.get("style") == "animated"
+        and extension not in settings.ANIMATED_EXTENSIONS
+    ):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
@@ -192,7 +195,10 @@ async def detail_blank(request, template_filename):
 async def detail_text(request, template_id, text_filepath):
     text_paths, extension = text_filepath.rsplit(".", 1)
 
-    if request.args.get("style") == "animated" and extension != "gif":
+    if (
+        request.args.get("style") == "animated"
+        and extension not in settings.ANIMATED_EXTENSIONS
+    ):
         # TODO: Move this pattern to utils
         params = {k: v for k, v in request.args.items() if k != "style"}
         url = request.app.url_for(
