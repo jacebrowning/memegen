@@ -57,11 +57,21 @@ def get_example_images(
 
 
 def get_test_images(request: Request) -> list[str]:
+    animated = utils.urls.flag(request, "animated")
+    if animated:
+        images = [
+            image
+            for image in settings.TEST_IMAGES
+            if image[2] in settings.ANIMATED_EXTENSIONS
+        ]
+    else:
+        images = settings.TEST_IMAGES
+
     return [
         request.app.url_for(
             "Images.detail_text",
             template_id=id,
             text_filepath=utils.text.encode(lines) + "." + extension,
         )
-        for id, lines, extension in settings.TEST_IMAGES
+        for id, lines, extension in images
     ]

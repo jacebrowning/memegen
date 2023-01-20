@@ -13,7 +13,8 @@ from ..models import Template
 def pytest_configure(config):
     terminal = config.pluginmanager.getplugin("terminal")
     terminal.TerminalReporter.showfspath = False
-    settings.ALLOWED_EXTENSIONS.append("apng")
+    settings.ALLOWED_EXTENSIONS.add("apng")
+    settings.ANIMATED_EXTENSIONS.add("apng")
     settings.DEBUG = False
 
 

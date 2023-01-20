@@ -104,7 +104,9 @@ def save(
         frames, duration = render_animation(
             template, style, lines, size, font_name, maximum_frames, watermark=watermark
         )
-        fps = (duration // len(frames)) // 1.5  # TODO: Match GIF framerate
+        count = len(frames)
+        fps = (duration // count) // 1.5  # TODO: Match GIF framerate
+        logger.info(f"Saving {count} frame(s) as WebP at {duration} duration")
         webp.save_images(frames, path, fps=fps, lossless=False)
     else:
         image = render_image(
@@ -707,7 +709,6 @@ def get_text_offset(
 
     if any(letter in lines[-1] for letter in "gjpqy"):
         descender_offset = text_size[1] // 20
-        logger.debug(f"Offsetting {lines[-1]!r} by {descender_offset} pixels")
         y_offset += descender_offset
 
     return x_offset, y_offset
