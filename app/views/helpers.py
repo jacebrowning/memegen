@@ -149,6 +149,7 @@ async def render_image(
 
     animated = extension in settings.ANIMATED_EXTENSIONS
     if extension not in settings.ALLOWED_EXTENSIONS:
+        logger.error(f"Invalid extension: {extension}")
         extension = settings.DEFAULT_EXTENSION
         status = 422
 
@@ -184,6 +185,7 @@ async def render_image(
                 if utils.urls.schema(style):
                     status = 415
                 elif style != settings.PLACEHOLDER:
+                    logger.error(f"Invalid style: {style}")
                     status = 422
 
         else:
@@ -205,6 +207,7 @@ async def render_image(
             if utils.urls.schema(style):
                 status = 415
             elif style != settings.PLACEHOLDER:
+                logger.error(f"Invalid style: {style}")
                 status = 422
 
     layout = utils.urls.arg(request.args, "default", "layout")
@@ -222,6 +225,7 @@ async def render_image(
         try:
             models.Font.objects.get(font_name)
         except ValueError:
+            logger.error(f"Invalid font: {font_name}")
             font_name = ""
             status = 422
 

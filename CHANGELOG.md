@@ -1,8 +1,8 @@
 # Revision History
 
-## 10.13b1
+## 10.13
 
-- Added preliminary support for `.webp` animated images.
+- Added support for `.webp` animated images.
 
 ## 10.12
 
