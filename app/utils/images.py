@@ -79,7 +79,13 @@ def save(
 
     if extension == "gif":
         frames, duration = render_animation(
-            template, style, lines, size, font_name, maximum_frames, watermark=watermark
+            template,
+            style,
+            lines,
+            size,
+            font_name,
+            maximum_frames,
+            watermark=watermark,
         )
 
         count = len(frames)
@@ -88,9 +94,9 @@ def save(
                 extension = "png"
 
         if extension == "png":
-            logger.info(f"Saving {count} frame(s) as APNG at {duration} ms/frame")
+            logger.info(f"Saving {count} frames as APNG at {duration} ms/frame")
         else:
-            logger.info(f"Saving {count} frame(s) as GIF at {duration} ms/frame")
+            logger.info(f"Saving {count} frames as GIF at {duration} ms/frame")
 
         frames[0].save(
             path,
@@ -102,11 +108,17 @@ def save(
         )
     elif extension == "webp":
         frames, duration = render_animation(
-            template, style, lines, size, font_name, maximum_frames, watermark=watermark
+            template,
+            style,
+            lines,
+            size,
+            font_name,
+            maximum_frames or settings.MAXIMUM_FRAMES * 4,
+            watermark=watermark,
         )
         count = len(frames)
-        fps = 1 / duration * 1000
-        logger.info(f"Saving {count} frame(s) as WebP at {fps} frame/s")
+        fps = round(1 / duration * 1000, 2)
+        logger.info(f"Saving {count} frames as WebP at {fps} frame/s")
         webp.save_images(frames, path, fps=fps, lossless=False)
     else:
         image = render_image(
