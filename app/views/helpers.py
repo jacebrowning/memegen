@@ -139,7 +139,7 @@ async def render_image(
     id: str,
     slug: str = "",
     watermark: str = "",
-    extension: str = settings.DEFAULT_EXTENSION,
+    extension: str = settings.DEFAULT_STATIC_EXTENSION,
 ):
     logger.info(f"Rendering image: {request.url}")
 
@@ -150,7 +150,7 @@ async def render_image(
     animated = extension in settings.ANIMATED_EXTENSIONS
     if extension not in settings.ALLOWED_EXTENSIONS:
         logger.error(f"Invalid extension: {extension}")
-        extension = settings.DEFAULT_EXTENSION
+        extension = settings.DEFAULT_STATIC_EXTENSION
         status = 422
 
     template: models.Template

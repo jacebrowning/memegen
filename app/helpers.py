@@ -43,11 +43,11 @@ def get_example_images(
             continue
 
         if animated is True:
-            extension = "gif"
+            extension = settings.DEFAULT_ANIMATED_EXTENSION
         elif "animated" in template.styles and animated is not False:
-            extension = "gif"
+            extension = settings.DEFAULT_ANIMATED_EXTENSION
         else:
-            extension = settings.DEFAULT_EXTENSION
+            extension = settings.DEFAULT_STATIC_EXTENSION
 
         example = template.build_example_url(request, extension=extension)
         self = template.build_self_url(request)
