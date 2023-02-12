@@ -130,7 +130,11 @@ async def custom_path(request, template_id, text_paths):
     template = models.Template.objects.get_or_create(template_id)
     template.datafile.save()
     animated = utils.urls.flag(request, "animated")
-    extension = "gif" if animated else "png"
+    extension = (
+        settings.DEFAULT_ANIMATED_EXTENSION
+        if animated
+        else settings.DEFAULT_STATIC_EXTENSION
+    )
     content = utils.html.gallery(
         [f"/images/{template_id}/{text_paths}.{extension}"],
         columns=False,

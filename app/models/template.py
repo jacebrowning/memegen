@@ -213,7 +213,7 @@ class Template:
         if style == "default":
             style = ""
         elif style == "animated":
-            extension = "gif"
+            extension = settings.DEFAULT_ANIMATED_EXTENSION
             style = ""
         if layout == "default":
             layout = ""
@@ -231,7 +231,11 @@ class Template:
 
     @property
     def _extension(self) -> str:
-        return "gif" if self.animated_image else settings.DEFAULT_EXTENSION
+        return (
+            settings.DEFAULT_ANIMATED_EXTENSION
+            if self.animated_image
+            else settings.DEFAULT_STATIC_EXTENSION
+        )
 
     def build_path(
         self,

@@ -57,7 +57,7 @@ def save(
     watermark: str = "",
     *,
     font_name: str = "",
-    extension: str = settings.DEFAULT_EXTENSION,
+    extension: str = settings.DEFAULT_STATIC_EXTENSION,
     style: str = "default",
     size: Dimensions = (0, 0),
     maximum_frames: int = 0,
