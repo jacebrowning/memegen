@@ -1,0 +1,33 @@
+name: Say the Line, Bart! / The Simpsons
+source: https://knowyourmeme.com/memes/say-the-line-bart
+text:
+  - style: default
+    color: white
+    font: comic
+    anchor_x: 0.0
+    anchor_y: 0.33
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.17
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: comic
+    anchor_x: 0.0
+    anchor_y: 0.85
+    angle: 0.0
+    scale_x: 1.0
+    scale_y: 0.15
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - Say the line, Senior Engineer!
+  - It depends.
+overlay:
+  - center_x: 0.67
+    center_y: 0.74
+    angle: 0.0
+    scale: 0.23
