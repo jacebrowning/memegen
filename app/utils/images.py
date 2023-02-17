@@ -147,7 +147,7 @@ def embed(template: Template, index: int, foreground_path: Path, background_path
     foreground = load(foreground_path)
 
     size = overlay.get_size(background.size)
-    foreground = foreground.resize(size, Image.Resampling.LANCZOS)
+    foreground = resize_image(foreground, *size, expand=True)
     foreground = foreground.rotate(overlay.angle, expand=True)
 
     x1, y1, _x2, _y2 = overlay.get_box(background.size, foreground.size)
@@ -444,7 +444,7 @@ def render_animation(
 
 
 def resize_image(
-    image: ImageType, width: int, height: int, pad: bool, *, expand: bool
+    image: ImageType, width: int, height: int, pad: bool = True, *, expand: bool
 ) -> ImageType:
     ratio = image.width / image.height
     default_width, default_height = settings.DEFAULT_SIZE
