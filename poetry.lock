@@ -2797,6 +2797,18 @@ files = [
 ]
 
 [[package]]
+name = "types-docutils"
+version = "0.19.1.6"
+description = "Typing stubs for docutils"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-docutils-0.19.1.6.tar.gz", hash = "sha256:a334a703a8688910d0869464f1f6f8bd330d75843bdab4f893547bfb29417a01"},
+    {file = "types_docutils-0.19.1.6-py3-none-any.whl", hash = "sha256:b7e182f371cbe20828a8750ffb150219968452445946f66f33778b08e81c7d89"},
+]
+
+[[package]]
 name = "types-pillow"
 version = "9.2.1"
 description = "Typing stubs for Pillow"
@@ -2822,6 +2834,21 @@ files = [
 
 [package.dependencies]
 types-urllib3 = "<1.27"
+
+[[package]]
+name = "types-setuptools"
+version = "67.4.0.1"
+description = "Typing stubs for setuptools"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-setuptools-67.4.0.1.tar.gz", hash = "sha256:c3ad0d029f7cf66a568b100dc89c0202637839a4ed08a08cb56559f5a43ce2d9"},
+    {file = "types_setuptools-67.4.0.1-py3-none-any.whl", hash = "sha256:d5da93fba1f91c039cc896e529c605b63c310086fe3311b74875af8c84935f8f"},
+]
+
+[package.dependencies]
+types-docutils = "*"
 
 [[package]]
 name = "types-urllib3"
@@ -3063,23 +3090,23 @@ testing = ["coverage", "pytest (>=3.1.0)", "pytest-cov", "pytest-xdist"]
 
 [[package]]
 name = "webp"
-version = "0.1.4"
+version = "0.1.5"
 description = "Python bindings for WebP"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7,<4.0"
 files = [
-    {file = "webp-0.1.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c9445d190e32b830b71322007b9e89ef7e56595b6a4a450347f71ae37b50f2c2"},
-    {file = "webp-0.1.4-cp310-cp310-win_amd64.whl", hash = "sha256:a17f60508811dab3a4b2bb462fc1d9697a084cacd3d50699b854aec6221a208a"},
-    {file = "webp-0.1.4-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cc69f9cbd1f9fc9993753fe296e2b936115109ea8e38191776bac50e490a1139"},
-    {file = "webp-0.1.4-cp36-cp36m-win_amd64.whl", hash = "sha256:54c7bd36291ebc9584ccef97e0b62cedfbf080fcdd09a78aa1b5bbe40e407d78"},
-    {file = "webp-0.1.4-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5515f01fbde0f2ed5cc4e136d5f23bc6f7d17f18ee9f3d46d9719cf49ed3d822"},
-    {file = "webp-0.1.4-cp37-cp37m-win_amd64.whl", hash = "sha256:61927b4d5f5b936c3026f61247f227b6c3f68b73db21d86b525fe81d72461d98"},
-    {file = "webp-0.1.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:55f34ea37d012ff761843fc8f93909781d39660b8f17c09c8903d7cd1b9edf1f"},
-    {file = "webp-0.1.4-cp38-cp38-win_amd64.whl", hash = "sha256:9fcb42728510c75c796754a5ce46916664eb37124b7100f91cf8b6c23f073228"},
-    {file = "webp-0.1.4-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a9b745f4730103d4f08a02c2b0317a2276e511a4aefc616cda209321d4337d3f"},
-    {file = "webp-0.1.4-cp39-cp39-win_amd64.whl", hash = "sha256:fe9cbf52c1a80eefbdf5fab8ba5d442eaee409a06c2b32e2cfb0b08a792fe740"},
-    {file = "webp-0.1.4.tar.gz", hash = "sha256:159a81fdd2c245beaeec2fe5969382e8b0a1535ad450f45762a1f3814f8df35c"},
+    {file = "webp-0.1.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:25c78544a092a8fe74f9bb41d167d4338d2a9abf198e0f83752f847b76aa1b4c"},
+    {file = "webp-0.1.5-cp310-cp310-win_amd64.whl", hash = "sha256:043731e7c22718fe27fc5049bf54734b94f7828579df81c2bf7f83395fe88fe0"},
+    {file = "webp-0.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2d9a542ed895df52d7f084f6df2468ae1c04f49bab2d72d8282f5938008d87bf"},
+    {file = "webp-0.1.5-cp311-cp311-win_amd64.whl", hash = "sha256:fd05b135de0cc66ae19b3a6ca2d5e5806a4981aba2a4b3527290e3992ef4d621"},
+    {file = "webp-0.1.5-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:356cc43d32b24751c911c83f4f6070319c31773a26f1eea904916ad32659f148"},
+    {file = "webp-0.1.5-cp37-cp37m-win_amd64.whl", hash = "sha256:26b1e595b3af6440192f0dc55ae518b5d95ed10062a757ca4f77a5b9a01008cb"},
+    {file = "webp-0.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d428d45e4ebfc0aa675422fdd8d326808dfbc500228d8b55228f809575338514"},
+    {file = "webp-0.1.5-cp38-cp38-win_amd64.whl", hash = "sha256:b95e3b22acb6249bb715739464efda5f6bbdd4fcc7fc298c580b0c73853f6972"},
+    {file = "webp-0.1.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1b9556a876cc63b8ac116c2c710354bb7a8b304a5275481201a0af54fa163cb0"},
+    {file = "webp-0.1.5-cp39-cp39-win_amd64.whl", hash = "sha256:cf1c9df4dbe81039e73b7f48ef3a9653c4928f8e58fe5ffef12d43299b5a63c8"},
+    {file = "webp-0.1.5.tar.gz", hash = "sha256:8c8b0cbaa807f8daa7ca43dfdf7ba298f4ba23278021c5272d4b9714fea3205a"},
 ]
 
 [package.dependencies]
@@ -3150,7 +3177,7 @@ name = "werkzeug"
 version = "2.2.3"
 description = "The comprehensive WSGI web application library."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "Werkzeug-2.2.3-py3-none-any.whl", hash = "sha256:56433961bc1f12533306c624f3be5e744389ac61d722175d543e1751285da612"},
@@ -3346,4 +3373,4 @@ testing = ["locust"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "e718056d2868b652b9ca34f7c6eb8030ad996cce35f22766fcf381acf243e4bc"
+content-hash = "940ee7454c3f2cd2c3326f8b1300e4b2c8d3c62b8f7f46ab1664274aa4b646e0"
