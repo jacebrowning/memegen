@@ -34,8 +34,8 @@ ifndef CI
 poetry.lock: pyproject.toml
 	poetry lock --no-update
 	@ touch $@
-runtime.txt: .python-version
-	echo "python-$(shell cat $<)" > $@
+runtime.txt: .tool-versions
+	echo $(shell cat $< | tr ' ' '-') > $@
 requirements.txt: poetry.lock
 	poetry export --format requirements.txt --output $@ --without-hashes
 endif
