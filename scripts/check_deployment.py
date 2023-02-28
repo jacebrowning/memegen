@@ -41,6 +41,12 @@ def test_get_image_custom(expect, url):
     expect(response.headers["Content-Type"]) == "image/png"
 
 
+def test_get_image_webp(expect, url):
+    response = requests.get(f"{url}/images/fry/not_sure/if_animated.webp")
+    expect(response.status_code) == 200
+    expect(response.headers["Content-Type"]) == "image/webp"
+
+
 def test_swagger(expect, url):
     response = requests.get(
         f"https://validator.swagger.io/validator/debug?url="

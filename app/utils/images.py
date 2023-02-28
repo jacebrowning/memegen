@@ -4,7 +4,6 @@ import io
 from pathlib import Path
 from typing import Iterator, cast
 
-import webp
 from PIL import (
     Image,
     ImageDraw,
@@ -19,6 +18,15 @@ from sanic.log import logger
 from .. import settings
 from ..models import Font, Template, Text
 from ..types import Align, Dimensions, FontType, ImageType, Offset, Point
+
+try:
+    import webp
+except ModuleNotFoundError:
+    # TODO: Fix 'webp' import on certain systems
+    # https://github.com/jacebrowning/memegen/issues/787
+    settings.ALLOWED_EXTENSIONS.remove("webp")
+    settings.ANIMATED_EXTENSIONS.remove("webp")
+    settings.DEFAULT_ANIMATED_EXTENSION = "gif"
 
 EXCEPTIONS = (
     OSError,
