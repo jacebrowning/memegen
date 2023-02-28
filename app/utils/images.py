@@ -21,11 +21,10 @@ from ..types import Align, Dimensions, FontType, ImageType, Offset, Point
 
 try:
     import webp
-except ModuleNotFoundError:
+except ModuleNotFoundError as e:
     # TODO: Fix 'webp' import on certain systems
     # https://github.com/jacebrowning/memegen/issues/787
-    settings.ALLOWED_EXTENSIONS.remove("webp")
-    settings.ANIMATED_EXTENSIONS.remove("webp")
+    logger.error(f"WebP support unavailable: {e}")
     settings.DEFAULT_ANIMATED_EXTENSION = "gif"
 
 EXCEPTIONS = (

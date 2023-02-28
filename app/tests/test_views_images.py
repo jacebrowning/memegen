@@ -84,6 +84,19 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.gif"
             }
 
+        def it_prefers_extension_over_animated_style(expect, client):
+            data = {
+                "template_id": "iw",
+                "text_lines[]": ["foo", "bar"],
+                "style": "animated",
+                "extension": "webp",
+            }
+            request, response = client.post("/images", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/foo/bar.webp"
+            }
+
         def it_redirects_if_requested(expect, client):
             data = {"template_id": "iw", "text_lines": ["abc"], "redirect": True}
             request, response = client.post("/images", data=data, allow_redirects=False)
