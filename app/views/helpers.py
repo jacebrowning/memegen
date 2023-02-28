@@ -252,5 +252,4 @@ async def render_image(
         size=size,
         maximum_frames=frames,
     )
-    mime_type = "image/webp" if path.suffix == ".webp" else None
-    return await response.file(path, status, mime_type=mime_type)
+    return await response.file(path, status)
