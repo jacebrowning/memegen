@@ -213,8 +213,9 @@ class Template:
         if style == "default":
             style = ""
         elif style == "animated":
-            extension = settings.DEFAULT_ANIMATED_EXTENSION
             style = ""
+            if extension not in settings.ANIMATED_EXTENSIONS:
+                extension = settings.DEFAULT_ANIMATED_EXTENSION
         if layout == "default":
             layout = ""
         url = request.app.url_for(
