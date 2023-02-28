@@ -24,7 +24,7 @@ text:
     start: 0.55
     stop: 1.0
 example:
-  - why dont we take all the memes
+  - why don't we take all the memes
   - and put them on memegen
 overlay:
   - center_x: 0.1
