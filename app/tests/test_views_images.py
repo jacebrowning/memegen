@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from .. import settings
+from .. import settings, utils
 
 
 def describe_list():
@@ -167,6 +167,10 @@ def describe_detail():
             ("/images/fry/test.png", "image/png"),
             ("/images/fry/test.webp", "image/webp"),
         ],
+    )
+    @pytest.mark.skipif(
+        utils.images.webp is None,
+        reason="https://github.com/jacebrowning/memegen/issues/787",
     )
     def it_returns_an_image(expect, client, path, content_type):
         request, response = client.get(path, timeout=10)
@@ -415,6 +419,7 @@ def describe_automatic():
                     {
                         "image_url": "http://example.com/images/example.png"
                         + "?background=https://www.gstatic.com/webp/gallery/3.png",
+                        "generator": "Test",
                         "confidence": 0.5,
                     }
                 ]
@@ -428,6 +433,7 @@ def describe_automatic():
             expect(response.json) == {
                 "url": "http://localhost:5000/images/example.png"
                 + "?background=https://www.gstatic.com/webp/gallery/3.png",
+                "generator": "Test",
                 "confidence": 0.5,
             }
 
