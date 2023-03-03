@@ -40,8 +40,12 @@ async def download(url: str, path: AsyncPath) -> bool:
             async with session.get(url, timeout=10) as response:
 
                 if response.history:
-                    logger.error(f"3xx response from {url}")
-                    return False
+                    # TODO: Figure out which sites use 3xx as errors
+                    if "imgur" in url:
+                        logger.error(f"3xx response from {url}")
+                        return False
+                    logger.warning(f"3xx redirect from {url}")
+                    url = str(response.url)
 
                 if response.status == 200:
                     logger.info(f"200 response from {url}")
