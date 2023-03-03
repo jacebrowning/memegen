@@ -86,14 +86,18 @@ async def create_automatic(request: Request):
         return response.json({"message": f"No results matched: {query}"}, status=404)
 
     url = utils.urls.normalize(results[0]["image_url"])
+    generator = results[0]["generator"]
     confidence = results[0]["confidence"]
-    logger.info(f"Top result: {url} ({confidence=})")
+    logger.info(f"Top result: {url} ({generator=} {confidence=})")
     url, _updated = await utils.meta.tokenize(request, url)
 
     if payload.get("redirect", False):
         return response.redirect(utils.urls.add(url, status="201"))
 
-    return response.json({"url": url, "confidence": confidence}, status=201)
+    return response.json(
+        {"url": url, "generator": generator, "confidence": confidence},
+        status=201,
+    )
 
 
 @blueprint.post("/custom")

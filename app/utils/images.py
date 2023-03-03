@@ -25,6 +25,7 @@ except ModuleNotFoundError as e:
     # TODO: Fix 'webp' import on certain systems
     # https://github.com/jacebrowning/memegen/issues/787
     logger.error(f"WebP support unavailable: {e}")
+    webp = None
     settings.DEFAULT_ANIMATED_EXTENSION = "gif"
 
 EXCEPTIONS = (
