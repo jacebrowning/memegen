@@ -1,16 +1,18 @@
 export PYTHONBREAKPOINT=ipdb.set_trace
 
 .PHONY: all
-all: install
+all: format check test ## Run all validation targets
 
-.PHONY: ci
-ci: format check test
+.PHONY: dev
+dev: install ## Rerun all validation targests in a loop
+	@ sleep 2 && touch */__init__.py &
+	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
 
 ###############################################################################
 # System Dependencies
 
 .PHONY: doctor
-doctor:
+doctor: ## Check for required system dependencies
 	bin/verchew --exit-code
 
 ###############################################################################
@@ -19,7 +21,7 @@ doctor:
 BACKEND_DEPENDENCIES := .venv/.flag
 
 .PHONY: install
-install: $(BACKEND_DEPENDENCIES)
+install: $(BACKEND_DEPENDENCIES) ## Install project dependencies
 
 $(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
 	@ poetry config virtualenvs.in-project true
@@ -64,10 +66,6 @@ clean-all: clean
 
 PACKAGES := app scripts
 
-.PHONY: run
-run: install
-	poetry run honcho start --procfile Procfile.dev
-
 .PHONY: format
 format: install
 	poetry run autoflake --recursive $(PACKAGES) --in-place --remove-all-unused-imports --ignore-init-module-imports
@@ -75,11 +73,11 @@ format: install
 	poetry run black $(PACKAGES)
 
 .PHONY: check
-check: install
+check: install ## Run static analysis
 	poetry run mypy $(PACKAGES)
 
 .PHONY: test
-test: install
+test: install ## Run all tests
 ifdef CI
 	poetry run pytest --verbose --junit-xml=results/junit.xml
 else
@@ -107,10 +105,9 @@ test-fast: install
 test-slow: install
 	poetry run pytest -m slow --durations=0 --durations-min=0.05
 
-.PHONY: dev
-dev: install
-	@ sleep 2 && touch */__init__.py &
-	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
+.PHONY: run
+run: install ## Run the applicaiton
+	poetry run honcho start --procfile Procfile.dev
 
 ###############################################################################
 # Delivery Tasks
@@ -149,3 +146,11 @@ promote: install .envrc
 	echo "export CF_API_KEY=???" >> $@
 	echo "export REMOTE_TRACKING_URL=???" >> $@
 	echo "export DEBUG=true" >> $@
+
+# HELP ########################################################################
+
+.PHONY: help
+help: install
+	@ grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.DEFAULT_GOAL := help
