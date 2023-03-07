@@ -16,7 +16,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.gif> produces:
 
-![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=icc12mvkq7hc9ysbbtxr&width=800&frames=50)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=wxgjeu3jll4dt9q6fihy&width=800&frames=50)
 
 ## Available Formats
 
@@ -37,7 +37,7 @@ Images can be scaled to a specific width or height using the `width=<int>` and `
 
 For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800> produces:
 
-![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800&token=e3ctlu471cv4k0hx698p)
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800&token=6alj86spiq9iyevbknm3)
 
 ## Special Characters
 
@@ -63,7 +63,7 @@ Reserved URL characters can be included using escape patterns:
 
 For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png> produces:
 
-![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png?width=800&token=69q6jocby8r0gwdt254l)
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png?width=800&token=g1oow9vw3dw5l1iy7a9q)
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
@@ -87,7 +87,7 @@ The `style=<str>` query parameter can also be an image URL to overlay on the def
 
 For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png> produces:
 
-![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=cy49tv234bu3jzgw587o)
+![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=mbckgprafgz8o4l1adct)
 
 The overlay image can be customized with the following additional query parameters:
 
@@ -102,7 +102,7 @@ You can also use your own image URL as the background.
 
 For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
-![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=ahby9x2nlsbk0gxdmpo5)
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=kxxlu7wzoxgp5l2iruta)
 
 This can be combined with [custom overlays](#custom-overlays) to augment the background image.
 
@@ -112,7 +112,7 @@ Add the `layout=<str>` query parameter to switch between the default and `top` t
 
 For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top> produces:
 
-![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&width=800&token=2mow56u2t6pyeubr032j)
+![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
 
 # Fonts
 
