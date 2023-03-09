@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: memegen
+  name: memegen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: memegen
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: memegen
+    spec:
+      containers:
+        - image: mappy.azurecr.io/dev-images/mappy-memegen
+          imagePullPolicy: Always
+          name: memegen
+          ports:
+            - containerPort: 5000
+          resources: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+status: {}
