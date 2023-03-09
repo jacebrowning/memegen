@@ -54,7 +54,7 @@ async def tokenize(request: Request, url: str) -> tuple[str, bool]:
     if settings.REMOTE_TRACKING_URL:
         api = settings.REMOTE_TRACKING_URL + "tokenize"
     else:
-        return url, False
+        return url, True
 
     if api_key or token:
         async with aiohttp.ClientSession() as session:
@@ -68,7 +68,7 @@ async def tokenize(request: Request, url: str) -> tuple[str, bool]:
             data = await response.json()
             return data["url"], data["url"] != url
 
-    return url, False
+    return url, True
 
 
 async def custom_watermarks_allowed(request: Request) -> bool:
@@ -82,7 +82,7 @@ async def custom_watermarks_allowed(request: Request) -> bool:
         _url, updated = await tokenize(request, request.url)
         return not updated
 
-    return False
+    return True
 
 
 async def get_watermark(request: Request) -> tuple[str, bool]:
