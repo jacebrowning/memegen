@@ -18,7 +18,12 @@ spec:
         io.kompose.service: memegen
     spec:
       containers:
-        - image: mappy.azurecr.io/dev-images/mappy-memegen
+        - env:
+            - name: DOMAIN
+              value: dev-memegen.audiomobile.xyz
+            - name: REMOTE_TRACKING_URL
+              value: ???              
+          image: mappy.azurecr.io/dev-images/mappy-memegen
           imagePullPolicy: Always
           name: memegen
           ports:
