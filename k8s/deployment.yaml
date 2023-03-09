@@ -23,7 +23,7 @@ spec:
               value: dev-memegen.audiomobile.xyz
             - name: REMOTE_TRACKING_URL
               value: ???              
-          image: mappy.azurecr.io/dev-images/mappy-memegen:latest
+          image: mappy.azurecr.io/mappy-memegen
           imagePullPolicy: Always
           name: memegen
           ports:
