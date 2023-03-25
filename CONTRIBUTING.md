@@ -12,6 +12,7 @@
 To confirm these system dependencies are configured correctly:
 
 ```text
+$ make bootstrap
 $ make doctor
 ```
 
