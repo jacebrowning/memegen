@@ -14,10 +14,6 @@ from .. import models, settings, utils
 
 @pytest.mark.slow
 @pytest.mark.parametrize(("id", "lines", "extension"), settings.TEST_IMAGES)
-@pytest.mark.skipif(
-    utils.images.webp is None,
-    reason="https://github.com/jacebrowning/memegen/issues/787",
-)
 def test_images(images, id, lines, extension):
     template = models.Template.objects.get(id)
     utils.images.save(template, lines, extension=extension, directory=images)

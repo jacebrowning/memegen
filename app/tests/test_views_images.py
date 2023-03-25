@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from .. import settings, utils
+from .. import settings
 
 
 def describe_list():
@@ -167,10 +167,6 @@ def describe_detail():
             ("/images/fry/test.png", "image/png"),
             ("/images/fry/test.webp", "image/webp"),
         ],
-    )
-    @pytest.mark.skipif(
-        utils.images.webp is None,
-        reason="https://github.com/jacebrowning/memegen/issues/787",
     )
     def it_returns_an_image(expect, client, path, content_type):
         request, response = client.get(path, timeout=10)
