@@ -4,6 +4,7 @@ import io
 from pathlib import Path
 from typing import Iterator, cast
 
+import webp
 from PIL import (
     Image,
     ImageDraw,
@@ -18,16 +19,6 @@ from sanic.log import logger
 from .. import settings
 from ..models import Font, Template, Text
 from ..types import Align, Dimensions, FontType, ImageType, Offset, Point
-
-try:
-    import webp
-except ModuleNotFoundError as webp_exception:
-    # TODO: Fix 'webp' import on certain systems
-    # https://github.com/jacebrowning/memegen/issues/787
-    WEBP_ERROR = f"WebP support unavailable: {webp_exception}"
-    logger.warning(WEBP_ERROR)
-    webp = None
-    settings.DEFAULT_ANIMATED_EXTENSION = "gif"
 
 EXCEPTIONS = (
     OSError,
@@ -116,7 +107,6 @@ def save(
             loop=0,
         )
     elif extension == "webp":
-        assert webp, WEBP_ERROR
         frames, duration = render_animation(
             template,
             style,
