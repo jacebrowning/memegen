@@ -1,7 +1,7 @@
 export PYTHONBREAKPOINT=ipdb.set_trace
 
 .PHONY: all
-all: format check test ## Run all validation targets
+all: doctor format check test ## Run all validation targets
 
 .PHONY: dev
 dev: install ## Rerun all validation targests in a loop
