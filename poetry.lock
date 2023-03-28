@@ -666,14 +666,14 @@ requests = ">=2.28,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "2.1b2"
+version = "2.1"
 description = "File-based ORM for dataclasses."
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "datafiles-2.1b2-py3-none-any.whl", hash = "sha256:aa5836f6cefb8bd544eb5dcdf9a76657de5d5b2064271440787a6bdb9ba1430c"},
-    {file = "datafiles-2.1b2.tar.gz", hash = "sha256:ae8db8efe8c19c599b5c7a11bc9a92e86aad539725b1e328b0a7612c7f59ff98"},
+    {file = "datafiles-2.1-py3-none-any.whl", hash = "sha256:31de48c187436bef9062efffc17fa9a42cd4fb8929d86f334413950f9e17d052"},
+    {file = "datafiles-2.1.tar.gz", hash = "sha256:70728378e9313702b055c6cdeade385a170ea26a008d299f61ec360080c245a5"},
 ]
 
 [package.dependencies]
@@ -3375,4 +3375,4 @@ testing = ["locust"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "692742164a3252c0e23f151d7f96e29f51210422d2e17a021ea77766ce5466e3"
+content-hash = "293cea2b3081b46d6339581139b05c552e7442e67280425631ab7730972d9b04"
