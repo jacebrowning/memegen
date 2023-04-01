@@ -13,8 +13,8 @@ packages = [{ include = "app" }]
 python = "~3.11"
 
 # Sanic
-sanic = "~22.9.1"  # remove -W in pytest with 22.12: https://github.com/sanic-org/sanic/issues/2388
-sanic-ext = "~22.9" # match to 'sanic'
+sanic = "~23.3" # update 'sanic-ext' and 'sanic-testing' to match
+sanic-ext = "~23.3"
 
 # Markdown
 markdown = "~3.2.2"
@@ -39,7 +39,7 @@ gunicorn = "^20.1"
 uvicorn = "~0.19"
 locust = { version = "^2.12", optional = true }
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 
 # Formatting
 isort = "^5.11"
@@ -60,7 +60,7 @@ pytest-describe = "^2.0"
 pytest-expecter = "^3.0"
 pytest-random = "*"
 pytest-cov = "^2.7"
-sanic-testing = "*"
+sanic-testing = "^23.3"
 aioresponses = "*"
 
 # Coverage
@@ -106,8 +106,6 @@ addopts = """
 --random \
 --show-capture=log \
 --cov=app --cov-report=term-missing:skip-covered --cov-report=html:.cache/htmlcov --no-cov-on-fail
-
--W ignore::DeprecationWarning:sanic.server.loop
 """
 
 cache_dir = ".cache/pytest/"
