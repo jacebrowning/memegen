@@ -223,7 +223,7 @@ async def detail_text(request, template_id, text_filepath):
         )
         return response.redirect(utils.urls.clean(url), status=301)
 
-    url, updated = await utils.meta.tokenize(request, request.url)
+    url, updated = await utils.meta.tokenize(request, utils.urls.clean(request.url))
     if updated:
         return response.redirect(url, status=302)
 

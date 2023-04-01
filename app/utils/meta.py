@@ -1,5 +1,4 @@
 from pathlib import Path
-from urllib.parse import unquote
 
 import aiohttp
 from aiocache import cached
@@ -7,7 +6,7 @@ from sanic.log import logger
 from sanic.request import Request
 
 from .. import settings
-from . import http
+from . import http, urls
 
 
 def version() -> str:
@@ -79,7 +78,7 @@ async def custom_watermarks_allowed(request: Request) -> bool:
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
-        _url, updated = await tokenize(request, request.url)
+        _url, updated = await tokenize(request, urls.clean(request.url))
         return not updated
 
     return False
@@ -121,7 +120,7 @@ async def track(request: Request, lines: list[str]):
         return
 
     async with aiohttp.ClientSession() as session:
-        params = dict(text=text, referer=referer, result=unquote(request.url))
+        params = dict(text=text, referer=referer, result=urls.clean(request.url))
         logger.info(f"Tracking request: {params}")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
         status, message = await http.fetch(api, params=params, headers=headers)
