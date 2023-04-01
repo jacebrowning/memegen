@@ -69,4 +69,8 @@ def clean(url: str) -> str:
     while "/_." in url:
         url = url.replace("/_.", ".")
 
+    # TODO: Fix Sanic bug?
+    # https://github.com/jacebrowning/memegen/issues/799
+    url = url.replace("::", ":")
+
     return url
