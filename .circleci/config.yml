@@ -4,6 +4,8 @@ jobs:
   test:
     docker:
       - image: cimg/python:3.11.2
+    
+    working_directory: ~/memegen
 
     steps:
       - checkout
