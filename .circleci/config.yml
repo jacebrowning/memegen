@@ -1,9 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
-    working_directory: ~/memegen
-
+  test:
     docker:
       - image: cimg/python:3.11.2
 
@@ -47,3 +45,126 @@ jobs:
       - run:
           name: Building site
           command: make site
+  docker-build:
+    machine:
+      image: ubuntu-2204:2023.02.1
+
+    steps:
+      - checkout
+
+      - run:
+          name: Make cache directory
+          command: mkdir -p /tmp/cache
+
+      - restore_cache:
+          keys:
+            - v2-{{ .Branch }}-{{ arch }}-{{ checksum "Containerfile" }}
+
+      - run:
+          name: Loading Docker image
+          command: |
+            if [ -f /tmp/cache/memegen.tar ]; then
+                echo "Loading Docker image from cache"
+            else
+                echo "No Docker image found in cache"
+                exit 0
+            fi
+            docker load < /tmp/cache/memegen.tar
+
+      - run:
+          name: Building Docker image
+          command: |
+            # Build the image with the tag "latest" and the tag of the current git tag (if any)
+            TAGS=$(for tag in latest ${CIRCLE_TAG}; do echo "-t memegen:$tag"; done)
+            echo "Building Docker image with tags: $TAGS"
+            docker build ${TAGS} -f Containerfile .
+
+      - run:
+          name: Running Docker image
+          command: |
+            docker run --name memegen -p 5000:5000 --rm memegen || :
+          background: true
+
+      - run:
+          name: Validate API is running
+          command: |
+            set +e
+            echo "Waiting for API to start..."
+            MAX_TRIES=15
+            for i in $(seq 1 $MAX_TRIES); do
+                sleep 5
+                http_code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:5000/images/preview.jpg" 2>/dev/null)
+                if [ "$http_code" = "200" ]; then
+                    exit 0
+                fi
+            done
+            echo "Failed to validate API is running after $MAX_TRIES tries"
+            exit 1
+
+      - run:
+          name: Stopping Docker image
+          command: docker exec memegen bash -c "kill -9 1"
+
+      - run:
+          name: Saving Docker image
+          command: docker save memegen > /tmp/cache/memegen.tar
+
+      - save_cache:
+          key: v2-{{ .Branch }}-{{ arch }}-{{ checksum "Containerfile" }}
+          paths:
+            - /tmp/cache/memegen.tar
+
+      - persist_to_workspace:
+          root: /tmp/cache
+          paths:
+            - memegen.tar
+
+  docker-deploy:
+    docker:
+      - image: cimg/base:current
+
+    steps:
+      - checkout
+
+      - setup_remote_docker
+
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Loading Docker image
+          command: |
+            if [ -f ./memegen.tar ]; then
+                echo "Loading Docker image from cache"
+            else
+                echo "No Docker image found in cache"
+                exit 0
+            fi
+            docker load < ./memegen.tar
+
+      - run:
+          name: Pushing Docker image
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker push memegen
+
+workflows:
+  default:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - docker-build:
+          filters:
+            tags:
+              only: /.*/
+      - docker-deploy:
+          requires:
+            - test
+            - docker-build
+          filters:
+            tags:
+              only: /v.*/
+            branches:
+              ignore: /.*/
