@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+#
 # The MIT License (MIT)
 # Copyright © 2016, Jace Browning
 #
@@ -47,10 +47,13 @@ else:
     import configparser
     from urllib.request import urlretrieve
 
-__version__ = '3.1'
+__version__ = '3.4'
 
 SCRIPT_URL = (
-    "https://raw.githubusercontent.com/jacebrowning/verchew/master/verchew/script.py"
+    "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
+)
+WRAPPER_URL = (
+    "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/wrapper.sh"
 )
 
 CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
@@ -112,7 +115,8 @@ def main():
     log.debug("PATH: %s", os.getenv('PATH'))
 
     if args.vendor:
-        vendor_script(args.vendor)
+        vendor_script(SCRIPT_URL, args.vendor)
+        vendor_script(WRAPPER_URL, args.vendor + "-wrapper")
         sys.exit(0)
 
     path = find_config(args.root, generate=args.init)
@@ -171,14 +175,14 @@ def configure_logging(count=0):
     logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
 
 
-def vendor_script(path):
+def vendor_script(url, path):
     root = os.path.abspath(os.path.join(path, os.pardir))
     if not os.path.isdir(root):
         log.info("Creating directory %s", root)
         os.makedirs(root)
 
-    log.info("Downloading %s to %s", SCRIPT_URL, path)
-    urlretrieve(SCRIPT_URL, path)
+    log.info("Downloading %s to %s", url, path)
+    urlretrieve(url, path)
 
     log.debug("Making %s executable", path)
     mode = os.stat(path).st_mode
@@ -236,6 +240,10 @@ def parse_config(path):
         data[name]['version'] = version
         data[name]['patterns'] = [v.strip() for v in version.split('||')]
 
+        data[name]['optional'] = data[name].get(
+            'optional', 'false'
+        ).strip().lower() in ('true', 'yes', 'y', True)
+
     return data
 
 
@@ -260,7 +268,7 @@ def check_dependencies(config):
                     if "not found" in output:
                         actual = "Not found"
                     else:
-                        actual = output.split('\n')[0].strip('.')
+                        actual = output.split('\n', maxsplit=1)[0].strip('.')
                     expected = settings['version'] or "<anything>"
                     print("{0}: {1}, EXPECTED: {2}".format(name, actual, expected))
                 show(
@@ -280,30 +288,44 @@ def get_version(program, argument=None):
     if argument is None:
         args = [program, '--version']
     elif argument:
-        args = [program, argument]
+        args = [program] + argument.split()
     else:
         args = [program]
 
     show("$ {0}".format(" ".join(args)))
     output = call(args)
     lines = output.splitlines()
-    show(lines[0] if lines else "<nothing>")
+
+    if lines:
+        for line in lines:
+            if any(char.isdigit() for char in line):
+                show(line)
+                break
+        else:
+            show(lines[0])
+    else:
+        show("<nothing>")
 
     return output
 
 
 def match_version(pattern, output):
-    if "not found" in output.split('\n')[0]:
+    lines = output.splitlines()
+    if "not found" in lines[0]:
         return False
 
     regex = pattern.replace('.', r'\.') + r'(\b|/)'
 
-    log.debug("Matching %s: %s", regex, output)
-    match = re.match(regex, output)
-    if match is None:
-        match = re.match(r'.*[^\d.]' + regex, output)
+    for line in lines:
+        log.debug("Matching %s: %s", regex, line)
+        match = re.match(regex, line)
+        if match is None:
+            log.debug("Matching %s: %s", regex, line)
+            match = re.match(r'.*[^\d.]' + regex, line)
+        if match:
+            return True
 
-    return bool(match)
+    return False
 
 
 def call(args):
