@@ -42,8 +42,8 @@ locust = { version = "^2.12", optional = true }
 [tool.poetry.group.dev.dependencies]
 
 # Formatting
-isort = "^5.11"
-black = "^22.12"
+isort = "^5.12"
+black = "^23.7"
 
 # Type Checking
 mypy = "^1.3"

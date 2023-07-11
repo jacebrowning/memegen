@@ -253,7 +253,6 @@ def render_image(
     ) in get_image_elements(
         template, lines, font_name, watermark, image.size, is_preview
     ):
-
         box = Image.new("RGBA", max_text_size)
         draw = ImageDraw.Draw(box)
 

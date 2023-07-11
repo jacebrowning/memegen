@@ -5,7 +5,6 @@ from ..types import Box, Dimensions
 
 @dataclass
 class Overlay:
-
     center_x: float = 0.5
     center_y: float = 0.5
 

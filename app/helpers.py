@@ -36,7 +36,6 @@ def get_example_images(
 
     images = []
     for template in templates:
-
         if exact and animated is True and "animated" not in template.styles:
             continue
         if exact and animated is False and "animated" in template.styles:
