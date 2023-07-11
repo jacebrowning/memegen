@@ -20,7 +20,6 @@ async def fetch(url: str, **kwargs) -> tuple[int, dict | str]:
     async with aiohttp.ClientSession() as session:
         try:
             async with session.get(url, timeout=10, **kwargs) as response:
-
                 try:
                     message = await response.json()
                 except aiohttp.client_exceptions.ContentTypeError:
@@ -38,7 +37,6 @@ async def download(url: str, path: AsyncPath) -> bool:
     async with aiohttp.ClientSession() as session:
         try:
             async with session.get(url, timeout=10) as response:
-
                 if response.history:
                     # TODO: Figure out which sites use 3xx as errors
                     if "imgur" in url:

@@ -14,7 +14,6 @@ def alpha(value: float) -> str:
 
 @dataclass
 class Text:
-
     style: str = "upper"
     color: str = "white"
     font: str = settings.DEFAULT_FONT

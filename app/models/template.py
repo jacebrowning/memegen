@@ -18,7 +18,6 @@ from .text import Text
 
 @datafile("../../templates/{self.id}/config.yml", defaults=True)
 class Template:
-
     id: str
     name: str = ""
     source: str | None = None

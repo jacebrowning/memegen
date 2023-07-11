@@ -24,7 +24,6 @@ class Manager:
 
 @dataclass
 class Font:
-
     filename: str
     id: str
     _: KW_ONLY
