@@ -19,7 +19,7 @@ sanic-ext = "~23.3"
 # Markdown
 markdown = "~3.2.2"
 pymdown-extensions = "^10.0"
-pygments = "^2.7.0"
+pygments = "^2.15.0"
 
 # Images
 pillow = "^10.0"  # update 'types-pillow' to match version
