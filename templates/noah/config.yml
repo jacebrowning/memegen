@@ -1,5 +1,7 @@
-name: What the Hell is This? / Family Guy Noah
+name: What the Hell is This?
 source:
+keywords:
+  - Family Guy Noah
 text:
   - style: default
     color: white

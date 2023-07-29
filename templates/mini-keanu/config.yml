@@ -1,5 +1,7 @@
 name: Mini Keanu Reeves
 source: https://knowyourmeme.com/memes/mini-keanu-reeves
+keywords:
+  -
 text:
   - style: upper
     color: white

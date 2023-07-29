@@ -1,5 +1,8 @@
-name: What a Country / Dr. Nick
+name: What a Country
 source: https://www.youtube.com/watch?v=Q8mD2hsxrhQ
+keywords:
+  - The Simpsons
+  - Dr. Nick
 text:
   - style: upper
     color: white

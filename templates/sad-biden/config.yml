@@ -1,5 +1,7 @@
 name: Sad Joe Biden
 source: http://knowyourmeme.com/memes/sad-joe-biden
+keywords:
+  -
 text:
   - style: upper
     color: white

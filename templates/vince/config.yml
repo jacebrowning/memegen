@@ -1,5 +1,7 @@
 name: Vince McMahon Reaction
 source: https://knowyourmeme.com/memes/vince-mcmahon-reaction
+keywords:
+  -
 text:
   - style: default
     color: black

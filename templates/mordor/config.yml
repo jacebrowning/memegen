@@ -1,5 +1,7 @@
 name: One Does Not Simply Walk into Mordor
 source: http://knowyourmeme.com/memes/one-does-not-simply-walk-into-mordor
+keywords:
+  -
 text:
   - style: upper
     color: white

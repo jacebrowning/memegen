@@ -1,5 +1,7 @@
 name: I Feel Like I'm Taking Crazy Pills
 source: http://knowyourmeme.com/memes/i-feel-like-im-taking-crazy-pills
+keywords:
+  -
 text:
   - style: upper
     color: white

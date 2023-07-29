@@ -1,5 +1,7 @@
 name: Drowning High Five
 source: https://knowyourmeme.com/memes/drowning-high-five
+keywords:
+  -
 text:
   - style: default
     color: white

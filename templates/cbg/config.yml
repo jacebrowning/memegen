@@ -1,5 +1,7 @@
 name: Comic Book Guy
 source: http://simpsons.wikia.com/wiki/Jeffrey_Albertson
+keywords:
+  -
 text:
   - style: upper
     color: white

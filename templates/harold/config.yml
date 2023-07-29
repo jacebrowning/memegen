@@ -1,5 +1,7 @@
 name: Hide the Pain Harold
 source: https://knowyourmeme.com/memes/hide-the-pain-harold
+keywords:
+  -
 text:
   - style: upper
     color: white

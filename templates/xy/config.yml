@@ -1,5 +1,7 @@
 name: X all the Y
 source: http://knowyourmeme.com/memes/x-all-the-y
+keywords:
+  -
 text:
   - style: upper
     color: white

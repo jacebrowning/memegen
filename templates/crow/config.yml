@@ -1,5 +1,7 @@
 name: Get Better Material
 source: https://knowyourmeme.com/memes/get-better-material
+keywords:
+  -
 text:
   - style: upper
     color: black

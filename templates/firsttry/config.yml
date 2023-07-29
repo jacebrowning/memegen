@@ -1,5 +1,7 @@
 name: First Try!
 source: https://www.youtube.com/watch?v=44-RsrF_V_w
+keywords:
+  -
 text:
   - style: upper
     color: white

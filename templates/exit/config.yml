@@ -1,5 +1,7 @@
 name: Left Exit 12 Off Ramp
 source: https://knowyourmeme.com/memes/left-exit-12-off-ramp
+keywords:
+  -
 text:
   - style: default
     color: '#BBBBBB'

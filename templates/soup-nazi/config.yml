@@ -1,5 +1,8 @@
-name: No Soup for You / Soup Nazi
+name: No Soup for You
 source: https://knowyourmeme.com/memes/no-soup-for-you-soup-nazi
+keywords:
+  - Seinfeld
+  - Soup Nazi
 text:
   - style: upper
     color: white

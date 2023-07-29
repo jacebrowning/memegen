@@ -1,5 +1,7 @@
 name: Ugandan Knuckles
 source: http://knowyourmeme.com/memes/ugandan-knuckles
+keywords:
+  -
 text:
   - style: upper
     color: white

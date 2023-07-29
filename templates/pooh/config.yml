@@ -1,5 +1,7 @@
 name: Tuxedo Winnie the Pooh
 source: https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh
+keywords:
+  -
 text:
   - style: default
     color: black

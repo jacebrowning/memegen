@@ -1,5 +1,7 @@
 name: Baby Insanity Wolf
 source: http://knowyourmeme.com/memes/baby-insanity-wolf
+keywords:
+  -
 text:
   - style: upper
     color: white

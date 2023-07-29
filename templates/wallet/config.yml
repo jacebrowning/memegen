@@ -1,5 +1,7 @@
 name: Patrick Star's Wallet
 source: https://knowyourmeme.com/memes/patrick-stars-wallet
+keywords:
+  -
 text:
   - style: default
     color: white

@@ -1,5 +1,7 @@
 name: Kramer, What's Going On In There?
 source: https://knowyourmeme.com/memes/kramer-whats-going-on-in-there
+keywords:
+  -
 text:
   - style: default
     color: khaki

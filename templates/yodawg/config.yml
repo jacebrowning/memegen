@@ -1,5 +1,7 @@
 name: Xzibit Yo Dawg
 source: http://knowyourmeme.com/memes/xzibit-yo-dawg
+keywords:
+  -
 text:
   - style: upper
     color: white

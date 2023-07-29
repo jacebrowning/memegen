@@ -1,5 +1,7 @@
 name: Communist Bugs Bunny
 source: https://knowyourmeme.com/memes/communist-bugs-bunny
+keywords:
+  -
 text:
   - style: upper
     color: white

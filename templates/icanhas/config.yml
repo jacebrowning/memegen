@@ -1,5 +1,7 @@
 name: I Can Has Cheezburger?
 source: http://knowyourmeme.com/memes/happy-cat
+keywords:
+  -
 text:
   - style: upper
     color: white

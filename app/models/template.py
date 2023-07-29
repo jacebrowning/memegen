@@ -21,6 +21,7 @@ class Template:
     id: str
     name: str = ""
     source: str | None = None
+    keywords: list[str] = field(default_factory=list)
 
     text: list[Text] = field(
         default_factory=lambda: [Text(), Text(anchor_x=0.0, anchor_y=0.8)]
@@ -44,9 +45,12 @@ class Template:
         if not settings.DEPLOYED:
             self._update_example()
             self.datafile.save()
-        return (
-            not self.id.startswith("_")
-            and self.image.suffix != settings.PLACEHOLDER_SUFFIX
+        return all(
+            (
+                not self.id.startswith("_"),
+                "/" not in self.name,
+                self.image.suffix != settings.PLACEHOLDER_SUFFIX,
+            )
         )
 
     def _update_example(self):
@@ -158,6 +162,7 @@ class Template:
                 "url": self.build_example_url(request),
             },
             "source": self.source,
+            "keywords": self.keywords,
             "_self": self.build_self_url(request),
         }
 
@@ -465,5 +470,13 @@ class Template:
             shutil.rmtree(self.directory)
 
     def matches(self, query: str) -> bool:
+        keywords = " ".join(line.lower() for line in self.keywords)
         example = " ".join(line.lower() for line in self.example)
-        return any((query in self.id, query in self.name.lower(), query in example))
+        return any(
+            (
+                query in self.id,
+                query in self.name.lower(),
+                query in keywords,
+                query in example,
+            )
+        )

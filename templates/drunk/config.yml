@@ -1,5 +1,7 @@
 name: Drunk Baby
 source: https://knowyourmeme.com/memes/drunk-baby--2
+keywords:
+  -
 text:
   - style: upper
     color: white

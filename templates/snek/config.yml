@@ -1,5 +1,7 @@
 name: Skeptical Snake
 source: https://www.reddit.com/r/JoeRogan/comments/5kga5k/skeptical_snake/
+keywords:
+  -
 text:
   - style: upper
     color: white

@@ -21,7 +21,7 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
     description="Limit results to templates supporting animation",
 )
 @openapi.parameter(
-    "filter", str, "query", description="Part of the name or example to match"
+    "filter", str, "query", description="Part of the name, keyword, or example to match"
 )
 @openapi.response(
     200,

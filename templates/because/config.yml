@@ -1,5 +1,7 @@
-name: Men in Black / Will Smith
+name: Men in Black
 source: https://www.youtube.com/watch?v=GNOZhAc26I8&t=76s
+keywords:
+  - Will Smith
 text:
   - style: default
     color: khaki

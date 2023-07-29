@@ -1,5 +1,7 @@
 name: Cheems
 source: https://knowyourmeme.com/memes/cheems
+keywords:
+  -
 text:
   - style: upper
     color: white

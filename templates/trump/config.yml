@@ -1,5 +1,7 @@
 name: Donald Trump
 source: https://knowyourmeme.com/memes/people/donald-trump
+keywords:
+  -
 text:
   - style: upper
     color: white

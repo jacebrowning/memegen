@@ -1,5 +1,7 @@
 name: Stonks
 source: https://knowyourmeme.com/memes/stonks
+keywords:
+  -
 text:
   - style: upper
     color: white

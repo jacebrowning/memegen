@@ -1,5 +1,7 @@
 name: Stop It Patrick You're Scaring Him
 source: https://knowyourmeme.com/memes/stop-it-patrick-youre-scaring-him
+keywords:
+  -
 text:
   - style: default
     color: '#b1e0d0'

@@ -1,5 +1,7 @@
 name: No Take, Only Throw
 source: https://knowyourmeme.com/memes/no-take-only-throw
+keywords:
+  -
 text:
   - style: default
     color: black

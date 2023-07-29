@@ -1,5 +1,7 @@
 name: At Least You Tried
 source: http://knowyourmeme.com/memes/you-tried
+keywords:
+  -
 text:
   - style: upper
     color: white

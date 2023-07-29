@@ -1,5 +1,7 @@
 name: And Then I Said
 source: https://knowyourmeme.com/memes/and-then-i-said
+keywords:
+  -
 text:
   - style: upper
     color: white

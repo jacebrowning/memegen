@@ -1,5 +1,7 @@
 name: Roll Safe
 source: http://knowyourmeme.com/memes/roll-safe
+keywords:
+  -
 text:
   - style: upper
     color: white

@@ -145,11 +145,11 @@ def describe_template():
         async def it_accepts_multiple_urls(expect):
             style = ",".join(
                 [
-                    "https://i.stack.imgur.com/PvgbL.jpeg",
-                    "https://i.imgur.com/AD3MbBi.jpeg",
+                    "https://www.gstatic.com/webp/gallery/1.jpg",
+                    "https://www.gstatic.com/webp/gallery/2.jpg",
                 ]
             )
-            template = Template.objects.get("perfection")
+            template:Template = Template.objects.get("perfection")
             expect(await template.check(style)) == True
 
         @pytest.mark.asyncio

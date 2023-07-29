@@ -1,5 +1,7 @@
 name: Galaxy Brain
 source: https://knowyourmeme.com/memes/galaxy-brain
+keywords:
+  -
 text:
   - style: none
     color: black

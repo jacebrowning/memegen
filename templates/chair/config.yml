@@ -1,5 +1,7 @@
 name: American Chopper Argument
 source: https://knowyourmeme.com/memes/american-chopper-argument
+keywords:
+  -
 text:
   - style: default
     color: khaki

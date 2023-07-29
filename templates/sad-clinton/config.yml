@@ -1,5 +1,7 @@
 name: Sad Bill Clinton
 source: https://en.wikipedia.org/wiki/Bill_Clinton
+keywords:
+  -
 text:
   - style: upper
     color: white

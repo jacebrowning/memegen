@@ -1,5 +1,7 @@
 name: Pepperidge Farm Remembers
 source: http://knowyourmeme.com/memes/pepperidge-farm-remembers
+keywords:
+  -
 text:
   - style: upper
     color: white

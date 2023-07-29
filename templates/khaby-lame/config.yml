@@ -1,5 +1,7 @@
-name: Khaby Lame Shrug / It's That Sample
+name: Khaby Lame Shrug
 source: https://knowyourmeme.com/photos/2132291-khaby-lame-shrug-its-that-simple
+keywords:
+  - It's That Sample
 text:
   - style: default
     color: black
