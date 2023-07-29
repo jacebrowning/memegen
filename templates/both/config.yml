@@ -1,5 +1,7 @@
 name: Why Not Both?
 source: http://knowyourmeme.com/memes/why-not-both-why-dont-we-have-both
+keywords:
+  -
 text:
   - style: upper
     color: white

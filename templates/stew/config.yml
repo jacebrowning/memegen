@@ -1,5 +1,7 @@
 name: Baby, You've Got a Stew Going
 source: https://www.youtube.com/watch?v=Sr2PlqXw03Y
+keywords:
+  -
 text:
   - style: upper
     color: white

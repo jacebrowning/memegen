@@ -1,5 +1,7 @@
 name: Mocking Spongebob
 source: http://knowyourmeme.com/memes/mocking-spongebob
+keywords:
+  -
 text:
   - style: default
     color: white

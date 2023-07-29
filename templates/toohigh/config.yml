@@ -1,5 +1,7 @@
 name: The Rent Is Too Damn High
 source: http://knowyourmeme.com/memes/the-rent-is-too-damn-high-jimmy-mcmillan
+keywords:
+  -
 text:
   - style: upper
     color: white

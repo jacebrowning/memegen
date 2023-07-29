@@ -1,5 +1,7 @@
 name: Crying on Floor
 source: http://knowyourmeme.com/photos/1125083-hold-the-door
+keywords:
+  -
 text:
   - style: upper
     color: white

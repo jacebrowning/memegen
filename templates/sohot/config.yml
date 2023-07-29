@@ -1,5 +1,7 @@
 name: So Hot Right Now
 source: https://www.youtube.com/watch?v=QizsJQNIKhc
+keywords:
+  -
 text:
   - style: upper
     color: white

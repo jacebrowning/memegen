@@ -1,5 +1,7 @@
 name: Bongo Cat
 source: https://knowyourmeme.com/memes/bongo-cat
+keywords:
+  -
 text:
   - style: default
     color: black

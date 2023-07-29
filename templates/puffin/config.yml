@@ -1,5 +1,7 @@
 name: Unpopular opinion puffin
 source: http://knowyourmeme.com/memes/unpopular-opinion-puffin
+keywords:
+  -
 text:
   - style: upper
     color: white

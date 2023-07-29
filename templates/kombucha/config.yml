@@ -1,5 +1,7 @@
 name: Kombucha Girl
 source: https://www.buzzfeed.com/daniellaemanuel/woman-trying-kombucha-meme
+keywords:
+  -
 text:
   - style: default
     color: black

@@ -1,5 +1,7 @@
 name: Peter Parker's Glasses
 source: https://knowyourmeme.com/memes/peter-parkers-glasses
+keywords:
+  -
 text:
   - style: default
     color: black

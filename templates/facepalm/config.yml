@@ -1,5 +1,7 @@
 name: Facepalm
 source: http://knowyourmeme.com/memes/facepalm
+keywords:
+  -
 text:
   - style: upper
     color: white

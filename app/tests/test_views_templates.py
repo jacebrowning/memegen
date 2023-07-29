@@ -37,6 +37,7 @@ def describe_detail():
                     "url": "http://localhost:5000/images/iw/does_testing/in_production.png",
                 },
                 "source": "http://knowyourmeme.com/memes/insanity-wolf",
+                "keywords": [],
                 "_self": "http://localhost:5000/templates/iw",
             }
 

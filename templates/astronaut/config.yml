@@ -1,5 +1,7 @@
 name: Always Has Been
 source: https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been
+keywords:
+  -
 text:
   - style: default
     color: white

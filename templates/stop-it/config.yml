@@ -1,5 +1,7 @@
 name: Stop It, Get Some Help
 source: https://knowyourmeme.com/memes/stop-it-get-some-help
+keywords:
+  -
 text:
   - style: upper
     color: white

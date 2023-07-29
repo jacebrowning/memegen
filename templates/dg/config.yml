@@ -1,5 +1,7 @@
 name: Distracted Girlfriend
 source: https://knowyourmeme.com/memes/distracted-boyfriend
+keywords:
+  -
 text:
   - style: default
     color: white

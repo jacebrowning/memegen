@@ -1,5 +1,7 @@
 name: Change My Mind
 source: https://knowyourmeme.com/memes/steven-crowders-change-my-mind-campus-sign
+keywords:
+  -
 text:
   - style: upper
     color: black

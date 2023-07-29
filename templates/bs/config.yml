@@ -1,5 +1,7 @@
 name: This is Bull, Shark
 source: https://www.reddit.com/r/funny/comments/3grsfs
+keywords:
+  -
 text:
   - style: upper
     color: white

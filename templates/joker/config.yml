@@ -1,5 +1,7 @@
 name: It's Simple, Kill the Batman
 source: https://www.youtube.com/watch?v=f_XHjqABQQA
+keywords:
+  -
 text:
   - style: upper
     color: white

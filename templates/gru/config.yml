@@ -1,5 +1,7 @@
 name: Gru's Plan
 source: https://knowyourmeme.com/memes/grus-plan
+keywords:
+  -
 text:
   - style: default
     color: black

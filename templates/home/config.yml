@@ -1,5 +1,7 @@
 name: We Have Food at Home
 source: https://knowyourmeme.com/memes/we-have-food-at-home
+keywords:
+  -
 text:
   - style: default
     color: black

@@ -1,5 +1,7 @@
 name: Persian Cat Room Guardian
 source: https://knowyourmeme.com/memes/persian-cat-room-guardian
+keywords:
+  -
 text:
   - style: upper
     color: white

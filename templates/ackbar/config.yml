@@ -1,5 +1,8 @@
 name: It's A Trap!
 source: http://knowyourmeme.com/memes/its-a-trap
+keywords:
+  - Star Wards
+  - Admiral Ackbar
 text:
   - style: upper
     color: white

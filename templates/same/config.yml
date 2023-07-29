@@ -1,5 +1,7 @@
 name: They're The Same Picture
 source: https://knowyourmeme.com/memes/theyre-the-same-picture
+keywords:
+  -
 text:
   - style: default
     color: black

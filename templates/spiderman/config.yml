@@ -1,5 +1,7 @@
 name: Spider-Man Pointing at Spider-Man
 source: https://knowyourmeme.com/memes/spider-man-pointing-at-spider-man
+keywords:
+  -
 text:
   - style: upper
     color: white

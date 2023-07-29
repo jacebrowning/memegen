@@ -1,5 +1,7 @@
 name: Scooby Doo Reveal
 source: https://knowyourmeme.com/memes/lets-see-who-this-really-is
+keywords:
+  -
 text:
   - style: default
     color: white

@@ -1,5 +1,7 @@
 name: Panik Kalm Panik
 source: https://knowyourmeme.com/memes/panik-kalm
+keywords:
+  -
 text:
   - style: default
     color: black

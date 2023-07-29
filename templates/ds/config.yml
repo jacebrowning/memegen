@@ -1,5 +1,7 @@
 name: Daily Struggle
 source: https://knowyourmeme.com/memes/daily-struggle
+keywords:
+  -
 text:
   - style: default
     color: black

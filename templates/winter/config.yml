@@ -1,5 +1,7 @@
 name: Winter is coming
 source: http://knowyourmeme.com/memes/imminent-ned-brace-yourselves-winter-is-coming
+keywords:
+  -
 text:
   - style: upper
     color: white

@@ -1,5 +1,7 @@
 name: Sad George Bush
 source: http://knowyourmeme.com/memes/sad-joe-biden
+keywords:
+  -
 text:
   - style: upper
     color: white

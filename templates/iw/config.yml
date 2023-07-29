@@ -1,5 +1,7 @@
 name: Insanity Wolf
 source: http://knowyourmeme.com/memes/insanity-wolf
+keywords:
+  -
 text:
   - style: upper
     color: white

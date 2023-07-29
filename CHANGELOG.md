@@ -1,5 +1,9 @@
 # Revision History
 
+## 10.14
+
+- Added template `keywords` to improve search results.
+
 ## 10.13
 
 - Added support for `.webp` animated images.

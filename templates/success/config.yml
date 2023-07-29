@@ -1,5 +1,7 @@
 name: Success Kid
 source: http://knowyourmeme.com/memes/success-kid-i-hate-sandcastles
+keywords:
+  -
 text:
   - style: upper
     color: white

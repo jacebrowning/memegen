@@ -1,5 +1,7 @@
 name: Drakeposting
 source: http://knowyourmeme.com/memes/drakeposting
+keywords:
+  -
 text:
   - style: upper
     color: white

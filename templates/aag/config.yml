@@ -1,5 +1,7 @@
 name: Ancient Aliens Guy
 source: http://knowyourmeme.com/memes/ancient-aliens
+keywords:
+  - History Channel
 text:
   - style: upper
     color: white
