@@ -1,7 +1,7 @@
 name: You Sit on a Throne of Lies
 source: http://knowyourmeme.com/memes/you-sit-on-a-throne-of-lies
 keywords:
-  -
+  - Elf
 text:
   - style: upper
     color: white
@@ -26,7 +26,7 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
+  - ""
   - you sit on a throne of lies
 overlay:
   - center_x: 0.5

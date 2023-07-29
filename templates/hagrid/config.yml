@@ -1,7 +1,7 @@
 name: I Should Not Have Said That
 source: https://www.youtube.com/watch?v=498HkRM77gg
 keywords:
-  -
+  - Harry Potter
 text:
   - style: upper
     color: white
@@ -26,7 +26,7 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
+  - ""
   - i should not have said that
 overlay:
   - center_x: 0.5

@@ -1,7 +1,7 @@
 name: Confused Gandalf
 source: http://knowyourmeme.com/memes/confused-gandalf
 keywords:
-  -
+  - Lord of the Rings
 text:
   - style: upper
     color: white
@@ -26,7 +26,7 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - ''
+  - ""
   - I have no memory of this place
 overlay:
   - center_x: 0.5
