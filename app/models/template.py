@@ -45,9 +45,12 @@ class Template:
         if not settings.DEPLOYED:
             self._update_example()
             self.datafile.save()
-        return (
-            not self.id.startswith("_")
-            and self.image.suffix != settings.PLACEHOLDER_SUFFIX
+        return all(
+            (
+                not self.id.startswith("_"),
+                "/" not in self.name,
+                self.image.suffix != settings.PLACEHOLDER_SUFFIX,
+            )
         )
 
     def _update_example(self):

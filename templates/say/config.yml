@@ -1,7 +1,8 @@
-name: Say the Line, Bart! / The Simpsons
+name: Say the Line, Bart!
 source: https://knowyourmeme.com/memes/say-the-line-bart
 keywords:
-  -
+  - The Simpsons
+  - Bart Simpson
 text:
   - style: default
     color: white
