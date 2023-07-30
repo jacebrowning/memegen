@@ -149,7 +149,7 @@ def describe_template():
                     "https://www.gstatic.com/webp/gallery/2.jpg",
                 ]
             )
-            template:Template = Template.objects.get("perfection")
+            template: Template = Template.objects.get("perfection")
             expect(await template.check(style)) == True
 
         @pytest.mark.asyncio

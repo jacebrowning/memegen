@@ -13,8 +13,8 @@ packages = [{ include = "app" }]
 python = "~3.11"
 
 # Sanic
-sanic = "~23.3" # update 'sanic-ext' and 'sanic-testing' to match
-sanic-ext = "~23.3"
+sanic = "~23.6" # update 'sanic-ext' and 'sanic-testing' to match
+sanic-ext = "~23.6"
 
 # Markdown
 markdown = "~3.2.2"
