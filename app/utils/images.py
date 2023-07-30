@@ -87,17 +87,7 @@ def save(
             maximum_frames,
             watermark=watermark,
         )
-
-        count = len(frames)
-        if "apng" in settings.ALLOWED_EXTENSIONS:
-            if (count <= settings.MINIMUM_FRAMES) or (count > settings.MAXIMUM_FRAMES):
-                extension = "png"
-
-        if extension == "png":
-            logger.info(f"Saving {count} frames as APNG at {duration} ms/frame")
-        else:
-            logger.info(f"Saving {count} frames as GIF at {duration} ms/frame")
-
+        logger.info(f"Saving {len(frames)} frames as GIF at {duration} ms/frame")
         frames[0].save(
             path,
             format=extension,
