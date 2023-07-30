@@ -35,11 +35,8 @@ MINIMUM_FONT_SIZE = 7
 
 IMAGES_DIRECTORY = ROOT / "images"
 
-ALLOWED_EXTENSIONS = {"apng", "gif", "jpg", "jpeg", "png", "webp"}
-ANIMATED_EXTENSIONS = {"apng", "gif", "webp"}
-if "ENABLE_APNG_SUPPORT" not in os.environ:
-    ALLOWED_EXTENSIONS.remove("apng")
-    ANIMATED_EXTENSIONS.remove("apng")
+ALLOWED_EXTENSIONS = {"gif", "jpg", "jpeg", "png", "webp"}
+ANIMATED_EXTENSIONS = {"gif", "webp"}
 
 DEFAULT_STATIC_EXTENSION = os.environ.get("DEFAULT_STATIC_EXTENSION", "png")
 DEFAULT_ANIMATED_EXTENSION = os.environ.get("DEFAULT_ANIMATED_EXTENSION", "gif")
