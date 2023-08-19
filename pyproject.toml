@@ -10,10 +10,10 @@ packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 
-python = "~3.11"
+python = "3.11.4"
 
 # Sanic
-sanic = "~23.6" # update 'sanic-ext' and 'sanic-testing' to match
+sanic = "~23.6"     # update 'sanic-ext' and 'sanic-testing' to match
 sanic-ext = "~23.6"
 
 # Markdown
@@ -22,7 +22,7 @@ pymdown-extensions = "^10.0"
 pygments = "^2.15.0"
 
 # Images
-pillow = "^10.0"  # update 'types-pillow' to match version
+pillow = "^10.0"      # update 'types-pillow' to match version
 spongemock = "~0.3.4"
 
 # Utilities
