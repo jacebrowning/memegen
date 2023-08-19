@@ -29,7 +29,7 @@ BACKEND_DEPENDENCIES := .venv/.flag
 .PHONY: install
 install: $(BACKEND_DEPENDENCIES) ## Install project dependencies
 
-$(BACKEND_DEPENDENCIES): poetry.lock runtime.txt requirements.txt
+$(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config virtualenvs.in-project true
 ifdef CI
 	poetry install
@@ -42,10 +42,6 @@ ifndef CI
 poetry.lock: pyproject.toml
 	poetry lock --no-update
 	@ touch $@
-runtime.txt: .tool-versions
-	echo $(shell grep '^python ' $< | tr ' ' '-') > $@
-requirements.txt: poetry.lock
-	poetry export --format requirements.txt --output $@ --without-hashes
 endif
 
 site: install
