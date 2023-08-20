@@ -703,6 +703,8 @@ def get_text_offset(
     rows = len(lines)
     if rows >= 3:
         y_adjust = 1.1
+    elif rows == 2 and "Impact" in font.getname()[0]:
+        y_adjust = 1.1
     else:
         y_adjust = 1 + (3 - rows) * 0.25
 

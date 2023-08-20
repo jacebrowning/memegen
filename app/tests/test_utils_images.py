@@ -260,6 +260,14 @@ def test_font_override(images, template):
     utils.images.save(template, lines, font_name="comic", directory=images)
 
 
+def test_text_not_cut_off_with_impact_and_watermark(images):
+    template = models.Template.objects.get("fry")
+    lines = ["", ("enjoy " * 7).strip()]
+    utils.images.save(
+        template, lines, "Memegen.link", font_name="impact", directory=images
+    )
+
+
 # Watermark
 
 
