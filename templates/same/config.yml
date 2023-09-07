@@ -3,7 +3,7 @@ source: https://knowyourmeme.com/memes/theyre-the-same-picture
 keywords:
   -
 text:
-  - style: default
+  - style: none
     color: black
     font: thin
     anchor_x: 0.06
@@ -14,7 +14,7 @@ text:
     align: center
     start: 0.0
     stop: 1.0
-  - style: default
+  - style: none
     color: black
     font: thin
     anchor_x: 0.525
@@ -38,7 +38,7 @@ text:
     stop: 1.0
 example:
   - π
-  - '3'
+  - "3"
   - The Bible
 overlay:
   - center_x: 0.275

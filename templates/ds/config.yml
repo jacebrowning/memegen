@@ -3,7 +3,7 @@ source: https://knowyourmeme.com/memes/daily-struggle
 keywords:
   -
 text:
-  - style: default
+  - style: none
     color: black
     font: thin
     anchor_x: 0.085
@@ -14,7 +14,7 @@ text:
     align: center
     start: 0.0
     stop: 0.5
-  - style: default
+  - style: none
     color: black
     font: thin
     anchor_x: 0.455
