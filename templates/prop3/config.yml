@@ -1,0 +1,23 @@
+name: Too Confusing, Too Extreme
+source: https://wfgr.com/too-extreme-state-political-catch-phrase-gets-roasted-online/
+keywords:
+  - Michigan Proposal 3
+text:
+  - style: default
+    color: maroon
+    font: thin
+    anchor_x: 0.15
+    anchor_y: 0.31
+    angle: -3.0
+    scale_x: 0.64
+    scale_y: 0.31
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - Zipper Merging
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
