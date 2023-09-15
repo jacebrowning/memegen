@@ -38,7 +38,7 @@ text:
     stop: 1.0
 example:
   - π
-  - "3"
+  - '3'
   - The Bible
 overlay:
   - center_x: 0.275
