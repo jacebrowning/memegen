@@ -3,7 +3,7 @@ ARG ARG_MAX_REQUESTS=0
 ARG ARG_MAX_REQUESTS_JITTER=0
 
 # Prep everything
-FROM docker.io/python:3.11.5-bullseye as build
+FROM docker.io/python:3.12.0-bullseye as build
 
 # Install webp dependencies
 RUN apt update && apt install -y webp cmake
