@@ -1828,6 +1828,7 @@ description = "parse() is the opposite of format()"
 optional = false
 python-versions = "*"
 files = [
+    {file = "parse-1.19.0-py2.py3-none-any.whl", hash = "sha256:6ce007645384a91150cb7cd7c8a9db2559e273c2e2542b508cd1e342508c2601"},
     {file = "parse-1.19.0.tar.gz", hash = "sha256:9ff82852bcb65d139813e2a5197627a94966245c897796760a3a2a8eb66f020b"},
 ]
 
@@ -2991,34 +2992,40 @@ testing = ["coverage", "pytest (>=3.1.0)", "pytest-cov", "pytest-xdist"]
 
 [[package]]
 name = "webp"
-version = "0.2.0"
+version = "0.3.0"
 description = "Python bindings for WebP"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "webp-0.2.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:6e7861ae6c760eb61bb42689b14c41cc88393dedfa24f1786cc6c82273283adb"},
-    {file = "webp-0.2.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cb84edd4282aa2359f76fcdd8a4a03aaa5615340eb467329a9925b53bcc0f0fa"},
-    {file = "webp-0.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:32ca3b8c13a7ce2c83b12423d219e6a3a43c177df21a3e14ebe05856b5904512"},
-    {file = "webp-0.2.0-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:d5f9871c7e3e1e3d303bf20814f8af2c54a75335643bb3662210024902b9f94e"},
-    {file = "webp-0.2.0-cp310-cp310-win_amd64.whl", hash = "sha256:f8b07d0d105f4647f502866a915360e5752c67470d2f0effe797e9df0241dfbf"},
-    {file = "webp-0.2.0-cp310-cp310-win_arm64.whl", hash = "sha256:3b0650e066dcfd6c229d9f6b7ec7556a02d776f9eeb0bd5a8140e840c41ca8a7"},
-    {file = "webp-0.2.0-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:251ac33eec030bf8693b4bee1fffc5126a4476117861b523b19ed7f95cbb63f9"},
-    {file = "webp-0.2.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6ab703f60beb08fa87465246e6978fbed882d7fa43cb593b7e2fd35d31906bf7"},
-    {file = "webp-0.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4b9f6210194da70a4b43957bb2f3aa3f575c1c1956371b90c8390fd1647e02f5"},
-    {file = "webp-0.2.0-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:a7416899365090ec8eb0672d274137e99c2e7cec81478b40eab9f033f3741674"},
-    {file = "webp-0.2.0-cp311-cp311-win_amd64.whl", hash = "sha256:009c44497d278229c352ab2d3418e850c28bb1495206bbd6788dfda8268716ee"},
-    {file = "webp-0.2.0-cp311-cp311-win_arm64.whl", hash = "sha256:8cb0650f0d76e5f2bd621d8b685dd82ffa345cdf2a31386c20fc7ae23c8298d7"},
-    {file = "webp-0.2.0-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:eebf4a2453743995117a79fd6bd6ab4f4ea74fd8df3bd7502973cc38a92944d4"},
-    {file = "webp-0.2.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b4adac52d140ea0f0e282a2d97b7baa38e5dfe977b29073d00416706d8ebfe3f"},
-    {file = "webp-0.2.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8700e1986be75d3ed9c6ba24a27e7d3f7a82101caeb5a88da3cea6c40e05df48"},
-    {file = "webp-0.2.0-cp38-cp38-win_amd64.whl", hash = "sha256:b5563cc7fe8fc4c6a0fc04420ab8638fa0dbc32a11aafb82afc7e335b84ed267"},
-    {file = "webp-0.2.0-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:a690311c22a4a199d11426d19cf5918db2992e6fa2ebe2e9761cf384cce1f772"},
-    {file = "webp-0.2.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:542374518dd2208798cdaf831e77f4eddc887ba5a709851436074788c9df4753"},
-    {file = "webp-0.2.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:10c9e336364f9fcf09dfa6423903956d9268bce7dd63735c15b16ef00c3be141"},
-    {file = "webp-0.2.0-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:e5df2c725b15d1c38b47ceedc3693857923b5708d2b353acef92071a74a96245"},
-    {file = "webp-0.2.0-cp39-cp39-win_amd64.whl", hash = "sha256:1d28e78bb6b6644f7d8f6fe7d11a853552a0922693c5b1830677d649ca8aaefb"},
-    {file = "webp-0.2.0-cp39-cp39-win_arm64.whl", hash = "sha256:3c472a9afb964f2113f42b163452964de95f638cadcfa1c22152a0cc86232b4a"},
-    {file = "webp-0.2.0.tar.gz", hash = "sha256:cfd3614056e5d11b9410f6608c39d3c42668a38a9b106161d3474377b2202064"},
+    {file = "webp-0.3.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:ef131d8af4552f870f5984a96671600bf29558ab7c3bf5fa2a010bfaefb4ff81"},
+    {file = "webp-0.3.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:f4eec57bf92d5871a291d790e73b04e829c7703c25a141eff01da28141e50d18"},
+    {file = "webp-0.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:01c8ee5824984b2c83696b134f9d6d468a768d3e0bffb09e82f9d39027874755"},
+    {file = "webp-0.3.0-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:302c213370b549e59fba03589bcdf033723ad46d0e813843b95d0d80c3c7a903"},
+    {file = "webp-0.3.0-cp310-cp310-win_amd64.whl", hash = "sha256:55e939762c504797c3ff1c26828961986ee1b04452515910077a22b85d4214fd"},
+    {file = "webp-0.3.0-cp310-cp310-win_arm64.whl", hash = "sha256:4d0136be5a1d78d283a9df4542ab18a94ffa8a71eb692d63f459c5567b2a0796"},
+    {file = "webp-0.3.0-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:17c66319ded46c0b858424f5a8e132b1fc233106784027dede17a33bffbe508b"},
+    {file = "webp-0.3.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3901024c0214b43f0830d18dc95fb681e5e2d150d92c84b734616961b52e5f92"},
+    {file = "webp-0.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2e290cc3db157a9557fc7d0c9044f83e5ed518c92019067ac87433eb37e28bf0"},
+    {file = "webp-0.3.0-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:958e38357fa0eb60ce6352020210a90fd1954a6270f2daa758ea404f85d7739f"},
+    {file = "webp-0.3.0-cp311-cp311-win_amd64.whl", hash = "sha256:0e228715cb7102610bd78cf9b626b7dd0fb0ea89fc36be483db6c05760fa89b7"},
+    {file = "webp-0.3.0-cp311-cp311-win_arm64.whl", hash = "sha256:69f56d5e40020559ab967ff38fd37895886bb752045ebbba83750d157f692868"},
+    {file = "webp-0.3.0-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:edb6b911fdd98fc8caa5e28070ef398a9c92c6c27d435d13ebe0061cb1bf67af"},
+    {file = "webp-0.3.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:57028316253ef07b7c985aed2d635d6a9e7b77dd369aba35c17cb77f2e24fccb"},
+    {file = "webp-0.3.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ddfb90c5a726818e4a2ff9006a2f3c3168957fff56291081e64da9c54af3e6d1"},
+    {file = "webp-0.3.0-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:a70886ccad12f99286979e5615f984bfd76aff4d48861618340e8b3b0b8d2114"},
+    {file = "webp-0.3.0-cp312-cp312-win_amd64.whl", hash = "sha256:32d4c2e692cb367e1deb3696a4bca43dc4ac855cc53b265a5e2fce338e633377"},
+    {file = "webp-0.3.0-cp312-cp312-win_arm64.whl", hash = "sha256:e15336927e14320acea89b34350918d201c1ab2627c00d165dffceb5356ec246"},
+    {file = "webp-0.3.0-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:59fd0abcfe53fd3cca3df29286440f6909304c5e723b76ece1142097c6566f5f"},
+    {file = "webp-0.3.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:dff7117a5eaff19e7d3f71be9bb775e52a35cc14dd03e58ccd2d41bc57feedd2"},
+    {file = "webp-0.3.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:fe9ee71c2cf53fa9d1da3a22a7ff49e3d7734c335c48066c4a08be88d4b682c0"},
+    {file = "webp-0.3.0-cp38-cp38-win_amd64.whl", hash = "sha256:6256e63ce90331cddf5f6a3fda3b7e11a5d35284230c320e4a7614b43d9f54d7"},
+    {file = "webp-0.3.0-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:25b423412035d8888cb4d2613ef235b42bba14cd26ef04a4a28da9b39af433e7"},
+    {file = "webp-0.3.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:f1bd6dfb54ca66ee05ce83135641d98f196374202e139455ed59b7c2ec7cd150"},
+    {file = "webp-0.3.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a41dd59cd254e922995db5d373d64ec09af53eedf772e9b36adaf7394af024f9"},
+    {file = "webp-0.3.0-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:a4e0237bd3e4fce1d040b4fcc230c156a86b5e6468d9d69c5e5c2c92a35c9fbd"},
+    {file = "webp-0.3.0-cp39-cp39-win_amd64.whl", hash = "sha256:b789fc057994085877f6ea0a4980aaa6ec95335ff7dc20072a4ff69049cf3df6"},
+    {file = "webp-0.3.0-cp39-cp39-win_arm64.whl", hash = "sha256:f77f1a387e0c972f22163eb503b2d4a7e716bb352f6a06774111bcb62e5a60e7"},
+    {file = "webp-0.3.0.tar.gz", hash = "sha256:14be1d3b0b2efca620bf7d2ea028de8f618219b1ba7b2a83097ea35b7f2e7565"},
 ]
 
 [package.dependencies]
@@ -3283,4 +3290,4 @@ testing = ["locust"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.5"
-content-hash = "254f62ee71b9ba08353adeb39a29de34a01b95a15f8be63f8957b6e2da1df3b8"
+content-hash = "79a7d31881443d983a8963b1224b064ebbc03e4a4ead681b14570598d6e5cabf"
