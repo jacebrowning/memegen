@@ -1,0 +1,71 @@
+name: Fake Spirit Halloween Costume
+source: https://knowyourmeme.com/photos/2466845-fake-spirit-halloween-costumes
+keywords:
+  - adult size costume
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.1
+    anchor_y: 0.28
+    angle: 0.0
+    scale_x: 0.35
+    scale_y: 0.16
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.1
+    anchor_y: 0.45
+    angle: 0.0
+    scale_x: 0.34
+    scale_y: 0.05
+    align: left
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.1
+    anchor_y: 0.51
+    angle: 0.0
+    scale_x: 0.34
+    scale_y: 0.08
+    align: left
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.1
+    anchor_y: 0.59
+    angle: 0.0
+    scale_x: 0.34
+    scale_y: 0.08
+    align: left
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: white
+    font: thin
+    anchor_x: 0.1
+    anchor_y: 0.67
+    angle: 0.0
+    scale_x: 0.34
+    scale_y: 0.08
+    align: left
+    start: 0.0
+    stop: 1.0
+example:
+  - My Dad
+  - 'Includes:'
+  - '- Nothing'
+  - '- Nothing'
+  - '- Nothing'
+overlay:
+  - center_x: 0.65
+    center_y: 0.55
+    angle: 1.0
+    scale: 0.48
