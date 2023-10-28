@@ -14,7 +14,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 # Images
 
-The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.gif> produces:
+The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.webp> produces:
 
 ![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=wxgjeu3jll4dt9q6fihy&width=800&frames=50)
 
@@ -110,7 +110,7 @@ This can be combined with [custom overlays](#custom-overlays) to augment the bac
 
 Add the `layout=<str>` query parameter to switch between the default and `top` text positioning.
 
-For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top> produces:
+For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top> produces:
 
 ![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
 
