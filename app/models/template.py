@@ -398,9 +398,9 @@ class Template:
                     style="none",
                     color="black",
                     font="thin",
-                    anchor_x=0,
+                    anchor_x=0.01,
                     anchor_y=index * 0.1,
-                    scale_x=1.0,
+                    scale_x=0.99,
                     scale_y=0.2 / lines,
                     align="left",
                 )
