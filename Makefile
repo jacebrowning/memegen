@@ -57,11 +57,11 @@ endif
 .PHONY: clean
 clean:
 	rm -rf images site templates/_custom-* templates/*/_*
+	rm -rf *.egg-info .venv
 
 .PHONY: clean-all
 clean-all: clean
 	rm -rf app/tests/images
-	rm -rf *.egg-info .venv
 
 ###############################################################################
 # Development Tasks
