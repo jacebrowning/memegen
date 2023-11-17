@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "3.11.5"
 
 # Sanic
-sanic = "~23.6"     # update 'sanic-ext' and 'sanic-testing' to match
+sanic = "~23.6" # update 'sanic-ext' and 'sanic-testing' to match
 sanic-ext = "~23.6"
 
 # Markdown
@@ -22,14 +22,14 @@ pymdown-extensions = "^10.0"
 pygments = "^2.15.0"
 
 # Images
-pillow = "^10.0.1"    # update 'types-pillow' to match version
+pillow = "^10.0.1" # update 'types-pillow' to match version
 spongemock = "~0.3.4"
 
 # Utilities
 aiocache = "~0.11.1"
 aiohttp = "^3.8.6"
 anyio = "^3.6.2"
-datafiles = "^2.1.2"
+datafiles = "^2.2"
 furl = "^2.1.3"
 webp = "~0.3"
 
@@ -70,9 +70,9 @@ coveragespace = "^6.0"
 mkdocs = "^1.2.3"
 
 # Utilities
-honcho = { git = "https://github.com/jacebrowning/honcho", branch = "support-importlib" }
+honcho = "^1.1"
 ipdb = "*"
-rope = "^0.18.0"
+rope = "^0.18"
 watchdog = { version = "^2.2", extras = ["watchmedo"] }
 
 [tool.poetry.extras]
