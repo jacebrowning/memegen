@@ -48,7 +48,7 @@ class Text:
 
     @classmethod
     def get_watermark(cls) -> "Text":
-        return cls(color="#FFFFFF" + alpha(0.75))
+        return cls(color="#FFFFFF" + alpha(settings.WATERMARK_ALPHA))
 
     @property
     def animated(self) -> bool:
