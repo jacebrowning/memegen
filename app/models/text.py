@@ -43,7 +43,7 @@ class Text:
         )
 
     @classmethod
-    def get_remark(cls) -> "Text":
+    def get_message(cls) -> "Text":
         return cls(color="#FFC107", anchor_x=0.5)
 
     @classmethod

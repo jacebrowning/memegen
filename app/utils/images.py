@@ -498,15 +498,25 @@ def add_blurred_background(
 
 
 def add_watermark(
-    image: ImageType, text: str, is_preview: bool, index: int = 0, total: int = 1
+    image: ImageType, label: str, is_preview: bool, index: int = 0, total: int = 1
 ) -> ImageType:
-    size = (image.size[0], 1 if len(text) == 1 else settings.WATERMARK_HEIGHT)
-    font = get_font("tiny", text, size, 99)
-    offset = get_text_offset(text, font, size)
+    if is_preview:
+        text = Text.get_message()
+        thick = True
+        size = (image.size[0], int(settings.WATERMARK_HEIGHT * 0.8))
+    else:
+        text = Text.get_watermark()
+        thick = False
+        if len(label) == 1:
+            size = (image.size[0], 1)
+        else:
+            size = (image.size[0], settings.WATERMARK_HEIGHT)
 
-    watermark = Text.get_remark() if is_preview else Text.get_watermark()
+    font = get_font("tiny", label, size, 99)
+    offset = get_text_offset(label, font, size, is_watermark=is_preview)
+
     stroke_width = get_stroke_width(font)
-    stroke_width, stroke_fill = watermark.get_stroke(stroke_width, thick=is_preview)
+    stroke_width, stroke_fill = text.get_stroke(stroke_width, thick=thick)
 
     if total == 1 or total >= settings.MAXIMUM_FRAMES:
         fuzz = 0
@@ -519,8 +529,8 @@ def add_watermark(
     draw = ImageDraw.Draw(box)
     draw.text(
         (3 + fuzz, image.size[1] - size[1] - offset[1]),
-        text,
-        watermark.color,
+        label,
+        text.color,
         font,
         stroke_width=stroke_width,
         stroke_fill=stroke_fill,
@@ -690,7 +700,11 @@ def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
 
 
 def get_text_offset(
-    text: str, font: FontType, max_text_size: Dimensions, align: str = "center"
+    text: str,
+    font: FontType,
+    max_text_size: Dimensions,
+    align: str = "center",
+    is_watermark: bool = False,
 ) -> Offset:
     text_size = get_text_size(text, font)
     stroke_width = get_stroke_width(font)
@@ -715,6 +729,8 @@ def get_text_offset(
     if any(letter in lines[-1] for letter in "gjpqy"):
         descender_offset = text_size[1] // 20
         y_offset += descender_offset
+    elif is_watermark:
+        y_offset += 2
 
     return x_offset, y_offset
 

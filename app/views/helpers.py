@@ -124,7 +124,9 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
     if error:
         watermark = error
     elif style == "animated" and not template.animated_image:
-        watermark = "GIF"
+        watermark = "Animated Text"
+    elif style == "default" and template.animated_image:
+        watermark = "Static Background"
     else:
         watermark = ""
 
