@@ -24,13 +24,11 @@ COPY --chown=memegen bin /opt/memegen/bin
 COPY --chown=memegen app /opt/memegen/app
 
 # Copy Specific Files
-COPY --chown=memegen requirements.txt /opt/memegen
 COPY --chown=memegen pyproject.toml /opt/memegen/
 COPY --chown=memegen CHANGELOG.md /opt/memegen/CHANGELOG.md
 
 # Install Python Requirements
-RUN pip install wheel && \
-    pip install -r /opt/memegen/requirements.txt
+RUN pip install wheel
 
 # Set the environment variables
 ENV PATH="/opt/memegen/.local/bin:${PATH}"
