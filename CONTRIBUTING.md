@@ -85,10 +85,10 @@ You can also build this service as a container simply by running either of the f
 
 ```bash
 # Using Podman:
-podman build -t memegen -f Containerfile .
+podman build --tag memegen --file Containerfile .
 
 # Using Docker:
-docker build -t memegen -f Containerfile .
+docker build --tag memegen --file Containerfile .
 ```
 
 You can then run the container by running:
@@ -116,13 +116,13 @@ If you want to build the image for multiple CPU architectures, you can either us
 On Debian/Ubuntu, you'll need to run:
 
 ```bash
-sudo apt install -y podman buildah qemu-user-static
+sudo apt install --yes podman buildah qemu-user-static
 ```
 
 On any RHEL flavor OS, you'll need to run:
 
 ```bash
-sudo yum install -y podman buildah qemu-user-static
+sudo yum install --yes podman buildah qemu-user-static
 ```
 
 On Arch or Manjaro Linux, you'll need to run:
