@@ -168,11 +168,6 @@ async def render_image(
         url = utils.urls.arg(request.args, None, "background", "alt")
         if url:
             template = await models.Template.create(url)
-            template.customize(
-                color=utils.urls.arg(request.args, None, "color"),
-                center=utils.urls.arg(request.args, None, "center"),
-                scale=utils.urls.arg(request.args, None, "scale"),
-            )
 
             if not template.image.exists():
                 logger.error(f"Unable to download image URL: {url}")
@@ -214,10 +209,14 @@ async def render_image(
 
     layout = utils.urls.arg(request.args, "default", "layout")
     template = await template.clone(layout, len(lines), style, animated=animated)
-
     template.animate(
         utils.urls.arg(request.args, "", "start"),
         utils.urls.arg(request.args, "", "stop"),
+    )
+    template.customize(
+        color=utils.urls.arg(request.args, None, "color"),
+        center=utils.urls.arg(request.args, None, "center"),
+        scale=utils.urls.arg(request.args, None, "scale"),
     )
 
     font_name = utils.urls.arg(request.args, "", "font")
