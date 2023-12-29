@@ -13,6 +13,7 @@
     "bin/verchew": true
   },
   "python.defaultInterpreterPath": ".venv/bin/python",
+  "pylint.ignorePatterns": ["*"],
   "editor.formatOnSave": true,
   "cSpell.words": [
     "Ackbar",
