@@ -13,8 +13,8 @@ packages = [{ include = "app" }]
 python = "3.12.0"
 
 # Sanic
-sanic = "~23.6" # update 'sanic-ext' and 'sanic-testing' to match
-sanic-ext = "~23.6"
+sanic = "~23.12" # update 'sanic-ext' and 'sanic-testing' to match
+sanic-ext = "~23.12"
 
 # Markdown
 markdown = "~3.5.1"
@@ -60,7 +60,7 @@ pytest-describe = "^2.0"
 pytest-expecter = "^3.0"
 pytest-random = "*"
 pytest-cov = "^4.1"
-sanic-testing = "^23.3"
+sanic-testing = "^23.12"
 aioresponses = "*"
 
 # Coverage
