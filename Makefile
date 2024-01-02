@@ -55,9 +55,12 @@ ifeq ($(CIRCLE_BRANCH),main)
 endif
 
 .PHONY: clean
-clean:
-	rm -rf images site templates/_custom-* templates/*/_*
-	rm -rf *.egg-info .venv
+clean: clean-tmp
+	rm -rf .cache .venv site
+
+.PHONY: clean-tmp
+clean-tmp:
+	rm -rf images templates/_custom* templates/*/_*
 
 .PHONY: clean-all
 clean-all: clean
@@ -109,6 +112,9 @@ test-slow: install
 
 .PHONY: run
 run: install ## Run the applicaiton
+ifdef DEBUG
+	make clean-tmp
+endif
 	poetry run honcho start --procfile Procfile.dev
 
 ###############################################################################
