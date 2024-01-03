@@ -40,5 +40,4 @@ async def preview(request: Request):
     style = request.args.get("style") or ",".join(request.args.getlist("styles[]", []))
     while style.endswith(",default"):
         style = style.removesuffix(",default")
-    layout = utils.urls.arg(request.args, "default", "layout")
-    return await preview_image(id, style, lines, layout)
+    return await preview_image(request, id, style, lines)

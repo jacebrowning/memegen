@@ -3,12 +3,16 @@ from contextlib import suppress
 
 from sanic import exceptions, response
 from sanic.log import logger
+from sanic.request import Request
 
 from .. import models, settings, utils
 
 
 async def generate_url(
-    request, template_id: str = "", *, template_id_required: bool = False
+    request: Request,
+    template_id: str = "",
+    *,
+    template_id_required: bool = False,
 ):
     if request.form:
         payload = dict(request.form)
@@ -94,7 +98,7 @@ async def generate_url(
     return response.json({"url": url}, status=status)
 
 
-async def preview_image(id: str, style: str, lines: list[str], layout: str):
+async def preview_image(request: Request, id: str, style: str, lines: list[str]):
     error = ""
 
     id = utils.urls.clean(id)
@@ -114,7 +118,7 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
     if not any(line.strip() for line in lines):
         lines = template.example
 
-    template = await template.clone(layout, len(lines), style, animated=False)
+    template = await template.clone(request.args, len(lines), style, animated=False)
 
     if not utils.urls.schema(style):
         style = style.strip().lower()
@@ -137,7 +141,7 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
 
 
 async def render_image(
-    request,
+    request: Request,
     id: str,
     slug: str = "",
     watermark: str = "",
@@ -207,8 +211,7 @@ async def render_image(
                 logger.error(f"Invalid style: {style}")
                 status = 422
 
-    layout = utils.urls.arg(request.args, "default", "layout")
-    template = await template.clone(layout, len(lines), style, animated=animated)
+    template = await template.clone(request.args, len(lines), style, animated=animated)
     template.animate(
         utils.urls.arg(request.args, "", "start"),
         utils.urls.arg(request.args, "", "stop"),

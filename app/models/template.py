@@ -383,8 +383,9 @@ class Template:
         return await foreground.exists()
 
     async def clone(
-        self, layout: str, lines: int = 1, style: str = "default", *, animated: bool
+        self, options: dict, lines: int = 1, style: str = "default", *, animated: bool
     ) -> "Template":
+        layout = utils.urls.arg(options, "default", "layout")
         if layout != "top":
             return self
 
