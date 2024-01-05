@@ -60,7 +60,7 @@ clean: clean-tmp
 
 .PHONY: clean-tmp
 clean-tmp:
-	rm -rf images templates/_custom* templates/*/_*
+	rm -rf images templates/_custom* templates/*/_* templates/*/*.*.* "templates/<sample>"
 
 .PHONY: clean-all
 clean-all: clean

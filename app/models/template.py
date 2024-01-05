@@ -16,9 +16,10 @@ from .overlay import Overlay
 from .text import Text
 
 
-@datafile("../../templates/{self.id}/config.yml", defaults=True)
+@datafile("../../templates/{self.id}/config{self.variant}.yml", defaults=True)
 class Template:
     id: str
+    variant: str = ""
     name: str = ""
     source: str | None = None
     keywords: list[str] = field(default_factory=list)
@@ -94,6 +95,9 @@ class Template:
         level = 20 if (style != "default" or animated is True) else 10
 
         style = style or "default"
+        if self.name == "top":
+            style += ".top"
+
         logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
         if style == "animated":
             style = "default"
@@ -287,7 +291,7 @@ class Template:
                     return cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
-        template = cls.objects.get_or_create(id, url)
+        template: Template = cls.objects.get_or_create(id, name=url)
 
         suffix = Path(str(parsed.path)).suffix
         if not suffix or len(suffix) > 10:
@@ -389,8 +393,10 @@ class Template:
         if layout != "top":
             return self
 
-        id = utils.text.fingerprint(self.name) + f"-{layout}{lines}"
-        template: Template = self.objects.get_or_create(id, self.name)
+        # TODO: Only include lines in fingerprint of top layout templates
+        variant = utils.text.fingerprint(f"{layout}{lines}", prefix=".")
+
+        template: Template = self.objects.get_or_create(self.id, variant, "top")
         with frozen(template):
             template.overlay = self.overlay
             template.text = []
@@ -412,7 +418,7 @@ class Template:
         if suffix == settings.PLACEHOLDER_SUFFIX:
             suffix = settings.DEFAULT_SUFFIX
 
-        destination = Path(template.directory) / (source.stem + suffix)
+        destination = Path(template.directory) / (source.stem + ".top" + suffix)
         await asyncio.to_thread(utils.images.pad_top, source, destination)
 
         return template
