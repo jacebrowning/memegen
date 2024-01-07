@@ -98,6 +98,8 @@ def normalize(slug: str) -> tuple[str, bool]:
 
 
 def fingerprint(value: str, *, prefix="_custom-", suffix="") -> str:
+    if not value.strip():
+        return ""
     return prefix + hashlib.sha1(value.encode()).hexdigest() + suffix
 
 
