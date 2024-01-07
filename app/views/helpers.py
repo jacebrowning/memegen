@@ -180,6 +180,10 @@ async def render_image(
                     status = 415
 
             style = utils.urls.arg(request.args, "default", "style")
+            template = await template.clone(
+                request.args, len(lines), style, animated=animated
+            )
+
             if not utils.urls.schema(style):
                 style = style.lower()
             if not await template.check(style, animated=animated):
@@ -204,23 +208,16 @@ async def render_image(
                 status = 404
 
         style = utils.urls.arg(request.args, "default", "style", "alt")
+        template = await template.clone(
+            request.args, len(lines), style, animated=animated
+        )
+
         if not await template.check(style, animated=animated):
             if utils.urls.schema(style):
                 status = 415
             elif style != settings.PLACEHOLDER:
                 logger.error(f"Invalid style: {style}")
                 status = 422
-
-    template = await template.clone(request.args, len(lines), style, animated=animated)
-    template.animate(
-        utils.urls.arg(request.args, "", "start"),
-        utils.urls.arg(request.args, "", "stop"),
-    )
-    template.customize(
-        color=utils.urls.arg(request.args, None, "color"),
-        center=utils.urls.arg(request.args, None, "center"),
-        scale=utils.urls.arg(request.args, None, "scale"),
-    )
 
     font_name = utils.urls.arg(request.args, "", "font")
     if font_name == settings.PLACEHOLDER:

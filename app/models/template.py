@@ -257,12 +257,12 @@ class Template:
         frames: int = 0,
     ) -> Path:
         slug = utils.text.encode(text_lines)
-        variant = str(self.text) + font_name + style + str(size) + watermark
+        identifier = str(self.text) + font_name + style + str(size) + watermark
         if self.overlay != [Overlay()]:
-            variant += str(self.overlay)
+            identifier += str(self.overlay)
         if frames:
-            variant += str(frames)
-        fingerprint = utils.text.fingerprint(variant, prefix="")
+            identifier += str(frames)
+        fingerprint = utils.text.fingerprint(identifier, prefix="")
         filename = f"{slug}.{fingerprint}.{extension}"
         return Path(self.id) / filename
 
@@ -390,13 +390,28 @@ class Template:
         self, options: dict, lines: int = 1, style: str = "default", *, animated: bool
     ) -> "Template":
         layout = utils.urls.arg(options, "default", "layout")
-        if layout != "top":
-            return self
 
-        # TODO: Only include lines in fingerprint of top layout templates
-        variant = utils.text.fingerprint(f"{layout}{lines}", prefix=".")
+        start = utils.urls.arg(options, "", "start")
+        stop = utils.urls.arg(options, "", "stop")
 
-        template: Template = self.objects.get_or_create(self.id, variant, "top")
+        color = utils.urls.arg(options, None, "color")
+        center = utils.urls.arg(options, None, "center")
+        scale = utils.urls.arg(options, None, "scale")
+
+        identifiers = [str(v) for v in (start, stop, color, center, scale) if v]
+        if layout == "top":
+            identifiers.extend([layout, str(lines)])
+        variant = utils.text.fingerprint("".join(identifiers), prefix=".")
+
+        template: Template = self.objects.get_or_create(self.id, variant)
+        template.animate(start, stop)
+        template.customize(color, center, scale)
+
+        if layout == "top":
+            template.name = "top"
+        else:
+            return template
+
         with frozen(template):
             template.overlay = self.overlay
             template.text = []
@@ -442,7 +457,7 @@ class Template:
         if starts or stops:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
 
-    def customize(self, *, color: str, center: str, scale: str | float):
+    def customize(self, color: str, center: str, scale: str | float):
         with frozen(self):
             if color:
                 try:
