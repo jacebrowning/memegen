@@ -3,7 +3,6 @@
 /templates/_custom*
 /templates/<*
 /templates/*/_*
-/templates/*/config.*.yml
 /templates/*/*.*.*
 
 # Dependencies
