@@ -128,7 +128,7 @@ async def test_custom_style(images):
     url = "https://sn56.scholastic.com/content/dam/classroom-magazines/sn56/issues/2019-20/031620/coronavirus/16-SN56-20200316-VirusOutbreak-PO-2.png"
     template = models.Template.objects.get("fine")
     await template.check(url, force=True)
-    lines = ["102 °F", "this is fine"]
+    lines = ["101 °F", "this is fine"]
     utils.images.save(template, lines, style=url, directory=images)
 
 
