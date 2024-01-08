@@ -87,16 +87,31 @@ class Template:
     def directory(self) -> Path:
         return self.datafile.path.parent
 
+    @property
+    def layout(self) -> str:
+        if utils.urls.schema(self.source):
+            return ""
+        return self.source or ""
+
+    @layout.setter
+    def layout(self, value: str):
+        if value not in {"", "default"}:
+            self.source = value
+
+    @layout.deleter
+    def layout(self):
+        if not utils.urls.schema(self.source):
+            self.source = ""
+
     @cached_property
     def image(self) -> Path:
         return self.get_image()
 
     def get_image(self, style: str = "default", *, animated=False) -> Path:
-        level = 20 if (style != "default" or animated is True) else 10
-
         style = style or "default"
-        if self.name == "top":
-            style += ".top"
+        style += "." + self.layout
+        style = style.strip(".")
+        level = 20 if (style != "default" or animated is True) else 10
 
         logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
         if style == "animated":
@@ -145,6 +160,7 @@ class Template:
             logger.warning(
                 f"Style {url or style!r} not available for template: {self.id}"
             )
+            del self.layout
 
         return self.get_image()
 
@@ -403,13 +419,12 @@ class Template:
             identifiers.extend([layout, str(lines)])
         variant = utils.text.fingerprint("".join(identifiers), prefix=".")
 
-        template: Template = self.objects.get_or_create(self.id, variant)
+        template: Template = self.objects.get_or_create(self.id, variant, self.name)
         template.animate(start, stop)
         template.customize(color, center, scale)
+        template.layout = layout
 
-        if layout == "top":
-            template.name = "top"
-        else:
+        if template.layout != "top":
             return template
 
         with frozen(template):
@@ -433,7 +448,9 @@ class Template:
         if suffix == settings.PLACEHOLDER_SUFFIX:
             suffix = settings.DEFAULT_SUFFIX
 
-        destination = Path(template.directory) / (source.stem + ".top" + suffix)
+        destination = Path(template.directory) / (
+            source.stem + "." + template.layout + suffix
+        )
         await asyncio.to_thread(utils.images.pad_top, source, destination)
 
         return template
