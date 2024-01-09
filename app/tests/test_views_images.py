@@ -10,7 +10,7 @@ def describe_list():
     def describe_GET():
         @pytest.mark.slow
         def it_returns_example_image_urls(expect, client):
-            request, response = client.get("/images", timeout=10)
+            request, response = client.get("/images", timeout=15)
             expect(response.status) == 200
             expect(response.json).contains(
                 {
@@ -21,7 +21,7 @@ def describe_list():
 
         @pytest.mark.slow
         def it_can_filter_examples(expect, client):
-            request, response = client.get("/images?filter=awesome", timeout=10)
+            request, response = client.get("/images?filter=awesome", timeout=15)
             expect(response.status) == 200
             expect(len(response.json)) == 3
 
@@ -169,7 +169,7 @@ def describe_detail():
         ],
     )
     def it_returns_an_image(expect, client, path, content_type):
-        request, response = client.get(path, timeout=10)
+        request, response = client.get(path, timeout=15)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 

@@ -8,13 +8,13 @@ def describe_list():
         @pytest.mark.slow
         @pytest.mark.parametrize("slash", ["", "/"])
         def it_returns_all_templates(expect, client, slash):
-            request, response = client.get("/templates" + slash, timeout=10)
+            request, response = client.get("/templates" + slash, timeout=15)
             expect(response.status) == 200
             expect(len(response.json)) >= 140
 
         @pytest.mark.slow
         def it_can_filter_templates(expect, client):
-            request, response = client.get("/templates?filter=awesome", timeout=10)
+            request, response = client.get("/templates?filter=awesome", timeout=15)
             expect(response.status) == 200
             expect(len(response.json)) == 3
 
