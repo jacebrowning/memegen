@@ -422,36 +422,7 @@ class Template:
         template: Template = self.objects.get_or_create(self.id, variant, self.name)
         template.animate(start, stop)
         template.customize(color, center, scale)
-        template.layout = layout
-
-        if template.layout != "top":
-            return template
-
-        with frozen(template):
-            template.overlay = self.overlay
-            template.text = []
-            for index in range(lines):
-                text = Text(
-                    style="none",
-                    color="black",
-                    font="thin",
-                    anchor_x=0.01,
-                    anchor_y=index * 0.1,
-                    scale_x=0.99,
-                    scale_y=0.2 / lines,
-                    align="left",
-                )
-                template.text.append(text)
-
-        source = self.get_image(style=style, animated=animated)
-        suffix = source.suffix
-        if suffix == settings.PLACEHOLDER_SUFFIX:
-            suffix = settings.DEFAULT_SUFFIX
-
-        destination = Path(template.directory) / (
-            source.stem + "." + template.layout + suffix
-        )
-        await asyncio.to_thread(utils.images.pad_top, source, destination)
+        await template.position(layout, lines, style, animated)
 
         return template
 
@@ -498,6 +469,33 @@ class Template:
                     logger.error(f"Invalid overlay: {scale=}")
                 else:
                     self.overlay[0].scale = scale
+
+    async def position(self, layout: str, lines: int, style: str, animated: bool):
+        if layout == "top":
+            with frozen(self):
+                self.overlay = self.overlay
+                self.text = []
+                for index in range(lines):
+                    text = Text(
+                        style="none",
+                        color="black",
+                        font="thin",
+                        anchor_x=0.01,
+                        anchor_y=index * 0.1,
+                        scale_x=0.99,
+                        scale_y=0.2 / lines,
+                        align="left",
+                    )
+                    self.text.append(text)
+
+            source = self.get_image(style=style, animated=animated)
+            suffix = source.suffix
+            if suffix == settings.PLACEHOLDER_SUFFIX:
+                suffix = settings.DEFAULT_SUFFIX
+
+            destination = Path(self.directory) / (source.stem + ".top" + suffix)
+            await asyncio.to_thread(utils.images.pad_top, source, destination)
+            self.layout = "top"
 
     def clean(self):
         for path in self.directory.iterdir():
