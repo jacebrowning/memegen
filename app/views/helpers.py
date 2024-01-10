@@ -40,7 +40,7 @@ async def generate_url(
         else:
             template_id = utils.text.slugify(template_id)
 
-    style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")
+    style: str = utils.urls.arg(payload, "", "style", "overlay")
     if isinstance(style, list):
         style = ",".join([(s.strip() or "default") for s in style])
     while style.endswith(",default"):
@@ -169,30 +169,14 @@ async def render_image(
         status = 414
 
     elif id == "custom":
-        url = utils.urls.arg(request.args, None, "background", "alt")
+        url = utils.urls.arg(request.args, None, "background")
         if url:
             template = await models.Template.create(url)
-
             if not template.image.exists():
                 logger.error(f"Unable to download image URL: {url}")
                 template = models.Template.objects.get("_error")
                 if url != settings.PLACEHOLDER:
                     status = 415
-
-            style = utils.urls.arg(request.args, "default", "style")
-            template = await template.clone(
-                request.args, len(lines), style, animated=animated
-            )
-
-            if not utils.urls.schema(style):
-                style = style.lower()
-            if not await template.check(style, animated=animated):
-                if utils.urls.schema(style):
-                    status = 415
-                elif style != settings.PLACEHOLDER:
-                    logger.error(f"Invalid style: {style}")
-                    status = 422
-
         else:
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
@@ -207,17 +191,16 @@ async def render_image(
             if id != settings.PLACEHOLDER:
                 status = 404
 
-        style = utils.urls.arg(request.args, "default", "style", "alt")
-        template = await template.clone(
-            request.args, len(lines), style, animated=animated
-        )
+    style = utils.urls.arg(request.args, "default", "style")
 
-        if not await template.check(style, animated=animated):
-            if utils.urls.schema(style):
-                status = 415
-            elif style != settings.PLACEHOLDER:
-                logger.error(f"Invalid style: {style}")
-                status = 422
+    template = await template.clone(request.args, len(lines), style, animated=animated)
+
+    if not await template.check(style, animated=animated):
+        if utils.urls.schema(style):
+            status = 415
+        elif style != settings.PLACEHOLDER:
+            logger.error(f"Invalid style: {style}")
+            status = 422
 
     font_name = utils.urls.arg(request.args, "", "font")
     if font_name == settings.PLACEHOLDER:

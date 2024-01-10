@@ -15,10 +15,10 @@ def describe_image_redirects():
     @pytest.mark.parametrize("extension", ["png", "jpg"])
     def it_preserves_query_params_when_redirecting(expect, client, extension):
         request, response = client.get(
-            f"/images/custom/One Two.{extension}?alt=http://example.com",
+            f"/images/custom/One Two.{extension}?background=http://example.com",
             allow_redirects=False,
         )
-        redirect = f"/images/custom/One_Two.{extension}?alt=http://example.com"
+        redirect = f"/images/custom/One_Two.{extension}?background=http://example.com"
         expect(response.status) == 301
         expect(response.headers["Location"]) == redirect
 
@@ -143,23 +143,3 @@ def describe_legacy_paths():
     ):
         request, response = client.get(f"/{unknown_template.id}/test{suffix}")
         expect(response.status) == 404
-
-
-def describe_legacy_params():
-    @pytest.mark.slow
-    def it_accepts_alt_for_template(expect, client):
-        request, response = client.get(
-            "/images/custom/test.png?alt=https://www.gstatic.com/webp/gallery/3.jpg"
-        )
-        expect(response.status) == 200
-        expect(response.headers["content-type"]) == "image/png"
-
-    @pytest.mark.slow
-    def it_accepts_alt_for_style(expect, client):
-        request, response = client.get("/images/sad-biden/test.png?style=scowl")
-        expect(response.status) == 200
-
-        request, response2 = client.get("/images/sad-biden/test.png?alt=scowl")
-        expect(response.status) == 200
-
-        expect(len(response.content)) == len(response2.content)
