@@ -152,6 +152,7 @@ async def render_image(
     lines = utils.text.decode(slug)
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
+    style = utils.urls.arg(request.args, "default", "style")
 
     animated = extension in settings.ANIMATED_EXTENSIONS
     if extension not in settings.ALLOWED_EXTENSIONS:
@@ -182,7 +183,6 @@ async def render_image(
             template = models.Template.objects.get("_error")
             style = "default"
             status = 422
-
     else:
         template = models.Template.objects.get_or_none(id)
         if not template or not template.image.exists():
@@ -191,16 +191,16 @@ async def render_image(
             if id != settings.PLACEHOLDER:
                 status = 404
 
-    style = utils.urls.arg(request.args, "default", "style")
-
-    template = await template.clone(request.args, len(lines), style, animated=animated)
-
-    if not await template.check(style, animated=animated):
-        if utils.urls.schema(style):
-            status = 415
-        elif style != settings.PLACEHOLDER:
-            logger.error(f"Invalid style: {style}")
-            status = 422
+    if status < 400:
+        template = await template.clone(
+            request.args, len(lines), style, animated=animated
+        )
+        if not await template.check(style, animated=animated):
+            if utils.urls.schema(style):
+                status = 415
+            elif style != settings.PLACEHOLDER:
+                logger.error(f"Invalid style: {style}")
+                status = 422
 
     font_name = utils.urls.arg(request.args, "", "font")
     if font_name == settings.PLACEHOLDER:
