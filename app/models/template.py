@@ -417,7 +417,7 @@ class Template:
         identifiers = [str(v) for v in (start, stop, color, center, scale) if v]
         if layout == "top":
             identifiers.extend([layout, str(lines)])
-        variant = utils.text.fingerprint("".join(identifiers), prefix=".")
+        variant = utils.text.fingerprint("|".join(identifiers), prefix=".")
 
         template: Template = self.objects.get_or_create(self.id, variant, self.name)
         template.animate(start, stop)
