@@ -108,15 +108,16 @@ class Template:
         return self.get_image()
 
     def get_image(self, style: str = "default", *, animated=False) -> Path:
-        style = style or "default"
-        style += "." + self.layout
-        style = style.strip(".")
-        level = 20 if (style != "default" or animated is True) else 10
-
-        logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
         if style == "animated":
             style = "default"
             animated = True
+
+        style = style or "default"
+        style += "." + self.layout
+        style = style.strip(".")
+
+        level = 20 if (style != "default" or animated is True) else 10
+        logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
 
         url = ""
         if utils.urls.schema(style):
@@ -143,6 +144,10 @@ class Template:
             for path in paths:
                 if path.suffix != ".gif":
                     logger.log(level, f"Matched path by suffix: {path}")
+                    return path
+            for path in paths:
+                if path.stem == style:
+                    logger.log(level, f"Matched path by stem: {path}")
                     return path
 
         path = self.directory / "default.gif"

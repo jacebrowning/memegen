@@ -120,8 +120,6 @@ async def preview_image(request: Request, id: str, style: str, lines: list[str])
 
     template = await template.clone(request.args, len(lines), style, animated=False)
 
-    if not utils.urls.schema(style):
-        style = style.strip().lower()
     if style != "animated" and not await template.check(style):
         error = "Invalid Overlay"
 

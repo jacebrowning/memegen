@@ -199,6 +199,7 @@ def pad_top(source_path: Path, destination_path: Path):
             save_all=True,
             append_images=frames[1:],
             duration=foreground.info.get("duration", 100),
+            loop=0,
         )
     else:
         background = Image.new("RGB", background_dimensions, "white")
