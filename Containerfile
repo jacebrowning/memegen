@@ -29,7 +29,7 @@ COPY --chown=memegen poetry.lock /opt/memegen/
 COPY --chown=memegen CHANGELOG.md /opt/memegen/CHANGELOG.md
 
 # Install Python Requirements
-RUN pip install poetry && python -m poetry install --no-dev
+RUN pip install poetry && python -m poetry install --no-dev && pip install .
 
 # Set the environment variables
 ENV PATH="/opt/memegen/.local/bin:${PATH}"
