@@ -84,18 +84,18 @@ This service is built to run on Heroku. Route traffic through a CDN to cache gen
 You can also build this service as a container simply by running either of the following commands:
 
 ```bash
-# Using Podman:
-podman build --tag memegen --file Containerfile .
-
 # Using Docker:
 docker build --tag memegen --file Containerfile .
+
+# Using Podman:
+podman build --tag memegen --file Containerfile .
 ```
 
 You can then run the container by running:
 
 ```bash
 # Run the container
-podman run -p 5000:5000 -e DOMAIN="set.your.domain" memegen
+docker run --publish 5000:5000 --env DOMAIN="set.your.domain" memegen
 
 # Validate functionality
 $ curl http://127.0.0.1:5000/docs/ -sI
@@ -109,7 +109,7 @@ access-control-allow-origin: *
 
 ### Multi-Architecture Container Builds
 
-If you want to build the image for multiple CPU architectures, you can either use `buildah` or `docker buildx`. Below are examples for both, and assume you're in the root of the memegen git repo.
+If you want to build the image for multiple CPU architectures, you can either use `buildah` or `docker buildx`. Below are examples for both, and assume you're in the root of the repository:
 
 #### System Requirements
 
