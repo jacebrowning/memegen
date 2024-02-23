@@ -51,7 +51,11 @@ def normalize(url: str) -> str:
 
 
 def params(**kwargs) -> dict:
-    return {k: v for k, v in kwargs.items() if v}
+    return {k: escape(v) for k, v in kwargs.items() if v}
+
+
+def escape(value: str) -> str:
+    return value.replace("?", "%3F").replace("&", "%26")
 
 
 def clean(url: str) -> str:
