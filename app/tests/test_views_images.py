@@ -455,6 +455,18 @@ def describe_custom():
                 "?background=http://example.com"
             }
 
+        def it_escapes_query_parameters(expect, client):
+            data = {
+                "background": "https://cdn.discordapp.com/attachments/1/2/stare.png?ex=a1&is=b2&hm=c3",
+                "text_lines[]": ["foo", "bar"],
+            }
+            request, response = client.post("/images/custom", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/custom/foo/bar.png"
+                "?background=https://cdn.discordapp.com/attachments/1/2/stare.png%3Fex=a1%26is=b2%26hm=c3"
+            }
+
         def it_returns_gif_when_background_is_gif(expect, client):
             data = {
                 "background": "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif",
