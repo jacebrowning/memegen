@@ -159,7 +159,7 @@ async def index_custom(request: Request):
     {"image/*": bytes},
     "Invalid style for template or no image URL specified for custom template",
 )
-async def detail_blank(request, template_filename):
+async def detail_blank(request: Request, template_filename: str):
     template_id, extension = template_filename.rsplit(".", 1)
 
     if (
@@ -196,7 +196,7 @@ async def detail_blank(request, template_filename):
     {"image/*": bytes},
     "Invalid style for template or no image URL specified for custom template",
 )
-async def detail_text(request, template_id, text_filepath):
+async def detail_text(request: Request, template_id: str, text_filepath: str):
     text_paths, extension = text_filepath.rsplit(".", 1)
 
     if (
@@ -223,7 +223,7 @@ async def detail_text(request, template_id, text_filepath):
         )
         return response.redirect(utils.urls.clean(url), status=301)
 
-    url, updated = await utils.meta.tokenize(request, utils.urls.clean(request.url))
+    url, updated = await utils.meta.tokenize(request, request.url)
     if updated:
         return response.redirect(url, status=302)
 
