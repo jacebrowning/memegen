@@ -170,6 +170,7 @@ async def render_image(
     elif id == "custom":
         url = utils.urls.arg(request.args, None, "background")
         if url:
+            url = utils.urls.clean(url)
             template = await models.Template.create(url)
             if not template.image.exists():
                 logger.error(f"Unable to download image URL: {url}")

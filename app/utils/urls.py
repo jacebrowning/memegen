@@ -51,16 +51,15 @@ def normalize(url: str) -> str:
 
 
 def params(**kwargs) -> dict:
-    return {k: escape(v) for k, v in kwargs.items() if v}
-
-
-def escape(value: str) -> str:
-    return value.replace("?", "%3F").replace("&", "%26")
+    return {k: v for k, v in kwargs.items() if v}
 
 
 def clean(url: str) -> str:
     # Replace percent-encoded characters
-    url = unquote(url)
+    if "background=" in url:
+        url = url.replace("%3A", ":").replace("%2F", "/").replace("%3D", "=")
+    else:
+        url = unquote(url)
 
     # Replace invalid regex escape sequences
     url = url.replace("\\", "~b")

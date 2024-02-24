@@ -78,7 +78,7 @@ async def custom_watermarks_allowed(request: Request) -> bool:
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
-        _url, updated = await tokenize(request, urls.clean(request.url))
+        _url, updated = await tokenize(request, request.url)
         return not updated
 
     return False
