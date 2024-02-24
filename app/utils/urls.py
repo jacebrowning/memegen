@@ -57,7 +57,7 @@ def params(**kwargs) -> dict:
 def clean(url: str) -> str:
     # Replace percent-encoded characters
     if "background=" in url:
-        url = url.replace("%3A", ":").replace("%2F", "/").replace("%3D", "=")
+        url = url.replace("%3A", ":").replace("%2F", "/")
     else:
         url = unquote(url)
 

@@ -464,7 +464,7 @@ def describe_custom():
             expect(response.status) == 201
             expect(response.json) == {
                 "url": "http://localhost:5000/images/custom/foo/bar.png"
-                "?background=https://cdn.discordapp.com/attachments/1/2/stare.png%3Fex=a1%26is=b2%26hm=c3"
+                "?background=https://cdn.discordapp.com/attachments/1/2/stare.png%3Fex%3Da1%26is%3Db2%26hm%3Dc3"
             }
 
         def it_returns_gif_when_background_is_gif(expect, client):
