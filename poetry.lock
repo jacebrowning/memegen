@@ -3424,5 +3424,5 @@ testing = ["locust"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.12.0"
-content-hash = "d609cbb0c70b92cff063012dc8d22531b764247d45984a9be055d61b75f9b515"
+python-versions = "3.12.2"
+content-hash = "10376a1cdb7e25a3296a81a208e1ccd53f574948b2c5fc9bb4a4ef8192192572"
