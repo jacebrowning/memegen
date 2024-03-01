@@ -124,6 +124,13 @@ endif
 run-production: install .env
 	poetry run heroku local web
 
+.PHONY: compress
+compress: clean-tmp
+	@ for letter in {a..z} ; do \
+		echo "Optimizing templates starting with $$letter..." ;\
+		imageoptim templates/$$letter* ;\
+	done
+
 .PHONY: deploy
 deploy: .envrc
 	@ echo
