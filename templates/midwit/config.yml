@@ -1,0 +1,47 @@
+name: Midwit
+source: https://knowyourmeme.com/memes/iq-bell-curve-midwit
+keywords:
+  - IQ Bell Curve / Midwit
+text:
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.02
+    anchor_y: 0.46
+    angle: 0.0
+    scale_x: 0.283
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.13
+    anchor_y: 0.02
+    angle: 0.0
+    scale_x: 0.7
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.687
+    anchor_y: 0.386
+    angle: 0.0
+    scale_x: 0.283
+    scale_y: 0.1
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - if it's good I do it
+  - NOOOOO you have to have complex reasons for what you're doing. what is the point. what is your goal.
+  - if it's good I do it
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25
