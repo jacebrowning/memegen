@@ -38,10 +38,11 @@ text:
     stop: 1.0
 example:
   - if it's good I do it
-  - NOOOOO you have to have complex reasons for what you're doing. what is the point. what is your goal.
+  - NOOOOO you have to have complex reasons for what you're doing. what is the point.
+    what is your goal.
   - if it's good I do it
 overlay:
   - center_x: 0.5
-    center_y: 0.5
+    center_y: 0.725
     angle: 0.0
     scale: 0.25
