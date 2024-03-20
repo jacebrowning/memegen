@@ -43,7 +43,7 @@ locust = { version = "^2.12", optional = true }
 
 # Formatting
 isort = "^5.12"
-black = "^23.7"
+black = "^24.3"
 
 # Type Checking
 mypy = "^1.4.1"
