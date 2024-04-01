@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "3.12.2"
 
 # Sanic
-sanic = "~23.12" # update 'sanic-ext' and 'sanic-testing' to match
+sanic = "~23.12" # update 'sanic-ext' and 'sanic-testing' to match version
 sanic-ext = "~23.12"
 
 # Markdown
@@ -22,7 +22,7 @@ pymdown-extensions = "^10.0"
 pygments = "^2.15.0"
 
 # Images
-pillow = "^10.2.0" # update 'types-pillow' to match version
+pillow = "^10.3" # update 'types-pillow' to match version
 spongemock = "~0.3.4"
 
 # Utilities
@@ -49,7 +49,7 @@ black = "^23.7"
 mypy = "^1.4.1"
 autoflake = "^2.1"
 types-aiofiles = "*"
-types-pillow = "^10.0"
+types-pillow = "^10.2"
 types-requests = "*"
 types-setuptools = "*"
 
