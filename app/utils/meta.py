@@ -118,6 +118,8 @@ async def track(request: Request, lines: list[str]):
         return
     if any(name in request.args for name in ["height", "width", "watermark"]):
         return
+    if _get_api_key(request):
+        return
 
     async with aiohttp.ClientSession() as session:
         params = dict(text=text, referer=referer, result=urls.clean(request.url))

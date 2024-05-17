@@ -17,8 +17,8 @@ Additional clients can be found by searching for [code examples](https://github.
 
 # Authentication
 
-Unauthenticated API requests are watermarked and may be rate limited.
-Individuals sponsoring this project at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or more are welcome to an API key.
+Unauthenticated API requests are watermarked and may be rate-limited or used as training data.
+Individuals sponsoring this project at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or higher are welcome to an API key.
 Please <a href="mailto:support@maketested.com?subject=memegen.link">contact support</a> to request one or inquire about pricing for your specific use case.
 
 ## HTTP Header
