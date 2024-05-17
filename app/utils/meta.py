@@ -116,9 +116,7 @@ async def track(request: Request, lines: list[str]):
     referer = _get_referer(request) or settings.BASE_URL
     if referer in settings.REMOTE_TRACKING_URL:
         return
-    if any(name in request.args for name in ["height", "width", "watermark"]):
-        return
-    if _get_api_key(request):
+    if any(name in request.args for name in ["height", "width", "watermark", "token"]):
         return
 
     async with aiohttp.ClientSession() as session:
