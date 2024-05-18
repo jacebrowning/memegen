@@ -64,7 +64,7 @@ sanic-testing = "^23.12"
 aioresponses = "*"
 
 # Coverage
-coveragespace = "^6.0"
+coveragespace = "^6.1"
 
 # Documentation
 mkdocs = "^1.2.3"
