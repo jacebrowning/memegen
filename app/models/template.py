@@ -424,7 +424,13 @@ class Template:
             identifiers.extend([layout, str(lines)])
         variant = utils.text.fingerprint("|".join(identifiers), prefix=".")
 
-        template: Template = self.objects.get_or_create(self.id, variant, self.name)
+        template: Template = self.objects.get_or_create(
+            self.id,
+            variant,
+            name=self.name,
+            text=self.text,
+            overlay=self.overlay,
+        )
         template.animate(start, stop)
         template.customize(color, center, scale)
         await template.position(layout, lines, style, animated)
