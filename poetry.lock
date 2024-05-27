@@ -715,19 +715,19 @@ requests = ">=2.28,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "2.2.2"
+version = "2.2.3"
 description = "File-based ORM for dataclasses."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "datafiles-2.2.2-py3-none-any.whl", hash = "sha256:ad50344be44444edf8220046b3cfb81aff61aed5c3dd61f2808caf5add2f5ec2"},
-    {file = "datafiles-2.2.2.tar.gz", hash = "sha256:c82e3ca2e187f5fdbb6eb01c4001021c945f0e75de1e32b0aeece3615d8d478b"},
+    {file = "datafiles-2.2.3-py3-none-any.whl", hash = "sha256:a3251ce5cc0c508907c8bc97c6601401b6576f6d6fc94b209ba7519d970d2058"},
+    {file = "datafiles-2.2.3.tar.gz", hash = "sha256:4192e1bc22e47d6a50c1384d1a5becc6106eb6aaa725f46326b890cf36c62113"},
 ]
 
 [package.dependencies]
 cached_property = ">=1.5,<2.0"
 classproperties = ">=0.2,<0.3"
-minilog = ">=2.1,<3.0"
+minilog = ">=2.3,<3.0"
 parse = ">=1.12,<2.0"
 "ruamel.yaml" = ">=0.17.21,<0.18.0"
 tomlkit = ">=0.10.1,<0.11.0"
@@ -1599,13 +1599,13 @@ files = [
 
 [[package]]
 name = "minilog"
-version = "2.2"
+version = "2.3"
 description = "Minimalistic wrapper for Python logging."
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "minilog-2.2-py3-none-any.whl", hash = "sha256:8eda4bf1ee6bcb302a09c36c8e0a58fdd24f41f381c8ca254ddac0f814759e76"},
-    {file = "minilog-2.2.tar.gz", hash = "sha256:b2bae5327bf62b82b700bf58e17e5236ee77036dd8de6d44e6c5cff59d0a97ac"},
+    {file = "minilog-2.3-py3-none-any.whl", hash = "sha256:e42dc2def1da424e90d6664279c128dde94adc5840557b27857957ed23ee09b6"},
+    {file = "minilog-2.3.tar.gz", hash = "sha256:ebdf354f1dd86a2e8a824cdde4b7b50cdbc24b99a5465bc4d1806bd1e030bc92"},
 ]
 
 [[package]]
@@ -3431,4 +3431,4 @@ testing = ["locust"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.2"
-content-hash = "6ffc8b6405409313c82f926ef4b0c5d78e079426cd07e5e13bf42b96e1b16ce6"
+content-hash = "61331eba9046d0ef118fc58df16572aaed52c44d924114d24d75ff37d713cfb5"
