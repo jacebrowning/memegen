@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "3.12.2"
 
 # Sanic
-sanic = "~23.12" # update 'sanic-ext' and 'sanic-testing' to match version
+sanic = "~23.12.1" # update 'sanic-ext' and 'sanic-testing' to match version
 sanic-ext = "~23.12"
 
 # Markdown
@@ -27,7 +27,7 @@ spongemock = "~0.3.4"
 
 # Utilities
 aiocache = "~0.11.1"
-aiohttp = "^3.9.4"
+aiohttp = "^3.9.5"
 anyio = "^3.6.2"
 datafiles = "^2.2.3"
 furl = "^2.1.3"

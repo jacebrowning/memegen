@@ -34,7 +34,7 @@ async def fetch(url: str, **kwargs) -> tuple[int, dict | str]:
 
 
 async def download(url: str, path: AsyncPath) -> bool:
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(skip_auto_headers=["User-Agent"]) as session:
         try:
             async with session.get(url, timeout=10) as response:
                 if response.history:
