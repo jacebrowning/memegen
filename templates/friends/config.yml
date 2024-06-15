@@ -1,0 +1,55 @@
+name: Are You Two Friends?
+source: https://knowyourmeme.com/memes/are-you-two-friends
+keywords:
+  - Star Trek
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.25
+    anchor_y: 0.2
+    angle: -3.0
+    scale_x: 0.6
+    scale_y: 0.2
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.05
+    anchor_y: 0.65
+    angle: 5.0
+    scale_x: 0.4
+    scale_y: 0.2
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.46
+    anchor_y: 0.69
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.2
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - Progressives
+  - Republicans
+  - Libertarians
+overlay:
+  - center_x: 0.55
+    center_y: 0.31
+    angle: -3.0
+    scale: 0.27
+  - center_x: 0.25
+    center_y: 0.76
+    angle: 5.0
+    scale: 0.27
+  - center_x: 0.68
+    center_y: 0.79
+    angle: 0.0
+    scale: 0.27
