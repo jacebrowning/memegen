@@ -59,4 +59,5 @@ FONTS = [
     Font("Impact.ttf", "impact"),
     Font("TitilliumWeb-SemiBold.ttf", "titilliumweb-thin", alias="thin"),
     Font("Segoe UI Bold.ttf", "segoe", alias="tiny"),
+    Font("HG-Mincho-B.ttc", "hg-mincho-b", alias="jp")
 ]
