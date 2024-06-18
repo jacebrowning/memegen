@@ -126,6 +126,7 @@ Add the `font=<str>` query parameter to customize the look of your meme:
 | [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
 | [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
 | [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
+| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
 
 <br>
 
