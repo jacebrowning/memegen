@@ -2,7 +2,7 @@ ARG ARG_PORT=5000
 ARG ARG_MAX_REQUESTS=0
 ARG ARG_MAX_REQUESTS_JITTER=0
 
-FROM docker.io/python:3.12.2-bullseye as build
+FROM docker.io/python:3.12.5-bullseye as build
 
 # Install system dependencies
 RUN apt update && apt install --yes webp cmake
