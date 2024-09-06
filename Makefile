@@ -128,7 +128,8 @@ run-production: install .env
 compress: clean-tmp
 	@ for letter in {a..z} ; do \
 		echo "Optimizing templates starting with $$letter..." ;\
-		imageoptim templates/$$letter* ;\
+		find templates/$$letter* -name '*.jpg' -or -name '*.jpeg' | xargs jpegoptim -m85 --strip-all -q ;\
+		find templates/$$letter* -name '*.png' | xargs optipng -o7 -quiet ;\
 	done
 
 .PHONY: deploy
