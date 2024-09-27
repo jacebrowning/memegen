@@ -153,7 +153,7 @@ async def search(request: Request, text: str, safe: bool, *, mode="") -> list[di
         )
         logger.info(f"Searching for results: {text!r} (safe={safe})")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
-        response = await session.get(api, params=params, headers=headers)
+        response = await session.get(api, params=params, headers=headers)  # type: ignore[arg-type]
         if response.status >= 500:
             settings.REMOTE_TRACKING_ERRORS += 1
             return []

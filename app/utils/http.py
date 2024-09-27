@@ -10,6 +10,7 @@ EXCEPTIONS = (
     aiohttp.client_exceptions.ClientConnectionError,
     aiohttp.client_exceptions.InvalidURL,
     aiohttp.client_exceptions.TooManyRedirects,
+    aiohttp.client_exceptions.NonHttpUrlClientError,
     AssertionError,
     asyncio.TimeoutError,
     UnicodeError,
@@ -17,9 +18,9 @@ EXCEPTIONS = (
 
 
 async def fetch(url: str, **kwargs) -> tuple[int, dict | str]:
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(10)) as session:
         try:
-            async with session.get(url, timeout=10, **kwargs) as response:
+            async with session.get(url, **kwargs) as response:
                 try:
                     message = await response.json()
                 except aiohttp.client_exceptions.ContentTypeError:
@@ -34,9 +35,11 @@ async def fetch(url: str, **kwargs) -> tuple[int, dict | str]:
 
 
 async def download(url: str, path: AsyncPath) -> bool:
-    async with aiohttp.ClientSession(skip_auto_headers=["User-Agent"]) as session:
+    async with aiohttp.ClientSession(
+        skip_auto_headers=["User-Agent"], timeout=aiohttp.ClientTimeout(10)
+    ) as session:
         try:
-            async with session.get(url, timeout=10) as response:
+            async with session.get(url) as response:
                 if response.history:
                     # TODO: Figure out which sites use 3xx as errors
                     if "imgur" in url:
