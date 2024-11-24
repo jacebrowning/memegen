@@ -29,6 +29,7 @@
     "autoflake",
     "autouse",
     "Baggins",
+    "Bluesky",
     "BUGSNAG",
     "buildah",
     "buildpacks",
@@ -132,5 +133,6 @@
     "webp",
     "Wonka",
     "Zoidberg"
-  ]
+  ],
+  "djlint.showInstallError": false
 }
