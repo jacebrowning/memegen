@@ -65,7 +65,7 @@ Emojis are also supported, both as characters (👍) and aliases (`:thumbsup:`).
 
 For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thubsup:.png> produces:
 
-![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash-- :thumbsup:.png?width=800&token=offeqniqbh09p5m2bedu)
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i)
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
