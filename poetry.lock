@@ -3623,5 +3623,5 @@ testing = ["locust"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.12.5"
-content-hash = "50ebcca0d491989ee1f401b1d502e49b43e8c618f36389abe998253f794181f7"
+python-versions = "~3.12.2"
+content-hash = "187de6025db6507688a1490818e0bde288538a0ea03c5e434f772c903b83ed41"
