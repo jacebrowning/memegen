@@ -72,7 +72,7 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png?style=default,test&font=impact"
             }
 
-        def it_returns_gif_when_animated(expect, client):
+        def it_returns_webp_when_animated(expect, client):
             data = {
                 "template_id": "iw",
                 "text_lines[]": ["foo", "bar"],
@@ -81,7 +81,7 @@ def describe_list():
             request, response = client.post("/images", data=data)
             expect(response.status) == 201
             expect(response.json) == {
-                "url": "http://localhost:5000/images/iw/foo/bar.gif"
+                "url": "http://localhost:5000/images/iw/foo/bar.webp"
             }
 
         def it_prefers_extension_over_animated_style(expect, client):

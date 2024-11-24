@@ -63,7 +63,7 @@ Reserved URL characters can be included using escape patterns:
 
 Emojis are also supported, both as characters (👍) and aliases (`:thumbsup:`).
 
-For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thubsup:.png> produces:
+For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png> produces:
 
 ![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i)
 
