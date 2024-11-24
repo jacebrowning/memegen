@@ -158,7 +158,7 @@ async def test_custom_style_rotated(images):
 
 
 def test_special_characters(images, template):
-    lines = ["Special? 100% #these-memes", "template_rating: 9/10"]
+    lines = ["Special? 👋 100% #these-memes", "template_rating: 9/10"]
     utils.images.save(template, lines, directory=images)
 
 

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import io
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator, cast
 
+import emoji
 import webp
 from PIL import (
     Image,
@@ -14,11 +16,12 @@ from PIL import (
     ImageSequence,
     UnidentifiedImageError,
 )
+from pilmoji import Pilmoji
 from sanic.log import logger
 
 from .. import settings
 from ..models import Font, Template, Text
-from ..types import Align, Dimensions, FontType, ImageType, Offset, Point
+from ..types import Align, Dimensions, DrawType, FontType, ImageType, Offset, Point
 
 EXCEPTIONS = (
     OSError,
@@ -253,16 +256,17 @@ def render_image(
             draw.rectangle(xy, outline=outline)
 
         rows = text.count("\n") + 1
-        draw.text(
-            (-offset[0], -offset[1]),
-            text,
-            text_fill,
-            font,
-            spacing=-offset[1] / (rows * 2),
-            align=align,
-            stroke_width=stroke_width,
-            stroke_fill=stroke_fill,
-        )
+        with emoji_support(box, draw, text) as draw:
+            draw.text(
+                (-offset[0], -offset[1]),
+                text,
+                text_fill,
+                font,
+                spacing=-offset[1] / (rows * 2),
+                align=align,
+                stroke_width=stroke_width,
+                stroke_fill=stroke_fill,
+            )
 
         box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
         image.paste(box, point, box)
@@ -386,16 +390,17 @@ def render_animation(
                 draw.rectangle(xy, outline=outline)
 
             rows = text.count("\n") + 1
-            draw.text(
-                (-offset[0], -offset[1]),
-                text,
-                text_fill,
-                font,
-                spacing=-offset[1] / (rows * 2),
-                align=align,
-                stroke_width=stroke_width,
-                stroke_fill=stroke_fill,
-            )
+            with emoji_support(box, draw, text) as draw:
+                draw.text(
+                    (-offset[0], -offset[1]),
+                    text,
+                    text_fill,
+                    font,
+                    spacing=-offset[1] / (rows * 2),
+                    align=align,
+                    stroke_width=stroke_width,
+                    stroke_fill=stroke_fill,
+                )
 
             try:
                 box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
@@ -552,6 +557,16 @@ def add_counter(
     draw.text((3, -3), text, "lime", font, stroke_width=1, stroke_fill="black")
 
     return Image.alpha_composite(image, box)
+
+
+@contextmanager
+def emoji_support(image: ImageType, draw: DrawType, text: str):
+    if emoji.emoji_count(text):
+        pilmoji = Pilmoji(image, render_discord_emoji=False, emoji_scale_factor=0.8)
+        yield pilmoji
+        pilmoji.close()
+    else:
+        yield draw
 
 
 def get_image_elements(

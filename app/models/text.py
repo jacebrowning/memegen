@@ -1,6 +1,7 @@
 import re
 from dataclasses import dataclass
 
+import emoji
 from sanic.log import logger
 from spongemock import spongemock
 
@@ -87,6 +88,7 @@ class Text:
         return text
 
     def stylize(self, text: str, **kwargs) -> str:
+        text = emoji.emojize(text, language="alias")
         lines = [line for line in kwargs.get("lines", [text]) if line.strip()]
 
         if self.style == "none":
