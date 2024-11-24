@@ -61,9 +61,11 @@ Reserved URL characters can be included using escape patterns:
 - tilde + G (`~g`) → greater-than sign (`>`)
 - 2 single quotes (`''`) → double quote (`"`)
 
-For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png> produces:
+Emojis are also supported, both as characters (👍) and aliases (`:thumbsup:`).
 
-![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png?width=800&token=g1oow9vw3dw5l1iy7a9q)
+For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thubsup:.png> produces:
+
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash-- :thumbsup:.png?width=800&token=offeqniqbh09p5m2bedu)
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 

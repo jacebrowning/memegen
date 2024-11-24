@@ -1,6 +1,6 @@
 # Revision History
 
-## 11.1b1
+## 11.1
 
 - Added emoji support.
 
