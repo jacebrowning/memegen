@@ -71,7 +71,7 @@ def describe_image_redirects():
 def describe_path_redirects():
     def it_redirects_to_example_image_when_no_extension(expect, client):
         request, response = client.get("/images/fry", allow_redirects=False)
-        redirect = "/images/fry/not_sure_if_trolling/or_just_stupid.gif"
+        redirect = "/images/fry/not_sure_if_trolling/or_just_stupid.webp"
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
