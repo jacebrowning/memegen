@@ -41,12 +41,12 @@ def describe_detail():
                 "_self": "http://localhost:5000/templates/iw",
             }
 
-        def it_defaults_to_webp_example_when_available(expect, client):
+        def it_defaults_to_animated_example_when_available(expect, client):
             request, response = client.get("/templates/bongo")
             expect(response.status) == 200
             expect(response.json["example"]["url"]) == (
                 "http://localhost:5000/images/bongo/"
-                "Any_sound_when_you're_trying_to_sleep/Max_volume_alarm_when_you_have_to_wake_up.webp"
+                "Any_sound_when_you're_trying_to_sleep/Max_volume_alarm_when_you_have_to_wake_up.gif"
             )
 
         def it_returns_404_when_missing(expect, client):
