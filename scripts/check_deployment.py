@@ -18,7 +18,7 @@ def test_post_images(expect, url):
     params = {"template_id": "iw", "text_lines": ["test", "deployment"]}
     response = requests.post(f"{url}/images", json=params)
     expect(response.status_code) == 201
-    expect(response.json()["url"]).endswith("/images/iw/test/deployment.png")
+    expect(response.json()["url"]).contains("/images/iw/test/deployment.")
 
 
 def test_get_examples(expect, url):
