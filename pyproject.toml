@@ -10,7 +10,7 @@ packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 
-python = "~3.12.2"
+python = "^3.13.1"
 
 # Sanic
 sanic = "~24.6" # run 'poetry update sanic-ext sanic-testing' when changing this
@@ -28,7 +28,7 @@ spongemock = "~0.3.4"
 
 # Utilities
 aiocache = "~0.11.1"
-aiohttp = "^3.10.11"
+aiohttp = "^3.11.10"
 anyio = "^3.6.2"
 datafiles = "^2.2.3"
 furl = "^2.1.3"
@@ -36,9 +36,8 @@ webp = "~0.3"
 
 # Production
 bugsnag = "^4.6"
-gunicorn = "^22.0"
-uvicorn = "~0.23.2"
-locust = { version = "^2.12", optional = true }
+gunicorn = "^23.0"
+uvicorn = "~0.31.1"
 
 [tool.poetry.group.dev.dependencies]
 
@@ -63,6 +62,7 @@ pytest-random = "*"
 pytest-cov = "^4.1"
 sanic-testing = "*"
 aioresponses = "*"
+locust = "^2.32.4"
 
 # Coverage
 coveragespace = "^6.1"
@@ -75,10 +75,6 @@ honcho = "^1.1"
 ipdb = "*"
 rope = "^0.18"
 watchdog = { version = "^2.2", extras = ["watchmedo"] }
-
-[tool.poetry.extras]
-
-testing = ["locust"]
 
 [tool.black]
 
