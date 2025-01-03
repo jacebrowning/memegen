@@ -31,11 +31,7 @@ install: $(BACKEND_DEPENDENCIES) ## Install project dependencies
 
 $(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config virtualenvs.in-project true
-ifdef CI
 	poetry install
-else
-	poetry install --extras testing
-endif
 	@ touch $@
 
 ifndef CI

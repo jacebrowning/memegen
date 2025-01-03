@@ -27,3 +27,5 @@ htmlcov/
 
 # Site
 /site/
+
+.codegpt
