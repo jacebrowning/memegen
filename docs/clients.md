@@ -6,7 +6,6 @@ Here are some popular apps and integrations to check out:
 | :---------- | :--------- | :--------------------------------------------- |
 | Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
 | Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
-| Slack       | --         | <http://www.memetizer.com>                     |
 | Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
 | Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
 | Web & Slack | --         | <https://memecomplete.com>                     |

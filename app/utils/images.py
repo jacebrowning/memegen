@@ -112,7 +112,7 @@ def save(
         count = len(frames)
         fps = round(1 / duration * 1000, 2)
         logger.info(f"Saving {count} frames as WebP at {fps} frame/s")
-        webp.save_images(frames, path, fps=fps, lossless=False)
+        webp.save_images(frames, str(path), fps=fps, lossless=False)
     else:
         image = render_image(
             template, style, lines, size, font_name, watermark=watermark
