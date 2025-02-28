@@ -4,7 +4,7 @@ export PYTHONBREAKPOINT=ipdb.set_trace
 all: doctor format check test ## Run all validation targets
 
 .PHONY: dev
-dev: install ## Rerun all validation targests in a loop
+dev: install ## Rerun all validation targets in a loop
 	@ sleep 2 && touch */__init__.py &
 	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
 
@@ -14,7 +14,7 @@ dev: install ## Rerun all validation targests in a loop
 .PHONY: bootstrap
 bootstrap: ## Attempt to install system dependencies
 	asdf plugin add python || asdf plugin update python
-	asdf plugin add poetry https://github.com/asdf-community/asdf-poetry.git || asdf plugin update poetry
+	asdf plugin add poetry || asdf plugin update poetry
 	asdf install
 
 .PHONY: doctor
@@ -36,7 +36,7 @@ $(BACKEND_DEPENDENCIES): poetry.lock
 
 ifndef CI
 poetry.lock: pyproject.toml
-	poetry lock --no-update
+	poetry lock
 	@ touch $@
 endif
 
@@ -107,7 +107,7 @@ test-slow: install
 	poetry run pytest -m slow --durations=0 --durations-min=0.05
 
 .PHONY: run
-run: install ## Run the applicaiton
+run: install ## Run the application
 ifdef DEBUG
 	make clean-tmp
 endif
