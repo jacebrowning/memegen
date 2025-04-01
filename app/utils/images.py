@@ -124,7 +124,7 @@ def save(
 
 def load(path: Path) -> ImageType:
     image = Image.open(path).convert("RGBA")
-    image = ImageOps.exif_transpose(image)
+    image = cast(ImageType, ImageOps.exif_transpose(image))
     return image
 
 
@@ -164,7 +164,7 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
     for frame in ImageSequence.Iterator(background):
         stream = io.BytesIO()
         frame.save(stream, format="GIF")
-        background = Image.open(stream).convert("RGBA")
+        background = Image.open(stream).convert("RGBA")  # type: ignore[assignment]
 
         size = overlay.get_size(background.size)
         foreground.thumbnail(size)
@@ -712,7 +712,7 @@ def get_font(
 def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
     text_width, text_height = get_text_size(text, font)
     x_offset, y_offset, _, _ = font.getbbox(text)
-    return text_width - x_offset, text_height - y_offset
+    return text_width - x_offset, text_height - y_offset  # type: ignore[return-value]
 
 
 def get_text_offset(
@@ -733,7 +733,7 @@ def get_text_offset(
     rows = len(lines)
     if rows >= 3:
         y_adjust = 1.1
-    elif rows == 2 and "Impact" in font.getname()[0]:
+    elif rows == 2 and "Impact" in font.getname()[0]:  # type: ignore[operator]
         y_adjust = 1.1
     else:
         y_adjust = 1 + (3 - rows) * 0.25
@@ -756,8 +756,8 @@ def get_text_size(text: str, font: FontType) -> Dimensions:
     draw = ImageDraw.Draw(image)
     _, _, text_width, text_height = draw.textbbox((0, 0), text, font)
     stroke_width = get_stroke_width(font)
-    return text_width + stroke_width, text_height + stroke_width
+    return text_width + stroke_width, text_height + stroke_width  # type: ignore[return-value]
 
 
 def get_stroke_width(font: FontType) -> int:
-    return min(3, max(1, font.size // 12))
+    return min(3, max(1, int(font.size / 12)))
