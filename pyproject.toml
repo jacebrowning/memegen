@@ -22,7 +22,7 @@ pymdown-extensions = "^10.0"
 pygments = "^2.15.0"
 
 # Images
-pillow = "^10.4" # run 'poetry update types-pillow' when changing this
+pillow = "~11.1" # upgrades blocked by https://github.com/jay3332/pilmoji/issues/46
 pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
 spongemock = "~0.3.4"
 
@@ -49,7 +49,6 @@ black = "^24.3"
 mypy = "^1.4.1"
 autoflake = "^2.1"
 types-aiofiles = "*"
-types-pillow = "*"
 types-requests = "*"
 types-setuptools = "*"
 
