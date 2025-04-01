@@ -13,7 +13,9 @@
     "bin/verchew": true
   },
   "python.defaultInterpreterPath": ".venv/bin/python",
-  "pylint.ignorePatterns": ["*"],
+  "pylint.ignorePatterns": [
+    "*"
+  ],
   "editor.formatOnSave": true,
   "cSpell.words": [
     "Ackbar",
@@ -71,6 +73,7 @@
     "htmlcov",
     "icanhas",
     "imgur",
+    "ipdb",
     "isort",
     "isupper",
     "jpegoptim",
@@ -110,6 +113,7 @@
     "pygments",
     "pymdown",
     "pyproject",
+    "pytest",
     "PYTHONASYNCIODEBUG",
     "PYTHONBREAKPOINT",
     "PYTHONUNBUFFERED",
@@ -139,6 +143,7 @@
     "toohigh",
     "typeahead",
     "uvicorn",
+    "venv",
     "verchew",
     "virtualenvs",
     "watchmedo",
@@ -146,5 +151,6 @@
     "Wonka",
     "Zoidberg"
   ],
-  "djlint.showInstallError": false
+  "djlint.showInstallError": false,
+  "makefile.configureOnOpen": false
 }
