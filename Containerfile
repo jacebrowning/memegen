@@ -27,7 +27,7 @@ COPY --chown=memegen poetry.lock /opt/memegen/
 COPY --chown=memegen CHANGELOG.md /opt/memegen/CHANGELOG.md
 
 # Install project dependencies
-RUN poetry install --no-dev
+RUN poetry install --only=main
 
 # Set environment variables
 ENV PATH="/opt/memegen/.local/bin:${PATH}"
