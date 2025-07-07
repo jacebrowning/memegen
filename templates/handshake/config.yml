@@ -2,8 +2,6 @@ name: Epic Handshake
 source: 
   https://www.deviantart.com/miloslavvonranda/art/EPIC-handshake-by-Dillon-and-Dutch-325709082
 keywords:
-  - epic
-  - handshake
   - object-labeled
   - object-labelling
 text:
@@ -43,7 +41,7 @@ text:
 example:
   - left
   - right
-  - centre
+  - center
 overlay:
   - center_x: 0.4
     center_y: 0.2
