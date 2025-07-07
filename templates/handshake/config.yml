@@ -1,5 +1,6 @@
 name: Epic Handshake
-source: https://www.deviantart.com/miloslavvonranda/art/EPIC-handshake-by-Dillon-and-Dutch-325709082
+source: 
+  https://www.deviantart.com/miloslavvonranda/art/EPIC-handshake-by-Dillon-and-Dutch-325709082
 keywords:
   - epic
   - handshake
@@ -31,10 +32,10 @@ text:
   - style: upper
     color: white
     font: thick
-    anchor_x: -0.1
+    anchor_x: 0.15
     anchor_y: 0.1
     angle: 0.0
-    scale_x: 1.0
+    scale_x: 0.5
     scale_y: 0.2
     align: center
     start: 0.0
@@ -44,7 +45,7 @@ example:
   - right
   - centre
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
+  - center_x: 0.4
+    center_y: 0.2
     angle: 0.0
     scale: 0.25
