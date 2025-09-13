@@ -70,7 +70,7 @@ coveragespace = "^6.1"
 mkdocs = "^1.2.3"
 
 # Utilities
-honcho = "^1.1"
+honcho = "^2.0"
 ipdb = "*"
 rope = "^0.18"
 watchdog = { version = "^2.2", extras = ["watchmedo"] }
