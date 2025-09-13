@@ -1055,14 +1055,14 @@ files = [
 
 [[package]]
 name = "furl"
-version = "2.1.3"
+version = "2.1.4"
 description = "URL manipulation made simple."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "furl-2.1.3-py2.py3-none-any.whl", hash = "sha256:9ab425062c4217f9802508e45feb4a83e54324273ac4b202f1850363309666c0"},
-    {file = "furl-2.1.3.tar.gz", hash = "sha256:5a6188fe2666c484a12159c18be97a1977a71d632ef5bb867ef15f54af39cc4e"},
+    {file = "furl-2.1.4-py2.py3-none-any.whl", hash = "sha256:da34d0b34e53ffe2d2e6851a7085a05d96922b5b578620a37377ff1dbeeb11c8"},
+    {file = "furl-2.1.4.tar.gz", hash = "sha256:877657501266c929269739fb5f5980534a41abd6bbabcb367c136d1d3b2a6015"},
 ]
 
 [package.dependencies]
@@ -3927,4 +3927,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "99624a1a7e9360e0c73fd82527c0c46d14e808a69b0070997640615835fbd6bd"
+content-hash = "7584bfa2d58be8897b18bbb68df160279a600e1e37e373881f1d19bd2a714167"
