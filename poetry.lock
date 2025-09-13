@@ -2691,18 +2691,18 @@ testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtuale
 
 [[package]]
 name = "pytest-describe"
-version = "2.1.0"
+version = "2.2.0"
 description = "Describe-style plugin for pytest"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "pytest-describe-2.1.0.tar.gz", hash = "sha256:0630c95ac4942ab8dcd8e766236f86436b4984896db0c059fc234fef66fe9732"},
-    {file = "pytest_describe-2.1.0-py3-none-any.whl", hash = "sha256:3ea587839363a91ea24e35e442dae46b56bd91d670e63b755e002b0adfc7a7b2"},
+    {file = "pytest-describe-2.2.0.tar.gz", hash = "sha256:39bb05eb90f2497d9ca342ef9a0b7fa5bada7e58505aec33f66d661d631955b7"},
+    {file = "pytest_describe-2.2.0-py3-none-any.whl", hash = "sha256:bd9e2c73acb4b9522a8400823d98f5b6a081667d3bfd7243a8598336896b544d"},
 ]
 
 [package.dependencies]
-pytest = ">=4.6,<8"
+pytest = ">=4.6,<9"
 
 [[package]]
 name = "pytest-expecter"
@@ -3927,4 +3927,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "0feacaa53084a280fd546e5f4a2e4b26ab95a5ea18c28962666830049a43a6b9"
+content-hash = "657ccf02a3e20da4f219662c73a64255aecde0f2190bc024e8c64d43bc9b1b27"
