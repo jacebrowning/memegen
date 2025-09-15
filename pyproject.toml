@@ -42,7 +42,7 @@ uvicorn = "~0.31.1"
 [tool.poetry.group.dev.dependencies]
 
 # Formatting
-isort = "^5.12"
+isort = "^6.0"
 black = "^24.3"
 
 # Type Checking
