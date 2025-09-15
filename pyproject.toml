@@ -24,7 +24,7 @@ pygments = "^2.15.0"
 # Images
 pillow = "~11.1" # upgrades blocked by https://github.com/jay3332/pilmoji/issues/46
 pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
-spongemock = "~0.3.4"
+spongemock = "~1.0.0"
 
 # Utilities
 aiocache = "~0.11.1"
