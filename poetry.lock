@@ -2706,17 +2706,6 @@ pyyaml = "*"
 extra = ["pygments (>=2.12)"]
 
 [[package]]
-name = "pyperclip"
-version = "1.8.2"
-description = "A cross-platform clipboard module for Python. (Only handles plain text for now.)"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "pyperclip-1.8.2.tar.gz", hash = "sha256:105254a8b04934f0bc84e9c24eb360a591aaf6535c9def5f29d92af107a9bf57"},
-]
-
-[[package]]
 name = "pytest"
 version = "7.4.3"
 description = "pytest: simple powerful testing with Python"
@@ -3418,18 +3407,15 @@ files = [
 
 [[package]]
 name = "spongemock"
-version = "0.3.4"
+version = "1.0.0"
 description = "Mock some text like spongebob would. mOCk SoMe TexT lIKe SpONGebOb wOuLd."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "spongemock-0.3.4-py2.py3-none-any.whl", hash = "sha256:6a7df0a929a8d0f55cae1b2cfb45db471775f6fda0f2c2239d9935dbe6ac500b"},
-    {file = "spongemock-0.3.4.tar.gz", hash = "sha256:40c1316d9ece635d727ac2b3c6e22e5f9d85ba402ee4dc6eeef5a8e8c17ff892"},
+    {file = "spongemock-1.0.0-py2.py3-none-any.whl", hash = "sha256:a2149006d54aeeb82ec3f76c5f46371a12fb520499087b31d4df329d2591e9f8"},
+    {file = "spongemock-1.0.0.tar.gz", hash = "sha256:af609bbd149701d6f57c0264e9eb98db204c5d4b0a806e09c75991a47e8f65fb"},
 ]
-
-[package.dependencies]
-pyperclip = ">=1.5.27"
 
 [[package]]
 name = "stack-data"
@@ -4108,4 +4094,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "ceaf7d4cab33dffd94eeb16c556cb02d8d8bf26b646ae84279d379eadd473d0c"
+content-hash = "3b7a93932162bccc9d2248501b026448407c0958cc3970b2394cfee06324db5c"
