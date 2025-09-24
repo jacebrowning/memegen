@@ -19,7 +19,7 @@ sanic-ext = "*"
 # Markdown
 markdown = "~3.5.1"
 pymdown-extensions = "^10.0"
-pygments = "^2.15.0"
+pygments = "^2.19.2"
 
 # Images
 pillow = "~11.1" # upgrades blocked by https://github.com/jay3332/pilmoji/issues/46
