@@ -2687,18 +2687,18 @@ windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pymdown-extensions"
-version = "10.4"
+version = "10.7.1"
 description = "Extension pack for Python Markdown."
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "pymdown_extensions-10.4-py3-none-any.whl", hash = "sha256:cfc28d6a09d19448bcbf8eee3ce098c7d17ff99f7bd3069db4819af181212037"},
-    {file = "pymdown_extensions-10.4.tar.gz", hash = "sha256:bc46f11749ecd4d6b71cf62396104b4a200bad3498cb0f5dad1b8502fe461a35"},
+    {file = "pymdown_extensions-10.7.1-py3-none-any.whl", hash = "sha256:f5cc7000d7ff0d1ce9395d216017fa4df3dde800afb1fb72d1c7d3fd35e710f4"},
+    {file = "pymdown_extensions-10.7.1.tar.gz", hash = "sha256:c70e146bdd83c744ffc766b4671999796aba18842b268510a329f7f64700d584"},
 ]
 
 [package.dependencies]
-markdown = ">=3.2"
+markdown = ">=3.5"
 pyyaml = "*"
 
 [package.extras]
@@ -4153,4 +4153,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "37315c1d3cad4310776dcb3f7d12a4a1078054a77d19e3418a91b5c0cec9435c"
+content-hash = "e895e68567e395ada7c44cffddde9c182615336b3076a4f5cb282421365807c0"
