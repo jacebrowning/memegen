@@ -473,14 +473,14 @@ files = [
 
 [[package]]
 name = "bugsnag"
-version = "4.7.1"
+version = "4.8.0"
 description = "Automatic error monitoring for django, flask, etc."
 optional = false
 python-versions = "<4,>=3.5"
 groups = ["main"]
 files = [
-    {file = "bugsnag-4.7.1-py3-none-any.whl", hash = "sha256:4537ff3c200890d26e28079e31729c041a9ffe84a803860ea8adefe535aac7df"},
-    {file = "bugsnag-4.7.1.tar.gz", hash = "sha256:98408fe17d4a7f300a56535407a6448b9844d9b528c44527908868fc3646e873"},
+    {file = "bugsnag-4.8.0-py3-none-any.whl", hash = "sha256:47358a290bd0dc8a6718db259d80023b6ce867ac678137f67e782b78c14b4723"},
+    {file = "bugsnag-4.8.0.tar.gz", hash = "sha256:9bd600fcf6ae8567b6d116522649ea173517aa98b3739e9ba73b1fea2bc82444"},
 ]
 
 [package.dependencies]
@@ -4218,4 +4218,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "de39c6f21c08906ac93f51c6452df8f9749fb5ac8133a71fa83283ec77ceceb6"
+content-hash = "10e3c89827b6e507fe18098276d1e4fac149e7856f80abe641127fe809e35048"
