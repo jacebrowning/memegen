@@ -46,7 +46,9 @@ async def tokenize(request: Request, url: str) -> tuple[str, bool]:
     token = request.args.get("token")
     default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
 
-    if api_key == "myapikey42" and "example.png" not in url:
+    if api_key == "myapikey42" and not url.startswith(
+        "https://api.memegen.link/images/puffin/custom_watermark/sample_image.png"
+    ):
         logger.warning(f"Example API key used to tokenize: {url}")
         return default_url, True
 

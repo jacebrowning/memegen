@@ -80,9 +80,9 @@ The `template=<str>` query parameter can be a template ID or URL:
 
 Authenticated requests can also add their own watermark to images using the `watermark=<str>` query parameter.
 
-For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com> produces:
+For example, <https://api.memegen.link/images/puffin/custom_watermark/sample_image.png?api_key=myapikey42&watermark=example.com> produces:
 
-![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com&width=800)
+![](https://api.memegen.link/images/puffin/custom_watermark/sample_image.png?api_key=myapikey42&watermark=example.com&width=800)
 
 # Zapier Integration
 
