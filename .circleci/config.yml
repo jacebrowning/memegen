@@ -47,9 +47,10 @@ jobs:
       - run:
           name: Building site
           command: make site
+
   docker-build:
     machine:
-      image: ubuntu-2204:2023.02.1
+      image: ubuntu-2204:2025.09.1
 
     steps:
       - checkout
@@ -126,6 +127,17 @@ jobs:
       - image: cimg/base:current
 
     steps:
+      # Unfortunately env vars can't be used in the "when:" clause of conditional workflows. This "run" step is a
+      # workaround to achieve the same behaviour, see these docs for more info:
+      # https://support.circleci.com/hc/en-us/articles/21200178128155
+      - run:
+          name: Checking Docker credentials are present
+          command: |
+            if [ -z "$DOCKER_USERNAME" || -z "$DOCKER_PASSWORD" ]; then
+              echo "Docker credentials missing, skipping deploy job"
+              exit 0
+            fi
+
       - checkout
 
       - setup_remote_docker
