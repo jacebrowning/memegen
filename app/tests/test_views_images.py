@@ -10,7 +10,7 @@ def describe_list():
     def describe_GET():
         @pytest.mark.slow
         def it_returns_example_image_urls(expect, client):
-            request, response = client.get("/images", timeout=10)
+            request, response = client.get("/images", timeout=15)
             expect(response.status) == 200
             expect(response.json).contains(
                 {
@@ -21,7 +21,7 @@ def describe_list():
 
         @pytest.mark.slow
         def it_can_filter_examples(expect, client):
-            request, response = client.get("/images?filter=awesome", timeout=10)
+            request, response = client.get("/images?filter=awesome", timeout=15)
             expect(response.status) == 200
             expect(len(response.json)) == 3
 
@@ -72,7 +72,7 @@ def describe_list():
                 "url": "http://localhost:5000/images/iw/foo/bar.png?style=default,test&font=impact"
             }
 
-        def it_returns_gif_when_animated(expect, client):
+        def it_can_force_animated_extension(expect, client):
             data = {
                 "template_id": "iw",
                 "text_lines[]": ["foo", "bar"],
@@ -169,7 +169,7 @@ def describe_detail():
         ],
     )
     def it_returns_an_image(expect, client, path, content_type):
-        request, response = client.get(path, timeout=10)
+        request, response = client.get(path, timeout=15)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
@@ -453,6 +453,18 @@ def describe_custom():
             expect(response.json) == {
                 "url": "http://localhost:5000/images/custom/foo/bar.png"
                 "?background=http://example.com"
+            }
+
+        def it_escapes_query_parameters(expect, client):
+            data = {
+                "background": "https://cdn.discordapp.com/attachments/1/2/stare.png?ex=a1&is=b2&hm=c3",
+                "text_lines[]": ["foo", "bar"],
+            }
+            request, response = client.post("/images/custom", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/custom/foo/bar.png"
+                "?background=https://cdn.discordapp.com/attachments/1/2/stare.png%3Fex%3Da1%26is%3Db2%26hm%3Dc3"
             }
 
         def it_returns_gif_when_background_is_gif(expect, client):

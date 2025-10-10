@@ -14,9 +14,9 @@ An API to programmatically generate memes based solely on requested URLs.
 
 # Images
 
-The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.gif> produces:
+The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.webp> produces:
 
-![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.gif?token=wxgjeu3jll4dt9q6fihy&width=800&frames=50)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.webp?token=wxgjeu3jll4dt9q6fihy&width=800)
 
 ## Available Formats
 
@@ -61,9 +61,11 @@ Reserved URL characters can be included using escape patterns:
 - tilde + G (`~g`) → greater-than sign (`>`)
 - 2 single quotes (`''`) → double quote (`"`)
 
-For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png> produces:
+Emojis are also supported, both as characters (👍) and aliases (`:thumbsup:`).
 
-![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--.png?width=800&token=g1oow9vw3dw5l1iy7a9q)
+For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png> produces:
+
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i)
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
@@ -110,9 +112,9 @@ This can be combined with [custom overlays](#custom-overlays) to augment the bac
 
 Add the `layout=<str>` query parameter to switch between the default and `top` text positioning.
 
-For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top> produces:
+For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top> produces:
 
-![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.gif?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
+![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
 
 # Fonts
 
@@ -126,6 +128,7 @@ Add the `font=<str>` query parameter to customize the look of your meme:
 | [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
 | [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
 | [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
+| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
 
 <br>
 

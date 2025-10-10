@@ -2,9 +2,6 @@
   "addons": [],
   "buildpacks": [
     {
-      "url": "https://github.com/moneymeets/python-poetry-buildpack.git"
-    },
-    {
       "url": "heroku/python"
     }
   ],
@@ -23,5 +20,5 @@
   },
   "name": "memegen",
   "scripts": {},
-  "stack": "heroku-22"
+  "stack": "heroku-24"
 }

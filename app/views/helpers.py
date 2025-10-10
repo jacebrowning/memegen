@@ -3,12 +3,16 @@ from contextlib import suppress
 
 from sanic import exceptions, response
 from sanic.log import logger
+from sanic.request import Request
 
 from .. import models, settings, utils
 
 
 async def generate_url(
-    request, template_id: str = "", *, template_id_required: bool = False
+    request: Request,
+    template_id: str = "",
+    *,
+    template_id_required: bool = False,
 ):
     if request.form:
         payload = dict(request.form)
@@ -36,7 +40,7 @@ async def generate_url(
         else:
             template_id = utils.text.slugify(template_id)
 
-    style: str = utils.urls.arg(payload, "", "style", "overlay", "alt")
+    style: str = utils.urls.arg(payload, "", "style", "overlay")
     if isinstance(style, list):
         style = ",".join([(s.strip() or "default") for s in style])
     while style.endswith(",default"):
@@ -94,7 +98,7 @@ async def generate_url(
     return response.json({"url": url}, status=status)
 
 
-async def preview_image(id: str, style: str, lines: list[str], layout: str):
+async def preview_image(request: Request, id: str, style: str, lines: list[str]):
     error = ""
 
     id = utils.urls.clean(id)
@@ -114,17 +118,17 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
     if not any(line.strip() for line in lines):
         lines = template.example
 
-    template = await template.clone(layout, len(lines), style, animated=False)
+    template = await template.clone(request.args, len(lines), style, animated=False)
 
-    if not utils.urls.schema(style):
-        style = style.strip().lower()
     if style != "animated" and not await template.check(style):
         error = "Invalid Overlay"
 
     if error:
         watermark = error
     elif style == "animated" and not template.animated_image:
-        watermark = "GIF"
+        watermark = "Animated Text"
+    elif style == "default" and template.animated_image:
+        watermark = "Static Image"
     else:
         watermark = ""
 
@@ -135,7 +139,7 @@ async def preview_image(id: str, style: str, lines: list[str], layout: str):
 
 
 async def render_image(
-    request,
+    request: Request,
     id: str,
     slug: str = "",
     watermark: str = "",
@@ -146,6 +150,7 @@ async def render_image(
     lines = utils.text.decode(slug)
     status = int(utils.urls.arg(request.args, "200", "status"))
     frames = int(request.args.get("frames", 0))
+    style = utils.urls.arg(request.args, "default", "style")
 
     animated = extension in settings.ANIMATED_EXTENSIONS
     if extension not in settings.ALLOWED_EXTENSIONS:
@@ -163,37 +168,20 @@ async def render_image(
         status = 414
 
     elif id == "custom":
-        url = utils.urls.arg(request.args, None, "background", "alt")
+        url = utils.urls.arg(request.args, None, "background")
         if url:
+            url = utils.urls.clean(url)
             template = await models.Template.create(url)
-            template.customize(
-                color=utils.urls.arg(request.args, None, "color"),
-                center=utils.urls.arg(request.args, None, "center"),
-                scale=utils.urls.arg(request.args, None, "scale"),
-            )
-
             if not template.image.exists():
                 logger.error(f"Unable to download image URL: {url}")
                 template = models.Template.objects.get("_error")
                 if url != settings.PLACEHOLDER:
                     status = 415
-
-            style = utils.urls.arg(request.args, "default", "style")
-            if not utils.urls.schema(style):
-                style = style.lower()
-            if not await template.check(style, animated=animated):
-                if utils.urls.schema(style):
-                    status = 415
-                elif style != settings.PLACEHOLDER:
-                    logger.error(f"Invalid style: {style}")
-                    status = 422
-
         else:
             logger.error("No image URL specified for custom template")
             template = models.Template.objects.get("_error")
             style = "default"
             status = 422
-
     else:
         template = models.Template.objects.get_or_none(id)
         if not template or not template.image.exists():
@@ -202,21 +190,16 @@ async def render_image(
             if id != settings.PLACEHOLDER:
                 status = 404
 
-        style = utils.urls.arg(request.args, "default", "style", "alt")
+    if status < 400:
+        template = await template.clone(
+            request.args, len(lines), style, animated=animated
+        )
         if not await template.check(style, animated=animated):
             if utils.urls.schema(style):
                 status = 415
             elif style != settings.PLACEHOLDER:
                 logger.error(f"Invalid style: {style}")
                 status = 422
-
-    layout = utils.urls.arg(request.args, "default", "layout")
-    template = await template.clone(layout, len(lines), style, animated=animated)
-
-    template.animate(
-        utils.urls.arg(request.args, "", "start"),
-        utils.urls.arg(request.args, "", "stop"),
-    )
 
     font_name = utils.urls.arg(request.args, "", "font")
     if font_name == settings.PLACEHOLDER:

@@ -29,7 +29,11 @@ example:
   - Me Trying to Enjoy the Weekend
   - Monday
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
+  - center_x: 0.21
+    center_y: 0.21
     angle: 0.0
-    scale: 0.25
+    scale: 0.4
+  - center_x: 0.76
+    center_y: 0.18
+    angle: 0.0
+    scale: 0.38

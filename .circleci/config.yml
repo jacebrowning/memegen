@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/python:3.11.5
+      - image: cimg/python:3.13.7
 
     working_directory: ~/memegen
 

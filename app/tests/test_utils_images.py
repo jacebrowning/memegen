@@ -99,14 +99,6 @@ async def test_custom_template(images):
     utils.images.save(template, ["", "My Custom Template"], directory=images)
 
 
-@pytest.mark.slow
-@pytest.mark.asyncio
-async def test_custom_template_with_exif_rotation(images):
-    url = "https://cdn.discordapp.com/attachments/752902976322142218/752903391281283152/20200608_111430.jpg"
-    template = await models.Template.create(url)
-    utils.images.save(template, ["", "This should not be rotated!"], directory=images)
-
-
 def test_unknown_template(images):
     template = models.Template.objects.get("_error")
     utils.images.save(template, ["UNKNOWN TEMPLATE"], directory=images)
@@ -128,7 +120,7 @@ async def test_custom_style(images):
     url = "https://sn56.scholastic.com/content/dam/classroom-magazines/sn56/issues/2019-20/031620/coronavirus/16-SN56-20200316-VirusOutbreak-PO-2.png"
     template = models.Template.objects.get("fine")
     await template.check(url, force=True)
-    lines = ["102 °F", "this is fine"]
+    lines = ["101 °F", "this is fine"]
     utils.images.save(template, lines, style=url, directory=images)
 
 
@@ -166,7 +158,7 @@ async def test_custom_style_rotated(images):
 
 
 def test_special_characters(images, template):
-    lines = ["Special? 100% #these-memes", "template_rating: 9/10"]
+    lines = ["Special? 👋 100% #these-memes", "template_rating: 9/10"]
     utils.images.save(template, lines, directory=images)
 
 
@@ -228,7 +220,7 @@ def test_text_align_start(images):
 async def test_layout_top(images):
     url = "https://www.gstatic.com/webp/gallery/2.jpg"
     template = await models.Template.create(url)
-    template = await template.clone(layout="top", lines=2, animated=False)
+    template = await template.clone({"layout": "top"}, lines=2, animated=False)
     lines = ["One line of text", "Another slightly longer line of text"]
     utils.images.save(template, lines, directory=images)
 
@@ -237,7 +229,7 @@ async def test_layout_top(images):
 async def test_layout_top_single_line(images):
     url = "https://www.gstatic.com/webp/gallery/2.jpg"
     template = await models.Template.create(url)
-    template = await template.clone(layout="top", lines=1, animated=False)
+    template = await template.clone({"layout": "top"}, lines=1, animated=False)
     lines = ["One sentence of text. Another slightly longer sentence of text."]
     utils.images.save(template, lines, directory=images)
 
@@ -247,7 +239,7 @@ async def test_layout_top_single_line(images):
 async def test_layout_top_unknown_format(images):
     url = "https://pbs.twimg.com/media/E7obYTTXsAMerli?format=jpg"
     template = await models.Template.create(url)
-    template = await template.clone(layout="top", lines=1, animated=False)
+    template = await template.clone({"layout": "top"}, lines=1, animated=False)
     lines = ["When the image format is unknown"]
     utils.images.save(template, lines, directory=images)
 

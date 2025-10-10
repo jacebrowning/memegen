@@ -1,0 +1,49 @@
+name: Epic Handshake
+source: 
+  https://www.deviantart.com/miloslavvonranda/art/EPIC-handshake-by-Dillon-and-Dutch-325709082
+keywords:
+  - object-labeled
+  - object-labelling
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: -0.0275
+    anchor_y: 0.3
+    angle: -45.0
+    scale_x: 0.4
+    scale_y: 0.4
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.4
+    anchor_y: 0.35
+    angle: 27.5
+    scale_x: 0.4
+    scale_y: 0.4
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.15
+    anchor_y: 0.1
+    angle: 0.0
+    scale_x: 0.5
+    scale_y: 0.2
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - left
+  - right
+  - center
+overlay:
+  - center_x: 0.4
+    center_y: 0.2
+    angle: 0.0
+    scale: 0.25

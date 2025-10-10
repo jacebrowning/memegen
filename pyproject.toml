@@ -1,7 +1,7 @@
 [tool.poetry]
 
 name = "memegen"
-version = "10.14"
+version = "11.1"
 description = "The free and open source API to generate memes."
 authors = ["Jace Browning <support@maketested.com>"]
 license = "MIT"
@@ -10,74 +10,70 @@ packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 
-python = "3.11.5"
+python = "^3.13"
 
 # Sanic
-sanic = "~23.6"     # update 'sanic-ext' and 'sanic-testing' to match
-sanic-ext = "~23.6"
+sanic = "~25.3" # run 'poetry update sanic-ext sanic-testing' when changing this
+sanic-ext = "*"
 
 # Markdown
-markdown = "~3.2.2"
-pymdown-extensions = "^10.0"
-pygments = "^2.15.0"
+markdown = "~3.5.1"
+pymdown-extensions = "^10.7"
+pygments = "^2.19.2"
 
 # Images
-pillow = "^10.0.1"    # update 'types-pillow' to match version
-spongemock = "~0.3.4"
+pillow = "~11.3" # upgrades blocked by https://github.com/jay3332/pilmoji/issues/46
+pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
+spongemock = "~1.0.0"
 
 # Utilities
 aiocache = "~0.11.1"
-aiohttp = "^3.8.5"
+aiohttp = "^3.12.15"
 anyio = "^3.6.2"
-datafiles = "^2.1.2"
-furl = "^2.1.3"
-webp = "~0.3"
+datafiles = "^2.3.4"
+furl = "^2.1.4"
+webp = "~0.4"
 
 # Production
-bugsnag = "^4.2"
-gunicorn = "^20.1"
-uvicorn = "~0.19"
-locust = { version = "^2.12", optional = true }
+bugsnag = "^4.8"
+gunicorn = "^23.0"
+uvicorn = "~0.37.0"
 
 [tool.poetry.group.dev.dependencies]
 
 # Formatting
-isort = "^5.12"
-black = "^23.7"
+isort = "^6.0"
+black = "^25.9"
 
 # Type Checking
-mypy = "^1.4.1"
-autoflake = "^2.1"
+mypy = "^1.18.1"
+autoflake = "^2.3"
 types-aiofiles = "*"
-types-pillow = "^10.0"
 types-requests = "*"
 types-setuptools = "*"
 
 # Testing
-pytest = "^7.1.3"
+pytest = "^8.4.2"
 pytest-asyncio = "*"
-pytest-describe = "^2.0"
+pytest-describe = "^2.2"
 pytest-expecter = "^3.0"
 pytest-random = "*"
-pytest-cov = "^2.7"
-sanic-testing = "^23.3"
+pytest-cov = "^7.0"
+sanic-testing = "*"
 aioresponses = "*"
+locust = "^2.39.1"
 
 # Coverage
-coveragespace = "^6.0"
+coveragespace = "^6.1"
 
 # Documentation
 mkdocs = "^1.2.3"
 
 # Utilities
-honcho = { git = "https://github.com/jacebrowning/honcho", branch = "support-importlib" }
+honcho = "^2.0"
 ipdb = "*"
-rope = "^0.18.0"
+rope = "^1.14"
 watchdog = { version = "^2.2", extras = ["watchmedo"] }
-
-[tool.poetry.extras]
-
-testing = ["locust"]
 
 [tool.black]
 

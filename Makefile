@@ -4,7 +4,7 @@ export PYTHONBREAKPOINT=ipdb.set_trace
 all: doctor format check test ## Run all validation targets
 
 .PHONY: dev
-dev: install ## Rerun all validation targests in a loop
+dev: install ## Rerun all validation targets in a loop
 	@ sleep 2 && touch */__init__.py &
 	@ poetry run watchmedo shell-command --recursive --pattern="*.py" --command="clear && make test check format SKIP_SLOW=true && echo && echo ✅ && echo" --wait --drop
 
@@ -14,7 +14,7 @@ dev: install ## Rerun all validation targests in a loop
 .PHONY: bootstrap
 bootstrap: ## Attempt to install system dependencies
 	asdf plugin add python || asdf plugin update python
-	asdf plugin add poetry https://github.com/asdf-community/asdf-poetry.git || asdf plugin update poetry
+	asdf plugin add poetry || asdf plugin update poetry
 	asdf install
 
 .PHONY: doctor
@@ -31,16 +31,12 @@ install: $(BACKEND_DEPENDENCIES) ## Install project dependencies
 
 $(BACKEND_DEPENDENCIES): poetry.lock
 	@ poetry config virtualenvs.in-project true
-ifdef CI
 	poetry install
-else
-	poetry install --extras testing
-endif
 	@ touch $@
 
 ifndef CI
 poetry.lock: pyproject.toml
-	poetry lock --no-update
+	poetry lock
 	@ touch $@
 endif
 
@@ -55,13 +51,16 @@ ifeq ($(CIRCLE_BRANCH),main)
 endif
 
 .PHONY: clean
-clean:
-	rm -rf images site templates/_custom-* templates/*/_*
+clean: clean-tmp
+	rm -rf .cache .venv site
+
+.PHONY: clean-tmp
+clean-tmp:
+	rm -rf images templates/_custom* templates/*/_* templates/*/*.*.* "templates/<sample>"
 
 .PHONY: clean-all
 clean-all: clean
 	rm -rf app/tests/images
-	rm -rf *.egg-info .venv
 
 ###############################################################################
 # Development Tasks
@@ -108,7 +107,10 @@ test-slow: install
 	poetry run pytest -m slow --durations=0 --durations-min=0.05
 
 .PHONY: run
-run: install ## Run the applicaiton
+run: install ## Run the application
+ifdef DEBUG
+	make clean-tmp
+endif
 	poetry run honcho start --procfile Procfile.dev
 
 ###############################################################################
@@ -117,6 +119,14 @@ run: install ## Run the applicaiton
 .PHONY: run-production
 run-production: install .env
 	poetry run heroku local web
+
+.PHONY: compress
+compress: clean-tmp
+	@ for letter in {a..z} ; do \
+		echo "Optimizing templates starting with $$letter..." ;\
+		find templates/$$letter* -name '*.jpg' -or -name '*.jpeg' | xargs jpegoptim -m85 --strip-all -q ;\
+		find templates/$$letter* -name '*.png' | xargs optipng -o7 -quiet ;\
+	done
 
 .PHONY: deploy
 deploy: .envrc
@@ -153,6 +163,6 @@ promote: install .envrc
 
 .PHONY: help
 help: install
-	@ grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@ grep -E '^[^[:space:]]+:.*## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help

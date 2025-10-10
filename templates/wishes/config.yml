@@ -1,0 +1,24 @@
+name: Genie Rules
+source: https://en.meming.world/wiki/Genie_Rules
+keywords:
+  - wish
+  - want
+text:
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.0
+    anchor_y: 0.48
+    angle: 0.0
+    scale_x: 0.45
+    scale_y: 0.15
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - I want to divide by zero
+overlay:
+  - center_x: 0.5
+    center_y: 0.5
+    angle: 0.0
+    scale: 0.25

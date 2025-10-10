@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import io
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator, cast
 
+import emoji
 import webp
 from PIL import (
     Image,
@@ -14,11 +16,12 @@ from PIL import (
     ImageSequence,
     UnidentifiedImageError,
 )
+from pilmoji import Pilmoji
 from sanic.log import logger
 
 from .. import settings
 from ..models import Font, Template, Text
-from ..types import Align, Dimensions, FontType, ImageType, Offset, Point
+from ..types import Align, Dimensions, DrawType, FontType, ImageType, Offset, Point
 
 EXCEPTIONS = (
     OSError,
@@ -109,7 +112,7 @@ def save(
         count = len(frames)
         fps = round(1 / duration * 1000, 2)
         logger.info(f"Saving {count} frames as WebP at {fps} frame/s")
-        webp.save_images(frames, path, fps=fps, lossless=False)
+        webp.save_images(frames, str(path), fps=fps, lossless=False)
     else:
         image = render_image(
             template, style, lines, size, font_name, watermark=watermark
@@ -121,7 +124,7 @@ def save(
 
 def load(path: Path) -> ImageType:
     image = Image.open(path).convert("RGBA")
-    image = ImageOps.exif_transpose(image)
+    image = cast(ImageType, ImageOps.exif_transpose(image))
     return image
 
 
@@ -161,7 +164,7 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
     for frame in ImageSequence.Iterator(background):
         stream = io.BytesIO()
         frame.save(stream, format="GIF")
-        background = Image.open(stream).convert("RGBA")
+        background = Image.open(stream).convert("RGBA")  # type: ignore[assignment]
 
         size = overlay.get_size(background.size)
         foreground.thumbnail(size)
@@ -199,6 +202,7 @@ def pad_top(source_path: Path, destination_path: Path):
             save_all=True,
             append_images=frames[1:],
             duration=foreground.info.get("duration", 100),
+            loop=0,
         )
     else:
         background = Image.new("RGB", background_dimensions, "white")
@@ -252,16 +256,17 @@ def render_image(
             draw.rectangle(xy, outline=outline)
 
         rows = text.count("\n") + 1
-        draw.text(
-            (-offset[0], -offset[1]),
-            text,
-            text_fill,
-            font,
-            spacing=-offset[1] / (rows * 2),
-            align=align,
-            stroke_width=stroke_width,
-            stroke_fill=stroke_fill,
-        )
+        with emoji_support(box, draw, text) as draw:
+            draw.text(
+                (-offset[0], -offset[1]),
+                text,
+                text_fill,
+                font,
+                spacing=-offset[1] / (rows * 2),
+                align=align,
+                stroke_width=stroke_width,
+                stroke_fill=stroke_fill,
+            )
 
         box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
         image.paste(box, point, box)
@@ -385,16 +390,17 @@ def render_animation(
                 draw.rectangle(xy, outline=outline)
 
             rows = text.count("\n") + 1
-            draw.text(
-                (-offset[0], -offset[1]),
-                text,
-                text_fill,
-                font,
-                spacing=-offset[1] / (rows * 2),
-                align=align,
-                stroke_width=stroke_width,
-                stroke_fill=stroke_fill,
-            )
+            with emoji_support(box, draw, text) as draw:
+                draw.text(
+                    (-offset[0], -offset[1]),
+                    text,
+                    text_fill,
+                    font,
+                    spacing=-offset[1] / (rows * 2),
+                    align=align,
+                    stroke_width=stroke_width,
+                    stroke_fill=stroke_fill,
+                )
 
             try:
                 box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
@@ -498,15 +504,25 @@ def add_blurred_background(
 
 
 def add_watermark(
-    image: ImageType, text: str, is_preview: bool, index: int = 0, total: int = 1
+    image: ImageType, label: str, is_preview: bool, index: int = 0, total: int = 1
 ) -> ImageType:
-    size = (image.size[0], 1 if len(text) == 1 else settings.WATERMARK_HEIGHT)
-    font = get_font("tiny", text, size, 99)
-    offset = get_text_offset(text, font, size)
+    if is_preview:
+        text = Text.get_message()
+        thick = True
+        size = (image.size[0], int(settings.WATERMARK_HEIGHT * 0.8))
+    else:
+        text = Text.get_watermark()
+        thick = False
+        if len(label) == 1:
+            size = (image.size[0], 1)
+        else:
+            size = (image.size[0], settings.WATERMARK_HEIGHT)
 
-    watermark = Text.get_remark() if is_preview else Text.get_watermark()
+    font = get_font("tiny", label, size, 99)
+    offset = get_text_offset(label, font, size, is_watermark=is_preview)
+
     stroke_width = get_stroke_width(font)
-    stroke_width, stroke_fill = watermark.get_stroke(stroke_width, thick=is_preview)
+    stroke_width, stroke_fill = text.get_stroke(stroke_width, thick=thick)
 
     if total == 1 or total >= settings.MAXIMUM_FRAMES:
         fuzz = 0
@@ -519,8 +535,8 @@ def add_watermark(
     draw = ImageDraw.Draw(box)
     draw.text(
         (3 + fuzz, image.size[1] - size[1] - offset[1]),
-        text,
-        watermark.color,
+        label,
+        text.color,
         font,
         stroke_width=stroke_width,
         stroke_fill=stroke_fill,
@@ -541,6 +557,16 @@ def add_counter(
     draw.text((3, -3), text, "lime", font, stroke_width=1, stroke_fill="black")
 
     return Image.alpha_composite(image, box)
+
+
+@contextmanager
+def emoji_support(image: ImageType, draw: DrawType, text: str):
+    if emoji.emoji_count(text):
+        pilmoji = Pilmoji(image, render_discord_emoji=False, emoji_scale_factor=0.8)
+        yield pilmoji
+        pilmoji.close()
+    else:
+        yield draw
 
 
 def get_image_elements(
@@ -686,11 +712,15 @@ def get_font(
 def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
     text_width, text_height = get_text_size(text, font)
     x_offset, y_offset, _, _ = font.getbbox(text)
-    return text_width - x_offset, text_height - y_offset
+    return text_width - x_offset, text_height - y_offset  # type: ignore[return-value]
 
 
 def get_text_offset(
-    text: str, font: FontType, max_text_size: Dimensions, align: str = "center"
+    text: str,
+    font: FontType,
+    max_text_size: Dimensions,
+    align: str = "center",
+    is_watermark: bool = False,
 ) -> Offset:
     text_size = get_text_size(text, font)
     stroke_width = get_stroke_width(font)
@@ -703,7 +733,7 @@ def get_text_offset(
     rows = len(lines)
     if rows >= 3:
         y_adjust = 1.1
-    elif rows == 2 and "Impact" in font.getname()[0]:
+    elif rows == 2 and "Impact" in font.getname()[0]:  # type: ignore[operator]
         y_adjust = 1.1
     else:
         y_adjust = 1 + (3 - rows) * 0.25
@@ -715,6 +745,8 @@ def get_text_offset(
     if any(letter in lines[-1] for letter in "gjpqy"):
         descender_offset = text_size[1] // 20
         y_offset += descender_offset
+    elif is_watermark:
+        y_offset += 2
 
     return x_offset, y_offset
 
@@ -724,8 +756,8 @@ def get_text_size(text: str, font: FontType) -> Dimensions:
     draw = ImageDraw.Draw(image)
     _, _, text_width, text_height = draw.textbbox((0, 0), text, font)
     stroke_width = get_stroke_width(font)
-    return text_width + stroke_width, text_height + stroke_width
+    return text_width + stroke_width, text_height + stroke_width  # type: ignore[return-value]
 
 
 def get_stroke_width(font: FontType) -> int:
-    return min(3, max(1, font.size // 12))
+    return min(3, max(1, int(font.size / 12)))

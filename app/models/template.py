@@ -16,9 +16,10 @@ from .overlay import Overlay
 from .text import Text
 
 
-@datafile("../../templates/{self.id}/config.yml", defaults=True)
+@datafile("../../templates/{self.id}/config{self.variant}.yml", defaults=True)
 class Template:
     id: str
+    variant: str = ""
     name: str = ""
     source: str | None = None
     keywords: list[str] = field(default_factory=list)
@@ -86,18 +87,37 @@ class Template:
     def directory(self) -> Path:
         return self.datafile.path.parent
 
+    @property
+    def layout(self) -> str:
+        if utils.urls.schema(self.source):
+            return ""
+        return self.source or ""
+
+    @layout.setter
+    def layout(self, value: str):
+        if value not in {"", "default"}:
+            self.source = value
+
+    @layout.deleter
+    def layout(self):
+        if not utils.urls.schema(self.source):
+            self.source = ""
+
     @cached_property
     def image(self) -> Path:
         return self.get_image()
 
     def get_image(self, style: str = "default", *, animated=False) -> Path:
-        level = 20 if (style != "default" or animated is True) else 10
-
-        style = style or "default"
-        logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
         if style == "animated":
             style = "default"
             animated = True
+
+        style = style or "default"
+        style += "." + self.layout
+        style = style.strip(".")
+
+        level = 20 if (style != "default" or animated is True) else 10
+        logger.log(level, f"Getting background image: {self.id=} {style=} {animated=}")
 
         url = ""
         if utils.urls.schema(style):
@@ -125,6 +145,10 @@ class Template:
                 if path.suffix != ".gif":
                     logger.log(level, f"Matched path by suffix: {path}")
                     return path
+            for path in paths:
+                if path.stem == style:
+                    logger.log(level, f"Matched path by stem: {path}")
+                    return path
 
         path = self.directory / "default.gif"
         if path.exists():
@@ -141,6 +165,7 @@ class Template:
             logger.warning(
                 f"Style {url or style!r} not available for template: {self.id}"
             )
+            del self.layout
 
         return self.get_image()
 
@@ -253,12 +278,12 @@ class Template:
         frames: int = 0,
     ) -> Path:
         slug = utils.text.encode(text_lines)
-        variant = str(self.text) + font_name + style + str(size) + watermark
+        identifier = str(self.text) + font_name + style + str(size) + watermark
         if self.overlay != [Overlay()]:
-            variant += str(self.overlay)
+            identifier += str(self.overlay)
         if frames:
-            variant += str(frames)
-        fingerprint = utils.text.fingerprint(variant, prefix="")
+            identifier += str(frames)
+        fingerprint = utils.text.fingerprint(identifier, prefix="")
         filename = f"{slug}.{fingerprint}.{extension}"
         return Path(self.id) / filename
 
@@ -287,7 +312,7 @@ class Template:
                     return cls.objects.get("_error")
 
         id = utils.text.fingerprint(url)
-        template = cls.objects.get_or_create(id, url)
+        template: Template = cls.objects.get_or_create(id, name=url)
 
         suffix = Path(str(parsed.path)).suffix
         if not suffix or len(suffix) > 10:
@@ -383,36 +408,32 @@ class Template:
         return await foreground.exists()
 
     async def clone(
-        self, layout: str, lines: int = 1, style: str = "default", *, animated: bool
+        self, options: dict, lines: int = 1, style: str = "default", *, animated: bool
     ) -> "Template":
-        if layout != "top":
-            return self
+        layout = utils.urls.arg(options, "default", "layout")
 
-        id = utils.text.fingerprint(self.name) + f"-{layout}{lines}"
-        template = self.objects.get_or_create(id, self.name)
-        with frozen(template):
-            template.overlay = self.overlay
-            template.text = []
-            for index in range(lines):
-                text = Text(
-                    style="none",
-                    color="black",
-                    font="thin",
-                    anchor_x=0,
-                    anchor_y=index * 0.1,
-                    scale_x=1.0,
-                    scale_y=0.2 / lines,
-                    align="left",
-                )
-                template.text.append(text)
+        start = utils.urls.arg(options, "", "start")
+        stop = utils.urls.arg(options, "", "stop")
 
-        source = self.get_image(style=style, animated=animated)
-        suffix = source.suffix
-        if suffix == settings.PLACEHOLDER_SUFFIX:
-            suffix = settings.DEFAULT_SUFFIX
+        color = utils.urls.arg(options, None, "color")
+        center = utils.urls.arg(options, None, "center")
+        scale = utils.urls.arg(options, None, "scale")
 
-        destination = Path(template.directory) / (source.stem + suffix)
-        await asyncio.to_thread(utils.images.pad_top, source, destination)
+        identifiers = [str(v) for v in (start, stop, color, center, scale) if v]
+        if layout == "top":
+            identifiers.extend([layout, str(lines)])
+        variant = utils.text.fingerprint("|".join(identifiers), prefix=".")
+
+        template: Template = self.objects.get_or_create(
+            self.id,
+            variant,
+            name=self.name,
+            text=self.text,
+            overlay=self.overlay,
+        )
+        template.animate(start, stop)
+        template.customize(color, center, scale)
+        await template.position(layout, lines, style, animated)
 
         return template
 
@@ -435,7 +456,7 @@ class Template:
         if starts or stops:
             logger.info(f"Updated {self} with: {starts=} {stops=}")
 
-    def customize(self, *, color: str, center: str, scale: str | float):
+    def customize(self, color: str, center: str, scale: str | float):
         with frozen(self):
             if color:
                 try:
@@ -459,6 +480,33 @@ class Template:
                     logger.error(f"Invalid overlay: {scale=}")
                 else:
                     self.overlay[0].scale = scale
+
+    async def position(self, layout: str, lines: int, style: str, animated: bool):
+        if layout == "top":
+            with frozen(self):
+                self.overlay = self.overlay
+                self.text = []
+                for index in range(lines):
+                    text = Text(
+                        style="none",
+                        color="black",
+                        font="thin",
+                        anchor_x=0.01,
+                        anchor_y=index * 0.1,
+                        scale_x=0.99,
+                        scale_y=0.2 / lines,
+                        align="left",
+                    )
+                    self.text.append(text)
+
+            source = self.get_image(style=style, animated=animated)
+            suffix = source.suffix
+            if suffix == settings.PLACEHOLDER_SUFFIX:
+                suffix = settings.DEFAULT_SUFFIX
+
+            destination = Path(self.directory) / (source.stem + ".top" + suffix)
+            await asyncio.to_thread(utils.images.pad_top, source, destination)
+            self.layout = "top"
 
     def clean(self):
         for path in self.directory.iterdir():

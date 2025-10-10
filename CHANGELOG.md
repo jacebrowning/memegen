@@ -1,5 +1,13 @@
 # Revision History
 
+## 11.1
+
+- Added emoji support.
+
+## 11.0
+
+- Removed support for legacy `alt` query parameter for custom backgrounds.
+
 ## 10.14
 
 - Added template `keywords` to improve search results.

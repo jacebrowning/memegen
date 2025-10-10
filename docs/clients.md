@@ -6,7 +6,6 @@ Here are some popular apps and integrations to check out:
 | :---------- | :--------- | :--------------------------------------------- |
 | Slack       | Python     | <https://github.com/nicolewhite/slack-meme>    |
 | Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
-| Slack       | --         | <http://www.memetizer.com>                     |
 | Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
 | Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
 | Web & Slack | --         | <https://memecomplete.com>                     |
@@ -17,8 +16,8 @@ Additional clients can be found by searching for [code examples](https://github.
 
 # Authentication
 
-Unauthenticated API requests are watermarked and may be rate limited.
-Individuals sponsoring this project at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or more are welcome to an API key.
+Unauthenticated API requests are watermarked and may be rate-limited or used as training data.
+Individuals sponsoring this project at [$10/month](https://github.com/sponsors/jacebrowning/sponsorships?sponsor=jacebrowning&tier_id=55476&preview=false) or higher are welcome to an API key.
 Please <a href="mailto:support@maketested.com?subject=memegen.link">contact support</a> to request one or inquire about pricing for your specific use case.
 
 ## HTTP Header
@@ -81,9 +80,9 @@ The `template=<str>` query parameter can be a template ID or URL:
 
 Authenticated requests can also add their own watermark to images using the `watermark=<str>` query parameter.
 
-For example, <https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com> produces:
+For example, <https://api.memegen.link/images/puffin/custom_watermark/sample_image.png?api_key=myapikey42&watermark=example.com> produces:
 
-![](https://api.memegen.link/images/puffin/custom_watermark/example.png?api_key=myapikey42&watermark=example.com&width=800)
+![](https://api.memegen.link/images/puffin/custom_watermark/sample_image.png?api_key=myapikey42&watermark=example.com&width=800)
 
 # Zapier Integration
 

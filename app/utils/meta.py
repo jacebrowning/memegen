@@ -46,7 +46,9 @@ async def tokenize(request: Request, url: str) -> tuple[str, bool]:
     token = request.args.get("token")
     default_url = url.replace(f"api_key={api_key}", "").replace("?&", "?").strip("?&")
 
-    if api_key == "myapikey42" and "example.png" not in url:
+    if api_key == "myapikey42" and not url.startswith(
+        "https://api.memegen.link/images/puffin/custom_watermark/sample_image.png"
+    ):
         logger.warning(f"Example API key used to tokenize: {url}")
         return default_url, True
 
@@ -78,7 +80,7 @@ async def custom_watermarks_allowed(request: Request) -> bool:
     token = request.args.get("token")
     if token:
         logger.info(f"Authenticating with token: {token}")
-        _url, updated = await tokenize(request, urls.clean(request.url))
+        _url, updated = await tokenize(request, request.url)
         return not updated
 
     return False
@@ -116,7 +118,7 @@ async def track(request: Request, lines: list[str]):
     referer = _get_referer(request) or settings.BASE_URL
     if referer in settings.REMOTE_TRACKING_URL:
         return
-    if any(name in request.args for name in ["height", "width", "watermark"]):
+    if any(name in request.args for name in ["height", "width", "watermark", "token"]):
         return
 
     async with aiohttp.ClientSession() as session:
@@ -153,7 +155,7 @@ async def search(request: Request, text: str, safe: bool, *, mode="") -> list[di
         )
         logger.info(f"Searching for results: {text!r} (safe={safe})")
         headers = {"X-API-KEY": _get_api_key(request) or ""}
-        response = await session.get(api, params=params, headers=headers)
+        response = await session.get(api, params=params, headers=headers)  # type: ignore[arg-type]
         if response.status >= 500:
             settings.REMOTE_TRACKING_ERRORS += 1
             return []

@@ -15,6 +15,7 @@ LINES_SLUG = [
     (["git commit --no-verify"], "git_commit_----no--verify"),
     (["_username likes _charname"], "__username_likes___charname"),
     (["underscore_ dash-"], "underscore__-dash--"),
+    (["kill -9"], "kill_--9"),
 ]
 
 
