@@ -1,8 +1,8 @@
+FROM docker.io/python:3.13.7-bookworm AS build
+
 ARG ARG_PORT=5000
 ARG ARG_MAX_REQUESTS=0
 ARG ARG_MAX_REQUESTS_JITTER=0
-
-FROM docker.io/python:3.13.7-bullseye AS build
 
 # Install system dependencies
 RUN apt update && apt install --yes webp cmake
