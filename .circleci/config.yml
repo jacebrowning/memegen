@@ -137,7 +137,7 @@ jobs:
           command: |
             if [ -z "$DOCKER_USERNAME" || -z "$DOCKER_PASSWORD" ]; then
               echo "Docker credentials missing, skipping deploy job"
-              exit 0
+              circleci-agent step halt
             fi
 
       - checkout
