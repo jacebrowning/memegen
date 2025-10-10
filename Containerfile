@@ -31,14 +31,22 @@ RUN poetry install --only=main
 
 # Set environment variables
 ENV PATH="/opt/memegen/.local/bin:${PATH}"
-ENV PORT="${ARG_PORT:-5000}"
-ENV MAX_REQUESTS="${ARG_MAX_REQUESTS:-0}"
-ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER:-0}"
+ENV PORT="${ARG_PORT}"
+ENV MAX_REQUESTS="${ARG_MAX_REQUESTS}"
+ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER}"
 
-# Set the entrypoint
-ENTRYPOINT poetry run gunicorn --bind "0.0.0.0:$PORT" \
-    --worker-class uvicorn.workers.UvicornWorker  \
-    --max-requests="$MAX_REQUESTS" \
-    --max-requests-jitter="$MAX_REQUESTS_JITTER" \
-    --timeout=20  \
+# Set the entrypoint using this workaround:
+# https://docs.docker.com/reference/build-checks/json-args-recommended/#create-a-wrapper-script
+COPY --chmod=755 <<EOT /entrypoint.sh
+#!/usr/bin/env bash
+set -e
+poetry run gunicorn \\
+    --bind "0.0.0.0:$PORT" \\
+    --worker-class uvicorn.workers.UvicornWorker \\
+    --max-requests="$MAX_REQUESTS" \\
+    --max-requests-jitter="$MAX_REQUESTS_JITTER" \\
+    --timeout=20 \\
     app.main:app
+EOT
+
+ENTRYPOINT ["/entrypoint.sh"]
