@@ -165,7 +165,7 @@ jobs:
 workflows:
   default:
     jobs:
-      - test:
+      - build:
           filters:
             tags:
               only: /.*/
@@ -175,7 +175,7 @@ workflows:
               only: /.*/
       - docker-deploy:
           requires:
-            - test
+            - build
             - docker-build
           filters:
             tags:
