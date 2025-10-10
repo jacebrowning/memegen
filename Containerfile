@@ -2,7 +2,6 @@ ARG ARG_PORT=5000
 ARG ARG_MAX_REQUESTS=0
 ARG ARG_MAX_REQUESTS_JITTER=0
 
-# Prep everything
 FROM docker.io/python:3.13.7-bullseye AS build
 
 # Install system dependencies
