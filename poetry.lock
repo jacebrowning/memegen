@@ -2,21 +2,20 @@
 
 [[package]]
 name = "aiocache"
-version = "0.11.1"
+version = "0.12.3"
 description = "multi backend asyncio cache"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "aiocache-0.11.1-py2.py3-none-any.whl", hash = "sha256:e55c7caaa5753794fd301c3a2e592737fa1d036db9f8d04ae154facdfb48a157"},
-    {file = "aiocache-0.11.1.tar.gz", hash = "sha256:f2ebe0b05cec45782e7b5ea0bb74640f157dd4bb1028b4565364dda9fe33be7f"},
+    {file = "aiocache-0.12.3-py2.py3-none-any.whl", hash = "sha256:889086fc24710f431937b87ad3720a289f7fc31c4fd8b68e9f918b9bacd8270d"},
+    {file = "aiocache-0.12.3.tar.gz", hash = "sha256:f528b27bf4d436b497a1d0d1a8f59a542c153ab1e37c3621713cb376d44c4713"},
 ]
 
 [package.extras]
-dev = ["asynctest (>=0.11.0)", "black ; python_version >= \"3.6\"", "codecov", "coverage", "flake8", "ipdb", "marshmallow", "pystache", "pytest", "pytest-asyncio", "pytest-mock", "sphinx", "sphinx-autobuild", "sphinx-rtd-theme"]
 memcached = ["aiomcache (>=0.5.2)"]
 msgpack = ["msgpack (>=0.5.5)"]
-redis = ["aioredis (>=0.3.3) ; python_version < \"3.7\"", "aioredis (>=1.0.0) ; python_version >= \"3.7\""]
+redis = ["redis (>=4.2.0)"]
 
 [[package]]
 name = "aiofiles"
@@ -4234,4 +4233,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "3feeb84c5ac8d177fc4d924ab1ae659bb51185f28ae2e0aa813ff0083d389a1b"
+content-hash = "e926f75c64d42268c51c9210f91d1a29586199c816b4caf23f45ee4b32d0ad26"
