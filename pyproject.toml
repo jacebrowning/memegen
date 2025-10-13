@@ -27,7 +27,7 @@ pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
 spongemock = "~1.0.0"
 
 # Utilities
-aiocache = "~0.11.1"
+aiocache = "~0.12.3"
 aiohttp = "^3.12.15"
 anyio = "^3.6.2"
 datafiles = "^2.3.4"
