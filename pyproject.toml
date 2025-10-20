@@ -61,7 +61,7 @@ pytest-random = "*"
 pytest-cov = "^7.0"
 sanic-testing = "*"
 aioresponses = "*"
-locust = "^2.39.1"
+locust = "^2.42.0"
 
 # Coverage
 coveragespace = "^6.1"
