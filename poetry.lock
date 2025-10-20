@@ -1636,14 +1636,14 @@ test-extra = ["curio", "matplotlib (!=3.2.0)", "nbformat", "numpy (>=1.22)", "pa
 
 [[package]]
 name = "isort"
-version = "6.0.1"
+version = "7.0.0"
 description = "A Python utility / library to sort Python imports."
 optional = false
-python-versions = ">=3.9.0"
+python-versions = ">=3.10.0"
 groups = ["dev"]
 files = [
-    {file = "isort-6.0.1-py3-none-any.whl", hash = "sha256:2dc5d7f65c9678d94c88dfc29161a320eec67328bc97aad576874cb4be1e9615"},
-    {file = "isort-6.0.1.tar.gz", hash = "sha256:1cb5df28dfbc742e490c5e41bad6da41b805b0a8be7bc93cd0fb2a8a890ac450"},
+    {file = "isort-7.0.0-py3-none-any.whl", hash = "sha256:1bcabac8bc3c36c7fb7b98a76c8abb18e0f841a3ba81decac7691008592499c1"},
+    {file = "isort-7.0.0.tar.gz", hash = "sha256:5513527951aadb3ac4292a41a16cbc50dd1642432f5e8c20057d414bdafb4187"},
 ]
 
 [package.extras]
@@ -4237,4 +4237,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "1d9cbd10d56d5672672bfa10f2f3a337879665b0fedff85d969a69d86803a011"
+content-hash = "a6ba98124bb2c290dc6f198f3d6a5ba0cf85f4b99e7174e3a4dee3f5828675e9"
