@@ -17,7 +17,7 @@ sanic = "~25.3" # run 'poetry update sanic-ext sanic-testing' when changing this
 sanic-ext = "*"
 
 # Markdown
-markdown = "~3.5.1"
+markdown = "~3.9"
 pymdown-extensions = "^10.7"
 pygments = "^2.19.2"
 
@@ -27,7 +27,7 @@ pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
 spongemock = "~1.0.0"
 
 # Utilities
-aiocache = "~0.11.1"
+aiocache = "~0.12.3"
 aiohttp = "^3.12.15"
 anyio = "^3.6.2"
 datafiles = "^2.3.4"
@@ -42,11 +42,11 @@ uvicorn = "~0.37.0"
 [tool.poetry.group.dev.dependencies]
 
 # Formatting
-isort = "^6.0"
+isort = "^7.0"
 black = "^25.9"
 
 # Type Checking
-mypy = "^1.18.1"
+mypy = "^1.18.2"
 autoflake = "^2.3"
 types-aiofiles = "*"
 types-requests = "*"
@@ -61,7 +61,7 @@ pytest-random = "*"
 pytest-cov = "^7.0"
 sanic-testing = "*"
 aioresponses = "*"
-locust = "^2.39.1"
+locust = "^2.42.0"
 
 # Coverage
 coveragespace = "^6.1"
