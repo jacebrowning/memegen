@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  test:
     working_directory: ~/memegen
 
     docker:
@@ -48,7 +48,7 @@ jobs:
           name: Building site
           command: make site
 
-  docker-build:
+  build:
     machine:
       image: ubuntu-2204:2025.09.1
 
@@ -124,7 +124,7 @@ jobs:
           paths:
             - memegen.tar
 
-  docker-deploy:
+  deploy:
     docker:
       - image: cimg/base:current
 
@@ -167,18 +167,18 @@ jobs:
 workflows:
   default:
     jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
       - build:
           filters:
             tags:
               only: /.*/
-      - docker-build:
-          filters:
-            tags:
-              only: /.*/
-      - docker-deploy:
+      - deploy:
           requires:
+            - test
             - build
-            - docker-build
           filters:
             tags:
               only: /v.*/

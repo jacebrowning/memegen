@@ -26,7 +26,8 @@ text:
     start: 0.0
     stop: 1.0
 example:
-  - Just because you see a Black man driving in a nice car... does not mean it's stolen.
+  - Just because you see a Black man driving in a nice car... does not mean it's
+    stolen.
   - "...I stole that one, but not 'cause I'm Black!"
 overlay:
   - center_x: 0.5
