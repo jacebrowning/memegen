@@ -107,7 +107,9 @@ content-type: text/html; charset=utf-8
 access-control-allow-origin: *
 ```
 
-### Multi-Architecture Container Builds
+<details>
+<summary>Multi-Architecture Builds</summary>
+<br>
 
 If you want to build the image for multiple CPU architectures, you can either use `buildah` or `docker buildx`. Below are examples for both, and assume you're in the root of the repository:
 
@@ -171,3 +173,5 @@ buildah manifest push --all memegen \
 ```
 
 > Please note that building the `--arch arm` build on an `amd64` (Intel/AMD) system can take nearly an hour.
+
+</details>
