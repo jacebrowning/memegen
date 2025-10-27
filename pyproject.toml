@@ -67,7 +67,7 @@ locust = "^2.42.0"
 coveragespace = "^6.1"
 
 # Documentation
-mkdocs = "^1.2.3"
+mkdocs = "^1.6.1"
 
 # Utilities
 honcho = "^2.0"
