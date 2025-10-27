@@ -73,7 +73,7 @@ mkdocs = "^1.2.3"
 honcho = "^2.0"
 ipdb = "*"
 rope = "^1.14"
-watchdog = { version = "^2.2", extras = ["watchmedo"] }
+watchdog = { version = "^6.0", extras = ["watchmedo"] }
 
 [tool.black]
 
