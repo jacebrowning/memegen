@@ -55,7 +55,7 @@ types-setuptools = "*"
 # Testing
 pytest = "^8.4.2"
 pytest-asyncio = "*"
-pytest-describe = "^2.2"
+pytest-describe = "^3.0"
 pytest-expecter = "^3.0"
 pytest-random = "*"
 pytest-cov = "^7.0"
