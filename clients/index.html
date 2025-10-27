@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +10,13 @@
         <link rel="shortcut icon" href="../img/favicon.ico">
         <title>Clients - Memegen.link</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2XT39Z5FC"></script>
@@ -64,7 +68,7 @@
             <div class="container">
                 <a class="navbar-brand" href="..">Memegen.link</a>
                 <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -72,18 +76,18 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href=".." class="nav-link">Home</a>
                             </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">Clients</a>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Clients</a>
                             </li>
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../examples/" class="nav-link">Examples</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto"> 
+                    <ul class="nav navbar-nav ms-md-auto"> 
 
 <li class="nav-item">
     <a href="https://github.com/jacebrowning/memegen" class="nav-link">
@@ -131,46 +135,46 @@
         <div class="container">
             <div class="row"> 
 
-<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+<div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
         </button>
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#sample-code" class="nav-link">Sample Code</a>
+            <li class="nav-item" data-bs-level="1"><a href="#sample-code" class="nav-link">Sample Code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="1"><a href="#authentication" class="nav-link">Authentication</a>
+            <li class="nav-item" data-bs-level="1"><a href="#authentication" class="nav-link">Authentication</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#http-header" class="nav-link">HTTP Header</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#query-parameter" class="nav-link">Query Parameter</a>
+            <li class="nav-item" data-bs-level="2"><a href="#http-header" class="nav-link">HTTP Header</a>
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-bs-level="2"><a href="#query-parameter" class="nav-link">Query Parameter</a>
+              <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#image-previews" class="nav-link">Image Previews</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="1"><a href="#custom-watermark" class="nav-link">Custom Watermark</a>
+            <li class="nav-item" data-bs-level="1"><a href="#image-previews" class="nav-link">Image Previews</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             
-            <li class="nav-item" data-level="1"><a href="#zapier-integration" class="nav-link">Zapier Integration</a>
+            <li class="nav-item" data-bs-level="1"><a href="#custom-watermark" class="nav-link">Custom Watermark</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#zapier-integration" class="nav-link">Zapier Integration</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -325,8 +329,7 @@ $(document).ready(updatePreview)
 
  
         </footer> 
-        <script src="../js/jquery-3.6.0.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
@@ -353,7 +356,7 @@ $(document).ready(updatePreview)
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <table class="table">
