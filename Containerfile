@@ -1,4 +1,4 @@
-FROM docker.io/python:3.13.7-bookworm AS build
+FROM docker.io/python:3.13.9-bookworm AS build
 
 ARG ARG_PORT=5000
 ARG ARG_MAX_REQUESTS=0
