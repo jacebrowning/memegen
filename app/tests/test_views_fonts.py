@@ -2,7 +2,7 @@ def describe_list():
     def describe_GET():
         def it_returns_all_fonts(expect, client):
             request, response = client.get("/fonts")
-            expect(len(response.json)) == 7
+            expect(len(response.json)) == 8
 
 
 def describe_detail():

@@ -129,6 +129,7 @@ Add the `font=<str>` query parameter to customize the look of your meme:
 | [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
 | [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
 | [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
+| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshe`    | `font=he`    |
 
 <br>
 
