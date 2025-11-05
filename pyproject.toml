@@ -29,7 +29,7 @@ spongemock = "~1.0.0"
 # Utilities
 aiocache = "~0.12.3"
 aiohttp = "^3.13.2"
-anyio = "^3.6.2"
+anyio = "^4.11.0"
 datafiles = "^2.3.4"
 furl = "^2.1.4"
 webp = "~0.4"
