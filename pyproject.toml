@@ -17,7 +17,7 @@ sanic = "~25.3" # run 'poetry update sanic-ext sanic-testing' when changing this
 sanic-ext = "*"
 
 # Markdown
-markdown = "~3.9"
+markdown = "~3.10"
 pymdown-extensions = "^10.7"
 pygments = "^2.19.2"
 
