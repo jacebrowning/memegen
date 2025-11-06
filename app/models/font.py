@@ -60,4 +60,5 @@ FONTS = [
     Font("TitilliumWeb-SemiBold.ttf", "titilliumweb-thin", alias="thin"),
     Font("Segoe UI Bold.ttf", "segoe", alias="tiny"),
     Font("HG-Mincho-B.ttc", "hgminchob", alias="jp"),
+    Font("NotoSansHebrew-Bold.ttf", "notosanshe", alias="he"),
 ]
