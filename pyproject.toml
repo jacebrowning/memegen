@@ -22,7 +22,7 @@ pymdown-extensions = "^10.7"
 pygments = "^2.19.2"
 
 # Images
-pillow = "~11.3" # upgrades blocked by https://github.com/jay3332/pilmoji/issues/46
+pillow = "~12.0" # upgrades blocked by https://github.com/jay3332/pilmoji/issues/46
 pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
 spongemock = "~1.0.0"
 
