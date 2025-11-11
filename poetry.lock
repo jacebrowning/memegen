@@ -1726,14 +1726,14 @@ sly = ">=0.5"
 
 [[package]]
 name = "locust"
-version = "2.42.0"
+version = "2.42.2"
 description = "Developer-friendly load testing framework"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "locust-2.42.0-py3-none-any.whl", hash = "sha256:2ea7fac853ca8dfc981408f22dd83f3b93cca152b3a21e30b6b03dadda6cde65"},
-    {file = "locust-2.42.0.tar.gz", hash = "sha256:b327c613469bd4508ac5fb398e7fce6f2346985e27463db29a6045beefd5f78b"},
+    {file = "locust-2.42.2-py3-none-any.whl", hash = "sha256:6596c99e9208284ae12c8d7830a360e8336f9f29bac17c80dfa4f89c30abe950"},
+    {file = "locust-2.42.2.tar.gz", hash = "sha256:bbb4da7e1ce41799158c3e77ec7f64c7a754f50ae63ec772d57fc4440775541e"},
 ]
 
 [package.dependencies]
@@ -1743,7 +1743,7 @@ flask-cors = ">=3.0.10"
 flask-login = ">=0.6.3"
 gevent = ">=24.10.1,<25.8.1 || >25.8.1,<26.0.0"
 geventhttpclient = ">=2.3.1"
-locust-cloud = ">=1.27.6"
+locust-cloud = ">=1.28.0"
 msgpack = ">=1.0.0"
 psutil = ">=5.9.1"
 pytest = ">=8.3.3,<9.0.0"
@@ -1752,7 +1752,6 @@ python-socketio = {version = ">=5.13.0", extras = ["client"]}
 pywin32 = {version = "*", markers = "sys_platform == \"win32\""}
 pyzmq = ">=25.0.0"
 requests = ">=2.32.2,<2.32.5"
-setuptools = ">=70.0.0"
 werkzeug = ">=2.0.0"
 
 [package.extras]
@@ -1762,14 +1761,14 @@ mqtt = ["paho-mqtt (>=2.1.0)"]
 
 [[package]]
 name = "locust-cloud"
-version = "1.27.6"
+version = "1.28.1"
 description = "Locust Cloud"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "locust_cloud-1.27.6-py3-none-any.whl", hash = "sha256:29db6e7b94d1b7f45c133d4d399309865adcd4fe82c9a6c4e0f2735677593bf9"},
-    {file = "locust_cloud-1.27.6.tar.gz", hash = "sha256:28c64c56a04a0f7e5893237402fa14092d4f57dcada0ec6208c2ba7d6acf110c"},
+    {file = "locust_cloud-1.28.1-py3-none-any.whl", hash = "sha256:fadfd423dd83057b96c4332e8fdb94ccacaecbb6b8ae837212c42276b8b5c22e"},
+    {file = "locust_cloud-1.28.1.tar.gz", hash = "sha256:c010a80dbd26fbd791a9c1202c63c59ddb96e9f3cc4ff5af48a9ee858057a56c"},
 ]
 
 [package.dependencies]
@@ -4231,4 +4230,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "c8c5d26b41919ec33ac3320835957853a9345fbc47709a1e004cca5e505cd904"
+content-hash = "4feb8bc33ee2ac24115b108dff514185fa5e948f9d1d052d1c5b09b3d8d1c04f"
