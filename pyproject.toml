@@ -13,7 +13,7 @@ packages = [{ include = "app" }]
 python = "^3.13"
 
 # Sanic
-sanic = "~25.3" # run 'poetry update sanic-ext sanic-testing' when changing this
+sanic = "~25.12" # run 'poetry update sanic-ext sanic-testing' when changing this
 sanic-ext = "*"
 
 # Markdown
@@ -109,6 +109,11 @@ cache_dir = ".cache/pytest/"
 markers = "slow"
 
 asyncio_mode = "strict"
+
+filterwarnings = [
+    "ignore::DeprecationWarning:websockets.legacy",
+    "ignore::DeprecationWarning:sanic.logging.deprecation",
+]
 
 [build-system]
 
