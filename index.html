@@ -152,7 +152,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#special-characters" class="nav-link">Special Characters</a>
+            <li class="nav-item" data-level="2"><a href="#alternate-layouts" class="nav-link">Alternate Layouts</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -161,11 +161,15 @@
             
             <li class="nav-item" data-level="1"><a href="#text" class="nav-link">Text</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#fonts" class="nav-link">Fonts</a>
+            <li class="nav-item" data-level="2"><a href="#special-characters" class="nav-link">Special Characters</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#colors" class="nav-link">Colors</a>
+            <li class="nav-item" data-level="2"><a href="#custom-fonts" class="nav-link">Custom Fonts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#different-colors" class="nav-link">Different Colors</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -178,7 +182,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#custom-overlays" class="nav-link">Custom Overlays</a>
+            <li class="nav-item" data-level="2"><a href="#image-overlays" class="nav-link">Image Overlays</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -186,11 +190,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#layouts" class="nav-link">Layouts</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
         </ul>
@@ -252,6 +251,12 @@
 <p>Images can be scaled to a specific width or height using the <code>width=&lt;int&gt;</code> and <code>height=&lt;int&gt;</code> query parameters. If both are provided (<code>width=&lt;int&gt;&amp;height=&lt;int&gt;</code>), the image will be padded to the exact dimensions.</p>
 <p>For example, <a href="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&amp;width=800">https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&amp;width=800</a> produces:</p>
 <p><img alt="Custom Size" src="https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&amp;width=800&amp;token=6alj86spiq9iyevbknm3" /></p>
+<h2 id="alternate-layouts">Alternate Layouts</h2>
+<p>Add the <code>layout=&lt;str&gt;</code> query parameter to switch between the default and <code>top</code> text positioning.</p>
+<p>For example, <a href="https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top">https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top</a> produces:</p>
+<p><img alt="Top Layout" src="https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&amp;width=800&amp;token=orgyyu0tuzir7n4ktwvc" /></p>
+<h1 id="text">Text</h1>
+<p>Each template uses the optimal font and text color but those can be overridden.</p>
 <h2 id="special-characters">Special Characters</h2>
 <p>In URLs, spaces can be inserted using underscores or dashes:</p>
 <ul>
@@ -277,9 +282,7 @@
 <p>For example, <a href="https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png">https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png</a> produces:</p>
 <p><img alt="Escaped Characters" src="https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i" /></p>
 <p>All of the <code>POST</code> endpoints will return image URLs with special characters replaced with these alternatives.</p>
-<h1 id="text">Text</h1>
-<p>Each template uses the optimal font and text color but those can be overridden.</p>
-<h2 id="fonts">Fonts</h2>
+<h2 id="custom-fonts">Custom Fonts</h2>
 <p>The list of fonts is available here: <a href="https://api.memegen.link/fonts/">https://api.memegen.link/fonts/</a></p>
 <p>Add the <code>font=&lt;str&gt;</code> query parameter to customize the look of your meme:</p>
 <table>
@@ -323,7 +326,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="colors">Colors</h2>
+<h2 id="different-colors">Different Colors</h2>
 <p>Add the <code>color=&lt;str&gt;,&lt;str&gt;</code> query parameter to customize the color of text lines. Colors can be specified as:</p>
 <ul>
 <li>Named colors (e.g., <code>black</code>, <code>red</code>, <code>DarkSeaGreen</code>)</li>
@@ -348,7 +351,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="custom-overlays">Custom Overlays</h2>
+<h2 id="image-overlays">Image Overlays</h2>
 <p>The <code>style=&lt;str&gt;</code> query parameter can also be an image URL to overlay on the default background image.</p>
 <p>For example, <a href="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png">https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png</a> produces:</p>
 <p><img alt="Custom Overlay" src="https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&amp;width=800&amp;token=mbckgprafgz8o4l1adct" /></p>
@@ -379,10 +382,6 @@
 <p>For example, <a href="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png">https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png</a> produces:</p>
 <p><img alt="Custom Background" src="https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&amp;width=800&amp;token=kxxlu7wzoxgp5l2iruta" /></p>
 <p>This can be combined with <a href="#custom-overlays">custom overlays</a> to augment the background image.</p>
-<h1 id="layouts">Layouts</h1>
-<p>Add the <code>layout=&lt;str&gt;</code> query parameter to switch between the default and <code>top</code> text positioning.</p>
-<p>For example, <a href="https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top">https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top</a> produces:</p>
-<p><img alt="Top Layout" src="https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&amp;width=800&amp;token=orgyyu0tuzir7n4ktwvc" /></p>
 <p><br></p>
 <p>Explore the full API here: <a href="https://api.memegen.link/docs/">https://api.memegen.link/docs/</a></p></div>
 
@@ -470,5 +469,5 @@
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2025-12-31 04:08:21.989696+00:00
+Build Date UTC : 2025-12-31 04:40:32.293939+00:00
 -->
