@@ -39,6 +39,18 @@ For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~
 
 ![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800&token=6alj86spiq9iyevbknm3)
 
+## Alternate Layouts
+
+Add the `layout=<str>` query parameter to switch between the default and `top` text positioning.
+
+For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top> produces:
+
+![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
+
+# Text
+
+Each template uses the optimal font and text color but those can be overridden.
+
 ## Special Characters
 
 In URLs, spaces can be inserted using underscores or dashes:
@@ -69,11 +81,7 @@ For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
-# Text
-
-Each template uses the optimal font and text color but those can be overridden.
-
-## Fonts
+## Custom Fonts
 
 The list of fonts is available here: <https://api.memegen.link/fonts/>
 
@@ -88,7 +96,7 @@ Add the `font=<str>` query parameter to customize the look of your meme:
 | [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshebrew`    | `font=he`    |
 | [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
 
-## Colors
+## Different Colors
 
 Add the `color=<str>,<str>` query parameter to customize the color of text lines. Colors can be specified as:
 
@@ -109,7 +117,7 @@ For example, the <https://api.memegen.link/templates/ds/> template provides thes
 | :----------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
 | ![Default Style](https://api.memegen.link/images/ds.png?width=375) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=375&style=maga) |
 
-## Custom Overlays
+## Image Overlays
 
 The `style=<str>` query parameter can also be an image URL to overlay on the default background image.
 
@@ -133,14 +141,6 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=kxxlu7wzoxgp5l2iruta)
 
 This can be combined with [custom overlays](#custom-overlays) to augment the background image.
-
-# Layouts
-
-Add the `layout=<str>` query parameter to switch between the default and `top` text positioning.
-
-For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top> produces:
-
-![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
 
 <br>
 
