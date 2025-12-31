@@ -1,5 +1,9 @@
 # Revision History
 
+## 11.2
+
+- Added support for hex color codes without `#` prefix in the `color` query parameter.
+
 ## 11.1
 
 - Added emoji support.
