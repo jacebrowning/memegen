@@ -69,6 +69,32 @@ For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
+# Text
+
+Each template uses the optimal font and text color but those can be overridden.
+
+## Fonts
+
+The list of fonts is available here: <https://api.memegen.link/fonts/>
+
+Add the `font=<str>` query parameter to customize the look of your meme:
+
+| Name                                                                   | ID                  | Alias        |
+| ---------------------------------------------------------------------- | ------------------- | ------------ |
+| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web) | `font=titilliumweb` | `font=thick` |
+| [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
+| [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
+| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
+| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshebrew`    | `font=he`    |
+| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
+
+## Colors
+
+Add the `color=<str>,<str>` query parameter to customize the color of text lines. Colors can be specified as:
+
+- Named colors (e.g., `black`, `red`, `DarkSeaGreen`)
+- Hex colors without `#` prefix (e.g., `FF80ED`, `DEADBEEF`)
+
 # Templates
 
 The list of predefined meme templates is available here: <https://api.memegen.link/templates/>
@@ -115,21 +141,6 @@ Add the `layout=<str>` query parameter to switch between the default and `top` t
 For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top> produces:
 
 ![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
-
-# Fonts
-
-The list of fonts is available here: <https://api.memegen.link/fonts/>
-
-Add the `font=<str>` query parameter to customize the look of your meme:
-
-| Name                                                                   | ID                  | Alias        |
-| ---------------------------------------------------------------------- | ------------------- | ------------ |
-| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web) | `font=titilliumweb` | `font=thick` |
-| [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
-| [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
-| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
-| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshebrew`    | `font=he`    |
-| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
 
 <br>
 

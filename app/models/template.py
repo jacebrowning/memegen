@@ -459,14 +459,14 @@ class Template:
     def customize(self, color: str, center: str, scale: str | float):
         with frozen(self):
             if color:
-                try:
-                    colors = [value for value in color.split(",") if value]
-                except ValueError:
-                    logger.error(f"Invalid color: {color=}")
-                else:
-                    with suppress(IndexError):
-                        for index, value in enumerate(colors):
-                            self.text[index].color = value
+                values = [value for value in color.split(",") if value]
+                with suppress(IndexError):
+                    for index, value in enumerate(values):
+                        normalized, valid = utils.images.validate_color(value)
+                        if valid and normalized:
+                            self.text[index].color = normalized
+                        else:
+                            self.text[index].color = Text().color
             if center:
                 try:
                     xy = [float(value) for value in center.split(",")]

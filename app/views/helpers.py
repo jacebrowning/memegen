@@ -190,6 +190,16 @@ async def render_image(
             if id != settings.PLACEHOLDER:
                 status = 404
 
+    color = utils.urls.arg(request.args, None, "color")
+    if color and status < 400:
+        colors = [value for value in color.split(",") if value]
+        for value in colors:
+            _, valid = utils.images.validate_color(value)
+            if not valid:
+                logger.error(f"Invalid color: {color}")
+                status = 422
+                break
+
     if status < 400:
         template = await template.clone(
             request.args, len(lines), style, animated=animated
