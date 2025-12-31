@@ -207,6 +207,18 @@ def test_descender_vertical_alignment(images):
     utils.images.save(template, lines, directory=images)
 
 
+# Color
+
+
+@pytest.mark.asyncio
+async def test_color(images):
+    template = await models.Template.objects.get("dg").clone(
+        {"color": "DarkSeaGreen,BFCBD8,foobar"}, animated=False
+    )
+    lines = ["valid named color", "valid hex color", "fallback color"]
+    utils.images.save(template, lines, directory=images)
+
+
 # Alignment
 
 

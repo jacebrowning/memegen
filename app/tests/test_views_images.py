@@ -204,6 +204,11 @@ def describe_detail():
         expect(response.status) == 414
         expect(response.headers["content-type"]) == "image/jpeg"
 
+    def it_rejects_invalid_colors(expect, client):
+        request, response = client.get("/images/fry/test.png?color=foobar")
+        expect(response.status) == 422
+        expect(response.headers["content-type"]) == "image/png"
+
     def describe_font():
         def it_rejects_unknown_fonts(expect, client):
             request, response = client.get("/images/fry/test.png?font=foobar")

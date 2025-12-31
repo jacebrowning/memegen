@@ -9,6 +9,7 @@ import emoji
 import webp
 from PIL import (
     Image,
+    ImageColor,
     ImageDraw,
     ImageFilter,
     ImageFont,
@@ -761,3 +762,13 @@ def get_text_size(text: str, font: FontType) -> Dimensions:
 
 def get_stroke_width(font: FontType) -> int:
     return min(3, max(1, int(font.size / 12)))
+
+
+def validate_color(color: str) -> tuple[str | None, bool]:
+    for normalized in [color, "#" + color]:
+        try:
+            ImageColor.getrgb(normalized)
+        except ValueError:
+            continue
+        return normalized, True
+    return None, False

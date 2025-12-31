@@ -58,6 +58,7 @@
     "getenv",
     "getoffset",
     "getplugin",
+    "getrgb",
     "gjpqy",
     "Googlebot",
     "Groupon",
