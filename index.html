@@ -159,6 +159,19 @@
               </ul>
             </li>
             
+            <li class="nav-item" data-level="1"><a href="#text" class="nav-link">Text</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#fonts" class="nav-link">Fonts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#colors" class="nav-link">Colors</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
             <li class="nav-item" data-level="1"><a href="#templates" class="nav-link">Templates</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#alternate-styles" class="nav-link">Alternate Styles</a>
@@ -177,11 +190,6 @@
             </li>
             
             <li class="nav-item" data-level="1"><a href="#layouts" class="nav-link">Layouts</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#fonts" class="nav-link">Fonts</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -269,6 +277,58 @@
 <p>For example, <a href="https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png">https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png</a> produces:</p>
 <p><img alt="Escaped Characters" src="https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i" /></p>
 <p>All of the <code>POST</code> endpoints will return image URLs with special characters replaced with these alternatives.</p>
+<h1 id="text">Text</h1>
+<p>Each template uses the optimal font and text color but those can be overridden.</p>
+<h2 id="fonts">Fonts</h2>
+<p>The list of fonts is available here: <a href="https://api.memegen.link/fonts/">https://api.memegen.link/fonts/</a></p>
+<p>Add the <code>font=&lt;str&gt;</code> query parameter to customize the look of your meme:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Alias</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://fonts.google.com/specimen/Titillium+Web">Titillium Web Black</a></td>
+<td><code>font=titilliumweb</code></td>
+<td><code>font=thick</code></td>
+</tr>
+<tr>
+<td><a href="https://fonts.google.com/specimen/Kalam">Kalam Regular</a></td>
+<td><code>font=kalam</code></td>
+<td><code>font=comic</code></td>
+</tr>
+<tr>
+<td><a href="https://www.dafontfree.io/impact-font/">Impact</a></td>
+<td><code>font=impact</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><a href="https://fonts.google.com/noto/specimen/Noto+Sans">Noto Sans Bold</a></td>
+<td><code>font=notosans</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><a href="https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew">Noto Sans Bold Hebrew</a></td>
+<td><code>font=notosanshebrew</code></td>
+<td><code>font=he</code></td>
+</tr>
+<tr>
+<td><a href="https://japanesefonts.org/hg-mincho-b.html">HG Mincho B</a></td>
+<td><code>font=hgminchob</code></td>
+<td><code>font=jp</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="colors">Colors</h2>
+<p>Add the <code>color=&lt;str&gt;,&lt;str&gt;</code> query parameter to customize the color of text lines. Colors can be specified as:</p>
+<ul>
+<li>Named colors (e.g., <code>black</code>, <code>red</code>, <code>DarkSeaGreen</code>)</li>
+<li>Hex colors without <code>#</code> prefix (e.g., <code>FF80ED</code>, <code>DEADBEEF</code>)</li>
+</ul>
 <h1 id="templates">Templates</h1>
 <p>The list of predefined meme templates is available here: <a href="https://api.memegen.link/templates/">https://api.memegen.link/templates/</a></p>
 <h2 id="alternate-styles">Alternate Styles</h2>
@@ -323,50 +383,6 @@
 <p>Add the <code>layout=&lt;str&gt;</code> query parameter to switch between the default and <code>top</code> text positioning.</p>
 <p>For example, <a href="https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top">https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top</a> produces:</p>
 <p><img alt="Top Layout" src="https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&amp;width=800&amp;token=orgyyu0tuzir7n4ktwvc" /></p>
-<h1 id="fonts">Fonts</h1>
-<p>The list of fonts is available here: <a href="https://api.memegen.link/fonts/">https://api.memegen.link/fonts/</a></p>
-<p>Add the <code>font=&lt;str&gt;</code> query parameter to customize the look of your meme:</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>ID</th>
-<th>Alias</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://fonts.google.com/specimen/Titillium+Web">Titillium Web Black</a></td>
-<td><code>font=titilliumweb</code></td>
-<td><code>font=thick</code></td>
-</tr>
-<tr>
-<td><a href="https://fonts.google.com/specimen/Kalam">Kalam Regular</a></td>
-<td><code>font=kalam</code></td>
-<td><code>font=comic</code></td>
-</tr>
-<tr>
-<td><a href="https://www.dafontfree.io/impact-font/">Impact</a></td>
-<td><code>font=impact</code></td>
-<td>-</td>
-</tr>
-<tr>
-<td><a href="https://fonts.google.com/noto/specimen/Noto+Sans">Noto Sans Bold</a></td>
-<td><code>font=notosans</code></td>
-<td>-</td>
-</tr>
-<tr>
-<td><a href="https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew">Noto Sans Bold Hebrew</a></td>
-<td><code>font=notosanshebrew</code></td>
-<td><code>font=he</code></td>
-</tr>
-<tr>
-<td><a href="https://japanesefonts.org/hg-mincho-b.html">HG Mincho B</a></td>
-<td><code>font=hgminchob</code></td>
-<td><code>font=jp</code></td>
-</tr>
-</tbody>
-</table>
 <p><br></p>
 <p>Explore the full API here: <a href="https://api.memegen.link/docs/">https://api.memegen.link/docs/</a></p></div>
 
@@ -454,5 +470,5 @@
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2025-12-24 00:59:52.656597+00:00
+Build Date UTC : 2025-12-31 03:58:38.015248+00:00
 -->
