@@ -8,7 +8,7 @@ Here are some popular apps and integrations to check out:
 | Slack       | Go         | <https://github.com/CptSpaceToaster/slackbot>  |
 | Hain        | JavaScript | <https://github.com/Metrakit/hain-plugin-meme> |
 | Web         | Clojure    | <https://github.com/jasich/mighty-fine-memes>  |
-| Web & Slack | --         | <https://memecomplete.com>                     |
+| Web & Slack | —         | <https://memecomplete.com>                     |
 | Discord     | JavaScript | <https://github.com/parshsee/discordbot>       |
 | Legobot     | Python     | <https://github.com/drewpearce/legos.memes>    |
 

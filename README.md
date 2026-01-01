@@ -96,12 +96,12 @@ Add the `font=<str>` query parameter to customize the look of your meme:
 | [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshebrew`    | `font=he`    |
 | [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
 
-## Different Colors
+## Custom Colors
 
 Add the `color=<str>,<str>` query parameter to customize the color of text lines. Colors can be specified as:
 
-- Named colors (e.g., `black`, `red`, `DarkSeaGreen`)
-- Hex colors without `#` prefix (e.g., `FF80ED`, `DEADBEEF`)
+- HTML color names (e.g. `red`, `blue`, `DarkSeaGreen`)
+- HTML color codes (e.g. `FF80ED`, `DEADBEEF`, `ABC`)
 
 # Templates
 
@@ -142,6 +142,6 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 
 This can be combined with [custom overlays](#custom-overlays) to augment the background image.
 
-<br>
+<br><hr><br>
 
 Explore the full API here: <https://api.memegen.link/docs/>
