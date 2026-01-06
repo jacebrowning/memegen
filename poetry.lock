@@ -1730,14 +1730,14 @@ sly = ">=0.5"
 
 [[package]]
 name = "locust"
-version = "2.42.2"
+version = "2.43.0"
 description = "Developer-friendly load testing framework"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "locust-2.42.2-py3-none-any.whl", hash = "sha256:6596c99e9208284ae12c8d7830a360e8336f9f29bac17c80dfa4f89c30abe950"},
-    {file = "locust-2.42.2.tar.gz", hash = "sha256:bbb4da7e1ce41799158c3e77ec7f64c7a754f50ae63ec772d57fc4440775541e"},
+    {file = "locust-2.43.0-py3-none-any.whl", hash = "sha256:777a11f917b16d07959e5e9ec8a1b7b0973f2f847afff257e359e0e9228131b7"},
+    {file = "locust-2.43.0.tar.gz", hash = "sha256:7a0d76e842c0dab7dccde6bd8abaef5e2c2966f8ab69c34761341bb80af66db9"},
 ]
 
 [package.dependencies]
@@ -1747,40 +1747,21 @@ flask-cors = ">=3.0.10"
 flask-login = ">=0.6.3"
 gevent = ">=24.10.1,<25.8.1 || >25.8.1,<26.0.0"
 geventhttpclient = ">=2.3.1"
-locust-cloud = ">=1.28.0"
 msgpack = ">=1.0.0"
 psutil = ">=5.9.1"
-pytest = ">=8.3.3,<9.0.0"
+pytest = ">=8.3.3,<10"
 python-engineio = ">=4.12.2"
 python-socketio = {version = ">=5.13.0", extras = ["client"]}
 pywin32 = {version = "*", markers = "sys_platform == \"win32\""}
 pyzmq = ">=25.0.0"
-requests = ">=2.32.2,<2.32.5"
+requests = ">=2.32.2"
 werkzeug = ">=2.0.0"
 
 [package.extras]
 dns = ["dnspython (>=2.8.0)"]
 milvus = ["pymilvus (>=2.5.0)"]
 mqtt = ["paho-mqtt (>=2.1.0)"]
-
-[[package]]
-name = "locust-cloud"
-version = "1.28.1"
-description = "Locust Cloud"
-optional = false
-python-versions = ">=3.10"
-groups = ["dev"]
-files = [
-    {file = "locust_cloud-1.28.1-py3-none-any.whl", hash = "sha256:fadfd423dd83057b96c4332e8fdb94ccacaecbb6b8ae837212c42276b8b5c22e"},
-    {file = "locust_cloud-1.28.1.tar.gz", hash = "sha256:c010a80dbd26fbd791a9c1202c63c59ddb96e9f3cc4ff5af48a9ee858057a56c"},
-]
-
-[package.dependencies]
-configargparse = ">=1.7.1"
-gevent = ">=24.10.1,<26.0.0"
-platformdirs = ">=4.3.6,<5.0.0"
-python-engineio = ">=4.12.2"
-python-socketio = {version = ">=5.14.1,<6.0.0", extras = ["client"]}
+otel = ["opentelemetry-exporter-otlp-proto-grpc (>=1.38.0)", "opentelemetry-exporter-otlp-proto-http (>=1.38.0)", "opentelemetry-instrumentation-requests (>=0.59b0)", "opentelemetry-instrumentation-urllib3 (>=0.59b0)", "opentelemetry-sdk (>=1.38.0)"]
 
 [[package]]
 name = "markdown"
@@ -2740,20 +2721,20 @@ extra = ["pygments (>=2.19.1)"]
 
 [[package]]
 name = "pytest"
-version = "8.4.2"
+version = "9.0.2"
 description = "pytest: simple powerful testing with Python"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "pytest-8.4.2-py3-none-any.whl", hash = "sha256:872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79"},
-    {file = "pytest-8.4.2.tar.gz", hash = "sha256:86c0d0b93306b961d58d62a4db4879f27fe25513d4b969df351abdddb3c30e01"},
+    {file = "pytest-9.0.2-py3-none-any.whl", hash = "sha256:711ffd45bf766d5264d487b917733b453d917afd2b0ad65223959f59089f875b"},
+    {file = "pytest-9.0.2.tar.gz", hash = "sha256:75186651a92bd89611d1d9fc20f0b4345fd827c41ccd5c299a868a05d70edf11"},
 ]
 
 [package.dependencies]
 colorama = {version = ">=0.4", markers = "sys_platform == \"win32\""}
-iniconfig = ">=1"
-packaging = ">=20"
+iniconfig = ">=1.0.1"
+packaging = ">=22"
 pluggy = ">=1.5,<2"
 pygments = ">=2.7.2"
 
@@ -2762,18 +2743,18 @@ dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "requests
 
 [[package]]
 name = "pytest-asyncio"
-version = "1.2.0"
+version = "1.3.0"
 description = "Pytest support for asyncio"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "pytest_asyncio-1.2.0-py3-none-any.whl", hash = "sha256:8e17ae5e46d8e7efe51ab6494dd2010f4ca8dae51652aa3c8d55acf50bfb2e99"},
-    {file = "pytest_asyncio-1.2.0.tar.gz", hash = "sha256:c609a64a2a8768462d0c99811ddb8bd2583c33fd33cf7f21af1c142e824ffb57"},
+    {file = "pytest_asyncio-1.3.0-py3-none-any.whl", hash = "sha256:611e26147c7f77640e6d0a92a38ed17c3e9848063698d5c93d5aa7aa11cebff5"},
+    {file = "pytest_asyncio-1.3.0.tar.gz", hash = "sha256:d7f52f36d231b80ee124cd216ffb19369aa168fc10095013c6b014a34d3ee9e5"},
 ]
 
 [package.dependencies]
-pytest = ">=8.2,<9"
+pytest = ">=8.2,<10"
 
 [package.extras]
 docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1)"]
@@ -2801,18 +2782,18 @@ testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-describe"
-version = "3.0.0"
+version = "3.1.0"
 description = "Describe-style plugin for pytest"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "pytest_describe-3.0.0-py3-none-any.whl", hash = "sha256:946d40b5d77faf4eb610b94f2d54ab8b6721cc0b313f5bfb3663fd25c6a3920a"},
-    {file = "pytest_describe-3.0.0.tar.gz", hash = "sha256:50e0b7f404decaeb1b5d7bca13cbe369208d1eeffafc2802663777b195f074ff"},
+    {file = "pytest_describe-3.1.0-py3-none-any.whl", hash = "sha256:9835cc6732c1cc92b0ae230f0a8a6084924129669cb370fe9d4422445cae3cc1"},
+    {file = "pytest_describe-3.1.0.tar.gz", hash = "sha256:096017a0efd7beab7114c8fb7ced3a0cfd3a6d8a37e89578ea3d7b190bec6871"},
 ]
 
 [package.dependencies]
-pytest = ">=6,<9"
+pytest = ">=6,<10"
 
 [[package]]
 name = "pytest-expecter"
@@ -4237,4 +4218,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "e75160e5b181594b4adcda9462d40fc2826e042f7c4962f15b570a02601cf2a4"
+content-hash = "3ad6bbcdbddbd31a86d4a8c52f25e550400d1017123cf5d8585114a2b83965a7"
