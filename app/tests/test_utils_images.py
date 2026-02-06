@@ -162,6 +162,13 @@ def test_special_characters(images, template):
     utils.images.save(template, lines, directory=images)
 
 
+@pytest.mark.xfail(reason="https://github.com/jacebrowning/memegen/issues/971")
+def test_special_characters_with_wrapping(images):
+    template = models.Template.objects.get("gru")
+    lines = ["🚀 aaaaa bbb cccc"]
+    utils.images.save(template, lines, directory=images)
+
+
 @pytest.mark.skipif("CIRCLECI" in os.environ, reason="Long filenames not supported")
 def test_extremely_long_text(images, tmpdir):
     template = models.Template.objects.get("fry")
