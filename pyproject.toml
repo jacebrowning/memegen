@@ -36,7 +36,7 @@ webp = "~0.4"
 
 # Production
 bugsnag = "^4.8"
-gunicorn = "^23.0"
+gunicorn = "^25.1"
 uvicorn = "~0.40.0"
 
 [tool.poetry.group.dev.dependencies]
