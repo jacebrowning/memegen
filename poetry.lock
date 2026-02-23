@@ -3503,22 +3503,23 @@ test = ["bandit", "beautifulsoup4", "chardet (==3.*)", "coverage", "docutils", "
 
 [[package]]
 name = "sanic-ext"
-version = "24.12.0"
+version = "25.12.0"
 description = "Extend your Sanic installation with some core functionality."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "sanic_ext-24.12.0-py3-none-any.whl", hash = "sha256:861f809f071770cf28acd5f13e97ed59985e07361b13b4b4540da1333730c83e"},
-    {file = "sanic_ext-24.12.0.tar.gz", hash = "sha256:8f912f4c29f242bc638346d09b79f0c8896ff64e79bd0e7fa09eac4b6c0e23c8"},
+    {file = "sanic_ext-25.12.0-py3-none-any.whl", hash = "sha256:4bf9afcb28c7abbc4bcac489cf4b6d53f12fa49ea4777200ea7d7d6d23ffe8ca"},
+    {file = "sanic_ext-25.12.0.tar.gz", hash = "sha256:db6f5c8b880bb6b4cb73717b655b63aea4e77cf57825678ec74310fd69581ce1"},
 ]
 
 [package.dependencies]
 pyyaml = ">=3.0.0"
+sanic = ">=25.12.0"
 
 [package.extras]
-dev = ["Jinja2", "black (>=21.4b2)", "coverage", "flake8 (>=3.7.7)", "isort (>=5.0.0)", "pytest", "pytest-asyncio", "pytest-cov", "sanic_testing (>=22.9.0)", "tox"]
-test = ["Jinja2", "coverage", "pytest", "pytest-asyncio", "pytest-cov", "sanic_testing (>=22.9.0)", "tox"]
+dev = ["Jinja2", "black (>=21.4b2)", "coverage", "flake8 (>=3.7.7)", "isort (>=5.0.0)", "pytest", "pytest-asyncio", "pytest-cov", "pytest-xdist", "sanic_testing (>=24.6.0)", "tox"]
+test = ["Jinja2", "coverage", "pytest", "pytest-asyncio", "pytest-cov", "pytest-xdist", "sanic_testing (>=24.6.0)", "tox"]
 
 [[package]]
 name = "sanic-routing"
