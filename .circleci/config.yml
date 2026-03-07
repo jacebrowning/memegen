@@ -130,7 +130,7 @@ jobs:
 
     steps:
       # Unfortunately env vars can't be used in the "when:" clause of conditional workflows. This "run" step is a
-      # workaround to achieve the same behaviour, see these docs for more info:
+      # workaround to achieve the same behavior, see these docs for more info:
       # https://support.circleci.com/hc/en-us/articles/21200178128155
       - run:
           name: Checking Docker credentials are present
