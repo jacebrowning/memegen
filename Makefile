@@ -47,7 +47,7 @@ site: install
 ifeq ($(CIRCLE_BRANCH),main)
 	@ echo
 	git config --global user.name CircleCI
-	poetry run mkdocs gh-deploy --force
+	poetry run mkdocs gh-deploy --dirty --force
 endif
 
 .PHONY: clean
