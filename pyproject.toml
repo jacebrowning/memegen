@@ -19,7 +19,7 @@ sanic-ext = "*"
 # Markdown
 markdown = "~3.10"
 pymdown-extensions = "^10.21"
-pygments = "^2.19.2"
+pygments = "^2.20.0"
 
 # Images
 pillow = "~12.1"
