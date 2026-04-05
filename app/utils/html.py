@@ -111,13 +111,11 @@ def _columns(urls: list[str]) -> str:
     elements = []
 
     for url in urls:
-        elements.append(
-            f"""
+        elements.append(f"""
             <a href="https://memecomplete.com/edit/{url}" target="_parent">
                 <img src="{url}?width={settings.PREVIEW_SIZE[0]}&frames=10">
             </a>
-            """
-        )
+            """)
 
     elements.append(RESIZE_SCRIPT)
 
@@ -133,13 +131,11 @@ def _columns_debug(urls: list[str], refresh: int, extra: str) -> str:
     elements = []
 
     for url in urls:
-        elements.append(
-            f"""
+        elements.append(f"""
             <a href="{url}">
                 <img src="{url}?width={settings.PREVIEW_SIZE[0]}&time=0{extra}">
             </a>
-            """
-        )
+            """)
 
     if refresh:
         elements.append(REFRESH_SCRIPT.replace("{interval}", str(refresh * 1000)))
@@ -156,13 +152,11 @@ def _grid_debug(urls: list[str], refresh: int, extra: str):
     elements = []
 
     for url in urls:
-        elements.append(
-            f"""
+        elements.append(f"""
             <a href="{url}">
                 <img src="{url}?time=0{extra}">
             </a>
-            """
-        )
+            """)
 
     elements.append(REFRESH_SCRIPT.replace("{interval}", str(refresh * 1000)))
 
