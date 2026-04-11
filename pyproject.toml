@@ -15,6 +15,7 @@ python = "^3.13"
 # Sanic
 sanic = "~25.12" # run 'poetry update sanic-ext sanic-testing' when changing this
 sanic-ext = "*"
+pydantic = ">=2.5.3" # sanic-ext dependency
 
 # Markdown
 markdown = "~3.10"

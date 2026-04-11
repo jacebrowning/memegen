@@ -116,6 +116,7 @@
     "pluginmanager",
     "podman",
     "procfile",
+    "pydantic",
     "pygments",
     "pymdown",
     "pyproject",
