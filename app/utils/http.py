@@ -11,6 +11,7 @@ EXCEPTIONS = (
     aiohttp.client_exceptions.InvalidURL,
     aiohttp.client_exceptions.TooManyRedirects,
     aiohttp.client_exceptions.NonHttpUrlClientError,
+    aiohttp.client_exceptions.ClientResponseError,
     AssertionError,
     asyncio.TimeoutError,
     UnicodeError,
