@@ -53,7 +53,7 @@ types-requests = "*"
 types-setuptools = "*"
 
 # Testing
-pytest = "^9.0.2"
+pytest = "^9.0.3"
 pytest-asyncio = "*"
 pytest-describe = "^3.0"
 pytest-expecter = "^3.0"
