@@ -1,0 +1,55 @@
+name: Three-Headed Dragon
+source: https://knowyourmeme.com/memes/three-headed-dragon
+keywords:
+  - King Ghidorah
+text:
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.0
+    anchor_y: 0.65
+    angle: 0.0
+    scale_x: 0.27
+    scale_y: 0.13
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.365
+    anchor_y: 0.55
+    angle: 0.0
+    scale_x: 0.27
+    scale_y: 0.13
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: upper
+    color: white
+    font: thick
+    anchor_x: 0.73
+    anchor_y: 0.6
+    angle: 0.0
+    scale_x: 0.27
+    scale_y: 0.13
+    align: center
+    start: 0.0
+    stop: 1.0
+example:
+  - Pepperoni
+  - Mushroom
+  - Pineapple
+overlay:
+  - center_x: 0.19
+    center_y: 0.48
+    angle: 0.0
+    scale: 0.27
+  - center_x: 0.5
+    center_y: 0.37
+    angle: 0.0
+    scale: 0.27
+  - center_x: 0.82
+    center_y: 0.42
+    angle: 0.0
+    scale: 0.27
