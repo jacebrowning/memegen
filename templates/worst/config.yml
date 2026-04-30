@@ -33,3 +33,5 @@ overlay:
     center_y: 0.1
     angle: 0.0
     scale: 0.2
+    start: 0.0
+    stop: 1.0
