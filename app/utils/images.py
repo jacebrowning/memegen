@@ -20,8 +20,8 @@ from PIL import (
 from pilmoji import Pilmoji
 from sanic.log import logger
 
-from .. import settings
-from ..models import Font, Template, Text
+from .. import settings, utils
+from ..models import Font, Overlay, Template, Text
 from ..types import Align, Dimensions, DrawType, FontType, ImageType, Offset, Point
 
 EXCEPTIONS = (
@@ -129,6 +129,43 @@ def load(path: Path) -> ImageType:
     return image
 
 
+def embed_foreground_path(template: Template, url: str) -> Path:
+    """Filesystem path for a downloaded overlay image (same fingerprint as Template._embed)."""
+    url = url.strip()
+    from furl import furl
+
+    suffix = Path(str(furl(url).path)).suffix
+    if not suffix:
+        suffix = ".png"
+    filename = utils.text.fingerprint(url, prefix="_embed-", suffix=suffix)
+    return template.directory / filename
+
+
+def get_overlay_foreground_path(
+    template: Template, style: str, index: int
+) -> Path | None:
+    if not utils.urls.schema(style):
+        return None
+    urls = [u.strip() for u in style.split(",") if u.strip()]
+    if index >= len(urls):
+        return None
+    url = urls[index]
+    if url in {"", "default"}:
+        return None
+    return embed_foreground_path(template, url)
+
+
+def composite_overlay_frame(
+    image: ImageType, overlay: Overlay, foreground: ImageType
+) -> None:
+    chip = foreground.copy()
+    size = overlay.get_size(image.size)
+    chip.thumbnail(size)
+    chip = chip.rotate(overlay.angle, expand=True)
+    x1, y1, _, _ = overlay.get_box(image.size, chip.size)
+    image.paste(chip, (x1, y1), mask=chip.convert("RGBA"))
+
+
 def embed(template: Template, index: int, foreground_path: Path, background_path: Path):
     try:
         overlay = template.overlay[index]
@@ -136,6 +173,10 @@ def embed(template: Template, index: int, foreground_path: Path, background_path
         count = len(template.overlay)
         logger.error(f"Template {template.id!r} only supports {count} overlay(s)")
         overlay = template.overlay[count - 1]
+
+    if overlay.timed:
+        logger.debug(f"Skipping embed bake for timed overlay index={index}")
+        return
 
     background = load(background_path)
     foreground = load(foreground_path)
@@ -158,8 +199,12 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
         logger.error(f"Template {template.id!r} only supports {count} overlay(s)")
         overlay = template.overlay[count - 1]
 
+    if overlay.timed:
+        logger.debug(f"Skipping merge bake for timed overlay index={index}")
+        return
+
     background = Image.open(background_path)
-    foreground = load(foreground_path)
+    foreground_master = load(foreground_path)
 
     frames = []
     for frame in ImageSequence.Iterator(background):
@@ -167,12 +212,13 @@ def merge(template: Template, index: int, foreground_path: Path, background_path
         frame.save(stream, format="GIF")
         background = Image.open(stream).convert("RGBA")  # type: ignore[assignment]
 
+        chip = foreground_master.copy()
         size = overlay.get_size(background.size)
-        foreground.thumbnail(size)
-        foreground = foreground.rotate(overlay.angle, expand=True)
+        chip.thumbnail(size)
+        chip = chip.rotate(overlay.angle, expand=True)
 
-        x1, y1, _x2, _y2 = overlay.get_box(background.size, foreground.size)
-        background.paste(foreground, (x1, y1), mask=foreground.convert("RGBA"))
+        x1, y1, _x2, _y2 = overlay.get_box(background.size, chip.size)
+        background.paste(chip, (x1, y1), mask=chip.convert("RGBA"))
 
         frames.append(background)
 
@@ -233,6 +279,24 @@ def render_image(
         )
     ) and not (is_preview or settings.DEBUG):
         watermark = ""
+
+    overlay_snapshot_percent = 0.0
+    timed_overlay_images: dict[int, ImageType] = {}
+    for i, ov in enumerate(template.overlay):
+        if not ov.timed:
+            continue
+        path = get_overlay_foreground_path(template, style, i)
+        if path and path.exists():
+            timed_overlay_images[i] = load(path)
+    for overlay_index, overlay in enumerate(template.overlay):
+        if not overlay.timed:
+            continue
+        foreground = timed_overlay_images.get(overlay_index)
+        if foreground is None:
+            continue
+        if not overlay.visible_at(overlay_snapshot_percent):
+            continue
+        composite_overlay_frame(image, overlay, foreground)
 
     for (
         point,
@@ -352,6 +416,14 @@ def render_animation(
     ) and not (is_preview or settings.DEBUG):
         watermark = ""
 
+    timed_overlay_images: dict[int, ImageType] = {}
+    for i, ov in enumerate(template.overlay):
+        if not ov.timed:
+            continue
+        path = get_overlay_foreground_path(template, style, i)
+        if path and path.exists():
+            timed_overlay_images[i] = load(path)
+
     for index, frame in enumerate(sources):
         if (index % modulus) >= 1:
             continue
@@ -361,6 +433,16 @@ def render_animation(
         background = Image.open(stream).convert("RGBA")
         image = resize_image(background, *size, pad, expand=False)
         percent_rendered = 1.0 if total == 1 else index / total
+
+        for overlay_index, overlay in enumerate(template.overlay):
+            if not overlay.timed:
+                continue
+            foreground = timed_overlay_images.get(overlay_index)
+            if foreground is None:
+                continue
+            if not overlay.visible_at(percent_rendered):
+                continue
+            composite_overlay_frame(image, overlay, foreground)
 
         for (
             point,

@@ -12,6 +12,16 @@ class Overlay:
 
     scale: float = 0.25
 
+    start: float = 0.0
+    stop: float = 1.0
+
+    @property
+    def timed(self) -> bool:
+        return not (self.start == 0.0 and self.stop == 1.0)
+
+    def visible_at(self, percent_rendered: float) -> bool:
+        return self.start <= percent_rendered < self.stop
+
     def get_size(self, background_size: Dimensions) -> Dimensions:
         background_width, background_height = background_size
         dimension = min(

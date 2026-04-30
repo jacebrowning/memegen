@@ -30,7 +30,15 @@ example:
   - Push to CI
   - It turns green
 overlay:
-  - center_x: 0.5
-    center_y: 0.5
-    angle: 0.0
-    scale: 0.25
+  - center_x: 0.35
+    center_y: 0.2
+    angle: 8.0
+    scale: 0.4
+    start: 0.0
+    stop: 0.54
+  - center_x: 0.25
+    center_y: 0.2
+    angle: 8.0
+    scale: 0.4
+    start: 0.61
+    stop: 0.75

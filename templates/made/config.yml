@@ -69,11 +69,17 @@ overlay:
     center_y: 0.27
     angle: 0.0
     scale: 0.12
+    start: 0.0
+    stop: 1.0
   - center_x: 0.565
     center_y: 0.57
     angle: 0.0
     scale: 0.12
+    start: 0.0
+    stop: 1.0
   - center_x: 0.59
     center_y: 0.885
     angle: 0.0
     scale: 0.11
+    start: 0.0
+    stop: 1.0

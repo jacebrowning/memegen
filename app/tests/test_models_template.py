@@ -151,3 +151,17 @@ def describe_template():
             style = "default,https://www.gstatic.com/webp/gallery/1.jpg"
             template = Template.objects.get("perfection")
             expect(await template.check(style)) == True
+
+
+def describe_overlay():
+    def it_is_visible_inside_start_stop_window(expect):
+        o = Overlay(start=0.25, stop=0.75)
+        expect(o.visible_at(0.24)) == False
+        expect(o.visible_at(0.25)) == True
+        expect(o.visible_at(0.5)) == True
+        expect(o.visible_at(0.75)) == False
+
+    def it_timed_when_window_is_partial(expect):
+        expect(Overlay().timed) == False
+        expect(Overlay(start=0.1).timed) == True
+        expect(Overlay(stop=0.9).timed) == True

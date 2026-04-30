@@ -45,11 +45,17 @@ overlay:
     center_y: 0.155
     angle: 0.0
     scale: 0.3
+    start: 0.0
+    stop: 1.0
   - center_x: 0.25
     center_y: 0.5
     angle: 0.0
     scale: 0.3
+    start: 0.0
+    stop: 1.0
   - center_x: 0.25
     center_y: 0.84
     angle: 0.0
     scale: 0.3
+    start: 0.0
+    stop: 1.0

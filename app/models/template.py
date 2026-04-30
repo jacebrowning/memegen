@@ -349,14 +349,24 @@ class Template:
             logger.error(f"Invalid style for {self.id} template: {style}")
             return False
 
+        urls = [u.strip() for u in style.split(",") if u.strip()]
+
         image = self.get_image(animated=animated)
         filename = utils.text.fingerprint(f"{style}{self.overlay}", suffix=image.suffix)
         path = AsyncPath(self.directory) / filename
         if await path.exists() and not settings.DEBUG and not force:
-            logger.info(f"Found overlay {style} at {path}")
-            return True
+            embeds_ok = True
+            for url in urls:
+                if url in {"", "default"}:
+                    continue
+                fp = utils.images.embed_foreground_path(self, url)
+                if not await AsyncPath(fp).exists():
+                    embeds_ok = False
+                    break
+            if embeds_ok:
+                logger.info(f"Found overlay {style} at {path}")
+                return True
 
-        urls = style.split(",")
         logger.info(f"Embedding {len(urls)} overlay image(s) onto {path}")
         await asyncio.to_thread(shutil.copy, image, path)
 
@@ -374,16 +384,11 @@ class Template:
     async def _embed(
         self, index: int, url: str, background: AsyncPath, force: bool
     ) -> bool:
-        if url.strip() in {"", "default"}:
+        url = url.strip()
+        if url in {"", "default"}:
             return True
 
-        suffix = Path(str(furl(url).path)).suffix
-        if not suffix:
-            logger.warning(f"Unable to determine image extension: {url}")
-            suffix = ".png"
-
-        filename = utils.text.fingerprint(url, prefix="_embed-", suffix=suffix)
-        foreground = AsyncPath(self.directory) / filename
+        foreground = AsyncPath(utils.images.embed_foreground_path(self, url))
 
         if await foreground.exists() and not settings.DEBUG and not force:
             logger.info(f"Found overlay {url} at {foreground}")
