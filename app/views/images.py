@@ -6,7 +6,7 @@ from sanic.request import Request
 from sanic_ext import openapi
 
 from .. import helpers, settings, utils
-from .helpers import render_image
+from .helpers import generate_url, render_image
 from .schemas import (
     AutomaticRequest,
     CustomRequest,
@@ -15,7 +15,6 @@ from .schemas import (
     MemeRequest,
     MemeResponse,
 )
-from .templates import generate_url
 
 blueprint = Blueprint("Images", url_prefix="/images")
 
