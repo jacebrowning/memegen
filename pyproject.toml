@@ -64,7 +64,7 @@ aioresponses = "*"
 locust = "^2.42.2"
 
 # Coverage
-coveragespace = "^6.1"
+coveragespace = "^6.2"
 
 # Documentation
 mkdocs = "^1.2.3"
