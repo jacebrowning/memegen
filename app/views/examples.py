@@ -32,7 +32,7 @@ async def examples_static(request: Request):
 
 
 def display(request, items):
-    urls = [items[0] for items in items]
+    urls = [item[0] for item in items]
     if settings.DEBUG:
         refresh = int(request.args.get("refresh", 5 * 60))
     else:
