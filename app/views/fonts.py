@@ -34,7 +34,7 @@ async def detail(request, id):
     try:
         font = models.Font.objects.get(id)
     except ValueError:
-        raise exceptions.NotFound(f"Template not found: {id}")
+        raise exceptions.NotFound(f"Font not found: {id}")
     else:
         data = font.jsonify(request)
         return response.json(data)
