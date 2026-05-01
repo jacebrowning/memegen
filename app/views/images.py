@@ -40,6 +40,23 @@ async def index(request: Request):
 
 @blueprint.post("/")
 @openapi.summary("Create a meme from a template")
+@openapi.description(
+    "Create a meme by `POST`ing raw text. The response includes a `url` "
+    "field containing the canonical, escape-encoded URL — agents that don't "
+    "want to implement the escape table client-side should use this endpoint "
+    "and read back the URL rather than constructing one themselves.\n\n"
+    "Body fields:\n"
+    "- `template_id`: ID of the template to render (from `GET /templates/`).\n"
+    "- `text`: Lines of text in order (raw, not escape-encoded). Up to the "
+    "template's `lines` value; pass an empty string for an empty intermediate "
+    "line.\n"
+    "- `style`: One or more style names from the template's `styles` array, "
+    "or HTTPS URLs to use as custom overlay images. For templates with "
+    "`overlays > 1`, the array sets each slot independently.\n"
+    "- `extension`: Output format — `png`, `jpg`, `gif`, or `webp`.\n"
+    "- `redirect`: If true, returns 302 to the canonical URL instead of "
+    "returning JSON."
+)
 @openapi.body({"application/json": MemeRequest})
 @openapi.response(
     201, {"application/json": MemeResponse}, "Successfully created a meme"
@@ -147,7 +164,115 @@ async def index_custom(request: Request):
     "template_filename",
     str,
     "path",
-    description="Template ID and image format: `<template_id>.<extension>`",
+    description=(
+        "Template ID and image format: `<template_id>.<extension>`. This is "
+        "the canonical empty-template render and matches the `blank` field on "
+        "`GET /templates/{id}`. Use this when a client just wants the "
+        "background. The same query parameters as "
+        "`/images/{template_id}/{text_filepath}` apply."
+    ),
+)
+@openapi.parameter(
+    "style",
+    str,
+    "query",
+    description=(
+        "Alternate visual variant from the template's `styles` array, OR an "
+        "HTTPS URL to use as a custom overlay image. For templates with "
+        "`overlays > 1`, may be repeated to set each slot independently. "
+        "Unknown style names return HTTP 422, not the default render."
+    ),
+)
+@openapi.parameter(
+    "font",
+    str,
+    "query",
+    description=(
+        "Font name or alias overriding the template's default. Full list at "
+        "`/fonts/`. Named aliases: `thick`, `comic`, `he`, `jp`. Unknown "
+        "values return HTTP 422; the image still renders with the template's "
+        "default font."
+    ),
+)
+@openapi.parameter(
+    "layout",
+    str,
+    "query",
+    description=(
+        "`default` (implicit) or `top`. `top` places all text at the image "
+        "top rather than the template's default regions."
+    ),
+)
+@openapi.parameter(
+    "width",
+    int,
+    "query",
+    description=(
+        "Output width in pixels. If both `width` and `height` are supplied, "
+        "the image is padded to fit while preserving aspect ratio. Values "
+        "between 1 and 9 are rejected with HTTP 422."
+    ),
+)
+@openapi.parameter(
+    "height",
+    int,
+    "query",
+    description="Output height in pixels. See `width` for combined behavior.",
+)
+@openapi.parameter(
+    "color",
+    str,
+    "query",
+    description=(
+        "Comma-separated `<text>,<outline>` pair. Each value is either an "
+        "HTML color name or a hex code (with or without a leading `#`). "
+        "Example: `white,black`."
+    ),
+)
+@openapi.parameter(
+    "background",
+    str,
+    "query",
+    description=("Custom background image URL. Composes with `style=<url>` overlays."),
+)
+@openapi.parameter(
+    "center",
+    str,
+    "query",
+    description=(
+        "Comma-separated `<x>,<y>` fractional coordinates (0.0–1.0) for "
+        "overlay center within its slot. Most useful with `style=<url>`."
+    ),
+)
+@openapi.parameter(
+    "scale",
+    float,
+    "query",
+    description=(
+        "Multiplier applied to the overlay's default size. Most useful with "
+        "`style=<url>`."
+    ),
+)
+@openapi.parameter(
+    "frames",
+    int,
+    "query",
+    description=(
+        "Maximum number of frames to render in animated output (`gif`/"
+        "`webp`). 0 (default) means no cap. Use this to bound response size "
+        "and render time on long animations."
+    ),
+)
+@openapi.parameter(
+    "status",
+    int,
+    "query",
+    description=(
+        "Override the HTTP response status code. Primarily used internally "
+        "by the `POST /images/` → redirect flow to propagate a `201 Created` "
+        "semantic to the final image fetch. Most clients should not need to "
+        "set this directly."
+    ),
 )
 @openapi.response(
     200, {"image/*": bytes}, "Successfully displayed a template background"
@@ -184,9 +309,123 @@ async def detail_blank(request: Request, template_filename: str):
     "text_filepath",
     str,
     "path",
-    description="Lines of text and image format: `<line1>/<line2>.<extension>`",
+    description=(
+        "Lines of text and image format: `<line1>/<line2>/.../<line_n>."
+        "<extension>`, where `n` ≤ the template's `lines` value. Trailing "
+        "lines may be omitted; pass `_` (single underscore) for an empty "
+        "intermediate line. Extensions: `png`, `jpg`, `gif`, `webp`. Special "
+        "characters in each segment use an ASCII-safe escape table: `_` "
+        "(space), `__` (literal underscore), `~n` (newline), `~q` (?), `~a` "
+        "(&), `~p` (%), `~h` (#), `~s` (/), `~b` (\\), `~l` (<), `~g` (>), "
+        "`''` (double quote). Emoji shortcodes (e.g. `:thumbsup:`) are "
+        "substituted automatically. Clients that don't want to implement the "
+        "escape table should `POST` to `/images/` with raw text in the JSON "
+        "body and use the canonical `url` field from the response."
+    ),
 )
 @openapi.parameter("template_id", str, "path", description="ID of a meme template")
+@openapi.parameter(
+    "style",
+    str,
+    "query",
+    description=(
+        "Alternate visual variant from the template's `styles` array, OR an "
+        "HTTPS URL to use as a custom overlay image. For templates with "
+        "`overlays > 1`, may be repeated to set each slot independently. "
+        "Unknown style names return HTTP 422, not the default render."
+    ),
+)
+@openapi.parameter(
+    "font",
+    str,
+    "query",
+    description=(
+        "Font name or alias overriding the template's default. Full list at "
+        "`/fonts/`. Named aliases: `thick`, `comic`, `he`, `jp`. Unknown "
+        "values return HTTP 422; the image still renders with the template's "
+        "default font."
+    ),
+)
+@openapi.parameter(
+    "layout",
+    str,
+    "query",
+    description=(
+        "`default` (implicit) or `top`. `top` places all text at the image "
+        "top rather than the template's default regions."
+    ),
+)
+@openapi.parameter(
+    "width",
+    int,
+    "query",
+    description=(
+        "Output width in pixels. If both `width` and `height` are supplied, "
+        "the image is padded to fit while preserving aspect ratio. Values "
+        "between 1 and 9 are rejected with HTTP 422."
+    ),
+)
+@openapi.parameter(
+    "height",
+    int,
+    "query",
+    description="Output height in pixels. See `width` for combined behavior.",
+)
+@openapi.parameter(
+    "color",
+    str,
+    "query",
+    description=(
+        "Comma-separated `<text>,<outline>` pair. Each value is either an "
+        "HTML color name or a hex code (with or without a leading `#`). "
+        "Example: `white,black`."
+    ),
+)
+@openapi.parameter(
+    "background",
+    str,
+    "query",
+    description=("Custom background image URL. Composes with `style=<url>` overlays."),
+)
+@openapi.parameter(
+    "center",
+    str,
+    "query",
+    description=(
+        "Comma-separated `<x>,<y>` fractional coordinates (0.0–1.0) for "
+        "overlay center within its slot. Most useful with `style=<url>`."
+    ),
+)
+@openapi.parameter(
+    "scale",
+    float,
+    "query",
+    description=(
+        "Multiplier applied to the overlay's default size. Most useful with "
+        "`style=<url>`."
+    ),
+)
+@openapi.parameter(
+    "frames",
+    int,
+    "query",
+    description=(
+        "Maximum number of frames to render in animated output (`gif`/"
+        "`webp`). 0 (default) means no cap. Use this to bound response size "
+        "and render time on long animations."
+    ),
+)
+@openapi.parameter(
+    "status",
+    int,
+    "query",
+    description=(
+        "Override the HTTP response status code. Primarily used internally "
+        "by the `POST /images/` → redirect flow to propagate a `201 Created` "
+        "semantic to the final image fetch. Most clients should not need to "
+        "set this directly."
+    ),
+)
 @openapi.response(200, {"image/*": bytes}, "Successfully displayed a custom meme")
 @openapi.response(404, {"image/*": bytes}, "Template not found")
 @openapi.response(414, {"image/*": bytes}, "Custom text too long (length >200)")
