@@ -144,4 +144,6 @@ This can be combined with [custom overlays](#custom-overlays) to augment the bac
 
 <br><hr><br>
 
+For the full URL-construction reference (the four load-bearing template fields, the escape table, all rendering query parameters, and notes for automated clients), see [`docs/guide.md`](docs/guide.md).
+
 Explore the full API here: <https://api.memegen.link/docs/>
