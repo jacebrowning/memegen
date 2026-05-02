@@ -110,6 +110,58 @@ def init(app: Sanic):
 
         View the image: <https://api.memegen.link/images/aag/foo/bar.png>
 
+        For the full URL-construction reference, see [`docs/guide.md`](https://github.com/jacebrowning/memegen/blob/main/docs/guide.md).
+
+        <details>
+        <summary>URL anatomy</summary>
+
+        A rendered meme URL has the form:
+
+        ```
+        /images/{template_id}/{line_1}/{line_2}/.../{line_n}.{ext}
+        ```
+
+        where `n` is at most the template's `lines` value, and `{ext}` is one of `png`, `jpg`, `gif`, or `webp`. Trailing lines may be omitted; pass `_` to render an empty line in a non-trailing position. The blank template is at `/images/{template_id}.{ext}`.
+
+        The four template-metadata fields that govern URL construction are `id`, `lines`, `overlays`, and `styles`. The remaining fields are descriptive.
+        </details>
+
+        <details>
+        <summary>Special characters</summary>
+
+        | Character | Escape |
+        |-----------|--------|
+        | Space | `_` |
+        | Underscore | `__` |
+        | Newline | `~n` |
+        | `?` | `~q` |
+        | `&` | `~a` |
+        | `%` | `~p` |
+        | `#` | `~h` |
+        | `/` | `~s` |
+        | `\\` | `~b` |
+        | `<` | `~l` |
+        | `>` | `~g` |
+        | `"` | `''` |
+
+        Emoji are supported via shortcode aliases (e.g. `:thumbsup:`). Alternatively, `POST` to `/images/` with raw text and use the canonical `url` field from the response.
+        </details>
+
+        <details>
+        <summary>Rendering options</summary>
+
+        These query parameters apply to all path-based image endpoints:
+
+        - `style=<name>` — alternate visual variant from the template's `styles` array; also accepts an HTTPS URL for a custom overlay
+        - `font=<name>` — override the template's default font; full list at `/fonts/`
+        - `layout=top` — place all text at the top
+        - `width=<int>`, `height=<int>` — output dimensions in pixels
+        - `color=<text>,<outline>` — HTML color names or hex codes
+        - `background=<url>` — custom background image
+        - `center=<x>,<y>`, `scale=<float>` — overlay placement modifiers (when `overlays > 0`)
+        - `frames=<int>` — cap on rendered frames for animated output (`gif`/`webp`); `0` (default) means no cap
+        </details>
+
         ## Links
         """.replace("https://api.memegen.link", settings.BASE_URL)),
     )
