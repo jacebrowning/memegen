@@ -883,24 +883,24 @@ requests = ">=2.28,<3.0"
 
 [[package]]
 name = "datafiles"
-version = "2.3.4"
+version = "2.5"
 description = "File-based ORM for dataclasses."
 optional = false
-python-versions = "<4.0,>=3.9"
+python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "datafiles-2.3.4-py3-none-any.whl", hash = "sha256:7270ce61bc6df2e1c32ef30a177744ab941873f6fe57967c2fd14c156af23f50"},
-    {file = "datafiles-2.3.4.tar.gz", hash = "sha256:706aa9be52c3c206e15d47ca4f9468449a3c511f13d3d9df57b051dd3e7a1d80"},
+    {file = "datafiles-2.5-py3-none-any.whl", hash = "sha256:3c4b50339b698ef7096f7244233e80c5686838f0dcd4c77bfe7e0e52ddea75de"},
+    {file = "datafiles-2.5.tar.gz", hash = "sha256:432498336b57aaa9e3427f3c2cf0c558b980a01d825661da9df61076b3b84f8e"},
 ]
 
 [package.dependencies]
-cached_property = ">=1.5,<2.0"
+cached_property = ">=1.5,<3.0"
 classproperties = ">=0.2,<0.3"
 json-five = ">=1.1.2,<2.0.0"
 minilog = ">=2.3,<3.0"
 parse = ">=1.12,<2.0"
-"ruamel.yaml" = ">=0.18.10,<0.19.0"
-tomlkit = ">=0.10.1,<0.11.0"
+"ruamel.yaml" = ">=0.18.10,<0.20.0"
+tomlkit = ">=0.10.1,<0.15.0"
 
 [[package]]
 name = "decorator"
@@ -3803,25 +3803,11 @@ files = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.12.2"
-description = "Backported and Experimental Type Hints for Python 3.8+"
-optional = false
-python-versions = ">=3.8"
-groups = ["main", "dev"]
-markers = "python_version < \"3.15\""
-files = [
-    {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
-    {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
-]
-
-[[package]]
-name = "typing-extensions"
 version = "4.15.0"
 description = "Backported and Experimental Type Hints for Python 3.9+"
 optional = false
 python-versions = ">=3.9"
 groups = ["main", "dev"]
-markers = "python_version >= \"3.15\""
 files = [
     {file = "typing_extensions-4.15.0-py3-none-any.whl", hash = "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"},
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
@@ -4409,4 +4395,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "f45e8e25cd2940a11e1f83d10ca985d2baf1ef1f5eb0c796ccdce1143913ff4d"
+content-hash = "faaf4a33af6b6f6fce9bb1f16f0f11f599fc445864db7541355a364480337d93"
