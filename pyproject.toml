@@ -35,7 +35,7 @@ furl = "^2.1.4"
 webp = "~0.4"
 
 # Production
-bugsnag = "^4.8"
+bugsnag = "^4.9"
 gunicorn = "^25.1"
 uvicorn = "~0.40.0"
 
