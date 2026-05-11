@@ -10,6 +10,12 @@ blueprint = Blueprint("Fonts", url_prefix="/fonts")
 
 @blueprint.get("/")
 @openapi.summary("List available fonts")
+@openapi.description(
+    "List of fonts available for the `font=` query parameter on path-based "
+    "image endpoints. Each entry has an `id` (canonical name) and an "
+    "optional `alias`. Named aliases include `thick`, `comic`, `he` "
+    "(Hebrew), and `jp` (Japanese)."
+)
 @openapi.response(
     200,
     {"application/json": list[FontResponse]},
