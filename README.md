@@ -87,14 +87,14 @@ The list of fonts is available here: <https://api.memegen.link/fonts/>
 
 Add the `font=<str>` query parameter to customize the look of your meme:
 
-| Name                                                                   | ID                  | Alias        |
-| ---------------------------------------------------------------------- | ------------------- | ------------ |
-| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web) | `font=titilliumweb` | `font=thick` |
-| [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
-| [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
-| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
-| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshebrew`    | `font=he`    |
-| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
+| Name                                                                             | ID                    | Alias        |
+| -------------------------------------------------------------------------------- | --------------------- | ------------ |
+| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web)           | `font=titilliumweb`   | `font=thick` |
+| [Kalam Regular](https://fonts.google.com/specimen/Kalam)                         | `font=kalam`          | `font=comic` |
+| [Impact](https://www.dafontfree.io/impact-font/)                                 | `font=impact`         | -            |
+| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)               | `font=notosans`       | -            |
+| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew) | `font=notosanshebrew` | `font=he`    |
+| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)                        | `font=hgminchob`      | `font=jp`    |
 
 ## Custom Colors
 
@@ -143,7 +143,5 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 This can be combined with [custom overlays](#custom-overlays) to augment the background image.
 
 <br><hr><br>
-
-For the full URL-construction reference (the four load-bearing template fields, the escape table, all rendering query parameters, and notes for automated clients), see [`docs/guide.md`](https://github.com/jacebrowning/memegen/blob/main/docs/guide.md).
 
 Explore the full API here: <https://api.memegen.link/docs/>

@@ -1,4 +1,4 @@
-# Constructing meme URLs
+# Full API Guide
 
 A reference for humans and automated clients on how to build valid memegen URLs from template metadata. The goal is a single page you can read top-to-bottom and emit a correct URL on the first try, without consulting the README, the OpenAPI spec, and a per-template metadata response separately.
 
@@ -37,12 +37,12 @@ where `{template_id}` is the `id` field from `/templates/`, each `{line_i}` is o
 
 For URL construction, four fields are load-bearing:
 
-| Field | Role in the URL |
-|-------|-----------------|
-| `id` | Goes into the path immediately after `/images/` |
-| `lines` | Maximum number of `/`-separated text segments accepted in the path |
-| `overlays` | Number of overlay image slots the template defines |
-| `styles` | Allowed values for the `style=` query parameter |
+| Field      | Role in the URL                                                    |
+| ---------- | ------------------------------------------------------------------ |
+| `id`       | Goes into the path immediately after `/images/`                    |
+| `lines`    | Maximum number of `/`-separated text segments accepted in the path |
+| `overlays` | Number of overlay image slots the template defines                 |
+| `styles`   | Allowed values for the `style=` query parameter                    |
 
 The remaining fields (`name`, `blank`, `example`, `source`, `keywords`) are descriptive — useful for discovery, search, and validation, but not for URL construction.
 
@@ -66,20 +66,20 @@ If you pass more segments than `lines`, the surplus is currently ignored. Agents
 
 Text segments live inside a URL path, so a small escape table substitutes ASCII-safe sequences for characters that would otherwise need percent-encoding or break path parsing:
 
-| Character | Escape |
-|-----------|--------|
-| Space | `_` |
-| Underscore | `__` |
-| Newline | `~n` |
-| `?` | `~q` |
-| `&` | `~a` |
-| `%` | `~p` |
-| `#` | `~h` |
-| `/` | `~s` |
-| `\` | `~b` |
-| `<` | `~l` |
-| `>` | `~g` |
-| `"` | `''` |
+| Character  | Escape |
+| ---------- | ------ |
+| Space      | `_`    |
+| Underscore | `__`   |
+| Newline    | `~n`   |
+| `?`        | `~q`   |
+| `&`        | `~a`   |
+| `%`        | `~p`   |
+| `#`        | `~h`   |
+| `/`        | `~s`   |
+| `\`        | `~b`   |
+| `<`        | `~l`   |
+| `>`        | `~g`   |
+| `"`        | `''`   |
 
 Emoji are supported via shortcode aliases — for example, `:thumbsup:` renders 👍.
 
@@ -178,19 +178,19 @@ A handful of points that are obvious in retrospect but cost an agent several rou
 
 ## Edge cases
 
-| Situation | Current behavior |
-|-----------|------------------|
-| More text segments than `lines` | Extra segments are ignored; the meme renders with the first `lines` segments |
-| Fewer text segments than `lines` | Missing trailing lines render as empty |
-| Unknown `style=` name (not a URL) | Returns HTTP 422 |
-| Unknown `font=` value | Returns HTTP 422; the image still renders using the template's default font |
-| Path text segment >200 bytes | Returns HTTP 414 (`Custom text too long`) |
-| Unknown image extension | Defaults to PNG, returns HTTP 422 |
-| `width` or `height` between 1 and 9 | Returns HTTP 422 (size silently set back to 0,0) |
-| Unknown `template_id` | Returns HTTP 404 |
-| `style=<url>` that can't be downloaded | Returns HTTP 415 |
-| `id=custom` with no or un-downloadable `background=` URL | Returns HTTP 422 (missing) or HTTP 415 (un-downloadable) |
-| Invalid `color=` value | Returns HTTP 422 |
+| Situation                                                | Current behavior                                                             |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| More text segments than `lines`                          | Extra segments are ignored; the meme renders with the first `lines` segments |
+| Fewer text segments than `lines`                         | Missing trailing lines render as empty                                       |
+| Unknown `style=` name (not a URL)                        | Returns HTTP 422                                                             |
+| Unknown `font=` value                                    | Returns HTTP 422; the image still renders using the template's default font  |
+| Path text segment >200 bytes                             | Returns HTTP 414 (`Custom text too long`)                                    |
+| Unknown image extension                                  | Defaults to PNG, returns HTTP 422                                            |
+| `width` or `height` between 1 and 9                      | Returns HTTP 422 (size silently set back to 0,0)                             |
+| Unknown `template_id`                                    | Returns HTTP 404                                                             |
+| `style=<url>` that can't be downloaded                   | Returns HTTP 415                                                             |
+| `id=custom` with no or un-downloadable `background=` URL | Returns HTTP 422 (missing) or HTTP 415 (un-downloadable)                     |
+| Invalid `color=` value                                   | Returns HTTP 422                                                             |
 
 ## Reference
 
