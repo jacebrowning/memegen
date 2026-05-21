@@ -12,7 +12,7 @@ A rendered meme URL has the form:
 https://api.memegen.link/images/{template_id}/{line_1}/{line_2}/.../{line_n}.{ext}
 ```
 
-where `{template_id}` is the `id` field from `/templates/`, each `{line_i}` is one segment of text escaped per the rules below, `n` is at most the template's `lines` value, and `{ext}` is one of `png`, `jpg`, `gif`, or `webp`. A blank template (no text) is available at `/images/{template_id}.{ext}` — this is the value of the `blank` field on the template's metadata response.
+where `{template_id}` is the `id` field from `/templates/`, each `{line_i}` is one path segment of text, `n` is at most the template's `lines` value, and `{ext}` is one of `png`, `jpg`, `gif`, or `webp`. A blank template (no text) is available at `/images/{template_id}.{ext}` — this is the value of the `blank` field on the template's metadata response.
 
 ## Source of truth: the templates endpoint
 
@@ -62,28 +62,11 @@ For example, on the Ancient Aliens Guy template (`aag`, `lines: 2`):
 
 If you pass more segments than `lines`, the surplus is currently ignored. Agents should treat over-passing as an error and trim to `template.lines` before constructing the URL rather than relying on silent truncation as a contract.
 
-## Escaping text segments
+## Special characters
 
-Text segments live inside a URL path, so a small escape table substitutes ASCII-safe sequences for characters that would otherwise need percent-encoding or break path parsing:
+Path-based URLs require escaping spaces, punctuation, and other reserved characters in each text segment. **Prefer the `POST` endpoints** — send `template_id` and a `text` array of raw strings in the JSON body (for example, `POST /images/`). The response includes a canonical `url` field with escaping applied for you.
 
-| Character  | Escape |
-| ---------- | ------ |
-| Space      | `_`    |
-| Underscore | `__`   |
-| Newline    | `~n`   |
-| `?`        | `~q`   |
-| `&`        | `~a`   |
-| `%`        | `~p`   |
-| `#`        | `~h`   |
-| `/`        | `~s`   |
-| `\`        | `~b`   |
-| `<`        | `~l`   |
-| `>`        | `~g`   |
-| `"`        | `''`   |
-
-Emoji are supported via shortcode aliases — for example, `:thumbsup:` renders 👍.
-
-If you'd rather not implement the escape table client-side, `POST` to `/images/` with a JSON body containing `template_id` and a `text` array of raw strings. The response includes a `url` field with the canonical, escaped URL. Automated clients can `POST` raw text and use the returned URL verbatim instead of maintaining the escape table themselves.
+If you must build `GET` URLs by hand, see the [special characters reference](https://memegen.link/#special-characters) for the full escape table and emoji shortcodes.
 
 ## Styles and the `styles` field
 
@@ -171,7 +154,7 @@ https://api.memegen.link/images/custom/top_text/bottom_text.png?background=https
 A handful of points that are obvious in retrospect but cost an agent several round-trips to discover:
 
 1. **Bootstrap once, cache.** `GET /templates/` is the single source of truth for renderable templates. Fetch at startup and refresh on a long interval; don't query per-meme.
-2. **`POST` raw, read back the URL.** All `POST` endpoints normalize special characters into the escape forms above and return the canonical URL in the `url` field. Agents that don't want to maintain the escape table client-side can `POST` raw strings and use the returned URL verbatim.
+2. **`POST` raw, read back the URL.** All `POST` endpoints apply URL escaping and return the canonical URL in the `url` field. Use raw strings in the request body and the returned URL verbatim; only consult the [special characters reference](https://memegen.link/#special-characters) when you must construct path-based `GET` URLs yourself.
 3. **`example.url` is a free smoke test.** Each template's `example.url` is guaranteed to render, so a `HEAD` request against that URL is the cheapest way to validate that a `template_id` is live before constructing a derived URL.
 4. **Validate `style` against `template.styles`.** Passing an unknown style name returns HTTP 422, not a default render, so client-side validation prevents user-visible errors. Likewise, validate `font=` against `GET /fonts/` before sending — an unknown font also returns 422.
 5. **Trim text segments to `lines`.** Don't rely on silent truncation; trim client-side to `template.lines` before joining.
