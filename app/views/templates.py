@@ -25,7 +25,6 @@ blueprint = Blueprint("Templates", url_prefix="/templates")
     "guaranteed-valid smoke-test URL, `source` for attribution, and "
     "`keywords` for search. Recommended client pattern: fetch this endpoint "
     "once at startup, cache, and construct URLs locally rather than per-meme. "
-    "See `docs/guide.md` for worked examples and the full escape table."
 )
 @openapi.parameter(
     "animated",
@@ -55,7 +54,7 @@ async def index(request: Request):
 @openapi.description(
     "Per-template metadata. The four URL-construction fields are `id`, "
     "`lines`, `overlays`, and `styles`; see `GET /templates/` for what each "
-    "one governs and `docs/guide.md` for worked examples. The `example.url` "
+    "one governs. The `example.url` "
     "field is a guaranteed-valid render URL — issuing a `HEAD` against it is "
     "the cheapest way to validate that the template id is live."
 )

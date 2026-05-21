@@ -1,8 +1,8 @@
 # Full API Guide
 
-A reference for humans and automated clients on how to build valid memegen URLs from template metadata. The goal is a single page you can read top-to-bottom and emit a correct URL on the first try, without consulting the README, the OpenAPI spec, and a per-template metadata response separately.
+A reference for humans and automated clients on how to build valid memegen URLs from template metadata. The goal is a single page you can read top-to-bottom and emit a correct URL on the first try, without consulting the README, the OpenAPI spec, and per-template metadata responses individually.
 
-The OpenAPI specification at [`/docs/openapi.json`](https://api.memegen.link/docs/openapi.json) is the source of truth for endpoint shapes and parameter names. This guide is derived from those descriptions and adds worked examples, edge-case behavior, and a recipe for automated clients that doesn't fit cleanly inside the spec itself.
+The OpenAPI specification at [`/docs/openapi.json`](https://api.memegen.link/docs/openapi.json) is the source of truth for endpoint shapes and parameter names. This guide is derived from those descriptions and adds working examples, edge-case behavior, and a recipe for automated clients that does not fit cleanly inside the spec itself.
 
 ## The shape of a meme URL
 
@@ -84,7 +84,7 @@ The `style=` parameter has a second mode: passing an HTTPS URL instead of a name
 
 A template's `overlays` field counts the compositing slots the template defines — for example, the Drake template defines two regions where reaction images go. When `overlays > 0`, each slot can be filled either with the template's default content (no `style=` needed) or with a custom image URL via `style=<url>`.
 
-Two query parameters fine-tune overlay placement, most useful when supplying custom images:
+Two query parameters fine-tune overlay placement and are most useful when supplying custom images:
 
 - `center=<x>,<y>` — fractional coordinates (0.0–1.0) for the overlay center within its slot
 - `scale=<float>` — multiplier applied to the overlay's default size
@@ -125,9 +125,9 @@ The file extension on the path determines the response format. `png` and `jpg` a
 
 `status=<int>` overrides the HTTP response status code on the rendered image. This is primarily used internally by the `POST /images/` → redirect flow to propagate a `201 Created` semantic to the final image fetch. Most clients should not need to set this directly.
 
-## Worked examples
+## Working examples
 
-A few complete URLs covering common cases:
+A few complete URLs that cover common cases:
 
 ```
 # Two-line meme on a standard template
@@ -154,7 +154,7 @@ https://api.memegen.link/images/custom/top_text/bottom_text.png?background=https
 A handful of points that are obvious in retrospect but cost an agent several round-trips to discover:
 
 1. **Bootstrap once, cache.** `GET /templates/` is the single source of truth for renderable templates. Fetch at startup and refresh on a long interval; don't query per-meme.
-2. **`POST` raw, read back the URL.** All `POST` endpoints apply URL escaping and return the canonical URL in the `url` field. Use raw strings in the request body and the returned URL verbatim; only consult the [special characters reference](https://memegen.link/#special-characters) when you must construct path-based `GET` URLs yourself.
+2. **`POST` raw, read back the URL.** All `POST` endpoints apply URL escaping and return the canonical URL in the `url` field. Send raw strings in the request body, then use the returned `url` verbatim. Only consult the [special characters reference](https://memegen.link/#special-characters) when you must construct path-based `GET` URLs yourself.
 3. **`example.url` is a free smoke test.** Each template's `example.url` is guaranteed to render, so a `HEAD` request against that URL is the cheapest way to validate that a `template_id` is live before constructing a derived URL.
 4. **Validate `style` against `template.styles`.** Passing an unknown style name returns HTTP 422, not a default render, so client-side validation prevents user-visible errors. Likewise, validate `font=` against `GET /fonts/` before sending — an unknown font also returns 422.
 5. **Trim text segments to `lines`.** Don't rely on silent truncation; trim client-side to `template.lines` before joining.
@@ -163,7 +163,7 @@ A handful of points that are obvious in retrospect but cost an agent several rou
 
 | Situation                                                | Current behavior                                                             |
 | -------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| More text segments than `lines`                          | Extra segments are ignored; the meme renders with the first `lines` segments |
+| More text segments than `lines`                          | Extra segments are ignored; the meme renders using only the first `lines` segments |
 | Fewer text segments than `lines`                         | Missing trailing lines render as empty                                       |
 | Unknown `style=` name (not a URL)                        | Returns HTTP 422                                                             |
 | Unknown `font=` value                                    | Returns HTTP 422; the image still renders using the template's default font  |
