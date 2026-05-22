@@ -13,7 +13,9 @@
     "bin/verchew": true
   },
   "python.defaultInterpreterPath": ".venv/bin/python",
-  "pylint.ignorePatterns": ["*"],
+  "pylint.ignorePatterns": [
+    "*"
+  ],
   "editor.formatOnSave": true,
   "cSpell.words": [
     "Ackbar",
@@ -116,6 +118,7 @@
     "pluginmanager",
     "podman",
     "procfile",
+    "pydantic",
     "pygments",
     "pymdown",
     "pyproject",
