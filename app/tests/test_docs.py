@@ -4,12 +4,20 @@ import pytest
 
 
 def describe_spec():
+
+    URL = "/docs/openapi.json"
+
     def it_contains_the_version(expect, client):
         version = get_version("memegen")
-        request, response = client.get("/docs/openapi.json")
+        request, response = client.get(URL)
         expect(response.status) == 200
         if "b" not in version:
             expect(response.json["info"]["version"]) == version
+
+    def it_links_to_the_api_guide(expect, client):
+        request, response = client.get(URL)
+        expect(response.status) == 200
+        expect(response.json["externalDocs"]["url"]) == "https://memegen.link/guide/"
 
 
 @pytest.mark.xfail(reason="Requires JavaScript")

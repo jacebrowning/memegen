@@ -115,7 +115,7 @@ def init(app: Sanic):
         """.replace("https://api.memegen.link", settings.BASE_URL)),
     )
     app.ext.openapi.external(
-        url=f"https://{settings.BASE_URL}/guide/",
+        url="https://memegen.link/guide/",
         description="Browse API guide",
     )
     app.ext.openapi.contact(name="support", email="support@maketested.com")
