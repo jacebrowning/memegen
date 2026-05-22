@@ -1,4 +1,5 @@
 import asyncio
+from textwrap import dedent
 
 from sanic import Blueprint, exceptions, response
 from sanic.log import logger
@@ -39,6 +40,21 @@ async def index(request: Request):
 
 @blueprint.post("/")
 @openapi.summary("Create a meme from a template")
+@openapi.description(dedent("""
+        Create a meme by `POST`ing raw text. The response includes a canonical
+        `url` field with path escaping applied — prefer this over hand-built
+        `GET` URLs when text contains spaces or reserved characters.
+
+        Body fields:
+        - `template_id`: Template to render (`GET /templates/`).
+        - `text`: Lines of text in order (raw, not escape-encoded). Up to the
+          template's `lines` value; pass an empty string for an empty intermediate
+          line.
+        - `style`: Style names from the template's `styles` field, or HTTPS URLs
+          for custom overlay images. When `overlays` > 1, the array sets each slot.
+        - `extension`: Output image extension.
+        - `redirect`: If true, returns 302 to the canonical URL instead of JSON.
+        """))
 @openapi.body({"application/json": MemeRequest})
 @openapi.response(
     201, {"application/json": MemeResponse}, "Successfully created a meme"
@@ -146,7 +162,113 @@ async def index_custom(request: Request):
     "template_filename",
     str,
     "path",
-    description="Template ID and image format: `<template_id>.<extension>`",
+    description=dedent("""
+        Template ID and image format: `<template_id>.<extension>`. This is the
+        canonical empty-template render and matches the `blank` field on
+        `GET /templates/{id}`. Use this when a client just wants the background.
+        The same query parameters as `/images/{template_id}/{text_filepath}`
+        apply.
+        """),
+)
+@openapi.parameter(
+    "style",
+    str,
+    "query",
+    description=dedent("""
+        Alternate visual variant from the template's `styles` array, OR an HTTPS
+        URL to use as a custom overlay image. For templates with `overlays > 1`,
+        may be repeated to set each slot independently. Unknown style names return
+        HTTP 422, not the default render.
+        """),
+)
+@openapi.parameter(
+    "font",
+    str,
+    "query",
+    description=dedent("""
+        Font `id` or `alias` overriding the template default (`GET /fonts/`).
+        Unknown values return HTTP 422; the image still renders with the template
+        default font.
+        """),
+)
+@openapi.parameter(
+    "layout",
+    str,
+    "query",
+    description=dedent("""
+        Text layout mode. Allowed values are defined by the API; `top` places all
+        text at the image top rather than the template's default regions.
+        """),
+)
+@openapi.parameter(
+    "width",
+    int,
+    "query",
+    description=dedent("""
+        Output width in pixels. If both `width` and `height` are supplied, the image
+        is padded to fit while preserving aspect ratio. Values between 1 and 9 are
+        rejected with HTTP 422.
+        """),
+)
+@openapi.parameter(
+    "height",
+    int,
+    "query",
+    description="Output height in pixels. See `width` for combined behavior.",
+)
+@openapi.parameter(
+    "color",
+    str,
+    "query",
+    description=dedent("""
+        Comma-separated `<text>,<outline>` pair. Each value is an HTML color name
+        or hex code (with or without a leading `#`).
+        """),
+)
+@openapi.parameter(
+    "background",
+    str,
+    "query",
+    description=dedent("""
+        Custom background image URL. Composes with `style=<url>` overlays.
+        """),
+)
+@openapi.parameter(
+    "center",
+    str,
+    "query",
+    description=dedent("""
+        Comma-separated `<x>,<y>` fractional coordinates (0.0 to 1.0) for overlay center
+        within its slot. Most useful with `style=<url>`.
+        """),
+)
+@openapi.parameter(
+    "scale",
+    float,
+    "query",
+    description=dedent("""
+        Multiplier applied to the overlay's default size. Most useful with
+        `style=<url>`.
+        """),
+)
+@openapi.parameter(
+    "frames",
+    int,
+    "query",
+    description=dedent("""
+        Maximum number of frames to render in animated output. 0 (default) means no
+        cap. Use this to bound response size and render time on long animations.
+        """),
+)
+@openapi.parameter(
+    "status",
+    int,
+    "query",
+    description=dedent("""
+        Override the HTTP response status code. Primarily used internally by the
+        `POST /images/` → redirect flow to propagate a `201 Created` semantic to the
+        final image fetch. Most clients should not need to set this directly.
+        """),
 )
 @openapi.response(
     200, {"image/*": bytes}, "Successfully displayed a template background"
@@ -183,9 +305,116 @@ async def detail_blank(request: Request, template_filename: str):
     "text_filepath",
     str,
     "path",
-    description="Lines of text and image format: `<line1>/<line2>.<extension>`",
+    description=dedent("""
+        Lines of text and output extension:
+        `<line1>/<line2>/.../<line_n>.<extension>`, where `n` is at most the
+        template's `lines` value (`GET /templates/{id}`). Trailing lines may be
+        omitted; pass `_` for an empty intermediate line. Path segments must be
+        escape-encoded; prefer `POST /images/` with raw `text` and use the
+        canonical `url` from the response.
+        """),
 )
 @openapi.parameter("template_id", str, "path", description="ID of a meme template")
+@openapi.parameter(
+    "style",
+    str,
+    "query",
+    description=dedent("""
+        Alternate visual variant from the template's `styles` array, OR an HTTPS
+        URL to use as a custom overlay image. For templates with `overlays > 1`,
+        may be repeated to set each slot independently. Unknown style names return
+        HTTP 422, not the default render.
+        """),
+)
+@openapi.parameter(
+    "font",
+    str,
+    "query",
+    description=dedent("""
+        Font `id` or `alias` overriding the template default (`GET /fonts/`).
+        Unknown values return HTTP 422; the image still renders with the template
+        default font.
+        """),
+)
+@openapi.parameter(
+    "layout",
+    str,
+    "query",
+    description=dedent("""
+        Text layout mode. Allowed values are defined by the API; `top` places all
+        text at the image top rather than the template's default regions.
+        """),
+)
+@openapi.parameter(
+    "width",
+    int,
+    "query",
+    description=dedent("""
+        Output width in pixels. If both `width` and `height` are supplied, the image
+        is padded to fit while preserving aspect ratio. Values between 1 and 9 are
+        rejected with HTTP 422.
+        """),
+)
+@openapi.parameter(
+    "height",
+    int,
+    "query",
+    description="Output height in pixels. See `width` for combined behavior.",
+)
+@openapi.parameter(
+    "color",
+    str,
+    "query",
+    description=dedent("""
+        Comma-separated `<text>,<outline>` pair. Each value is an HTML color name
+        or hex code (with or without a leading `#`).
+        """),
+)
+@openapi.parameter(
+    "background",
+    str,
+    "query",
+    description=dedent("""
+        Custom background image URL. Composes with `style=<url>` overlays.
+        """),
+)
+@openapi.parameter(
+    "center",
+    str,
+    "query",
+    description=dedent("""
+        Comma-separated `<x>,<y>` fractional coordinates (0.0–1.0) for overlay center
+        within its slot. Most useful with `style=<url>`.
+        """),
+)
+@openapi.parameter(
+    "scale",
+    float,
+    "query",
+    description=dedent("""
+        Multiplier applied to the overlay's default size. Most useful with
+        `style=<url>`.
+        """),
+)
+@openapi.parameter(
+    "frames",
+    int,
+    "query",
+    description=dedent("""
+        Maximum number of frames to render in animated output. 0 (default) means no
+        cap. Use this to bound response size and render time on long animations.
+        """),
+)
+@openapi.parameter(
+    "status",
+    int,
+    "query",
+    description=dedent("""
+        Override the HTTP response status code. Primarily used internally by the
+        `POST /images/` → redirect flow to propagate a `201 Created` semantic to the
+        final image fetch. Most clients should not need to set this directly.
+        """),
+)
 @openapi.response(200, {"image/*": bytes}, "Successfully displayed a custom meme")
 @openapi.response(404, {"image/*": bytes}, "Template not found")
 @openapi.response(414, {"image/*": bytes}, "Custom text too long (length >200)")

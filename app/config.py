@@ -53,6 +53,15 @@ def init(app: Sanic):
         "operationsSorter": "method",
         "docExpansion": "list",
     }
+    app.config.OAS_UI_SWAGGER_CUSTOM_CSS = """
+        .swagger-ui .info {
+            margin-bottom: 10px;
+        }
+        .swagger-ui .scheme-container {
+            margin-top: 0;
+            padding: 5px 0 15px;
+        }
+    """
 
     app.blueprint(views.examples.blueprint)
     app.blueprint(views.clients.blueprint)
@@ -83,16 +92,8 @@ def init(app: Sanic):
                 "name": "Ancient Aliens Guy",
                 "lines": 2,
                 "overlays": 0,
-                "styles": [],
-                "blank": "https://api.memegen.link/images/aag.png",
-                "example": {
-                    "text": [
-                        "",
-                        "aliens"
-                    ],
-                    "url": "https://api.memegen.link/images/aag/_/aliens.png"
-                },
                 "source": "http://knowyourmeme.com/memes/ancient-aliens",
+                ...
             },
             ...
         ]
@@ -112,6 +113,10 @@ def init(app: Sanic):
 
         ## Links
         """.replace("https://api.memegen.link", settings.BASE_URL)),
+    )
+    app.ext.openapi.external(
+        url=f"https://{settings.BASE_URL}/guide/",
+        description="Browse API guide",
     )
     app.ext.openapi.contact(name="support", email="support@maketested.com")
     app.ext.openapi.license(

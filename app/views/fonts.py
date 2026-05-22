@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from sanic import Blueprint, exceptions, response
 from sanic.request import Request
 from sanic_ext import openapi
@@ -10,6 +12,10 @@ blueprint = Blueprint("Fonts", url_prefix="/fonts")
 
 @blueprint.get("/")
 @openapi.summary("List available fonts")
+@openapi.description(dedent("""
+        Fonts available for the `font=` query parameter on path-based image
+        endpoints. Each entry has an `id` and an optional `alias`.
+        """))
 @openapi.response(
     200,
     {"application/json": list[FontResponse]},

@@ -13,9 +13,7 @@
     "bin/verchew": true
   },
   "python.defaultInterpreterPath": ".venv/bin/python",
-  "pylint.ignorePatterns": [
-    "*"
-  ],
+  "pylint.ignorePatterns": ["*"],
   "editor.formatOnSave": true,
   "cSpell.words": [
     "Ackbar",
@@ -128,6 +126,7 @@
     "Redditors",
     "REDOC",
     "removesuffix",
+    "renderable",
     "RGBA",
     "Ronchi",
     "sanic",

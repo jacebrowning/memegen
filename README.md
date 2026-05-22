@@ -87,14 +87,14 @@ The list of fonts is available here: <https://api.memegen.link/fonts/>
 
 Add the `font=<str>` query parameter to customize the look of your meme:
 
-| Name                                                                   | ID                  | Alias        |
-| ---------------------------------------------------------------------- | ------------------- | ------------ |
-| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web) | `font=titilliumweb` | `font=thick` |
-| [Kalam Regular](https://fonts.google.com/specimen/Kalam)               | `font=kalam`        | `font=comic` |
-| [Impact](https://www.dafontfree.io/impact-font/)                       | `font=impact`       | -            |
-| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)     | `font=notosans`     | -            |
-| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew)              | `font=notosanshebrew`    | `font=he`    |
-| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)              | `font=hgminchob`    | `font=jp`    |
+| Name                                                                             | ID                    | Alias        |
+| -------------------------------------------------------------------------------- | --------------------- | ------------ |
+| [Titillium Web Black](https://fonts.google.com/specimen/Titillium+Web)           | `font=titilliumweb`   | `font=thick` |
+| [Kalam Regular](https://fonts.google.com/specimen/Kalam)                         | `font=kalam`          | `font=comic` |
+| [Impact](https://www.dafontfree.io/impact-font/)                                 | `font=impact`         | -            |
+| [Noto Sans Bold](https://fonts.google.com/noto/specimen/Noto+Sans)               | `font=notosans`       | -            |
+| [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew) | `font=notosanshebrew` | `font=he`    |
+| [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)                        | `font=hgminchob`      | `font=jp`    |
 
 ## Custom Colors
 
