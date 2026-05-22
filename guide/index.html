@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Jace Browning">
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Full API Guide - Memegen.link</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2XT39Z5FC"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', "G-B2XT39Z5FC");
+        </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid #555;
+        background: white;
+    }
+
+    th,
+    tr,
+    td {
+        border-top: 1px solid #555 !important;
+        border-bottom: 1px solid #555 !important;
+    }
+
+    code {
+        padding: 2px 4px;
+        font-size: 90%;
+        color: #e83e8c;
+        background-color: #f9f2f4;
+        border-radius: 4px;
+    }
+
+    @media all and (max-width: 992px) {
+        .badges {
+            display: none;
+        }
+    }
+</style>
+
+
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="..">Memegen.link</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../clients/" class="nav-link">Clients</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../examples/" class="nav-link">Examples</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto"> 
+
+<li class="nav-item">
+    <a href="https://github.com/jacebrowning/memegen" class="nav-link">
+        <i class="fa-brands fa-github"></i>
+        GitHub
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="https://api.memegen.link/docs/" class="nav-link">
+        <i class="fa fa-book"></i>
+        Swagger
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="https://bsky.app/profile/memegen.link" class="nav-link">
+        <i class="fa-brands fa-bluesky"></i>
+        Bluesky
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="https://www.facebook.com/memegenlink" class="nav-link">
+        <i class="fa-brands fa-facebook"></i>
+        Facebook
+    </a>
+</li>
+
+<form class="form-inline m-2 my-lg-0">
+    <a
+        href="https://memecomplete.com/custom/?standard=true"
+        class="btn btn-sm btn-secondary"
+    >
+        Create a Meme
+    </a>
+</form>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row"> 
+
+<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#full-api-guide" class="nav-link">Full API Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#the-shape-of-a-meme-url" class="nav-link">The shape of a meme URL</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#source-of-truth-the-templates-endpoint" class="nav-link">Source of truth: the templates endpoint</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#path-segments-and-the-lines-field" class="nav-link">Path segments and the lines field</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#special-characters" class="nav-link">Special characters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#styles-and-the-styles-field" class="nav-link">Styles and the styles field</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#overlays" class="nav-link">Overlays</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#rendering-options" class="nav-link">Rendering options</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#working-examples" class="nav-link">Working examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#notes-for-automated-clients" class="nav-link">Notes for automated clients</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#edge-cases" class="nav-link">Edge cases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#reference" class="nav-link">Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+
+<div class="col-md-9 pt-2" role="main">
+
+<h1 id="full-api-guide">Full API Guide</h1>
+<p>A reference for humans and automated clients on how to build valid memegen URLs from template metadata. The goal is a single page you can read top-to-bottom and emit a correct URL on the first try, without consulting the README, the OpenAPI spec, and per-template metadata responses individually.</p>
+<p>The OpenAPI specification at <a href="https://api.memegen.link/docs/openapi.json"><code>/docs/openapi.json</code></a> is the source of truth for endpoint shapes and parameter names. This guide is derived from those descriptions and adds working examples, edge-case behavior, and a recipe for automated clients that does not fit cleanly inside the spec itself.</p>
+<h2 id="the-shape-of-a-meme-url">The shape of a meme URL</h2>
+<p>A rendered meme URL has the form:</p>
+<pre><code>https://api.memegen.link/images/{template_id}/{line_1}/{line_2}/.../{line_n}.{ext}
+</code></pre>
+<p>where <code>{template_id}</code> is the <code>id</code> field from <code>/templates/</code>, each <code>{line_i}</code> is one path segment of text, <code>n</code> is at most the template's <code>lines</code> value, and <code>{ext}</code> is one of <code>png</code>, <code>jpg</code>, <code>gif</code>, or <code>webp</code>. A blank template (no text) is available at <code>/images/{template_id}.{ext}</code> — this is the value of the <code>blank</code> field on the template's metadata response.</p>
+<h2 id="source-of-truth-the-templates-endpoint">Source of truth: the templates endpoint</h2>
+<p><code>GET /templates/</code> returns the full list of renderable templates. Each entry has the form:</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;ds&quot;,
+  &quot;name&quot;: &quot;Daily Struggle&quot;,
+  &quot;lines&quot;: 3,
+  &quot;overlays&quot;: 1,
+  &quot;styles&quot;: [&quot;default&quot;, &quot;maga&quot;],
+  &quot;blank&quot;: &quot;https://api.memegen.link/images/ds.jpg&quot;,
+  &quot;example&quot;: {
+    &quot;text&quot;: [&quot;The dress is black and blue.&quot;, &quot;The dress is gold and white.&quot;],
+    &quot;url&quot;: &quot;https://api.memegen.link/images/ds/The_dress_is_black_and_blue./The_dress_is_gold_and_white..jpg&quot;
+  },
+  &quot;source&quot;: &quot;https://knowyourmeme.com/memes/daily-struggle&quot;,
+  &quot;keywords&quot;: []
+}
+</code></pre>
+<p>For URL construction, four fields are load-bearing:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Role in the URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Goes into the path immediately after <code>/images/</code></td>
+</tr>
+<tr>
+<td><code>lines</code></td>
+<td>Maximum number of <code>/</code>-separated text segments accepted in the path</td>
+</tr>
+<tr>
+<td><code>overlays</code></td>
+<td>Number of overlay image slots the template defines</td>
+</tr>
+<tr>
+<td><code>styles</code></td>
+<td>Allowed values for the <code>style=</code> query parameter</td>
+</tr>
+</tbody>
+</table>
+<p>The remaining fields (<code>name</code>, <code>blank</code>, <code>example</code>, <code>source</code>, <code>keywords</code>) are descriptive — useful for discovery, search, and validation, but not for URL construction.</p>
+<p>For automated clients, the recommended bootstrap is to fetch <code>/templates/</code> once at startup, cache it, and construct URLs locally. Refresh on a long interval; the template list is stable.</p>
+<h2 id="path-segments-and-the-lines-field">Path segments and the <code>lines</code> field</h2>
+<p>The number of <code>/</code>-separated text segments after <code>{template_id}</code> may range from zero (the blank template) up to the template's <code>lines</code> value. Trailing lines may be omitted; to skip an earlier line while populating a later one, pass an underscore (<code>_</code>) as the segment to render an empty line in that position.</p>
+<p>For example, on the Ancient Aliens Guy template (<code>aag</code>, <code>lines: 2</code>):</p>
+<pre><code>/images/aag/aliens.png            -&gt; top line &quot;aliens&quot;, bottom line empty
+/images/aag/_/aliens.png          -&gt; top line empty, bottom line &quot;aliens&quot;
+/images/aag/why/aliens.png        -&gt; both lines populated
+</code></pre>
+<p>If you pass more segments than <code>lines</code>, the surplus is currently ignored. Agents should treat over-passing as an error and trim to <code>template.lines</code> before constructing the URL rather than relying on silent truncation as a contract.</p>
+<h2 id="special-characters">Special characters</h2>
+<p>Path-based URLs require escaping spaces, punctuation, and other reserved characters in each text segment. <strong>Prefer the <code>POST</code> endpoints</strong> — send <code>template_id</code> and a <code>text</code> array of raw strings in the JSON body (for example, <code>POST /images/</code>). The response includes a canonical <code>url</code> field with escaping applied for you.</p>
+<p>If you must build <code>GET</code> URLs by hand, see the <a href="https://memegen.link/#special-characters">special characters reference</a> for the full escape table and emoji shortcodes.</p>
+<h2 id="styles-and-the-styles-field">Styles and the <code>styles</code> field</h2>
+<p>Many templates support visual variants, exposed via the <code>styles</code> field on <code>/templates/{id}</code>. Selection is via the <code>style=</code> query parameter:</p>
+<pre><code>/images/ds/The_dress_is_black_and_blue./The_dress_is_gold_and_white..jpg?style=maga
+</code></pre>
+<p>The default style is implicit when <code>style=</code> is omitted.</p>
+<p>The <code>style=</code> parameter has a second mode: passing an HTTPS URL instead of a name treats the URL as a custom overlay image and composites it onto the template. This dual purpose — named style or arbitrary overlay URL — is easy to miss when reading the spec. For templates with <code>overlays &gt; 1</code>, supply multiple <code>style=</code> values to set each overlay slot independently.</p>
+<h2 id="overlays">Overlays</h2>
+<p>A template's <code>overlays</code> field counts the compositing slots the template defines — for example, the Drake template defines two regions where reaction images go. When <code>overlays &gt; 0</code>, each slot can be filled either with the template's default content (no <code>style=</code> needed) or with a custom image URL via <code>style=&lt;url&gt;</code>.</p>
+<p>Two query parameters fine-tune overlay placement and are most useful when supplying custom images:</p>
+<ul>
+<li><code>center=&lt;x&gt;,&lt;y&gt;</code> — fractional coordinates (0.0–1.0) for the overlay center within its slot</li>
+<li><code>scale=&lt;float&gt;</code> — multiplier applied to the overlay's default size</li>
+</ul>
+<h2 id="rendering-options">Rendering options</h2>
+<p>The following query parameters apply to all path-based image endpoints. Combining them is allowed; later parameters compose with the path-derived defaults.</p>
+<h3 id="format">Format</h3>
+<p>The file extension on the path determines the response format. <code>png</code> and <code>jpg</code> are static. <code>gif</code> and <code>webp</code> produce animated output when the template's background is animated, and a static-background-with-animated-text variant otherwise.</p>
+<h3 id="dimensions">Dimensions</h3>
+<p><code>width=&lt;int&gt;</code> and <code>height=&lt;int&gt;</code> set the output dimensions in pixels. If both are supplied, the image is padded to fit while preserving aspect ratio. Values between 1 and 9 are rejected as too small (the size is silently set back to 0,0 and the response status is 422).</p>
+<h3 id="layout">Layout</h3>
+<p><code>layout=top</code> places all text at the top of the image rather than spreading it across the template's default text regions. The <code>default</code> layout is implicit when <code>layout=</code> is omitted.</p>
+<h3 id="font">Font</h3>
+<p><code>font=&lt;name&gt;</code> overrides the template's default font. The full list of available fonts is at <code>GET /fonts/</code>. Named aliases include <code>thick</code>, <code>comic</code>, <code>he</code> (Hebrew), and <code>jp</code> (Japanese).</p>
+<h3 id="color">Color</h3>
+<p><code>color=&lt;text&gt;,&lt;outline&gt;</code> is a comma-separated pair, each value either an HTML color name or a hex code. Hex codes may be supplied with or without a leading <code>#</code>. Example: <code>color=white,black</code>.</p>
+<h3 id="custom-background">Custom background</h3>
+<p><code>background=&lt;url&gt;</code> uses an arbitrary image as the template background. It composes with <code>style=&lt;url&gt;</code> overlays as expected.</p>
+<h3 id="animation-frames">Animation frames</h3>
+<p><code>frames=&lt;int&gt;</code> caps the number of frames rendered in animated output (<code>gif</code>/<code>webp</code>). The default of <code>0</code> means no cap. Use this to bound response size and render time on long animations.</p>
+<h3 id="status-override">Status override</h3>
+<p><code>status=&lt;int&gt;</code> overrides the HTTP response status code on the rendered image. This is primarily used internally by the <code>POST /images/</code> → redirect flow to propagate a <code>201 Created</code> semantic to the final image fetch. Most clients should not need to set this directly.</p>
+<h2 id="working-examples">Working examples</h2>
+<p>A few complete URLs that cover common cases:</p>
+<pre><code># Two-line meme on a standard template
+https://api.memegen.link/images/aag/Why_can''t/I_post_memes.png
+
+# Non-default style
+https://api.memegen.link/images/ds/Wikipedia_says_no/My_LLM_says_yes.jpg?style=maga
+
+# Custom dimensions and font
+https://api.memegen.link/images/aag/agile/standups.png?width=800&amp;font=thick
+
+# Empty top line (skip the first segment)
+https://api.memegen.link/images/aag/_/aliens.png
+
+# Multi-line text via newline escape
+https://api.memegen.link/images/aag/first_line~nsecond_line/bottom.png
+
+# Custom background
+https://api.memegen.link/images/custom/top_text/bottom_text.png?background=https://example.com/img.jpg
+</code></pre>
+<h2 id="notes-for-automated-clients">Notes for automated clients</h2>
+<p>A handful of points that are obvious in retrospect but cost an agent several round-trips to discover:</p>
+<ol>
+<li><strong>Bootstrap once, cache.</strong> <code>GET /templates/</code> is the single source of truth for renderable templates. Fetch at startup and refresh on a long interval; don't query per-meme.</li>
+<li><strong><code>POST</code> raw, read back the URL.</strong> All <code>POST</code> endpoints apply URL escaping and return the canonical URL in the <code>url</code> field. Send raw strings in the request body, then use the returned <code>url</code> verbatim. Only consult the <a href="https://memegen.link/#special-characters">special characters reference</a> when you must construct path-based <code>GET</code> URLs yourself.</li>
+<li><strong><code>example.url</code> is a free smoke test.</strong> Each template's <code>example.url</code> is guaranteed to render, so a <code>HEAD</code> request against that URL is the cheapest way to validate that a <code>template_id</code> is live before constructing a derived URL.</li>
+<li><strong>Validate <code>style</code> against <code>template.styles</code>.</strong> Passing an unknown style name returns HTTP 422, not a default render, so client-side validation prevents user-visible errors. Likewise, validate <code>font=</code> against <code>GET /fonts/</code> before sending — an unknown font also returns 422.</li>
+<li><strong>Trim text segments to <code>lines</code>.</strong> Don't rely on silent truncation; trim client-side to <code>template.lines</code> before joining.</li>
+</ol>
+<h2 id="edge-cases">Edge cases</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Current behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>More text segments than <code>lines</code></td>
+<td>Extra segments are ignored; the meme renders using only the first <code>lines</code> segments</td>
+</tr>
+<tr>
+<td>Fewer text segments than <code>lines</code></td>
+<td>Missing trailing lines render as empty</td>
+</tr>
+<tr>
+<td>Unknown <code>style=</code> name (not a URL)</td>
+<td>Returns HTTP 422</td>
+</tr>
+<tr>
+<td>Unknown <code>font=</code> value</td>
+<td>Returns HTTP 422; the image still renders using the template's default font</td>
+</tr>
+<tr>
+<td>Path text segment &gt;200 bytes</td>
+<td>Returns HTTP 414 (<code>Custom text too long</code>)</td>
+</tr>
+<tr>
+<td>Unknown image extension</td>
+<td>Defaults to PNG, returns HTTP 422</td>
+</tr>
+<tr>
+<td><code>width</code> or <code>height</code> between 1 and 9</td>
+<td>Returns HTTP 422 (size silently set back to 0,0)</td>
+</tr>
+<tr>
+<td>Unknown <code>template_id</code></td>
+<td>Returns HTTP 404</td>
+</tr>
+<tr>
+<td><code>style=&lt;url&gt;</code> that can't be downloaded</td>
+<td>Returns HTTP 415</td>
+</tr>
+<tr>
+<td><code>id=custom</code> with no or un-downloadable <code>background=</code> URL</td>
+<td>Returns HTTP 422 (missing) or HTTP 415 (un-downloadable)</td>
+</tr>
+<tr>
+<td>Invalid <code>color=</code> value</td>
+<td>Returns HTTP 422</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>Templates list — <code>GET /templates/</code></li>
+<li>Per-template metadata — <code>GET /templates/{id}</code></li>
+<li>Fonts — <code>GET /fonts/</code></li>
+<li>OpenAPI spec — <a href="https://api.memegen.link/docs/openapi.json"><code>/docs/openapi.json</code></a></li>
+<li>Interactive client — <a href="https://api.memegen.link/docs"><code>/docs</code></a></li>
+</ul></div>
+
+ 
+            </div>
+        </div>
+
+        <footer class="col-md-12"> 
+
+<hr />
+
+<p>
+    Copyright © 2026
+    <a href="https://jacebrowning.info">Jace Browning</a>
+</p>
+
+ 
+        </footer> 
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.11/iframeResizer.min.js"
+    integrity="sha512-HY1lApSG7xxx8mYzs/lxRs+c5AaDThRaa3pvQB6puiswvf2lWqMJVf+8qSGiL4ZXfHQoPIqbd1TlpqfycPo3cQ=="
+    crossorigin="anonymous"
+></script>
+
+<script>
+    iFrameResize({ checkOrigin: false, resizedCallback: onResized })
+    function onResized(iframe, height, width, type) {
+        $("#loading").hide()
+    }
+</script>
+
+
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
