@@ -144,4 +144,4 @@ This can be combined with [custom overlays](#custom-overlays) to augment the bac
 
 <br><hr><br>
 
-Explore the full API here: <https://api.memegen.link/docs/>
+Explore the full [API docs](https://api.memegen.link/docs/) or browse the [API guide](https://memegen.link/guide/) for more details.
