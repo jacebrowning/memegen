@@ -24,7 +24,6 @@
     "aiofiles",
     "aiohttp",
     "aiopath",
-    "aioresponses",
     "Aladin",
     "anyio",
     "asdict",
@@ -162,5 +161,7 @@
     "Zoidberg"
   ],
   "djlint.showInstallError": false,
-  "makefile.configureOnOpen": false
+  "makefile.configureOnOpen": false,
+  "python-envs.defaultEnvManager": "ms-python.python:poetry",
+  "python-envs.defaultPackageManager": "ms-python.python:poetry"
 }

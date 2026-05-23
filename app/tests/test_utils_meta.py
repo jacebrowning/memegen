@@ -1,33 +1,34 @@
 import pytest
+from aiointercept import aiointercept
 
 from .. import settings, utils
 
 
 def describe_authenticate():
     @pytest.mark.asyncio
-    async def it_returns_payload_from_tracker(expect, monkeypatch, request):
-        monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/")
+    async def it_returns_payload_from_tracker(
+        expect, monkeypatch, request, aiointercept_mock: aiointercept
+    ):
+        base_url = aiointercept_mock.server_url + "/"
+        monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", base_url)
         request.args = {}
 
-        from aioresponses import aioresponses
+        aiointercept_mock.get(
+            f"{base_url}auth",
+            payload={"error": "API key missing or invalid."},
+        )
+        aiointercept_mock.get(
+            f"{base_url}auth",
+            payload={"email": "user@example.com"},
+        )
 
-        with aioresponses() as patched_session:
-            patched_session.get(
-                "http://example.com/auth",
-                payload={"error": "API key missing or invalid."},
-            )
-            patched_session.get(
-                "http://example.com/auth",
-                payload={"email": "user@example.com"},
-            )
+        request.headers = {"x-api-key": "invalid"}
+        response = await utils.meta.authenticate(request)
+        expect(response) == {"error": "API key missing or invalid."}
 
-            request.headers = {"x-api-key": "invalid"}
-            response = await utils.meta.authenticate(request)
-            expect(response) == {"error": "API key missing or invalid."}
-
-            request.headers = {"x-api-key": "valid"}
-            response = await utils.meta.authenticate(request)
-            expect(response) == {"email": "user@example.com"}
+        request.headers = {"x-api-key": "valid"}
+        response = await utils.meta.authenticate(request)
+        expect(response) == {"email": "user@example.com"}
 
 
 def describe_tokenize():
@@ -44,21 +45,21 @@ def describe_tokenize():
         expect(updated) == True
 
     @pytest.mark.asyncio
-    async def it_returns_url_from_tracker(expect, monkeypatch, request):
-        monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/")
+    async def it_returns_url_from_tracker(
+        expect, monkeypatch, request, aiointercept_mock: aiointercept
+    ):
+        base_url = aiointercept_mock.server_url + "/"
+        monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", base_url)
         request.args = {}
 
-        from aioresponses import aioresponses
+        aiointercept_mock.post(
+            f"{base_url}tokenize",
+            payload={"url": f"{base_url}foobar.png?token=abc123"},
+        )
 
-        with aioresponses() as patched_session:
-            patched_session.post(
-                "http://example.com/tokenize",
-                payload={"url": "http://example.com/foobar.png?token=abc123"},
-            )
-
-            request.headers = {"x-api-key": "valid"}
-            data = await utils.meta.tokenize(request, "http://example.com/foobar.png")
-            expect(data) == ("http://example.com/foobar.png?token=abc123", True)
+        request.headers = {"x-api-key": "valid"}
+        data = await utils.meta.tokenize(request, f"{base_url}foobar.png")
+        expect(data) == (f"{base_url}foobar.png?token=abc123", True)
 
 
 def describe_track():

@@ -61,7 +61,7 @@ pytest-expecter = "^3.0"
 pytest-random = "*"
 pytest-cov = "^7.1"
 sanic-testing = "*"
-aioresponses = "*"
+aiointercept = "^0.1.4"
 locust = "^2.44.0"
 
 # Coverage
