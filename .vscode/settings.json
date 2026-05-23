@@ -161,7 +161,5 @@
     "Zoidberg"
   ],
   "djlint.showInstallError": false,
-  "makefile.configureOnOpen": false,
-  "python-envs.defaultEnvManager": "ms-python.python:poetry",
-  "python-envs.defaultPackageManager": "ms-python.python:poetry"
+  "makefile.configureOnOpen": false
 }
