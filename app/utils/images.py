@@ -723,6 +723,18 @@ def get_image_element(
     )
 
 
+def _unsafe_wrap(text: str) -> bool:
+    for line in text.split("\n"):
+        stripped = line.strip()
+        if (
+            stripped
+            and emoji.emoji_count(stripped)
+            and not emoji.replace_emoji(stripped, replace="").strip()
+        ):
+            return True
+    return False
+
+
 def wrap(font: str, line: str, max_text_size: Dimensions, max_font_size: int) -> str:
     lines_1 = line
     lines_2 = split_2(line)
@@ -738,7 +750,10 @@ def wrap(font: str, line: str, max_text_size: Dimensions, max_font_size: int) ->
     if font_1.size >= font_2.size:
         return lines_1
 
-    if get_text_size(lines_3, font_3)[0] >= max_text_size[0] * 0.60:
+    if (
+        not _unsafe_wrap(lines_3)
+        and get_text_size(lines_3, font_3)[0] >= max_text_size[0] * 0.60
+    ):
         return lines_3
 
     if get_text_size(lines_2, font_2)[0] >= max_text_size[0] * 0.60:

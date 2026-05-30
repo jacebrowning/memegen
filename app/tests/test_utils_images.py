@@ -162,7 +162,6 @@ def test_special_characters(images, template):
     utils.images.save(template, lines, directory=images)
 
 
-@pytest.mark.xfail(reason="https://github.com/jacebrowning/memegen/issues/971")
 def test_special_characters_with_wrapping(images):
     template = models.Template.objects.get("gru")
     lines = ["🚀 aaaaa bbb cccc"]
