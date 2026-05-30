@@ -236,16 +236,32 @@ async def render_image(
     if status < 400:
         asyncio.create_task(utils.meta.track(request, lines))
 
-    path = await asyncio.to_thread(
-        utils.images.save,
-        template,
-        lines,
-        watermark,
-        font_name=font_name,
-        extension=extension,
-        style=style,
-        size=size,
-        maximum_frames=frames,
-    )
+    try:
+        path = await asyncio.to_thread(
+            utils.images.save,
+            template,
+            lines,
+            watermark,
+            font_name=font_name,
+            extension=extension,
+            style=style,
+            size=size,
+            maximum_frames=frames,
+        )
+    except ValueError as e:
+        logger.error(f"Unable to render text: {e}")
+        if status < 400:
+            status = 422
+        path = await asyncio.to_thread(
+            utils.images.save,
+            models.Template.objects.get("_error"),
+            lines,
+            watermark,
+            font_name=font_name,
+            extension=extension,
+            style=style,
+            size=size,
+            maximum_frames=frames,
+        )
     mime_type = "image/webp" if path.suffix == ".webp" else None
     return await response.file(path, status, mime_type=mime_type)
