@@ -3126,29 +3126,29 @@ testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-describe"
-version = "3.1.0"
+version = "3.2.0"
 description = "Describe-style plugin for pytest"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "pytest_describe-3.1.0-py3-none-any.whl", hash = "sha256:9835cc6732c1cc92b0ae230f0a8a6084924129669cb370fe9d4422445cae3cc1"},
-    {file = "pytest_describe-3.1.0.tar.gz", hash = "sha256:096017a0efd7beab7114c8fb7ced3a0cfd3a6d8a37e89578ea3d7b190bec6871"},
+    {file = "pytest_describe-3.2.0-py3-none-any.whl", hash = "sha256:ea4ef9968145d017847b0e705d058b1ea35ea35c59b5adf4a34378c418ac455a"},
+    {file = "pytest_describe-3.2.0.tar.gz", hash = "sha256:8697f9818c330c80312c28c731022618ac96d0dab3b5238116c4a7d0cd187d9f"},
 ]
 
 [package.dependencies]
-pytest = ">=6,<10"
+pytest = ">=7,<10"
 
 [[package]]
 name = "pytest-expecter"
-version = "3.0"
+version = "3.1"
 description = "Better testing with expecter and pytest."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.10"
 groups = ["dev"]
 files = [
-    {file = "pytest-expecter-3.0.tar.gz", hash = "sha256:be8f3e9f823af6d6713e3f552ed47560061a2fd243a78952180f5df61a2b76a4"},
-    {file = "pytest_expecter-3.0-py3-none-any.whl", hash = "sha256:98fe65ecc1ddb7ca29084dc68ec07983dbbdb20b566fd14140b0b5f4b7c84cc8"},
+    {file = "pytest_expecter-3.1-py3-none-any.whl", hash = "sha256:b400425e9f65eacd49bfb6fed6d83e4482f58d3b22f7d353146ed513f12d60a2"},
+    {file = "pytest_expecter-3.1.tar.gz", hash = "sha256:219a9a0042eb7b912f9854184b66ea658f513290c434ab0d6dba2a5899104e99"},
 ]
 
 [[package]]
@@ -4637,4 +4637,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "0c541c97ff70fc7f31eaef39268736244592bc33427bdd96347c895314085b54"
+content-hash = "50be763e89d83d76675e73f54786586ca9fb5b992cf3a6713028d24e7a3576c2"

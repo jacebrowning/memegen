@@ -4,7 +4,7 @@ from ..models import Text
 
 
 def describe_text():
-    def describe_stylize():
+    def describe_stylize(expect):
         @pytest.mark.parametrize(
             ("style", "before", "after"),
             [
@@ -19,17 +19,17 @@ def describe_text():
                 ("<unknown>", "Hello, world!", "Hello, world!"),
             ],
         )
-        def it_applies_style(expect, style, before, after):
+        def it_applies_style(style, before, after):
             text = Text()
             text.style = style
             expect(text.stylize(before)) == after
 
-        def it_defaults_to_upper(expect):
+        def it_defaults_to_upper():
             text = Text()
             text.style = ""
             expect(text.stylize("Foobar")) == "FOOBAR"
 
-        def it_respects_case_when_set_in_any_line(expect):
+        def it_respects_case_when_set_in_any_line():
             text = Text(style="default")
             expect(text.stylize("foo", lines=["foo", " ", "bar"])) == "Foo"
             expect(text.stylize("foo", lines=["foo", " ", "Bar"])) == "foo"

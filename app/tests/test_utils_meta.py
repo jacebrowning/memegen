@@ -30,9 +30,9 @@ def describe_authenticate():
             expect(response) == {"email": "user@example.com"}
 
 
-def describe_tokenize():
+def describe_tokenize(expect, request):
     @pytest.mark.asyncio
-    async def it_restricts_sample_api_key_usage(expect, request):
+    async def it_restricts_sample_api_key_usage():
         request.args = {"api_key": "myapikey42"}
         request.headers = {}
 
@@ -44,7 +44,7 @@ def describe_tokenize():
         expect(updated) == True
 
     @pytest.mark.asyncio
-    async def it_returns_url_from_tracker(expect, monkeypatch, request):
+    async def it_returns_url_from_tracker(monkeypatch):
         monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/")
         request.args = {}
 

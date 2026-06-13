@@ -9,29 +9,29 @@ def describe_auth():
             expect(response.json) == {"error": "API key missing or invalid."}
 
 
-def describe_image_preview():
+def describe_image_preview(expect, client):
     @pytest.fixture
     def path():
         return "/images/preview.jpg"
 
-    def it_returns_an_image(expect, client, path):
+    def it_returns_an_image(path):
         request, response = client.get(path)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
 
-    def it_supports_custom_templates(expect, client, path):
+    def it_supports_custom_templates(path):
         request, response = client.get(
             path + "?template=https://www.gstatic.com/webp/gallery/1.png"
         )
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
 
-    def it_handles_invalid_urls(expect, client, path):
+    def it_handles_invalid_urls(path):
         request, response = client.get(path + "?template=http://example.com/foobar.jpg")
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
 
-    def it_handles_invalid_keys(expect, client, path, unknown_template):
+    def it_handles_invalid_keys(path, unknown_template):
         request, response = client.get(path + f"?template={unknown_template.id}")
         expect(response.status) == 200
         expect(response.headers["content-type"]) == "image/jpeg"
