@@ -29,7 +29,7 @@ spongemock = "~1.0.0"
 
 # Utilities
 aiocache = "~0.12.3"
-aiohttp = "^3.13.5"
+aiohttp = "^3.14.0"
 anyio = "^4.13.0"
 datafiles = "^2.5.0"
 furl = "^2.1.4"
@@ -60,8 +60,8 @@ pytest-describe = "^3.2"
 pytest-expecter = "^3.1"
 pytest-random = "*"
 pytest-cov = "^7.1"
+aiointercept = "^0.1.7"
 sanic-testing = "*"
-aioresponses = "*"
 locust = "^2.44.0"
 
 # Coverage
