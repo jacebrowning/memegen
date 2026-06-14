@@ -1,4 +1,5 @@
 import pytest
+from aiointercept import aiointercept
 
 from .. import settings, utils
 
@@ -9,9 +10,7 @@ def describe_authenticate():
         monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/")
         request.args = {}
 
-        from aioresponses import aioresponses
-
-        with aioresponses() as patched_session:
+        async with aiointercept(mock_external_urls=True) as patched_session:
             patched_session.get(
                 "http://example.com/auth",
                 payload={"error": "API key missing or invalid."},
@@ -48,9 +47,7 @@ def describe_tokenize(expect, request):
         monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/")
         request.args = {}
 
-        from aioresponses import aioresponses
-
-        with aioresponses() as patched_session:
+        async with aiointercept(mock_external_urls=True) as patched_session:
             patched_session.post(
                 "http://example.com/tokenize",
                 payload={"url": "http://example.com/foobar.png?token=abc123"},
