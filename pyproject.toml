@@ -60,7 +60,7 @@ pytest-describe = "^3.2"
 pytest-expecter = "^3.1"
 pytest-random = "*"
 pytest-cov = "^7.1"
-aiointercept = "^0.1.7"
+aiointercept = "^0.1.9"
 sanic-testing = "*"
 locust = "^2.44.3"
 
