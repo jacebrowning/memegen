@@ -1,3 +1,4 @@
+import re
 from urllib.parse import unquote, urlencode
 
 from furl import furl
@@ -69,8 +70,7 @@ def clean(url: str) -> str:
     url = url.replace(" ", "_")
 
     # Drop trailing spaces
-    while "/_." in url:
-        url = url.replace("/_.", ".")
+    url = re.sub(r"(?:/_)+(\.\w+)(?=$|\?)", r"\1", url)
 
     # TODO: Fix Sanic bug?
     # https://github.com/jacebrowning/memegen/issues/799
