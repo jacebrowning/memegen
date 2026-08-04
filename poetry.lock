@@ -1901,14 +1901,14 @@ files = [
 
 [[package]]
 name = "locust"
-version = "2.44.3"
+version = "2.46.3"
 description = "Developer-friendly load testing framework"
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["dev"]
 files = [
-    {file = "locust-2.44.3-py3-none-any.whl", hash = "sha256:6d266d8f69ff2a4ebc26ab2211c8af24a6e39f7cf8c19f562c584506b12140bc"},
-    {file = "locust-2.44.3.tar.gz", hash = "sha256:bf3c82843dfebf684c968b5778b8132e9c1f1abd400d25a91c63ea65200b7f29"},
+    {file = "locust-2.46.3-py3-none-any.whl", hash = "sha256:a51e03cc27280eb2770f5aefacc3eb4c290eafe0feb19c64fa3c99e31fa21265"},
+    {file = "locust-2.46.3.tar.gz", hash = "sha256:b1d313db9df0a4036d4d905b1dc8585d020a7299239a1bb2e2885b71389253c0"},
 ]
 
 [package.dependencies]
@@ -1916,7 +1916,7 @@ configargparse = ">=1.7.1"
 flask = ">=2.0.0"
 flask-cors = ">=3.0.10"
 flask-login = ">=0.6.3"
-gevent = ">=24.10.1,<25.8.1 || >25.8.1,<26.0.0"
+gevent = ">=24.10.1"
 geventhttpclient = ">=2.3.1"
 msgpack = ">=1.0.0"
 psutil = ">=5.9.1"
@@ -4698,4 +4698,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "d38269c185bc34ef8055351ca61a250013d4789a4de6147fe0b66d2988c08a92"
+content-hash = "815c3d78dec7fd67546cb1b7d6eac97468c4e8dfc6a2fcbf441fe8b1473c0fed"
