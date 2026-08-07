@@ -47,7 +47,7 @@ isort = "^8.0"
 black = "^26.5"
 
 # Type Checking
-mypy = "^2.1.0"
+mypy = "^2.3.0"
 autoflake = "^2.3"
 types-aiofiles = "*"
 types-requests = "*"
