@@ -4093,14 +4093,14 @@ urllib3 = ">=2"
 
 [[package]]
 name = "types-setuptools"
-version = "83.0.0.20260724"
+version = "83.0.0.20260807"
 description = "Typing stubs for setuptools"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "types_setuptools-83.0.0.20260724-py3-none-any.whl", hash = "sha256:eed1a91e1ed9d8ec9f3e71908e5bb17272e41e0852d37d1485ecd9cd33165e1a"},
-    {file = "types_setuptools-83.0.0.20260724.tar.gz", hash = "sha256:fe2801176b667f1e8209f8571b0839ca6c34318d743825aeacf3f29970c8d46f"},
+    {file = "types_setuptools-83.0.0.20260807-py3-none-any.whl", hash = "sha256:a3b07bc820b397a64f660bbbef5b3738296cac619a0b1ccab261b9ce9325f9b2"},
+    {file = "types_setuptools-83.0.0.20260807.tar.gz", hash = "sha256:1ed1a446914afe91658868a8fe8806d1e34ba89f8c3bf8926c7165a428b117a6"},
 ]
 
 [[package]]
