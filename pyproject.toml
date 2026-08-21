@@ -20,7 +20,7 @@ pydantic = "*" # sanic-ext dependency
 # Markdown
 markdown = "~3.10"
 pymdown-extensions = "^11.0"
-pygments = "^2.20.0"
+pygments = "^2.21.0"
 
 # Images
 pillow = "~12.3"
