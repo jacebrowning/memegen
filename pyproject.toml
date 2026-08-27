@@ -48,7 +48,7 @@ black = "^26.5"
 
 # Type Checking
 mypy = "^2.3.1"
-autoflake = "^2.3"
+autoflake = "^2.4"
 types-aiofiles = "*"
 types-requests = "*"
 types-setuptools = "*"
