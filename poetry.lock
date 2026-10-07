@@ -1987,18 +1987,18 @@ qdrant = ["qdrant-client (>=1.16.2)"]
 
 [[package]]
 name = "markdown"
-version = "3.10.3"
+version = "3.11"
 description = "Python implementation of John Gruber's Markdown."
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["main", "dev"]
 files = [
-    {file = "markdown-3.10.3-py3-none-any.whl", hash = "sha256:fa6c92a00a4a3c98b22728c64a935ae1928250ae65058a6ded814d2cc29a4cea"},
-    {file = "markdown-3.10.3.tar.gz", hash = "sha256:3589362618f743188b4d955b874402bc814f4f83f544dc207719f4baa7d9c45f"},
+    {file = "markdown-3.11-py3-none-any.whl", hash = "sha256:cd6c89e7eb308c8b332ed673215a52d208a43f8bacc030b1419376129408719e"},
+    {file = "markdown-3.11.tar.gz", hash = "sha256:180224db6aed87ba9ce1f2781ebcd5826253de8ff637112090e24b84502bbf9f"},
 ]
 
 [package.extras]
-docs = ["mdx_gh_links (>=0.2)", "mkdocs (>=1.6)", "mkdocs-gen-files", "mkdocs-literate-nav", "mkdocs-nature (>=0.6)", "mkdocs-section-index", "mkdocstrings[python] (>=0.28.3)"]
+docs = ["ghp-import (==2.1.0)", "justhtml (==3.11.2)", "mdx_gh_links (==0.4)", "mkdocstrings (==1.0.6)", "mkdocstrings-python (==1.16.8)", "pygments (==2.21.0)", "pymdown-extensions (==11.0.2)", "zensical (==0.0.62)"]
 testing = ["coverage", "pyyaml"]
 
 [[package]]
@@ -4756,4 +4756,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "7acf1b923ea713c1f773815809d5e0c2c43ade35fd818d2c63ad62baaf11542e"
+content-hash = "96190328bdbbad30709f2955979fb7524d2c40767fbce72177010c06d845bacd"
