@@ -44,7 +44,7 @@ uvicorn = "~0.52.4"
 
 # Formatting
 isort = "^8.0"
-black = "^26.5"
+black = "^26.10"
 
 # Type Checking
 mypy = "^2.3.1"
