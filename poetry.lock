@@ -3826,14 +3826,14 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
 
 [[package]]
 name = "rope"
-version = "1.14.0"
+version = "1.15.0"
 description = "a python refactoring library..."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "rope-1.14.0-py3-none-any.whl", hash = "sha256:00a7ea8c0c376fc0b053b2f2f8ef3bfb8b50fecf1ebf3eb80e4f8bd7f1941918"},
-    {file = "rope-1.14.0.tar.gz", hash = "sha256:8803e3b667315044f6270b0c69a10c0679f9f322ed8efe6245a93ceb7658da69"},
+    {file = "rope-1.15.0-py3-none-any.whl", hash = "sha256:1445f5c6eb3c2c6eda9f9532ed02513a09c1694bfee4a9291f7a86a990ac44a1"},
+    {file = "rope-1.15.0.tar.gz", hash = "sha256:a9e82c9f5ca5a1054387c22fdf6c9de9e948af556138bda57d4da81d3378793a"},
 ]
 
 [package.dependencies]
@@ -4845,4 +4845,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "887d2e196e36d8278b6d21b67691062b45003c7166b6bee037818792236c881a"
+content-hash = "3f10cd5b33a3d0939514190a605e62c9fec42fe224d57377a7cfde244c0adcd5"
