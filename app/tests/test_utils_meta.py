@@ -57,6 +57,25 @@ def describe_tokenize(expect, request):
             data = await utils.meta.tokenize(request, "http://example.com/foobar.png")
             expect(data) == ("http://example.com/foobar.png?token=abc123", True)
 
+    @pytest.mark.asyncio
+    async def it_caches_results_per_api_key(monkeypatch):
+        monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", "http://example.com/")
+        request.args = {}
+
+        async with aiointercept(mock_external_urls=True) as patched_session:
+            patched_session.post(
+                "http://example.com/tokenize",
+                payload={"url": "http://example.com/cached.png?token=abc123"},
+            )
+
+            request.headers = {"x-api-key": "valid"}
+            data = await utils.meta.tokenize(request, "http://example.com/cached.png")
+            expect(data) == ("http://example.com/cached.png?token=abc123", True)
+
+            request.headers = {}
+            data = await utils.meta.tokenize(request, "http://example.com/cached.png")
+            expect(data) == ("http://example.com/cached.png", False)
+
 
 def describe_track():
     @pytest.mark.asyncio

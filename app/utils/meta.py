@@ -40,7 +40,12 @@ async def authenticate(request: Request) -> dict:
     return info
 
 
-@cached(60 * 15 if settings.DEPLOYED else 5)
+@cached(
+    60 * 15 if settings.DEPLOYED else 5,
+    key_builder=lambda _func, request, url: (
+        f"{url=} {_get_api_key(request)=} {request.args.get('token')=}"
+    ),
+)
 async def tokenize(request: Request, url: str) -> tuple[str, bool]:
     api_key = _get_api_key(request) or ""
     token = request.args.get("token")
