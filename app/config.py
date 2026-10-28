@@ -6,6 +6,7 @@ from PIL import UnidentifiedImageError
 from sanic import Request, Sanic
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
+from urllib.parse import urlparse
 
 from . import settings, utils, views
 
@@ -25,6 +26,16 @@ IGNORED_EXCEPTIONS = (
     NotFound,
     UnidentifiedImageError,
 )
+
+def _get_server_name(base_url: str) -> str:
+    """Extract hostname and port from a base URL for use as SERVER_NAME."""
+    if "://" not in base_url:
+        return base_url
+    parsed = urlparse(base_url)
+    server_name = parsed.hostname
+    if parsed.port:
+        server_name = f"{server_name}:{parsed.port}"
+    return server_name
 
 
 class BugsnagErrorHandler(ErrorHandler):
@@ -55,7 +66,7 @@ class BugsnagErrorHandler(ErrorHandler):
 
 
 def init(app: Sanic):
-    app.config.SERVER_NAME = settings.BASE_URL
+    app.config.SERVER_NAME = _get_server_name(settings.BASE_URL)
     app.config.CORS_ORIGINS = "*"
     app.config.CORS_SEND_WILDCARD = True
     app.config.OAS_UI_DEFAULT = "swagger"
