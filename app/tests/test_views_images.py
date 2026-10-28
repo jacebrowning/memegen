@@ -173,6 +173,13 @@ def describe_detail(expect, client):
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
 
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("extension", ["png", "gif"])
+    async def it_includes_content_length_under_asgi(asgi_client, extension):
+        request, response = await asgi_client.get(f"/images/fry/test.{extension}")
+        expect(response.status) == 200
+        expect(response.headers["content-length"]) == str(len(response.content))
+
     def it_handles_placeholder_templates():
         request, response = client.get("/images/string/test.png")
         expect(response.status) == 200
