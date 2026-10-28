@@ -264,4 +264,7 @@ async def render_image(
             maximum_frames=frames,
         )
     mime_type = "image/webp" if path.suffix == ".webp" else None
-    return await response.file(path, status, mime_type=mime_type)
+    image = await response.file(path, status, mime_type=mime_type)
+    # Sanic only adds this header when running its own server, not under ASGI
+    image.headers["Content-Length"] = str(len(image.body or b""))
+    return image
