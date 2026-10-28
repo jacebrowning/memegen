@@ -92,6 +92,23 @@ def describe_detail():
                 "url": "http://localhost:5000/images/fry/foo/bar.jpg"
             }
 
+        def it_accepts_a_string_as_a_single_line_of_text():
+            data = {"text": "foo"}
+            request, response = client.post("/templates/iw", content=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {"url": "http://localhost:5000/images/iw/foo.png"}
+
+        @pytest.mark.parametrize("id", ["iw", "custom"])
+        def it_rejects_text_of_other_types(id):
+            data = {"text": 5}
+            request, response = client.post(
+                f"/templates/{id}", content=json.dumps(data)
+            )
+            expect(response.status) == 400
+            expect(response.json) == {
+                "error": '"text" must be a string or a list of strings'
+            }
+
         @pytest.mark.parametrize("id", ["iw", "custom"])
         def it_redirects_if_requested(id):
             data = {"text_lines": ["abc"], "redirect": True}
