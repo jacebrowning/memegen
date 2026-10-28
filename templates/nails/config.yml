@@ -7,8 +7,8 @@ text:
   - style: upper
     color: white
     font: thick
-    anchor_x: 0.05
-    anchor_y: 0.19
+    anchor_x: 0.039
+    anchor_y: 0.297
     angle: 42.0
     scale_x: 0.35
     scale_y: 0.1
@@ -18,8 +18,8 @@ text:
   - style: upper
     color: white
     font: thick
-    anchor_x: 0.4
-    anchor_y: 0.78
+    anchor_x: 0.407
+    anchor_y: 0.839
     angle: -20.0
     scale_x: 0.35
     scale_y: 0.1
@@ -29,8 +29,8 @@ text:
   - style: default
     color: white
     font: thin
-    anchor_x: 0.51
-    anchor_y: 0.24
+    anchor_x: 0.525
+    anchor_y: 0.279
     angle: -10.0
     scale_x: 0.45
     scale_y: 0.2

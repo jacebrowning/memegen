@@ -7,8 +7,8 @@ text:
   - style: none
     color: maroon
     font: thin
-    anchor_x: 0.15
-    anchor_y: 0.31
+    anchor_x: 0.155
+    anchor_y: 0.34
     angle: -3.0
     scale_x: 0.64
     scale_y: 0.31

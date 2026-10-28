@@ -17,8 +17,8 @@ text:
   - style: upper
     color: black
     font: comic
-    anchor_x: 0.615
-    anchor_y: 0.72
+    anchor_x: 0.634
+    anchor_y: 0.75
     angle: 12.0
     scale_x: 0.3
     scale_y: 0.2
