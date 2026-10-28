@@ -86,8 +86,4 @@ def clean(url: str) -> str:
     # Drop trailing spaces
     url = re.sub(r"(?:/_)+(\.\w+)(?=$|\?)", r"\1", url)
 
-    # TODO: Fix Sanic bug?
-    # https://github.com/jacebrowning/memegen/issues/799
-    url = url.replace("::", ":")
-
     return url

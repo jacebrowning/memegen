@@ -147,6 +147,14 @@ def describe_list():
             expect(response.status) == 201
             expect(response.json) == {"url": "http://localhost:5000/images/iw/_/2.png"}
 
+        def it_preserves_double_colons_in_text():
+            data = {"template_id": "iw", "text_lines": ["std::vector", "is fine"]}
+            request, response = client.post("/images", data=data)
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/std::vector/is_fine.png"
+            }
+
         def it_handles_invalid_json():
             request, response = client.post("/images", content="???")
             expect(response.status) == 400
@@ -172,6 +180,24 @@ def describe_detail(expect, client):
         request, response = client.get(path, timeout=15)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
+
+    def it_builds_a_valid_request_url():
+        request, response = client.get("/images/fry/test.png")
+        expect(request.url) == "http://localhost:5000/images/fry/test.png"
+
+    def it_preserves_double_colons_in_text():
+        request, response = client.get(
+            "/images/fry/std::vector/is_fine.png", allow_redirects=False
+        )
+        expect(response.status) == 200
+        expect(response.headers["content-type"]) == "image/png"
+
+    def it_preserves_double_colons_when_normalizing_text():
+        request, response = client.get(
+            "/images/fry/std::vector/is fine.png", allow_redirects=False
+        )
+        expect(response.status) == 301
+        expect(response.headers["Location"]) == "/images/fry/std::vector/is_fine.png"
 
     def it_handles_placeholder_templates():
         request, response = client.get("/images/string/test.png")
