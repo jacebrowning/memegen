@@ -1,7 +1,8 @@
 name: You Were the Chosen One!
 source: http://knowyourmeme.com/memes/you-were-the-chosen-one
 keywords:
-  -
+  - Star Wars
+  - Obi-Wan Kenobi
 text:
   - style: upper
     color: white
