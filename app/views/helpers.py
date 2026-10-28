@@ -24,6 +24,8 @@ async def generate_url(
             payload = request.json or {}
         except exceptions.InvalidUsage:
             payload = {}
+        if not isinstance(payload, dict):
+            payload = {}
 
     with suppress(KeyError):
         payload["style"] = payload.pop("style[]")
@@ -37,19 +39,39 @@ async def generate_url(
             template_id = payload["template_id"]
         except KeyError:
             return response.json({"error": '"template_id" is required'}, status=400)
-        else:
-            template_id = utils.text.slugify(template_id)
+        if not isinstance(template_id, str):
+            return response.json(
+                {"error": '"template_id" must be a string'}, status=400
+            )
+        template_id = utils.text.slugify(template_id)
 
-    style: str = utils.urls.arg(payload, "", "style", "overlay")
-    if isinstance(style, list):
+    style = utils.urls.arg(payload, "", "style", "overlay")
+    if isinstance(style, list) and all(isinstance(s, str) for s in style):
         style = ",".join([(s.strip() or "default") for s in style])
+    if not isinstance(style, str):
+        return response.json(
+            {"error": '"style" must be a string or a list of strings'}, status=400
+        )
     while style.endswith(",default"):
         style = style.removesuffix(",default")
+
     text_lines = utils.urls.arg(payload, [], "text", "text_lines")
+    if isinstance(text_lines, str):
+        text_lines = [text_lines]
+    if not isinstance(text_lines, list) or not all(
+        isinstance(line, (str, type(None))) for line in text_lines
+    ):
+        return response.json(
+            {"error": '"text" must be a string or a list of strings'}, status=400
+        )
+
+    background = utils.urls.arg(payload, "", "background", "image_url")
+    if not isinstance(background, str):
+        return response.json({"error": '"background" must be a string'}, status=400)
+
     layout = utils.urls.arg(payload, "default", "layout")
     normalize = layout == "default"
     font = utils.urls.arg(payload, "", "font")
-    background = utils.urls.arg(payload, "", "background", "image_url")
     extension = utils.urls.arg(payload, "", "extension")
 
     if (
@@ -148,9 +170,24 @@ async def render_image(
     logger.info(f"Rendering image: {utils.urls.redact(request.url)}")
 
     lines = utils.text.decode(slug)
-    status = int(utils.urls.arg(request.args, "200", "status"))
-    frames = int(request.args.get("frames", 0))
     style = utils.urls.arg(request.args, "default", "style")
+
+    try:
+        status = int(utils.urls.arg(request.args, "200", "status"))
+        if not 200 <= status <= 599:
+            raise ValueError(f"Status code is out of range: {status}")
+    except ValueError as e:
+        logger.error(f"Invalid status: {e}")
+        status = 422
+
+    try:
+        frames = int(request.args.get("frames", 0))
+        if frames < 0:
+            raise ValueError(f"Frame count is negative: {frames}")
+    except ValueError as e:
+        logger.error(f"Invalid frames: {e}")
+        frames = 0
+        status = 422
 
     animated = extension in settings.ANIMATED_EXTENSIONS
     if extension not in settings.ALLOWED_EXTENSIONS:

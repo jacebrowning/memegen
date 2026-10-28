@@ -152,6 +152,45 @@ def describe_list():
             expect(response.status) == 400
             expect(response.json) == {"error": '"template_id" is required'}
 
+        def it_handles_non_object_json():
+            request, response = client.post("/images", content="[1]")
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"template_id" is required'}
+
+        @pytest.mark.parametrize("template_id", [5, None, ["iw"]])
+        def it_rejects_non_string_template_ids(template_id):
+            data = {"template_id": template_id}
+            request, response = client.post("/images", content=json.dumps(data))
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"template_id" must be a string'}
+
+        @pytest.mark.parametrize("key", ["text", "text_lines"])
+        def it_accepts_a_string_as_a_single_line_of_text(key):
+            data = {"template_id": "iw", key: "hello world"}
+            request, response = client.post("/images", content=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/iw/hello_world.png"
+            }
+
+        @pytest.mark.parametrize("text", [5, {"a": "b"}, ["foo", 5]])
+        def it_rejects_text_of_other_types(text):
+            data = {"template_id": "iw", "text": text}
+            request, response = client.post("/images", content=json.dumps(data))
+            expect(response.status) == 400
+            expect(response.json) == {
+                "error": '"text" must be a string or a list of strings'
+            }
+
+        @pytest.mark.parametrize("style", [5, ["default", 5]])
+        def it_rejects_styles_of_other_types(style):
+            data = {"template_id": "iw", "style": style}
+            request, response = client.post("/images", content=json.dumps(data))
+            expect(response.status) == 400
+            expect(response.json) == {
+                "error": '"style" must be a string or a list of strings'
+            }
+
 
 def describe_detail(expect, client):
     @pytest.mark.slow
@@ -172,6 +211,23 @@ def describe_detail(expect, client):
         request, response = client.get(path, timeout=15)
         expect(response.status) == 200
         expect(response.headers["content-type"]) == content_type
+
+    @pytest.mark.parametrize("frames", ["abc", "1.5", "-1"])
+    def it_rejects_invalid_frames(frames):
+        request, response = client.get(f"/images/fry/test.gif?frames={frames}")
+        expect(response.status) == 422
+        expect(response.headers["content-type"]) == "image/gif"
+
+    def it_accepts_custom_status_codes():
+        request, response = client.get("/images/fry/test.png?status=201")
+        expect(response.status) == 201
+        expect(response.headers["content-type"]) == "image/png"
+
+    @pytest.mark.parametrize("status", ["abc", "99", "100", "199", "600", "999"])
+    def it_rejects_invalid_status_codes(status):
+        request, response = client.get(f"/images/fry/test.png?status={status}")
+        expect(response.status) == 422
+        expect(response.headers["content-type"]) == "image/png"
 
     def it_handles_placeholder_templates():
         request, response = client.get("/images/string/test.png")
@@ -498,6 +554,21 @@ def describe_custom():
                 "url": "http://localhost:5000/images/custom/foo/bar.gif"
                 "?background=https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
             }
+
+        def it_accepts_a_string_as_a_single_line_of_text():
+            data = {"background": "http://example.com", "text": "foo"}
+            request, response = client.post("/images/custom", content=json.dumps(data))
+            expect(response.status) == 201
+            expect(response.json) == {
+                "url": "http://localhost:5000/images/custom/foo.png"
+                "?background=http://example.com"
+            }
+
+        def it_rejects_backgrounds_of_other_types():
+            data = {"background": 5, "text": ["foo"]}
+            request, response = client.post("/images/custom", content=json.dumps(data))
+            expect(response.status) == 400
+            expect(response.json) == {"error": '"background" must be a string'}
 
         def it_redirects_if_requested():
             data = {
