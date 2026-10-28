@@ -25,6 +25,15 @@ URL_CLEANED = [
         "http://localhost:5000/images/vince/a/_.b/c-d.png",
         "http://localhost:5000/images/vince/a/_.b/c-d.png",
     ),
+    # Double colons in text are preserved
+    (
+        "http://localhost:5000/images/fry/std::vector/is_fine.png",
+        "http://localhost:5000/images/fry/std::vector/is_fine.png",
+    ),
+    (
+        "http://localhost:5000/images/fry/std%3A%3Avector/is%20fine.png",
+        "http://localhost:5000/images/fry/std::vector/is_fine.png",
+    ),
 ]
 
 
