@@ -49,6 +49,7 @@ class Template:
         return all(
             (
                 not self.id.startswith("_"),
+                not self.variant,
                 "/" not in self.name,
                 self.image.suffix != settings.PLACEHOLDER_SUFFIX,
             )
@@ -65,6 +66,9 @@ class Template:
         styles = []
         for path in self.directory.iterdir():
             if path.stem[0] in {".", "_"}:
+                continue
+            # Skip cached config variants and padded 'top' layout backgrounds
+            if path.stem.startswith("config.") or path.stem.endswith(".top"):
                 continue
             if path.stem not in {"config", "default"}:
                 styles.append(path.stem)
