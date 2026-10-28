@@ -278,6 +278,50 @@ def test_text_not_cut_off_with_impact_and_watermark(images):
     )
 
 
+def get_font_size_linearly(name, text, max_text_size, max_font_size):
+    font_path = models.Font.objects.get(name).path
+    max_text_width = max_text_size[0] - max_text_size[0] / 35
+    max_text_height = max_text_size[1] - max_text_size[1] / 10
+    for size in range(max(settings.MINIMUM_FONT_SIZE, max_font_size), 6, -1):
+        font = utils.images.ImageFont.truetype(str(font_path), size=size)
+        width, height = utils.images.get_text_size_minus_font_offset(text, font)
+        if width <= max_text_width and height <= max_text_height:
+            break
+    return size
+
+
+@pytest.mark.parametrize("name", ["thick", "impact", "comic", "notosans"])
+@pytest.mark.parametrize(
+    "text",
+    [
+        "",
+        "a",
+        "Top Line",
+        "one does not simply\nwalk into mordor",
+        "word " * 20,
+        "Special? 👋 100% #these-memes",
+    ],
+)
+def test_font_size_matches_linear_search(expect, name, text):
+    for max_text_size in [(30, 10), (150, 60), (600, 150), (900, 400)]:
+        for max_font_size in [0, 33, 66, 150]:
+            args = (name, text, max_text_size, max_font_size)
+            font = utils.images.get_font(*args)
+            expect(font.size) == get_font_size_linearly(*args)
+
+
+def test_font_size_when_larger_sizes_measure_smaller(expect):
+    # This text is 58px tall at sizes 78-79 but 57px tall at sizes 80-81
+    args = ("thick", "'MEMBER", (5000, 64), 82)
+    expect(get_font_size_linearly(*args)) == 81
+    expect(utils.images.get_font(*args).size) == 81
+
+
+def test_fonts_are_reused(expect):
+    font = utils.images.get_font("thick", "Top Line", (600, 150), 66)
+    expect(utils.images.get_font("thick", "Top Line", (600, 150), 66)).is_(font)
+
+
 # Watermark
 
 
