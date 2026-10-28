@@ -301,6 +301,27 @@ def test_rotated_point_when_rotated_box_is_narrower(expect):
     expect(point) == (175, 25)
 
 
+def test_angled_text_keeps_animation_frame_size(expect):
+    template = models.Template.objects.get("crowd")
+    assert any(text.angle for text in template.text)
+
+    frames, _duration = utils.images.render_animation(
+        template, "default", template.example, (0, 0)
+    )
+
+    expect(len(frames)) > 1
+    expect({frame.size for frame in frames}) == {frames[0].size}
+
+
+def test_angled_text_keeps_padded_image_size(expect):
+    template = models.Template.objects.get("cmm")
+    assert any(text.angle for text in template.text)
+
+    image = utils.images.render_image(template, "default", template.example, (800, 450))
+
+    expect(image.size) == (800, 450)
+
+
 # Watermark
 
 

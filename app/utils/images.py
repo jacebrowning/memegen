@@ -333,9 +333,9 @@ def render_image(
                 stroke_fill=stroke_fill,
             )
 
-        size = box.size
+        unrotated_size = box.size
         box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
-        image.paste(box, get_rotated_point(point, size, box.size), box)
+        image.paste(box, get_rotated_point(point, unrotated_size, box.size), box)
 
     if settings.DEBUG:
         for overlay in template.overlay:
@@ -486,13 +486,13 @@ def render_animation(
                     stroke_fill=stroke_fill,
                 )
 
-            size = box.size
+            unrotated_size = box.size
             try:
                 box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
             except ValueError as e:
                 logger.warning(e)
                 box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
-            image.paste(box, get_rotated_point(point, size, box.size), box)
+            image.paste(box, get_rotated_point(point, unrotated_size, box.size), box)
 
         if settings.DEBUG:
             draw = ImageDraw.Draw(image)
