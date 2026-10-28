@@ -4,7 +4,7 @@ from sanic import Blueprint, exceptions, response
 from sanic.log import logger
 from sanic_ext import openapi
 
-from .. import models, settings, utils
+from .. import helpers, models, settings, utils
 
 blueprint = Blueprint("Shortcuts", url_prefix="/")
 
@@ -135,8 +135,9 @@ async def custom_path(request, template_id, text_paths):
         if animated
         else settings.DEFAULT_STATIC_EXTENSION
     )
+    alt = helpers.get_alt_text(utils.text.decode(text_paths))
     content = utils.html.gallery(
-        [f"/images/{template_id}/{text_paths}.{extension}"],
+        [(f"/images/{template_id}/{text_paths}.{extension}", alt)],
         columns=False,
         refresh=30 if animated else 3,
         query_string=request.query_string,
