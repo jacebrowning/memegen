@@ -42,7 +42,7 @@ jobs:
           path: results
 
       - store_artifacts:
-          path: htmlcov
+          path: .cache/htmlcov
 
       - run:
           name: Building site
