@@ -1,13 +1,32 @@
+from threading import Lock
+
 from sanic import Request
 
 from . import settings, utils
 from .models import Template
 
+_templates: list[Template] = []
+_templates_lock = Lock()
+
+
+def get_base_templates() -> list[Template]:
+    """Load the built-in templates, cached per process when deployed."""
+    if not settings.DEPLOYED:
+        return _load_base_templates()
+    with _templates_lock:
+        if not _templates:
+            _templates.extend(_load_base_templates())
+    return list(_templates)
+
+
+def _load_base_templates() -> list[Template]:
+    return list(Template.objects.filter(valid=True, _exclude="_custom"))
+
 
 def get_valid_templates(
     request: Request, query: str = "", animated: bool | None = None
 ) -> list[dict]:
-    templates: list[Template] = Template.objects.filter(valid=True, _exclude="_custom")
+    templates = get_base_templates()
     if query:
         templates = [t for t in templates if t.matches(query)]
     else:
@@ -22,7 +41,7 @@ def get_valid_templates(
 def get_example_images(
     request: Request, query: str = "", *, animated: bool | None = None
 ) -> list[tuple[str, str]]:
-    templates = Template.objects.filter(valid=True, _exclude="_custom")
+    templates = get_base_templates()
     if query:
         templates = [t for t in templates if t.matches(query)]
     else:
