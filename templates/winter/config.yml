@@ -2,7 +2,9 @@ name: Winter is coming
 source: 
   http://knowyourmeme.com/memes/imminent-ned-brace-yourselves-winter-is-coming
 keywords:
-  -
+  - Brace Yourselves
+  - Game of Thrones
+  - Ned Stark
 text:
   - style: upper
     color: white

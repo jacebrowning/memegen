@@ -18,6 +18,16 @@ def describe_list():
             expect(response.status) == 200
             expect(len(response.json)) == 3
 
+        @pytest.mark.slow
+        @pytest.mark.parametrize(
+            ("query", "template_id"),
+            [("two buttons", "ds"), ("hotline bling", "drake")],
+        )
+        def it_can_filter_templates_by_keyword(query, template_id):
+            request, response = client.get(f"/templates/?filter={query}", timeout=15)
+            expect(response.status) == 200
+            expect([t["id"] for t in response.json]).contains(template_id)
+
 
 def describe_detail():
     def describe_GET(expect, client):
