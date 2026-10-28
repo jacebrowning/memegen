@@ -86,6 +86,7 @@ def describe_path_redirects(expect, client):
         monkeypatch.setattr(settings, "DEBUG", True)
         request, response = client.get("/images/fry/test")
         expect(response.text).contains("/images/fry/test.png")
+        expect(response.text).contains('alt="test"')
 
     def it_rejects_unknown_templates(unknown_template):
         request, response = client.get(
