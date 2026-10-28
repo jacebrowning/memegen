@@ -9,6 +9,16 @@ from sanic.handlers import ErrorHandler
 
 from . import settings, utils, views
 
+BUGSNAG_FILTERS = [
+    "password",
+    "password_confirmation",
+    "cookie",
+    "authorization",
+    "x-api-key",
+    "api_key",
+    "token",
+]
+
 IGNORED_EXCEPTIONS = (
     ClientPayloadError,
     MethodNotSupported,
@@ -20,19 +30,20 @@ IGNORED_EXCEPTIONS = (
 class BugsnagErrorHandler(ErrorHandler):
     def default(self, request: Request, exception):
         if self._should_notify(exception):
-            bugsnag.notify(
-                exception,
-                metadata={
-                    "request": {
-                        "method": request.method,
-                        "url": request.url,
-                        "json": request.json,
-                        "form": request.form,
-                        "headers": request.headers,
-                    }
-                },
-            )
+            bugsnag.notify(exception, metadata=self._metadata(request))
         return super().default(request, exception)
+
+    @staticmethod
+    def _metadata(request: Request) -> dict:
+        return {
+            "request": {
+                "method": request.method,
+                "url": utils.urls.redact(request.url),
+                "json": request.json,
+                "form": request.form,
+                "headers": dict(request.headers),
+            }
+        }
 
     @staticmethod
     def _should_notify(exception) -> bool:
@@ -127,6 +138,7 @@ def init(app: Sanic):
     app.error_handler = BugsnagErrorHandler()
     bugsnag.configure(
         api_key=settings.BUGSNAG_API_KEY,
+        params_filters=BUGSNAG_FILTERS,
         project_root="/app",
         release_stage=settings.RELEASE_STAGE,
     )

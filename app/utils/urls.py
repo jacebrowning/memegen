@@ -51,6 +51,20 @@ def normalize(url: str) -> str:
     return clean(str(normalized))
 
 
+def mask(value: str) -> str:
+    if len(value) <= 6:
+        return "***"
+    return value[:2] + "***" + value[-2:]
+
+
+def redact(url: str) -> str:
+    return re.sub(
+        r"([?&](?:api_key|token)=)([^&#]*)",
+        lambda match: match.group(1) + mask(match.group(2)),
+        url,
+    )
+
+
 def params(**kwargs) -> dict:
     return {k: v for k, v in kwargs.items() if v}
 
