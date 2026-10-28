@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 
 import pytest
+from PIL import Image
 
 from .. import models, settings, utils
 
@@ -276,6 +277,28 @@ def test_text_not_cut_off_with_impact_and_watermark(images):
     utils.images.save(
         template, lines, "Memegen.link", font_name="impact", directory=images
     )
+
+
+# Rotation
+
+
+def test_rotated_point_without_rotation(expect):
+    point = utils.images.get_rotated_point((10, 20), (200, 50), (200, 50))
+    expect(point) == (10, 20)
+
+
+@pytest.mark.parametrize("angle", [-45, -12, 0.001, 8, 23, 44])
+def test_rotated_point_keeps_box_centered(expect, angle):
+    box = Image.new("RGBA", (300, 120))
+    rotated = box.rotate(angle, expand=True)
+    x, y = utils.images.get_rotated_point((100, 50), box.size, rotated.size)
+    expect(abs(x + rotated.width / 2 - (100 + box.width / 2))) <= 0.5
+    expect(abs(y + rotated.height / 2 - (50 + box.height / 2))) <= 0.5
+
+
+def test_rotated_point_when_rotated_box_is_narrower(expect):
+    point = utils.images.get_rotated_point((100, 100), (200, 50), (50, 200))
+    expect(point) == (175, 25)
 
 
 # Watermark

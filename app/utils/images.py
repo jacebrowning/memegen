@@ -333,8 +333,9 @@ def render_image(
                 stroke_fill=stroke_fill,
             )
 
+        size = box.size
         box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
-        image.paste(box, point, box)
+        image.paste(box, get_rotated_point(point, size, box.size), box)
 
     if settings.DEBUG:
         for overlay in template.overlay:
@@ -485,12 +486,13 @@ def render_animation(
                     stroke_fill=stroke_fill,
                 )
 
+            size = box.size
             try:
                 box = box.rotate(angle, resample=Image.Resampling.LANCZOS, expand=True)
             except ValueError as e:
                 logger.warning(e)
                 box = box.rotate(angle, resample=Image.Resampling.BICUBIC, expand=True)
-            image.paste(box, point, box)
+            image.paste(box, get_rotated_point(point, size, box.size), box)
 
         if settings.DEBUG:
             draw = ImageDraw.Draw(image)
@@ -549,6 +551,17 @@ def resize_image(
 
     image = image.resize(size, Image.Resampling.LANCZOS)
     return image
+
+
+def get_rotated_point(
+    point: Point, original_size: Dimensions, rotated_size: Dimensions
+) -> Point:
+    # Rotating with expand=True grows the box, so shift it up and to the left
+    # by half of that growth to keep it centered where the original box was
+    x, y = point
+    x -= (rotated_size[0] - original_size[0]) // 2
+    y -= (rotated_size[1] - original_size[1]) // 2
+    return x, y
 
 
 def fit_image(width: float, height: float) -> tuple[int, int]:
