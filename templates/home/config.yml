@@ -6,8 +6,8 @@ text:
   - style: default
     color: black
     font: thin
-    anchor_x: 0.0
-    anchor_y: 0.0
+    anchor_x: 0.002
+    anchor_y: 0.002
     angle: 0.001
     scale_x: 1.0
     scale_y: 0.1

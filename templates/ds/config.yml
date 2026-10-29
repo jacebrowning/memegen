@@ -6,8 +6,8 @@ text:
   - style: none
     color: black
     font: thin
-    anchor_x: 0.085
-    anchor_y: 0.085
+    anchor_x: 0.097
+    anchor_y: 0.108
     angle: 12.5
     scale_x: 0.32
     scale_y: 0.095
@@ -17,8 +17,8 @@ text:
   - style: none
     color: black
     font: thin
-    anchor_x: 0.455
-    anchor_y: 0.055
+    anchor_x: 0.467
+    anchor_y: 0.069
     angle: 10.5
     scale_x: 0.23
     scale_y: 0.09
