@@ -32,6 +32,29 @@ def describe_template():
             template.overlay[0].center_x = 0.123
             expect(template.styles) == ["default"]
 
+        @pytest.mark.asyncio
+        async def it_excludes_cached_variants(expect):
+            template = Template.objects.get("ds")
+            expect(template.valid) == True
+
+            variant = await template.clone({"color": "red"}, animated=False)
+            expect(variant.variant) != ""
+            expect(variant.valid) == False
+
+    def describe_styles():
+        @pytest.mark.asyncio
+        async def it_ignores_cached_variants_and_padded_backgrounds(expect):
+            template = Template.objects.get("ds")
+            await template.clone({"color": "red"}, animated=False)
+            await template.clone({"layout": "top"}, 1, animated=False)
+            await template.clone({"layout": "top"}, 2, "maga", animated=False)
+
+            stems = {path.stem for path in template.directory.iterdir()}
+            expect(stems) >= {"default.top", "maga.top"}
+            expect(any(stem.startswith("config.") for stem in stems)) == True
+
+            expect(template.styles) == ["default", "maga"]
+
     def describe_text():
         def it_defaults_to_two_lines(expect, template):
             expect(template.text) == [Text(), Text(anchor_x=0.0, anchor_y=0.8)]

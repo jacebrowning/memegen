@@ -25,6 +25,15 @@ def describe_list():
             expect(response.status) == 200
             expect(len(response.json)) == 3
 
+        @pytest.mark.slow
+        def it_excludes_cached_variants():
+            client.get("/images/fry/a/b.png?color=red")
+            client.get("/images/fry/a/b.png?layout=top")
+            request, response = client.get("/images", timeout=15)
+            expect(response.status) == 200
+            urls = [item["template"] for item in response.json]
+            expect(len(urls)) == len(set(urls))
+
     def describe_POST(expect, client):
         @pytest.mark.parametrize("as_json", [True, False])
         def it_returns_an_image_url(as_json):
