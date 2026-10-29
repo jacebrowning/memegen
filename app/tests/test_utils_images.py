@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 
 import pytest
+from PIL import Image, ImageSequence
 
 from .. import models, settings, utils
 
@@ -47,6 +48,85 @@ def test_single_line_is_never_animated(images):
     template = models.Template.objects.get("cbg")
     lines = [" ", "not. animated. ever"]
     utils.images.save(template, lines, extension="gif", directory=images)
+
+
+# Frame durations
+
+
+@pytest.fixture
+def animated_template(unknown_template):
+    def build(durations):
+        colors = ["red", "green", "blue", "white", "black"] * len(durations)
+        frames = [Image.new("RGB", (300, 200), color) for color in colors]
+        unknown_template.directory.mkdir(exist_ok=True)
+        frames[0].save(
+            unknown_template.directory / "default.gif",
+            save_all=True,
+            append_images=frames[1 : len(durations)],
+            duration=durations,
+            loop=0,
+        )
+        return unknown_template
+
+    return build
+
+
+def test_variable_frame_durations_are_kept(expect, animated_template):
+    template = animated_template([1000, 100, 100, 100])
+    lines = ["slow first", "frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0)
+    )
+    expect(len(frames)) == 4
+    expect(durations) == [1000, 100, 100, 100]
+
+
+def test_skipped_frame_durations_are_added(expect, animated_template):
+    template = animated_template([1000, 100, 100, 100])
+    lines = ["slow first", "frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0), maximum_frames=2
+    )
+    expect(len(frames)) == 2
+    expect(durations) == [1100, 200]
+
+
+def test_variable_frame_durations_are_scaled_proportionally(expect, animated_template):
+    template = animated_template([1000] + [100] * 9)
+    lines = ["slow first", "frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0)
+    )
+    expect(len(frames)) == 10
+    # Slowed down like other short GIFs, but capped at 250 ms/frame on average
+    expect(durations) == [1316] + [132] * 9
+
+
+def test_uniform_frame_durations_are_unchanged(expect, animated_template):
+    template = animated_template([100] * 10)
+    lines = ["same speed", "every frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0)
+    )
+    expect(durations) == [200] * 10
+
+
+def test_variable_frame_durations_are_saved(expect, animated_template, tmp_path):
+    template = animated_template([1000, 100, 100, 100])
+    lines = ["slow first", "frame"]
+    path = utils.images.save(template, lines, extension="gif", directory=tmp_path)
+    image = Image.open(path)
+    durations = [frame.info["duration"] for frame in ImageSequence.Iterator(image)]
+    expect(durations) == [1000, 100, 100, 100]
+
+
+def test_variable_frame_durations_are_padded(expect, animated_template, tmp_path):
+    template = animated_template([1000, 100, 100, 100])
+    path = tmp_path / "padded.gif"
+    utils.images.pad_top(template.directory / "default.gif", path)
+    image = Image.open(path)
+    durations = [frame.info["duration"] for frame in ImageSequence.Iterator(image)]
+    expect(durations) == [1000, 100, 100, 100]
 
 
 # Size

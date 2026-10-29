@@ -82,7 +82,7 @@ def save(
         path.parent.mkdir(parents=True, exist_ok=True)
 
     if extension == "gif":
-        frames, duration = render_animation(
+        frames, durations = render_animation(
             template,
             style,
             lines,
@@ -91,17 +91,18 @@ def save(
             maximum_frames,
             watermark=watermark,
         )
+        duration = sum(durations) / len(durations)
         logger.info(f"Saving {len(frames)} frames as GIF at {duration} ms/frame")
         frames[0].save(
             path,
             format=extension,
             save_all=True,
             append_images=frames[1:],
-            duration=duration,
+            duration=durations,
             loop=0,
         )
     elif extension == "webp":
-        frames, duration = render_animation(
+        frames, durations = render_animation(
             template,
             style,
             lines,
@@ -111,6 +112,8 @@ def save(
             watermark=watermark,
         )
         count = len(frames)
+        # WebP output uses a constant frame rate, so use the average duration
+        duration = sum(durations) / count
         fps = round(1 / duration * 1000, 2)
         logger.info(f"Saving {count} frames as WebP at {fps} frame/s")
         webp.save_images(frames, str(path), fps=fps, lossless=False)
@@ -235,6 +238,8 @@ def pad_top(source_path: Path, destination_path: Path):
 
     if source_path.suffix == ".gif":
         frames = []
+        durations = []
+        default_duration = foreground.info.get("duration", 100)
         for frame in ImageSequence.Iterator(foreground):
             stream = io.BytesIO()
             frame.save(stream, format="GIF")
@@ -242,13 +247,14 @@ def pad_top(source_path: Path, destination_path: Path):
             background = Image.new("RGBA", background_dimensions, "white")
             background.paste(foreground, (0, extra))
             frames.append(background)
+            durations.append(frame.info.get("duration", default_duration))
 
         logger.debug(f"Padding {len(frames)} frame(s) for custom background")
         frames[0].save(
             destination_path,
             save_all=True,
             append_images=frames[1:],
-            duration=foreground.info.get("duration", 100),
+            duration=durations,
             loop=0,
         )
     else:
@@ -378,14 +384,16 @@ def render_animation(
     pad: bool | None = None,
     is_preview: bool = False,
     watermark: str = "",
-) -> tuple[list[ImageType], int]:
+) -> tuple[list[ImageType], list[float]]:
     frames = []
+    durations: list[float] = []
 
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style, animated=True))
     duration = source.info.get("duration", 100)
     total = getattr(source, "n_frames", 1)
-    if total > 1:
+    animated = total > 1
+    if animated:
         sources = ImageSequence.Iterator(source)
     elif template.animated_text:
         sources = [source] * settings.MAXIMUM_FRAMES  # type: ignore
@@ -424,9 +432,16 @@ def render_animation(
         if path and path.exists():
             timed_overlay_images[i] = load(path)
 
+    source_durations = set()
     for index, frame in enumerate(sources):
+        frame_duration = frame.info.get("duration", duration) if animated else duration
+        source_durations.add(frame_duration)
+
         if (index % modulus) >= 1:
+            # Give skipped frames' time to the last rendered frame
+            durations[-1] += frame_duration
             continue
+        durations.append(frame_duration)
 
         stream = io.BytesIO()
         frame.save(stream, format="GIF")
@@ -507,9 +522,18 @@ def render_animation(
             image = add_watermark(image, ".", is_preview, index, total)
 
         if settings.DEBUG:
-            image = add_counter(image, index, total, modulus, duration)
+            image = add_counter(image, index, total, modulus, frame_duration)
 
         frames.append(image)
+
+    if len(source_durations) > 1:
+        # Keep each frame's share of the loop when frame durations vary
+        if len(frames) > settings.MINIMUM_FRAMES:
+            scale = max(total, settings.MAXIMUM_FRAMES) / total
+            scale = min(scale, 250 * len(frames) / sum(durations))
+            durations = [round(value * scale) for value in durations]
+            logger.info(f"Adjusted variable durations by {scale:.2f}x")
+        return frames, durations
 
     if len(frames) > settings.MINIMUM_FRAMES:
         ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
@@ -518,7 +542,7 @@ def render_animation(
         if duration != old_duration:
             logger.info(f"Adjusted duration of {old_duration} to {duration}")
 
-    return frames, duration
+    return frames, [duration] * len(frames)
 
 
 def resize_image(
