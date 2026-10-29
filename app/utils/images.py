@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 from contextlib import contextmanager
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterator, cast
 
@@ -30,6 +31,8 @@ EXCEPTIONS = (
     Image.DecompressionBombError,
     UnidentifiedImageError,
 )
+
+FONT_SIZE_LOOKAHEAD = 3
 
 
 def preview(
@@ -794,17 +797,43 @@ def split_3(line: str) -> str:
 def get_font(
     name: str, text: str, max_text_size: Dimensions, max_font_size: int
 ) -> FontType:
-    font_path = Font.objects.get(name or settings.DEFAULT_FONT).path
+    font_path = str(Font.objects.get(name or settings.DEFAULT_FONT).path)
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
-    for size in range(max(settings.MINIMUM_FONT_SIZE, max_font_size), 6, -1):
-        font = ImageFont.truetype(str(font_path), size=size)
+    def fits(size: int) -> bool:
+        font = load_font(font_path, size)
         text_width, text_height = get_text_size_minus_font_offset(text, font)
-        if text_width <= max_text_width and text_height <= max_text_height:
-            break
+        return text_width <= max_text_width and text_height <= max_text_height
 
-    return font
+    smallest = settings.MINIMUM_FONT_SIZE
+    largest = max(smallest, max_font_size)
+    if fits(largest):
+        return load_font(font_path, largest)
+
+    # Find a size that fits where the next size up does not
+    low, high = smallest, largest
+    while high - low > 1:
+        middle = (low + high) // 2
+        if fits(middle):
+            low = middle
+        else:
+            high = middle
+
+    # Rendered text can measure smaller at a slightly larger font size due
+    # to hinting, so check the next few sizes to pick the largest that fits
+    for size in range(min(high + FONT_SIZE_LOOKAHEAD, largest - 1), high, -1):
+        if fits(size):
+            return load_font(font_path, size)
+
+    return load_font(font_path, low)
+
+
+@lru_cache(maxsize=128)
+def load_font(path: str, size: int) -> FontType:
+    # Fonts are not modified after loading and Pillow serializes each FreeType
+    # call on a font, so these can be shared by renders in different threads
+    return ImageFont.truetype(path, size=size)
 
 
 def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
