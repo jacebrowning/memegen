@@ -29,7 +29,7 @@ async def validate(request: Request):
     "template", str, "query", description="Template ID, URL, or custom background"
 )
 @openapi.parameter(
-    "layout", str, "query", description="Text position: `default` or `top`"
+    "layout", str, "query", description="Text layout: `default` or `top`"
 )
 @openapi.response(200, {"image/jpeg": bytes}, "Successfully displayed a custom meme")
 async def preview(request: Request):
