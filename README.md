@@ -16,7 +16,7 @@ An API to programmatically generate memes based solely on requested URLs.
 
 The API is stateless so URLs contain all the information necessary to generate meme images. For example, <https://api.memegen.link/images/buzz/memes/memes_everywhere.webp> produces:
 
-![Buzz Lightyear meme reading "memes, memes everywhere"](https://api.memegen.link/images/buzz/memes/memes_everywhere.webp?token=wxgjeu3jll4dt9q6fihy&width=800)
+![Example Image](https://api.memegen.link/images/buzz/memes/memes_everywhere.webp?token=wxgjeu3jll4dt9q6fihy&width=800)
 
 ## Available Formats
 
@@ -37,7 +37,7 @@ Images can be scaled to a specific width or height using the `width=<int>` and `
 
 For example, <https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800> produces:
 
-![Why Not Both? meme reading "width or height, why not both?" padded to 800 by 450 pixels](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800&token=6alj86spiq9iyevbknm3)
+![Custom Size](https://api.memegen.link/images/both/width_or_height/why_not_both~q.png?height=450&width=800&token=6alj86spiq9iyevbknm3)
 
 ## Alternate Layouts
 
@@ -45,7 +45,7 @@ Add the `layout=<str>` query parameter to switch between the default and `top` t
 
 For example, <https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top> produces:
 
-![Roll Safe meme with "When you have a really good idea" at the top](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
+![Top Layout](https://api.memegen.link/images/rollsafe/When_you_have_a_really_good_idea.webp?layout=top&width=800&token=orgyyu0tuzir7n4ktwvc)
 
 # Text
 
@@ -77,7 +77,7 @@ Emojis are also supported, both as characters (👍) and aliases (`:thumbsup:`).
 
 For example, <https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_:thumbsup:.png> produces:
 
-![Ugandan Knuckles meme reading "#special characters?" and "underscore_ dash- 👍"](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i)
+![Escaped Characters](https://api.memegen.link/images/ugandanknuck/~hspecial_characters~q/underscore__-dash--_%F0%9F%91%8D.png?token=0wzowe01f5oxdtaqz21i)
 
 All of the `POST` endpoints will return image URLs with special characters replaced with these alternatives.
 
@@ -113,9 +113,9 @@ Some memes come in multiple forms, which can be selected using the `style=<str>`
 
 For example, the <https://api.memegen.link/templates/ds/> template provides these styles:
 
-|                                                 `/images/ds.png`                                                 |                                           `/images/ds.png?style=maga`                                           |
-| :--------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| ![Daily Struggle: a sweating man choosing between two buttons](https://api.memegen.link/images/ds.png?width=375) | ![Daily Struggle: the same man wearing a MAGA hat](https://api.memegen.link/images/ds.png?width=375&style=maga) |
+|                          `/images/ds.png`                          |                           `/images/ds.png?style=maga`                           |
+| :----------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| ![Default Style](https://api.memegen.link/images/ds.png?width=375) | ![Alternate Style](https://api.memegen.link/images/ds.png?width=375&style=maga) |
 
 ## Image Overlays
 
@@ -123,7 +123,7 @@ The `style=<str>` query parameter can also be an image URL to overlay on the def
 
 For example, <https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png> produces:
 
-![Is This a Pigeon? meme with an overlay image, reading "Engineer" and "Is this Photoshop?"](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=mbckgprafgz8o4l1adct)
+![Custom Overlay](https://api.memegen.link/images/pigeon/Engineer/_/Is_this_Photoshop~q.png?style=https://i.imgur.com/W0NXFpQ.png&width=800&token=mbckgprafgz8o4l1adct)
 
 The overlay image can be customized with the following additional query parameters:
 
@@ -138,7 +138,7 @@ You can also use your own image URL as the background.
 
 For example, <https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png> produces:
 
-![Meme reading "my background" on a custom background photo](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=kxxlu7wzoxgp5l2iruta)
+![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=kxxlu7wzoxgp5l2iruta)
 
 This can be combined with [custom overlays](#image-overlays) to augment the background image.
 

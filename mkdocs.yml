@@ -7,7 +7,6 @@ edit_uri: ""
 
 nav:
   - Home: index.md
-  - Guide: guide.md
   - Clients: clients.md
   - Examples: examples.md
 
