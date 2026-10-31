@@ -820,9 +820,21 @@ def get_font(
     return font
 
 
+# Raqm 0.11 (Pillow 13) rejects paragraph separators. Raqm 0.10 laid the
+# whole string out as one run, and sizing uses that box's left and top.
+# Basic layout still measures the string that way.
+_PARAGRAPH_SEPARATORS = frozenset("\n\r\u001c\u001d\u001e\u0085\u2029")
+
+
+def getbbox_safe(text: str, font: FontType) -> tuple[int, int, int, int]:
+    if any(character in _PARAGRAPH_SEPARATORS for character in text):
+        font = font.font_variant(layout_engine=ImageFont.Layout.BASIC)
+    return font.getbbox(text)  # type: ignore[return-value]
+
+
 def get_text_size_minus_font_offset(text: str, font: FontType) -> Dimensions:
     text_width, text_height = get_text_size(text, font)
-    x_offset, y_offset, _, _ = font.getbbox(text)
+    x_offset, y_offset, _, _ = getbbox_safe(text, font)
     return text_width - x_offset, text_height - y_offset  # type: ignore[return-value]
 
 
@@ -836,7 +848,7 @@ def get_text_offset(
     text_size = get_text_size(text, font)
     stroke_width = get_stroke_width(font)
 
-    x_offset, y_offset, _, _ = font.getbbox(text)
+    x_offset, y_offset, _, _ = getbbox_safe(text, font)
     x_offset -= stroke_width
     y_offset -= stroke_width
 

@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 import pytest
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from .. import models, settings, utils
 
@@ -299,6 +299,23 @@ def test_rotated_point_keeps_box_centered(expect, angle):
 def test_rotated_point_when_rotated_box_is_narrower(expect):
     point = utils.images.get_rotated_point((100, 100), (200, 50), (50, 200))
     expect(point) == (175, 25)
+
+
+def test_paragraph_separator_keeps_single_run_bbox(expect):
+    font = ImageFont.truetype(str(models.Font.objects.get("thick").path), size=84)
+    text = ".\nÁ"
+
+    left, top, right, bottom = utils.images.getbbox_safe(text, font)
+    dot = font.getbbox(".")
+    accent = font.getbbox("Á")
+    image = Image.new("RGB", (100, 100))
+    _, _, _, wrapped_bottom = ImageDraw.Draw(image).textbbox((0, 0), text, font)
+
+    expect(top) == accent[1]
+    expect(bottom) == max(dot[3], accent[3])
+    expect(right) > max(dot[2], accent[2])
+    expect(bottom) < wrapped_bottom
+    expect(left) == 0
 
 
 def test_angled_text_keeps_animation_frame_size(expect):
