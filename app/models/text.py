@@ -36,8 +36,8 @@ class Text:
     def get_preview(cls) -> "Text":
         return cls(
             color="#808080" + alpha(0.375),
-            anchor_x=0.075,
-            anchor_y=0.05,
+            anchor_x=0.125,
+            anchor_y=0.1,
             angle=10,
             scale_x=0.75,
             scale_y=0.75,

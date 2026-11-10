@@ -19,6 +19,25 @@ def describe_spec(expect, client):
         expect(response.status) == 200
         expect(response.json["externalDocs"]["url"]) == "https://memegen.link/guide/"
 
+    def it_describes_image_parameters_consistently():
+        request, response = client.get(URL)
+        expect(response.status) == 200
+        paths = response.json["paths"]
+
+        def get_descriptions(path):
+            parameters = paths[path]["get"]["parameters"]
+            return {
+                p["name"]: p["description"] for p in parameters if p["in"] == "query"
+            }
+
+        blank = get_descriptions("/images/{template_filename}")
+        text = get_descriptions("/images/{template_id}/{text_filepath}")
+        expect(blank) == text
+        expect(text["layout"]).contains("`default` or `top`")
+        expect(get_descriptions("/images/preview.jpg")["layout"]).contains(
+            "`default` or `top`"
+        )
+
 
 @pytest.mark.xfail(reason="Requires JavaScript")
 def describe_ui(expect, client):
