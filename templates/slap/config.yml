@@ -6,8 +6,8 @@ text:
   - style: upper
     color: white
     font: thick
-    anchor_x: 0.18
-    anchor_y: 0.13
+    anchor_x: 0.196
+    anchor_y: 0.286
     angle: 44.0
     scale_x: 0.35
     scale_y: 0.3

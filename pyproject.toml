@@ -23,15 +23,17 @@ pymdown-extensions = "^12.2"
 pygments = "^2.21.0"
 
 # Images
-pillow = "~12.3"
+pillow = "~13.0"
 pilmoji = { git = "https://github.com/jay3332/pilmoji", branch = "2.0" }
 spongemock = "~1.0.0"
 
 # Utilities
 aiocache = "~0.12.3"
+aiofiles = "^23.2.1"
 aiohttp = "^3.14.4"
-anyio = "^4.14.2"
+anyio = "^4.16.0"
 datafiles = "^2.5.0"
+emoji = "^2.14.0"
 furl = "^2.1.4"
 webp = "~0.4"
 
@@ -47,14 +49,14 @@ isort = "^8.0"
 black = "^26.10"
 
 # Type Checking
-mypy = "^2.4.0"
+mypy = "^2.4.1"
 autoflake = "^2.4"
 types-aiofiles = "*"
 types-requests = "*"
 types-setuptools = "*"
 
 # Testing
-pytest = "^9.1.1"
+pytest = "^9.2.0"
 pytest-asyncio = "*"
 pytest-describe = "^3.2"
 pytest-expecter = "^3.1"
@@ -63,6 +65,7 @@ pytest-cov = "^7.1"
 aiointercept = "^0.1.9"
 sanic-testing = "*"
 locust = "^2.46.7"
+requests = "^2.34.2"
 
 # Coverage
 coveragespace = "^6.2"

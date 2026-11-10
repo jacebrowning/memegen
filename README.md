@@ -22,14 +22,14 @@ The API is stateless so URLs contain all the information necessary to generate m
 
 Clients can request `.jpg` instead of `.png` for smaller files. The `.gif` and `.webp` extensions can be used if an animated background is available or to animate text on static backgrounds:
 
-| Format                     | Example                                                                                                     |
-| :------------------------- | :---------------------------------------------------------------------------------------------------------- |
-| PNG                        | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png)    |
-| JPEG                       | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg)    |
-| GIF (animated background)  | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/oprah/you_get/animated_text.gif)         |
-| GIF (static background)    | [/images/iw/animates_text/in_production.gif](https://api.memegen.link/iw/animates_text/in_production.gif)   |
-| WebP (animated background) | [/images/oprah/you_get/animated_text.webp](https://api.memegen.link/oprah/you_get/animated_text.webp)       |
-| WebP (static background)   | [/images/iw/animates_text/in_production.webp](https://api.memegen.link/iw/animates_text/in_production.webp) |
+| Format                     | Example                                                                                                            |
+| :------------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| PNG                        | [/images/ds/small_file/high_quality.png](https://api.memegen.link/images/ds/small_file/high_quality.png)           |
+| JPEG                       | [/images/ds/high_quality/small_file.jpg](https://api.memegen.link/images/ds/high_quality/small_file.jpg)           |
+| GIF (animated background)  | [/images/oprah/you_get/animated_text.gif](https://api.memegen.link/images/oprah/you_get/animated_text.gif)         |
+| GIF (static background)    | [/images/iw/animates_text/in_production.gif](https://api.memegen.link/images/iw/animates_text/in_production.gif)   |
+| WebP (animated background) | [/images/oprah/you_get/animated_text.webp](https://api.memegen.link/images/oprah/you_get/animated_text.webp)       |
+| WebP (static background)   | [/images/iw/animates_text/in_production.webp](https://api.memegen.link/images/iw/animates_text/in_production.webp) |
 
 ## Custom Dimensions
 
@@ -140,7 +140,7 @@ For example, <https://api.memegen.link/images/custom/_/my_background.png?backgro
 
 ![Custom Background](https://api.memegen.link/images/custom/_/my_background.png?background=http://www.gstatic.com/webp/gallery/1.png&width=800&token=kxxlu7wzoxgp5l2iruta)
 
-This can be combined with [custom overlays](#custom-overlays) to augment the background image.
+This can be combined with [custom overlays](#image-overlays) to augment the background image.
 
 <br><hr><br>
 

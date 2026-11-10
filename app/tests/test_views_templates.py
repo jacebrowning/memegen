@@ -18,6 +18,17 @@ def describe_list():
             expect(response.status) == 200
             expect(len(response.json)) == 3
 
+        @pytest.mark.slow
+        def it_excludes_cached_variants():
+            client.get("/images/fry/a/b.png?color=red")
+            client.get("/images/fry/a/b.png?layout=top")
+            request, response = client.get("/templates", timeout=15)
+            expect(response.status) == 200
+            ids = [template["id"] for template in response.json]
+            expect(len(ids)) == len(set(ids))
+            fry = next(t for t in response.json if t["id"] == "fry")
+            expect(fry["styles"]) == ["animated", "default"]
+
 
 def describe_detail():
     def describe_GET(expect, client):
@@ -36,7 +47,7 @@ def describe_detail():
                     "text": ["does testing", "in production"],
                     "url": "http://localhost:5000/images/iw/does_testing/in_production.png",
                 },
-                "source": "http://knowyourmeme.com/memes/insanity-wolf",
+                "source": "https://knowyourmeme.com/memes/insanity-wolf",
                 "keywords": [],
                 "_self": "http://localhost:5000/templates/iw",
             }

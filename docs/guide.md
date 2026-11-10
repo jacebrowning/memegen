@@ -30,7 +30,7 @@ where `{template_id}` is the `id` field from `/templates/`, each `{line_i}` is o
     "text": ["The dress is black and blue.", "The dress is gold and white."],
     "url": "https://api.memegen.link/images/ds/The_dress_is_black_and_blue./The_dress_is_gold_and_white..jpg"
   },
-  "source": "https://knowyourmeme.com/memes/daily-struggle",
+  "source": "https://knowyourmeme.com/memes/daily-struggle-two-buttons",
   "keywords": []
 }
 ```
