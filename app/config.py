@@ -103,7 +103,7 @@ def init(app: Sanic):
                 "name": "Ancient Aliens Guy",
                 "lines": 2,
                 "overlays": 0,
-                "source": "http://knowyourmeme.com/memes/ancient-aliens",
+                "source": "https://knowyourmeme.com/memes/ancient-aliens",
                 ...
             },
             ...

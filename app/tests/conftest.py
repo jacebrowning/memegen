@@ -28,6 +28,15 @@ def client(monkeypatch):
     return app.test_client
 
 
+@pytest.fixture
+def asgi_client(monkeypatch):
+    monkeypatch.setattr(settings, "REMOTE_TRACKING_URL", None)
+    client = app.asgi_client
+    # The client is cached, but running the other client resets this flag
+    monkeypatch.setattr(app, "asgi", True)
+    return client
+
+
 @pytest.fixture(scope="session")
 def template():
     return Template.objects.get("icanhas")
