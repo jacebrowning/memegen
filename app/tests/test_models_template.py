@@ -157,10 +157,9 @@ def describe_configs():
     # Small rounding overshoots (e.g. 0.502 + 0.499) are harmless.
     TOLERANCE = 0.005
 
-    # Rotated text whose box intentionally starts off the edge so the
-    # label is centered along the subject; the rendered text stays visible.
+    # The second balloon is partly out of frame, so its label is too.
     EXCEPTIONS = {
-        ("handshake", 0),
+        ("balloon", 1),
     }
 
     @pytest.fixture(scope="module")
@@ -186,7 +185,9 @@ def describe_configs():
         invalid = []
         for template in templates:
             for index, text in enumerate(template.text):
-                if (template.id, index) in EXCEPTIONS:
+                # Rotated text is positioned around the box's center, so the
+                # unrotated box can extend past the edge while the text doesn't.
+                if text.angle or (template.id, index) in EXCEPTIONS:
                     continue
                 for anchor, scale in [
                     (text.anchor_x, text.scale_x),
