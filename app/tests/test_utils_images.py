@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 
 import pytest
+from PIL import Image, ImageDraw, ImageFont
 
 from .. import models, settings, utils
 
@@ -276,6 +277,66 @@ def test_text_not_cut_off_with_impact_and_watermark(images):
     utils.images.save(
         template, lines, "Memegen.link", font_name="impact", directory=images
     )
+
+
+# Rotation
+
+
+def test_rotated_point_without_rotation(expect):
+    point = utils.images.get_rotated_point((10, 20), (200, 50), (200, 50))
+    expect(point) == (10, 20)
+
+
+@pytest.mark.parametrize("angle", [-45, -12, 0.001, 8, 23, 44])
+def test_rotated_point_keeps_box_centered(expect, angle):
+    box = Image.new("RGBA", (300, 120))
+    rotated = box.rotate(angle, expand=True)
+    x, y = utils.images.get_rotated_point((100, 50), box.size, rotated.size)
+    expect(abs(x + rotated.width / 2 - (100 + box.width / 2))) <= 0.5
+    expect(abs(y + rotated.height / 2 - (50 + box.height / 2))) <= 0.5
+
+
+def test_rotated_point_when_rotated_box_is_narrower(expect):
+    point = utils.images.get_rotated_point((100, 100), (200, 50), (50, 200))
+    expect(point) == (175, 25)
+
+
+def test_paragraph_separator_keeps_single_run_bbox(expect):
+    font = ImageFont.truetype(str(models.Font.objects.get("thick").path), size=84)
+    text = ".\nÁ"
+
+    left, top, right, bottom = utils.images.getbbox_safe(text, font)
+    dot = font.getbbox(".")
+    accent = font.getbbox("Á")
+    image = Image.new("RGB", (100, 100))
+    _, _, _, wrapped_bottom = ImageDraw.Draw(image).textbbox((0, 0), text, font)
+
+    expect(top) == accent[1]
+    expect(bottom) == max(dot[3], accent[3])
+    expect(right) > max(dot[2], accent[2])
+    expect(bottom) < wrapped_bottom
+    expect(left) == 0
+
+
+def test_angled_text_keeps_animation_frame_size(expect):
+    template = models.Template.objects.get("crowd")
+    assert any(text.angle for text in template.text)
+
+    frames, _duration = utils.images.render_animation(
+        template, "default", template.example, (0, 0)
+    )
+
+    expect(len(frames)) > 1
+    expect({frame.size for frame in frames}) == {frames[0].size}
+
+
+def test_angled_text_keeps_padded_image_size(expect):
+    template = models.Template.objects.get("cmm")
+    assert any(text.angle for text in template.text)
+
+    image = utils.images.render_image(template, "default", template.example, (800, 450))
+
+    expect(image.size) == (800, 450)
 
 
 # Watermark
