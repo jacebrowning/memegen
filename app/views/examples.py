@@ -32,11 +32,11 @@ async def examples_static(request: Request):
 
 
 def display(request, items):
-    urls = [item[0] for item in items]
+    images = [(url, alt) for url, _template, alt in items]
     if settings.DEBUG:
         refresh = int(request.args.get("refresh", 5 * 60))
     else:
         refresh = 0
-        random.shuffle(urls)
-    content = utils.html.gallery(urls, columns=True, refresh=refresh)
+        random.shuffle(images)
+    content = utils.html.gallery(images, columns=True, refresh=refresh)
     return response.html(content)
