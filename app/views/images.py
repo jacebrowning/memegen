@@ -62,7 +62,7 @@ async def index(request: Request):
 @openapi.response(
     400,
     {"application/json": ErrorResponse},
-    'Required "template_id" missing in request body',
+    'Required "template_id" missing or a field has the wrong type',
 )
 @openapi.response(
     404, {"application/json": ErrorResponse}, 'Specified "template_id" does not exist'
@@ -235,6 +235,7 @@ IMAGE_PARAMETERS = [
         dedent("""
             Maximum number of frames to render in animated output. 0 (default) means no
             cap. Use this to bound response size and render time on long animations.
+            Negative or non-integer values return HTTP 422.
             """),
     ),
     (
@@ -244,6 +245,7 @@ IMAGE_PARAMETERS = [
             Override the HTTP response status code. Primarily used internally by the
             `POST /images/` → redirect flow to propagate a `201 Created` semantic to the
             final image fetch. Most clients should not need to set this directly.
+            Values outside 200-599 return HTTP 422.
             """),
     ),
 ]
