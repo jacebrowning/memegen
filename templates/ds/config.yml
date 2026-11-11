@@ -1,7 +1,8 @@
 name: Daily Struggle
 source: https://knowyourmeme.com/memes/daily-struggle-two-buttons
 keywords:
-  -
+  - Two Buttons
+  - sweating
 text:
   - style: none
     color: black
@@ -39,6 +40,7 @@ text:
 example:
   - The dress is black and blue.
   - The dress is gold and white.
+  - Me
 overlay:
   - center_x: 0.525
     center_y: 0.55

@@ -1,7 +1,7 @@
 name: Comic Book Guy
 source: https://en.wikipedia.org/wiki/Comic_Book_Guy
 keywords:
-  -
+  - The Simpsons
 text:
   - style: upper
     color: white

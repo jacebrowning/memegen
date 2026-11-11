@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 import pytest
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageSequence
 
 from .. import models, settings, utils
 
@@ -48,6 +48,85 @@ def test_single_line_is_never_animated(images):
     template = models.Template.objects.get("cbg")
     lines = [" ", "not. animated. ever"]
     utils.images.save(template, lines, extension="gif", directory=images)
+
+
+# Frame durations
+
+
+@pytest.fixture
+def animated_template(unknown_template):
+    def build(durations):
+        colors = ["red", "green", "blue", "white", "black"] * len(durations)
+        frames = [Image.new("RGB", (300, 200), color) for color in colors]
+        unknown_template.directory.mkdir(exist_ok=True)
+        frames[0].save(
+            unknown_template.directory / "default.gif",
+            save_all=True,
+            append_images=frames[1 : len(durations)],
+            duration=durations,
+            loop=0,
+        )
+        return unknown_template
+
+    return build
+
+
+def test_variable_frame_durations_are_kept(expect, animated_template):
+    template = animated_template([1000, 100, 100, 100])
+    lines = ["slow first", "frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0)
+    )
+    expect(len(frames)) == 4
+    expect(durations) == [1000, 100, 100, 100]
+
+
+def test_skipped_frame_durations_are_added(expect, animated_template):
+    template = animated_template([1000, 100, 100, 100])
+    lines = ["slow first", "frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0), maximum_frames=2
+    )
+    expect(len(frames)) == 2
+    expect(durations) == [1100, 200]
+
+
+def test_variable_frame_durations_are_scaled_proportionally(expect, animated_template):
+    template = animated_template([1000] + [100] * 9)
+    lines = ["slow first", "frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0)
+    )
+    expect(len(frames)) == 10
+    # Slowed down like other short GIFs, but capped at 250 ms/frame on average
+    expect(durations) == [1316] + [132] * 9
+
+
+def test_uniform_frame_durations_are_unchanged(expect, animated_template):
+    template = animated_template([100] * 10)
+    lines = ["same speed", "every frame"]
+    frames, durations = utils.images.render_animation(
+        template, "default", lines, (0, 0)
+    )
+    expect(durations) == [200] * 10
+
+
+def test_variable_frame_durations_are_saved(expect, animated_template, tmp_path):
+    template = animated_template([1000, 100, 100, 100])
+    lines = ["slow first", "frame"]
+    path = utils.images.save(template, lines, extension="gif", directory=tmp_path)
+    image = Image.open(path)
+    durations = [frame.info["duration"] for frame in ImageSequence.Iterator(image)]
+    expect(durations) == [1000, 100, 100, 100]
+
+
+def test_variable_frame_durations_are_padded(expect, animated_template, tmp_path):
+    template = animated_template([1000, 100, 100, 100])
+    path = tmp_path / "padded.gif"
+    utils.images.pad_top(template.directory / "default.gif", path)
+    image = Image.open(path)
+    durations = [frame.info["duration"] for frame in ImageSequence.Iterator(image)]
+    expect(durations) == [1000, 100, 100, 100]
 
 
 # Size
@@ -277,6 +356,50 @@ def test_text_not_cut_off_with_impact_and_watermark(images):
     utils.images.save(
         template, lines, "Memegen.link", font_name="impact", directory=images
     )
+
+
+def get_font_size_linearly(name, text, max_text_size, max_font_size):
+    font_path = models.Font.objects.get(name).path
+    max_text_width = max_text_size[0] - max_text_size[0] / 35
+    max_text_height = max_text_size[1] - max_text_size[1] / 10
+    for size in range(max(settings.MINIMUM_FONT_SIZE, max_font_size), 6, -1):
+        font = utils.images.ImageFont.truetype(str(font_path), size=size)
+        width, height = utils.images.get_text_size_minus_font_offset(text, font)
+        if width <= max_text_width and height <= max_text_height:
+            break
+    return size
+
+
+@pytest.mark.parametrize("name", ["thick", "impact", "comic", "notosans"])
+@pytest.mark.parametrize(
+    "text",
+    [
+        "",
+        "a",
+        "Top Line",
+        "one does not simply\nwalk into mordor",
+        "word " * 20,
+        "Special? 👋 100% #these-memes",
+    ],
+)
+def test_font_size_matches_linear_search(expect, name, text):
+    for max_text_size in [(30, 10), (150, 60), (600, 150), (900, 400)]:
+        for max_font_size in [0, 33, 66, 150]:
+            args = (name, text, max_text_size, max_font_size)
+            font = utils.images.get_font(*args)
+            expect(font.size) == get_font_size_linearly(*args)
+
+
+def test_font_size_when_larger_sizes_measure_smaller(expect):
+    # This text is 58px tall at sizes 78-79 but 57px tall at sizes 80-81
+    args = ("thick", "'MEMBER", (5000, 64), 82)
+    expect(get_font_size_linearly(*args)) == 81
+    expect(utils.images.get_font(*args).size) == 81
+
+
+def test_fonts_are_reused(expect):
+    font = utils.images.get_font("thick", "Top Line", (600, 150), 66)
+    expect(utils.images.get_font("thick", "Top Line", (600, 150), 66)).is_(font)
 
 
 # Rotation

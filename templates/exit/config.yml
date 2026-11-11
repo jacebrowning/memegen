@@ -14,7 +14,7 @@ text:
     align: center
     start: 0.0
     stop: 1.0
-  - style: thin
+  - style: default
     color: '#BBBBBB'
     font: thin
     anchor_x: 0.53

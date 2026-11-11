@@ -22,8 +22,8 @@ async def test(request: Request):
     if not settings.DEBUG:
         return response.redirect("/")
 
-    urls = await asyncio.to_thread(helpers.get_test_images, request)
-    content = utils.html.gallery(urls, columns=False, refresh=20)
+    images = await asyncio.to_thread(helpers.get_test_images, request)
+    content = utils.html.gallery(images, columns=False, refresh=20)
     return response.html(content)
 
 
