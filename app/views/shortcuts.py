@@ -98,12 +98,15 @@ async def custom_path(request, template_id, text_paths):
         text_paths = text_paths.rstrip('"')
 
     if text_paths.startswith("."):
-        return response.redirect(
-            request.app.url_for(
-                "Images.detail_blank",
-                template_filename=f"{template_id}{text_paths}",
+        try:
+            return response.redirect(
+                request.app.url_for(
+                    "Images.detail_blank",
+                    template_filename=f"{template_id}{text_paths}",
+                )
             )
-        )
+        except exceptions.URLBuildError:
+            raise exceptions.NotFound(f"Invalid image path: {template_id}/{text_paths}")
 
     try:
         url = request.app.url_for(

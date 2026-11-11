@@ -114,6 +114,7 @@ cache_dir = ".cache/pytest/"
 markers = "slow"
 
 asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
 
 filterwarnings = [
     "ignore::DeprecationWarning:websockets.legacy",

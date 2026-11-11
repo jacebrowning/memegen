@@ -36,6 +36,13 @@ def describe_image_redirects(expect, client):
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
+    def it_rejects_invalid_blank_image_paths():
+        request, response = client.get(
+            "/images/frontend/.git/config", allow_redirects=False
+        )
+        expect(response.status) == 404
+        expect(response.text).contains("Invalid image path")
+
     @pytest.mark.parametrize("extra", ["/", '"'])
     def it_fixes_extra_trailing_characters(extra):
         request, response = client.get(
