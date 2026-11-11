@@ -34,7 +34,7 @@ async def index(request: Request):
     query = request.args.get("filter", "").lower()
     examples = await asyncio.to_thread(helpers.get_example_images, request, query)
     return response.json(
-        [{"url": url, "template": template} for url, template in examples]
+        [{"url": url, "template": template} for url, template, _alt in examples]
     )
 
 

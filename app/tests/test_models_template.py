@@ -176,6 +176,61 @@ def describe_template():
             expect(await template.check(style)) == True
 
 
+def describe_configs():
+    # Small rounding overshoots (e.g. 0.502 + 0.499) are harmless.
+    TOLERANCE = 0.005
+
+    # The second balloon is partly out of frame, so its label is too.
+    EXCEPTIONS = {
+        ("balloon", 1),
+    }
+
+    @pytest.fixture(scope="module")
+    def templates():
+        return list(Template.objects.all(_exclude="_custom"))
+
+    def _is_valid_style(style: str) -> bool:
+        if style in {"none", "default", "mock"}:
+            return True
+        method = getattr("Text", style, None)
+        return callable(method) and isinstance(method(), str)
+
+    def it_uses_valid_text_styles(expect, templates):
+        invalid = [
+            f"{template.id}[{index}]: {text.style}"
+            for template in templates
+            for index, text in enumerate(template.text)
+            if not _is_valid_style(text.style)
+        ]
+        expect(invalid) == []
+
+    def it_keeps_text_boxes_on_the_image(expect, templates):
+        invalid = []
+        for template in templates:
+            for index, text in enumerate(template.text):
+                # Rotated text is positioned around the box's center, so the
+                # unrotated box can extend past the edge while the text doesn't.
+                if text.angle or (template.id, index) in EXCEPTIONS:
+                    continue
+                for anchor, scale in [
+                    (text.anchor_x, text.scale_x),
+                    (text.anchor_y, text.scale_y),
+                ]:
+                    if anchor < 0 or anchor + scale > 1 + TOLERANCE:
+                        invalid.append(f"{template.id}[{index}]: {text}")
+                        break
+        expect(invalid) == []
+
+    def it_shows_text_before_hiding_it(expect, templates):
+        invalid = [
+            f"{template.id}[{index}]: {text.start=} {text.stop=}"
+            for template in templates
+            for index, text in enumerate(template.text)
+            if not text.start < text.stop
+        ]
+        expect(invalid) == []
+
+
 def describe_overlay(expect):
     def it_is_visible_inside_start_stop_window():
         o = Overlay(start=0.25, stop=0.75)

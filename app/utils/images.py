@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 from contextlib import contextmanager
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterator, cast
 
@@ -30,6 +31,8 @@ EXCEPTIONS = (
     Image.DecompressionBombError,
     UnidentifiedImageError,
 )
+
+FONT_SIZE_LOOKAHEAD = 3
 
 
 def preview(
@@ -82,7 +85,7 @@ def save(
         path.parent.mkdir(parents=True, exist_ok=True)
 
     if extension == "gif":
-        frames, duration = render_animation(
+        frames, durations = render_animation(
             template,
             style,
             lines,
@@ -91,17 +94,18 @@ def save(
             maximum_frames,
             watermark=watermark,
         )
+        duration = sum(durations) / len(durations)
         logger.info(f"Saving {len(frames)} frames as GIF at {duration} ms/frame")
         frames[0].save(
             path,
             format=extension,
             save_all=True,
             append_images=frames[1:],
-            duration=duration,
+            duration=durations,
             loop=0,
         )
     elif extension == "webp":
-        frames, duration = render_animation(
+        frames, durations = render_animation(
             template,
             style,
             lines,
@@ -111,6 +115,8 @@ def save(
             watermark=watermark,
         )
         count = len(frames)
+        # WebP output uses a constant frame rate, so use the average duration
+        duration = sum(durations) / count
         fps = round(1 / duration * 1000, 2)
         logger.info(f"Saving {count} frames as WebP at {fps} frame/s")
         webp.save_images(frames, str(path), fps=fps, lossless=False)
@@ -235,6 +241,8 @@ def pad_top(source_path: Path, destination_path: Path):
 
     if source_path.suffix == ".gif":
         frames = []
+        durations = []
+        default_duration = foreground.info.get("duration", 100)
         for frame in ImageSequence.Iterator(foreground):
             stream = io.BytesIO()
             frame.save(stream, format="GIF")
@@ -242,13 +250,14 @@ def pad_top(source_path: Path, destination_path: Path):
             background = Image.new("RGBA", background_dimensions, "white")
             background.paste(foreground, (0, extra))
             frames.append(background)
+            durations.append(frame.info.get("duration", default_duration))
 
         logger.debug(f"Padding {len(frames)} frame(s) for custom background")
         frames[0].save(
             destination_path,
             save_all=True,
             append_images=frames[1:],
-            duration=foreground.info.get("duration", 100),
+            duration=durations,
             loop=0,
         )
     else:
@@ -379,14 +388,16 @@ def render_animation(
     pad: bool | None = None,
     is_preview: bool = False,
     watermark: str = "",
-) -> tuple[list[ImageType], int]:
+) -> tuple[list[ImageType], list[float]]:
     frames = []
+    durations: list[float] = []
 
     pad = all(size) if pad is None else pad
     source = Image.open(template.get_image(style, animated=True))
     duration = source.info.get("duration", 100)
     total = getattr(source, "n_frames", 1)
-    if total > 1:
+    animated = total > 1
+    if animated:
         sources = ImageSequence.Iterator(source)
     elif template.animated_text:
         sources = [source] * settings.MAXIMUM_FRAMES  # type: ignore
@@ -425,9 +436,16 @@ def render_animation(
         if path and path.exists():
             timed_overlay_images[i] = load(path)
 
+    source_durations = set()
     for index, frame in enumerate(sources):
+        frame_duration = frame.info.get("duration", duration) if animated else duration
+        source_durations.add(frame_duration)
+
         if (index % modulus) >= 1:
+            # Give skipped frames' time to the last rendered frame
+            durations[-1] += frame_duration
             continue
+        durations.append(frame_duration)
 
         stream = io.BytesIO()
         frame.save(stream, format="GIF")
@@ -509,9 +527,18 @@ def render_animation(
             image = add_watermark(image, ".", is_preview, index, total)
 
         if settings.DEBUG:
-            image = add_counter(image, index, total, modulus, duration)
+            image = add_counter(image, index, total, modulus, frame_duration)
 
         frames.append(image)
+
+    if len(source_durations) > 1:
+        # Keep each frame's share of the loop when frame durations vary
+        if len(frames) > settings.MINIMUM_FRAMES:
+            scale = max(total, settings.MAXIMUM_FRAMES) / total
+            scale = min(scale, 250 * len(frames) / sum(durations))
+            durations = [round(value * scale) for value in durations]
+            logger.info(f"Adjusted variable durations by {scale:.2f}x")
+        return frames, durations
 
     if len(frames) > settings.MINIMUM_FRAMES:
         ratio = len(frames) / max(total, settings.MAXIMUM_FRAMES)
@@ -520,7 +547,7 @@ def render_animation(
         if duration != old_duration:
             logger.info(f"Adjusted duration of {old_duration} to {duration}")
 
-    return frames, duration
+    return frames, [duration] * len(frames)
 
 
 def resize_image(
@@ -807,17 +834,43 @@ def split_3(line: str) -> str:
 def get_font(
     name: str, text: str, max_text_size: Dimensions, max_font_size: int
 ) -> FontType:
-    font_path = Font.objects.get(name or settings.DEFAULT_FONT).path
+    font_path = str(Font.objects.get(name or settings.DEFAULT_FONT).path)
     max_text_width = max_text_size[0] - max_text_size[0] / 35
     max_text_height = max_text_size[1] - max_text_size[1] / 10
 
-    for size in range(max(settings.MINIMUM_FONT_SIZE, max_font_size), 6, -1):
-        font = ImageFont.truetype(str(font_path), size=size)
+    def fits(size: int) -> bool:
+        font = load_font(font_path, size)
         text_width, text_height = get_text_size_minus_font_offset(text, font)
-        if text_width <= max_text_width and text_height <= max_text_height:
-            break
+        return text_width <= max_text_width and text_height <= max_text_height
 
-    return font
+    smallest = settings.MINIMUM_FONT_SIZE
+    largest = max(smallest, max_font_size)
+    if fits(largest):
+        return load_font(font_path, largest)
+
+    # Find a size that fits where the next size up does not
+    low, high = smallest, largest
+    while high - low > 1:
+        middle = (low + high) // 2
+        if fits(middle):
+            low = middle
+        else:
+            high = middle
+
+    # Rendered text can measure smaller at a slightly larger font size due
+    # to hinting, so check the next few sizes to pick the largest that fits
+    for size in range(min(high + FONT_SIZE_LOOKAHEAD, largest - 1), high, -1):
+        if fits(size):
+            return load_font(font_path, size)
+
+    return load_font(font_path, low)
+
+
+@lru_cache(maxsize=128)
+def load_font(path: str, size: int) -> FontType:
+    # Fonts are not modified after loading and Pillow serializes each FreeType
+    # call on a font, so these can be shared by renders in different threads
+    return ImageFont.truetype(path, size=size)
 
 
 # Raqm 0.11 (Pillow 13) rejects paragraph separators. Raqm 0.10 laid the

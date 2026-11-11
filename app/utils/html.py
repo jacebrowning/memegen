@@ -1,3 +1,5 @@
+import html
+
 from .. import settings
 
 COLUMNS_STYLE = """
@@ -80,8 +82,10 @@ RESIZE_SCRIPT = """
 
 HTML = """
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 {head}
 </head>
 <body>
@@ -92,7 +96,7 @@ HTML = """
 
 
 def gallery(
-    urls: list[str],
+    items: list[tuple[str, str]],
     *,
     columns: bool,
     refresh: int,
@@ -101,19 +105,23 @@ def gallery(
     extra = "&" + query_string if query_string else ""
     if columns:
         if refresh:
-            return _columns_debug(urls, refresh, extra)
-        return _columns(urls)
+            return _columns_debug(items, refresh, extra)
+        return _columns(items)
     assert refresh
-    return _grid_debug(urls, refresh, extra)
+    return _grid_debug(items, refresh, extra)
 
 
-def _columns(urls: list[str]) -> str:
+def _alt(text: str) -> str:
+    return html.escape(text, quote=True)
+
+
+def _columns(items: list[tuple[str, str]]) -> str:
     elements = []
 
-    for url in urls:
+    for url, alt in items:
         elements.append(f"""
             <a href="https://memecomplete.com/edit/{url}" target="_parent">
-                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&frames=10">
+                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&frames=10" alt="{_alt(alt)}">
             </a>
             """)
 
@@ -127,13 +135,13 @@ def _columns(urls: list[str]) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _columns_debug(urls: list[str], refresh: int, extra: str) -> str:
+def _columns_debug(items: list[tuple[str, str]], refresh: int, extra: str) -> str:
     elements = []
 
-    for url in urls:
+    for url, alt in items:
         elements.append(f"""
             <a href="{url}">
-                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&time=0{extra}">
+                <img src="{url}?width={settings.PREVIEW_SIZE[0]}&time=0{extra}" alt="{_alt(alt)}">
             </a>
             """)
 
@@ -148,13 +156,13 @@ def _columns_debug(urls: list[str], refresh: int, extra: str) -> str:
     return HTML.format(head=head, body=body)
 
 
-def _grid_debug(urls: list[str], refresh: int, extra: str):
+def _grid_debug(items: list[tuple[str, str]], refresh: int, extra: str):
     elements = []
 
-    for url in urls:
+    for url, alt in items:
         elements.append(f"""
             <a href="{url}">
-                <img src="{url}?time=0{extra}">
+                <img src="{url}?time=0{extra}" alt="{_alt(alt)}">
             </a>
             """)
 
