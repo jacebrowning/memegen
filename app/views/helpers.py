@@ -248,8 +248,8 @@ async def render_image(
             size=size,
             maximum_frames=frames,
         )
-    except ValueError as e:
-        logger.error(f"Unable to render text: {e}")
+    except (ValueError, *utils.images.EXCEPTIONS) as e:
+        logger.error(f"Unable to render image: {e}")
         if status < 400:
             status = 422
         path = await asyncio.to_thread(

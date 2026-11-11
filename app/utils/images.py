@@ -12,12 +12,16 @@ from PIL import (
     Image,
     ImageColor,
     ImageDraw,
+    ImageFile,
     ImageFilter,
     ImageFont,
     ImageOps,
     ImageSequence,
     UnidentifiedImageError,
 )
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 from pilmoji import Pilmoji
 from sanic.log import logger
 

@@ -81,6 +81,17 @@ def test_variable_frame_durations_are_kept(expect, animated_template):
     expect(durations) == [1000, 100, 100, 100]
 
 
+def test_truncated_gif_frames_still_render(expect, animated_template):
+    template = animated_template([100, 100, 100, 100])
+    path = template.directory / "default.gif"
+    path.write_bytes(path.read_bytes()[:-5])
+    frames, durations = utils.images.render_animation(
+        template, "default", lines=["still", "works"], size=(0, 0)
+    )
+    expect(len(frames)) >= 1
+    expect(len(durations)) == len(frames)
+
+
 def test_skipped_frame_durations_are_added(expect, animated_template):
     template = animated_template([1000, 100, 100, 100])
     lines = ["slow first", "frame"]
