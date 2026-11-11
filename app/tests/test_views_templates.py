@@ -19,6 +19,16 @@ def describe_list():
             expect(len(response.json)) == 3
 
         @pytest.mark.slow
+        @pytest.mark.parametrize(
+            ("query", "template_id"),
+            [("two buttons", "ds"), ("hotline bling", "drake")],
+        )
+        def it_can_filter_templates_by_keyword(query, template_id):
+            request, response = client.get(f"/templates/?filter={query}", timeout=15)
+            expect(response.status) == 200
+            expect([t["id"] for t in response.json]).contains(template_id)
+
+        @pytest.mark.slow
         def it_excludes_cached_variants():
             client.get("/images/fry/a/b.png?color=red")
             client.get("/images/fry/a/b.png?layout=top")
