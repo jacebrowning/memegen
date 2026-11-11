@@ -36,6 +36,13 @@ def describe_image_redirects(expect, client):
         expect(response.status) == 302
         expect(response.headers["Location"]) == redirect
 
+    def it_rejects_invalid_blank_image_paths():
+        request, response = client.get(
+            "/images/frontend/.git/config", allow_redirects=False
+        )
+        expect(response.status) == 404
+        expect(response.text).contains("Invalid image path")
+
     @pytest.mark.parametrize("extra", ["/", '"'])
     def it_fixes_extra_trailing_characters(extra):
         request, response = client.get(
@@ -86,6 +93,7 @@ def describe_path_redirects(expect, client):
         monkeypatch.setattr(settings, "DEBUG", True)
         request, response = client.get("/images/fry/test")
         expect(response.text).contains("/images/fry/test.png")
+        expect(response.text).contains('alt="test"')
 
     def it_rejects_unknown_templates(unknown_template):
         request, response = client.get(

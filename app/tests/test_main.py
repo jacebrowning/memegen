@@ -29,3 +29,4 @@ def describe_test(expect, client):
         expect(response.status) == 200
         expect(response.text.count("img")) > 5
         expect(response.text.count("img")) < 100
+        expect(response.text).contains('alt="tests code / in production"')

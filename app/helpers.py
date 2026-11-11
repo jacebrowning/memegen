@@ -21,7 +21,7 @@ def get_valid_templates(
 
 def get_example_images(
     request: Request, query: str = "", *, animated: bool | None = None
-) -> list[tuple[str, str]]:
+) -> list[tuple[str, str, str]]:
     templates = Template.objects.filter(valid=True, _exclude="_custom")
     if query:
         templates = [t for t in templates if t.matches(query)]
@@ -50,12 +50,13 @@ def get_example_images(
 
         example = template.build_example_url(request, extension=extension)
         self = template.build_self_url(request)
-        images.append((example, self))
+        alt = get_alt_text(template.example, name=template.name)
+        images.append((example, self, alt))
 
     return images
 
 
-def get_test_images(request: Request) -> list[str]:
+def get_test_images(request: Request) -> list[tuple[str, str]]:
     animated = utils.urls.flag(request, "animated")
     if animated:
         images = [
@@ -67,10 +68,20 @@ def get_test_images(request: Request) -> list[str]:
         images = settings.TEST_IMAGES
 
     return [
-        request.app.url_for(
-            "Images.detail_text",
-            template_id=id,
-            text_filepath=utils.text.encode(lines) + "." + extension,
+        (
+            request.app.url_for(
+                "Images.detail_text",
+                template_id=id,
+                text_filepath=utils.text.encode(lines) + "." + extension,
+            ),
+            get_alt_text(lines),
         )
         for id, lines, extension in images
     ]
+
+
+def get_alt_text(lines: list[str], *, name: str = "") -> str:
+    text = " / ".join(line for line in lines if line)
+    if name and text:
+        return f"{name}: {text}"
+    return name or text
