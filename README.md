@@ -96,6 +96,8 @@ Add the `font=<str>` query parameter to customize the look of your meme:
 | [Noto Sans Bold Hebrew](https://fonts.google.com/noto/specimen/Noto+Sans+Hebrew) | `font=notosanshebrew` | `font=he`    |
 | [HG Mincho B](https://japanesefonts.org/hg-mincho-b.html)                        | `font=hgminchob`      | `font=jp`    |
 
+Arabic text works with any of these fonts: its letters are joined and laid out right to left by [khatt](https://github.com/DrEssam97/khatt), using [Lalezar](https://fonts.google.com/specimen/Lalezar) for the letters a font doesn't have.
+
 ## Custom Colors
 
 Add the `color=<str>,<str>` query parameter to customize the color of text lines. Colors can be specified as:
