@@ -1092,14 +1092,14 @@ files = [
 
 [[package]]
 name = "emoji"
-version = "2.14.0"
+version = "2.16.0"
 description = "Emoji for Python"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "emoji-2.14.0-py3-none-any.whl", hash = "sha256:fcc936bf374b1aec67dda5303ae99710ba88cc9cdce2d1a71c5f2204e6d78799"},
-    {file = "emoji-2.14.0.tar.gz", hash = "sha256:f68ac28915a2221667cddb3e6c589303c3c6954c6c5af6fefaec7f9bdf72fdca"},
+    {file = "emoji-2.16.0-py3-none-any.whl", hash = "sha256:c4230d80640def9071599ff56b1b5950fe13a2a94c0da98c5deab12431b24330"},
+    {file = "emoji-2.16.0.tar.gz", hash = "sha256:ff9e9b1c48389ef78ed1787e7693c555e84e6bb9bac16be1fd65e1616dbf80c8"},
 ]
 
 [package.extras]
@@ -4866,4 +4866,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "4ee071475ee45c3865327f302e1b23ddeabb77acd573a942c40813bb1b8e20f6"
+content-hash = "982bcdc018504143c378f71608fc0293df80cd759e99ba230ab6fa57bfa672b7"
