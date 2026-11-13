@@ -64,7 +64,7 @@ pytest-random = "*"
 pytest-cov = "^7.1"
 aiointercept = "^0.1.9"
 sanic-testing = "*"
-locust = "^2.46.7"
+locust = "^2.47.0"
 requests = "^2.34.2"
 
 # Coverage
