@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import io
-import re
 from contextlib import contextmanager
 from functools import lru_cache
 from pathlib import Path
@@ -40,13 +39,8 @@ EXCEPTIONS = (
 
 FONT_SIZE_LOOKAHEAD = 3
 
-# Arabic script, including its presentation forms
-_ARABIC = re.compile(
-    "[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]"
-)
-
-# A heavy Arabic font bundled with khatt, for the letters a font lacks
-ARABIC_FALLBACK_FONT = "lalezar"
+# Text in this font (`font=ar`) is drawn by khatt
+ARABIC_FONT_PATH = str(Font.objects.get("ar").path)
 
 
 def preview(
@@ -700,20 +694,20 @@ def add_counter(
     return Image.alpha_composite(image, box)
 
 
-def is_shaped(text: str) -> bool:
-    """Whether khatt draws ``text``: it has Arabic letters (and no emoji).
+def is_shaped(text: str, font: FontType) -> bool:
+    """Whether khatt draws ``text``: it uses `font=ar` (and has no emoji).
 
     Pillow only joins Arabic letters and lays them out right to left when it
-    has Raqm, and none of the bundled fonts has Arabic letters.
+    has Raqm, which needs FriBiDi from the system.
     """
-    return bool(_ARABIC.search(text)) and not emoji.emoji_count(text)
+    return font.path == ARABIC_FONT_PATH and not emoji.emoji_count(text)
 
 
 def draw_text(
     image: ImageType, draw: DrawType, xy, text: str, fill, font: FontType, **kwargs
 ):
-    """Draw ``text`` with ``draw``, or with khatt when it has Arabic letters."""
-    if is_shaped(text):
+    """Draw ``text`` with ``draw``, or with khatt for `font=ar`."""
+    if is_shaped(text, font):
         khatt.draw_text(
             image,
             xy,
@@ -721,7 +715,6 @@ def draw_text(
             font=str(font.path),
             size_px=round(font.size),
             fill=fill,
-            fallback_fonts=ARABIC_FALLBACK_FONT,
             **kwargs,
         )
     else:
@@ -926,7 +919,7 @@ _PARAGRAPH_SEPARATORS = frozenset("\n\r\u001c\u001d\u001e\u0085\u2029")
 
 
 def getbbox_safe(text: str, font: FontType) -> tuple[int, int, int, int]:
-    if is_shaped(text):
+    if is_shaped(text, font):
         return khatt_bbox(text, font)
     if any(character in _PARAGRAPH_SEPARATORS for character in text):
         font = font.font_variant(layout_engine=ImageFont.Layout.BASIC)
@@ -982,13 +975,12 @@ def khatt_bbox(text: str, font: FontType) -> tuple[int, int, int, int]:
         font=str(font.path),
         size_px=round(font.size),
         spacing=4,
-        fallback_fonts=ARABIC_FALLBACK_FONT,
     )
 
 
 def get_text_size(text: str, font: FontType) -> Dimensions:
     box: tuple[float, float, float, float]
-    if is_shaped(text):
+    if is_shaped(text, font):
         box = khatt_bbox(text, font)
     else:
         image = Image.new("RGB", (100, 100))

@@ -262,20 +262,23 @@ def test_special_characters_with_wrapping(images):
 def test_arabic_text(images):
     template = models.Template.objects.get("buzz")
     lines = ["مرحبا بالعالم", "الميمز في كل مكان"]
-    utils.images.save(template, lines, directory=images)
+    utils.images.save(template, lines, font_name="ar", directory=images)
 
 
 def test_arabic_text_is_drawn(expect):
     template = models.Template.objects.get("buzz")
-    blank = utils.images.render_image(template, "default", [], (600, 450))
-    arabic = utils.images.render_image(template, "default", ["مرحبا"], (600, 450))
+    blank = utils.images.render_image(template, "default", [], (600, 450), "ar")
+    arabic = utils.images.render_image(template, "default", ["مرحبا"], (600, 450), "ar")
     expect(arabic.tobytes()) != blank.tobytes()
 
 
-def test_only_arabic_text_is_shaped(expect):
-    expect(utils.images.is_shaped("مرحبا بالعالم")) == True
-    expect(utils.images.is_shaped("hello world")) == False
-    expect(utils.images.is_shaped("مرحبا 👋")) == False  # emoji keep Pilmoji
+def test_only_the_arabic_font_is_shaped(expect):
+    arabic = utils.images.load_font(str(models.Font.objects.get("ar").path), 40)
+    impact = utils.images.load_font(str(models.Font.objects.get("impact").path), 40)
+    expect(utils.images.is_shaped("مرحبا بالعالم", arabic)) == True
+    expect(utils.images.is_shaped("hello world", arabic)) == True
+    expect(utils.images.is_shaped("مرحبا بالعالم", impact)) == False
+    expect(utils.images.is_shaped("مرحبا 👋", arabic)) == False  # emoji keep Pilmoji
 
 
 @pytest.mark.skipif("CIRCLECI" in os.environ, reason="Long filenames not supported")
