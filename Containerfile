@@ -37,15 +37,19 @@ ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER}"
 
 # Set the entrypoint using this workaround:
 # https://docs.docker.com/reference/build-checks/json-args-recommended/#create-a-wrapper-script
-COPY --chmod=755 <<EOT /entrypoint.sh
+# Note: heredoc content is copied verbatim (no escape processing), so line
+# continuations are written as a single backslash. The quoted delimiter keeps
+# $PORT / $MAX_REQUESTS / $MAX_REQUESTS_JITTER unexpanded at build time so they
+# are read from the environment when the container starts.
+COPY --chmod=755 <<'EOT' /entrypoint.sh
 #!/usr/bin/env bash
 set -e
-poetry run gunicorn \\
-    --bind "0.0.0.0:$PORT" \\
-    --worker-class uvicorn.workers.UvicornWorker \\
-    --max-requests="$MAX_REQUESTS" \\
-    --max-requests-jitter="$MAX_REQUESTS_JITTER" \\
-    --timeout=20 \\
+poetry run gunicorn \
+    --bind "0.0.0.0:${PORT:-5000}" \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --max-requests="${MAX_REQUESTS:-0}" \
+    --max-requests-jitter="${MAX_REQUESTS_JITTER:-0}" \
+    --timeout=20 \
     app.main:app
 EOT
 
