@@ -35,6 +35,16 @@ ENV PORT="${ARG_PORT}"
 ENV MAX_REQUESTS="${ARG_MAX_REQUESTS}"
 ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER}"
 
+# Absolute URLs (image/template/font links and the Swagger UI's openapi.json +
+# swagger-config) are built from this. By default the app assumes
+# http://localhost:${PORT}, which only matches the browser when you publish the
+# SAME port and browse localhost (e.g. `run -p 5000:5000`). If you publish a
+# different port or serve behind a reverse proxy / other host, pass the origin
+# the browser uses, e.g.:
+#   run -e BASE_URL=https://api.example.com ... 
+#   run -p 8080:5000 -e BASE_URL=http://localhost:8080 ...
+# (Leave it unset when the default localhost:${PORT} origin already matches.)
+
 # Set the entrypoint using this workaround:
 # https://docs.docker.com/reference/build-checks/json-args-recommended/#create-a-wrapper-script
 # Note: heredoc content is copied verbatim (no escape processing), so line
