@@ -9,7 +9,20 @@ PLACEHOLDER = "string"  # Swagger UI placeholder value
 
 DEBUG = os.environ.get("DEBUG", "false") == "true"
 
-if "DOMAIN" in os.environ:  # staging / production
+if "BASE_URL" in os.environ:  # explicit public origin (e.g. running in a container)
+    # Highest-priority override: declare the exact scheme://host[:port] the
+    # service is actually reached on. SERVER_NAME (set from BASE_URL below)
+    # drives every absolute URL the app emits -- image / template / font links
+    # AND the Swagger UI's openapi.json + swagger-config -- so setting it to the
+    # real origin fixes them all when serving on a non-default host, a published
+    # port that differs from the internal one, or behind a reverse proxy.
+    # Accepts values with or without a scheme, and with or without a trailing /
+    # (e.g. "https://api.example.com", "http://localhost:8080", "localhost:8080").
+    _origin = os.environ["BASE_URL"].strip().rstrip("/")
+    _scheme, _sep, _host = _origin.partition("://")
+    SCHEME, SERVER_NAME = (_scheme, _host) if _sep else ("http", _origin)
+    RELEASE_STAGE = os.environ.get("RELEASE_STAGE", "production")
+elif "DOMAIN" in os.environ:  # staging / production
     SERVER_NAME = os.environ["DOMAIN"]
     RELEASE_STAGE = "staging" if "staging" in SERVER_NAME else "production"
     SCHEME = "https"
@@ -17,8 +30,10 @@ elif "HEROKU_APP_NAME" in os.environ:  # review apps
     SERVER_NAME = os.environ["HEROKU_APP_NAME"] + ".herokuapp.com"
     RELEASE_STAGE = "review"
     SCHEME = "https"
-else:  # localhost
-    SERVER_NAME = "localhost:5000"
+else:  # localhost / bare-container default
+    # Respect PORT so the default origin matches a container whose internal and
+    # published ports are the same (e.g. `run -p 7000:7000` with PORT=7000).
+    SERVER_NAME = f"localhost:{os.environ.get('PORT', '5000')}"
     RELEASE_STAGE = "local"
     SCHEME = "http"
 

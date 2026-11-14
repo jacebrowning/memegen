@@ -35,17 +35,31 @@ ENV PORT="${ARG_PORT}"
 ENV MAX_REQUESTS="${ARG_MAX_REQUESTS}"
 ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER}"
 
+# Absolute URLs (image/template/font links and the Swagger UI's openapi.json +
+# swagger-config) are built from this. By default the app assumes
+# http://localhost:${PORT}, which only matches the browser when you publish the
+# SAME port and browse localhost (e.g. `run -p 5000:5000`). If you publish a
+# different port or serve behind a reverse proxy / other host, pass the origin
+# the browser uses, e.g.:
+#   run -e BASE_URL=https://api.example.com ... 
+#   run -p 8080:5000 -e BASE_URL=http://localhost:8080 ...
+# (Leave it unset when the default localhost:${PORT} origin already matches.)
+
 # Set the entrypoint using this workaround:
 # https://docs.docker.com/reference/build-checks/json-args-recommended/#create-a-wrapper-script
-COPY --chmod=755 <<EOT /entrypoint.sh
+# Note: heredoc content is copied verbatim (no escape processing), so line
+# continuations are written as a single backslash. The quoted delimiter keeps
+# $PORT / $MAX_REQUESTS / $MAX_REQUESTS_JITTER unexpanded at build time so they
+# are read from the environment when the container starts.
+COPY --chmod=755 <<'EOT' /entrypoint.sh
 #!/usr/bin/env bash
 set -e
-poetry run gunicorn \\
-    --bind "0.0.0.0:$PORT" \\
-    --worker-class uvicorn.workers.UvicornWorker \\
-    --max-requests="$MAX_REQUESTS" \\
-    --max-requests-jitter="$MAX_REQUESTS_JITTER" \\
-    --timeout=20 \\
+poetry run gunicorn \
+    --bind "0.0.0.0:${PORT:-5000}" \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --max-requests="${MAX_REQUESTS:-0}" \
+    --max-requests-jitter="${MAX_REQUESTS_JITTER:-0}" \
+    --timeout=20 \
     app.main:app
 EOT
 
