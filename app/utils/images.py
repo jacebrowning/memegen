@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Iterator, cast
 
 import emoji
+import khatt
 import webp
 from PIL import (
     Image,
@@ -37,6 +38,9 @@ EXCEPTIONS = (
 )
 
 FONT_SIZE_LOOKAHEAD = 3
+
+# Text in this font (`font=ar`) is drawn by khatt
+ARABIC_FONT_PATH = str(Font.objects.get("ar").path)
 
 
 def preview(
@@ -335,7 +339,9 @@ def render_image(
 
         rows = text.count("\n") + 1
         with emoji_support(box, draw, text) as draw:
-            draw.text(
+            draw_text(
+                box,
+                draw,
                 (-offset[0], -offset[1]),
                 text,
                 text_fill,
@@ -497,7 +503,9 @@ def render_animation(
 
             rows = text.count("\n") + 1
             with emoji_support(box, draw, text) as draw:
-                draw.text(
+                draw_text(
+                    box,
+                    draw,
                     (-offset[0], -offset[1]),
                     text,
                     text_fill,
@@ -684,6 +692,33 @@ def add_counter(
     draw.text((3, -3), text, "lime", font, stroke_width=1, stroke_fill="black")
 
     return Image.alpha_composite(image, box)
+
+
+def is_shaped(text: str, font: FontType) -> bool:
+    """Whether khatt draws ``text``: it uses `font=ar` (and has no emoji).
+
+    Pillow only joins Arabic letters and lays them out right to left when it
+    has Raqm, which needs FriBiDi from the system.
+    """
+    return font.path == ARABIC_FONT_PATH and not emoji.emoji_count(text)
+
+
+def draw_text(
+    image: ImageType, draw: DrawType, xy, text: str, fill, font: FontType, **kwargs
+):
+    """Draw ``text`` with ``draw``, or with khatt for `font=ar`."""
+    if is_shaped(text, font):
+        khatt.draw_text(
+            image,
+            xy,
+            text,
+            font=str(font.path),
+            size_px=round(font.size),
+            fill=fill,
+            **kwargs,
+        )
+    else:
+        draw.text(xy, text, fill, font, **kwargs)
 
 
 @contextmanager
@@ -884,6 +919,8 @@ _PARAGRAPH_SEPARATORS = frozenset("\n\r\u001c\u001d\u001e\u0085\u2029")
 
 
 def getbbox_safe(text: str, font: FontType) -> tuple[int, int, int, int]:
+    if is_shaped(text, font):
+        return khatt_bbox(text, font)
     if any(character in _PARAGRAPH_SEPARATORS for character in text):
         font = font.font_variant(layout_engine=ImageFont.Layout.BASIC)
     return font.getbbox(text)  # type: ignore[return-value]
@@ -931,10 +968,25 @@ def get_text_offset(
     return x_offset, y_offset
 
 
+def khatt_bbox(text: str, font: FontType) -> tuple[int, int, int, int]:
+    """The box khatt draws ``text`` in, as Pillow's ``textbbox`` measures it."""
+    return khatt.text_bbox(
+        text,
+        font=str(font.path),
+        size_px=round(font.size),
+        spacing=4,
+    )
+
+
 def get_text_size(text: str, font: FontType) -> Dimensions:
-    image = Image.new("RGB", (100, 100))
-    draw = ImageDraw.Draw(image)
-    _, _, text_width, text_height = draw.textbbox((0, 0), text, font)
+    box: tuple[float, float, float, float]
+    if is_shaped(text, font):
+        box = khatt_bbox(text, font)
+    else:
+        image = Image.new("RGB", (100, 100))
+        draw = ImageDraw.Draw(image)
+        box = draw.textbbox((0, 0), text, font)
+    _, _, text_width, text_height = box
     stroke_width = get_stroke_width(font)
     return text_width + stroke_width, text_height + stroke_width  # type: ignore[return-value]
 

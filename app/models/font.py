@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import KW_ONLY, dataclass
 from pathlib import Path
 
+import khatt
 from sanic import Request
 
 from .. import settings
@@ -28,12 +29,13 @@ class Font:
     id: str
     _: KW_ONLY
     alias: str = ""
+    directory: Path = settings.ROOT / "fonts"
 
     objects = Manager()
 
     @property
     def path(self) -> Path:
-        return settings.ROOT / "fonts" / self.filename
+        return self.directory / self.filename
 
     def jsonify(self, request: Request) -> dict:
         return {
@@ -61,4 +63,10 @@ FONTS = [
     Font("Segoe UI Bold.ttf", "segoe", alias="tiny"),
     Font("HG-Mincho-B.ttc", "hgminchob", alias="jp"),
     Font("NotoSansHebrew-Bold.ttf", "notosanshebrew", alias="he"),
+    Font(
+        "Lalezar-Regular.ttf",
+        "lalezar",
+        alias="ar",
+        directory=khatt.font_path("lalezar").parent,
+    ),
 ]
