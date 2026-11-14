@@ -43,6 +43,9 @@ ENV MAX_REQUESTS_JITTER="${ARG_MAX_REQUESTS_JITTER}"
 # the browser uses, e.g.:
 #   run -e BASE_URL=https://api.example.com ... 
 #   run -p 8080:5000 -e BASE_URL=http://localhost:8080 ...
+# If the proxy serves the app under a sub-path, include the prefix too and both
+# the absolute URLs and the OpenAPI spec's `servers` will honour it:
+#   run -e BASE_URL=https://api.example.com/memegen ...
 # (Leave it unset when the default localhost:${PORT} origin already matches.)
 
 # Set the entrypoint using this workaround:
