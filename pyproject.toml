@@ -31,7 +31,7 @@ spongemock = "~1.0.0"
 # Utilities
 aiocache = "~0.12.3"
 aiofiles = "^25.1.0"
-aiohttp = "^3.14.4"
+aiohttp = "^3.14.5"
 anyio = "^4.16.0"
 datafiles = "^2.6.0"
 emoji = "^2.16.0"
