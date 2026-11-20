@@ -1963,14 +1963,14 @@ files = [
 
 [[package]]
 name = "khatt"
-version = "0.9.0"
+version = "0.12.0"
 description = "Correct Arabic text for Python: on images, in video subtitles and as terminal art, with no system libraries"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "khatt-0.9.0-py3-none-any.whl", hash = "sha256:e230d2c920a726606da770f6c5d8365f03538818ffc48b09f3fb1eb264c36635"},
-    {file = "khatt-0.9.0.tar.gz", hash = "sha256:e8717ac0a0aa9e5617a780e9775798441479f75e6dae30ecb2f0ddf6d0cc6e29"},
+    {file = "khatt-0.12.0-py3-none-any.whl", hash = "sha256:c6303cfca89f4f88b7c815a3d268249ff11ee659ff57e941ed72ad585da02b88"},
+    {file = "khatt-0.12.0.tar.gz", hash = "sha256:93db4ecf8cd9e3543cca0dfec49df841ac0b3ebc4d4dee9f5b23ec0ae79f3917"},
 ]
 
 [package.dependencies]
@@ -5054,4 +5054,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "c9611fa6e60acd14db562d3f1691ff572c37ff88f8164ee38669afed8736da38"
+content-hash = "a4eb5494aa95148ad02b4de111f161811315ef6e6b5cf249c1e991c081667273"
