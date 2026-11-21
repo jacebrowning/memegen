@@ -1,4 +1,5 @@
 from textwrap import dedent
+from urllib.parse import urlparse
 
 import bugsnag
 from aiohttp.client_exceptions import ClientPayloadError
@@ -6,6 +7,7 @@ from PIL import UnidentifiedImageError
 from sanic import Request, Sanic
 from sanic.exceptions import MethodNotSupported, NotFound
 from sanic.handlers import ErrorHandler
+from sanic_ext.extensions.openapi.builders import SpecificationBuilder
 
 from . import settings, utils, views
 
@@ -56,6 +58,22 @@ class BugsnagErrorHandler(ErrorHandler):
 
 def init(app: Sanic):
     app.config.SERVER_NAME = settings.BASE_URL
+
+    # When served under a reverse-proxy path prefix (e.g. https://host/memegen)
+    # the OpenAPI spec carries no `servers` entry by default, so Swagger UI
+    # falls back to the page origin and drops the prefix from "Try it out"
+    # requests (and the spec itself has no base URL). Declare the full public
+    # origin -- prefix included -- as the spec's server so the docs and any
+    # OpenAPI client build correct URLs.
+    #
+    # Only registered when BASE_URL actually has a path prefix, so the default
+    # (no-prefix) behaviour stays exactly as before: no explicit server entry,
+    # Swagger uses the request origin (and tests stay unchanged).
+    _base = urlparse(settings.BASE_URL)
+    _prefix = _base.path.rstrip("/")
+    if _prefix:
+        SpecificationBuilder().url(f"{_base.scheme}://{_base.netloc}{_prefix}")
+
     app.config.CORS_ORIGINS = "*"
     app.config.CORS_SEND_WILDCARD = True
     app.config.OAS_UI_DEFAULT = "swagger"
